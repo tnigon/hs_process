@@ -83,6 +83,10 @@ class Hyperspectral(object):
         self.buf_y_pix = None
         self.spec_clip = None
 
+        self.name_short = None
+        self.name_long = None
+        self.name_plot = None
+
         self.pix_skip = int(6.132 / -0.04)  # alley - skip 6.132 m
         self.cols_plots = None
         self.rows_plots = None
@@ -192,31 +196,29 @@ class Hyperspectral(object):
         data. It has the advantage of preserving the original shape and
         features of the signal better than other types of filtering
         approaches, such as moving averages techniques.
-        Parameters
-        ----------
-        y : array_like, shape (N,)
-            the values of the time history of the signal.
-        window_size : int
-            the length of the window. Must be an odd integer number.
-        order : int
-            the order of the polynomial used in the filtering.
-            Must be less then `window_size` - 1.
-        deriv: int
-            the order of the derivative to compute (default = 0 means only
-            smoothing)
-        Returns
-        -------
-        ys : ndarray, shape (N)
-            the smoothed signal (or it's n-th derivative).
-        Notes
-        -----
+
+        Parameters:
+        y (`numpy.array`; shape (N,)): the values of the time history of the
+            signal.
+        window_size (`int`): the length of the window; must be an odd integer
+            number (default: 5).
+        order (`int`): the order of the polynomial used in the filtering; must
+            be less than `window_size` - 1 (default: 2).
+        deriv (`int`): the order of the derivative to compute (default: 0,
+              means only smoothing).
+
+        Returns:
+        ys (`ndarray`; shape (N)): the smoothed signal (or it's n-th
+           derivative).
+
+        Notes:
         The Savitzky-Golay is a type of low-pass filter, particularly
         suited for smoothing noisy data. The main idea behind this
         approach is to make for each point a least-square fit with a
         polynomial of high order over a odd-sized window centered at
         the point.
-        Examples
-        --------
+
+        Examples:
         t = np.linspace(-4, 4, 500)
         y = np.exp( -t**2 ) + np.random.normal(0, 0.05, t.shape)
         ysg = savitzky_golay(y, window_size=31, order=4)
@@ -325,14 +327,16 @@ class Hyperspectral(object):
             # works out perfect.. don't have to change anything
             pass
 
-    def _get_envi_gdal(self):
+    def _get_envi_gdal(self, fname_in=None):
         '''
         GDAL dataset isn't saved to self, so this function gets and returns the
         GDAL object if necessary.
         '''
+        if fname_in is None:
+            fname_in = self.fname_in
         drv = gdal.GetDriverByName('ENVI')
         drv.Register()
-        img_ds = gdal.Open(self.fname_in, gdalconst.GA_ReadOnly)
+        img_ds = gdal.Open(fname_in, gdalconst.GA_ReadOnly)
         if img_ds is None:
             sys.exit("Image not loaded. Check file path and try again.")
         return img_ds
@@ -882,6 +886,80 @@ class Hyperspectral(object):
         self._read_envi_hdr()
         self._read_envi_spy()
 
+    def spectral_clip_and_smooth_batch(self, base_dir, name_long=None,
+                                       name_append=None,
+                                       wl_bands=[[0, 420], [760, 776],
+                                                 [813, 827], [880, 1000]],
+                                       spectra_smooth=True, window_size=11,
+                                       order=2, save_out=True,
+                                       interleave='bip', level=0):
+        '''
+        Does a batch clip and smooth for all files in a directory with the
+        given file extension. Saves some descriptive statistics that result
+        from the processing.
+
+        Parameters:
+            base_dir (`str`): Directory to search for images to process
+                default (None)
+            name_long (str): Spectronon processing appends processing names to
+                the filenames; this indicates those processing names that are
+                repetitive and can be deleted from the filename following
+                processing.
+            name_append (`str`): text to append to end of filename; used to
+                describe this particular manipulation (default:
+                'smooth_spec_clip').
+            wl_bands (`list`): minimum and maximum wavelenths to clip from
+                image; if multiple groups of wavelengths should be cut, this
+                should be a list of lists. For example, wl_bands=[760, 776]
+                will clip all bands greater than 760.0 nm and less than 776.0
+                nm; wl_bands = [[0, 420], [760, 776], [813, 827], [880, 1000]]
+                will clip all band less than 420.0 nm, bands greater than 760.0
+                nm and less than 776.0 nm, bands greater than 813.0 nm and less
+                than 827.0 nm, and bands greater than 880 nm (default).
+            spectra_smooth (`bool`): Indicates whether Savitzky-Golay smoothing
+                should be performed on the spectral domain (default: True).
+            window_size (`int`): the length of the window; must be an odd integer
+                number (default: 11).
+            order (`int`): the order of the polynomial used in the filtering; must
+                be less than `window_size` - 1 (default: 2).
+            save_out (`bool): indicates whether manipulated image should be
+                saved to disk (defaul: True).
+            interleave (`str`): interleave (and file extension) of input and
+                manipulated file; (default: 'bip').
+            level (`int`): Number of levels to search in the directory
+                (default: 0)
+        '''
+        fname_list = self._recurs_dir(base_dir=base_dir,
+                                      search_exp='.' + interleave, level=0)
+        self.base_dir = base_dir
+        base_dir_out, name_print = self._save_file_setup(
+                base_dir_out=None, folder_name='smooth_spec_clip')
+        df_smooth_stats = pd.DataFrame(columns=['fname', 'mean', 'std', 'cv'])
+#        name_long = ('-Radiance From Raw Data-Georectify Airborne Datacube-'
+#                     'Reflectance from Radiance Data and Measured Reference Spectrum')
+
+        for idx, fname_in in enumerate(fname_list):
+            if name_long is None:  # finds first '-' after last '_'
+                name_long = fname_in[fname_in.find('-',fname_in.rfind('_')):]
+            self.read_cube(fname_in, name_long=name_long)
+            self.spectral_clip_and_smooth(base_dir_out=base_dir_out,
+                                          name_append=name_append,
+                                          wl_bands=wl_bands,
+                                          spectra_smooth=spectra_smooth,
+                                          window_size=window_size,
+                                          order=order, save_out=save_out,
+                                          interleave=interleave)
+            mean = np.nanmean(self.array_smooth)
+            std = np.nanstd(self.array_smooth)
+            cv = std/mean
+            df_smooth_temp = pd.DataFrame([[fname_in, mean, std, cv]],
+                                          columns=['fname', 'mean', 'std',
+                                                   'cv'])
+            df_smooth_stats = df_smooth_stats.append(df_smooth_temp,
+                                                     ignore_index=True)
+        fname_stats = os.path.join(base_dir_out, 'spec_clip_smooth_stats.csv')
+        df_smooth_stats.to_csv(fname_stats)
+
     def spectral_clip_and_smooth(self, base_dir_out=None, name_append=None,
                                  wl_bands=[[0, 420], [760, 776], [813, 827],
                                            [880, 1000]],
@@ -908,6 +986,10 @@ class Hyperspectral(object):
                 than 827.0 nm, and bands greater than 880 nm (default).
             spectra_smooth (`bool`): Indicates whether Savitzky-Golay smoothing
                 should be performed on the spectral domain (default: True).
+            window_size (`int`): the length of the window; must be an odd integer
+                number (default: 11).
+            order (`int`): the order of the polynomial used in the filtering; must
+                be less than `window_size` - 1 (default: 2).
             save_out (`bool): indicates whether manipulated image should be
                 saved to disk (defaul: True).
             interleave (`str`): interleave (and file extension) of manipulated
@@ -925,7 +1007,7 @@ class Hyperspectral(object):
             name_append = 'smooth-spec-clip'
         name_label = (name_print + '-' + str(name_append) + '.' + interleave)
         fname_out_envi = os.path.join(base_dir_out, name_label)
-        print('Smoothing and spectrally clipping image: {0}'
+        print('\n\nSmoothing and spectrally clipping image: {0}\n'
               ''.format(name_print))
 
         self.spec_clip = spec_clip
@@ -935,7 +1017,8 @@ class Hyperspectral(object):
         self.meta_bands = meta_bands
         array_clip = np.delete(self.img_sp.asarray(), spec_clip, axis=2)
         if spectra_smooth is True:
-            self.array_smooth = self._smooth_image(array_clip, window_size=19, order=2)
+            self.array_smooth = self._smooth_image(array_clip, window_size=19,
+                                                   order=2)
 
             hist_str = (" -> Hyperspectral.spectral_clip_and_smooth[<"
                         "SpecPyFloatText label: 'wl_bands?' value:{0}; "
@@ -1269,12 +1352,16 @@ class Hyperspectral(object):
 #            from spectral import save_rgb
 #            save_rgb(fname_out_tif, array_img_crop, rgb_list, format='tiff')
 
-        drv = gdal.GetDriverByName('ENVI')
-        drv.Register()
-        img_ds = gdal.Open(fname_in, gdalconst.GA_ReadOnly)
+        img_ds = self._get_envi_gdal(fname_in=fname_in)
         projection_out = img_ds.GetProjection()
-        img_ds = None
-        drv = None
+        img_ds = None  # I only want to use GDAL when I have to..
+
+#        drv = gdal.GetDriverByName('ENVI')
+#        drv.Register()
+#        img_ds = gdal.Open(fname_in, gdalconst.GA_ReadOnly)
+#        projection_out = img_ds.GetProjection()
+#        img_ds = None
+#        drv = None
 
         geotransform_out = [ul_x_utm, self.size_x_m, 0.0, ul_y_utm, 0.0,
                             self.size_y_m]
