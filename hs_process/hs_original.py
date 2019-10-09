@@ -1,21 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Jun 30 17:04:43 2019
-
-@author: nigo0024
-"""
-
-# -*- coding: utf-8 -*-
-"""
 © 2019 Regents of the University of Minnesota. All rights reserved.
 """
 __copyright__ = 'Regents of the University of Minnesota. All rights reserved.'
 __author__ = 'Tyler Nigon'
 __license__ = (
-        '"envi_crop" is copyrighted by the Regents of the University of Minnesota.'
+        '"hyperspectral" is copyrighted by the Regents of the University of Minnesota.'
         'It can be freely used for educational and research purposes by '
         'non-profit institutions and US government agencies only. Other '
-        'organizations are allowed to use "envi_crop" only for evaluation '
+        'organizations are allowed to use "hyperspectral" only for evaluation '
         'purposes, and any further uses will require prior approval. The '
         'software may not be sold or redistributed without prior approval. '
         'One may make copies of the software for their use provided that the '
@@ -45,8 +38,6 @@ import spectral.io.envi as envi
 import sys
 
 
-#from IPython import get_ipython
-
 class Hyperspectral(object):
     '''
     Performs band math on and ENVI image file
@@ -65,6 +56,7 @@ class Hyperspectral(object):
         self.base_dir = None
         self.fname_shp = None
         self.long_name = None
+        self.base_dir_out = None
 
         self.img_ds = None
         self.img_sp = None
@@ -157,11 +149,11 @@ class Hyperspectral(object):
                 meta_bands[key+1] = val
         else:
             try:
-                band_names = list(ast.literal_eval(self.metadata['band names']))
-                wl_names = list(ast.literal_eval(self.metadata['wavelength']))
+                band_names = list(sorted(ast.literal_eval(self.metadata['band names'])))
+                wl_names = list(sorted(ast.literal_eval(self.metadata['wavelength'])))
             except ValueError as e:
-                band_names = list(ast.literal_eval(str(self.metadata['band names'])))
-                wl_names = list(ast.literal_eval(str(self.metadata['wavelength'])))
+                band_names = list(sorted(ast.literal_eval(str(self.metadata['band names']))))
+                wl_names = list(sorted(ast.literal_eval(str(self.metadata['wavelength']))))
             for idx in range(len(band_names)):
                 meta_bands[band_names[idx]] = wl_names[idx]
         self.meta_bands = meta_bands
@@ -765,6 +757,7 @@ class Hyperspectral(object):
             base_dir_out = os.path.join(self.base_dir, folder_name)
         if not os.path.isdir(base_dir_out):
             os.mkdir(base_dir_out)
+        self.base_dir_out = base_dir_out
 
         if self.name_plot is not None:
             name_print = self.name_plot
@@ -848,7 +841,7 @@ class Hyperspectral(object):
         return set_str
 
     def read_cube(self, fname_in, fname_shp=None,
-                  name_long='-Unit Conversion Utility', plot_name=False):
+                  name_long=None, plot_name=False):
         '''
         Reads in a hyperspectral datacube
 
@@ -862,6 +855,8 @@ class Hyperspectral(object):
         plot_name (bool): Indicates whether image (and its filename) is for an
             individual plot (True), or for many plots (False) (default: False).
         '''
+        if name_long is None:  # finds first '-' after last '_'
+            name_long = fname_in[fname_in.find('-',fname_in.rfind('_')):]
         self.fname_in = fname_in
         self.fname_shp = fname_shp
         self.base_dir = os.path.split(fname_in)[0]
@@ -963,7 +958,7 @@ class Hyperspectral(object):
     def spectral_clip_and_smooth(self, base_dir_out=None, name_append=None,
                                  wl_bands=[[0, 420], [760, 776], [813, 827],
                                            [880, 1000]],
-                                 spectra_smooth=True, window_size=19, order=2,
+                                 spectra_smooth=True, window_size=11, order=2,
                                  save_out=True, interleave='bip'):
         '''
         Removes/clips designated wavelength bands from image, smooths data on
@@ -1007,7 +1002,7 @@ class Hyperspectral(object):
             name_append = 'smooth-spec-clip'
         name_label = (name_print + '-' + str(name_append) + '.' + interleave)
         fname_out_envi = os.path.join(base_dir_out, name_label)
-        print('\n\nSmoothing and spectrally clipping image: {0}\n'
+        print('Smoothing and spectrally clipping image: {0}\n'
               ''.format(name_print))
 
         self.spec_clip = spec_clip
@@ -1017,7 +1012,8 @@ class Hyperspectral(object):
         self.meta_bands = meta_bands
         array_clip = np.delete(self.img_sp.asarray(), spec_clip, axis=2)
         if spectra_smooth is True:
-            self.array_smooth = self._smooth_image(array_clip, window_size=19,
+            self.array_smooth = self._smooth_image(array_clip,
+                                                   window_size=window_size,
                                                    order=2)
 
             hist_str = (" -> Hyperspectral.spectral_clip_and_smooth[<"
@@ -1131,7 +1127,7 @@ class Hyperspectral(object):
         return array_index
 
     def band_math_ndi(self, b1=780, b2=559, b3=None, b4=None, b5=None,
-                      base_dir_out=None, name=None,
+                      base_dir_out=None, name_append=None,
                       save_out=True, interleave='bip'):
         '''
         Calculates the spectral index from a list of bands and the "form" of
@@ -1156,25 +1152,37 @@ class Hyperspectral(object):
         base_dir_out, name_print = self._save_file_setup(
                 base_dir_out, folder_name='band_math')
         band1, band2, wl1, wl2 = self._get_band_info_consolidate(b1, b2)
-        if name is None:
-            name = 'ndi_{0:.0f}_{1:.0f}'.format(wl1, wl2)
-        fname_out_envi = os.path.join(
-            base_dir_out, (name_print + '_' + str(name) + '.' + interleave))
+        if name_append is None:
+            name_append = 'ndi_{0:.0f}_{1:.0f}'.format(wl1, wl2)
+        name_label = (name_print + '-' + str(name_append) + '.' + interleave)
+        fname_out_envi = os.path.join(base_dir_out, name_label)
         print('Calculating normalized difference index for {0}: '
               '({1:.0f}-{2:.0f})/({1:.0f}+{2:.0f})'.format(name_print,
                                                            wl1, wl2))
-        if self.array_smooth is not None:
-            array = self.array_smooth
-        else:
-            array = self.img_sp.asarray()
+#        array = self.img_sp.asarray()
+        array = self.img_sp.load()
         array_b1 = self._get_band_mean(array, band1)
         array_b2 = self._get_band_mean(array, band2)
         array_index = (array_b1-array_b2)/(array_b1+array_b2)
 
-        geotransform_out = self.geotransform
+#        geotransform_out = self.geotransform
+
+        hist_str = (" -> Hyperspectral.band_math_ndi[<"
+                    "SpecPyFloatText label: 'b1?' value:{0};"
+                    "'b2?' value:{1}>]".format(b1, b2))
+        self.metadata['history'] += hist_str
+        self.metadata['bands'] = array_index.shape[2]
+        self.metadata['interleave'] = interleave
+        self.metadata['label'] = name_label
+
         if save_out is True:
-            self._write_envi(array_index, fname_out_envi, geotransform_out,
-                             name, interleave=interleave, modify_hdr=False)
+            envi.save_image(fname_out_envi + '.hdr', array_index,
+                            dtype=np.float32, force=True, ext=None,
+                            interleave=interleave, metadata=self.metadata)
+
+#        if save_out is True:
+#            self._write_envi(array_index, fname_out_envi, geotransform_out,
+#                             name, interleave=interleave, modify_hdr=False)
         return array_index
 
     def crop_many(self, base_dir_crop=None):

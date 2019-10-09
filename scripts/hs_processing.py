@@ -51,8 +51,7 @@ sns.lineplot(x=range(240), y=array_index[:,0, 0])
 # In[]
 
 # In[2.a. Get spectra for each pixel in directory]
-base_dir_spec = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2019\2019-06-26_Wells-V6\spec_ref_panels'
-
+base_dir_spec = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2019\2019-08-28_Waseca-AERF\cube_ref_panels'
 my_hs = Hyperspectral()
 fname_list = my_hs._recurs_dir(base_dir=base_dir_spec, search_exp='.bip')
 df_specs = None
