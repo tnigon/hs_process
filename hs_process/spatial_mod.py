@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import json
 import os
 
 class Spatial_mod(object):
@@ -22,6 +23,20 @@ class Spatial_mod(object):
         self.size_y_m = None
         self.ul_x_m = None
         self.ul_y_m = None
+
+        def run_init():
+            try:
+                self.size_x_m = float(self.img_sp.metadata['map info'][5])
+                self.size_y_m = float(self.img_sp.metadata['map info'][6])
+                self.ul_x_m = float(self.img_sp.metadata['map info'][4])
+                self.ul_y_m = float(self.img_sp.metadata['map info'][3])
+            except KeyError as e:
+                self.size_x_m = None
+                self.size_y_m = None
+                self.ul_x_m = None
+                self.ul_y_m = None
+
+        run_init()
 
     def _check_alley(self):
         '''
@@ -64,6 +79,33 @@ class Spatial_mod(object):
         utm_x_new = utm_x + (ulx * size_x)
         utm_y_new = utm_y - (uly * size_y)
         return utm_x_new, utm_y_new
+
+    def _read_plot_shp(self):
+        '''
+        Reads shapefile of plot bounds and record upper left (northwest)
+        corner of each plot
+        '''
+        assert self.df_shp is not None, 'Please load a shapefile\n'
+        df_shp = self.df_shp.copy()
+        drv = ogr.GetDriverByName('ESRI Shapefile')
+        ds_shp = drv.Open(self.fname_shp, 0)
+        if ds_shp is None:
+            print('Could not open {0}'.format(self.fname_shp))
+        layer = ds_shp.GetLayer()
+
+        for feat in layer:
+            geom = feat.GetGeometryRef()
+            bounds = geom.GetBoundary()
+            bounds_dict = json.loads(bounds.ExportToJson())
+            bounds_coords = bounds_dict['coordinates']
+            plot_id = feat.GetField('plot')
+            x, y = zip(*bounds_coords)
+            ul_x_utm = min(x)
+            ul_y_utm = max(y)
+            df_temp = pd.DataFrame(data=[[plot_id, ul_x_utm, ul_y_utm]],
+                                   columns=df_shp.columns)
+            df_shp = df_shp.append(df_temp, ignore_index=True)
+            self.df_shp = df_shp
 
     def crop_many(self, base_dir_crop=None):
         '''

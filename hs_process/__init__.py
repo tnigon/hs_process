@@ -34,7 +34,6 @@ __email__ = 'nigo0024@umn.edu'
 
 
 from .helper import IO_tools
-from .helper import HS_tools
 from .segment import Segment
 from .spatial_mod import Spatial_mod
 from .spec_mod import Spec_mod
@@ -43,7 +42,6 @@ name = 'hs_process'
 __version__ = '0.0.1'
 
 __all__ = ['IO_tools',
-           'HS_tools',
            'Spatial_mod',
            'Segment',
            'Spec_mod']
