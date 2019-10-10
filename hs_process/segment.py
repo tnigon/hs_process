@@ -3,7 +3,7 @@ import numpy as np
 import os
 
 
-class Segment(object):
+class segment(object):
     '''
     Class for aiding in the segmentation/masking of image data to include
     pixels that are of most interest.

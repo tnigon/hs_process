@@ -2,7 +2,7 @@
 import json
 import os
 
-class Spatial_mod(object):
+class spatial_mod(object):
     '''
     Class for manipulating data within the spatial domain (e.g., cropping by
     geographical boundary)

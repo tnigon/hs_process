@@ -12,11 +12,238 @@ import spectral.io.envi as envi
 import spectral.io.spyfile as SpyFile
 import sys
 
+class hstools(object):
+    '''
+    Basic tools for manipulating Spyfiles and accessing their metadata.
 
-class IO_tools(object):
+    Parameters:
+        spyfile (`SpyFile` object): The datacube being accessed and/or
+            manipulated.
+    '''
+    def __init__(self, spyfile=None):
+        msg = ('Pleae load a SpyFile (Spectral Python object)')
+        assert spyfile is not None, msg
+
+        self.spyfile = spyfile
+        self.meta_bands = None
+
+        self._get_meta_bands(spyfile)
+
+    def _get_meta_bands(self, spyfile=None, metadata=None):
+        '''
+        Retrieves band number and wavelength information from metadata and
+        saves as a dictionary
+
+        Parameters:
+            metadata (`dict`): dictionary of the metadata
+            spyfile (`SpyFile` object or `numpy.ndarray`): The datacube being
+                accessed and/or manipulated.
+#
+#        Returns:
+#            meta_bands (`dict`): dictionary of the band information where the
+#                band name is the key and wavelength is the value.
+        '''
+        if spyfile is None:
+            spyfile = self.spyfile
+        if metadata is None:
+            metadata = spyfile.metadata
+        meta_bands = {}
+        if 'band names' not in metadata.keys():
+#            for key, val in enumerate(sorted(ast.literal_eval(
+#                    metadata['wavelength']))):
+#                meta_bands[key+1] = val
+
+            #aa = metadata['wavelength']
+#            print(metadata['wavelength'][1:-1])
+#            b = metadata['wavelength'][1:-1].split(', ')
+#            print(type(b))
+#            for key, val in enumerate(sorted(b)):
+#                meta_bands[key+1] = val
+            for key, val in enumerate(metadata['wavelength']):
+                meta_bands[key+1] = float(val)
+
+        else:
+            try:
+                band_names = list(ast.literal_eval(metadata['band names']))
+                wl_names = list(ast.literal_eval(metadata['wavelength']))
+            except ValueError as e:
+                band_names = list(ast.literal_eval(
+                        str(metadata['band names'])))
+                wl_names = list(ast.literal_eval(
+                        str(metadata['wavelength'])))
+            for idx in range(len(band_names)):
+                meta_bands[band_names[idx]] = wl_names[idx]
+        self.meta_bands = meta_bands
+#        return meta_bands
+
+    def get_band(self, target, spyfile=None):
+        '''
+        Returns band number of closest target wavelength and that wavelength
+
+        Parameters:
+            target (`int` or `float`): the target wavelength to retrive band
+                number for (required).
+            spyfile (`SpyFile` object): The datacube being accessed and/or
+                manipulated; if `None`, uses `hstools.spyfile` (default:
+                `None`).
+
+        Example:
+            [1] hstools.get_band(703, spyfile)
+            >>> (151, 702.52)
+        '''
+        if spyfile is None:
+            spyfile = self.spyfile
+        else:
+            self.load_spyfile(spyfile)
+
+        val_target = min(list(self.meta_bands.values()),
+                         key=lambda x: abs(x-target))
+        key_band = list(self.meta_bands.keys())[sorted(list(
+                self.meta_bands.values())).index(val_target)]
+        key_wavelength = sorted(list(self.meta_bands.values()))[key_band-1]
+        return key_band, key_wavelength
+
+    def get_bands(self, band_list, spyfile=None):
+        '''
+        Gets band numbers and wavelength information for all bands in
+        `band_list`.
+
+        Parameters:
+            band_list (`list`): the list of bands to get information for
+                (required).
+            spyfile (`SpyFile` object): The datacube being accessed and/or
+                manipulated; if `None`, uses `hstools.spyfile` (default:
+                `None`).
+        '''
+        msg = ('"band_list" must be a list.')
+        assert isinstance(band_list, list), msg
+
+        if spyfile is None:
+            spyfile = self.spyfile
+        else:
+            self.load_spyfile(spyfile)
+
+        bands = []
+        wls = []
+        for band in band_list:
+            band_i, wl_i = self._get_band(band)
+            bands.append(band_i)
+            wls.append(wl_i)
+        wls = np.mean(wls)
+        return bands, wls
+
+    def get_band_index(self, band_num):
+        '''
+        Subtracts 1 from `band_num` and returns the band index(es).
+
+        Parameters:
+            band_num (`int` or `list`): the target band number(s) to retrive
+            the band index for (required).
+        '''
+        if isinstance(band_num, list):
+            band_num = np.array(band_num)
+            band_idx = list(band_num - 1)
+        else:
+            band_idx = band_num - 1
+        return band_idx
+
+    def get_band_mean(self, band_list, spyfile=None):
+        '''
+        Gets the spectral mean of a datacube from a list of bands
+
+        Parameters:
+            band_list (`list`): the list of bands to calculate the spectral
+                mean for on the datacube (required).
+            spyfile (`SpyFile` object or `numpy.ndarray`): The datacube being
+                accessed and/or manipulated; if `None`, uses `hstools.spyfile`
+                (default: `None`).
+        '''
+        msg = ('"band_list" must be a list.')
+        assert isinstance(band_list, list), msg
+
+        if spyfile is None:
+            spyfile = self.spyfile
+            array = self.spyfile.load()
+        elif isinstance(spyfile, SpyFile.SpyFile):
+            self.load_spyfile(spyfile)
+            array = self.spyfile.load()
+        elif isinstance(spyfile, np.ndarray):
+            array = spyfile.copy()
+
+        band_idx = self.get_band_index(band_list)
+        array_mean = np.mean(array[:, :, band_idx], axis=2)
+        return array_mean
+
+    def get_band_num(self, band_idx):
+        '''
+        Adds 1 to `band_idx` and returns the band number(s).
+
+        Parameters:
+            band_idx (`int` or `list`): the target band index(es) to retrive
+                the band number for (required).
+        '''
+        if isinstance(band_idx, list):
+            band_idx = np.array(band_idx)
+            band_num = list(band_idx + 1)
+        else:
+            band_num = band_idx + 1
+        return band_num
+
+    def get_band_range(self, range_wl, index=True, spyfile=None):
+        '''
+        Retrieves the band index or band number for all bands within a
+        wavelength range.
+
+        Parameters:
+            range_wl (`list`): the minimum and maximum wavelength to consider;
+                values should be `int` or `float`.
+            index (bool): Indicates whether to return the band number (min=1)
+                or to return index number (min=0) (default: True)
+
+        Returns:
+            band_list (`list`): a list of all bands (either index or number
+                depending on how `index` is set) between a range in
+                wavelength values.
+        '''
+        msg = ('"range_wl" must be a `list` or `tuple`.')
+        assert isinstance(range_wl, list) or isinstance(range_wl, tuple), msg
+        msg = ('"range_wl" must have exactly two items.')
+        assert len(range_wl) == 2, msg
+
+        band_min, wl_min = self.get_band(range_wl[0])  # gets closest band
+        band_max, wl_max = self.get_band(range_wl[1])
+        if wl_min < range_wl[0]:  # ensures its actually within the range
+            band_min += 1
+        if wl_max > range_wl[1]:
+            band_max -= 1
+        if index is True:
+            band_min = self.get_band_index(band_min)
+            band_max = self.get_band_index(band_max)
+        band_list = [x for x in range(band_min, band_max+1)]
+        return band_list
+
+    def load_spyfile(self, spyfile):
+        '''
+        Loads a `SpyFile` (Spectral Python object) for data access and/or
+        manipulation by the `hstools` class.
+
+        Parameters:
+            spyfile (`SpyFile` object): The datacube being accessed and/or
+                manipulated.
+        '''
+        self.spyfile = spyfile
+        self._get_meta_bands(spyfile)
+
+
+
+class hsio(object):
     '''
     Class for reading and writing hyperspectral data files and accessing,
     interpreting, and modifying its assoicated metadata.
+
+    TODO: Create a temporary Spyfile using envi.create_imamge() and saving to a
+        temporary location. This can be used to hold intermediate SpyFiles
+        without actually saving them to disk.. (good idea?)
     '''
     def __init__(self, fname_in=None, name_long=None, name_plot=None,
                  name_short=None, str_plot='plot_', individual_plot=False,
@@ -45,6 +272,8 @@ class IO_tools(object):
 
         if self.fname_hdr_spec is not None:
             self.read_spec(self.fname_hdr_spec)
+
+        self.defaults = defaults
 
     def _append_hdr_fname(self, fname_hdr, key, value):
         '''
@@ -103,9 +332,19 @@ class IO_tools(object):
             metadata = spyfile.metadata
         meta_bands = {}
         if 'band names' not in metadata.keys():
-            for key, val in enumerate(sorted(ast.literal_eval(
-                    metadata['wavelength']))):
-                meta_bands[key+1] = val
+#            for key, val in enumerate(sorted(ast.literal_eval(
+#                    metadata['wavelength']))):
+#                meta_bands[key+1] = val
+
+            #aa = metadata['wavelength']
+#            print(metadata['wavelength'][1:-1])
+#            b = metadata['wavelength'][1:-1].split(', ')
+#            print(type(b))
+#            for key, val in enumerate(sorted(b)):
+#                meta_bands[key+1] = val
+            for key, val in enumerate(metadata['wavelength']):
+                meta_bands[key+1] = float(val)
+
         else:
             try:
                 band_names = list(ast.literal_eval(metadata['band names']))
@@ -257,7 +496,8 @@ class IO_tools(object):
                 a spectrum (`True`; default: `False`).
         '''
         if spec is False:
-            fname_hdr = self.fname_in + 'hdr'
+#            fname_hdr = self.fname_in + '.hdr'
+            fname_hdr = self.fname_hdr
             try:
                 self.img_sp = envi.open(fname_hdr)
             except envi.MissingEnviHeaderParameter as e:  # Resonon excludes
@@ -280,7 +520,9 @@ class IO_tools(object):
                 else:
                     print(err)
                 self.spec_sp = envi.open(fname_hdr_spec)
-        self._get_meta_bands(spec=spec)
+#        self._get_meta_bands(spec=spec)
+        tools = hstools(self.img_sp)
+        self.meta_bands = tools.meta_bands
 
     def _read_envi_gdal(self, fname_in=None):
         '''
@@ -365,112 +607,6 @@ class IO_tools(object):
             return ''
         return str('-' + s)
 
-
-
-    def _get_band(self, target):
-        '''
-        Returns band number of closest target wavelength
-        band = self._get_band(703) returns 151 (i.e., band 151)
-
-        Parameters:
-            target (`int` or `float`): the target wavelength to retrive band
-                number for (required).
-        '''
-        val_target = min(list(self.meta_bands.values()),
-                         key=lambda x: abs(x-target))
-        key_band = list(self.meta_bands.keys())[sorted(list(
-                self.meta_bands.values())).index(val_target)]
-        key_wavelength = sorted(list(self.meta_bands.values()))[key_band-1]
-        return key_band, key_wavelength
-
-    def _get_band_index(self, band_num):
-        '''
-        Subtracts 1 from each number in band list and returns list of band
-        indexes
-        '''
-        if isinstance(band_num, list):
-            band_num = np.array(band_num)
-            band_idx = list(band_num - 1)
-        else:
-            band_idx = band_num - 1
-        return band_idx
-
-    def _get_band_info_consolidate(self, b1, b2):
-        '''
-        Gets band number and wavelength information
-        '''
-        if isinstance(b1, list):
-            band1 = []
-            wl1 = []
-            for band in b1:
-                band_i, wl_i = self._get_band(band)
-                band1.append(band_i)
-                wl1.append(wl_i)
-            wl1 = np.mean(wl1)
-        else:
-            band1, wl1 = self._get_band(b1)
-        if isinstance(b2, list):
-            band2 = []
-            wl2 = []
-            for band in b2:
-                band_i, wl_i = self._get_band(band)
-                band2.append(band_i)
-                wl2.append(wl_i)
-            wl2 = np.mean(wl2)
-        else:
-            band2, wl2 = self._get_band(b2)
-        return band1, band2, wl1, wl2
-
-    def _get_band_mean(self, img_array, band_num):
-        '''
-        Gets the mean value from a list of bands
-
-        Parameters:
-            img_array (numpy array): image to evaluate
-            band_num (int, list): band number(s) to determine mean value for
-        '''
-        band_idx = self._get_band_index(band_num)
-        if isinstance(band_idx, list):
-            array_band = np.mean(img_array[:, :, band_idx], axis=2)
-        else:
-            array_band = img_array[:, :, band_idx]
-        return array_band
-
-    def _get_band_num(self, band_idx):
-        '''
-        Adds 1 to each number in band list and returns list of band
-        numbers
-        '''
-        if isinstance(band_idx, list):
-            band_idx = np.array(band_idx)
-            band_num = list(band_idx + 1)
-        else:
-            band_num = band_idx + 1
-        return band_num
-
-    def _get_band_range(self, range_wl, index=True):
-        '''
-        Gets all band indexes with the given minimum and maximum wavelengths
-
-        Parameters:
-            range_wl (list): the minimum and maximum wavelength to consider;
-                values should be `int` or `float`.
-            index (bool): Indicates whether to return the band number (min=1)
-                or to return index number (min=0) (default: True)
-        '''
-        band_min, wl_min = self._get_band(range_wl[0])
-        band_max, wl_max = self._get_band(range_wl[1])
-        if wl_min < range_wl[0]:
-            band_min += 1
-        if wl_max > range_wl[1]:
-            band_max -= 1
-        if index is True:
-            band_min = self._get_band_index(band_min)
-            band_max = self._get_band_index(band_max)
-        band_list = [x for x in range(band_min, band_max+1)]
-        return band_list
-
-
     def read_cube(self, fname_hdr=None, name_long=None, name_plot=None,
                   name_short=None, individual_plot=False, overwrite=True):
         '''
@@ -530,6 +666,47 @@ class IO_tools(object):
         self.fname_hdr_spec = fname_hdr_spec
         self.base_dir_spec = os.path.dirname(fname_hdr_spec)
         self._read_envi(spec=True)
+
+    def set_io_defaults(self, dtype=False, force=None, ext=False,
+                        interleave=False, byteorder=False):
+        '''
+        Sets any of the ENVI file writing parameters to `hsio`; if any
+        parameter is left unchanged from its default, it will remain as-is
+        (it will not be set).
+
+        Parameters:
+            dtype (`numpy.dtype` or `str`): The data type with which to store
+                the image. For example, to store the image in 16-bit unsigned
+                integer format, the argument could be any of numpy.uint16,
+                'u2', 'uint16', or 'H' (default=`False`).
+            force (`bool`): If `hdr_file` or its associated image file exist,
+                `force=True` will overwrite the files; otherwise, an exception
+                will be raised if either file exists (default=`None`).
+            ext (`str`): The extension to use for saving the image file; if not
+                specified, a default extension is determined based on the
+                `interleave`. For example, if `interleave`='bip', then `ext` is
+                set to 'bip' as well. If `ext` is an empty string, the image
+                file will have the same name as the .hdr, but without the
+                '.hdr' extension (default: `False`).
+            interleave (`str`): The band interleave format to use for writing
+                the file; `interleave` should be one of 'bil', 'bip', or 'bsq'
+                (default=`False`).
+            byteorder (`int` or `str`): Specifies the byte order (endian-ness)
+                of the data as written to disk. For little endian, this value
+                should be either 0 or 'little'. For big endian, it should be
+                either 1 or 'big'. If not specified, native byte order will be
+                used (default=`False`).
+        '''
+        if dtype is not False:
+            self.defaults.dtype = dtype
+        if force is not None:
+            self.defaults.force = force
+        if ext is not False:
+            self.defaults.ext = ext
+        if interleave is not False:
+            self.defaults.interleave = interleave
+        if byteorder is not False:
+            self.defaults.byteorder = byteorder
 
     def show_img(self, spyfile=None, band_r=120, band_g=76, band_b=32,
                  inline=True):
@@ -765,6 +942,41 @@ class IO_tools(object):
         tif_out = None
         self.show_img(array, band_r=band_r, band_g=band_g,
                       band_b=band_b)
+
+
+class defaults:
+    '''
+    Class containing all defaults for writing an ENVI datacube to file.
+
+    Parameters:
+        dtype (`numpy.dtype` or `str`): The data type with which to store
+            the image. For example, to store the image in 16-bit unsigned
+            integer format, the argument could be any of numpy.uint16,
+            'u2', 'uint16', or 'H' (default=np.float32).
+        force (`bool`): If `hdr_file` or its associated image file exist,
+            `force=True` will overwrite the files; otherwise, an exception
+            will be raised if either file exists (default=False).
+        ext (`str`): The extension to use for saving the image file; if not
+            specified, a default extension is determined based on the
+            `interleave`. For example, if `interleave`='bip', then `ext` is
+            set to 'bip' as well. If `ext` is an empty string, the image
+            file will have the same name as the .hdr, but without the
+            '.hdr' extension (default: None).
+        interleave (`str`): The band interleave format to use for writing
+            the file; `interleave` should be one of 'bil', 'bip', or 'bsq'
+            (default='bip').
+        byteorder (`int` or `str`): Specifies the byte order (endian-ness)
+            of the data as written to disk. For little endian, this value
+            should be either 0 or 'little'. For big endian, it should be
+            either 1 or 'big'. If not specified, native byte order will be
+            used (default=None).
+    '''
+    dtype = np.float32
+    force = False
+    ext = None
+    interleave = 'bip'
+    byteorder = None
+
 
 
 #class IO_tools2(object):

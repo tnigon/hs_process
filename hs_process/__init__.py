@@ -32,16 +32,21 @@ __license__ = (
         'SOFTWARE.')
 __email__ = 'nigo0024@umn.edu'
 
-
-from .helper import IO_tools
-from .segment import Segment
-from .spatial_mod import Spatial_mod
-from .spec_mod import Spec_mod
+from .batch import batch
+from .hsio import defaults
+from .hsio import hstools
+from .hsio import hsio
+from .segment import segment
+from .spatial_mod import spatial_mod
+from .spec_mod import spec_mod
 
 name = 'hs_process'
 __version__ = '0.0.1'
 
-__all__ = ['IO_tools',
-           'Spatial_mod',
-           'Segment',
-           'Spec_mod']
+__all__ = ['batch',
+           'defaults',
+           'hstools',
+           'hsio',
+           'segment',
+           'spatial_mod',
+           'spec_mod']
