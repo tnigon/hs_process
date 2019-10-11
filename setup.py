@@ -12,6 +12,7 @@ def readme():
 
 requirements = [
 #    'ast',
+    'geopandas',
 #    'itertools',
 #    'json',
 #    'matplotlib',

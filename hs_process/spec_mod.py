@@ -6,7 +6,7 @@ import os
 import spectral.io.envi as envi
 import spectral.io.spyfile as SpyFile
 
-from hs_process import hstools
+from hs_process.utilities import hstools
 
 
 class spec_mod(object):
@@ -139,8 +139,8 @@ class spec_mod(object):
             self.load_spyfile(spyfile)
             array = self.spyfile.load()
         elif isinstance(spyfile, np.ndarray):
-            spyfile = self.spyfile
             array = spyfile.copy()
+            spyfile = self.spyfile
 
         if isinstance(wl_bands[0], list):
             spec_clip_groups = [self.tools.get_band_range(
@@ -171,6 +171,7 @@ class spec_mod(object):
         wavelength_str = '{' + ', '.join(str(wl) for wl in wavelength) + '}'
         metadata['band names'] = band_str
         metadata['wavelength'] = wavelength_str
+        self.tools.spyfile.metadata = metadata
 
         return array_clip, metadata
 
@@ -194,8 +195,8 @@ class spec_mod(object):
             self.load_spyfile(spyfile)
             array = self.spyfile.load()
         elif isinstance(spyfile, np.ndarray):
-            spyfile = self.spyfile
             array = spyfile.copy()
+            spyfile = self.spyfile
 
         array_smooth = self._smooth_image(array, window_size, order)
 
@@ -206,5 +207,6 @@ class spec_mod(object):
                     "]".format(window_size, order))
         metadata['history'] += hist_str
         metadata['bands'] = self.spyfile.nbands
+        self.tools.spyfile.metadata = metadata
 
         return array_smooth, metadata
