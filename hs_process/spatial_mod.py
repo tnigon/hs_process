@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+import geopandas as gpd
 import json
 import numpy as np
 import os
+from shapely.geometry import Polygon
 import spectral.io.spyfile as SpyFile
 
 from hs_process.utilities import defaults
@@ -13,14 +15,14 @@ class spatial_mod(object):
     Class for manipulating data within the spatial domain (e.g., cropping by
     geographical boundary)
     '''
-    def __init__(self, spyfile, geopandas_df=None):
+    def __init__(self, spyfile, gdf=None):
         '''
-        spyfile
-        geopandas_df (`geopandas.DataFrame`): Polygon data that includes the
-            plot_id and its geometry.
+        spyfile (`SpyFile` object): The Spectral Python datacube to manipulate.
+        gdf (`geopandas.DataFrame`): Polygon data that includes the plot_id and
+            its geometry.
         '''
         self.spyfile = spyfile
-        self.geopandas_df = geopandas_df
+        self.gdf = gdf
         self.tools = hstools(spyfile)
 
 #        self.pix_e_ul = None  # these should be passed (can't use defaults)
@@ -63,6 +65,109 @@ class spatial_mod(object):
 #
 #        run_init()
         self.load_spyfile(spyfile)
+
+
+    def _create_spyfile_extent_gdf(self, spyfile, metadata=None, epsg=32615):
+        '''
+        '''
+        if metadata is None:
+            metadata = spyfile.metadata
+        crs = {'init': 'epsg:{0}'.format(epsg)}
+
+        e_m = float(metadata['map info'][5])
+        n_m = float(metadata['map info'][6])
+        size_x = spyfile.shape[1]
+        size_y = spyfile.shape[0]
+        loc_e_m = float(metadata['map info'][3])
+        loc_n_m = float(metadata['map info'][4])
+
+        e_nw = loc_e_m
+        e_ne = loc_e_m + (size_x * e_m)
+        e_se = loc_e_m + (size_x * e_m)
+        e_sw = loc_e_m
+        n_nw = loc_n_m
+        n_ne = loc_n_m
+        n_se = loc_n_m + (size_y * n_m)
+        n_sw = loc_n_m + (size_y * n_m)
+        coords_e = [e_nw, e_ne, e_se, e_sw, e_nw]
+        coords_n = [n_nw, n_ne, n_se, n_sw, n_nw]
+
+        polygon_geom = Polygon(zip(coords_e, coords_n))
+        gdf_sp = gpd.GeoDataFrame(index=[0], crs=crs, geometry=[polygon_geom])
+        return gdf_sp
+
+    def _overlay_gdf(self, spyfile, gdf, epsg_sp=32615, how='intersection'):
+        '''
+        Performs a geopandas overlay between the input geodatafram (`gdf`) and
+        the extent of `spyfile`.
+        '''
+        gdf_sp = self._create_spyfile_extent_gdf(spyfile, epsg=epsg_sp)
+        gdf_filter = gpd.overlay(gdf, gdf_sp, how=how)
+        return gdf_filter
+
+    def _find_plots(self, spyfile, gdf, plot_id_ref, pix_e_ul, pix_n_ul):
+        '''
+        Calculates the number of x plots and y plots in image, determines
+        the plot ID number, and calculates and records start/end pixels for
+        each plot
+        '''
+        df_plots = pd.DataFrame(columns=['plot_id', 'pix_e_ul', 'pix_n_ul'])
+        gdf_filter = self._overlay_gdf(spyfile, gdf)
+        msg = ('Please be sure the reference plot (`plot_id_ref`): {0} is '
+               'within the spatial extent of the datacube (`spyfile`):  {1}\n'
+               ''.format(plot_id_ref, spyfile.filename))
+        assert plot_id_ref in gdf_filter['plot'].tolist(), msg
+
+        for idx, row in gdf_filter.iterrows():
+            plot = row['plot']
+            bounds = row['geometry'].bounds
+            e_nw_m = bounds[0]
+            e_se_m = bounds[2]
+            n_nw_m = bounds[3]
+            n_se_m = bounds[1]
+
+
+            a = row['geometry']
+
+        df_plots = self.df_plots.copy()
+        row_plot = -1
+        plot_n_top = self.cols_plots * self.row_plots_top
+#            df_plots, row_plot = _record_pixels(0, plot_n_top, row_plot,
+#                                                     df_plots)
+        for plot_n in range(0, plot_n_top):  # top plots
+            col_plot = (plot_n) % 5
+            if col_plot == 0:
+                row_plot += 1
+            plot_id = plot_id_ul - (col_plot * 100)  # E/W
+            plot_id = plot_id - row_plot  # N/S
+            col_pix = ((col_plot * self.plot_x_pix) + self.ul_x_pix +
+                       self.buf_x_pix)
+            row_pix = ((row_plot * self.plot_y_pix) + self.ul_y_pix +
+                       self.buf_y_pix)
+            df_temp = pd.DataFrame(data=[[plot_id, col_plot, row_plot,
+                                          col_pix, row_pix]],
+                                   columns=df_plots.columns)
+            df_plots = df_plots.append(df_temp, ignore_index=True)
+
+        plot_n_bot = self.cols_plots * self.row_plots_bot
+#            df_plots, row_plot = _record_pixels(plot_n_top,
+#                                                     plot_n_top + plot_n_bot,
+#                                                     row_plot, df_plots)
+        for plot_n in range(plot_n_top, plot_n_top + plot_n_bot):
+            col_plot = (plot_n) % 5
+            if col_plot == 0:
+                row_plot += 1
+            plot_id = plot_id_ul - (col_plot * 100)  # E/W
+            plot_id = plot_id - row_plot  # N/S
+            col_pix = ((col_plot * self.plot_x_pix) + self.ul_x_pix +
+                       self.buf_x_pix)
+            row_pix = ((row_plot * self.plot_y_pix) + self.ul_y_pix +
+                       self.buf_y_pix + self.pix_skip)
+            df_temp = pd.DataFrame(data=[[plot_id, col_plot, row_plot,
+                                          col_pix, row_pix]],
+                                   columns=df_plots.columns)
+            df_plots = df_plots.append(df_temp, ignore_index=True)
+        self.df_plots = df_plots
 
     def _check_alley(self, row_dir_e_w=True):
         '''
@@ -164,12 +269,28 @@ class spatial_mod(object):
             df_shp = df_shp.append(df_temp, ignore_index=True)
             self.df_shp = df_shp
 
-    def crop_many(self, base_dir_crop=None):
+    def crop_many(self, pix_e_ul, pix_n_ul, crop_e_pix=None,
+                  crop_n_pix=None, crop_e_m=None, crop_n_m=None,
+                  buffer_x_pix=None, buffer_y_pix=None,
+                  buffer_x_m=None, buffer_y_m=None,
+                  spyfile=None, gdf=None):
         '''
-        Iterates through all plots, crops each, and saves to file
+        Crops many plots from a single image by comparing the image to a
+        polygon file that contains plot information and geometry of plot
+        boundaries.
+
+        Stores each cropped array and its metadata in a
         '''
-        array_crop, metadata = self.crop_single(pix_e_ul, pix_n_ul, plot_x_pix=90,
-                    plot_y_pix=120, spyfile=None)
+        df_croped = pd.DataFrame(colummns=[['array', 'metadata']])
+
+
+        # store all the necessary cropping information in df_plots (e.g., pix_e_ul, pix_n_ul, etc.)
+        for idx, row in df_plots.iterrows():
+            array_crop, metadata = self.crop_single(
+                    pix_e_ul, pix_n_ul, plot_x_pix=90, plot_y_pix=120,
+                    spyfile=None)
+        df_cropped_temp = pd.DataFrame(colummns=[['array', 'metadata']],
+                                       data=[[array_crop, metadata]])
 
 
         if base_dir_crop is None:
@@ -227,7 +348,7 @@ class spatial_mod(object):
                     buffer_x_m=None, buffer_y_m=None,
                     spyfile=None):
         '''
-        Crops and saves an image
+        Crops a single plot from an image.
 
         Parameters:
             pix_e_ul (`int`): upper left column (easting)to begin cropping
