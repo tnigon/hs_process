@@ -3,6 +3,7 @@ import geopandas as gpd
 import json
 import numpy as np
 import os
+import pandas as pd
 from shapely.geometry import Polygon
 import spectral.io.spyfile as SpyFile
 
@@ -38,34 +39,33 @@ class spatial_mod(object):
         self.buffer_y_m = None
 
         self.geotransform = None
-        self.pix_skip = int(6.132 / -0.04)  # alley - skip 6.132 m
+#        self.alley_size_pix = int(6.132 / -0.04)  # alley - skip 6.132 m
         self.projection = None
         self.plot_cols = None
         self.plot_rows = None
         self.row_plots_top = 0
         self.row_plots_bot = 0
 
-        self.size_x_m = None
-        self.size_y_m = None
-        self.ul_x_m = None
-        self.ul_y_m = None
+        self.spy_ps_e = None
+        self.spy_ps_n = None
+        self.spy_ul_e_srs = None
+        self.spy_ul_n_srs = None
 
         self.defaults = defaults
 #        def run_init():
 #            try:
-#                self.size_x_m = float(self.spyfile.metadata['map info'][5])
-#                self.size_y_m = float(self.spyfile.metadata['map info'][6])
-#                self.ul_x_m = float(self.spyfile.metadata['map info'][4])
-#                self.ul_y_m = float(self.spyfile.metadata['map info'][3])
+#                self.spy_ps_e = float(self.spyfile.metadata['map info'][5])
+#                self.spy_ps_n = float(self.spyfile.metadata['map info'][6])
+#                self.spy_ul_e_srs = float(self.spyfile.metadata['map info'][4])
+#                self.spy_ul_n_srs = float(self.spyfile.metadata['map info'][3])
 #            except KeyError as e:
-#                self.size_x_m = None
-#                self.size_y_m = None
-#                self.ul_x_m = None
-#                self.ul_y_m = None
+#                self.spy_ps_e = None
+#                self.spy_ps_n = None
+#                self.spy_ul_e_srs = None
+#                self.spy_ul_n_srs = None
 #
 #        run_init()
         self.load_spyfile(spyfile)
-
 
     def _create_spyfile_extent_gdf(self, spyfile, metadata=None, epsg=32615):
         '''
@@ -74,21 +74,21 @@ class spatial_mod(object):
             metadata = spyfile.metadata
         crs = {'init': 'epsg:{0}'.format(epsg)}
 
-        e_m = float(metadata['map info'][5])
+        e_m = float(metadata['map info'][5])  # pixel size
         n_m = float(metadata['map info'][6])
-        size_x = spyfile.shape[1]
+        size_x = spyfile.shape[1]  # number of pixels
         size_y = spyfile.shape[0]
-        loc_e_m = float(metadata['map info'][3])
-        loc_n_m = float(metadata['map info'][4])
+        srs_e_m = float(metadata['map info'][3])  # UTM coordinate
+        srs_n_m = float(metadata['map info'][4])
 
-        e_nw = loc_e_m
-        e_ne = loc_e_m + (size_x * e_m)
-        e_se = loc_e_m + (size_x * e_m)
-        e_sw = loc_e_m
-        n_nw = loc_n_m
-        n_ne = loc_n_m
-        n_se = loc_n_m + (size_y * n_m)
-        n_sw = loc_n_m + (size_y * n_m)
+        e_nw = srs_e_m
+        e_ne = srs_e_m + (size_x * e_m)
+        e_se = srs_e_m + (size_x * e_m)
+        e_sw = srs_e_m
+        n_nw = srs_n_m
+        n_ne = srs_n_m
+        n_se = srs_n_m + (size_y * n_m)
+        n_sw = srs_n_m + (size_y * n_m)
         coords_e = [e_nw, e_ne, e_se, e_sw, e_nw]
         coords_n = [n_nw, n_ne, n_se, n_sw, n_nw]
 
@@ -105,105 +105,191 @@ class spatial_mod(object):
         gdf_filter = gpd.overlay(gdf, gdf_sp, how=how)
         return gdf_filter
 
-    def _find_plots(self, spyfile, gdf, plot_id_ref, pix_e_ul, pix_n_ul):
+    def _find_plots_shp(self, spyfile, gdf, plot_id_ref, pix_e_ul, pix_n_ul,
+                        metadata=None):
         '''
         Calculates the number of x plots and y plots in image, determines
         the plot ID number, and calculates and records start/end pixels for
         each plot
         '''
-        df_plots = pd.DataFrame(columns=['plot_id', 'pix_e_ul', 'pix_n_ul'])
+        columns=['plot_id', 'pix_e_ul', 'pix_n_ul']
+        df_plots = pd.DataFrame(columns=columns)
         gdf_filter = self._overlay_gdf(spyfile, gdf)
         msg = ('Please be sure the reference plot (`plot_id_ref`): {0} is '
                'within the spatial extent of the datacube (`spyfile`):  {1}\n'
                ''.format(plot_id_ref, spyfile.filename))
         assert plot_id_ref in gdf_filter['plot'].tolist(), msg
 
+        if metadata is None:
+            metadata = spyfile.metadata
+#        spy_ps_e = float(metadata['map info'][5])  # pixel size
+#        spy_ps_n = float(metadata['map info'][6])
+        spy_srs_e_m = float(metadata['map info'][3])  # UTM coordinate
+        spy_srs_n_m = float(metadata['map info'][4])
+
         for idx, row in gdf_filter.iterrows():
             plot = row['plot']
             bounds = row['geometry'].bounds
-            e_nw_m = bounds[0]
-            e_se_m = bounds[2]
-            n_nw_m = bounds[3]
-            n_se_m = bounds[1]
+            plot_srs_e_m = bounds[0]
+            plot_srs_n_m = bounds[3]
+            # plot offset from datacube
+            offset_e = int((plot_srs_e_m - spy_srs_e_m) / self.spy_ps_e)
+            offset_n = int((plot_srs_n_m - spy_srs_n_m) / self.spy_ps_n)
+            data = [plot, offset_e, offset_n]
+            df_plots_temp = pd.DataFrame(columns=columns, data=[data])
+            df_plots = df_plots.append(df_plots_temp, ignore_index=True)
+        return df_plots
 
+    def envi_crop(self, plot_id_ul, ul_x_pix=100, ul_y_pix=100,
+                  plot_size_e_m=9.170, plot_size_n_m=3.049,
+                  alley_size_n_m=6.132,
+                  buf_x_m=1.0, buf_y_m=0.5, n_plots_x=5, n_plots_y=None,
+                  spyfile=None):
+        '''
+        n_plots_x: number of plots in a row in east/west direction
+        n_plots_y: number of plots in a row in north/south direction
+        plot_size_e_m: dimension of each plot in the E/W direction (in map units)
+        plot_size_n_m: dimension of each plot in the N/S direction (in map units)
+        '''
+        if spyfile is None:
+            spyfile = self.spyfile
+            metadata = spyfile.metadata
+        elif isinstance(spyfile, SpyFile.SpyFile):
+            self.load_spyfile(spyfile)
+            metadata = spyfile.metadata
 
-            a = row['geometry']
+        plot_size_e_pix = int(plot_size_e_m / self.spy_ps_e)
+        plot_size_n_pix = int(plot_size_n_m / self.spy_ps_n)
+        buf_x_pix = int(buf_x_m / self.spy_ps_e)
+        buf_y_pix = int(buf_y_m / self.spy_ps_n)
 
-        df_plots = self.df_plots.copy()
+#        self.cols_pix = ds_img.RasterXSize
+#        self.rows_pix = ds_img.RasterYSize
+#        self.bands = ds_img.RasterCount
+#        self.geotransform = ds_img.GetGeoTransform()
+#        self.spy_ul_e_srs = self.geotransform[0]
+#        self.spy_ul_n_srs = self.geotransform[3]
+#        self.spy_ps_e = self.geotransform[1]
+#        self.spy_ps_n = self.geotransform[5]
+#        self.plot_size_e_pix = int(self.plot_size_e_m / self.spy_ps_e)
+#        self.plot_size_n_pix = int(self.plot_size_n_m / self.spy_ps_n)
+#        self.buf_x_pix = int(self.buf_x_m / self.spy_ps_e)
+#        self.buf_y_pix = int(self.buf_y_m / self.spy_ps_n)
+#        n_plots_x = 5  # should always be 5
+        if n_plots_y is None:
+            n_plots_y = int(abs((spyfile.nrows - ul_y_pix) /
+                                      plot_size_n_pix))
+        alley_size_pix = int(alley_size_n_m / self.spy_ps_n)  # alley - skip 6.132 m
+
+        self.df_shp = pd.DataFrame(columns=['plot_id', 'ul_x_utm', 'ul_y_utm'])
+
+        row_plots_top, row_plots_bot = self._check_alley(
+                plot_id_ul, n_plots_y, rows_pix, ul_y_pix,
+                plot_size_n_pix, alley_size_pix)
+        df_plots = self._calc_size(n_plots_x, row_plots_top, row_plots_bot,
+                                   plot_size_e_pix, plot_size_n_pix, ul_x_pix,
+                                   ul_y_pix)
+        return df_plots
+
+    def _record_pixels(plot_n_start, plot_n_end, row_plot, df_plots, plot_size_e_pix,
+                       plot_size_n_pix, ul_x_pix, ul_y_pix):
+        '''
+        '''
+        for plot_n in range(plot_n_start, plot_n_end):  # top plots
+            col_plot = (plot_n) % 5
+            if col_plot == 0:
+                row_plot += 1
+            plot_id = plot_id_ul - (col_plot * 100)  # E/W
+            plot_id = plot_id - row_plot  # N/S
+            col_pix = (col_plot * plot_size_e_pix) + ul_x_pix
+            row_pix = (row_plot * plot_size_n_pix) + ul_y_pix
+            df_temp = pd.DataFrame(data=[[plot_id, col_plot, row_plot,
+                                          col_pix, row_pix]],
+                                   columns=df_plots.columns)
+            df_plots = df_plots.append(df_temp, ignore_index=True)
+            return df_plots, row_plot
+
+    def _calc_size(n_plots_x, row_plots_top, row_plots_bot, plot_size_e_pix, plot_size_n_pix, ul_x_pix, ul_y_pix):
+        '''
+        Calculates the number of x plots and y plots in image, determines
+        the plot ID number, and calculates and records start/end pixels for
+        each plot
+        '''
+        df_plots = pd.DataFrame(columns=['plot_id', 'col_plot',
+                                      'row_plot', 'col_pix',
+                                      'row_pix'])
         row_plot = -1
-        plot_n_top = self.cols_plots * self.row_plots_top
-#            df_plots, row_plot = _record_pixels(0, plot_n_top, row_plot,
-#                                                     df_plots)
-        for plot_n in range(0, plot_n_top):  # top plots
-            col_plot = (plot_n) % 5
-            if col_plot == 0:
-                row_plot += 1
-            plot_id = plot_id_ul - (col_plot * 100)  # E/W
-            plot_id = plot_id - row_plot  # N/S
-            col_pix = ((col_plot * self.plot_x_pix) + self.ul_x_pix +
-                       self.buf_x_pix)
-            row_pix = ((row_plot * self.plot_y_pix) + self.ul_y_pix +
-                       self.buf_y_pix)
-            df_temp = pd.DataFrame(data=[[plot_id, col_plot, row_plot,
-                                          col_pix, row_pix]],
-                                   columns=df_plots.columns)
-            df_plots = df_plots.append(df_temp, ignore_index=True)
+        plot_n_start = 0
+        plot_n_end = n_plots_x * row_plots_top
 
-        plot_n_bot = self.cols_plots * self.row_plots_bot
-#            df_plots, row_plot = _record_pixels(plot_n_top,
-#                                                     plot_n_top + plot_n_bot,
-#                                                     row_plot, df_plots)
-        for plot_n in range(plot_n_top, plot_n_top + plot_n_bot):
-            col_plot = (plot_n) % 5
-            if col_plot == 0:
-                row_plot += 1
-            plot_id = plot_id_ul - (col_plot * 100)  # E/W
-            plot_id = plot_id - row_plot  # N/S
-            col_pix = ((col_plot * self.plot_x_pix) + self.ul_x_pix +
-                       self.buf_x_pix)
-            row_pix = ((row_plot * self.plot_y_pix) + self.ul_y_pix +
-                       self.buf_y_pix + self.pix_skip)
-            df_temp = pd.DataFrame(data=[[plot_id, col_plot, row_plot,
-                                          col_pix, row_pix]],
-                                   columns=df_plots.columns)
-            df_plots = df_plots.append(df_temp, ignore_index=True)
-        self.df_plots = df_plots
+        df_plots, row_plot = self._record_pixels(
+                plot_n_start, plot_n_end, row_plot, df_plots, plot_size_e_pix,
+                plot_size_n_pix, ul_x_pix, ul_y_pix)
 
-    def _check_alley(self, row_dir_e_w=True):
+        if row_plots_bot > 0:  # do the same for bottom, adjusting start/end
+            plot_n_start = plot_n_end
+            plot_n_bot = n_plots_x * row_plots_bot
+            plot_n_end = plot_n_end + plot_n_bot
+            df_plots, row_plot = self._record_pixels(
+                    plot_n_start, plot_n_end, row_plot, df_plots, plot_size_e_pix,
+                    plot_size_n_pix, ul_x_pix, ul_y_pix)
+
+        return df_plots
+
+    def _find_plots_hard(self, n_plots_x=5, n_plots_y=9, plot_size_e_m=7.6,
+                         plot_size_n_m=3.048):
+        '''
+        '''
+#        columns=['plot_id', 'pix_e_ul', 'pix_n_ul']
+#        df_plots = pd.DataFrame(columns=columns)
+#
+#        spy_ps_e = float(metadata['map info'][5])  # pixel size
+#        spy_ps_n = float(metadata['map info'][6])
+#        plot_size_e_m = 7.6  # meters
+#        plot_size_n_m = 3.048  # meters
+#        plot_size_e_pix = int(plot_size_e_m / self.spy_ps_e)
+#        plot_size_n_pix = int(plot_size_n_m / self.spy_ps_n)
+
+    def _check_alley(plot_id_ul, n_plots_y, rows_pix,
+                     ul_y_pix, plot_size_n_pix, alley_size_pix):
         '''
         Calculates whether there is an alleyway in the image (based on plot
-        configuration), then adjusts plot_rows so it is correct after
+        configuration), then adjusts n_plots_y so it is correct after
         considering the alley
         '''
-        if row_dir_e_w is True:
-            crop_pix = self.crop_e_pix
-        plot_id_tens = abs(self.plot_id_ul) % 100  # the "tens" place of the plot_id
-        self.row_plots_top = plot_id_tens % 9  # remainder; plots left above in same block
-        if self.row_plots_top == 0:
-            self.row_plots_top = self.plot_rows  # remainder is 0, not 9..
+        plot_id_tens = abs(plot_id_ul) % 100
+        row_plots_top = plot_id_tens % n_plots_y
+        if row_plots_top == 0:
+            row_plots_top = n_plots_y  # remainder is 0, not 9..
 
-        if self.row_plots_top < self.plot_rows:
+        if row_plots_top < n_plots_y:
             # get pix left over
-            pix_remain = (self.img_sp.nrows - abs(self.ul_y_pix) -
-                          (self.row_plots_top * abs(crop_pix)))
+            pix_remain = (rows_pix - abs(ul_y_pix) -
+                          (row_plots_top * abs(plot_size_n_pix)))
         else:
-            return
+            row_plots_bot = 0
+            return row_plots_top, row_plots_bot
 
-        if pix_remain >= abs(self.pix_skip + crop_pix):
+        if pix_remain >= abs(alley_size_pix + plot_size_n_pix):
             # have room for more plots (must still remove 2 rows of plots)
             # calculate rows remain after skip
-            self.row_plots_bot = int(abs((pix_remain + self.pix_skip) /
-                                     crop_pix))
-            self.plot_rows = self.row_plots_top + self.row_plots_bot
-        elif pix_remain >= abs(crop_pix) * 2:
-            # remove 2 rows of plots
-            self.plot_rows -= 2
-        elif pix_remain >= abs(crop_pix):
-            # remove 1 row of plots
-            self.plot_rows -= 1
+            row_plots_bot = int(abs((pix_remain + alley_size_pix) /
+                                     plot_size_n_pix))
+            n_plots_y = row_plots_top + row_plots_bot
+        # these are for if alley_size_pix is large but plot_size_n_pix is relatively small..
         else:
-            # works out perfect.. don't have to change anything
-            pass
+            n_plots_y = row_plots_top
+#        elif pix_remain >= abs(plot_size_n_pix) * 2:
+#            # remove 2 rows of plots
+#            n_plots_y -= 2
+#        elif pix_remain >= abs(plot_size_n_pix):
+#            # remove 1 row of plots
+#            n_plots_y -= 1
+#        else:
+#            # works out perfect.. don't have to change anything
+#            pass
+        return row_plots_top, row_plots_bot
+
 
     def _get_corners(self, pix_ul, crop_pix, buffer_pix):
         '''
@@ -287,7 +373,7 @@ class spatial_mod(object):
         # store all the necessary cropping information in df_plots (e.g., pix_e_ul, pix_n_ul, etc.)
         for idx, row in df_plots.iterrows():
             array_crop, metadata = self.crop_single(
-                    pix_e_ul, pix_n_ul, plot_x_pix=90, plot_y_pix=120,
+                    pix_e_ul, pix_n_ul, plot_size_e_pix=90, plot_size_n_pix=120,
                     spyfile=None)
         df_cropped_temp = pd.DataFrame(colummns=[['array', 'metadata']],
                                        data=[[array_crop, metadata]])
@@ -307,13 +393,13 @@ class spatial_mod(object):
 #        row_pix = abs(df_plots[df_plots['plot_id'] == 2025]['row_pix'].item())
             array_img_crop = self.img_ds.ReadAsArray(
                     xoff=abs(col_pix), yoff=abs(row_pix),
-                    xsize=abs(self.plot_x_pix - (self.buf_x_pix * 2)),
-                    ysize=abs(self.plot_y_pix - (self.buf_y_pix * 2)))
+                    xsize=abs(self.plot_size_e_pix - (self.buf_x_pix * 2)),
+                    ysize=abs(self.plot_size_n_pix - (self.buf_y_pix * 2)))
 
 
             array_img_crop = self.img_sp.read_subregion(
-                    (abs(row_pix), abs(row_pix) + abs(self.plot_y_pix - (self.buf_y_pix * 2))),
-                    (abs(col_pix), abs(col_pix) + abs(self.plot_x_pix - (self.buf_x_pix * 2))))
+                    (abs(row_pix), abs(row_pix) + abs(self.plot_size_n_pix - (self.buf_y_pix * 2))),
+                    (abs(col_pix), abs(col_pix) + abs(self.plot_size_e_pix - (self.buf_x_pix * 2))))
             base_name = os.path.basename(self.fname_in)
             base_name_short = base_name[:base_name.find('gige_') + 7]  # limit of 2 digits in image number (i.e., max of 99)
             if base_name_short[-1] == '_' or base_name_short[-1] == '-':
@@ -333,10 +419,10 @@ class spatial_mod(object):
                             ['ul_y_utm'].item() - self.buf_y_m)
             else:
                 ul_x_utm, ul_y_utm = self._get_UTM(col_pix, row_pix, utm_x,
-                                                   utm_y, size_x=self.size_x_m,
-                                                   size_y=self.size_y_m)
-            geotransform_out = [ul_x_utm, self.size_x_m, 0.0, ul_y_utm, 0.0,
-                                self.size_y_m]
+                                                   utm_y, size_x=self.spy_ps_e,
+                                                   size_y=self.spy_ps_n)
+            geotransform_out = [ul_x_utm, self.spy_ps_e, 0.0, ul_y_utm, 0.0,
+                                self.spy_ps_n]
             self._write_envi(array_img_crop, fname_out_envi, geotransform_out)
             self._modify_hdr(fname_out_envi)
             fname_out_tif = os.path.splitext(fname_out_envi)[0] + '.tif'
@@ -402,8 +488,8 @@ class spatial_mod(object):
         utm_x = self.tools.get_meta_set(map_info_set, 3)
         utm_y = self.tools.get_meta_set(map_info_set, 4)
         ul_x_utm, ul_y_utm = self.tools.get_UTM(pix_e_ul, pix_n_ul,
-                                                utm_x, utm_y, self.size_x_m,
-                                                self.size_y_m)
+                                                utm_x, utm_y, self.spy_ps_e,
+                                                self.spy_ps_n)
         map_info_set = self.tools.modify_meta_set(map_info_set, 3, ul_x_utm)
         map_info_set = self.tools.modify_meta_set(map_info_set, 4, ul_y_utm)
         metadata['map info'] = map_info_set
@@ -431,8 +517,8 @@ class spatial_mod(object):
 #        projection_out = img_ds.GetProjection()
 #        img_ds = None  # I only want to use GDAL when I have to..
 #
-#        geotransform_out = [ul_x_utm, self.size_x_m, 0.0, ul_y_utm, 0.0,
-#                            self.size_y_m]
+#        geotransform_out = [ul_x_utm, self.spy_ps_e, 0.0, ul_y_utm, 0.0,
+#                            self.spy_ps_n]
 #        self._write_tif(array_img_crop, fname_out_tif, projection_out,
 #                        geotransform_out)
 
@@ -440,8 +526,8 @@ class spatial_mod(object):
 #        base_dir_out, name_print = self._save_file_setup(
 #                base_dir_out=base_dir_out, folder_name='crop')
 
-#        pix_e_new = pix_e_ul + plot_x_pix
-#        pix_n_new = pix_n_ul + plot_y_pix
+#        pix_e_new = pix_e_ul + plot_size_e_pix
+#        pix_n_new = pix_n_ul + plot_size_n_pix
 #        array_img_crop = self.img_sp.read_subregion((pix_n_ul, pix_n_new),
 #                                                    (pix_e_ul, pix_e_new))
 
@@ -466,8 +552,8 @@ class spatial_mod(object):
 #        utm_x = self._get_meta_set(map_info_set, 3)
 #        utm_y = self._get_meta_set(map_info_set, 4)
 #        ul_x_utm, ul_y_utm = self._get_UTM(pix_e_ul, pix_n_ul, utm_x,
-#                                           utm_y, size_x=self.size_x_m,
-#                                           size_y=self.size_y_m)
+#                                           utm_y, size_x=self.spy_ps_e,
+#                                           size_y=self.spy_ps_n)
 #        map_info_set = self._modify_meta_set(map_info_set, 3, ul_x_utm)
 #        map_info_set = self._modify_meta_set(map_info_set, 4, ul_y_utm)
 #        self.metadata['map info'] = map_info_set
@@ -503,8 +589,8 @@ class spatial_mod(object):
 ##        img_ds = None
 ##        drv = None
 #
-#        geotransform_out = [ul_x_utm, self.size_x_m, 0.0, ul_y_utm, 0.0,
-#                            self.size_y_m]
+#        geotransform_out = [ul_x_utm, self.spy_ps_e, 0.0, ul_y_utm, 0.0,
+#                            self.spy_ps_n]
 #        self._write_tif(array_img_crop, fname_out_tif, projection_out,
 #                        geotransform_out)
 
@@ -520,15 +606,15 @@ class spatial_mod(object):
         self.spyfile = spyfile
         self.tools = hstools(spyfile)
         try:
-            self.size_x_m = float(self.spyfile.metadata['map info'][5])
-            self.size_y_m = float(self.spyfile.metadata['map info'][6])
-            self.ul_x_m = float(self.spyfile.metadata['map info'][4])
-            self.ul_y_m = float(self.spyfile.metadata['map info'][3])
+            self.spy_ps_e = float(self.spyfile.metadata['map info'][5])
+            self.spy_ps_n = float(self.spyfile.metadata['map info'][6])
+            self.spy_ul_e_srs = float(self.spyfile.metadata['map info'][4])
+            self.spy_ul_n_srs = float(self.spyfile.metadata['map info'][3])
         except KeyError as e:
             print('Map information was not able to be loaded from the '
                   '`SpyFile`. Please be sure the metadata contains the "map '
                   'info" tag with accurate geometric information.\n')
-            self.size_x_m = None
-            self.size_y_m = None
-            self.ul_x_m = None
-            self.ul_y_m = None
+            self.spy_ps_e = None
+            self.spy_ps_n = None
+            self.spy_ul_e_srs = None
+            self.spy_ul_n_srs = None
