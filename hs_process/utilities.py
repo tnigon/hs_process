@@ -53,20 +53,29 @@ class defaults:
             'interleave': 'bip',
             'byteorder': 0}
 
-    crop_col_names = {
+    spat_crop_cols = {
             'directory': 'directory',
+            'fname': 'fname',
             'name_short': 'name_short',
             'name_long': 'name_long',
             'ext': 'ext',
             'pix_e_ul': 'pix_e_ul',
             'pix_n_ul': 'pix_n_ul',
-            'crop_e_pix': 'crop_e_pix',
-            'crop_n_pix': 'crop_n_pix',
+            'plot_id': 'plot_id',
+            'alley_size_e_m': 'alley_size_e_m',
+            'alley_size_n_m': 'alley_size_n_m',
+            'alley_size_e_pix': 'alley_size_e_pix',
+            'alley_size_n_pix': 'alley_size_n_pix',
+            'buf_e_m': 'buf_e_m',
+            'buf_n_m': 'buf_n_m',
+            'buf_e_pix': 'buf_e_pix',
+            'buf_n_pix': 'buf_n_pix',
             'crop_e_m': 'crop_e_m',
             'crop_n_m': 'crop_n_m',
-            'buffer_x': 'buffer_x',
-            'buffer_y': 'buffer_y',
-            'plot_id': 'plot_id'}
+            'crop_e_pix': 'crop_e_pix',
+            'crop_n_pix': 'crop_n_pix',
+            'n_plots_x': 'n_plots_x',
+            'n_plots_y': 'n_plots_y'}
 
     crop_defaults = {
             'directory': None,
@@ -75,14 +84,18 @@ class defaults:
             'ext': 'bip',
             'pix_e_ul': 0,
             'pix_n_ul': 0,
+            'alley_size_e_pix': None,  # set to `None` because should be set
+            'alley_size_n_pix': None,  # intentionally
+            'alley_size_e_m': None,
+            'alley_size_n_m': None,
             'crop_e_pix': 90,
             'crop_n_pix': 120,
-            'crop_e_m': 3.6,
-            'crop_n_m': 4.8,
-            'buffer_e_pix': 0,
-            'buffer_n_pix': 0,
-            'buffer_e_m': 0,
-            'buffer_n_m': 0,
+            'crop_e_m': None,
+            'crop_n_m': None,
+            'buf_e_pix': 0,
+            'buf_n_pix': 0,
+            'buf_e_m': None,
+            'buf_n_m': None,
             'plot_id': None}
 
 
@@ -160,8 +173,8 @@ class hsio(object):
         assert isinstance(metadata, dict), msg
         try:
 #            del metadata[key]
-            val = metadata.pop('bands', None)
-            val = None
+            _ = metadata.pop(key, None)
+#            val = None
         except KeyError:
             print('{0} not a valid key in input dictionary.'.format(key))
         return metadata
@@ -230,7 +243,10 @@ class hsio(object):
                 `str`), or if idx is not `None`, the item in the position
                 described by `idx`.
         '''
-        meta_set_list = meta_set[1:-1].split(",")
+        if isinstance(meta_set, str):
+            meta_set_list = meta_set[1:-1].split(",")
+        else:
+            meta_set_list = meta_set.copy()
         metadata_list = []
         for item in meta_set_list:
             if str(item)[::-1].find('.') == -1:
@@ -373,7 +389,7 @@ class hsio(object):
                 err = str(e)
                 key = err[err.find('"') + 1:err.rfind('"')]
                 if key == 'byte order':
-                    self._append_hdr_fname(fname_hdr, key, 0)
+                    self._append_hdr_fname(fname_hdr_spec, key, 0)
                 else:
                     print(err)
                 self.spyfile_spec = envi.open(fname_hdr_spec)
@@ -507,10 +523,11 @@ class hsio(object):
         if name_short is not None:
             self.name_short = name_short
 
-        if self.name_short[-1] == '_' or self.name_short[-1] == '-':
-            self.name_short = self.name_short[:-1]
-        if individual_plot is True and name_plot is None:
-            name_plot = name_short[name_short.rfind('_')+1:]
+#        print(self.name_short)
+#        if self.name_short[-1] == '_' or self.name_short[-1] == '-':
+#            self.name_short = self.name_short[:-1]
+#        if individual_plot is True and name_plot is None:
+#            name_plot = name_short[name_short.rfind('_')+1:]
 
         self.individual_plot = individual_plot
         self._read_envi()
@@ -730,6 +747,7 @@ class hsio(object):
         std = df_std.to_dict()
         metadata['stdev'] = '{' + ', '.join(str(e) for e in list(
                 std.values())) + '}'
+        metadata['label'] = os.path.basename(os.path.splitext(hdr_file)[0])
         metadata = self.tools.clean_md_sets(metadata=metadata)
         self.spyfile_spec.metadata = metadata
 
@@ -1041,7 +1059,10 @@ class hstools(object):
                 `str`), or if idx is not `None`, the item in the position
                 described by `idx`.
         '''
-        meta_set_list = meta_set[1:-1].split(",")
+        if isinstance(meta_set, str):
+            meta_set_list = meta_set[1:-1].split(",")
+        else:
+            meta_set_list = meta_set.copy()
         metadata_list = []
         for item in meta_set_list:
             if str(item)[::-1].find('.') == -1:

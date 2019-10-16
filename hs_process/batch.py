@@ -2,7 +2,9 @@
 import numpy as np
 import os
 import pandas as pd
+import spectral.io.spyfile as SpyFile
 
+from hs_process.utilities import defaults
 from hs_process.utilities import hsio
 from hs_process.utilities import hstools
 from hs_process import spec_mod
@@ -27,6 +29,7 @@ class batch(object):
             dir_level (`int`): The number of directory levels to search; if
                 `None`, searches all directory levels (default: 0).
         '''
+        print(spatial_mod)
         self.base_dir = base_dir
         self.search_ext = search_ext
         self.dir_level = dir_level
@@ -39,29 +42,143 @@ class batch(object):
 #        except TypeError:
 #            self.io = hsio.hsio()
         self.io = hsio()
+        self.defaults = defaults.spat_crop_cols
+
+    def _try_dict(self, key, df_row):
+        try:
+            value = df_row[self.defaults[key]]
+        except KeyError:
+            value = None
+        return value
+
+    def _crop_read_sheet(self, row):
+        '''
+        Reads the necessary information from the spreadsheet and saves it
+        to a dictionary
+
+        If this function causes an error, try checking `batch.defaults` - these
+        should be adjusted according to the default column names of the input
+        (i.e., `fname_sheet`).
+        '''
+        crop_specs = {
+                'directory': self._try_dict('directory', row),
+                'fname': self._try_dict('fname', row),
+                'name_short': self._try_dict('name_short', row),
+                'name_long': self._try_dict('name_long', row),
+                'ext': self._try_dict('ext', row),
+                'pix_e_ul': self._try_dict('pix_e_ul', row),
+                'pix_n_ul': self._try_dict('pix_n_ul', row),
+                'plot_id': self._try_dict('plot_id', row),
+                'alley_size_e_m': self._try_dict('alley_size_e_m', row),
+                'alley_size_n_m': self._try_dict('alley_size_n_m', row),
+                'alley_size_e_pix': self._try_dict('alley_size_e_pix', row),
+                'alley_size_n_pix': self._try_dict('alley_size_n_pix', row),
+                'buf_e_m': self._try_dict('buf_e_m', row),
+                'buf_n_m': self._try_dict('buf_n_m', row),
+                'buf_e_pix': self._try_dict('buf_e_pix', row),
+                'buf_n_pix': self._try_dict('buf_n_pix', row),
+                'crop_e_m': self._try_dict('crop_e_m', row),
+                'crop_n_m': self._try_dict('crop_n_m', row),
+                'crop_e_pix': self._try_dict('crop_e_pix', row),
+                'crop_n_pix': self._try_dict('crop_n_pix', row),
+                'n_plots_x': self._try_dict('n_plots_x', row),
+                'n_plots_y': self._try_dict('n_plots_y', row)}
+        if crop_specs['fname'] is None:
+            try:
+                crop_specs['fname'] = os.path.join(
+                        crop_specs['directory'],
+                        crop_specs['name_short'] +
+                        crop_specs['name_long'] +
+                        crop_specs['ext'])
+            except TypeError:
+                crop_specs['fname'] = None
+        if crop_specs['fname'] is not None:
+            base_name = os.path.basename(crop_specs['fname'])
+            if crop_specs['name_short'] is None:
+                crop_specs['name_short'] = base_name[
+                        :base_name.find('-', base_name.rfind('_'))]
+            if crop_specs['name_long'] is None:
+                crop_specs['name_long'] = base_name[
+                        base_name.find('-', base_name.rfind('_')):]
+            if crop_specs['ext'] is None:
+                crop_specs['ext'] = os.path.splitext(crop_specs['fname'])
+
+        for col_name in row.index:
+            if col_name not in self.defaults:
+                crop_specs['col_name']: self._try_dict(col_name, row)
+        self.crop_specs = crop_specs
+        return crop_specs
+
+    def _pix_to_mapunit(self, crop_specs, spyfile=None):
+        '''
+        Looks over specifications of `crop_specs`, and converts betweeen pixel
+        units and map units if one is populated and the other is `None`
+        '''
+        cs = crop_specs.copy()
+
+        if spyfile is None:
+            spyfile = self.io.spyfile
+        print(type(spyfile))
+        spy_ps_e = float(spyfile.metadata['map info'][5])
+        spy_ps_n = float(spyfile.metadata['map info'][6])
+        # Crop size
+        if cs['crop_e_pix'] is None and cs['crop_e_m'] is not None:
+            cs['crop_e_pix'] = cs['crop_e_m'] / spy_ps_e
+        elif cs['crop_e_pix'] is not None and cs['crop_e_m'] is None:
+            cs['crop_e_m'] = cs['crop_e_pix'] * spy_ps_e
+        if cs['crop_n_pix'] is None and cs['crop_n_m'] is not None:
+            cs['crop_n_pix'] = cs['crop_n_m'] / spy_ps_n
+        elif cs['crop_n_pix'] is not None and cs['crop_n_m'] is None:
+            cs['crop_n_m'] = cs['crop_n_pix'] * spy_ps_n
+        # Buffer
+        if cs['buf_e_pix'] is None and cs['buf_e_m'] is not None:
+            cs['buf_e_pix'] = cs['buf_e_m'] / spy_ps_e
+        elif cs['buf_e_pix'] is not None and cs['buf_e_m'] is None:
+            cs['buf_e_m'] = cs['buf_e_pix'] * spy_ps_e
+        if cs['buf_n_pix'] is None and cs['buf_n_m'] is not None:
+            cs['buf_n_pix'] = cs['buf_n_m'] / spy_ps_e
+        elif cs['buf_n_pix'] is not None and cs['buf_n_m'] is None:
+            cs['buf_n_m'] = cs['buf_n_pix'] * spy_ps_e
+        # Alley size
+        if cs['alley_size_e_pix'] is None and cs['alley_size_e_m'] is not None:
+            cs['alley_size_e_pix'] = cs['alley_size_e_m'] / spy_ps_e
+        elif cs['alley_size_e_pix'] is not None and cs['alley_size_e_m'] is None:
+            cs['alley_size_e_m'] = cs['alley_size_e_pix'] * spy_ps_e
+        if cs['alley_size_n_pix'] is None and cs['alley_size_n_m'] is not None:
+            cs['alley_size_n_pix'] = cs['alley_size_n_m'] / spy_ps_n
+        elif cs['alley_size_n_pix'] is not None and cs['alley_size_n_m'] is None:
+            cs['alley_size_n_m'] = cs['alley_size_n_pix'] * spy_ps_n
+        return cs
 
     def _execute_spat_crop(self, fname_sheet, base_dir_out, folder_name,
-                           name_append, crop_e_pix, crop_n_pix, geotiff):
+                           name_append, geotiff=True, method='single'):
         '''
         Actually executes the spatial crop to keep the main function a bit
         cleaner
         '''
-        df_plots = pd.read_csv(fname_sheet)
+        if isinstance(fname_sheet, pd.DataFrame):
+            df_plots = fname_sheet
+        elif os.path.splitext(fname_sheet)[1] == '.csv':
+            df_plots = pd.read_csv(fname_sheet)
 
         for idx, row in df_plots.iterrows():
-            directory = row['directory']
-            name_short = row['name_short']
-            name_long = row['name_long']
-            ext = row['ext']
-            fname = os.path.join(directory, name_short+name_long+ext)
-            print('Spatially cropping: {0}\n'.format(fname))
-
-            pix_e_ul = row['pix_e_ul']
-            pix_n_ul = row['pix_n_ul']
-
-            self.io.read_cube(fname)  # options: name_long, name_plot, name_short, individual_plot, overwrite
+            cs = self._crop_read_sheet(row)
+            print('Spatially cropping: {0}\n'.format(cs['fname']))
+            name_long = cs['name_long']  # `None` if it was never set
+            plot_id = cs['plot_id']
+            name_short = cs['name_short']
+            if np.isnan(name_long):
+                name_long = None
+            if np.isnan(plot_id):
+                plot_id = None
+            if np.isnan(name_short):
+                name_short = None
+            fname_hdr = os.path.join(cs['directory'], cs['fname'] + '.hdr')
+            self.io.read_cube(fname_hdr, name_long=name_long,
+                              name_plot=plot_id, name_short=name_short)
+            cs = self._pix_to_mapunit(cs)
             sm = spatial_mod(self.io.spyfile)
-            base_dir = os.path.dirname(fname)
+            base_dir = os.path.dirname(cs['fname'])
             if base_dir_out is None:
                 dir_out = self._save_file_setup(base_dir, folder_name)
             else:
@@ -75,36 +192,82 @@ class batch(object):
             else:
                 name_append = '-' + str(name_append)
 
-            array_crop, metadata = sm.crop_single(pix_e_ul, pix_n_ul,
-                                                  crop_e_pix, crop_n_pix)
-            metadata['interleave'] = self.io.defaults.interleave
-            name_label = (name_print + name_append + '.' +
-                          self.io.defaults.interleave)
-            metadata['label'] = name_label
+            if method == 'single':
+                array_crop, metadata = sm.crop_single(
+                        cs['pix_e_ul'], cs['pix_n_ul'], cs['crop_e_pix'],
+                        cs['crop_n_pix'])
+                metadata['interleave'] = self.io.defaults.interleave
+                if row['plot_id'] is not None:
+                    plot_id = '-' + str(row['plot_id'])
+                else:
+                    plot_id = ''
+                name_label = (name_print + name_append + plot_id + '.' +
+                              self.io.defaults.interleave)
+                metadata['label'] = name_label
+                self._crop_write_to_file(dir_out, name_label, array_crop,
+                                         metadata, geotiff, cs['fname'])
+            elif method == 'many':
+                df_plots = sm.envi_crop(
+                    cs['plot_id'], pix_e_ul=cs['pix_e_ul'],
+                    pix_n_ul=cs['pix_n_ul'], plot_size_e_m=cs['plot_size_e_m'],
+                    plot_size_n_m=cs['plot_size_n_m'],
+                    alley_size_n_m=cs['alley_size_n_m'], buf_e_m=cs['buf_e_m'],
+                    buf_n_m=cs['buf_n_m'], n_plots_x=cs['n_plots_x'],
+                    n_plots_y=cs['n_plots_y'])
 
-            hdr_file = os.path.join(dir_out, name_label + '.hdr')
-            self.io.write_cube(hdr_file, array_crop,
-                               dtype=self.io.defaults.dtype,
-                               force=self.io.defaults.force,
-                               ext=self.io.defaults.ext,
-                               interleave=self.io.defaults.interleave,
-                               byteorder=self.io.defaults.byteorder,
-                               metadata=metadata)
-            if geotiff is True:
-                fname_tif = os.path.join(dir_out, name_label + '.tif')
-                img_ds = self.io._read_envi_gdal(fname_in=fname)
-                projection_out = img_ds.GetProjection()
-                geotransform_out = img_ds.GetGeotransform()
-                img_ds = None  # I only want to use GDAL when I have to..
+                for idx, row in df_plots.iterrows():  # actually crop the image
+                    array_crop, metadata = sm.crop_single(
+                        row['pix_e_ul'], row['pix_n_ul'],
+                        crop_e_pix=cs['crop_e_pix'],
+                        crop_n_pix=cs['crop_n_pix'],
+                        buf_e_pix=cs['buf_e_pix'],
+                        buf_n_pix=cs['buf_n_pix'])
+#                    metadata = row['metadata']
+#                    array_crop = row['array_crop']
+                    metadata['interleave'] = self.io.defaults.interleave
+                    plot_id = '-' + str(row['plot_id'])
+                    name_label = (name_print + name_append + plot_id + '.' +
+                                  self.io.defaults.interleave)
+                    metadata['label'] = name_label
+                    self._crop_write_to_file(dir_out, name_label, array_crop,
+                                             metadata, geotiff, cs['fname'])
 
-                map_info_set = metadata['map info']
-                ul_x_utm = self.tools.get_meta_set(map_info_set, 3)
-                ul_y_utm = self.tools.get_meta_set(map_info_set, 4)
-                geotransform_out = [ul_x_utm, sm.size_x_m, 0.0, ul_y_utm, 0.0,
-                                    sm.size_y_m]
-                self.io.write_tif(fname_tif, spyfile=array_crop,
-                                  projection_out=projection_out,
-                                  geotransform_out=geotransform_out)
+    def _crop_write_to_file(self, dir_out, name_label, array_crop, metadata,
+                            geotiff=False, fname=None):
+
+        hdr_file = os.path.join(dir_out, name_label + '.hdr')
+        fname_tif = os.path.join(dir_out,
+                                 os.path.splitext(name_label)[0] + '.tif')
+        self.io.write_cube(hdr_file, array_crop,
+                           dtype=self.io.defaults.dtype,
+                           force=self.io.defaults.force,
+                           ext=self.io.defaults.ext,
+                           interleave=self.io.defaults.interleave,
+                           byteorder=self.io.defaults.byteorder,
+                           metadata=metadata)
+        if geotiff is True:
+            msg = ('Projection and Geotransform information are required for '
+                   'writing the geotiff. This comes from the input filename, '
+                   'so please be sure the correct filename is passed to '
+                   '`fname`.\n')
+            assert fname is not None and os.path.isfile(fname), msg
+            fname_tif = os.path.join(dir_out, name_label + '.tif')
+            img_ds = self.io._read_envi_gdal(fname_in=fname)
+            projection_out = img_ds.GetProjection()
+#            geotransform_out = img_ds.GetGeotransform()
+            img_ds = None  # I only want to use GDAL when I have to..
+
+            map_info_set = metadata['map info']
+            ul_x_utm = self.tools.get_meta_set(map_info_set, 3)
+            ul_y_utm = self.tools.get_meta_set(map_info_set, 4)
+            size_x_m = self.tools.get_meta_set(map_info_set, 5)
+            size_y_m = self.tools.get_meta_set(map_info_set, 6)
+
+            geotransform_out = [ul_x_utm, size_x_m, 0.0, ul_y_utm, 0.0,
+                                size_y_m]
+            self.io.write_tif(fname_tif, spyfile=array_crop,
+                              projection_out=projection_out,
+                              geotransform_out=geotransform_out)
 
     def _execute_spec_clip(self, fname_list, base_dir_out, folder_name,
                            name_append, wl_bands):
@@ -301,25 +464,22 @@ class batch(object):
         return base_dir_out, name_print
         return dir_out
 
-    def spatial_crop(self, fname_sheet, crop_e_pix=90, crop_n_pix=120,
-                     base_dir_out=None,
-                     folder_name='spatial_crop',
-                     name_append='spatial-crop', geotiff=True,
-                     out_dtype=False, out_force=None, out_ext=False,
-                     out_interleave=False, out_byteorder=False):
+    def spatial_crop(self, fname_sheet, base_dir_out=None,
+                     folder_name='spatial_crop', name_append='spatial-crop',
+                     geotiff=True, method='single', out_dtype=False,
+                     out_force=None, out_ext=False, out_interleave=False,
+                     out_byteorder=False):
         '''
         Iterates through spreadsheet that provides necessary information about
         how each image should be cropped and how it should be saved
 
         Parameters:
-            fname_sheet (`fname`): The filename of the spreadsheed that
-                provides the necessary information for batch process cropping.
-                See below for more information about the required and optional
-                contents of `fname_sheet` and how to properly format it.
-            crop_e_pix (`int`): number of pixels to allocate per row in the
-                cropped image (default: 90).
-            crop_n_pix (`int`): number of pixels per colum in the cropped image
-                 (default: 120).
+            fname_sheet (`fname` or `Pandas.DataFrame): The filename of the
+                spreadsheed that provides the necessary information for batch
+                process cropping. See below for more information about the
+                required and optional contents of `fname_sheet` and how to
+                properly format it. Optionally, `fname_sheet` can be a
+                `Pandas.DataFrame`
             base_dir_out (`str`): output directory of the cropped image
                 (default: `None`).
             folder_name (`str`): folder to add to `base_dir_out` to save all
@@ -328,6 +488,10 @@ class batch(object):
                 'spatial-crop').
             geotiff (`bool`): whether to save an RGB image as a geotiff
                 alongside the cropped datacube.
+            method (`str`): Must be one of "single" or "many". Indicates
+                whether a single plot should be cropped from the input datacube
+                or if many/multiple plots should be cropped from the input
+                datacube (default: "single").
             out_XXX: Settings for saving the output files can be adjusted here
                 if desired. They are stored in `batch.io.defaults, and are
                 therefore accessible at a high level. See
@@ -347,8 +511,8 @@ class batch(object):
                 which will take precedence over the defaults.
             `fname_sheet` may also have the following optional column headings:
                 vii) "crop_e_pix", viii) "crop_n_pix", ix) "crop_e_m",
-                x) "crop_n_m", xi) "buffer_x_pix", xii) "buffer_y_pix",
-                xiii) "buffer_x_m", xiv) "buffer_y_m", and xv) "plot_id".
+                x) "crop_n_m", xi) "buf_e_pix", xii) "buf_n_pix",
+                xiii) "buf_e_m", xiv) "buf_n_m", and xv) "plot_id".
             These optional inputs allow more control over exactly how the image
                 will be cropped, and hopefully are self-explanatory until
                 adequate documentation is written. Any other columns can
@@ -357,10 +521,8 @@ class batch(object):
         '''
         self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
                                 out_byteorder)
-
-        if os.path.splitext(fname_sheet)[1] == '.csv':
-            self._execute_spat_crop(fname_sheet, base_dir_out, folder_name,
-                                    name_append, crop_e_pix, crop_n_pix)
+        self._execute_spat_crop(fname_sheet, base_dir_out, folder_name,
+                                name_append, geotiff, method)
 
     def spectral_clip(self, fname_list=None, base_dir=None, search_ext='bip',
                       dir_level=0, base_dir_out=None, folder_name='spec_clip',

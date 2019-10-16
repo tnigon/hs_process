@@ -31,6 +31,14 @@ hsbatch = batch(base_dir_spec, search_ext='.bip')
 hsbatch.spectra_combine(base_dir=base_dir_spec, search_ext='bip', dir_level=0,
                         out_force=True)
 
+# In[2: spectral mean 2019-08-02_Crookston_Anderson]
+from hs_process import batch
+
+base_dir_spec = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2019\2019-08-02_Crookston_Anderson\cube_ref_panels'
+hsbatch = batch(base_dir_spec, search_ext='.bip')
+hsbatch.spectra_combine(base_dir=base_dir_spec, search_ext='bip', dir_level=0,
+                        out_force=True)
+
 # In[1: debugging spatial crop]
 import os
 import geopandas as gpd
@@ -84,4 +92,45 @@ if buffer_y_pix is not None:
 
 array_crop_buf = io.spyfile.read_subregion((pix_n_ul, pix_n_lr), (pix_e_ul, pix_e_lr))
 
-#In []
+# In[ENVI_crop]
+import os
+
+from hs_process.utilities import hsio
+
+directory = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2018\2018-07-11_Wells\Wells_rep4'
+file = r'Wells_rep4_20180711_18h22m_pika_gige_10-Radiance Conversion-Georectify Airborne Datacube-Reflectance from Radiance Data and Measured Reference Spectrum.bip'
+
+fname = os.path.join(directory, file)
+
+hs = hsio(fname)
+
+sm = spatial_mod(hs.spyfile)
+
+
+plot_id_ul = 2008
+df_plots = sm.envi_crop(plot_id_ul, pix_e_ul=233, pix_n_ul=60, plot_size_e_m=9.170,
+             plot_size_n_m=3.049, alley_size_n_m=6.132,
+             buf_x_m=1.5, buf_y_m=0.6, n_plots_x=5, n_plots_y=9)
+
+# In[Batch crop Wells data]
+from hs_process import batch
+from hs_process import spatial_mod
+
+fname_sheet = r'G:\BBE\AGROBOT\Shared Work\Wells_Study\python_processing\wells_image_cropping.csv'
+
+hsbatch = batch()
+hsbatch.spatial_crop(fname_sheet,
+                     folder_name='spatial_crop', name_append='spatial-crop',
+                     geotiff=True, method='many')
+# In[]
+import pandas as pd
+df_plots = pd.read_csv(fname_sheet)
+
+
+
+
+
+
+
+
+

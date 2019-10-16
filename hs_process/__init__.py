@@ -45,7 +45,6 @@ name = 'hs_process'
 __version__ = '0.0.1'
 
 __all__ = ['batch',
-           'utilities',
            'segment',
            'spatial_mod',
            'spec_mod']
