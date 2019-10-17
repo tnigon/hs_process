@@ -67,8 +67,8 @@ class spatial_mod(object):
         e_sw = srs_e_m
         n_nw = srs_n_m
         n_ne = srs_n_m
-        n_se = srs_n_m + (size_y * n_m)
-        n_sw = srs_n_m + (size_y * n_m)
+        n_se = srs_n_m - (size_y * n_m)
+        n_sw = srs_n_m - (size_y * n_m)
         coords_e = [e_nw, e_ne, e_se, e_sw, e_nw]
         coords_n = [n_nw, n_ne, n_se, n_sw, n_nw]
 
@@ -98,6 +98,9 @@ class spatial_mod(object):
         msg = ('Please be sure the reference plot (`plot_id_ref`): {0} is '
                'within the spatial extent of the datacube (`spyfile`):  {1}\n'
                ''.format(plot_id_ref, spyfile.filename))
+
+        print(gdf_filter)
+        # TODO: option to designate any column as the "plot_id" column.
         assert plot_id_ref in gdf_filter['plot'].tolist(), msg
 
         if metadata is None:
@@ -121,7 +124,7 @@ class spatial_mod(object):
         return df_plots
 
     def _record_pixels(self, plot_id_ul, plot_n_start, plot_n_end, row_plot,
-                       df_plots, crop_size_e_pix, crop_size_n_pix, pix_e_ul,
+                       df_plots, crop_e_pix, crop_n_pix, pix_e_ul,
                        pix_n_ul, experiment='wells'):
         '''
 
@@ -133,12 +136,12 @@ class spatial_mod(object):
                     row_plot += 1
                 plot_id = plot_id_ul - (col_plot * 100)  # E/W
                 plot_id = plot_id - row_plot  # N/S
-                col_pix = (col_plot * crop_size_e_pix) + pix_e_ul
-                row_pix = (row_plot * crop_size_n_pix) + pix_n_ul
+                col_pix = (col_plot * crop_e_pix) + pix_e_ul
+                row_pix = (row_plot * crop_n_pix) + pix_n_ul
 
 #                array_crop, metadata = self.crop_single(
-#                    col_pix, row_pix, crop_size_e_pix,
-#                    crop_size_n_pix)  # lines and samples backwards in metadata
+#                    col_pix, row_pix, crop_e_pix,
+#                    crop_n_pix)  # lines and samples backwards in metadata
 
                 df_temp = pd.DataFrame(data=[[self.spyfile.filename, plot_id,
                                               col_plot, row_plot,
@@ -149,7 +152,7 @@ class spatial_mod(object):
             return df_plots, row_plot
 
     def _calc_size(self, plot_id_ul, n_plots_x, row_plots_top, row_plots_bot,
-                   crop_size_e_pix, crop_size_n_pix, pix_e_ul, pix_n_ul):
+                   crop_e_pix, crop_n_pix, pix_e_ul, pix_n_ul):
         '''
         Calculates the number of x plots and y plots in image, determines
         the plot ID number, and calculates and records start/end pixels for
@@ -166,7 +169,7 @@ class spatial_mod(object):
 
         df_plots, row_plot = self._record_pixels(
                 plot_id_ul, plot_n_start, plot_n_end, row_plot, df_plots,
-                crop_size_e_pix, crop_size_n_pix, pix_e_ul, pix_n_ul)
+                crop_e_pix, crop_n_pix, pix_e_ul, pix_n_ul)
 
         if row_plots_bot > 0:  # do the same for bottom, adjusting start/end
             plot_n_start = plot_n_end
@@ -174,58 +177,50 @@ class spatial_mod(object):
             plot_n_end = plot_n_end + plot_n_bot
             df_plots, row_plot = self._record_pixels(
                     plot_id_ul, plot_n_start, plot_n_end, row_plot, df_plots,
-                    crop_size_e_pix, crop_size_n_pix, pix_e_ul, pix_n_ul)
+                    crop_e_pix, crop_n_pix, pix_e_ul, pix_n_ul)
 
         return df_plots
 
-    def _find_plots_hard(self, n_plots_x=5, n_plots_y=9, crop_size_e_m=7.6,
-                         crop_size_n_m=3.048):
-        '''
-        '''
-#        columns=['plot_id', 'pix_e_ul', 'pix_n_ul']
-#        df_plots = pd.DataFrame(columns=columns)
-#
-#        spy_ps_e = float(metadata['map info'][5])  # pixel size
-#        spy_ps_n = float(metadata['map info'][6])
-#        crop_size_e_m = 7.6  # meters
-#        crop_size_n_m = 3.048  # meters
-#        crop_size_e_pix = int(crop_size_e_m / self.spy_ps_e)
-#        crop_size_n_pix = int(crop_size_n_m / self.spy_ps_n)
-
     def _check_alley(self, plot_id_ul, n_plots_y, rows_pix,
-                     pix_n_ul, crop_size_n_pix, alley_size_pix):
+                     pix_n_ul, crop_n_pix, alley_size_pix):
         '''
         Calculates whether there is an alleyway in the image (based on plot
         configuration), then adjusts n_plots_y so it is correct after
         considering the alley
+
+        rows_pix (`int`): number of pixel rows in image
         '''
         plot_id_tens = abs(plot_id_ul) % 100
         row_plots_top = plot_id_tens % n_plots_y
-        if row_plots_top == 0:
+        if row_plots_top == 0:  # gets number of plots left in block
             row_plots_top = n_plots_y  # remainder is 0, not 9..
 
-        if row_plots_top < n_plots_y:
-            # get pix left over
-            pix_remain = (rows_pix - abs(pix_n_ul) -
-                          (row_plots_top * abs(crop_size_n_pix)))
-        else:
+        # we have plots left until alley, but image may not extend that far
+        pix_avail = rows_pix - abs(pix_n_ul)  # number of pixels south of ul
+        row_plots_avail = int(pix_avail / crop_n_pix)  # gets number of whole plots
+        if row_plots_top > row_plots_avail:
+            row_plots_top = row_plots_avail
+
+        if row_plots_top < row_plots_avail:  # gets remaining pixels south of block
+            pix_remain = (pix_avail - (row_plots_top * abs(crop_n_pix)))
+        else:  # no plots at the bottom block, just at the top block
             row_plots_bot = 0
             return row_plots_top, row_plots_bot
 
-        if pix_remain >= abs(alley_size_pix + crop_size_n_pix):
+        if pix_remain >= abs(alley_size_pix + crop_n_pix):
             # have room for more plots (must still remove 2 rows of plots)
             # calculate rows remain after skip
             row_plots_bot = int(abs((pix_remain + alley_size_pix) /
-                                     crop_size_n_pix))
+                                     crop_n_pix))
 #            n_plots_y = row_plots_top + row_plots_bot
-        # these are for if alley_size_pix is large but crop_size_n_pix is relatively small..
+        # these are for if alley_size_pix is large but crop_n_pix is relatively small..
         else:
 #            n_plots_y = row_plots_top
             row_plots_bot = 0
-#        elif pix_remain >= abs(crop_size_n_pix) * 2:
+#        elif pix_remain >= abs(crop_n_pix) * 2:
 #            # remove 2 rows of plots
 #            n_plots_y -= 2
-#        elif pix_remain >= abs(crop_size_n_pix):
+#        elif pix_remain >= abs(crop_n_pix):
 #            # remove 1 row of plots
 #            n_plots_y -= 1
 #        else:
@@ -241,8 +236,8 @@ class spatial_mod(object):
         function that can be used in either the easting or northing direction.
 
         Parameters:
-            pix_ul (`int`): upper left pixel coordinate (can be either easting
-                or northing direction).
+            pix_ul (`int`): upper left pixel coordinate as an index (first
+                pixel is zero; can be either easting or northing direction).
             crop_pix (`int`): number of pixels to be cropped (before applying
                 the buffer).
             buf_pix (`int`): number of pixels to buffer
@@ -268,8 +263,8 @@ class spatial_mod(object):
         betweeen pixel units and map units if one is populated and the other is
         `None`.
         '''
-        if not isinstance(spyfile, SpyFile):
-            spyfile = self.io.spyfile
+        if not isinstance(spyfile, SpyFile.SpyFile):
+            spyfile = self.spyfile
         else:
             self.load_spyfile(spyfile)
 
@@ -285,9 +280,9 @@ class spatial_mod(object):
                 n_pix = self.defaults.crop_defaults['alley_size_n_pix']
         elif group == 'buffer':
             if e_pix is None and e_m is None:
-                e_pix = self.defaults.crop_defaults['buf_x_pix']
+                e_pix = self.defaults.crop_defaults['buf_e_pix']
             if n_pix is None and n_m:
-                n_pix = self.defaults.crop_defaults['buf_y_pix']
+                n_pix = self.defaults.crop_defaults['buf_n_pix']
 
         if e_pix is None and e_m is not None:
             e_pix = e_m / self.spy_ps_e
@@ -326,10 +321,10 @@ class spatial_mod(object):
             df_shp = df_shp.append(df_temp, ignore_index=True)
             self.df_shp = df_shp
 
-    def crop_many(self, pix_e_ul, pix_n_ul, crop_e_pix=None,
+    def crop_many(self, plot_id_ref, pix_e_ul, pix_n_ul, crop_e_pix=None,
                   crop_n_pix=None, crop_e_m=None, crop_n_m=None,
-                  buf_x_pix=None, buf_y_pix=None,
-                  buf_x_m=None, buf_y_m=None,
+                  buf_e_pix=None, buf_n_pix=None,
+                  buf_e_m=None, buf_n_m=None,
                   spyfile=None, gdf=None):
         '''
         Crops many plots from a single image by comparing the image to a
@@ -337,14 +332,34 @@ class spatial_mod(object):
         boundaries.
 
         Stores each cropped array and its metadata in a
+
+        plot_id_ref (`int`): the plot ID of the reference plot, which must be
+            present in the datacube.
+        gdf (`geopandas.GeoDataFrame`): the polygon geometery of the plots.
         '''
-        df_cropped = pd.DataFrame(colummns=[['array', 'metadata']])
+        if spyfile is None:
+            spyfile = self.spyfile
+        elif isinstance(spyfile, SpyFile.SpyFile):
+            self.load_spyfile(spyfile)
+        metadata = self.spyfile.metadata
+        if gdf is None:
+            gdf = self.gdf
+
+        msg1 = ('Please load a GeoDataFrame (geopandas library).\n')
+        msg2 = ('Please be sure `plot_id_ref` is present in `gdf` (i.e., '
+                'the GeoDataFrame).\n')
+        assert isinstance(gdf, gpd.GeoDataFrame), msg1
+        assert plot_id_ref in gdf['plot'], msg2
+        df_plots = self._find_plots_shp(spyfile, gdf, plot_id_ref,
+                                        pix_e_ul, pix_n_ul, metadata)
+        raise ValueError
+        df_cropped = pd.DataFrame(columns=[['array', 'metadata']])
 
 
         # store all the necessary cropping information in df_plots (e.g., pix_e_ul, pix_n_ul, etc.)
         for idx, row in df_plots.iterrows():
             array_crop, metadata = self.crop_single(
-                    pix_e_ul, pix_n_ul, crop_size_e_pix=90, crop_size_n_pix=120,
+                    pix_e_ul, pix_n_ul, crop_e_pix=90, crop_n_pix=120,
                     spyfile=None)
         df_cropped_temp = pd.DataFrame(colummns=[['array', 'metadata']],
                                        data=[[array_crop, metadata]])
@@ -360,19 +375,17 @@ class spatial_mod(object):
             col_pix = row['col_pix']
             row_pix = row['row_pix']
 
-
-
 #        col_pix = df_plots[df_plots['plot_id'] == 2025]['col_pix'].item()
 #        row_pix = abs(df_plots[df_plots['plot_id'] == 2025]['row_pix'].item())
             array_img_crop = self.img_ds.ReadAsArray(
                     xoff=abs(col_pix), yoff=abs(row_pix),
-                    xsize=abs(self.crop_size_e_pix - (self.buf_x_pix * 2)),
-                    ysize=abs(self.crop_size_n_pix - (self.buf_y_pix * 2)))
+                    xsize=abs(self.crop_e_pix - (self.buf_e_pix * 2)),
+                    ysize=abs(self.crop_n_pix - (self.buf_n_pix * 2)))
 
 
             array_img_crop = self.img_sp.read_subregion(
-                    (abs(row_pix), abs(row_pix) + abs(self.crop_size_n_pix - (self.buf_y_pix * 2))),
-                    (abs(col_pix), abs(col_pix) + abs(self.crop_size_e_pix - (self.buf_x_pix * 2))))
+                    (abs(row_pix), abs(row_pix) + abs(self.crop_n_pix - (self.buf_n_pix * 2))),
+                    (abs(col_pix), abs(col_pix) + abs(self.crop_e_pix - (self.buf_e_pix * 2))))
             base_name = os.path.basename(self.fname_in)
             base_name_short = base_name[:base_name.find('gige_') + 7]  # limit of 2 digits in image number (i.e., max of 99)
             if base_name_short[-1] == '_' or base_name_short[-1] == '-':
@@ -387,15 +400,16 @@ class spatial_mod(object):
 #            print(self.df_shp[self.df_shp['plot_id'] == plot_id]['ul_x_utm'])
             if self.fname_shp is not None:
                 ul_x_utm = (self.df_shp[self.df_shp['plot_id'] == plot_id]
-                            ['ul_x_utm'].item() + self.buf_x_m)
+                            ['ul_x_utm'].item() + self.buf_e_m)
                 ul_y_utm = (self.df_shp[self.df_shp['plot_id'] == plot_id]
-                            ['ul_y_utm'].item() - self.buf_y_m)
+                            ['ul_y_utm'].item() - self.buf_n_m)
             else:
                 ul_x_utm, ul_y_utm = self._get_UTM(col_pix, row_pix, utm_x,
                                                    utm_y, size_x=self.spy_ps_e,
                                                    size_y=self.spy_ps_n)
+            # Note the last pixel size must be negative to begin at upper left
             geotransform_out = [ul_x_utm, self.spy_ps_e, 0.0, ul_y_utm, 0.0,
-                                self.spy_ps_n]
+                                -self.spy_ps_n]
             self._write_envi(array_img_crop, fname_out_envi, geotransform_out)
             self._modify_hdr(fname_out_envi)
             fname_out_tif = os.path.splitext(fname_out_envi)[0] + '.tif'
@@ -403,7 +417,7 @@ class spatial_mod(object):
 
     def crop_single(self, pix_e_ul, pix_n_ul, crop_e_pix=None,
                     crop_n_pix=None, crop_e_m=None, crop_n_m=None,
-                    buf_x_pix=None, buf_y_pix=None, buf_x_m=None, buf_y_m=None,
+                    buf_e_pix=None, buf_n_pix=None, buf_e_m=None, buf_n_m=None,
                     spyfile=None):
         '''
         Crops a single plot from an image.
@@ -411,9 +425,9 @@ class spatial_mod(object):
         Parameters:
             pix_e_ul (`int`): upper left column (easting)to begin cropping
             pix_n_ul (`int`): upper left row (northing) to begin cropping
-            crop_e_pix (`int`, optional): number of pixels for each row in the
+            crop_e_pix (`int`, optional): number of pixels in each row in the
                 cropped image
-            crop_n_pix (`int`, optional): number of pixels for each column in
+            crop_n_pix (`int`, optional): number of pixels in each column in
                 the cropped image
             crop_e_m (`float`, optional): length of each row (easting
                      direction) in the cropped image (in map units; e.g.,
@@ -421,11 +435,11 @@ class spatial_mod(object):
             crop_n_m (`float`, optional): length of each column (northing
                      direction) in the cropped image (in map units; e.g.,
                      meters).
-            buf_x_pix (`int`, optional): applied/calculated after
+            buf_e_pix (`int`, optional): applied/calculated after
                 `crop_e_pix` and `crop_n_pix` are accounted for
-            buf_y_pix (`int`, optional):
-            buf_x_m (`float`, optional):
-            buf_y_m (`float`, optional):
+            buf_n_pix (`int`, optional):
+            buf_e_m (`float`, optional):
+            buf_n_m (`float`, optional):
             spyfile (`SpyFile` object or `numpy.ndarray`): The data cube to
                 crop; if `numpy.ndarray` or `None`, loads band information from
                 `self.spyfile` (default: `None`).
@@ -435,16 +449,14 @@ class spatial_mod(object):
             metadata (`dict`): Modified metadata describing the cropped
                 hyperspectral datacube (`array_crop`).
         '''
-
         crop_e_pix, crop_n_pix, crop_e_m, crop_n_m = self._handle_defaults(
-                crop_e_pix, crop_n_pix, crop_e_m, crop_n_m)
-        buf_x_pix, buf_y_pix, buf_x_m, buf_y_m = self._handle_defaults(
-                buf_x_pix, buf_y_pix, buf_x_m, buf_y_m)
+                crop_e_pix, crop_n_pix, crop_e_m, crop_n_m, group='crop')
+        buf_e_pix, buf_n_pix, buf_e_m, buf_n_m = self._handle_defaults(
+                buf_e_pix, buf_n_pix, buf_e_m, buf_n_m, group='buffer')
         pix_e_ul, pix_e_lr = self._get_corners(pix_e_ul, crop_e_pix,
-                                               buf_x_pix)
+                                               buf_e_pix)
         pix_n_ul, pix_n_lr = self._get_corners(pix_n_ul, crop_n_pix,
-                                               buf_y_pix)
-
+                                               buf_n_pix)
         if spyfile is None:
             spyfile = self.spyfile
             array_crop = spyfile.read_subregion((pix_n_ul, pix_n_lr),
@@ -457,11 +469,23 @@ class spatial_mod(object):
             array = spyfile.copy()
             spyfile = self.spyfile
             array_crop = array[pix_n_ul:pix_n_lr, pix_e_ul:pix_e_lr, :]
-
         metadata = self.tools.spyfile.metadata
         map_info_set = metadata['map info']
         utm_x = self.tools.get_meta_set(map_info_set, 3)
         utm_y = self.tools.get_meta_set(map_info_set, 4)
+
+#        if self.fname_shp is not None:
+#            ul_x_utm = (self.df_shp[self.df_shp['plot_id'] == plot_id]
+#                        ['ul_x_utm'].item() + self.buf_x_m)
+#            ul_y_utm = (self.df_shp[self.df_shp['plot_id'] == plot_id]
+#                        ['ul_y_utm'].item() - self.buf_y_m)
+#        if self.gdf is not None:
+#
+#        else:
+#            ul_x_utm, ul_y_utm = self._get_UTM(col_pix, row_pix, utm_x,
+#                                               utm_y, size_x=self.size_x_m,
+#                                               size_y=self.size_y_m)
+
         ul_x_utm, ul_y_utm = self.tools.get_UTM(pix_e_ul, pix_n_ul,
                                                 utm_x, utm_y, self.spy_ps_e,
                                                 self.spy_ps_n)
@@ -475,7 +499,13 @@ class spatial_mod(object):
                     "SpecPyFloatText label: 'pix_e_lr?' value:{2}; "
                     "SpecPyFloatText label: 'pix_n_lr?' value:{3}>]"
                     "".format(pix_e_ul, pix_n_ul, pix_e_lr, pix_n_lr))
-        metadata['history'] += hist_str
+        idx_remove = metadata['history'].find(
+                ' -> Hyperspectral.crop_single[<')
+        if idx_remove == -1:
+            metadata['history'] += hist_str
+        else:
+            metadata['history'] = metadata['history'][:idx_remove]  # clear last history..
+            metadata['history'] += hist_str
         metadata['samples'] = array_crop.shape[1]
         metadata['lines'] = array_crop.shape[0]
         self.tools.spyfile.metadata = metadata
@@ -483,16 +513,16 @@ class spatial_mod(object):
         return array_crop, metadata
 
     def envi_crop(self, plot_id_ul, pix_e_ul=100, pix_n_ul=100,
-                  crop_size_e_m=9.170, crop_size_n_m=3.049,
-                  crop_size_e_pix=None, crop_size_n_pix=None,
+                  crop_e_m=9.170, crop_n_m=3.049,
+                  crop_e_pix=None, crop_n_pix=None,
                   alley_size_n_m=6.132,
-                  buf_x_m=1.0, buf_y_m=0.5, n_plots_x=5, n_plots_y=9,
+                  buf_e_m=1.0, buf_n_m=0.5, n_plots_x=5, n_plots_y=9,
                   spyfile=None):
         '''
         n_plots_x: number of plots in a row in east/west direction
         n_plots_y: number of plots in a row in north/south direction
-        crop_size_e_m: dimension of each plot in the E/W direction (in map units)
-        crop_size_n_m: dimension of each plot in the N/S direction (in map units)
+        crop_e_m: dimension of each plot in the E/W direction (in map units)
+        crop_n_m: dimension of each plot in the N/S direction (in map units)
 
         Note:
             Either crop_size_XX_m or crop_size_XX_pix should be passed. Do not
@@ -510,22 +540,22 @@ class spatial_mod(object):
         msg2 = ('Either crop_size_XX_m or crop_size_XX_pix should be passed. '
                 'Do not pass both.')
         assert not all(
-                v is None for v in [crop_size_e_m, crop_size_e_pix]), msg1
+                v is None for v in [crop_e_m, crop_e_pix]), msg1
         assert not all(
-                v is not None for v in [crop_size_e_m, crop_size_e_pix]), msg2
+                v is not None for v in [crop_e_m, crop_e_pix]), msg2
 
-        if crop_size_e_pix is None and crop_size_e_m is not None:
-            crop_size_e_pix = int(crop_size_e_m / self.spy_ps_e)
-            crop_size_n_pix = int(crop_size_n_m / self.spy_ps_n)
-        elif crop_size_e_pix is not None and crop_size_e_m is None:
-            crop_size_e_m = crop_size_e_pix * self.spy_ps_e
-            crop_size_n_m = crop_size_n_pix * self.spy_ps_n
-        elif crop_size_e_pix is None and crop_size_e_m is not None:
-            crop_size_e_pix = int(crop_size_e_m / self.spy_ps_e)
-            crop_size_n_pix = int(crop_size_n_m / self.spy_ps_n)
+        if crop_e_pix is None and crop_e_m is not None:
+            crop_e_pix = int(crop_e_m / self.spy_ps_e)
+            crop_n_pix = int(crop_n_m / self.spy_ps_n)
+        elif crop_e_pix is not None and crop_e_m is None:
+            crop_e_m = crop_e_pix * self.spy_ps_e
+            crop_n_m = crop_n_pix * self.spy_ps_n
+        elif crop_e_pix is None and crop_e_m is not None:
+            crop_e_pix = int(crop_e_m / self.spy_ps_e)
+            crop_n_pix = int(crop_n_m / self.spy_ps_n)
 
-        buf_x_pix = int(buf_x_m / self.spy_ps_e)
-        buf_y_pix = int(buf_y_m / self.spy_ps_n)
+        buf_e_pix = int(buf_e_m / self.spy_ps_e)
+        buf_n_pix = int(buf_n_m / self.spy_ps_n)
 
         alley_size_pix = int(alley_size_n_m / self.spy_ps_n)  # alley - skip 6.132 m
 
@@ -533,16 +563,16 @@ class spatial_mod(object):
 
         row_plots_top, row_plots_bot = self._check_alley(
                 plot_id_ul, n_plots_y, spyfile.nrows, pix_n_ul,
-                crop_size_n_pix, alley_size_pix)
+                crop_n_pix, alley_size_pix)
         df_plots = self._calc_size(plot_id_ul, n_plots_x, row_plots_top,
-                                   row_plots_bot, crop_size_e_pix,
-                                   crop_size_n_pix, pix_e_ul, pix_n_ul)
+                                   row_plots_bot, crop_e_pix,
+                                   crop_n_pix, pix_e_ul, pix_n_ul)
         return df_plots
 
 #        for idx, row in df_plots.iterrows():
 #            array_crop, metadata = sm.crop_single(
-#                    row['col_pix'], row['row_pix'], crop_size_e_pix,
-#                    crop_size_n_pix)  # lines and samples backwards in metadata
+#                    row['col_pix'], row['row_pix'], crop_e_pix,
+#                    crop_n_pix)  # lines and samples backwards in metadata
 
 #        envi.save_image(fname_out_envi + '.hdr', array_img_crop,
 #                        dtype=np.float32, force=True, ext=None,
@@ -563,8 +593,8 @@ class spatial_mod(object):
 #        base_dir_out, name_print = self._save_file_setup(
 #                base_dir_out=base_dir_out, folder_name='crop')
 
-#        pix_e_new = pix_e_ul + crop_size_e_pix
-#        pix_n_new = pix_n_ul + crop_size_n_pix
+#        pix_e_new = pix_e_ul + crop_e_pix
+#        pix_n_new = pix_n_ul + crop_n_pix
 #        array_img_crop = self.img_sp.read_subregion((pix_n_ul, pix_n_new),
 #                                                    (pix_e_ul, pix_e_new))
 

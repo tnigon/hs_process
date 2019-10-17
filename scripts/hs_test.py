@@ -41,32 +41,43 @@ hsbatch.spectra_combine(base_dir=base_dir_spec, search_ext='bip', dir_level=0,
 
 # In[1: debugging spatial crop]
 import os
-import geopandas as gpd
 from hs_process.utilities import hsio
+from hs_process.spatial_mod import spatial_mod
 
-fname_shp = r'G:\BBE\AGROBOT\Shared Work\Wells_Study\GIS_files\plot_bounds\plot_bounds.shp'
-
-gdf = gpd.read_file(fname_shp)
-
-'''
-If we know the plot and the pixel of the upper left corner of the
-northwest-most plot, we can use the plot_bounds shapefile to look up the
-geometry/coordinates of every other plot in that image, then apply the same
-offset to each of those plots as was applied based on the calculated offset of
-the northwest-most plot. For example:
-'''
 directory = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2018\2018-07-11_Wells\Wells_rep4'
 filename = r'Wells_rep4_20180711_18h22m_pika_gige_10-Radiance Conversion-Georectify Airborne Datacube-Reflectance from Radiance Data and Measured Reference Spectrum.bip'
-plot_id = 2008
-pix_e_ul = 233
-pix_n_ul = 60
-io = hsio()
 
+io = hsio()
 io.read_cube(os.path.join(directory, filename))
 array = io.spyfile.load()
+fname_tif = os.path.join(directory, 'test', 'test5.tif')
 
-# get southwest and northwest corner (in map units)
-plot_corners_m = gdf[gdf['plot'] == plot_id]['geometry'].total_bounds
+map_info = io.spyfile.metadata['map info']
+utm_x = float(map_info[3])
+utm_y = float(map_info[4])
+size_x = float(map_info[5])
+size_y = float(map_info[6])
+
+pix_e_ul = 200
+pix_n_ul = 237
+crop_e_pix = 300
+crop_n_pix = 50
+my_spat = spatial_mod(io.spyfile)
+array_crop, metadata = my_spat.crop_single(pix_e_ul, pix_n_ul, crop_e_pix, crop_n_pix)
+utm_x_new, utm_y_new = my_spat.tools.get_UTM(pix_e_ul, pix_n_ul, utm_x, utm_y, size_x, size_y)
+
+geotransform_out = [utm_x_new, 0.04, 0.0, utm_y_new, 0.0, -0.04]
+io.write_tif(fname_tif, array_crop, geotransform_out=geotransform_out)
+
+
+img_ds = io._read_envi_gdal(fname_in=os.path.join(directory, filename))
+projection_out = img_ds.GetProjection()
+geotransform_out = img_ds.GetGeoTransform()
+
+
+crop_e_pix2, crop_n_pix2, crop_e_m2, crop_n_m2 = my_spat._handle_defaults(
+                crop_e_pix, crop_n_pix, None, None)
+my_spat._handle_defaults(None, None, None, None, group='buffer')
 
 sw_e_m = plot_corners_m[0]
 sw_n_m = plot_corners_m[1]
@@ -81,16 +92,6 @@ buffer_y_pix = 10
 pix_e_lr = pix_e_ul + crop_e_pix
 pix_n_lr = pix_n_ul + crop_n_pix
 array_crop = io.spyfile.read_subregion((pix_n_ul, pix_n_lr), (pix_e_ul, pix_e_lr))
-
-if buffer_x_pix is not None:
-    pix_e_ul += buffer_x_pix
-    pix_e_lr -= buffer_x_pix
-if buffer_y_pix is not None:
-    # TODO: check that this is applied in correct direction
-    pix_n_ul += buffer_y_pix
-    pix_n_lr -= buffer_y_pix
-
-array_crop_buf = io.spyfile.read_subregion((pix_n_ul, pix_n_lr), (pix_e_ul, pix_e_lr))
 
 # In[ENVI_crop]
 import os
@@ -114,23 +115,42 @@ df_plots = sm.envi_crop(plot_id_ul, pix_e_ul=233, pix_n_ul=60, plot_size_e_m=9.1
 
 # In[Batch crop Wells data]
 from hs_process import batch
-from hs_process import spatial_mod
+#from hs_process import spatial_mod
 
 fname_sheet = r'G:\BBE\AGROBOT\Shared Work\Wells_Study\python_processing\wells_image_cropping.csv'
 
 hsbatch = batch()
 hsbatch.spatial_crop(fname_sheet,
                      folder_name='spatial_crop', name_append='spatial-crop',
-                     geotiff=True, method='many')
+                     geotiff=True, method='many', out_force=True)
 # In[]
 import pandas as pd
 df_plots = pd.read_csv(fname_sheet)
+for idx, row in df_plots.iterrows():
+    print(row)
 
+# In[]
+import geopandas as gpd
+import os
 
+from hs_process.utilities import hsio
+from hs_process.spatial_mod import spatial_mod
 
+directory = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2018\2018-06-13_Wells\Wells_rep1'
+fname = 'Wells_rep1_20180613_18h56m_pika_gige_1-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+hdr_name = os.path.join(directory, fname)
+fname_shp = r'G:\BBE\AGROBOT\Shared Work\Wells_Study\GIS_files\plot_bounds\plot_bounds.shp'
 
+gdf = gpd.read_file(fname_shp)
+hs = hsio(hdr_name)
+my_spat_mod = spatial_mod(hs.spyfile, gdf)
 
-
-
+plot_id_ref = 536
+pix_e_ul = 524
+pix_n_ul = 132
+crop_e_m = 9.17
+crop_n_m = 3.049
+my_spat_mod.crop_many(plot_id_ref, pix_e_ul, pix_n_ul, crop_e_m=crop_e_m,
+                      crop_n_m=crop_n_m)
 
 

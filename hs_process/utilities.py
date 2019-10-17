@@ -5,8 +5,8 @@ import numpy as np
 import os
 from osgeo import gdal
 from osgeo import gdalconst
-from osgeo import ogr
-import pandas as pd
+#from osgeo import ogr
+#import pandas as pd
 import re
 import spectral.io.envi as envi
 import spectral.io.spyfile as SpyFile
@@ -782,15 +782,16 @@ class hsio(object):
         else:
             assert isinstance(spyfile, np.ndarray)
             array = spyfile
-
         if projection_out is None or geotransform_out is None:
             print('Either `projection_out` is `None` or `geotransform_out` is '
                   '`None` (or both are). Retrieving projection and '
                   'geotransform information by loading `self.fname_in` via '
                   'GDAL. Be sure this is appropriate for the data you are '
-                  'trying to write\n.')
+                  'trying to write.\n')
             img_ds = self._read_envi_gdal()
+        if projection_out is None:
             projection_out = img_ds.GetProjection()
+        if geotransform_out is None:
             geotransform_out = img_ds.GetGeoTransform()
 
         drv = gdal.GetDriverByName('GTiff')
@@ -804,7 +805,6 @@ class hsio(object):
         band_g = self.tools.get_band(550)[0]
         band_r = self.tools.get_band(640)[0]
         band_list = [band_r, band_g, band_b]  # backwards for RGB display
-
         array_img = None
         for idx, band in enumerate(band_list):
             array_band = array[:, :, band-1]
@@ -812,7 +812,7 @@ class hsio(object):
                 array_band = array_band.reshape((array_band.shape[0],
                                                  array_band.shape[1]))
             band_out = tif_out.GetRasterBand(idx + 1)
-            band_out.WriteArray(array_band)
+            band_out.WriteArray(array_band)  # must flip
             if array_img is None:
                 array_img = array_band
             else:
@@ -833,7 +833,7 @@ class hstools(object):
         spyfile (`SpyFile` object): The datacube being accessed and/or
             manipulated.
     '''
-    def __init__(self, spyfile=None):
+    def __init__(self, spyfile):
         msg = ('Pleae load a SpyFile (Spectral Python object)')
         assert spyfile is not None, msg
 
@@ -1105,8 +1105,8 @@ class hstools(object):
             size_y (`float`): Ground resolved distance of the image pixels in
                 the y (northing) direction (meters).
         '''
-        utm_x_new = utm_x + (pix_e_ul * size_x)
-        utm_y_new = utm_y - (pix_n_ul * size_y)
+        utm_x_new = utm_x + ((pix_e_ul + 1) * size_x)
+        utm_y_new = utm_y - ((pix_n_ul + 1) * size_y)
         return utm_x_new, utm_y_new
 
     def load_spyfile(self, spyfile):

@@ -7,8 +7,8 @@ import spectral.io.spyfile as SpyFile
 from hs_process.utilities import defaults
 from hs_process.utilities import hsio
 from hs_process.utilities import hstools
-from hs_process import spec_mod
-from hs_process import spatial_mod
+from hs_process.spec_mod import spec_mod
+from hs_process.spatial_mod import spatial_mod
 #from hs_process import Segment
 
 
@@ -29,22 +29,22 @@ class batch(object):
             dir_level (`int`): The number of directory levels to search; if
                 `None`, searches all directory levels (default: 0).
         '''
-        print(spatial_mod)
         self.base_dir = base_dir
         self.search_ext = search_ext
         self.dir_level = dir_level
         self.fname_list = None
         if base_dir is not None:
             self.fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-#        print(hsio)
-#        try:
-#            self.io = hsio()
-#        except TypeError:
-#            self.io = hsio.hsio()
+
         self.io = hsio()
         self.defaults = defaults.spat_crop_cols
+        self.my_spectral_mod = None
+        self.my_spatial_mod = None
 
     def _try_dict(self, key, df_row):
+        if key not in self.defaults.keys():
+            print(key)
+            self.defaults[key] = key
         try:
             value = df_row[self.defaults[key]]
         except KeyError:
@@ -85,11 +85,9 @@ class batch(object):
                 'n_plots_y': self._try_dict('n_plots_y', row)}
         if crop_specs['fname'] is None:
             try:
-                crop_specs['fname'] = os.path.join(
-                        crop_specs['directory'],
-                        crop_specs['name_short'] +
-                        crop_specs['name_long'] +
-                        crop_specs['ext'])
+                crop_specs['fname'] = (crop_specs['name_short'] +
+                                      crop_specs['name_long'] +
+                                      crop_specs['ext'])
             except TypeError:
                 crop_specs['fname'] = None
         if crop_specs['fname'] is not None:
@@ -101,11 +99,18 @@ class batch(object):
                 crop_specs['name_long'] = base_name[
                         base_name.find('-', base_name.rfind('_')):]
             if crop_specs['ext'] is None:
-                crop_specs['ext'] = os.path.splitext(crop_specs['fname'])
+                crop_specs['ext'] = os.path.splitext(crop_specs['fname'])[1]
 
         for col_name in row.index:
-            if col_name not in self.defaults:
-                crop_specs['col_name']: self._try_dict(col_name, row)
+            if col_name not in self.defaults.keys():
+                crop_specs[col_name] = row[col_name]
+        if not pd.notnull(crop_specs['name_long']):
+            crop_specs['name_long'] = None
+        if not pd.notnull(crop_specs['plot_id']):
+            crop_specs['plot_id'] = None
+        if not pd.notnull(crop_specs['name_short']):
+            crop_specs['name_short'] = None
+
         self.crop_specs = crop_specs
         return crop_specs
 
@@ -118,34 +123,33 @@ class batch(object):
 
         if spyfile is None:
             spyfile = self.io.spyfile
-        print(type(spyfile))
         spy_ps_e = float(spyfile.metadata['map info'][5])
         spy_ps_n = float(spyfile.metadata['map info'][6])
         # Crop size
         if cs['crop_e_pix'] is None and cs['crop_e_m'] is not None:
-            cs['crop_e_pix'] = cs['crop_e_m'] / spy_ps_e
+            cs['crop_e_pix'] = int(cs['crop_e_m'] / spy_ps_e)
         elif cs['crop_e_pix'] is not None and cs['crop_e_m'] is None:
             cs['crop_e_m'] = cs['crop_e_pix'] * spy_ps_e
         if cs['crop_n_pix'] is None and cs['crop_n_m'] is not None:
-            cs['crop_n_pix'] = cs['crop_n_m'] / spy_ps_n
+            cs['crop_n_pix'] = int(cs['crop_n_m'] / spy_ps_n)
         elif cs['crop_n_pix'] is not None and cs['crop_n_m'] is None:
             cs['crop_n_m'] = cs['crop_n_pix'] * spy_ps_n
         # Buffer
         if cs['buf_e_pix'] is None and cs['buf_e_m'] is not None:
-            cs['buf_e_pix'] = cs['buf_e_m'] / spy_ps_e
+            cs['buf_e_pix'] = int(cs['buf_e_m'] / spy_ps_e)
         elif cs['buf_e_pix'] is not None and cs['buf_e_m'] is None:
             cs['buf_e_m'] = cs['buf_e_pix'] * spy_ps_e
         if cs['buf_n_pix'] is None and cs['buf_n_m'] is not None:
-            cs['buf_n_pix'] = cs['buf_n_m'] / spy_ps_e
+            cs['buf_n_pix'] = int(cs['buf_n_m'] / spy_ps_e)
         elif cs['buf_n_pix'] is not None and cs['buf_n_m'] is None:
             cs['buf_n_m'] = cs['buf_n_pix'] * spy_ps_e
         # Alley size
         if cs['alley_size_e_pix'] is None and cs['alley_size_e_m'] is not None:
-            cs['alley_size_e_pix'] = cs['alley_size_e_m'] / spy_ps_e
+            cs['alley_size_e_pix'] = int(cs['alley_size_e_m'] / spy_ps_e)
         elif cs['alley_size_e_pix'] is not None and cs['alley_size_e_m'] is None:
             cs['alley_size_e_m'] = cs['alley_size_e_pix'] * spy_ps_e
         if cs['alley_size_n_pix'] is None and cs['alley_size_n_m'] is not None:
-            cs['alley_size_n_pix'] = cs['alley_size_n_m'] / spy_ps_n
+            cs['alley_size_n_pix'] = int(cs['alley_size_n_m'] / spy_ps_n)
         elif cs['alley_size_n_pix'] is not None and cs['alley_size_n_m'] is None:
             cs['alley_size_n_m'] = cs['alley_size_n_pix'] * spy_ps_n
         return cs
@@ -163,60 +167,51 @@ class batch(object):
 
         for idx, row in df_plots.iterrows():
             cs = self._crop_read_sheet(row)
-            print('Spatially cropping: {0}\n'.format(cs['fname']))
+            fname = os.path.join(cs['directory'], cs['fname'])
+            print('Spatially cropping: {0}\n'.format(fname))
             name_long = cs['name_long']  # `None` if it was never set
             plot_id = cs['plot_id']
             name_short = cs['name_short']
-            if np.isnan(name_long):
-                name_long = None
-            if np.isnan(plot_id):
-                plot_id = None
-            if np.isnan(name_short):
-                name_short = None
-            fname_hdr = os.path.join(cs['directory'], cs['fname'] + '.hdr')
+            fname_hdr = fname + '.hdr'
             self.io.read_cube(fname_hdr, name_long=name_long,
                               name_plot=plot_id, name_short=name_short)
             cs = self._pix_to_mapunit(cs)
-            sm = spatial_mod(self.io.spyfile)
-            base_dir = os.path.dirname(cs['fname'])
+            self.my_spatial_mod = spatial_mod(self.io.spyfile)
             if base_dir_out is None:
-                dir_out = self._save_file_setup(base_dir, folder_name)
+                dir_out, name_print, name_append = self._save_file_setup(
+                        cs['directory'], folder_name)
             else:
-                dir_out = self._save_file_setup(base_dir_out, folder_name)
-            if self.io.name_plot is not None:
-                name_print = self.io.name_plot
-            else:
-                name_print = self.io.name_short
-            if name_append is None:
-                name_append = ''
-            else:
-                name_append = '-' + str(name_append)
-
+                dir_out, name_print, name_append = self._save_file_setup(
+                        base_dir_out, folder_name)
             if method == 'single':
-                array_crop, metadata = sm.crop_single(
+                array_crop, metadata = self.my_spatial_mod.crop_single(
                         cs['pix_e_ul'], cs['pix_n_ul'], cs['crop_e_pix'],
                         cs['crop_n_pix'])
                 metadata['interleave'] = self.io.defaults.interleave
                 if row['plot_id'] is not None:
-                    plot_id = '-' + str(row['plot_id'])
+                    name_plot = '-' + str(row['plot_id'])
                 else:
-                    plot_id = ''
-                name_label = (name_print + name_append + plot_id + '.' +
+                    name_plot = ''
+                name_label = (name_print + name_append + name_plot + '.' +
                               self.io.defaults.interleave)
                 metadata['label'] = name_label
+                fname = os.path.join(cs['directory'], cs['fname'])
                 self._crop_write_to_file(dir_out, name_label, array_crop,
-                                         metadata, geotiff, cs['fname'])
+                                         metadata, geotiff, fname)
             elif method == 'many':
-                df_plots = sm.envi_crop(
+                df_plots = self.my_spatial_mod.envi_crop(
                     cs['plot_id'], pix_e_ul=cs['pix_e_ul'],
-                    pix_n_ul=cs['pix_n_ul'], plot_size_e_m=cs['plot_size_e_m'],
-                    plot_size_n_m=cs['plot_size_n_m'],
+                    pix_n_ul=cs['pix_n_ul'], crop_e_m=cs['crop_e_m'],
+                    crop_n_m=cs['crop_n_m'],
                     alley_size_n_m=cs['alley_size_n_m'], buf_e_m=cs['buf_e_m'],
                     buf_n_m=cs['buf_n_m'], n_plots_x=cs['n_plots_x'],
                     n_plots_y=cs['n_plots_y'])
-
                 for idx, row in df_plots.iterrows():  # actually crop the image
-                    array_crop, metadata = sm.crop_single(
+                    # reload spyfile to my_spatial_mod??
+                    self.io.read_cube(fname_hdr, name_long=name_long,
+                              name_plot=plot_id, name_short=name_short)
+                    self.my_spatial_mod.load_spyfile(self.io.spyfile)
+                    array_crop, metadata = self.my_spatial_mod.crop_single(
                         row['pix_e_ul'], row['pix_n_ul'],
                         crop_e_pix=cs['crop_e_pix'],
                         crop_n_pix=cs['crop_n_pix'],
@@ -225,19 +220,23 @@ class batch(object):
 #                    metadata = row['metadata']
 #                    array_crop = row['array_crop']
                     metadata['interleave'] = self.io.defaults.interleave
-                    plot_id = '-' + str(row['plot_id'])
-                    name_label = (name_print + name_append + plot_id + '.' +
+                    if row['plot_id'] is not None:
+                        name_plot = '-' + str(row['plot_id'])
+                    else:
+                        name_plot = ''
+                    name_label = (name_print + name_append + name_plot + '.' +
                                   self.io.defaults.interleave)
                     metadata['label'] = name_label
+                    fname = os.path.join(cs['directory'], cs['fname'])
                     self._crop_write_to_file(dir_out, name_label, array_crop,
-                                             metadata, geotiff, cs['fname'])
+                                             metadata, geotiff, fname)
+                self.metadata = metadata
+                self.df_plots = df_plots
 
     def _crop_write_to_file(self, dir_out, name_label, array_crop, metadata,
                             geotiff=False, fname=None):
 
         hdr_file = os.path.join(dir_out, name_label + '.hdr')
-        fname_tif = os.path.join(dir_out,
-                                 os.path.splitext(name_label)[0] + '.tif')
         self.io.write_cube(hdr_file, array_crop,
                            dtype=self.io.defaults.dtype,
                            force=self.io.defaults.force,
@@ -251,20 +250,22 @@ class batch(object):
                    'so please be sure the correct filename is passed to '
                    '`fname`.\n')
             assert fname is not None and os.path.isfile(fname), msg
-            fname_tif = os.path.join(dir_out, name_label + '.tif')
+            fname_tif = os.path.join(dir_out,
+                                     os.path.splitext(name_label)[0] + '.tif')
             img_ds = self.io._read_envi_gdal(fname_in=fname)
             projection_out = img_ds.GetProjection()
 #            geotransform_out = img_ds.GetGeotransform()
             img_ds = None  # I only want to use GDAL when I have to..
 
             map_info_set = metadata['map info']
-            ul_x_utm = self.tools.get_meta_set(map_info_set, 3)
-            ul_y_utm = self.tools.get_meta_set(map_info_set, 4)
-            size_x_m = self.tools.get_meta_set(map_info_set, 5)
-            size_y_m = self.tools.get_meta_set(map_info_set, 6)
+            ul_x_utm = self.my_spatial_mod.tools.get_meta_set(map_info_set, 3)
+            ul_y_utm = self.my_spatial_mod.tools.get_meta_set(map_info_set, 4)
+            size_x_m = self.my_spatial_mod.tools.get_meta_set(map_info_set, 5)
+            size_y_m = self.my_spatial_mod.tools.get_meta_set(map_info_set, 6)
 
+            # Note the last pixel size must be negative to begin at upper left
             geotransform_out = [ul_x_utm, size_x_m, 0.0, ul_y_utm, 0.0,
-                                size_y_m]
+                                -size_y_m]
             self.io.write_tif(fname_tif, spyfile=array_crop,
                               projection_out=projection_out,
                               geotransform_out=geotransform_out)
@@ -278,22 +279,16 @@ class batch(object):
         for fname in fname_list:
             print('Spectrally clipping: {0}\n'.format(fname))
             self.io.read_cube(fname)  # options: name_long, name_plot, name_short, individual_plot, overwrite
-            sm = spec_mod(self.io.spyfile)
+            self.my_spectral_mod = spec_mod(self.io.spyfile)
             base_dir = os.path.dirname(fname)
             if base_dir_out is None:
-                dir_out = self._save_file_setup(base_dir, folder_name)
+                dir_out, name_print, name_append = self._save_file_setup(
+                        base_dir, folder_name)
             else:
-                dir_out = self._save_file_setup(base_dir_out, folder_name)
-            if self.io.name_plot is not None:
-                name_print = self.io.name_plot
-            else:
-                name_print = self.io.name_short
-            if name_append is None:
-                name_append = ''
-            else:
-                name_append = '-' + str(name_append)
-
-            array_clip, metadata = sm.spectral_clip(wl_bands=wl_bands)
+                dir_out, name_print, name_append = self._save_file_setup(
+                        base_dir_out, folder_name)
+            array_clip, metadata = self.my_spectral_mod.spectral_clip(
+                    wl_bands=wl_bands)
 
             metadata['interleave'] = self.io.defaults.interleave
             name_label = (name_print + name_append + '.' +
@@ -360,22 +355,15 @@ class batch(object):
         for fname in fname_list:
             print('Spectrally smoothing: {0}\n'.format(fname))
             self.io.read_cube(fname)  # options: name_long, name_plot, name_short, individual_plot, overwrite
-            sm = spec_mod(self.io.spyfile)
+            self.my_spectral_mod = spec_mod(self.io.spyfile)
             base_dir = os.path.dirname(fname)
             if base_dir_out is None:
-                dir_out = self._save_file_setup(base_dir, folder_name)
+                dir_out, name_print, name_append = self._save_file_setup(
+                        base_dir, folder_name)
             else:
-                dir_out = self._save_file_setup(base_dir_out, folder_name)
-            if self.io.name_plot is not None:
-                name_print = self.io.name_plot
-            else:
-                name_print = self.io.name_short
-            if name_append is None:
-                name_append = ''
-            else:
-                name_append = '-' + str(name_append)
-
-            array_smooth, metadata = sm.spectral_smooth(
+                dir_out, name_print, name_append = self._save_file_setup(
+                        base_dir_out, folder_name)
+            array_smooth, metadata = self.my_spectral_mod.spectral_smooth(
                     window_size=window_size, order=order)
 
             metadata['interleave'] = self.io.defaults.interleave
@@ -440,7 +428,7 @@ class batch(object):
                     out_files.extend(out_files_temp)  # add items
         return sorted(out_files)
 
-    def _save_file_setup(self, base_dir_out, folder_name, fname=None):
+    def _save_file_setup(self, base_dir_out, folder_name, name_append=None):
         '''
         Basic setup items when saving manipulated image files to disk
 
@@ -449,20 +437,24 @@ class batch(object):
                 will be saved.
             folder_name (`str`): Folder to add to `base_dir_out` to save all
                 the processed datacubes.
-            fname (`str`):
+            name_append (`str`):
         '''
 #        if base_dir_out is None:
 #            base_dir_out = os.path.join(self.base_dir, folder_name)
         dir_out = os.path.join(base_dir_out, folder_name)
         if not os.path.isdir(dir_out):
             os.mkdir(dir_out)
-
-        if fname is not None:
-            name_print = self.io.name_short
+        name_print = self.io.name_short
+        if name_append is None:
+            name_append = ''
         else:
-            name_print = self.name_short
-        return base_dir_out, name_print
-        return dir_out
+            name_append = '-' + str(name_append)
+        return dir_out, name_print, name_append
+#        if fname is not None:
+#            name_print = self.io.name_short
+#        else:
+#            name_print = self.name_short
+#        return dir_out
 
     def spatial_crop(self, fname_sheet, base_dir_out=None,
                      folder_name='spatial_crop', name_append='spatial-crop',
