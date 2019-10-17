@@ -114,15 +114,19 @@ df_plots = sm.envi_crop(plot_id_ul, pix_e_ul=233, pix_n_ul=60, plot_size_e_m=9.1
              buf_x_m=1.5, buf_y_m=0.6, n_plots_x=5, n_plots_y=9)
 
 # In[Batch crop Wells data]
+import geopandas as gpd
+
 from hs_process import batch
 #from hs_process import spatial_mod
 
 fname_sheet = r'G:\BBE\AGROBOT\Shared Work\Wells_Study\python_processing\wells_image_cropping.csv'
+fname_shp = r'G:\BBE\AGROBOT\Shared Work\Wells_Study\GIS_files\plot_bounds\plot_bounds.shp'
+gdf = gpd.read_file(fname_shp)
 
 hsbatch = batch()
 hsbatch.spatial_crop(fname_sheet,
                      folder_name='spatial_crop', name_append='spatial-crop',
-                     geotiff=True, method='many', out_force=True)
+                     geotiff=True, method='many_gdf', gdf=gdf, out_force=True)
 # In[]
 import pandas as pd
 df_plots = pd.read_csv(fname_sheet)
@@ -150,7 +154,9 @@ pix_e_ul = 524
 pix_n_ul = 132
 crop_e_m = 9.17
 crop_n_m = 3.049
-my_spat_mod.crop_many(plot_id_ref, pix_e_ul, pix_n_ul, crop_e_m=crop_e_m,
-                      crop_n_m=crop_n_m)
+df_plots = my_spat_mod.crop_many(plot_id_ref, pix_e_ul, pix_n_ul, crop_e_m=crop_e_m,
+                                 crop_n_m=crop_n_m)
 
 
+df_plots2 = my_spat_mod.envi_crop(plot_id_ref, pix_e_ul, pix_n_ul, crop_e_m=crop_e_m,
+                                  crop_n_m=crop_n_m, alley_size_n_m=6.132, buf_e_m=1.0, buf_n_m=0.5, n_plots_x=5, n_plots_y=9)

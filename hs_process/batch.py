@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import geopandas as gpd
 import numpy as np
 import os
 import pandas as pd
@@ -154,8 +155,31 @@ class batch(object):
             cs['alley_size_n_m'] = cs['alley_size_n_pix'] * spy_ps_n
         return cs
 
+    def _many_grid(self, cs):
+        '''Wrapper to get consice access to `spatial_mod.crop_many_grid()'''
+        df_plots = self.my_spatial_mod.crop_many_grid(
+            cs['plot_id'], pix_e_ul=cs['pix_e_ul'], pix_n_ul=cs['pix_n_ul'],
+            crop_e_m=cs['crop_e_m'], crop_n_m=cs['crop_n_m'],
+            alley_size_n_m=cs['alley_size_n_m'], buf_e_m=cs['buf_e_m'],
+            buf_n_m=cs['buf_n_m'], n_plots_x=cs['n_plots_x'],
+            n_plots_y=cs['n_plots_y'])
+        return df_plots
+
+    def _many_gdf(self, cs):
+        '''
+        Wrapper to get consice access to `spatial_mod.crop_many_gdf();
+        `my_spatial_mod` already has access to `spyfile` and `gdf`, so no need
+        to pass them here.
+        '''
+        df_plots = self.my_spatial_mod.crop_many_gdf(
+            cs['plot_id'], pix_e_ul=cs['pix_e_ul'], pix_n_ul=cs['pix_n_ul'],
+            crop_e_m=cs['crop_e_m'], crop_n_m=cs['crop_n_m'],
+            buf_e_m=cs['buf_e_m'], buf_n_m=cs['buf_n_m'])
+        return df_plots
+
     def _execute_spat_crop(self, fname_sheet, base_dir_out, folder_name,
-                           name_append, geotiff=True, method='single'):
+                           name_append, geotiff=True, method='single',
+                           gdf=None):
         '''
         Actually executes the spatial crop to keep the main function a bit
         cleaner
@@ -176,7 +200,7 @@ class batch(object):
             self.io.read_cube(fname_hdr, name_long=name_long,
                               name_plot=plot_id, name_short=name_short)
             cs = self._pix_to_mapunit(cs)
-            self.my_spatial_mod = spatial_mod(self.io.spyfile)
+            self.my_spatial_mod = spatial_mod(self.io.spyfile, gdf)
             if base_dir_out is None:
                 dir_out, name_print, name_append = self._save_file_setup(
                         cs['directory'], folder_name)
@@ -198,14 +222,12 @@ class batch(object):
                 fname = os.path.join(cs['directory'], cs['fname'])
                 self._crop_write_to_file(dir_out, name_label, array_crop,
                                          metadata, geotiff, fname)
-            elif method == 'many':
-                df_plots = self.my_spatial_mod.envi_crop(
-                    cs['plot_id'], pix_e_ul=cs['pix_e_ul'],
-                    pix_n_ul=cs['pix_n_ul'], crop_e_m=cs['crop_e_m'],
-                    crop_n_m=cs['crop_n_m'],
-                    alley_size_n_m=cs['alley_size_n_m'], buf_e_m=cs['buf_e_m'],
-                    buf_n_m=cs['buf_n_m'], n_plots_x=cs['n_plots_x'],
-                    n_plots_y=cs['n_plots_y'])
+            else:
+                if method == 'many_grid':
+                    df_plots = self._many_grid(cs)
+                elif method == 'many_gdf':
+                    df_plots = self._many_gdf(cs)
+
                 for idx, row in df_plots.iterrows():  # actually crop the image
                     # reload spyfile to my_spatial_mod??
                     self.io.read_cube(fname_hdr, name_long=name_long,
@@ -216,7 +238,8 @@ class batch(object):
                         crop_e_pix=cs['crop_e_pix'],
                         crop_n_pix=cs['crop_n_pix'],
                         buf_e_pix=cs['buf_e_pix'],
-                        buf_n_pix=cs['buf_n_pix'])
+                        buf_n_pix=cs['buf_n_pix'],
+                        plot_id=row['plot_id'], gdf=gdf)
 #                    metadata = row['metadata']
 #                    array_crop = row['array_crop']
                     metadata['interleave'] = self.io.defaults.interleave
@@ -458,12 +481,15 @@ class batch(object):
 
     def spatial_crop(self, fname_sheet, base_dir_out=None,
                      folder_name='spatial_crop', name_append='spatial-crop',
-                     geotiff=True, method='single', out_dtype=False,
+                     geotiff=True, method='single', gdf=None, out_dtype=False,
                      out_force=None, out_ext=False, out_interleave=False,
                      out_byteorder=False):
         '''
         Iterates through spreadsheet that provides necessary information about
-        how each image should be cropped and how it should be saved
+        how each image should be cropped and how it should be saved.
+
+        If `gdf` is passed (a geopandas.GoeDataFrame polygon file), the cropped
+        images will be shifted to the center of appropriate "plot" polygon.
 
         Parameters:
             fname_sheet (`fname` or `Pandas.DataFrame): The filename of the
@@ -480,10 +506,19 @@ class batch(object):
                 'spatial-crop').
             geotiff (`bool`): whether to save an RGB image as a geotiff
                 alongside the cropped datacube.
-            method (`str`): Must be one of "single" or "many". Indicates
-                whether a single plot should be cropped from the input datacube
-                or if many/multiple plots should be cropped from the input
-                datacube (default: "single").
+            method (`str`): Must be one of "single", "many_grid", or
+                "many_gdf". Indicates whether a single plot should be cropped
+                from the input datacube or if many/multiple plots should be
+                cropped from the input datacube. The "single" method leverages
+                `spatial_mod.crop_single(), the "many_grid" method leverages
+                `spatial_mod.crop_many_grid()`, and the "many_gdf" method
+                leverages `spatial_mod.crop_many_gdf()` (there are two methods
+                available to peform cropping for many/mulitple plots). Please
+                see the `spatial_mod` documentation for more information.
+                (default: "single").
+            gdf (`geopandas.GeoDataFrame`): the plot names and polygon
+                geometery of each of the plots; 'plot' must be used as a column
+                name to identify each of the plots, and should be an integer.
             out_XXX: Settings for saving the output files can be adjusted here
                 if desired. They are stored in `batch.io.defaults, and are
                 therefore accessible at a high level. See
@@ -511,10 +546,18 @@ class batch(object):
                 be added to `fname_sheet`, but `batch.spatial_crop` does not
                 use them in any way.
         '''
+        if method == 'many_gdf':
+            msg1 = ('Please pass a valid `geopandas.GeoDataFrame` if using '
+                    'the "many_gdf" method.\n')
+            msg2 = ('Please be sure the passed `geopandas.GeoDataFrame` has a '
+                   'column by the name of "plot", indicating the plot ID for '
+                   'each polygon geometry if using the "many_gdf" method.\n')
+            assert isinstance(gdf, gpd.GeoDataFrame), msg1
+            assert 'plot' in gdf.columns, msg2
         self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
                                 out_byteorder)
         self._execute_spat_crop(fname_sheet, base_dir_out, folder_name,
-                                name_append, geotiff, method)
+                                name_append, geotiff, method, gdf)
 
     def spectral_clip(self, fname_list=None, base_dir=None, search_ext='bip',
                       dir_level=0, base_dir_out=None, folder_name='spec_clip',
