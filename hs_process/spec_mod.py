@@ -106,6 +106,19 @@ class spec_mod(object):
         '''
         self.spyfile = spyfile
         self.tools = hstools(spyfile)
+        try:
+            self.spy_ul_e_srs = float(self.spyfile.metadata['map info'][3])
+            self.spy_ul_n_srs = float(self.spyfile.metadata['map info'][4])
+            self.spy_ps_e = float(self.spyfile.metadata['map info'][5])
+            self.spy_ps_n = float(self.spyfile.metadata['map info'][6])
+        except KeyError as e:
+            print('Map information was not able to be loaded from the '
+                  '`SpyFile`. Please be sure the metadata contains the "map '
+                  'info" tag with accurate geometric information.\n')
+            self.spy_ul_e_srs = None
+            self.spy_ul_n_srs = None
+            self.spy_ps_e = None
+            self.spy_ps_n = None
 
     def spectral_clip(self, wl_bands=[[0, 420], [760, 776], [813, 827],
                                       [880, 1000]], spyfile=None):

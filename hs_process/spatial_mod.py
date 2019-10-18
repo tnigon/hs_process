@@ -24,7 +24,6 @@ class spatial_mod(object):
         '''
         self.spyfile = spyfile
         self.gdf = gdf
-        self.tools = hstools(spyfile)
 
         self.spy_ps_e = None
         self.spy_ps_n = None
@@ -32,19 +31,6 @@ class spatial_mod(object):
         self.spy_ul_n_srs = None
 
         self.defaults = defaults
-#        def run_init():
-#            try:
-#                self.spy_ps_e = float(self.spyfile.metadata['map info'][5])
-#                self.spy_ps_n = float(self.spyfile.metadata['map info'][6])
-#                self.spy_ul_e_srs = float(self.spyfile.metadata['map info'][4])
-#                self.spy_ul_n_srs = float(self.spyfile.metadata['map info'][3])
-#            except KeyError as e:
-#                self.spy_ps_e = None
-#                self.spy_ps_n = None
-#                self.spy_ul_e_srs = None
-#                self.spy_ul_n_srs = None
-#
-#        run_init()
         self.load_spyfile(spyfile)
 
     def _create_spyfile_extent_gdf(self, spyfile, metadata=None, epsg=32615):
@@ -603,7 +589,7 @@ class spatial_mod(object):
             buf_n_pix (`int`, optional):
             buf_e_m (`float`, optional):
             buf_n_m (`float`, optional):
-            spyfile (`SpyFile` object or `numpy.ndarray`): The data cube to
+            spyfile (`SpyFile` object or `numpy.ndarray`): The datacube to
                 crop; if `numpy.ndarray` or `None`, loads band information from
                 `self.spyfile` (default: `None`).
             plot_id (`int`): the plot ID of the area to be cropped.
@@ -654,7 +640,7 @@ class spatial_mod(object):
         map_info_set = self.tools.modify_meta_set(map_info_set, 4, ul_y_utm)
         metadata['map info'] = map_info_set
 
-        hist_str = (" -> Hyperspectral.crop_single[<"
+        hist_str = (" -> hs_process.crop_single[<"
                     "SpecPyFloatText label: 'pix_e_ul?' value:{0}; "
                     "SpecPyFloatText label: 'pix_n_ul?' value:{1}; "
                     "SpecPyFloatText label: 'pix_e_lr?' value:{2}; "
@@ -662,7 +648,7 @@ class spatial_mod(object):
                     "".format(pix_e_ul, pix_n_ul, pix_e_lr, pix_n_lr))
         # If "..crop_single" is already included in the history, remove it
         idx_remove = metadata['history'].find(
-                ' -> Hyperspectral.crop_single[<')
+                ' -> hs_process.crop_single[<')
         if idx_remove == -1:
             metadata['history'] += hist_str
         else:

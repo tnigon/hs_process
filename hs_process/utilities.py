@@ -124,7 +124,6 @@ class hsio(object):
         self.base_name = None
         self.spyfile = None
         self.spyfile_spec = None
-        self.meta_bands = None
         self.tools = None
 
         if fname_in is not None:
@@ -178,54 +177,6 @@ class hsio(object):
         except KeyError:
             print('{0} not a valid key in input dictionary.'.format(key))
         return metadata
-
-    def _get_meta_bands(self, metadata=None, spec=False):
-        '''
-        Retrieves band number and wavelength information from metadata and
-        saves as a dictionary
-
-        Parameters:
-            metadata (`dict`): dictionary of the metadata
-
-        Returns:
-            meta_bands (`dict`): dictionary of the band information where the
-                band name is the key and wavelength is the value.
-            spec (`bool`): Whether the file to be read is an image (`False`) or
-                a spectrum (`True`; default: `False`).
-        '''
-        if spec is False:
-            spyfile = self.spyfile
-        else:
-            spyfile = self.spyfile_spec
-        if metadata is None:
-            metadata = spyfile.metadata
-        meta_bands = {}
-        if 'band names' not in metadata.keys():
-#            for key, val in enumerate(sorted(ast.literal_eval(
-#                    metadata['wavelength']))):
-#                meta_bands[key+1] = val
-
-            #aa = metadata['wavelength']
-#            print(metadata['wavelength'][1:-1])
-#            b = metadata['wavelength'][1:-1].split(', ')
-#            print(type(b))
-#            for key, val in enumerate(sorted(b)):
-#                meta_bands[key+1] = val
-            for key, val in enumerate(metadata['wavelength']):
-                meta_bands[key+1] = float(val)
-
-        else:
-            try:
-                band_names = list(ast.literal_eval(metadata['band names']))
-                wl_names = list(ast.literal_eval(metadata['wavelength']))
-            except ValueError as e:
-                band_names = list(ast.literal_eval(
-                        str(metadata['band names'])))
-                wl_names = list(ast.literal_eval(
-                        str(metadata['wavelength'])))
-            for idx in range(len(band_names)):
-                meta_bands[band_names[idx]] = wl_names[idx]
-        self.meta_bands = meta_bands
 
     def _get_meta_set(self, meta_set, idx=None):
         '''
@@ -289,14 +240,6 @@ class hsio(object):
         metadata_list[idx] = str(value)
         set_str = '{' + ', '.join(str(x) for x in metadata_list) + '}'
         return set_str
-#        set_str = '{'
-#        for i, item in enumerate(metadata_list):
-#            set_str += str(item)
-#            if i+1 == len(metadata_list):
-#                set_str += '}'
-#            else:
-#                set_str += ', '
-#        return set_str
 
     def _parse_fname(self, fname_hdr=None, str_plot='plot_', overwrite=True):
         '''
@@ -394,8 +337,6 @@ class hsio(object):
                     print(err)
                 self.spyfile_spec = envi.open(fname_hdr_spec)
             self.tools = hstools(self.spyfile_spec)
-#        self._get_meta_bands(spec=spec)
-        self.meta_bands = self.tools.meta_bands
 
     def _read_envi_gdal(self, fname_in=None):
         '''
@@ -738,12 +679,12 @@ class hsio(object):
         metadata = self._del_meta_item(metadata, 'map info')
         metadata = self._del_meta_item(metadata, 'history')
         metadata = self._del_meta_item(metadata, 'original cube file')
-        metadata = self._del_meta_item(metadata, 'pointlist')
+#        metadata = self._del_meta_item(metadata, 'pointlist')
         metadata = self._del_meta_item(metadata, 'boundary')
         metadata = self._del_meta_item(metadata, 'label')
 
         metadata['band names'] = '{' + ', '.join(str(e) for e in list(
-                self.meta_bands.keys())) + '}'
+                self.tools.meta_bands.keys())) + '}'
         std = df_std.to_dict()
         metadata['stdev'] = '{' + ', '.join(str(e) for e in list(
                 std.values())) + '}'
@@ -862,18 +803,9 @@ class hstools(object):
             metadata = spyfile.metadata
         meta_bands = {}
         if 'band names' not in metadata.keys():
-#            for key, val in enumerate(sorted(ast.literal_eval(
-#                    metadata['wavelength']))):
-#                meta_bands[key+1] = val
-
-            #aa = metadata['wavelength']
-#            print(metadata['wavelength'][1:-1])
-#            b = metadata['wavelength'][1:-1].split(', ')
-#            print(type(b))
-#            for key, val in enumerate(sorted(b)):
-#                meta_bands[key+1] = val
             for key, val in enumerate(metadata['wavelength']):
                 meta_bands[key+1] = float(val)
+            metadata['band names'] = list(meta_bands.keys())
 
         else:
             try:
@@ -885,11 +817,12 @@ class hstools(object):
                 wl_names = list(ast.literal_eval(
                         str(metadata['wavelength'])))
             for idx in range(len(band_names)):
-                meta_bands[band_names[idx]] = wl_names[idx]
+                meta_bands[band_names[idx]] = float(wl_names[idx])
         self.meta_bands = meta_bands
-#        return meta_bands
 
     def clean_md_sets(self, metadata=None):
+        if metadata is None:
+            metadata = self.spyfile.metadata
         metadata_out = metadata.copy()
         for key, value in metadata.items():
             if isinstance(value, list):
@@ -897,12 +830,34 @@ class hstools(object):
                 metadata_out[key] = set_str
         return metadata_out
 
-    def get_band(self, target, spyfile=None):
+    def del_meta_item(self, metadata, key):
         '''
-        Returns band number of closest target wavelength and that wavelength
+        Deletes metadata item from SpyFile object.
 
         Parameters:
-            target (`int` or `float`): the target wavelength to retrive band
+            metadata (`dict`): dictionary of the metadata
+            key (`str`): dictionary key to delete
+
+        Returns:
+            metadata (`dict`): Dictionary containing the modified metadata.
+        '''
+        msg = ('Please be sure to base a metadata dictionary.')
+        assert isinstance(metadata, dict), msg
+        try:
+#            del metadata[key]
+            _ = metadata.pop(key, None)
+#            val = None
+        except KeyError:
+            print('{0} not a valid key in input dictionary.'.format(key))
+        return metadata
+
+    def get_band(self, target, spyfile=None):
+        '''
+        Returns band number and actual wavelength of the closest target
+        wavelength.
+
+        Parameters:
+            target (`int` or `float`): the target wavelength to retrieve band
                 number for (required).
             spyfile (`SpyFile` object): The datacube being accessed and/or
                 manipulated; if `None`, uses `hstools.spyfile` (default:
@@ -924,20 +879,24 @@ class hstools(object):
         key_wavelength = sorted(list(self.meta_bands.values()))[key_band-1]
         return key_band, key_wavelength
 
-    def get_bands(self, band_list, spyfile=None):
+    def get_center_wl(self, wl_list, spyfile=None):
         '''
-        Gets band numbers and wavelength information for all bands in
-        `band_list`.
+        Gets band numbers and mean wavelength from all bands in `wl_list`.
 
         Parameters:
-            band_list (`list`): the list of bands to get information for
+            wl_list (`list`): the list of bands to get information for
                 (required).
             spyfile (`SpyFile` object): The datacube being accessed and/or
                 manipulated; if `None`, uses `hstools.spyfile` (default:
                 `None`).
+
+        Returns:
+            bands (`list`): the list of bands (band number) corresponding to
+                `wl_list`.
+            wls_mean (`float`): the mean wavelength from `wl_list`.
         '''
-        msg = ('"band_list" must be a list.')
-        assert isinstance(band_list, list), msg
+        msg = ('"wl_list" must be a list.')
+        assert isinstance(wl_list, list), msg
 
         if spyfile is None:
             spyfile = self.spyfile
@@ -946,12 +905,12 @@ class hstools(object):
 
         bands = []
         wls = []
-        for band in band_list:
-            band_i, wl_i = self._get_band(band)
+        for wl in wl_list:
+            band_i, wl_i = self.get_band(wl)
             bands.append(band_i)
             wls.append(wl_i)
-        wls = np.mean(wls)
-        return bands, wls
+        wls_mean = np.mean(wls)
+        return bands, wls_mean
 
     def get_band_index(self, band_num):
         '''
@@ -968,7 +927,7 @@ class hstools(object):
             band_idx = band_num - 1
         return band_idx
 
-    def get_band_mean(self, band_list, spyfile=None):
+    def get_spectral_mean(self, band_list, spyfile=None):
         '''
         Gets the spectral mean of a datacube from a list of bands
 
@@ -1028,11 +987,12 @@ class hstools(object):
         '''
         msg = ('"range_wl" must be a `list` or `tuple`.')
         assert isinstance(range_wl, list) or isinstance(range_wl, tuple), msg
+        # could also just take the min and max as long as it has at least 2..
         msg = ('"range_wl" must have exactly two items.')
         assert len(range_wl) == 2, msg
 
-        band_min, wl_min = self.get_band(range_wl[0])  # gets closest band
-        band_max, wl_max = self.get_band(range_wl[1])
+        band_min, wl_min = self.get_band(min(range_wl))  # gets closest band
+        band_max, wl_max = self.get_band(max(range_wl))
         if wl_min < range_wl[0]:  # ensures its actually within the range
             band_min += 1
         if wl_max > range_wl[1]:
@@ -1120,6 +1080,34 @@ class hstools(object):
         '''
         self.spyfile = spyfile
         self._get_meta_bands(spyfile)
+
+    def mask_array(self, array, thresh=0.5, percentile=None, side='lower'):
+        '''
+        Creates a masked numpy array based on a threshold value
+
+        Parameters:
+            array (`numpy.ndarray`): The data array to mask.
+            thresh (`float`): The value for which to base the threshold.
+            side (`str`): The side of the threshold for which to apply the
+                mask. Must be either 'lower' or 'upper'; if 'lower', everything
+                below the threshold will be masked (default: 'lower').
+        '''
+        if percentile is not None:
+            array_pctl = np.percentile(array, percentile)
+            if side == 'lower':
+                array_mask = np.ma.masked_where(array < array_pctl, array)
+            elif side == 'upper':
+                array_mask = np.ma.masked_where(array < array_pctl, array)
+
+
+        if side == 'lower':
+            mask_array = np.ma.array(array, mask=array <= 0.55)
+        elif side == 'upper':
+            mask_array = np.ma.array(array, mask=array > 0.55)
+        unmasked_pct = 100 * (mask_array.count() /
+                              (array.shape[0]*array.shape[1]))
+        print('Proportion unmasked pixels: {0:.2f}%'.format(unmasked_pct))
+        return mask_array
 
     def modify_meta_set(self, meta_set, idx, value):
         '''
