@@ -72,7 +72,7 @@ class spatial_mod(object):
         return gdf_filter
 
     def _find_plots_gdf(self, spyfile, gdf, plot_id_ref, pix_e_ul, pix_n_ul,
-                        metadata=None):
+                        n_plots, metadata=None):
         '''
         Calculates the number of x plots and y plots in image, determines
         the plot ID number, and calculates and records start/end pixels for
@@ -95,7 +95,21 @@ class spatial_mod(object):
         spy_srs_e_m = float(metadata['map info'][3])  # UTM coordinate
         spy_srs_n_m = float(metadata['map info'][4])
 
-        for idx, row in gdf_filter.iterrows():
+        gdf_temp = (
+            gdf_filter.assign(x=lambda df: df['geometry'].centroid.x)
+               .assign(y=lambda df: df['geometry'].centroid.y)
+        #       .assign(rep_val=lambda df: df[['x', 'y']].mean(axis=1))
+#               .sort_values(by=['y', 'x'], ascending=[False, True])
+               )
+        gdf_temp = gdf_temp.astype({'x': int, 'y': int})
+        gdf_sort = gdf_temp.sort_values(by=['y', 'x'], ascending=[False, True])
+        gdf_sort = gdf_sort.reset_index(drop=True)  # reset the index
+
+        if n_plots is not None:
+            idx = gdf_sort[gdf_sort['plot'] == plot_id_ref].index[0]
+            gdf_sort = gdf_sort.iloc[idx:idx + n_plots]
+
+        for idx, row in gdf_sort.iterrows():
             plot = row['plot']
             bounds = row['geometry'].bounds
             plot_srs_e_m = bounds[0]
@@ -373,7 +387,8 @@ class spatial_mod(object):
     def crop_many_gdf(self, plot_id_ref, pix_e_ul=0, pix_n_ul=0,
                       crop_e_m=None, crop_n_m=None, crop_e_pix=None,
                       crop_n_pix=None, buf_e_m=None, buf_n_m=None,
-                      buf_e_pix=None, buf_n_pix=None, spyfile=None, gdf=None):
+                      buf_e_pix=None, buf_n_pix=None, n_plots=None,
+                      spyfile=None, gdf=None):
         '''
         Crops many plots from a single image by comparing the image to a
         polygon file (geopandas.GoeDataFrame) that contains plot information
@@ -422,6 +437,9 @@ class spatial_mod(object):
             buf_n_pix (`int`, optional): The buffer distance in the northing
                 direction (in pixel units) to be applied after calculating the
                 original crop area.
+            n_plots (`int`, optional): number of plots to crop, starting with
+                `plot_id_ref` and moving from West to East and North to South
+                (default; `None`).
            spyfile (`SpyFile` object): The datacube to crop; if `None`, loads
                datacube and band information from `spatial_mod.spyfile`
                (default: `None`).
@@ -451,9 +469,9 @@ class spatial_mod(object):
         msg2 = ('Please be sure `plot_id_ref` is present in `gdf` (i.e., '
                 'the GeoDataFrame).\n')
         assert isinstance(gdf, gpd.GeoDataFrame), msg1
-        assert plot_id_ref in gdf['plot'], msg2
+        assert plot_id_ref in gdf['plot'].tolist(), msg2
         df_plots = self._find_plots_gdf(spyfile, gdf, plot_id_ref,
-                                        pix_e_ul, pix_n_ul, metadata)
+                                        pix_e_ul, pix_n_ul, n_plots, metadata)
         return df_plots
 
     def crop_many_grid(self, plot_id_ul, pix_e_ul, pix_n_ul,

@@ -6,7 +6,7 @@ import os
 from osgeo import gdal
 from osgeo import gdalconst
 #from osgeo import ogr
-#import pandas as pd
+import pandas as pd
 import re
 import spectral.io.envi as envi
 import spectral.io.spyfile as SpyFile
@@ -75,7 +75,8 @@ class defaults:
             'crop_e_pix': 'crop_e_pix',
             'crop_n_pix': 'crop_n_pix',
             'n_plots_x': 'n_plots_x',
-            'n_plots_y': 'n_plots_y'}
+            'n_plots_y': 'n_plots_y',
+            'n_plots': 'n_plots'}
 
     crop_defaults = {
             'directory': None,
@@ -453,6 +454,7 @@ class hsio(object):
 
         if os.path.splitext(fname_hdr)[1] != '.hdr':
             fname_hdr = fname_hdr + '.hdr'
+            self.fname_hdr = fname_hdr
 
         # The following ensures that user-passed variables have priority
         if not os.path.isfile(fname_hdr):
@@ -640,9 +642,9 @@ class hsio(object):
         Parameters:
             hdr_file (`str`): Output header file path (with the '.hdr'
                 extension).
-            df_mean (`pandas.DataFrame`): Mean spectra, stored as a df row,
+            df_mean (`pandas.Series` or `numpy.ndarray`): Mean spectra, stored as a df row,
                 where columns are the bands.
-            df_std (`pandas.DataFrame`): Standard deviation of each spectra,
+            df_std (`pandas.Series` or `numpy.ndarray`): Standard deviation of each spectra,
                 stored as a df row, where columns are the bands. This will be
                 saved to the .hdr file.
             dtype (`numpy.dtype` or `str`): The data type with which to store
@@ -677,22 +679,34 @@ class hsio(object):
         if os.path.splitext(hdr_file)[1] != '.hdr':
             hdr_file = hdr_file + '.hdr'
         metadata = self._del_meta_item(metadata, 'map info')
-        metadata = self._del_meta_item(metadata, 'history')
-        metadata = self._del_meta_item(metadata, 'original cube file')
+        metadata = self._del_meta_item(metadata, 'coordinate system string')
+#        metadata = self._del_meta_item(metadata, 'history')
+#        metadata = self._del_meta_item(metadata, 'original cube file')
 #        metadata = self._del_meta_item(metadata, 'pointlist')
         metadata = self._del_meta_item(metadata, 'boundary')
         metadata = self._del_meta_item(metadata, 'label')
 
-        metadata['band names'] = '{' + ', '.join(str(e) for e in list(
-                self.tools.meta_bands.keys())) + '}'
+        if 'band names' not in metadata.keys():
+            metadata['band names'] = '{' + ', '.join(str(e) for e in list(
+                    self.tools.meta_bands.keys())) + '}'
+        if 'wavelength' not in metadata.keys():
+            metadata['wavelength'] = '{' + ', '.join(str(e) for e in list(
+                    self.tools.meta_bands.values())) + '}'
+        if isinstance(df_std, np.ndarray):
+            df_std = pd.Series(df_std)
         std = df_std.to_dict()
         metadata['stdev'] = '{' + ', '.join(str(e) for e in list(
                 std.values())) + '}'
         metadata['label'] = os.path.basename(os.path.splitext(hdr_file)[0])
         metadata = self.tools.clean_md_sets(metadata=metadata)
-        self.spyfile_spec.metadata = metadata
-
-        array_mean = df_mean.to_numpy()
+        try:
+            self.spyfile_spec.metadata = metadata
+        except AttributeError as err:
+            pass
+        if isinstance(df_mean, np.ndarray):
+            array_mean = df_mean.copy()
+        else:
+            array_mean = df_mean.to_numpy()
         array = array_mean.reshape(1, 1, len(df_mean))
         envi.save_image(hdr_file, array, interleave=interleave, dtype=dtype,
                         byteorder=byteorder, metadata=metadata, force=force,
@@ -737,33 +751,58 @@ class hsio(object):
 
         drv = gdal.GetDriverByName('GTiff')
         drv.Register()
-        ysize, xsize, bands = array.shape
-        tif_out = drv.Create(fname_tif, xsize, ysize, 3, gdal.GDT_Float32)
-        tif_out.SetProjection(projection_out)
-        tif_out.SetGeoTransform(geotransform_out)
+        if len(array.shape) == 3:
+            ysize, xsize, bands = array.shape
+            tif_out = drv.Create(fname_tif, xsize, ysize, 3, gdal.GDT_Float32)
+            msg = ('GDAL driver was unable to successfully create the empty '
+                   'geotiff; check to be sure the correct filename is being '
+                   'passed: {0}\n'.format(fname_tif))
+            assert tif_out is not None, msg
+            tif_out.SetProjection(projection_out)
+            tif_out.SetGeoTransform(geotransform_out)
 
-        band_b = self.tools.get_band(460)[0]
-        band_g = self.tools.get_band(550)[0]
-        band_r = self.tools.get_band(640)[0]
-        band_list = [band_r, band_g, band_b]  # backwards for RGB display
-        array_img = None
-        for idx, band in enumerate(band_list):
-            array_band = array[:, :, band-1]
-            if len(array_band.shape) > 2:
-                array_band = array_band.reshape((array_band.shape[0],
-                                                 array_band.shape[1]))
-            band_out = tif_out.GetRasterBand(idx + 1)
-            band_out.WriteArray(array_band)  # must flip
-            if array_img is None:
-                array_img = array_band
-            else:
-                array_img = np.dstack((array_img, array_band))  # stacks bands
+            band_b = self.tools.get_band(460)
+            band_g = self.tools.get_band(550)
+            band_r = self.tools.get_band(640)
+            band_list = [band_r, band_g, band_b]  # backwards for RGB display
+#            array_img = None
+            for idx, band in enumerate(band_list):
+                array_band = array[:, :, band-1]
+                if len(array_band.shape) > 2:
+                    array_band = array_band.reshape((array_band.shape[0],
+                                                     array_band.shape[1]))
+                band_out = tif_out.GetRasterBand(idx + 1)
+                if np.ma.is_masked(array_band):
+                    array_band[array_band.mask] = 0
+                    band_out.SetNoDataValue(0)
+                band_out.WriteArray(array_band)  # must flip
+
+#                if array_img is None:
+#                    array_img = array_band
+#                else:
+#                    array_img = np.dstack((array_img, array_band))  # stacks bands
+                band_out = None
+            self.show_img(array, band_r=band_r, band_g=band_g,
+                          band_b=band_b)
+
+        else:
+            bands = 1
+            ysize, xsize = array.shape
+            tif_out = drv.Create(fname_tif, xsize, ysize, 1, gdal.GDT_Float32)
+            tif_out.SetProjection(projection_out)
+            tif_out.SetGeoTransform(geotransform_out)
+            band_out = tif_out.GetRasterBand(1)
+            if np.ma.is_masked(array):
+                array[array.mask] = 0
+                band_out.SetNoDataValue(0)
+            band_out.WriteArray(array)
             band_out = None
+            self.show_img(array)
+#        array_img = None
+
         tif_out.FlushCache()
         drv = None
         tif_out = None
-        self.show_img(array, band_r=band_r, band_g=band_g,
-                      band_b=band_b)
 
 
 class hstools(object):
@@ -817,7 +856,10 @@ class hstools(object):
                 wl_names = list(ast.literal_eval(
                         str(metadata['wavelength'])))
             for idx in range(len(band_names)):
-                meta_bands[band_names[idx]] = float(wl_names[idx])
+                try:
+                    meta_bands[int(band_names[idx])] = float(wl_names[idx])
+                except ValueError:
+                    meta_bands[band_names[idx]] = float(wl_names[idx])
         self.meta_bands = meta_bands
 
     def clean_md_sets(self, metadata=None):
@@ -851,21 +893,20 @@ class hstools(object):
             print('{0} not a valid key in input dictionary.'.format(key))
         return metadata
 
-    def get_band(self, target, spyfile=None):
+    def get_band(self, target_wl, spyfile=None):
         '''
-        Returns band number and actual wavelength of the closest target
-        wavelength.
+        Returns band number of the closest target wavelength.
 
         Parameters:
-            target (`int` or `float`): the target wavelength to retrieve band
-                number for (required).
+            target_wl (`int` or `float`): the target wavelength to retrieve the
+                band number for (required).
             spyfile (`SpyFile` object): The datacube being accessed and/or
                 manipulated; if `None`, uses `hstools.spyfile` (default:
                 `None`).
 
         Example:
             [1] hstools.get_band(703, spyfile)
-            >>> (151, 702.52)
+            >>> 151
         '''
         if spyfile is None:
             spyfile = self.spyfile
@@ -873,11 +914,38 @@ class hstools(object):
             self.load_spyfile(spyfile)
 
         val_target = min(list(self.meta_bands.values()),
-                         key=lambda x: abs(x-target))
+                         key=lambda x: abs(x-target_wl))
         key_band = list(self.meta_bands.keys())[sorted(list(
                 self.meta_bands.values())).index(val_target)]
-        key_wavelength = sorted(list(self.meta_bands.values()))[key_band-1]
-        return key_band, key_wavelength
+#        key_wavelength = sorted(list(self.meta_bands.values()))[key_band-1]
+        return key_band
+
+    def get_wavelength(self, target_band, spyfile=None):
+        '''
+        Returns actual wavelength of the closest target band.
+
+        Parameters:
+            target_band (`int` or `float`): the target band to retrieve
+                wavelength number for (required).
+            spyfile (`SpyFile` object): The datacube being accessed and/or
+                manipulated; if `None`, uses `hstools.spyfile` (default:
+                `None`).
+
+        Example:
+            [1] hstools.get_wavelength(151, spyfile)
+            >>> 702.52
+        '''
+        if spyfile is None:
+            spyfile = self.spyfile
+        else:
+            self.load_spyfile(spyfile)
+
+        val_target = min(list(self.meta_bands.keys()),
+                         key=lambda x: abs(x-target_band))
+        key_wavelength = list(self.meta_bands.values())[sorted(list(
+                self.meta_bands.keys())).index(val_target)]
+#        key_wavelength = sorted(list(self.meta_bands.values()))[key_band-1]
+        return key_wavelength
 
     def get_center_wl(self, wl_list, spyfile=None):
         '''
@@ -906,7 +974,8 @@ class hstools(object):
         bands = []
         wls = []
         for wl in wl_list:
-            band_i, wl_i = self.get_band(wl)
+            band_i = self.get_band(wl)
+            wl_i = self.get_wavelength(band_i)
             bands.append(band_i)
             wls.append(wl_i)
         wls_mean = np.mean(wls)
@@ -991,12 +1060,16 @@ class hstools(object):
         msg = ('"range_wl" must have exactly two items.')
         assert len(range_wl) == 2, msg
 
-        band_min, wl_min = self.get_band(min(range_wl))  # gets closest band
-        band_max, wl_max = self.get_band(max(range_wl))
+        band_min = self.get_band(min(range_wl))  # gets closest band
+        band_max = self.get_band(max(range_wl))
+        wl_min = self.get_wavelength(band_min)
+        wl_max = self.get_wavelength(band_max)
         if wl_min < range_wl[0]:  # ensures its actually within the range
             band_min += 1
+            wl_min = self.get_wavelength(band_min)
         if wl_max > range_wl[1]:
             band_max -= 1
+            wl_max = self.get_wavelength(band_max)
         if index is True:
             band_min = self.get_band_index(band_min)
             band_max = self.get_band_index(band_max)
@@ -1081,33 +1154,61 @@ class hstools(object):
         self.spyfile = spyfile
         self._get_meta_bands(spyfile)
 
-    def mask_array(self, array, thresh=0.5, percentile=None, side='lower'):
+    def mask_array(self, array, metadata, thresh=None, percentile=None,
+                   side='lower'):
         '''
         Creates a masked numpy array based on a threshold value
 
         Parameters:
             array (`numpy.ndarray`): The data array to mask.
-            thresh (`float`): The value for which to base the threshold.
+            thresh (`float`): The value for which to base the threshold
+                (default: `None`).
+            percentile (`float`): The percentile of pixels to mask; if
+                `percentile`=95 and `side`='lower', the lowest 95% of pixels
+                will be masked prior to calculating the mean spectra across
+                pixels (default: `None`; range: 0-100).
             side (`str`): The side of the threshold for which to apply the
                 mask. Must be either 'lower' or 'upper'; if 'lower', everything
                 below the threshold will be masked (default: 'lower').
         '''
+#        if metadata is None:
+#            metadata = self.spyfile.metadata
+        if thresh is None and percentile is None:
+            return array, metadata
+
         if percentile is not None:
-            array_pctl = np.percentile(array, percentile)
+            array_pctl = np.nanpercentile(array, percentile)
             if side == 'lower':
-                array_mask = np.ma.masked_where(array < array_pctl, array)
+#                mask_array_p = np.ma.masked_where(array <= array_pctl, array)
+                mask_array_p = np.ma.masked_less_equal(array, array_pctl)
             elif side == 'upper':
-                array_mask = np.ma.masked_where(array < array_pctl, array)
+#                mask_array_p = np.ma.masked_where(array > array_pctl, array)
+                mask_array_p = np.ma.masked_greater(array, array_pctl)
+        else:
+            mask_array_p = np.ma.masked_less(array, np.nanmin(array))
+        if thresh is not None:
+            if side == 'lower':
+#                mask_array_t = np.ma.array(array, mask=array <= thresh)
+                mask_array_t = np.ma.masked_less_equal(array, thresh)
+            elif side == 'upper':
+#                mask_array_t = np.ma.array(array, mask=array > thresh)
+                mask_array_t = np.ma.masked_greater(array, thresh)
+        else:
+            mask_array_t = np.ma.masked_less(array, np.nanmin(array))
 
-
-        if side == 'lower':
-            mask_array = np.ma.array(array, mask=array <= 0.55)
-        elif side == 'upper':
-            mask_array = np.ma.array(array, mask=array > 0.55)
-        unmasked_pct = 100 * (mask_array.count() /
+        mask_combine = np.logical_or(mask_array_p.mask, mask_array_t.mask)
+        array_mask = np.ma.array(array, mask=mask_combine)
+        unmasked_pct = 100 * (array_mask.count() /
                               (array.shape[0]*array.shape[1]))
         print('Proportion unmasked pixels: {0:.2f}%'.format(unmasked_pct))
-        return mask_array
+
+        hist_str = (" -> hs_process.mask_array[<"
+                    "label: 'thresh?' value:{0}; "
+                    "label: 'percentile?' value:{1}; "
+                    "label: 'side?' value:{2}>]"
+                    "".format(thresh, percentile, side))
+        metadata['history'] += hist_str
+        return array_mask, metadata
 
     def modify_meta_set(self, meta_set, idx, value):
         '''

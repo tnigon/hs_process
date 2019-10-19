@@ -61,7 +61,31 @@ from hs_process import batch
 base_dir_spec = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2019\2019-07-22_Waseca-LTARN\cube_ref_panels'
 hsbatch = batch(base_dir_spec, search_ext='.bip')
 hsbatch.spectra_combine(base_dir=base_dir_spec, search_ext='bip', dir_level=0,
-                        out_force=True)
+                        out_force=False)
+
+# In[1f: spectral mean 2019-06-29_AERF-plot2]
+from hs_process import batch
+
+base_dir_spec = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2019\2019-06-29_AERF-plot2\cube_ref_panels'
+hsbatch = batch(base_dir_spec, search_ext='.bip')
+hsbatch.spectra_combine(base_dir=base_dir_spec, search_ext='bip', dir_level=0,
+                        out_force=False)
+
+# In[1g: spectral mean 2019-06-29_Waseca-AERF]
+from hs_process import batch
+
+base_dir_spec = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2019\2019-06-29_Waseca-AERF\cube_ref_panels'
+hsbatch = batch(base_dir_spec, search_ext='.bip')
+hsbatch.spectra_combine(base_dir=base_dir_spec, search_ext='bip', dir_level=0,
+                        out_force=False)
+
+# In[1h: spectral mean 2019-07-22_Waseca-LTARN]
+from hs_process import batch
+
+base_dir_spec = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2019\2019-07-23_AERF-plot2\cube_ref_panels'
+hsbatch = batch(base_dir_spec, search_ext='.bip')
+hsbatch.spectra_combine(base_dir=base_dir_spec, search_ext='bip', dir_level=0,
+                        out_force=False)
 
 # In[2. Batch crop - Wells data]
 import geopandas as gpd
@@ -104,8 +128,46 @@ array_ndi_nr2, metadata_nr = my_seg.band_math_ndi(b1=[760, 770, 780, 810], b2=55
 
 # In[5. 67th percentile, segment, calculate plot avg for all bands, and export to spreadsheet]
 
-# In[5.a. Calculate NDVI]
+# In[5.a. Calculate NDRE]
+import os
+from hs_process.utilities import hsio
+from hs_process.segment import segment
 
+directory = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2019\2019-06-29_AERF-plot2\smooth_spec_clip\crop'
+fname = 'plot_101_pika_gige_2-crop.bip.hdr'
+hdr_name = os.path.join(directory, fname)
+hs = hsio(hdr_name)
+my_seg = segment(hs.spyfile)
+
+wl1 = 760
+wl2 = 720
+
+array_ndre, metadata_ndre = my_seg.band_math_ndi(wl1=wl1, wl2=wl2, list_range=True)
+hs.show_img(spyfile=array_ndre, inline=False)
+
+array_ndre_m, metadata = my_seg.tools.mask_array(array_ndre, thresh=None,
+                                                 percentile=90, side='lower',
+                                                 metadata=metadata_ndre)
+hs.show_img(spyfile=array_ndre_m, inline=False)
+
+veg_spec_mean, veg_spec_std, metadata = my_seg.veg_spectra(
+        array_ndre, thresh=None, percentile=90, side='lower')
+
+# In[5.b. Batch band math]
+from hs_process import batch
+
+base_dir = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2019\2019-06-29_AERF-plot2\smooth_spec_clip\crop'
+hsbatch = batch(base_dir, search_ext='.bip')
+fname_list = hsbatch.fname_list
+wl1 = 760
+wl2 = 720
+hsbatch.segment_band_math(folder_name='band_math', name_append='band-math',
+                          geotiff=True, method='ndi', wl1=wl1, wl2=wl2,
+                          list_range=True, mask_percentile=90,
+                          mask_side='lower', save_spec=True, out_force=True,
+                          out_ext=False, out_interleave=False)
+
+# In[Next]
 base_dir = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2018\2018-06-13_Wells\crop_3_standardized_byreflectance\block1\conventional\smooth_spec_clip'
 
 my_hs = Hyperspectral()
@@ -160,6 +222,57 @@ df_ndi_stats.to_csv(os.path.join(my_hs.base_dir_out, 'ndi_stats_90_pctl.csv'),
 
 
 
+# In[Sort by geometry]
+
+import geopandas as gpd
+from hs_process import batch
+
+fname_sheet = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\hs_process_demo\wells_image_cropping.csv'
+fname_shp = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\hs_process_demo\plot_bounds\plot_bounds.shp'
+gdf = gpd.read_file(fname_shp)
+
+hsbatch = batch()
+
+method = 'many_gdf'  # options: 'single', 'many_grid', or 'many_gdf'
+hsbatch.spatial_crop(fname_sheet,
+                     folder_name='spatial_crop_{0}'.format(method),
+                     name_append='spatial-crop', geotiff=True, method=method,
+                     gdf=gdf, out_force=True)
+
+
+# In[show plots]
+import matplotlib.pyplot as plt
+import rasterio as rast
+from rasterio.plot import show
+
+base_dir = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\hs_process_demo\spatial_crop_many_gdf'
+tif_list = hsbatch._recurs_dir(base_dir, search_ext='.tif', level=0)
+
+gdf_filter = hsbatch.my_spatial_mod._overlay_gdf(hsbatch.io.spyfile, gdf)
+
+fig, ax = plt.subplots(figsize=(15, 15))
+gdf_filter.plot(ax=ax, alpha=0.9, column='Crop', facecolor='none', edgecolor='blue', linewidth=3)
+ax.use_sticky_edges = True
+
+left = 1e9
+bottom = 1e9
+right = -1e9
+top = -1e9
+for fname_tif in tif_list:
+    tif = rast.open(fname_tif)
+    show(tif.read(), ax=ax, transform=tif.transform)
+    if tif.bounds[0] < left:
+        left = tif.bounds[0]
+    if tif.bounds[1] < bottom:
+        bottom = tif.bounds[1]
+    if tif.bounds[2] > right:
+        right = tif.bounds[2]
+    if tif.bounds[3] > top:
+        top = tif.bounds[3]
+
+bbox = gdf_filter.total_bounds
+plt.xlim((left, right))
+plt.ylim((bottom, top))
 
 
 
