@@ -8,6 +8,7 @@ from osgeo import gdalconst
 #from osgeo import ogr
 import pandas as pd
 import re
+import seaborn as sns
 import spectral.io.envi as envi
 import spectral.io.spyfile as SpyFile
 import sys
@@ -592,7 +593,7 @@ class hsio(object):
             hdr_file (`str`): Output header file path (with the '.hdr'
                 extension).
             spyfile (`SpyFile` object or `numpy.ndarray`): The hyperspectral
-                data cube to save. If `numpy.ndarray`, then metadata (`dict`)
+                datacube to save. If `numpy.ndarray`, then metadata (`dict`)
                 should also be passed.
             dtype (`numpy.dtype` or `str`): The data type with which to store
                 the image. For example, to store the image in 16-bit unsigned
@@ -713,7 +714,7 @@ class hsio(object):
                         ext=ext)
 
     def write_tif(self, fname_tif, spyfile=None,
-                  projection_out=None, geotransform_out=None):
+                  projection_out=None, geotransform_out=None, inline=True):
         '''
         Wrapper function that accesses the GDAL Python package to save a
         small datacube subset (i.e., three bands or less) to file.
@@ -753,7 +754,12 @@ class hsio(object):
         drv.Register()
         if len(array.shape) == 3:
             ysize, xsize, bands = array.shape
-            tif_out = drv.Create(fname_tif, xsize, ysize, 3, gdal.GDT_Float32)
+        else:
+            bands = 1
+        if bands >= 3:
+            tif_out = drv.Create(fname_tif, xsize, ysize, 3,
+                                 gdal.GDT_Float32)
+
             msg = ('GDAL driver was unable to successfully create the empty '
                    'geotiff; check to be sure the correct filename is being '
                    'passed: {0}\n'.format(fname_tif))
@@ -783,10 +789,11 @@ class hsio(object):
 #                    array_img = np.dstack((array_img, array_band))  # stacks bands
                 band_out = None
             self.show_img(array, band_r=band_r, band_g=band_g,
-                          band_b=band_b)
+                          band_b=band_b, inline=inline)
 
         else:
-            bands = 1
+            if len(array.shape) == 3:
+                array = np.reshape(array, array.shape[:2])
             ysize, xsize = array.shape
             tif_out = drv.Create(fname_tif, xsize, ysize, 1, gdal.GDT_Float32)
             tif_out.SetProjection(projection_out)
@@ -797,7 +804,7 @@ class hsio(object):
                 band_out.SetNoDataValue(0)
             band_out.WriteArray(array)
             band_out = None
-            self.show_img(array)
+            self.show_img(array, inline=inline)
 #        array_img = None
 
         tif_out.FlushCache()
@@ -842,10 +849,12 @@ class hstools(object):
             metadata = spyfile.metadata
         meta_bands = {}
         if 'band names' not in metadata.keys():
-            for key, val in enumerate(metadata['wavelength']):
-                meta_bands[key+1] = float(val)
-            metadata['band names'] = list(meta_bands.keys())
-
+            try:
+                for key, val in enumerate(metadata['wavelength']):
+                    meta_bands[key+1] = float(val)
+                metadata['band names'] = list(meta_bands.keys())
+            except KeyError as err:  # 'wavelength' is not a metadata key
+                pass  # meta_bands will just be empty
         else:
             try:
                 band_names = list(ast.literal_eval(metadata['band names']))
@@ -1157,58 +1166,145 @@ class hstools(object):
     def mask_array(self, array, metadata, thresh=None, percentile=None,
                    side='lower'):
         '''
-        Creates a masked numpy array based on a threshold value
+        Creates a masked numpy array based on a threshold value. If `array` is
+        already a masked array, that mask is maintained and the new mask(s) is/
+        are added to the original mask.
 
         Parameters:
             array (`numpy.ndarray`): The data array to mask.
-            thresh (`float`): The value for which to base the threshold
-                (default: `None`).
+            thresh (`float` or `list`): The value for which to base the
+                threshold; if `thresh` is `list` and `side` is `None`, then
+                all values in `thresh` will be masked; if `thresh` is `list`
+                and `side` is not `None`, then only the first value in the
+                list will be considered for thresholding (default: `None`).
             percentile (`float`): The percentile of pixels to mask; if
                 `percentile`=95 and `side`='lower', the lowest 95% of pixels
                 will be masked prior to calculating the mean spectra across
                 pixels (default: `None`; range: 0-100).
             side (`str`): The side of the threshold for which to apply the
-                mask. Must be either 'lower' or 'upper'; if 'lower', everything
-                below the threshold will be masked (default: 'lower').
+                mask. Must be either 'lower', 'upper', or `None`; if 'lower',
+                everything below the threshold will be masked; if `None`, only
+                the values that exactly match the threshol will be masked
+                (default: 'lower').
         '''
-#        if metadata is None:
-#            metadata = self.spyfile.metadata
+        if isinstance(array, np.ma.core.MaskedArray):
+            array_m = array.compressed()  # allows for accurate percentile calc
+        else:
+            array_m = np.ma.masked_array(array, mask=False)
+
         if thresh is None and percentile is None:
             return array, metadata
+        if isinstance(thresh, np.ndarray):
+            thresh = list(thresh)
+        if isinstance(thresh, list) and side is not None:
+            thresh = thresh[0]
 
         if percentile is not None:
-            array_pctl = np.nanpercentile(array, percentile)
+            array_pctl = np.nanpercentile(array_m, percentile)
             if side == 'lower':
-#                mask_array_p = np.ma.masked_where(array <= array_pctl, array)
                 mask_array_p = np.ma.masked_less_equal(array, array_pctl)
             elif side == 'upper':
-#                mask_array_p = np.ma.masked_where(array > array_pctl, array)
                 mask_array_p = np.ma.masked_greater(array, array_pctl)
+            elif side is None:
+                mask_array_p = np.ma.masked_equal(array, array_pctl)
         else:
-            mask_array_p = np.ma.masked_less(array, np.nanmin(array))
+            mask_array_p = np.ma.masked_less(array, np.nanmin(array)-1e-6)
         if thresh is not None:
             if side == 'lower':
-#                mask_array_t = np.ma.array(array, mask=array <= thresh)
                 mask_array_t = np.ma.masked_less_equal(array, thresh)
             elif side == 'upper':
-#                mask_array_t = np.ma.array(array, mask=array > thresh)
                 mask_array_t = np.ma.masked_greater(array, thresh)
+            elif side is None and isinstance(thresh, list):
+                mask_array_t = np.ma.MaskedArray(array, np.in1d(array, thresh))
+            else:  # side is None; thresh is float or int
+                mask_array_t = np.ma.masked_equal(array, thresh)
         else:
-            mask_array_t = np.ma.masked_less(array, np.nanmin(array))
+            mask_array_t = np.ma.masked_less(array, np.nanmin(array)-1e-6)
 
         mask_combine = np.logical_or(mask_array_p.mask, mask_array_t.mask)
+        try:
+            mask_combine = np.logical_or(mask_combine, array_m.mask)
+        except AttributeError as err:
+            pass  # array_m does not have a mask
         array_mask = np.ma.array(array, mask=mask_combine)
         unmasked_pct = 100 * (array_mask.count() /
                               (array.shape[0]*array.shape[1]))
         print('Proportion unmasked pixels: {0:.2f}%'.format(unmasked_pct))
 
+        if side is None:
+            side_str = 'equal'
+        else:
+            side_str = side
         hist_str = (" -> hs_process.mask_array[<"
                     "label: 'thresh?' value:{0}; "
                     "label: 'percentile?' value:{1}; "
                     "label: 'side?' value:{2}>]"
-                    "".format(thresh, percentile, side))
+                    "".format(thresh, percentile, side_str))
         metadata['history'] += hist_str
         return array_mask, metadata
+
+    def mask_datacube(self, spyfile, mask):
+        '''
+        Applies `mask` to `spyfile`, then returns the datcube (as a np.array)
+        and the mean spectra
+
+        Parameters:
+            spyfile (`SpyFile` object or `numpy.ndarray`): The hyperspectral
+                datacube to mask.
+            mask (`numpy.ndarray`): the mask to apply to `spyfile`; if `mask`
+                does not have similar dimensions to `spyfile`, the first band
+                (i.e., first two dimensions) of `mask` will be repeated n times
+                to match the number of bands of `spyfile`.
+        '''
+        if isinstance(spyfile, SpyFile.SpyFile):
+            self.load_spyfile(spyfile)
+            array = self.spyfile.load()
+        elif isinstance(spyfile, np.ndarray):
+            array = spyfile.copy()
+
+        if isinstance(mask, np.ma.masked_array):
+            mask = mask.mask
+        if mask.shape != spyfile.shape:
+            if len(mask.shape) == 3:
+                mask_2d = np.reshape(mask, mask.shape[:2])
+            else:
+                mask_2d = mask.copy()
+            mask = np.empty(spyfile.shape)
+            for band in range(spyfile.nbands):
+                mask[:, :, band] = mask_2d
+
+        datacube_masked = np.ma.masked_array(array, mask=mask)
+        spec_mean = np.nanmean(datacube_masked, axis=(0, 1))
+        spec_std = np.nanstd(datacube_masked, axis=(0, 1))
+        spec_mean = pd.Series(spec_mean)
+        spec_std = pd.Series(spec_std)
+        return spec_mean, spec_std, datacube_masked
+
+    def mask_shadow(self, shadow_pctl=20, show_histogram=False,
+                    spyfile=None):
+        '''
+        Creates a `numpy.mask` of all pixels that are likely shadow pixels.
+
+        Parameters:
+            shadow_pctl (`int`): the percentile of pixels in the image to mask
+                (default: 20).
+            show_histogram (`bool`):
+            spyfile (`SpyFile.SpyFile` object):
+        '''
+        if spyfile is None:
+            spyfile = self.spyfile
+            array = self.spyfile.load()
+        elif isinstance(spyfile, SpyFile.SpyFile):
+            self.load_spyfile(spyfile)
+            array = self.spyfile.load()
+        elif isinstance(spyfile, np.ndarray):
+            array = spyfile.copy()
+
+        array_energy = np.mean(array, axis=2)
+        array_noshadow, metadata = self.mask_array(
+                array_energy, self.spyfile.metadata, percentile=shadow_pctl,
+                side='lower', show_histogram=show_histogram)
+        return array_noshadow.mask, metadata
 
     def modify_meta_set(self, meta_set, idx, value):
         '''
