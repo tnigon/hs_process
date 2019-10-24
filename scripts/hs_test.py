@@ -87,6 +87,14 @@ hsbatch = batch(base_dir_spec, search_ext='.bip')
 hsbatch.spectra_combine(base_dir=base_dir_spec, search_ext='bip', dir_level=0,
                         out_force=False)
 
+# In[1i: spectral mean 2019-08-22_Becker-NNI1]
+from hs_process import batch
+
+base_dir_spec = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2019\2019-08-22_Becker-NNI1\cube_ref_panels'
+hsbatch = batch(base_dir_spec, search_ext='.bip')
+hsbatch.spectra_combine(base_dir=base_dir_spec, search_ext='bip', dir_level=0,
+                        out_force=False)
+
 # In[2. Batch crop - Wells data]
 import geopandas as gpd
 

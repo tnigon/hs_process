@@ -354,7 +354,6 @@ class batch(object):
             metadata['interleave'] = self.io.defaults.interleave
             self._write_datacube(dir_out, name_label, array_mask, metadata)
 
-            print(array_mask.shape)
             self.array_mask = array_mask
             if geotiff is True:
                 self._write_geotiff(array_mask, fname, dir_out, name_label,
@@ -637,7 +636,6 @@ class batch(object):
                 fname_fig = os.path.join(dir_out, name_print + name_append +
                                          '.png')
                 fig.savefig(fname_fig)
-
 
             metadata['interleave'] = self.io.defaults.interleave
             self._write_datacube(dir_out, name_label, array_class, metadata)
@@ -995,28 +993,14 @@ class batch(object):
             the minimum ndvi; if more than 1, all classes (default: 1)
         '''
         row_ndvi = row[filter_cols].astype(float)
+        if len(row_ndvi) == n_classes:
+            n_classes -= 1
         row_ndvi_small = row_ndvi.nsmallest(n=n_classes)
-#        class_mask = row_ndvi_small.values.argsort()
         class_name = row_ndvi_small.index.values.tolist()
         class_mask = []
         for name in class_name:
             class_int = int(re.search(r'\d+', name).group())
             class_mask.append(class_int)
-#        class_mask = row_ndvi.values.argmin()
-        print(class_mask)
-        print(class_name)
-#        class_mask_temp = class_mask.copy()
-#        for mask_idx in class_mask_temp:
-#            name = class_name[mask_idx]
-#            if str(mask_idx) not in name:
-#                np.delete(class_mask, mask_idx)
-#
-##        name_min = row_ndvi.index[class_mask]
-#            msg = ('"class_mask" not detected in "class_name"; stopping '
-#                   'because this is probably not the desired behavior\ndata: '
-#                   '{0}\nclass_mask: {1}\nclass_name: {2}'
-#                   ''.format(row, mask_idx, name))
-#            assert str(mask_idx) in name, msg
         return class_mask
 
     def _recurs_dir(self, base_dir, search_ext='.csv', level=None):
@@ -1299,8 +1283,8 @@ class batch(object):
             assert base_dir is not None, msg
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
             self._execute_kmeans(fname_list, base_dir_out, folder_name,
-                                 plot_out, mask_soil, geotiff, n_classes, max_iter,
-                                 mask_soil=False)
+                                 name_append, geotiff, n_classes, max_iter,
+                                 plot_out, mask_soil=False)
 
     def combine_kmeans_bandmath(self, fname_sheet, base_dir_out=None,
                                 folder_name='mask_combine',
@@ -1357,6 +1341,13 @@ class batch(object):
         assert kmeans_filter in ['ndvi', 'gndvi', 'ndre', 'mcari2'], msg
         filter_str = '_{0}'.format(kmeans_filter)
         filter_cols = [col for col in df_kmeans.columns if filter_str in col]
+
+        bandmath_pctl_str = '{0}_pctl'.format(kmeans_filter)
+        bandmath_side_str = '{0}_side'.format(kmeans_filter)
+        columns = ['fname', 'kmeans_class', 'kmeans_nonmasked_pct',
+                   bandmath_pctl_str, bandmath_side_str, 'total_nonmasked_pct']
+        df_stats = pd.DataFrame(columns=columns)
+
         for idx, row in df_kmeans.iterrows():  # using stats-kmeans.csv
             class_mask = self._get_class_mask(row, filter_cols,
                                               n_classes=kmeans_mask_classes)
@@ -1378,6 +1369,8 @@ class batch(object):
             array_kmeans, metadata_kmeans = self.io.tools.mask_array(
                     array_kmeans, metadata_kmeans, thresh=class_mask,
                     side=None)  # when side=None, masks the exact match
+            kmeans_pct = (100 * (array_kmeans.count() /
+                            (array_kmeans.shape[0]*array_kmeans.shape[1])))
 
             # by adding the kmeans mask, hstools.mask_array will consider that
             # mask when masking by bandmath values (applicable for percentile)
@@ -1386,9 +1379,15 @@ class batch(object):
             mask_combined, metadata_bandmath = self.io.tools.mask_array(
                     array_bandmath, metadata_bandmath,
                     percentile=mask_percentile, side=mask_side)
+            total_pct = (100 * (mask_combined.count() /
+                            (mask_combined.shape[0]*mask_combined.shape[1])))
             spec_mean, spec_std, datacube_masked = self.io.tools.mask_datacube(
                     self.io.spyfile, mask_combined)
 
+            data = [fname, class_mask, kmeans_pct, mask_percentile, mask_side,
+                    total_pct]
+            df_stats_temp = pd.DataFrame(data=[data], columns=columns)
+            df_stats = df_stats.append(df_stats_temp)
             name_label = (name_print + name_append + '.' +
                           self.io.defaults.interleave)
             metadata = self.io.spyfile.metadata.copy()
@@ -1408,6 +1407,8 @@ class batch(object):
                                '-spec-mean.spec')
             self._write_spec(dir_out, name_label_spec, spec_mean, spec_std,
                              metadata)
+        fname_stats = os.path.join(dir_out, name_append[1:] + '-stats.csv')
+        df_stats.to_csv(fname_stats)
 
     def segment_create_mask(self, fname_list=None, base_dir=None,
                             search_ext='bip', dir_level=0, base_dir_out=None,
@@ -1665,6 +1666,44 @@ class batch(object):
                     window_size, order, stats)
         if df_stats is not None:
             return df_stats
+
+    def spectra_to_csv(self, fname_list=None, base_dir=None, search_ext='spec',
+                       dir_level=0, base_dir_out=None):
+        '''
+        Reads all the .spec files in a direcory and saves their reflectance
+        information to a .csv
+        '''
+        if fname_list is None and base_dir is not None:
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+        else:  # fname_list and base_dir are both `None`
+            # base_dir may have been stored to the `batch` object
+            base_dir = self.base_dir
+            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+                   'datacubes should be processed.\n')
+            assert base_dir is not None, msg
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+
+          # load the data from the Spectral Python (SpyFile) object
+        df_spec = None
+        for fname in fname_list:
+            self.io.read_spec(fname + '.hdr')
+            meta_bands = self.io.tools.meta_bands
+            array = self.io.spyfile_spec.load()
+            data = list(np.reshape(array, (array.shape[2])) * 100)
+            data.insert(0, self.io.name_plot)
+            data.insert(0, fname)
+            if df_spec is None:
+                columns = list(meta_bands.values())
+                columns.insert(0, 'wavelength')
+                columns.insert(0, np.nan)
+                bands = list(meta_bands.keys())
+                bands.insert(0, 'plot')
+                bands.insert(0, 'fname')
+                df_spec = pd.DataFrame(data=[bands], columns=columns)
+            df_spec_temp = pd.DataFrame(data=[data], columns=columns)
+            df_spec = df_spec.append(df_spec_temp)
+        fname_csv = os.path.join(base_dir, 'stats-spectra.csv')
+        df_spec.to_csv(fname_csv, index=False)
 
     def spectra_combine(self, fname_list=None, base_dir=None,
                         search_ext='bip', dir_level=0, base_dir_out=None,

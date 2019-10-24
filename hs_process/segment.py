@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from spectral import kmeans
 import numpy as np
 import pandas as pd
+from spectral import kmeans
 import spectral.io.spyfile as SpyFile
 import seaborn as sns
 from matplotlib import pyplot as plt
@@ -49,6 +49,19 @@ class segment(object):
         elif wl is None and b is not None:  # get wl
             wl = self.tools.get_wavelength(b)
         return wl
+
+    def _check_classes(self, array_class, n_pix):
+        '''
+        Checks that enough classes were assigned
+        '''
+        unique_classes, counts = np.unique(array_class, return_counts=True)
+        unique_classes_mod = list(unique_classes.copy())
+        counts_mod = list(counts.copy())
+        for idx, (unique, count) in enumerate(zip(unique_classes, counts)):
+            if count < n_pix:
+                unique_classes_mod.pop(unique)
+                counts_mod.pop(idx)
+        return unique_classes_mod, counts_mod
 
     def _get_band_list(self, wl_list, list_range):
         '''
@@ -441,6 +454,39 @@ class segment(object):
         metadata = self.tools.spyfile.metadata
 
         array_class, c = kmeans(spyfile, n_classes, max_iter)
+#        print(len(np.unique(array_class)))
+        unique_classes, counts = self._check_classes(array_class, n_pix=5)
+        print(len(unique_classes))
+#        n = 0
+#        # the following checks that there are as many classes as desired; if
+#        # not, reruns kmeans with 1 additional
+#        msg = ('Failure to get enough kmeans classes.')
+#        while len(unique_classes) < n_classes:
+#            n += 1
+#            print('Not enough clusters found; increasing `n_classes` to {0} '
+#                  'and trying again..\n'.format(n_classes + n))
+#            array_class, c = kmeans(spyfile, n_classes + n, max_iter)
+#            unique_classes, counts = self._check_classes(array_class, n_pix=5)
+#            assert (n_classes + n <= n_classes + 5), msg
+#
+#    def _fix_kmeans_result(array_class):
+#        '''
+#        Reassigns class ID based on updated spectra (`c` array)
+#        '''
+#
+#
+#
+#        if len(c) > len(unique_classes):
+#            # remove from c
+#            c_len = list(range(0, len(c)))
+#            list_dif = np.setdiff1d(c_len, list(unique_classes))
+#            for i in sorted(list_dif, reverse=True):
+#                print(len(c))
+##                del c[i]
+##            for i in list_dif:
+#                c = np.delete(c, i, 0)
+
+
         df_class_spec = pd.DataFrame(c.transpose())
 
 #        nir_b = self.tools.get_band(760)

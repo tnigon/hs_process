@@ -1229,7 +1229,7 @@ class hstools(object):
         array_mask = np.ma.array(array, mask=mask_combine)
         unmasked_pct = 100 * (array_mask.count() /
                               (array.shape[0]*array.shape[1]))
-        print('Proportion unmasked pixels: {0:.2f}%'.format(unmasked_pct))
+#        print('Proportion unmasked pixels: {0:.2f}%'.format(unmasked_pct))
 
         if side is None:
             side_str = 'equal'
@@ -1238,8 +1238,9 @@ class hstools(object):
         hist_str = (" -> hs_process.mask_array[<"
                     "label: 'thresh?' value:{0}; "
                     "label: 'percentile?' value:{1}; "
-                    "label: 'side?' value:{2}>]"
-                    "".format(thresh, percentile, side_str))
+                    "label: 'side?' value:{2}; "
+                    "label: 'unmasked_pct?' value:{3}>]"
+                    "".format(thresh, percentile, side_str, unmasked_pct))
         metadata['history'] += hist_str
         return array_mask, metadata
 
