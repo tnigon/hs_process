@@ -78,7 +78,7 @@ class spatial_mod(object):
         the plot ID number, and calculates and records start/end pixels for
         each plot
         '''
-        columns=['plot_id', 'pix_e_ul', 'pix_n_ul']
+        columns=['plot_id', 'pix_e_ul', 'pix_n_ul', 'crop_e_pix', 'crop_n_pix']
         df_plots = pd.DataFrame(columns=columns)
         gdf_filter = self._overlay_gdf(spyfile, gdf)
         msg = ('Please be sure the reference plot (`plot_id_ref`): {0} is '
@@ -105,42 +105,50 @@ class spatial_mod(object):
         gdf_sort = gdf_temp.sort_values(by=['y', 'x'], ascending=[False, True])
         gdf_sort = gdf_sort.reset_index(drop=True)  # reset the index
 
-        if n_plots is not None:
+        if pd.notnull(n_plots):
             idx = gdf_sort[gdf_sort['plot'] == plot_id_ref].index[0]
             gdf_sort = gdf_sort.iloc[idx:idx + n_plots]
 
         for idx, row in gdf_sort.iterrows():
             plot = row['plot']
             bounds = row['geometry'].bounds
-            plot_srs_e_m = bounds[0]
-            plot_srs_n_m = bounds[3]
+            plot_srs_w = bounds[0]
+            plot_srs_s = bounds[1]
+            plot_srs_e = bounds[2]
+            plot_srs_n = bounds[3]
             # plot offset from datacube (from NW/upper left corner)
-            offset_e = int((plot_srs_e_m - spy_srs_e_m) / self.spy_ps_e)
-            offset_n = int((spy_srs_n_m - plot_srs_n_m) / self.spy_ps_n)
-            data = [plot, offset_e, offset_n]
+            offset_e = int((plot_srs_w - spy_srs_e_m) / self.spy_ps_e)
+            offset_n = int((spy_srs_n_m - plot_srs_n) / self.spy_ps_n)
+            gdf_crop_e_pix = int(abs(plot_srs_e - plot_srs_w) / self.spy_ps_e)
+            gdf_crop_n_pix = int(abs(plot_srs_n - plot_srs_s) / self.spy_ps_n)
+            data = [plot, offset_e, offset_n, gdf_crop_e_pix, gdf_crop_n_pix]
             df_plots_temp = pd.DataFrame(columns=columns, data=[data])
             df_plots = df_plots.append(df_plots_temp, ignore_index=True)
 
-        if pix_e_ul is not None:  # compare user-identified pixel to gdf pixel
+#        if pix_e_ul is not None:  # compare user-identified pixel to gdf pixel
+        if pd.notnull(pix_e_ul):  # compare user-identified pixel to gdf pixel
             gdf_e = df_plots[df_plots[
                     'plot_id'] == plot_id_ref]['pix_e_ul'].item()
             delta_e = pix_e_ul - gdf_e
+        else:
+            delta_e = 0
             # positive means error of image georeferenced to the right/E
-        if pix_n_ul is not None:  # compare user-identified pixel to gdf pixel
+        if pd.notnull(pix_n_ul):  # compare user-identified pixel to gdf pixel
             gdf_n = df_plots[df_plots[
                     'plot_id'] == plot_id_ref]['pix_n_ul'].item()
             # positive means error of image georeferenced to the bottom/S
             delta_n = pix_n_ul - gdf_n
+        else:
+            delta_n = 0
 
         for idx, row in df_plots.iterrows():
             plot_id = row['plot_id']
             gdf_e = row['pix_e_ul']
-            shft_e = gdf_e + delta_e  # if `delta_e` is positive, move up/N
+            shft_e = gdf_e + delta_e  # if `delta_e` is positive, move right/E
             df_plots.loc[df_plots['plot_id'] == plot_id, 'pix_e_ul'] = shft_e
             gdf_n = row['pix_n_ul']
-            shft_n = gdf_n + delta_n  # if `delta_e` is positive, move up/N
+            shft_n = gdf_n + delta_n  # if `delta_n` is positive, move up/N
             df_plots.loc[df_plots['plot_id'] == plot_id, 'pix_n_ul'] = shft_n
-
         return df_plots
 
     def _record_pixels(self, plot_id_ul, plot_n_start, plot_n_end, row_plot,
@@ -289,28 +297,28 @@ class spatial_mod(object):
             self.load_spyfile(spyfile)
 
         if group == 'crop':
-            if e_pix is None and e_m is None:
+            if pd.isnull(e_pix) and pd.isnull(e_m):
                 e_pix = self.defaults.crop_defaults['crop_e_pix']
-            if n_pix is None and n_m:
+            if pd.isnull(n_pix) and pd.notnull(n_m):
                 n_pix = self.defaults.crop_defaults['crop_n_pix']
         elif group == 'alley':
-            if e_pix is None and e_m is None:
+            if pd.isnull(e_pix) and pd.isnull(e_m):
                 e_pix = self.defaults.crop_defaults['alley_size_e_pix']
-            if n_pix is None and n_m:
+            if pd.isnull(n_pix) and pd.notnull(n_m):
                 n_pix = self.defaults.crop_defaults['alley_size_n_pix']
         elif group == 'buffer':
-            if e_pix is None and e_m is None:
+            if pd.isnull(e_pix) and pd.isnull(e_m):
                 e_pix = self.defaults.crop_defaults['buf_e_pix']
-            if n_pix is None and n_m:
+            if pd.isnull(n_pix) and pd.notnull(n_m):
                 n_pix = self.defaults.crop_defaults['buf_n_pix']
 
-        if e_pix is None and e_m is not None:
+        if pd.isnull(e_pix) and pd.notnull(e_m):
             e_pix = e_m / self.spy_ps_e
-        elif e_pix is not None and e_m is None:
+        elif pd.notnull(e_pix) and pd.isnull(e_m):
             e_m = e_pix * self.spy_ps_e
-        if n_pix is None and n_m is not None:
+        if pd.isnull(n_pix) and pd.notnull(n_m):
             n_pix = n_m / self.spy_ps_n
-        elif n_pix is not None and n_m is None:
+        elif pd.notnull(n_pix) and pd.isnull(n_m):
             n_m = n_pix * self.spy_ps_n
         return e_pix, n_pix, e_m, n_m
 
@@ -380,6 +388,10 @@ class spatial_mod(object):
             buf_n_m
         '''
         gdf_plot = gdf[gdf['plot'] == plot_id]
+        if pd.isnull(buf_e_m):
+            buf_e_m = 0
+        if pd.isnull(buf_n_m):
+            buf_n_m = 0
         ul_x_utm = gdf_plot['geometry'].bounds['minx'].item() + buf_e_m
         ul_y_utm = gdf_plot['geometry'].bounds['maxy'].item() - buf_n_m
         return ul_x_utm, ul_y_utm
@@ -472,6 +484,7 @@ class spatial_mod(object):
         assert plot_id_ref in gdf['plot'].tolist(), msg2
         df_plots = self._find_plots_gdf(spyfile, gdf, plot_id_ref,
                                         pix_e_ul, pix_n_ul, n_plots, metadata)
+        # TODO: add crop_X and buf_X to df_plots
         return df_plots
 
     def crop_many_grid(self, plot_id_ul, pix_e_ul, pix_n_ul,

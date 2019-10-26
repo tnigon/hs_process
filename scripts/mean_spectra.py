@@ -95,6 +95,32 @@ hsbatch = batch(base_dir_spec, search_ext='.bip')
 hsbatch.spectra_combine(base_dir=base_dir_spec, search_ext='bip', dir_level=0,
                         out_force=False)
 
+# In[1i: spectral mean 2019-07-24_Becker-NNI]
+from hs_process import batch
+
+base_dir_spec = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2019\2019-07-24_Becker-NNI\cube_ref_panels'
+hsbatch = batch(base_dir_spec, search_ext='.bip')
+hsbatch.spectra_combine(base_dir=base_dir_spec, search_ext='bip', dir_level=0,
+                        out_force=False)
+
+
+# In[1i: spectral mean 2019-06-19_Waseca_AERF-plot2]
+from hs_process import batch
+
+base_dir_spec = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2019\2019-06-19_Waseca_AERF-plot2\cube_ref_panels'
+hsbatch = batch(base_dir_spec, search_ext='.bip')
+hsbatch.spectra_combine(base_dir=base_dir_spec, search_ext='bip', dir_level=0,
+                        out_force=False)
+
+# In[1i: spectral mean 2019-07-09_AERF-plot2_flight1]
+from hs_process import batch
+
+base_dir_spec = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2019\2019-07-09_AERF-plot2_flight1\cube_ref_panels'
+hsbatch = batch(base_dir_spec, search_ext='.bip')
+hsbatch.spectra_combine(base_dir=base_dir_spec, search_ext='bip', dir_level=0,
+                        out_force=False)
+
+
 # In[2. Batch crop - Wells data]
 import geopandas as gpd
 
@@ -164,16 +190,23 @@ veg_spec_mean, veg_spec_std, metadata = my_seg.veg_spectra(
 # In[5.b. Batch band math]
 from hs_process import batch
 
-base_dir = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2019\2019-06-29_AERF-plot2\smooth_spec_clip\crop'
-hsbatch = batch(base_dir, search_ext='.bip')
-fname_list = hsbatch.fname_list
-wl1 = 760
-wl2 = 720
-hsbatch.segment_band_math(folder_name='band_math', name_append='band-math',
-                          geotiff=True, method='ndi', wl1=wl1, wl2=wl2,
-                          list_range=True, mask_percentile=90,
-                          mask_side='lower', save_spec=True, out_force=True,
-                          out_ext=False, out_interleave=False)
+fname_sheet = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\hs_process_demo\spatial_crop_many_gdf\spec_clip\spec_smooth\kmeans\kmeans-stats.csv'
+
+folder_name = 'mask_combine'
+
+kmeans_mask_classes = 2
+kmeans_filter = 'mcari2'
+mask_percentile = 90
+mask_side='lower'
+
+hsbatch.combine_kmeans_bandmath(fname_sheet, base_dir_out=None,
+                                folder_name=folder_name,
+                                name_append='mask-combine',
+                                geotiff=True,
+                                kmeans_mask_classes=kmeans_mask_classes,
+                                kmeans_filter=kmeans_filter,
+                                mask_percentile=mask_percentile,
+                                mask_side=mask_side, out_force=False)
 
 # In[Next]
 base_dir = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2018\2018-06-13_Wells\crop_3_standardized_byreflectance\block1\conventional\smooth_spec_clip'

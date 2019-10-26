@@ -54,6 +54,41 @@ class batch(object):
             value = None
         return value
 
+    def _check_processed(self, fname_list, base_dir_out, folder_name,
+                         name_append, append_extra=None):
+        '''
+        Checks if any files in fname_list have already (presumably) undergone
+        processing. This is determined by checking if a file exists with a
+        particular name based on the filename in fname_list and naming
+        parameters (i.e,. `folder_name` and `name_append`).
+        '''
+        if append_extra is None:
+            append_extra = ''
+        fname_list_final = fname_list.copy()
+        for fname in fname_list:
+            if base_dir_out is None:
+                base_dir = os.path.split(fname)[0]
+                dir_out, name_append = self._save_file_setup(
+                        base_dir, folder_name, name_append)
+            else:
+                dir_out, name_append = self._save_file_setup(
+                        base_dir_out, folder_name, name_append)
+            name_print = self._get_name_print(fname)
+
+            name_label = (name_print + name_append + append_extra + '.' +
+                          self.io.defaults.interleave)
+            if os.path.isfile(os.path.join(dir_out, name_label)):
+                fname_list_final.remove(fname)
+        msg = ('There are no files to process. Please check if files have '
+               'already undergone processing. If existing files should be '
+               'overwritten, be sure to set the `out_force` parameter.\n')
+        assert(len(fname_list_final) > 0), msg
+        print('Processing {0} files. If this is not what is expected, please '
+              'check if files have already undergone processing. If existing '
+              'files should be overwritten, be sure to set the `out_force` '
+              'parameter.\n'.format(len(fname_list_final)))
+        return fname_list_final
+
     def _crop_read_sheet(self, row):
         '''
         Reads the necessary information from the spreadsheet and saves it
@@ -130,35 +165,38 @@ class batch(object):
         spy_ps_e = float(spyfile.metadata['map info'][5])
         spy_ps_n = float(spyfile.metadata['map info'][6])
         # Crop size
-        if cs['crop_e_pix'] is None and cs['crop_e_m'] is not None:
+#        if cs['crop_e_pix'] is None and cs['crop_e_m'] is not None:
+        if pd.isnull(cs['crop_e_pix']) and pd.notnull(cs['crop_e_m']):
             cs['crop_e_pix'] = int(cs['crop_e_m'] / spy_ps_e)
-        elif cs['crop_e_pix'] is not None and cs['crop_e_m'] is None:
+        elif pd.notnull(cs['crop_e_pix']) and pd.isnull(cs['crop_e_m']):
             cs['crop_e_m'] = cs['crop_e_pix'] * spy_ps_e
-        if cs['crop_n_pix'] is None and cs['crop_n_m'] is not None:
+        if pd.isnull(cs['crop_n_pix']) and pd.notnull(cs['crop_n_m']):
             cs['crop_n_pix'] = int(cs['crop_n_m'] / spy_ps_n)
-        elif cs['crop_n_pix'] is not None and cs['crop_n_m'] is None:
+        elif pd.notnull(cs['crop_n_pix']) and pd.isnull(cs['crop_n_m']):
             cs['crop_n_m'] = cs['crop_n_pix'] * spy_ps_n
         # Buffer
-        if cs['buf_e_pix'] is None and cs['buf_e_m'] is not None:
+        if pd.isnull(cs['buf_e_pix']) and pd.notnull(cs['buf_e_m']):
             cs['buf_e_pix'] = int(cs['buf_e_m'] / spy_ps_e)
-        elif cs['buf_e_pix'] is not None and cs['buf_e_m'] is None:
+        elif pd.notnull(cs['buf_e_pix']) and pd.isnull(cs['buf_e_m']):
             cs['buf_e_m'] = cs['buf_e_pix'] * spy_ps_e
-        if cs['buf_n_pix'] is None and cs['buf_n_m'] is not None:
+        if pd.isnull(cs['buf_n_pix']) and pd.notnull(cs['buf_n_m']):
             cs['buf_n_pix'] = int(cs['buf_n_m'] / spy_ps_e)
-        elif cs['buf_n_pix'] is not None and cs['buf_n_m'] is None:
+        elif pd.notnull(cs['buf_n_pix']) and pd.isnull(cs['buf_n_m']):
             cs['buf_n_m'] = cs['buf_n_pix'] * spy_ps_e
         # Alley size
-        if cs['alley_size_e_pix'] is None and cs['alley_size_e_m'] is not None:
+        if (pd.isnull(cs['alley_size_e_pix']) and
+                pd.notnull(cs['alley_size_e_m'])):
             cs['alley_size_e_pix'] = int(cs['alley_size_e_m'] / spy_ps_e)
-        elif (cs['alley_size_e_pix'] is not None and
-              cs['alley_size_e_m'] is None):
+        elif (pd.notnull(cs['alley_size_e_pix']) and
+                  pd.isnull(cs['alley_size_e_m'])):
             cs['alley_size_e_m'] = cs['alley_size_e_pix'] * spy_ps_e
-        if (cs['alley_size_n_pix'] is None and
-                cs['alley_size_n_m'] is not None):
+        if (pd.isnull(cs['alley_size_n_pix']) and
+                pd.notnull(cs['alley_size_n_m'])):
             cs['alley_size_n_pix'] = int(cs['alley_size_n_m'] / spy_ps_n)
-        elif (cs['alley_size_n_pix'] is not None and
-              cs['alley_size_n_m'] is None):
+        elif (pd.notnull(cs['alley_size_n_pix']) and
+                  pd.isnull(cs['alley_size_n_m'])):
             cs['alley_size_n_m'] = cs['alley_size_n_pix'] * spy_ps_n
+        self.crop_specs = cs
         return cs
 
     def _many_grid(self, cs):
@@ -192,13 +230,14 @@ class batch(object):
                'or "mcari2".\n')
         assert method in ['ndi', 'ratio', 'derivative', 'mcari2'], msg
 
-        base_dir = os.path.dirname(fname)
         if base_dir_out is None:
-            dir_out, name_print, name_append = self._save_file_setup(
+            base_dir = os.path.dirname(fname)
+            dir_out, name_append = self._save_file_setup(
                     base_dir, folder_name, name_append)
         else:
-            dir_out, name_print, name_append = self._save_file_setup(
+            dir_out, name_append = self._save_file_setup(
                     base_dir_out, folder_name, name_append)
+        name_print = self._get_name_print()
         if method == 'ndi':
             print('\nCalculating normalized difference index for: {0}'
                   ''.format(name_print))
@@ -206,108 +245,6 @@ class batch(object):
             print('\nCalculating simple ratio index for: {0}'
                   ''.format(name_print))
         return dir_out, name_print, name_append
-
-    def _execute_band_math_complex(self, fname_list, base_dir_out, folder_name,
-                           name_append, geotiff, method, wl1, wl2, wl3, b1, b2,
-                           b3, list_range, mask_thresh, mask_percentile,
-                           mask_side, shadow_percentile, save_spec,
-                           save_datacube):
-        '''
-        Actually executes the band math to keep the main function a bit
-        cleaner
-        '''
-        for fname in fname_list:
-            self.io.read_cube(fname)
-            metadata = self.io.spyfile.metadata
-            dir_out, name_print, name_append = self._band_math_setup(
-                    base_dir_out, folder_name, fname, name_append, method)
-            self.my_segment = segment(self.io.spyfile)
-
-            if method == 'ndi':
-                array_bm, meta_bm = self.my_segment.band_math_ndi(
-                        wl1=wl1, wl2=wl2, b1=b1, b2=b2, list_range=list_range,
-                        print_out=True)
-            elif method == 'ratio':
-                array_bm, meta_bm = self.my_segment.band_math_ratio(
-                        wl1=wl1, wl2=wl2, b1=b1, b2=b2, list_range=list_range,
-                        print_out=True)
-            elif method == 'derivative':
-                array_bm, meta_bm = self.my_segment.band_math_derivative(
-                        wl1=wl1, wl2=wl2, wl3=wl3, b1=b1, b2=b2, b3=b3,
-                        list_range=list_range, print_out=True)
-
-            meta_bm['interleave'] = self.io.defaults.interleave
-            name_label_bm = (name_print + name_append + '-{0}-{1}-{2}.'
-                             ''.format(method, int(np.mean(wl1)),
-                                       int(np.mean(wl2))) +
-                             self.io.defaults.interleave)
-            meta_bm['label'] = name_label_bm
-
-            if (isinstance(shadow_percentile, int) or
-                    isinstance(shadow_percentile, float)):
-                # pass the spyfile for the metadata (tainted from threshold)
-                self.io.read_cube(fname)  # read again to get fresh metadata
-                shadow_mask, metadata = self.my_segment.tools.mask_shadow(
-                        shadow_pctl=shadow_percentile, show_histogram=True,
-                        spyfile=self.io.spyfile)
-                array_bm = np.ma.array(array_bm, mask=shadow_mask)
-
-            else:
-                if not isinstance(array_bm, np.ma.core.MaskedArray):
-                    array_bm = np.ma.array(array_bm, mask=False)
-
-            if mask_thresh is not None or mask_percentile is not None:
-                array_bm, meta_bm = self.my_segment.tools.mask_array(
-                        array_bm, metadata, thresh=mask_thresh,
-                        percentile=mask_percentile, side=mask_side)
-                name_lab_dc = (name_print + '-{0}-mask-{1}-{2}.'
-                               ''.format(method, int(np.mean(wl1)),
-                                         int(np.mean(wl2))) +
-                               self.io.defaults.interleave)
-            # should we make an option to save a mean spectra as well?
-            # Yes - we aren't required to save intermediate results and do
-            # another batch process..? we get everything done in one shot -
-            # after all, why do we want to do band math if we aren't also
-            # calculating the average of the area (unless cropping hasn't
-            # been perfomed yet)?
-            # No - Keep it simpler and keep batch functions more specific in
-            # their capabilities (e.g., batch.band_math, batch.mask_array,
-            # batch.veg_spectra)
-
-            if np.ma.is_masked(array_bm):
-                # don't pass thresh, etc. because array is already masked
-                # pass the spyfile for the metadata (tainted from threshold)
-                self.io.read_cube(fname)  # read again to get fresh metadata
-                self.io.spyfile.metadata['history'] = meta_bm['history']
-                spec_mean, spec_std, datacube_masked, datacube_md =\
-                    self.my_segment.veg_spectra(
-                            array_bm, spyfile=self.io.spyfile)
-                if save_datacube is True:
-                    hdr_file = os.path.join(dir_out, name_lab_dc + '.hdr')
-                    self.io.write_cube(hdr_file, datacube_masked,
-                                       dtype=self.io.defaults.dtype,
-                                       force=self.io.defaults.force,
-                                       ext=self.io.defaults.ext,
-                                       interleave=self.io.defaults.interleave,
-                                       byteorder=self.io.defaults.byteorder,
-                                       metadata=datacube_md)
-                if save_spec is True:
-                    spec_md = datacube_md.copy()
-                    name_label_spec = (os.path.splitext(name_lab_dc)[0] +
-                                       '-spec-mean.spec')
-                    spec_md['label'] = name_label_spec
-                    hdr_file = os.path.join(dir_out, name_label_spec + '.hdr')
-                    self.io.write_spec(hdr_file, spec_mean, spec_std,
-                                       dtype=self.io.defaults.dtype,
-                                       force=self.io.defaults.force,
-                                       ext=self.io.defaults.ext,
-                                       interleave=self.io.defaults.interleave,
-                                       byteorder=self.io.defaults.byteorder,
-                                       metadata=spec_md)
-            self._write_datacube(dir_out, name_label_bm, array_bm, metadata)
-            if geotiff is True:
-                self._write_geotiff(array_bm, fname, dir_out, name_label_bm,
-                                    meta_bm, self.my_segment.tools)
 
     def _execute_mask(self, fname_list, base_dir_out, folder_name,
                       name_append, geotiff, mask_thresh, mask_percentile,
@@ -333,12 +270,12 @@ class batch(object):
             metadata = self.io.spyfile.metadata
             base_dir = os.path.dirname(fname)
             if base_dir_out is None:
-                dir_out, name_print, name_append = self._save_file_setup(
+                dir_out, name_append = self._save_file_setup(
                         base_dir, folder_name, name_append)
             else:
-                dir_out, name_print, name_append = self._save_file_setup(
+                dir_out, name_append = self._save_file_setup(
                         base_dir_out, folder_name, name_append)
-
+            name_print = self._get_name_print()
             self.my_segment = segment(self.io.spyfile)
             array = self.io.spyfile.load()
             array_mask, metadata = self.my_segment.tools.mask_array(
@@ -450,7 +387,6 @@ class batch(object):
                                                 int(np.mean(wl2))))
         columns = ['fname', type_bm]
         df_stats = pd.DataFrame(columns=columns)
-        fname_csv = 'band-math-stats.csv'
         for fname in fname_list:
             self.io.read_cube(fname)
             dir_out, name_print, name_append = self._band_math_setup(
@@ -517,7 +453,12 @@ class batch(object):
             if geotiff is True:
                 self._write_geotiff(array_bm, fname, dir_out, name_label,
                                     metadata, self.my_segment.tools)
-        df_stats.to_csv(os.path.join(dir_out, fname_csv), index=False)
+
+        fname_stats = os.path.join(dir_out, name_append[1:] + '-stats.csv')
+        if os.path.isfile(fname_stats) and self.io.defaults.force is False:
+            df_stats_in = pd.read_csv(fname_stats)
+            df_stats = df_stats_in.append(df_stats)
+        df_stats.to_csv(fname_stats, index=False)
 
         def _get_ndvi_simple(self, df_class_spec, n_classes, plot_out=True):
             '''
@@ -565,18 +506,17 @@ class batch(object):
         for i in range(n_classes):
             columns.append('class_{0}_mcari2'.format(i))
         df_stats = pd.DataFrame(columns=columns)
-        fname_csv = 'kmeans-stats.csv'
         for fname in fname_list:
             self.io.read_cube(fname)
             metadata = self.io.spyfile.metadata
             base_dir = os.path.dirname(fname)
             if base_dir_out is None:
-                dir_out, name_print, name_append = self._save_file_setup(
+                dir_out, name_append = self._save_file_setup(
                         base_dir, folder_name, name_append)
             else:
-                dir_out, name_print, name_append = self._save_file_setup(
+                dir_out, name_append = self._save_file_setup(
                         base_dir_out, folder_name, name_append)
-
+            name_print = self._get_name_print()
             self.my_segment = segment(self.io.spyfile)
 
             array_class, df_class_spec, metadata = self.my_segment.kmeans(
@@ -657,7 +597,12 @@ class batch(object):
                               self.io.defaults.interleave)
                 self._write_datacube(dir_out, name_label, array_class,
                                      metadata)
-        df_stats.to_csv(os.path.join(dir_out, fname_csv), index=False)
+
+        fname_stats = os.path.join(dir_out, name_append[1:] + '-stats.csv')
+        if os.path.isfile(fname_stats) and self.io.defaults.force is False:
+            df_stats_in = pd.read_csv(fname_stats)
+            df_stats = df_stats_in.append(df_stats)
+        df_stats.to_csv(fname_stats, index=False)
 
     def _execute_spat_crop(self, fname_sheet, base_dir_out, folder_name,
                            name_append, geotiff=True, method='single',
@@ -684,15 +629,17 @@ class batch(object):
             cs = self._pix_to_mapunit(cs)
             self.my_spatial_mod = spatial_mod(self.io.spyfile, gdf)
             if base_dir_out is None:
-                dir_out, name_print, name_append = self._save_file_setup(
+                dir_out, name_append = self._save_file_setup(
                         cs['directory'], folder_name, name_append)
             else:
-                dir_out, name_print, name_append = self._save_file_setup(
+                dir_out, name_append = self._save_file_setup(
                         base_dir_out, folder_name, name_append)
+            name_print = self._get_name_print()
             if method == 'single':
                 array_crop, metadata = self.my_spatial_mod.crop_single(
                         cs['pix_e_ul'], cs['pix_n_ul'], cs['crop_e_pix'],
-                        cs['crop_n_pix'])
+                        cs['crop_n_pix'], buf_e_pix=cs['buf_e_pix'],
+                        buf_n_pix=cs['buf_n_pix'])
                 metadata['interleave'] = self.io.defaults.interleave
                 if row['plot_id'] is not None:
                     name_plot = '_' + str(row['plot_id'])
@@ -716,10 +663,16 @@ class batch(object):
                     self.io.read_cube(fname_hdr, name_long=name_long,
                                       name_plot=plot_id, name_short=name_short)
                     self.my_spatial_mod.load_spyfile(self.io.spyfile)
+                    crop_e_pix = cs['crop_e_pix']
+                    crop_n_pix = cs['crop_n_pix']
+                    if pd.isnull(crop_e_pix):
+                        crop_e_pix = row['crop_e_pix']
+                    if pd.isnull(crop_n_pix):
+                        crop_n_pix = row['crop_n_pix']
                     array_crop, metadata = self.my_spatial_mod.crop_single(
                         row['pix_e_ul'], row['pix_n_ul'],
-                        crop_e_pix=cs['crop_e_pix'],
-                        crop_n_pix=cs['crop_n_pix'],
+                        crop_e_pix=crop_e_pix,
+                        crop_n_pix=crop_n_pix,
                         buf_e_pix=cs['buf_e_pix'],
                         buf_n_pix=cs['buf_n_pix'],
                         plot_id=row['plot_id'], gdf=gdf)
@@ -825,11 +778,12 @@ class batch(object):
             self.my_spectral_mod = spec_mod(self.io.spyfile)
             base_dir = os.path.dirname(fname)
             if base_dir_out is None:
-                dir_out, name_print, name_append = self._save_file_setup(
+                dir_out, name_append = self._save_file_setup(
                         base_dir, folder_name, name_append)
             else:
-                dir_out, name_print, name_append = self._save_file_setup(
+                dir_out, name_append = self._save_file_setup(
                         base_dir_out, folder_name, name_append)
+            name_print = self._get_name_print()
             array_clip, metadata = self.my_spectral_mod.spectral_clip(
                     wl_bands=wl_bands)
 
@@ -901,11 +855,12 @@ class batch(object):
             self.my_spectral_mod = spec_mod(self.io.spyfile)
             base_dir = os.path.dirname(fname)
             if base_dir_out is None:
-                dir_out, name_print, name_append = self._save_file_setup(
+                dir_out, name_append = self._save_file_setup(
                         base_dir, folder_name, name_append)
             else:
-                dir_out, name_print, name_append = self._save_file_setup(
+                dir_out, name_append = self._save_file_setup(
                         base_dir_out, folder_name, name_append)
+            name_print = self._get_name_print()
             array_smooth, metadata = self.my_spectral_mod.spectral_smooth(
                     window_size=window_size, order=order)
 
@@ -932,11 +887,12 @@ class batch(object):
                                                        'cv'])
                 df_smooth_stats = df_smooth_stats.append(df_smooth_temp,
                                                          ignore_index=True)
+
         if stats is True:
-            if name_append[0] == '-':
-                name_append = name_append[1:]
-            fname_stats = os.path.join(dir_out, name_append +
-                                       '_stats.csv')
+            fname_stats = os.path.join(dir_out, name_append[1:] + '-stats.csv')
+            if os.path.isfile(fname_stats) and self.io.defaults.force is False:
+                df_stats_in = pd.read_csv(fname_stats)
+                df_smooth_stats = df_stats_in.append(df_smooth_stats)
             df_smooth_stats.to_csv(fname_stats)
             return df_smooth_stats
 
@@ -1052,121 +1008,23 @@ class batch(object):
         dir_out = os.path.join(base_dir_out, folder_name)
         if not os.path.isdir(dir_out):
             os.mkdir(dir_out)
-        name_print = self.io.name_short
         if name_append is None:
             name_append = ''
         else:
             if name_append[0] != '-':
                 name_append = '-' + str(name_append)
+        return dir_out, name_append
+
+    def _get_name_print(self, fname_in=None):
+        '''
+        '''
+        name_print = self.io.name_short
+        if name_print is None and fname_in is not None:
+            base_name = os.path.basename(fname_in)
+            name_print = base_name[:base_name.find('-', base_name.rfind('_'))]
         msg = ('Could not get a name for input datacube.\n')
         assert name_print is not None, msg
-        return dir_out, name_print, name_append
-
-    def segment_band_math_complex(self, fname_list=None, base_dir=None,
-                          search_ext='bip', dir_level=0, base_dir_out=None,
-                          folder_name='band_math', name_append='band-math',
-                          geotiff=True, method='ndi', wl1=None, wl2=None,
-                          wl3=None, b1=None, b2=None, b3=None,
-                          list_range=True, mask_thresh=None,
-                          mask_percentile=None, mask_side='lower',
-                          shadow_percentile=20,
-                          save_spec=True, save_datacube=True,
-                          out_dtype=False, out_force=None, out_ext=False,
-                          out_interleave=False, out_byteorder=False):
-        '''
-        Batch processing tool to perform band math on multiple datacubes in the
-        same way.
-
-        Parameters:
-            method (`str`): Must be one of "ndi" (normalized difference index),
-                or "ratio" (simple ratio index). Indicates what kind of band
-                math should be performed on the input datacube. The "ndi"
-                method leverages `segment.band_math_ndi()`, the "ratio"
-                method leverages `segment.band_math_ratio()`, and the
-                "derivative" method leverages `segment.band_math_derivative()`.
-                Please see the `segment` documentation for more information
-                (default: "ndi").
-            wl1 (`int`, `float`, or `list`): the wavelength (or set of
-                wavelengths) to be used as the first parameter of the
-                band math index; if `list`, then consolidates all
-                bands between two wavelength values by calculating the mean
-                pixel value across all bands in that range (default: `None`).
-            wl2 (`int`, `float`, or `list`): the wavelength (or set of
-                wavelengths) to be used as the second parameter of the
-                band math index; if `list`, then consolidates all
-                bands between two wavelength values by calculating the mean
-                pixel value across all bands in that range (default: `None`).
-            b1 (`int`, `float`, or `list`): the band (or set of bands) to be
-                used as the first parameter of the band math index;
-                if `list`, then consolidates all bands between two band values
-                by calculating the mean pixel value across all bands in that
-                range (default: `None`).
-            b2 (`int`, `float`, or `list`): the band (or set of bands) to be
-                used as the second parameter of the band math
-                index; if `list`, then consolidates all bands between two band
-                values by calculating the mean pixel value across all bands in
-                that range (default: `None`).
-            list_range (`bool`): Whether bands/wavelengths passed as a list is
-                interpreted as a range of bands (`True`) or for each individual
-                band in the list (`False`). If `list_range` is `True`,
-                `b1`/`wl1` and `b2`/`wl2` should be lists with two items, and
-                all bands/wavelegths between the two values will be used
-                (default: `True`).
-            mask_thresh (`float` or `int`): The value for which to mask the
-                array; should be used with `side` parameter (default: `None`).
-            mask_percentile (`float` or `int`): The percentile of pixels to
-                mask; if `percentile`=95 and `side`='lower', the lowest 95% of
-                pixels will be masked following the band math operation
-                (default: `None`; range: 0-100).
-            mask_side (`str`): The side of the threshold or percentile for
-                which to apply the mask. Must be either 'lower' or 'upper'; if
-                'lower', everything below the threshold/percentile will be
-                masked (default: 'lower').
-            shadow_percentile (`int` or `float`): The percentile of pixels to
-                mask that likely represent shadow (the pixels with the lowest
-                integrated reflecatnce across the spectral domain are masked).
-                If `None`, then no pixels are masked. This step occurs before
-                applying `mask_thresh` and/or `mask_percentile` (default: 20).
-            save_spec (`bool`): Whether to save a spectrum to file representing
-                the mean value of all unmasked pixels in the array after band
-                math (default: `True`).
-            save_datacube (`bool`): Whether to save a datacube to file
-                containing only the unmasked pixels after the band math
-                operation; only applies if `mask_thresh` or `mask_percentile`
-                are not `None` (default: `True`).
-            geotiff (`bool`): whether to save the masked RGB image as a geotiff
-                alongside the masked datacube.
-        '''
-        self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
-                                out_byteorder)
-        if fname_list is not None:
-            self._execute_band_math(fname_list, base_dir_out, folder_name,
-                                    name_append, geotiff, method, wl1, wl2,
-                                    wl3, b1, b2, b3, list_range, mask_thresh,
-                                    mask_percentile, mask_side,
-                                    shadow_percentile, save_spec,
-                                    save_datacube)
-        elif base_dir is not None:
-            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-            self._execute_band_math(fname_list, base_dir_out, folder_name,
-                                    name_append, geotiff, method, wl1, wl2,
-                                    wl3, b1, b2, b3, list_range, mask_thresh,
-                                    mask_percentile, mask_side,
-                                    shadow_percentile, save_spec,
-                                    save_datacube)
-        else:  # fname_list and base_dir are both `None`
-            # base_dir may have been stored to the `batch` object
-            base_dir = self.base_dir
-            msg = ('Please set `fname_list` or `base_dir` to indicate which '
-                   'datacubes should be processed.\n')
-            assert base_dir is not None, msg
-            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-            self._execute_band_math(fname_list, base_dir_out, folder_name,
-                                    name_append, geotiff, method, wl1, wl2,
-                                    wl3, b1, b2, b3, list_range, mask_thresh,
-                                    mask_percentile, mask_side,
-                                    shadow_percentile, save_spec,
-                                    save_datacube)
+        return name_print
 
     def segment_band_math(self, fname_list=None, base_dir=None,
                           search_ext='bip', dir_level=0, base_dir_out=None,
@@ -1224,25 +1082,67 @@ class batch(object):
         '''
         self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
                                 out_byteorder)
-        if fname_list is not None:
-            self._execute_band_math(fname_list, base_dir_out, folder_name,
-                                    name_append, geotiff, method, wl1, wl2,
-                                    wl3, b1, b2, b3, list_range, plot_out)
-        elif base_dir is not None:
+        if fname_list is None and base_dir is not None:
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-            self._execute_band_math(fname_list, base_dir_out, folder_name,
-                                    name_append, geotiff, method, wl1, wl2,
-                                    wl3, b1, b2, b3, list_range, plot_out)
-        else:  # fname_list and base_dir are both `None`
+        elif fname_list is None and base_dir is None:
             # base_dir may have been stored to the `batch` object
             base_dir = self.base_dir
             msg = ('Please set `fname_list` or `base_dir` to indicate which '
                    'datacubes should be processed.\n')
             assert base_dir is not None, msg
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-            self._execute_band_math(fname_list, base_dir_out, folder_name,
-                                    name_append, geotiff, method, wl1, wl2,
-                                    wl3, b1, b2, b3, list_range, plot_out)
+        # else fname_list must be passed directly
+
+        if method == 'ndi':
+            append_extra = ('-{0}-{1}-{2}'
+                            ''.format(method, int(np.mean(wl1)),
+                                      int(np.mean(wl2))))
+        elif method == 'ratio':
+            append_extra = ('-{0}-{1}-{2}'
+                            ''.format(method, int(np.mean(wl1)),
+                                      int(np.mean(wl2))))
+        elif method == 'derivative':
+            append_extra = ('-{0}-{1}-{2}-{3}'
+                            ''.format(method, int(np.mean(wl1)),
+                                      int(np.mean(wl2)),
+                                      int(np.mean(wl3))))
+        elif method == 'mcari2':
+            append_extra = ('-{0}-{1}-{2}-{3}'
+                            ''.format(method, int(np.mean(wl1)),
+                                      int(np.mean(wl2)),
+                                      int(np.mean(wl3))))
+
+        # checks filenames
+        if self.io.defaults.force is False:  # otherwise just overwrites if it exists
+            fname_list = self._check_processed(fname_list, base_dir_out,
+                                               folder_name, name_append,
+                                               append_extra)
+        self._execute_band_math(fname_list, base_dir_out, folder_name,
+                                name_append, geotiff, method, wl1, wl2,
+                                wl3, b1, b2, b3, list_range, plot_out)
+
+
+
+#        if fname_list is not None:
+#            self._execute_band_math(fname_list, base_dir_out, folder_name,
+#                                    name_append, geotiff, method, wl1, wl2,
+#                                    wl3, b1, b2, b3, list_range, plot_out)
+#        elif base_dir is not None:
+#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+#            self._execute_band_math(fname_list, base_dir_out, folder_name,
+#                                    name_append, geotiff, method, wl1, wl2,
+#                                    wl3, b1, b2, b3, list_range, plot_out)
+#        else:  # fname_list and base_dir are both `None`
+#            # base_dir may have been stored to the `batch` object
+#            base_dir = self.base_dir
+#            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+#                   'datacubes should be processed.\n')
+#            assert base_dir is not None, msg
+#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+#            self._execute_band_math(fname_list, base_dir_out, folder_name,
+#                                    name_append, geotiff, method, wl1, wl2,
+#                                    wl3, b1, b2, b3, list_range, plot_out)
+
 
     def segment_kmeans(self, fname_list=None, base_dir=None, search_ext='bip',
                        dir_level=0, base_dir_out=None, folder_name='kmeans',
@@ -1266,25 +1166,42 @@ class batch(object):
         '''
         self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
                                 out_byteorder)
-        if fname_list is not None:
-            self._execute_kmeans(fname_list, base_dir_out, folder_name,
-                                 name_append, geotiff, n_classes, max_iter,
-                                 plot_out, mask_soil=False)
-        elif base_dir is not None:
+        if fname_list is None and base_dir is not None:
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-            self._execute_kmeans(fname_list, base_dir_out, folder_name,
-                                 name_append, geotiff, n_classes, max_iter,
-                                 plot_out, mask_soil=False)
-        else:  # fname_list and base_dir are both `None`
+        elif fname_list is None and base_dir is None:
             # base_dir may have been stored to the `batch` object
             base_dir = self.base_dir
             msg = ('Please set `fname_list` or `base_dir` to indicate which '
                    'datacubes should be processed.\n')
             assert base_dir is not None, msg
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-            self._execute_kmeans(fname_list, base_dir_out, folder_name,
-                                 name_append, geotiff, n_classes, max_iter,
-                                 plot_out, mask_soil=False)
+
+        if self.io.defaults.force is False:  # otherwise just overwrites if it exists
+            fname_list = self._check_processed(fname_list, base_dir_out,
+                                               folder_name, name_append)
+        self._execute_kmeans(fname_list, base_dir_out, folder_name,
+                             name_append, geotiff, n_classes, max_iter,
+                             plot_out)
+
+#        if fname_list is not None:
+#            self._execute_kmeans(fname_list, base_dir_out, folder_name,
+#                                 name_append, geotiff, n_classes, max_iter,
+#                                 plot_out, mask_soil=False)
+#        elif base_dir is not None:
+#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+#            self._execute_kmeans(fname_list, base_dir_out, folder_name,
+#                                 name_append, geotiff, n_classes, max_iter,
+#                                 plot_out, mask_soil=False)
+#        else:  # fname_list and base_dir are both `None`
+#            # base_dir may have been stored to the `batch` object
+#            base_dir = self.base_dir
+#            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+#                   'datacubes should be processed.\n')
+#            assert base_dir is not None, msg
+#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+#            self._execute_kmeans(fname_list, base_dir_out, folder_name,
+#                                 name_append, geotiff, n_classes, max_iter,
+#                                 plot_out, mask_soil=False)
 
     def combine_kmeans_bandmath(self, fname_sheet, base_dir_out=None,
                                 folder_name='mask_combine',
@@ -1348,17 +1265,24 @@ class batch(object):
                    bandmath_pctl_str, bandmath_side_str, 'total_nonmasked_pct']
         df_stats = pd.DataFrame(columns=columns)
 
+        if self.io.defaults.force is False:  # otherwise just overwrites if it exists
+            fname_list = df_kmeans['fname'].tolist()
+            fname_list = self._check_processed(fname_list, base_dir_out,
+                                               folder_name, name_append)
+            df_kmeans = df_kmeans[df_kmeans['plot_id'].isin(fname_list)]
+
         for idx, row in df_kmeans.iterrows():  # using stats-kmeans.csv
             class_mask = self._get_class_mask(row, filter_cols,
                                               n_classes=kmeans_mask_classes)
             fname = row['fname']
             self.io.read_cube(fname)
             if base_dir_out is None:
-                dir_out, name_print, name_append = self._save_file_setup(
+                dir_out, name_append = self._save_file_setup(
                         os.path.dirname(fname), folder_name, name_append)
             else:
-                dir_out, name_print, name_append = self._save_file_setup(
+                dir_out, name_append = self._save_file_setup(
                         base_dir_out, folder_name, name_append)
+            name_print = self._get_name_print()
 
             dir_search = os.path.join(self.io.base_dir, 'kmeans')
             array_kmeans, metadata_kmeans = self._get_array_similar(dir_search)
@@ -1384,8 +1308,8 @@ class batch(object):
             spec_mean, spec_std, datacube_masked = self.io.tools.mask_datacube(
                     self.io.spyfile, mask_combined)
 
-            data = [fname, class_mask, kmeans_pct, mask_percentile, mask_side,
-                    total_pct]
+            data = [os.path.basename(fname), class_mask, kmeans_pct,
+                    mask_percentile, mask_side, total_pct]
             df_stats_temp = pd.DataFrame(data=[data], columns=columns)
             df_stats = df_stats.append(df_stats_temp)
             name_label = (name_print + name_append + '.' +
@@ -1408,7 +1332,10 @@ class batch(object):
             self._write_spec(dir_out, name_label_spec, spec_mean, spec_std,
                              metadata)
         fname_stats = os.path.join(dir_out, name_append[1:] + '-stats.csv')
-        df_stats.to_csv(fname_stats)
+        if os.path.isfile(fname_stats) and self.io.defaults.force is False:
+            df_stats_in = pd.read_csv(fname_stats)
+            df_stats = df_stats_in.append(df_stats)
+        df_stats.to_csv(fname_stats, index=False)
 
     def segment_create_mask(self, fname_list=None, base_dir=None,
                             search_ext='bip', dir_level=0, base_dir_out=None,
@@ -1436,25 +1363,42 @@ class batch(object):
         '''
         self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
                                 out_byteorder)
-        if fname_list is not None:
-            self._execute_mask(fname_list, base_dir_out, folder_name,
-                               name_append, geotiff, mask_thresh,
-                               mask_percentile, mask_side)
-        elif base_dir is not None:
+        if fname_list is None and base_dir is not None:
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-            self._execute_mask(fname_list, base_dir_out, folder_name,
-                               name_append, geotiff, mask_thresh,
-                               mask_percentile, mask_side)
-        else:  # fname_list and base_dir are both `None`
+        elif fname_list is None and base_dir is None:
             # base_dir may have been stored to the `batch` object
             base_dir = self.base_dir
             msg = ('Please set `fname_list` or `base_dir` to indicate which '
                    'datacubes should be processed.\n')
             assert base_dir is not None, msg
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-            self._execute_mask(fname_list, base_dir_out, folder_name,
-                               name_append, geotiff, mask_thresh,
-                               mask_percentile, mask_side)
+
+        if self.io.defaults.force is False:  # otherwise just overwrites if it exists
+            fname_list = self._check_processed(fname_list, base_dir_out,
+                                               folder_name, name_append)
+        self._execute_mask(fname_list, base_dir_out, folder_name,
+                           name_append, geotiff, mask_thresh,
+                           mask_percentile, mask_side)
+
+#        if fname_list is not None:
+#            self._execute_mask(fname_list, base_dir_out, folder_name,
+#                               name_append, geotiff, mask_thresh,
+#                               mask_percentile, mask_side)
+#        elif base_dir is not None:
+#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+#            self._execute_mask(fname_list, base_dir_out, folder_name,
+#                               name_append, geotiff, mask_thresh,
+#                               mask_percentile, mask_side)
+#        else:  # fname_list and base_dir are both `None`
+#            # base_dir may have been stored to the `batch` object
+#            base_dir = self.base_dir
+#            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+#                   'datacubes should be processed.\n')
+#            assert base_dir is not None, msg
+#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+#            self._execute_mask(fname_list, base_dir_out, folder_name,
+#                               name_append, geotiff, mask_thresh,
+#                               mask_percentile, mask_side)
 
     def spatial_crop(self, fname_sheet, base_dir_out=None,
                      folder_name='spatial_crop', name_append='spatial-crop',
@@ -1583,22 +1527,38 @@ class batch(object):
         '''
         self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
                                 out_byteorder)
-        if fname_list is not None:
-            self._execute_spec_clip(fname_list, base_dir_out, folder_name,
-                                    name_append, wl_bands)
-        elif base_dir is not None:
+        if fname_list is None and base_dir is not None:
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-            self._execute_spec_clip(fname_list, base_dir_out, folder_name,
-                                    name_append, wl_bands)
-        else:  # fname_list and base_dir are both `None`
+        elif fname_list is None and base_dir is None:
             # base_dir may have been stored to the `batch` object
             base_dir = self.base_dir
             msg = ('Please set `fname_list` or `base_dir` to indicate which '
                    'datacubes should be processed.\n')
             assert base_dir is not None, msg
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-            self._execute_spec_clip(fname_list, base_dir_out, folder_name,
+
+        if self.io.defaults.force is False:  # otherwise just overwrites if it exists
+            fname_list = self._check_processed(fname_list, base_dir_out,
+                                               folder_name, name_append)
+        self._execute_spec_clip(fname_list, base_dir_out, folder_name,
                                     name_append, wl_bands)
+
+#        if fname_list is not None:
+#            self._execute_spec_clip(fname_list, base_dir_out, folder_name,
+#                                    name_append, wl_bands)
+#        elif base_dir is not None:
+#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+#            self._execute_spec_clip(fname_list, base_dir_out, folder_name,
+#                                    name_append, wl_bands)
+#        else:  # fname_list and base_dir are both `None`
+#            # base_dir may have been stored to the `batch` object
+#            base_dir = self.base_dir
+#            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+#                   'datacubes should be processed.\n')
+#            assert base_dir is not None, msg
+#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+#            self._execute_spec_clip(fname_list, base_dir_out, folder_name,
+#                                    name_append, wl_bands)
 
     def spectral_smooth(self, fname_list=None, base_dir=None, search_ext='bip',
                         dir_level=0, base_dir_out=None,
@@ -1645,25 +1605,42 @@ class batch(object):
         '''
         self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
                                 out_byteorder)
-        if fname_list is not None:
-            df_stats = self._execute_spec_smooth(
-                    fname_list, base_dir_out, folder_name, name_append,
-                    window_size, order, stats)
-        elif base_dir is not None:
+        if fname_list is None and base_dir is not None:
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-            df_stats = self._execute_spec_smooth(
-                    fname_list, base_dir_out, folder_name, name_append,
-                    window_size, order, stats)
-        else:  # fname_list and base_dir are both `None`
+        elif fname_list is None and base_dir is None:
             # base_dir may have been stored to the `batch` object
             base_dir = self.base_dir
             msg = ('Please set `fname_list` or `base_dir` to indicate which '
                    'datacubes should be processed.\n')
             assert base_dir is not None, msg
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-            df_stats = self._execute_spec_smooth(
-                    fname_list, base_dir_out, folder_name, name_append,
-                    window_size, order, stats)
+
+        if self.io.defaults.force is False:  # otherwise just overwrites if it exists
+            fname_list = self._check_processed(fname_list, base_dir_out,
+                                               folder_name, name_append)
+        df_stats = self._execute_spec_smooth(
+                fname_list, base_dir_out, folder_name, name_append,
+                window_size, order, stats)
+
+#        if fname_list is not None:
+#            df_stats = self._execute_spec_smooth(
+#                    fname_list, base_dir_out, folder_name, name_append,
+#                    window_size, order, stats)
+#        elif base_dir is not None:
+#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+#            df_stats = self._execute_spec_smooth(
+#                    fname_list, base_dir_out, folder_name, name_append,
+#                    window_size, order, stats)
+#        else:  # fname_list and base_dir are both `None`
+#            # base_dir may have been stored to the `batch` object
+#            base_dir = self.base_dir
+#            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+#                   'datacubes should be processed.\n')
+#            assert base_dir is not None, msg
+#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+#            df_stats = self._execute_spec_smooth(
+#                    fname_list, base_dir_out, folder_name, name_append,
+#                    window_size, order, stats)
         if df_stats is not None:
             return df_stats
 
@@ -1675,7 +1652,7 @@ class batch(object):
         '''
         if fname_list is None and base_dir is not None:
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-        else:  # fname_list and base_dir are both `None`
+        elif fname_list is None and base_dir is None:
             # base_dir may have been stored to the `batch` object
             base_dir = self.base_dir
             msg = ('Please set `fname_list` or `base_dir` to indicate which '
@@ -1683,7 +1660,7 @@ class batch(object):
             assert base_dir is not None, msg
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
 
-          # load the data from the Spectral Python (SpyFile) object
+        # load the data from the Spectral Python (SpyFile) object
         df_spec = None
         for fname in fname_list:
             self.io.read_spec(fname + '.hdr')
@@ -1691,7 +1668,7 @@ class batch(object):
             array = self.io.spyfile_spec.load()
             data = list(np.reshape(array, (array.shape[2])) * 100)
             data.insert(0, self.io.name_plot)
-            data.insert(0, fname)
+            data.insert(0, os.path.basename(fname))
             if df_spec is None:
                 columns = list(meta_bands.values())
                 columns.insert(0, 'wavelength')
@@ -1739,16 +1716,14 @@ class batch(object):
         '''
         self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
                                 out_byteorder)
-        if fname_list is not None:
-            self._execute_spec_combine(fname_list, base_dir_out)
-        elif base_dir is not None:
+        if fname_list is None and base_dir is not None:
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-            self._execute_spec_combine(fname_list, base_dir_out)
-        else:  # fname_list and base_dir are both `None`
+        elif fname_list is None and base_dir is None:
             # base_dir may have been stored to the `batch` object
             base_dir = self.base_dir
             msg = ('Please set `fname_list` or `base_dir` to indicate which '
                    'datacubes should be processed.\n')
             assert base_dir is not None, msg
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-            self._execute_spec_combine(fname_list, base_dir_out)
+
+        self._execute_spec_combine(fname_list, base_dir_out)
