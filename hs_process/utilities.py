@@ -489,6 +489,10 @@ class hsio(object):
         self.fname_hdr_spec = fname_hdr_spec
         self.base_dir_spec = os.path.dirname(fname_hdr_spec)
         self._read_envi(spec=True)
+        basename = os.path.basename(fname_hdr_spec)
+        self.name_short = basename[:basename.find('-', basename.rfind('_'))]
+        self.name_long = basename[basename.find('-', basename.rfind('_')):]
+        self.name_plot = self.name_short.rsplit('_', 1)[1]
 
     def set_io_defaults(self, dtype=False, force=None, ext=False,
                         interleave=False, byteorder=False):
@@ -820,7 +824,7 @@ class hstools(object):
         spyfile (`SpyFile` object): The datacube being accessed and/or
             manipulated.
     '''
-    def __init__(self, spyfile):
+    def __init__(self, spyfile, ):
         msg = ('Pleae load a SpyFile (Spectral Python object)')
         assert spyfile is not None, msg
 

@@ -1644,44 +1644,6 @@ class batch(object):
         if df_stats is not None:
             return df_stats
 
-    def spectra_to_csv(self, fname_list=None, base_dir=None, search_ext='spec',
-                       dir_level=0, base_dir_out=None):
-        '''
-        Reads all the .spec files in a direcory and saves their reflectance
-        information to a .csv
-        '''
-        if fname_list is None and base_dir is not None:
-            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-        elif fname_list is None and base_dir is None:
-            # base_dir may have been stored to the `batch` object
-            base_dir = self.base_dir
-            msg = ('Please set `fname_list` or `base_dir` to indicate which '
-                   'datacubes should be processed.\n')
-            assert base_dir is not None, msg
-            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-
-        # load the data from the Spectral Python (SpyFile) object
-        df_spec = None
-        for fname in fname_list:
-            self.io.read_spec(fname + '.hdr')
-            meta_bands = self.io.tools.meta_bands
-            array = self.io.spyfile_spec.load()
-            data = list(np.reshape(array, (array.shape[2])) * 100)
-            data.insert(0, self.io.name_plot)
-            data.insert(0, os.path.basename(fname))
-            if df_spec is None:
-                columns = list(meta_bands.values())
-                columns.insert(0, 'wavelength')
-                columns.insert(0, np.nan)
-                bands = list(meta_bands.keys())
-                bands.insert(0, 'plot')
-                bands.insert(0, 'fname')
-                df_spec = pd.DataFrame(data=[bands], columns=columns)
-            df_spec_temp = pd.DataFrame(data=[data], columns=columns)
-            df_spec = df_spec.append(df_spec_temp)
-        fname_csv = os.path.join(base_dir, 'stats-spectra.csv')
-        df_spec.to_csv(fname_csv, index=False)
-
     def spectra_combine(self, fname_list=None, base_dir=None,
                         search_ext='bip', dir_level=0, base_dir_out=None,
                         out_dtype=False, out_force=None, out_ext=False,
@@ -1727,3 +1689,114 @@ class batch(object):
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
 
         self._execute_spec_combine(fname_list, base_dir_out)
+
+    def spectra_to_df(self, fname_list=None, base_dir=None, search_ext='spec',
+                      dir_level=0):
+        '''
+        Reads all the .spec files in a direcory and returns their data as a
+        pandas.DataFrame object.
+        '''
+        if fname_list is None and base_dir is not None:
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+        elif fname_list is None and base_dir is None:
+            # base_dir may have been stored to the `batch` object
+            base_dir = self.base_dir
+            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+                   'datacubes should be processed.\n')
+            assert base_dir is not None, msg
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+
+        # load the data from the Spectral Python (SpyFile) object
+        df_spec = None
+        for fname in fname_list:
+            self.io.read_spec(fname + '.hdr')
+            meta_bands = self.io.tools.meta_bands
+            array = self.io.spyfile_spec.load()
+            data = list(np.reshape(array, (array.shape[2])) * 100)
+            data.insert(0, self.io.name_plot)
+            data.insert(0, os.path.basename(fname))
+            if df_spec is None:
+                bands = list(meta_bands.keys())
+                bands.insert(0, 'plot')
+                bands.insert(0, 'fname')
+                df_spec = pd.DataFrame(columns=bands)
+            df_spec_temp = pd.DataFrame(data=[data], columns=bands)
+            df_spec = df_spec.append(df_spec_temp)
+        return df_spec
+#        if isinstance(df, pd.DataFrame):
+#            df_data = df.copy()
+#        elif isinstance(df, str):
+#            df_data = pd.read_csv(df)
+#        df_join = pd.merge(df_spec, df_data, on=[join_field])
+#        return df_spec
+
+    def spectra_to_csv(self, fname_list=None, base_dir=None, search_ext='spec',
+                       dir_level=0, base_dir_out=None):
+        '''
+        Reads all the .spec files in a direcory and saves their reflectance
+        information to a .csv
+        '''
+        if fname_list is None and base_dir is not None:
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+        elif fname_list is None and base_dir is None:
+            # base_dir may have been stored to the `batch` object
+            base_dir = self.base_dir
+            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+                   'datacubes should be processed.\n')
+            assert base_dir is not None, msg
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+
+        # load the data from the Spectral Python (SpyFile) object
+        df_spec = None
+        for fname in fname_list:
+            self.io.read_spec(fname + '.hdr')
+            meta_bands = self.io.tools.meta_bands
+            array = self.io.spyfile_spec.load()
+            data = list(np.reshape(array, (array.shape[2])) * 100)
+            data.insert(0, self.io.name_plot)
+            data.insert(0, os.path.basename(fname))
+            if df_spec is None:
+                columns = list(meta_bands.values())
+                columns.insert(0, 'wavelength')
+                columns.insert(0, np.nan)
+                bands = list(meta_bands.keys())
+                bands.insert(0, 'plot')
+                bands.insert(0, 'fname')
+                df_spec = pd.DataFrame(data=[bands], columns=columns)
+            df_spec_temp = pd.DataFrame(data=[data], columns=columns)
+            df_spec = df_spec.append(df_spec_temp)
+        fname_csv = os.path.join(base_dir, 'stats-spectra.csv')
+        df_spec.to_csv(fname_csv, index=False)
+
+    def split_train_val_test(self, df, train_pct=0.5, validate_pct=0.2,
+                             seed_st=None):
+        '''
+        Splits dataset into a training, test, and validation groups based on
+        the proporations passed.
+
+        Parameters:
+            df (`pandas.DataFrame`): input dataset
+            train_pct (`float`): Percent of samples to be put into the training
+                dataset.
+            validate_pct (`float`): Percent of samples to be put into the
+                validation dataset; the rest go to the test dataset.
+            seed (`int`): the `numpy.random.seed` for repeatable
+        '''
+        np.random.seed(None)
+        if seed_st is None:
+            seed_st = np.random.get_state()
+        else:
+            try:
+                np.random.set_state(seed_st)
+            except TypeError:
+                print('`seed_st` not recognized; using a new seed state.\n')
+                seed_st = np.random.get_state()
+
+        perm = np.random.permutation(df.index)
+        m = len(df.index)
+        train_end = int(train_pct * m)
+        validate_end = int(validate_pct * m) + train_end
+        train = df.iloc[perm[:train_end]]
+        validate = df.iloc[perm[train_end:validate_end]]
+        test = df.iloc[perm[validate_end:]]
+        return train, validate, test, seed_st
