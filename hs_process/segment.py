@@ -456,7 +456,7 @@ class segment(object):
         array_class, c = kmeans(spyfile, n_classes, max_iter)
 #        print(len(np.unique(array_class)))
         unique_classes, counts = self._check_classes(array_class, n_pix=5)
-        print(len(unique_classes))
+#        print(len(unique_classes))
 #        n = 0
 #        # the following checks that there are as many classes as desired; if
 #        # not, reruns kmeans with 1 additional

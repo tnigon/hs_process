@@ -69,7 +69,7 @@ from hs_process import batch
 base_dir_spec = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2019\2019-06-29_AERF-plot2\cube_ref_panels'
 hsbatch = batch(base_dir_spec, search_ext='.bip')
 hsbatch.spectra_combine(base_dir=base_dir_spec, search_ext='bip', dir_level=0,
-                        out_force=False)
+                        out_force=True)
 
 # In[1g: spectral mean 2019-06-29_Waseca-AERF]
 from hs_process import batch
@@ -95,7 +95,7 @@ hsbatch = batch(base_dir_spec, search_ext='.bip')
 hsbatch.spectra_combine(base_dir=base_dir_spec, search_ext='bip', dir_level=0,
                         out_force=False)
 
-# In[1i: spectral mean 2019-07-24_Becker-NNI]
+# In[1j: spectral mean 2019-07-24_Becker-NNI]
 from hs_process import batch
 
 base_dir_spec = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2019\2019-07-24_Becker-NNI\cube_ref_panels'
@@ -104,7 +104,7 @@ hsbatch.spectra_combine(base_dir=base_dir_spec, search_ext='bip', dir_level=0,
                         out_force=False)
 
 
-# In[1i: spectral mean 2019-06-19_Waseca_AERF-plot2]
+# In[1k: spectral mean 2019-06-19_Waseca_AERF-plot2]
 from hs_process import batch
 
 base_dir_spec = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2019\2019-06-19_Waseca_AERF-plot2\cube_ref_panels'
@@ -112,10 +112,34 @@ hsbatch = batch(base_dir_spec, search_ext='.bip')
 hsbatch.spectra_combine(base_dir=base_dir_spec, search_ext='bip', dir_level=0,
                         out_force=False)
 
-# In[1i: spectral mean 2019-07-09_AERF-plot2_flight1]
+# In[1l: spectral mean 2019-07-09_AERF-plot2_flight1]
 from hs_process import batch
 
 base_dir_spec = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2019\2019-07-09_AERF-plot2_flight1\cube_ref_panels'
+hsbatch = batch(base_dir_spec, search_ext='.bip')
+hsbatch.spectra_combine(base_dir=base_dir_spec, search_ext='bip', dir_level=0,
+                        out_force=False)
+
+# In[1m: spectral mean 2019-07-10_AERF-plot2]
+from hs_process import batch
+
+base_dir_spec = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2019\2019-07-10_AERF-plot2\cube_ref_panels'
+hsbatch = batch(base_dir_spec, search_ext='.bip')
+hsbatch.spectra_combine(base_dir=base_dir_spec, search_ext='bip', dir_level=0,
+                        out_force=False)
+
+# In[1n: spectral mean 2019-08-08_Waseca-LTARN]
+from hs_process import batch
+
+base_dir_spec = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2019\2019-08-08_Waseca-LTARN\cube_ref_panels'
+hsbatch = batch(base_dir_spec, search_ext='.bip')
+hsbatch.spectra_combine(base_dir=base_dir_spec, search_ext='bip', dir_level=0,
+                        out_force=False)
+
+# In[1n: spectral mean 2019-08-08_Wells-R2]
+from hs_process import batch
+
+base_dir_spec = r'G:\BBE\AGROBOT\Shared Work\Data\PikaImagery4_Reflectance\2019\2019-08-08_Wells-R2\cube_ref_panels'
 hsbatch = batch(base_dir_spec, search_ext='.bip')
 hsbatch.spectra_combine(base_dir=base_dir_spec, search_ext='bip', dir_level=0,
                         out_force=False)

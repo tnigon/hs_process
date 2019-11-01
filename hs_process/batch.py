@@ -489,7 +489,7 @@ class batch(object):
 
     def _execute_kmeans(self, fname_list, base_dir_out, folder_name,
                         name_append, geotiff, n_classes, max_iter,
-                        plot_out, mask_soil):
+                        plot_out):
         '''
         Actually executes the kmeans clustering to keep the main function a bit
         cleaner
@@ -588,15 +588,15 @@ class batch(object):
                 self._write_geotiff(array_class, fname, dir_out, name_label,
                                     metadata, self.my_segment.tools)
 
-            if mask_soil is True:
-                class_soil, class_veg = self._get_ndvi_simple(
-                        df_class_spec, n_classes, plot_out=True)
-                array_class = np.ma.masked_where(array_class==class_soil,
-                                                 array_class)
-                name_label = (name_print + name_append + '-mask-soil' + '.' +
-                              self.io.defaults.interleave)
-                self._write_datacube(dir_out, name_label, array_class,
-                                     metadata)
+#            if mask_soil is True:
+#                class_soil, class_veg = self._get_ndvi_simple(
+#                        df_class_spec, n_classes, plot_out=True)
+#                array_class = np.ma.masked_where(array_class==class_soil,
+#                                                 array_class)
+#                name_label = (name_print + name_append + '-mask-soil' + '.' +
+#                              self.io.defaults.interleave)
+#                self._write_datacube(dir_out, name_label, array_class,
+#                                     metadata)
 
         fname_stats = os.path.join(dir_out, name_append[1:] + '-stats.csv')
         if os.path.isfile(fname_stats) and self.io.defaults.force is False:
@@ -949,6 +949,9 @@ class batch(object):
             the minimum ndvi; if more than 1, all classes (default: 1)
         '''
         row_ndvi = row[filter_cols].astype(float)
+        row_ndvi = row_ndvi.dropna()
+        print(row_ndvi)
+        print(n_classes)
         if len(row_ndvi) == n_classes:
             n_classes -= 1
         row_ndvi_small = row_ndvi.nsmallest(n=n_classes)
@@ -1712,16 +1715,20 @@ class batch(object):
             self.io.read_spec(fname + '.hdr')
             meta_bands = self.io.tools.meta_bands
             array = self.io.spyfile_spec.load()
-            data = list(np.reshape(array, (array.shape[2])) * 100)
+            data = list(np.reshape(array, (array.shape[2])))
             data.insert(0, self.io.name_plot)
             data.insert(0, os.path.basename(fname))
             if df_spec is None:
                 bands = list(meta_bands.keys())
-                bands.insert(0, 'plot')
+                bands.insert(0, 'plot_id')
                 bands.insert(0, 'fname')
                 df_spec = pd.DataFrame(columns=bands)
             df_spec_temp = pd.DataFrame(data=[data], columns=bands)
             df_spec = df_spec.append(df_spec_temp)
+        try:
+            df_spec['plot_id'] = pd.to_numeric(df_spec['plot_id'])
+        except ValueError:
+            print('Unable to convert "plot_id" column to numeric type.\n')
         return df_spec
 #        if isinstance(df, pd.DataFrame):
 #            df_data = df.copy()
@@ -1760,7 +1767,7 @@ class batch(object):
                 columns.insert(0, 'wavelength')
                 columns.insert(0, np.nan)
                 bands = list(meta_bands.keys())
-                bands.insert(0, 'plot')
+                bands.insert(0, 'plot_id')
                 bands.insert(0, 'fname')
                 df_spec = pd.DataFrame(data=[bands], columns=columns)
             df_spec_temp = pd.DataFrame(data=[data], columns=columns)

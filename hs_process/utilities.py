@@ -960,9 +960,10 @@ class hstools(object):
 #        key_wavelength = sorted(list(self.meta_bands.values()))[key_band-1]
         return key_wavelength
 
-    def get_center_wl(self, wl_list, spyfile=None):
+    def get_center_wl(self, wl_list, spyfile=None, wls=True):
         '''
-        Gets band numbers and mean wavelength from all bands in `wl_list`.
+        Gets band numbers and mean wavelength from all wavelengths (or bands)
+        in `wl_list`.
 
         Parameters:
             wl_list (`list`): the list of bands to get information for
@@ -970,6 +971,9 @@ class hstools(object):
             spyfile (`SpyFile` object): The datacube being accessed and/or
                 manipulated; if `None`, uses `hstools.spyfile` (default:
                 `None`).
+            wls (`bool`): whether wavelengths are passed in `wl_list` or if
+                bands are passed in `wl_list` (default: `True` - wavelenghts
+                passed).
 
         Returns:
             bands (`list`): the list of bands (band number) corresponding to
@@ -985,13 +989,22 @@ class hstools(object):
             self.load_spyfile(spyfile)
 
         bands = []
-        wls = []
-        for wl in wl_list:
-            band_i = self.get_band(wl)
-            wl_i = self.get_wavelength(band_i)
-            bands.append(band_i)
-            wls.append(wl_i)
-        wls_mean = np.mean(wls)
+        wavelengths = []
+        if wls is False:
+            for band in wl_list:
+                wl_i = self.get_wavelength(band)
+                band_i = self.get_band(wl_i)
+                bands.append(band_i)
+                wavelengths.append(wl_i)
+            wls_mean = np.mean(wavelengths)
+        else:
+            for wl in wl_list:
+                band_i = self.get_band(wl)
+                wl_i = self.get_wavelength(band_i)
+                bands.append(band_i)
+                wavelengths.append(wl_i)
+            wls_mean = np.mean(wavelengths)
+
         return bands, wls_mean
 
     def get_band_index(self, band_num):
@@ -1019,6 +1032,10 @@ class hstools(object):
             spyfile (`SpyFile` object or `numpy.ndarray`): The datacube being
                 accessed and/or manipulated; if `None`, uses `hstools.spyfile`
                 (default: `None`).
+
+        Returns:
+            array_mean (`numpy.array` or `pandas.DataFrame`): The mean
+                reflectance from `spyfile` for the bands in `band_list`.
         '''
         msg = ('"band_list" must be a list.')
         assert isinstance(band_list, list), msg
@@ -1031,9 +1048,22 @@ class hstools(object):
             array = self.spyfile.load()
         elif isinstance(spyfile, np.ndarray):
             array = spyfile.copy()
+        elif isinstance(spyfile, pd.DataFrame):
+            array = spyfile.copy()
 
         band_idx = self.get_band_index(band_list)
-        array_mean = np.mean(array[:, :, band_idx], axis=2)
+        if isinstance(array, np.ndarray) and len(array.shape) == 3:
+            array_mean = np.mean(array[:, :, band_idx], axis=2)
+        elif isinstance(array, np.ndarray) and len(array.shape) == 2:
+            array_mean = np.mean(array[:, band_idx], axis=1)
+        elif isinstance(array, np.ndarray):
+            array_mean = array
+        elif isinstance(array, pd.DataFrame):
+            str_name = str(band_list)
+            array_mean = array[band_list].mean(axis=1).rename(str_name)
+        else:
+            msg = ('{0} type not supported.\n'.format(type(spyfile)))
+            raise TypeError(msg)
         return array_mean
 
     def get_band_num(self, band_idx):
