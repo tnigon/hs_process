@@ -164,11 +164,11 @@ class analyze(object):
 
     def _plot_set_labels(self, ax, title_str, eq_str, date_str,
                          growth_stage_str, lambda_str, wl1, wl2,
-                         color='#444444'):
+                         color='#444444', fontsize=16):
         '''
         Sets labels
         '''
-        ax.tick_params(labelsize=14)
+        ax.tick_params(labelsize=fontsize)
         boxstyle_str = 'round, pad=0.5, rounding_size=0.15'
         el = mpatches.Ellipse((0, 0), width=0.3, height=0.3, angle=50,
                               alpha=0.5)
@@ -176,13 +176,14 @@ class analyze(object):
 
         if title_str is not None:
     #        title_str = r'NDI vs. $d$AONR at Preplant (kg ha$^{-1}$)'
-            ax.set_title(title_str, color='#282828', fontweight='bold')
+            ax.set_title(title_str, color='#282828',
+                         fontsize=int(fontsize * 1.1), fontweight='bold')
         if eq_str is not None:
             ax.annotate(
                 eq_str,
                 xy=(0.95, 0.1),
                 xycoords=ax.transAxes,
-                ha='right', va='bottom', fontsize=8,
+                ha='right', va='bottom', fontsize=int(fontsize * 0.65),
                 color=color,
                 bbox=dict(boxstyle=boxstyle_str, pad=0.5, fc=(1, 1, 1),
                           ec=(0.5, 0.5, 0.5)))
@@ -197,23 +198,27 @@ class analyze(object):
 #                          ec=(0.5, 0.5, 0.5)))
             ax.annotate(
                 lambda_str,
-                xy=(wl1, wl2), xytext=(40, -30),
-                textcoords='offset points', ha='left', va='top', fontsize=8,
+                xy=(wl2, wl1), xytext=(40, -30),
+                textcoords='offset points', ha='left', va='top',
+                fontsize=int(fontsize * 0.7),
                 color=color,
                 bbox=dict(boxstyle=boxstyle_str, pad=0.5, fc=(1, 1, 1),
-                          ec=(0.5, 0.5, 0.5)),
+                          ec=(0.5, 0.5, 0.5), alpha=0.7),
                 arrowprops=dict(arrowstyle='-|>',
-                                color="grey",
+                                color=color,
                                 patchB=el,
-                                shrinkB=10,
+                                shrinkA=0,
+                                shrinkB=0,
                                 connectionstyle='arc3,rad=-0.3'))
 
         if date_str is not None:
-            plt.text(1, 1.01, date_str, color=color, fontsize=8,
+            plt.text(1, 1.01, date_str, color=color,
+                     fontsize=int(fontsize * 0.7),
                      horizontalalignment='right',
                      transform=ax.transAxes, fontweight='bold')
         if growth_stage_str is not None:
-            plt.text(0, 1.01, growth_stage_str, color=color, fontsize=10,
+            plt.text(0, 1.01, growth_stage_str, color=color,
+                     fontsize=int(fontsize * 0.7),
                      horizontalalignment='left',
                      transform=ax.transAxes, fontweight='bold')
         return ax
@@ -414,24 +419,41 @@ class analyze(object):
     def plot_coefficient_matrix(self, array, meta_bands=None, title_str=None,
                                 eq_str=None, date_str=None,
                                 growth_stage_str=None, fname_out=None,
-                                color='#282828'):
+                                color='#282828', fontsize=16,
+                                style='seaborn-whitegrid',
+                                cmap='viridis'):
         '''
         Plots a coefficient matrix represented in `array`.
+
+        Paramters:
+            color (`str`): hex color for labels (default '#282828')
+            fontsize (`int`): font size to use for axes labels; all other
+                labels are scaled appropriately for display (default: 16)
+            style (`str`): matplotlib style to use for plot (default:
+                'seaborn-whitegrid')
+            cmap (`str`): matplotlib color map to use for displaying the
+                correlation matrix. (default: 'viridis')
         '''
+        plt.style.use(style)
         if meta_bands is None:
             meta_bands = self.io.tools.meta_bands
         wls = list(meta_bands.values())
 
         g, ax1 = plt.subplots()
-        img = ax1.imshow(array, origin='lower', extent=[min(wls), max(wls),
-                                                        min(wls), max(wls)])
+        img = ax1.imshow(array, cmap=cmap, origin='lower',
+                         extent=[min(wls), max(wls), min(wls), max(wls)])
         cbar = g.colorbar(img)
-        cbar.ax.set_ylabel(r'$R^{2}$', color=color)
-        ax1.set_xlabel(r'$\lambda 2$ (nm)', color=color, fontweight='bold')
-        ax1.set_ylabel(r'$\lambda 1$ (nm)', color=color, fontweight='bold')
+        cbar.ax.set_ylabel(r'$R^{2}$', color=color, fontsize=fontsize)
+        cbar.ax.tick_params(labelsize=fontsize)
+        ax1.set_xlabel(r'$\lambda 2$ (nm)', color=color, fontsize=fontsize,
+                       fontweight='bold')
+        ax1.set_ylabel(r'$\lambda 1$ (nm)', color=color, fontsize=fontsize,
+                       fontweight='bold')
         lambda_str, wl1, wl2 = self._get_lambda_str(array, meta_bands)
         ax1 = self._plot_set_labels(ax1, title_str, eq_str, date_str,
-                                    growth_stage_str, lambda_str, wl1, wl2)
+                                    growth_stage_str, lambda_str, wl1, wl2,
+                                    fontsize=fontsize)
+        plt.tight_layout()
         if fname_out is not None:
             if not os.path.isdir(os.path.dirname(fname_out)):
                 try:
