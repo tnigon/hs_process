@@ -5,7 +5,7 @@ import pandas as pd
 import seaborn as sns
 from matplotlib import pyplot as plt
 import matplotlib.patches as mpatches
-from scipy import stats
+from sklearn.linear_model import LinearRegression
 
 from hs_process.utilities import defaults
 from hs_process.utilities import hsio
@@ -73,6 +73,22 @@ class analyze(object):
             wl = self.io.tools.get_wavelength(b)
         return wl
 
+    def _build_empty_arrays(self, meta_bands):
+        '''
+        Builds empty arrays for correlation matrices
+        '''
+        wl_list = [wl for wl in meta_bands.values()]
+        df = pd.DataFrame(columns=['wl', 'd_wl', 'skip_n'])
+        df['wl'] = wl_list
+        df['d_wl'] = df['wl'] - df['wl'].shift(-1)
+        dif_mode = df['d_wl'].mode()[0]
+        df['skip_n'] = np.nan_to_num(np.round(list(df['d_wl'].shift(1))/dif_mode)-1).astype(int)
+        array_size = len(meta_bands) + df['skip_n'].sum()
+        array_results1 = np.zeros((array_size, array_size-1))
+        array_results2 = array_results1.copy()
+        array_results3 = array_results1.copy()
+        return df, array_results1, array_results2, array_results3
+
     def _get_band_list(self, wl_list, list_range):
         '''
         Determines how a list of wavelengths should be consolidated, if at all.
@@ -97,9 +113,27 @@ class analyze(object):
         Gets wavelengths with highest R2 value
         '''
         idx_wl1, idx_wl2 = np.where(array == np.amax(array))
-#        band_1 = array.shape[0] - (idx_wl1[0])
-        band_1 = idx_wl1[0] + 1
-        band_2 = idx_wl2[0] + 1
+        # To find number of rows to skip, we have sum the rows of df until we
+        # reach idx_wl1, and the number of rows that we've gone through is the
+        # band number we're on
+        df, _, _, _ = self._build_empty_arrays(meta_bands)
+        band_1 = 0
+        array_idx1 = 0
+
+        for idx, row in enumerate(df.iterrows()):
+            band_1 = idx + 1
+            array_idx1 += int(row[1]['skip_n'] + 1)
+            if array_idx1 >= idx_wl1[0]:
+                break
+        band_2 = 0
+        array_idx2 = 0
+        for idx, row in enumerate(df.iterrows()):
+            band_2 = idx + 1
+            array_idx2 += int(row[1]['skip_n'] + 1)
+            if array_idx2 >= idx_wl2[0]:
+                break
+#        band_1 = idx_wl1[0] + 1
+#        band_2 = idx_wl2[0] + 1
         wl1 = meta_bands[band_1]
         wl2 = meta_bands[band_2]
         r2_max1 = r'Max $R^{2}$: '
@@ -107,7 +141,7 @@ class analyze(object):
         lambda1_ = r'$\lambda 1 = ${0:.0f} nm'.format(wl1)
         lambda2_ = r'$\lambda 2 = ${0:.0f} nm'.format(wl2)
         lambda_str = (r2_max1 + r2_max2 + '\n' + lambda1_ + '\n' + lambda2_)
-        return lambda_str
+        return lambda_str, wl1, wl2
 
     def _get_wavelength_list(self, band_list_in, list_range):
         '''
@@ -129,10 +163,12 @@ class analyze(object):
         return wl_list
 
     def _plot_set_labels(self, ax, title_str, eq_str, date_str,
-                         growth_stage_str, lambda_str, color='#444444'):
+                         growth_stage_str, lambda_str, wl1, wl2,
+                         color='#444444'):
         '''
         Sets labels
         '''
+        ax.tick_params(labelsize=14)
         boxstyle_str = 'round, pad=0.5, rounding_size=0.15'
         el = mpatches.Ellipse((0, 0), width=0.3, height=0.3, angle=50,
                               alpha=0.5)
@@ -151,14 +187,27 @@ class analyze(object):
                 bbox=dict(boxstyle=boxstyle_str, pad=0.5, fc=(1, 1, 1),
                           ec=(0.5, 0.5, 0.5)))
         if lambda_str is not None:
+#            ax.annotate(
+#                lambda_str,
+#                xy=(0.95, 0.65),
+#                xycoords=ax.transAxes,
+#                ha='right', va='top', fontsize=8,
+#                color=color,
+#                bbox=dict(boxstyle=boxstyle_str, pad=0.5, fc=(1, 1, 1),
+#                          ec=(0.5, 0.5, 0.5)))
             ax.annotate(
                 lambda_str,
-                xy=(0.95, 0.65),
-                xycoords=ax.transAxes,
-                ha='right', va='top', fontsize=8,
+                xy=(wl1, wl2), xytext=(40, -30),
+                textcoords='offset points', ha='left', va='top', fontsize=8,
                 color=color,
                 bbox=dict(boxstyle=boxstyle_str, pad=0.5, fc=(1, 1, 1),
-                          ec=(0.5, 0.5, 0.5)))
+                          ec=(0.5, 0.5, 0.5)),
+                arrowprops=dict(arrowstyle='-|>',
+                                color="grey",
+                                patchB=el,
+                                shrinkB=10,
+                                connectionstyle='arc3,rad=-0.3'))
+
         if date_str is not None:
             plt.text(1, 1.01, date_str, color=color, fontsize=8,
                      horizontalalignment='right',
@@ -167,6 +216,7 @@ class analyze(object):
             plt.text(0, 1.01, growth_stage_str, color=color, fontsize=10,
                      horizontalalignment='left',
                      transform=ax.transAxes, fontweight='bold')
+        return ax
 
     def _recurs_dir(self, base_dir, search_ext='.csv', level=None):
         '''
@@ -303,15 +353,19 @@ class analyze(object):
             meta_bands = self.io.tools.meta_bands
         bands = list(meta_bands.keys())
 
-        # build all empty arrays
-        array_results1 = np.zeros((len(meta_bands), len(meta_bands)))
-        array_results2 = array_results1.copy()
-        array_results3 = array_results1.copy()
+        df, array_results1, array_results2, array_results3 =\
+            self._build_empty_arrays(meta_bands)
 
-        for idx, band1 in enumerate(reversed(bands)):
+        for idx1, band1 in enumerate(reversed(bands)):
             # get all bands LOWER than band
             band_list2 = [i for i in reversed(bands) if i < band1]
-            for band2 in band_list2:
+            # get row to put result in
+            skip_n_row = df.iloc[:band1-1, [2]].sum()[0]
+            idx_row = band1 + skip_n_row - 1
+            for idx2, band2 in enumerate(band_list2):
+                # get column to put result in
+                skip_n_col = df.iloc[:band2-1, [2]].sum()[0]
+                idx_col = band2 + skip_n_col - 1
                 if method == 'ndi':
                     s_ndi = self.band_math_ndi(df_ref, b1=band1, b2=band2,
                                                meta_bands=meta_bands,
@@ -320,27 +374,41 @@ class analyze(object):
                     s_ndi = self.band_math_ratio(df_ref, b1=band1, b2=band2,
                                                  meta_bands=meta_bands,
                                                  list_range=False)
-                mx, b, r_value, p_value, std_err = stats.linregress(s_ndi, y1)
-                array_results1[band1-1, band2-1] = r_value**2
+#                mx, b, r_value, p_value, std_err = stats.linregress(s_ndi, y1)
+                reg1 = LinearRegression().fit(s_ndi.values.reshape(-1,1),
+                                              y1.values.reshape(-1,1))
+                r_2 = reg1.score(s_ndi.values.reshape(-1,1),
+                                 y1.values.reshape(-1,1))
+                array_results1[idx_row, idx_col] = r_2
                 if y2 is not None:
-                    mx, b, r_value, p_value, std_err = stats.linregress(
-                            s_ndi, y2)
-                    array_results2[band1-1, band2-1] = r_value**2
+                    reg2 = LinearRegression().fit(s_ndi.values.reshape(-1,1),
+                                                  y2.values.reshape(-1,1))
+                    r_2 = reg2.score(s_ndi.values.reshape(-1,1),
+                                     y2.values.reshape(-1,1))
+                    array_results2[idx_row, idx_col] = r_2
                 if y3 is not None:
-                    mx, b, r_value, p_value, std_err = stats.linregress(
-                            s_ndi, y3)
-                    array_results3[band1-1, band2-1] = r_value**2
-        array_results1 = np.ma.masked_where(array_results1 == 0,
-                                            array_results1)
-        if y2 is not None:
-            array_results2 = np.ma.masked_where(array_results2 == 0,
-                                                array_results2)
-            return array_results1, array_results2
-        elif y3 is not None:
+                    reg3 = LinearRegression().fit(s_ndi.values.reshape(-1,1),
+                                                  y3.values.reshape(-1,1))
+                    r_2 = reg3.score(s_ndi.values.reshape(-1,1),
+                                     y3.values.reshape(-1,1))
+                    array_results3[idx_row, idx_col] = r_2
+        if y3 is not None:
             array_results3 = np.ma.masked_where(array_results3 == 0,
                                                 array_results3)
+            array_results2 = np.ma.masked_where(array_results2 == 0,
+                                                array_results2)
+            array_results1 = np.ma.masked_where(array_results1 == 0,
+                                                array_results1)
             return array_results1, array_results2, array_results3
+        elif y2 is not None:
+            array_results2 = np.ma.masked_where(array_results2 == 0,
+                                                array_results2)
+            array_results1 = np.ma.masked_where(array_results1 == 0,
+                                                array_results1)
+            return array_results1, array_results2
         else:
+            array_results1 = np.ma.masked_where(array_results1 == 0,
+                                                array_results1)
             return array_results1
 
     def plot_coefficient_matrix(self, array, meta_bands=None, title_str=None,
@@ -361,12 +429,16 @@ class analyze(object):
         cbar.ax.set_ylabel(r'$R^{2}$', color=color)
         ax1.set_xlabel(r'$\lambda 2$ (nm)', color=color, fontweight='bold')
         ax1.set_ylabel(r'$\lambda 1$ (nm)', color=color, fontweight='bold')
-        lambda_str = self._get_lambda_str(array, meta_bands)
-        self._plot_set_labels(ax1, title_str, eq_str, date_str,
-                              growth_stage_str, lambda_str)
+        lambda_str, wl1, wl2 = self._get_lambda_str(array, meta_bands)
+        ax1 = self._plot_set_labels(ax1, title_str, eq_str, date_str,
+                                    growth_stage_str, lambda_str, wl1, wl2)
         if fname_out is not None:
             if not os.path.isdir(os.path.dirname(fname_out)):
-                os.mkdir(os.path.dirname(fname_out))
+                try:
+                    os.mkdir(os.path.dirname(fname_out))
+                except FileNotFoundError:
+                    os.mkdir(os.path.dirname(os.path.split(fname_out)[0]))
+                    os.mkdir(os.path.dirname(fname_out))
             g.savefig(fname_out)
         return g, ax1
 
