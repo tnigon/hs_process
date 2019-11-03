@@ -188,18 +188,13 @@ class analyze(object):
                 bbox=dict(boxstyle=boxstyle_str, pad=0.5, fc=(1, 1, 1),
                           ec=(0.5, 0.5, 0.5)))
         if lambda_str is not None:
-#            ax.annotate(
-#                lambda_str,
-#                xy=(0.95, 0.65),
-#                xycoords=ax.transAxes,
-#                ha='right', va='top', fontsize=8,
-#                color=color,
-#                bbox=dict(boxstyle=boxstyle_str, pad=0.5, fc=(1, 1, 1),
-#                          ec=(0.5, 0.5, 0.5)))
             ax.annotate(
                 lambda_str,
-                xy=(wl2, wl1), xytext=(40, -30),
-                textcoords='offset points', ha='left', va='top',
+                xy=(wl2, wl1),
+                xytext=(0.95, 0.25),  # loc to place text
+                textcoords='axes fraction',  # placed relative to axes
+                ha='right',  # alignment of text
+                va='bottom',
                 fontsize=int(fontsize * 0.7),
                 color=color,
                 bbox=dict(boxstyle=boxstyle_str, pad=0.5, fc=(1, 1, 1),
@@ -416,7 +411,8 @@ class analyze(object):
                                                 array_results1)
             return array_results1
 
-    def plot_coefficient_matrix(self, array, meta_bands=None, title_str=None,
+    def plot_coefficient_matrix(self, array, meta_bands=None, contours=True,
+                                title_str=None,
                                 eq_str=None, date_str=None,
                                 growth_stage_str=None, fname_out=None,
                                 color='#282828', fontsize=16,
@@ -453,6 +449,19 @@ class analyze(object):
         ax1 = self._plot_set_labels(ax1, title_str, eq_str, date_str,
                                     growth_stage_str, lambda_str, wl1, wl2,
                                     fontsize=fontsize)
+        if contours is True:
+            x = np.linspace(min(wls), max(wls), array.shape[1])
+            y = np.linspace(min(wls), max(wls), array.shape[0])
+            X, Y = np.meshgrid(x, y)
+            CS = ax1.contour(X, Y, array,
+                             levels=[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+                             alpha=0.7,
+                             linewidths=0.7,
+                             linestyles='dashed',
+                             colors=color)
+            ax1.clabel(CS, inline=1, fontsize=fontsize*0.5)
+
+
         plt.tight_layout()
         if fname_out is not None:
             if not os.path.isdir(os.path.dirname(fname_out)):
