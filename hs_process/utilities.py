@@ -451,30 +451,35 @@ class hsio(object):
         # If variables are already set and overwrite is False, they will remain
         # the same; if variables are set and overwrite is True, they will be
         # overwritten
-        self._parse_fname(fname_hdr, self.str_plot, overwrite=overwrite)
+#        self._parse_fname(fname_hdr, self.str_plot, overwrite=overwrite)
+
+#        if os.path.splitext(fname_hdr)[1] != '.hdr':
+#            fname_hdr = fname_hdr + '.hdr'
+#            self.fname_hdr = fname_hdr
+#
+#        # The following ensures that user-passed variables have priority
+#        if not os.path.isfile(fname_hdr):
+#            fname_hdr = self.fname_in
+#        if name_long is not None:
+#            self.name_long = name_long
+#        if name_plot is not None:
+#            self.name_plot = name_plot
+#        if name_short is not None:
+#            self.name_short = name_short
 
         if os.path.splitext(fname_hdr)[1] != '.hdr':
             fname_hdr = fname_hdr + '.hdr'
-            self.fname_hdr = fname_hdr
-
-        # The following ensures that user-passed variables have priority
-        if not os.path.isfile(fname_hdr):
-            fname_hdr = self.fname_in
-        if name_long is not None:
-            self.name_long = name_long
-        if name_plot is not None:
-            self.name_plot = name_plot
-        if name_short is not None:
-            self.name_short = name_short
-
-#        print(self.name_short)
-#        if self.name_short[-1] == '_' or self.name_short[-1] == '-':
-#            self.name_short = self.name_short[:-1]
-#        if individual_plot is True and name_plot is None:
-#            name_plot = name_short[name_short.rfind('_')+1:]
+        assert os.path.isfile(fname_hdr), 'Could not find .hdr file.'
+        self.fname_hdr = fname_hdr
+        self.base_dir = os.path.dirname(fname_hdr)
 
         self.individual_plot = individual_plot
         self._read_envi()
+
+        basename = os.path.basename(fname_hdr)
+        self.name_short = basename[:basename.find('-', basename.rfind('_'))]
+        self.name_long = basename[basename.find('-', basename.rfind('_')):]
+        self.name_plot = self.name_short.rsplit('_', 1)[1]
 
     def read_spec(self, fname_hdr_spec):
         '''
@@ -1225,6 +1230,7 @@ class hstools(object):
             array_m = array.compressed()  # allows for accurate percentile calc
         else:
             array_m = np.ma.masked_array(array, mask=False)
+            array_m = array_m.compressed()
 
         if thresh is None and percentile is None:
             return array, metadata
@@ -1280,6 +1286,9 @@ class hstools(object):
 
     def mask_datacube(self, spyfile, mask):
         '''
+        DO NOT USE; USE mean_datacube() INSTEAD AND PASS A MASK.
+
+
         Applies `mask` to `spyfile`, then returns the datcube (as a np.array)
         and the mean spectra
 
@@ -1307,6 +1316,45 @@ class hstools(object):
             mask = np.empty(spyfile.shape)
             for band in range(spyfile.nbands):
                 mask[:, :, band] = mask_2d
+
+        datacube_masked = np.ma.masked_array(array, mask=mask)
+        spec_mean = np.nanmean(datacube_masked, axis=(0, 1))
+        spec_std = np.nanstd(datacube_masked, axis=(0, 1))
+        spec_mean = pd.Series(spec_mean)
+        spec_std = pd.Series(spec_std)
+        return spec_mean, spec_std, datacube_masked
+
+    def mean_datacube(self, spyfile, mask=None):
+        '''
+        Calculates the mean spectra for a datcube; if `mask` is passed (as a
+        np.array), then the mask is applied to `spyfile` prior to computing
+        the mean spectra.
+
+        Parameters:
+            spyfile (`SpyFile` object or `numpy.ndarray`): The hyperspectral
+                datacube to mask.
+            mask (`numpy.ndarray`): the mask to apply to `spyfile`; if `mask`
+                does not have similar dimensions to `spyfile`, the first band
+                (i.e., first two dimensions) of `mask` will be repeated n times
+                to match the number of bands of `spyfile`.
+        '''
+        if isinstance(spyfile, SpyFile.SpyFile):
+            self.load_spyfile(spyfile)
+            array = self.spyfile.load()
+        elif isinstance(spyfile, np.ndarray):
+            array = spyfile.copy()
+
+        if isinstance(mask, np.ma.masked_array):
+            mask = mask.mask
+        if mask is not None:
+            if mask.shape != spyfile.shape:
+                if len(mask.shape) == 3:
+                    mask_2d = np.reshape(mask, mask.shape[:2])
+                else:
+                    mask_2d = mask.copy()
+                mask = np.empty(spyfile.shape)
+                for band in range(spyfile.nbands):
+                    mask[:, :, band] = mask_2d
 
         datacube_masked = np.ma.masked_array(array, mask=mask)
         spec_mean = np.nanmean(datacube_masked, axis=(0, 1))

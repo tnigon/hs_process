@@ -246,7 +246,7 @@ class batch(object):
                   ''.format(name_print))
         return dir_out, name_print, name_append
 
-    def _execute_mask(self, fname_list, base_dir_out, folder_name,
+    def _execute_mask(self, fname_list, mask_dir, base_dir_out, folder_name,
                       name_append, geotiff, mask_thresh, mask_percentile,
                       mask_side):
         '''
@@ -261,13 +261,13 @@ class batch(object):
         elif mask_thresh is None and mask_percentile is not None:
             type_mask = ('{0}-pctl-{1}'.format(
                     mask_side, mask_percentile))
-        columns = ['fname', type_mask]
+        columns = ['fname', 'plot_id', type_mask]
         df_stats = pd.DataFrame(columns=columns)
-        n = 1  # because multiple mask events may take place in same folder..
-        fname_csv = 'mask-stats-{0}.csv'.format(str(n).zfill(3))
+
         for fname in fname_list:
             self.io.read_cube(fname)
-            metadata = self.io.spyfile.metadata
+            metadata = self.io.spyfile.metadata.copy()
+            metadata_geotiff = self.io.spyfile.metadata.copy()
             base_dir = os.path.dirname(fname)
             if base_dir_out is None:
                 dir_out, name_append = self._save_file_setup(
@@ -276,33 +276,60 @@ class batch(object):
                 dir_out, name_append = self._save_file_setup(
                         base_dir_out, folder_name, name_append)
             name_print = self._get_name_print()
-            self.my_segment = segment(self.io.spyfile)
             array = self.io.spyfile.load()
-            array_mask, metadata = self.my_segment.tools.mask_array(
-                    array, metadata, mask_thresh, mask_percentile, mask_side)
+
+            if mask_dir is None:
+                mask_dir = os.path.join(self.io.base_dir, 'band_math')
+            array_bandmath, metadata_bandmath = self._get_array_similar(
+                    mask_dir)
+#            array_bandmath = np.ma.masked_array(
+#                    array_bandmath, mask=array_kmeans.mask)
+            array_mask, metadata_bandmath = self.io.tools.mask_array(
+                    array_bandmath, metadata_bandmath, thresh=mask_thresh,
+                    percentile=mask_percentile, side=mask_side)
 
             stat_mask_mean = np.nanmean(array_mask)
-            data = [fname, stat_mask_mean]
+            data = [fname, self.io.name_plot, stat_mask_mean]
             df_stats_temp = pd.DataFrame(data=[data], columns=columns)
             df_stats = df_stats.append(df_stats_temp, ignore_index=True)
 
+            spec_mean, spec_std, datacube_masked = self.io.tools.mask_datacube(
+                    array, array_mask.mask)
+#            metadata = self.io.spyfile.metadata.copy()
+            # because this is specialized, we should make our own history str
+            hist_str = (" -> hs_process.batch.segment_create_mask[<"
+                        "label: 'mask_thresh?' value:{0}; "
+                        "label: 'mask_percentile?' value:{1}; "
+                        "label: 'mask_side?' value:{2}>]"
+                        "".format(mask_thresh, mask_percentile, mask_side))
+            metadata['history'] += hist_str
+            metadata_geotiff['history'] += hist_str
+
             name_label = (name_print + name_append + '.' +
                           self.io.defaults.interleave)
-            metadata['interleave'] = self.io.defaults.interleave
-            self._write_datacube(dir_out, name_label, array_mask, metadata)
+            self._write_datacube(dir_out, name_label, datacube_masked,
+                                 metadata)
+            name_label_spec = (os.path.splitext(name_label)[0] +
+                               '-spec-mean.spec')
+            self._write_spec(dir_out, name_label_spec, spec_mean, spec_std,
+                             metadata)
 
             self.array_mask = array_mask
             if geotiff is True:
                 self._write_geotiff(array_mask, fname, dir_out, name_label,
-                                    metadata, self.my_segment.tools)
+                                    metadata_geotiff, self.io.tools)
+#        n = 1  # because multiple mask events may take place in same folder..
+#        fname_csv = 'mask-stats.csv'.format(str(n).zfill(3))
+#        fname_csv_full = os.path.join(dir_out, fname_csv)
+#
+#        while os.path.isfile(fname_csv_full):
+#            n += 1
+#            fname_csv = 'mask-stats-{0}.csv'.format(str(n).zfill(3))
+#            dir_name, base_name = os.path.split(fname_csv_full)
+##            base_name, ext = os.path.split(base_name)
+#            fname_csv_full = os.path.join(dir_name, fname_csv)
+        fname_csv = 'mask-stats.csv'
         fname_csv_full = os.path.join(dir_out, fname_csv)
-
-        while os.path.isfile(fname_csv_full):
-            n += 1
-            fname_csv = 'mask-stats-{0}.csv'.format(str(n).zfill(3))
-            dir_name, base_name = os.path.split(fname_csv_full)
-#            base_name, ext = os.path.split(base_name)
-            fname_csv_full = os.path.join(dir_name, fname_csv)
         df_stats.to_csv(fname_csv_full, index=False)
 #
 #############################################
@@ -385,7 +412,9 @@ class batch(object):
             type_bm = ('{0}-{1}-{2}-{3}'.format(method, int(np.mean(wl1)),
                                                 int(np.mean(wl2)),
                                                 int(np.mean(wl2))))
-        columns = ['fname', type_bm]
+        columns = ['fname', 'plot_id', 'count', 'mean', 'std_dev', 'median',
+                   'pctl_10th', 'pctl_25th', 'pctl_50th', 'pctl_75th',
+                   'pctl_90th', 'pctl_95th']
         df_stats = pd.DataFrame(columns=columns)
         for fname in fname_list:
             self.io.read_cube(fname)
@@ -428,23 +457,26 @@ class batch(object):
                                         int(np.mean(wl3)),
                                         self.io.defaults.interleave))
 
-            stat_bm_mean = np.nanmean(array_bm)
-            data = [fname, stat_bm_mean]
+            stat_count = np.count_nonzero(~np.isnan(array_bm))
+            stat_mean = np.nanmean(array_bm)
+            stat_std = np.nanstd(array_bm)
+            stat_med = np.nanmedian(array_bm)
+            stat_pctls = np.nanpercentile(array_bm, [10, 25, 50, 75, 90, 95])
+
+            data = [fname, self.io.name_plot, stat_count, stat_mean, stat_std,
+                    stat_med, stat_pctls[0], stat_pctls[1], stat_pctls[2],
+                    stat_pctls[3], stat_pctls[4], stat_pctls[5]]
             df_stats_temp = pd.DataFrame(data=[data], columns=columns)
             df_stats = df_stats.append(df_stats_temp, ignore_index=True)
 
             if plot_out is True:
-                fig, ax = plt.subplots()
-                sns.distplot(array_bm.flatten())
-                ax.set_title(os.path.basename(name_label))
-                ax.set_xlabel(type_bm)
-                ax.set_ylabel('Frequency')
-                legend = ax.legend()
-                legend.set_title(type_bm)
                 fname_fig = os.path.join(dir_out,
                                          os.path.splitext(name_label)[0] +
                                          '.png')
-                fig.savefig(fname_fig)
+                self._plot_histogram(array_bm, fname_fig, title=name_print,
+                                     xlabel=type_bm.upper(), percentile=90,
+                                     fontsize=14,
+                                     color='#444444')
 
             metadata['label'] = name_label
             metadata['interleave'] = self.io.defaults.interleave
@@ -1029,6 +1061,58 @@ class batch(object):
         assert name_print is not None, msg
         return name_print
 
+    def _plot_histogram(self, array, fname_fig, title=None, xlabel=None,
+                        percentile=90, fontsize=16, color='#444444'):
+        '''
+        Plots a histogram with the percentile value labeled
+        '''
+        if isinstance(array, np.ma.core.MaskedArray):
+            array_m = array.compressed()  # allows for accurate percentile calc
+        else:
+            array_m = np.ma.masked_array(array, mask=False)
+            array_m = array_m.compressed()
+
+        pctl = np.nanpercentile(array_m.flatten(), percentile)
+
+        fig, ax = plt.subplots()
+        ax = sns.distplot(array_m.flatten(), bins=50, color='grey')
+        data_x, data_y = ax.lines[0].get_data()
+
+        y_lim = ax.get_ylim()
+        yi = np.interp(pctl, data_x, data_y)
+        ymax = yi/y_lim[1]
+        ax.axvline(pctl, ymax=ymax, linestyle='--', color=color, linewidth=0.5)
+        boxstyle_str = 'round, pad=0.5, rounding_size=0.15'
+
+
+        legend_str = ('Percentile ({0}): {1:.3f}'
+                      ''.format(percentile, pctl))
+        ax.annotate(
+            legend_str,
+            xy=(pctl, yi),
+            xytext=(0.97, 0.94),  # loc to place text
+            textcoords='axes fraction',  # placed relative to axes
+            ha='right',  # alignment of text
+            va='top',
+            fontsize=int(fontsize * 0.9),
+            color=color,
+            bbox=dict(boxstyle=boxstyle_str, pad=0.5, fc=(1, 1, 1),
+                      ec=(0.5, 0.5, 0.5), alpha=0.5),
+            arrowprops=dict(arrowstyle='-|>',
+                            color=color,
+        #                    patchB=el,
+                            shrinkA=0,
+                            shrinkB=0,
+                            connectionstyle='arc3,rad=-0.3',
+                            linestyle='--',
+                            linewidth=0.7))
+        ax.set_title(title, fontweight='bold', fontsize=int(fontsize * 1.1))
+        ax.set_xlabel(xlabel, fontsize=fontsize)
+        ax.set_ylabel('Frequency (%)', fontsize=fontsize)
+        ax.tick_params(labelsize=fontsize)
+        plt.tight_layout()
+        fig.savefig(fname_fig, dpi=300)
+
     def segment_band_math(self, fname_list=None, base_dir=None,
                           search_ext='bip', dir_level=0, base_dir_out=None,
                           folder_name='band_math', name_append='band-math',
@@ -1340,8 +1424,67 @@ class batch(object):
             df_stats = df_stats_in.append(df_stats)
         df_stats.to_csv(fname_stats, index=False)
 
+    def cube_to_spectra(self, fname_list=None, base_dir=None, search_ext='bip',
+                        dir_level=0, base_dir_out=None,
+                        folder_name='cube_to_spec',
+                        name_append='cube-to-spec',
+                        geotiff=True, out_dtype=False, out_force=None,
+                        out_ext=False, out_interleave=False,
+                        out_byteorder=False):
+        '''
+        Calculates the mean and standard deviation for each cube in
+        `fname_sheet` and writes the result to a .spec file.
+
+        Parameters:
+
+        '''
+        if fname_list is None and base_dir is not None:
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+        elif fname_list is None and base_dir is None:
+            # base_dir may have been stored to the `batch` object
+            base_dir = self.base_dir
+            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+                   'datacubes should be processed.\n')
+            assert base_dir is not None, msg
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+
+        if self.io.defaults.force is False:  # otherwise just overwrites if it exists
+            fname_list = self._check_processed(fname_list, base_dir_out,
+                                               folder_name, name_append)
+
+        for fname in fname_list:
+            print('\nCalculating mean spectra: {0}'.format(fname))
+            self.io.read_cube(fname)
+            base_dir = os.path.dirname(fname)
+            if base_dir_out is None:
+                dir_out, name_append = self._save_file_setup(
+                        base_dir, folder_name, name_append)
+            else:
+                dir_out, name_append = self._save_file_setup(
+                        base_dir_out, folder_name, name_append)
+
+            spec_mean, spec_std, array = self.io.tools.mean_datacube(
+                    self.io.spyfile)
+
+            name_print = self._get_name_print()
+            name_label = (name_print + name_append + '.' +
+                          self.io.defaults.interleave)
+            metadata = self.io.spyfile.metadata.copy()
+            # because this is specialized, we should make our own history str
+            hist_str = (" -> hs_process.batch.cube_to_spectra[<>]")
+            metadata['history'] += hist_str
+            name_label_spec = (os.path.splitext(name_label)[0] +
+                               '-mean.spec')
+            if geotiff is True:
+                self._write_geotiff(array, fname, dir_out, name_label,
+                                    metadata, self.io.tools)
+            # Now write spec (will change map info on metadata)
+            self._write_spec(dir_out, name_label_spec, spec_mean, spec_std,
+                             metadata)
+
     def segment_create_mask(self, fname_list=None, base_dir=None,
-                            search_ext='bip', dir_level=0, base_dir_out=None,
+                            search_ext='bip', dir_level=0, mask_dir=None,
+                            base_dir_out=None,
                             folder_name='mask', name_append='mask',
                             geotiff=True, mask_thresh=None,
                             mask_percentile=None, mask_side='lower',
@@ -1379,7 +1522,7 @@ class batch(object):
         if self.io.defaults.force is False:  # otherwise just overwrites if it exists
             fname_list = self._check_processed(fname_list, base_dir_out,
                                                folder_name, name_append)
-        self._execute_mask(fname_list, base_dir_out, folder_name,
+        self._execute_mask(fname_list, mask_dir, base_dir_out, folder_name,
                            name_append, geotiff, mask_thresh,
                            mask_percentile, mask_side)
 
@@ -1774,36 +1917,3 @@ class batch(object):
             df_spec = df_spec.append(df_spec_temp)
         fname_csv = os.path.join(base_dir, 'stats-spectra.csv')
         df_spec.to_csv(fname_csv, index=False)
-
-    def split_train_val_test(self, df, train_pct=0.5, validate_pct=0.2,
-                             seed_st=None):
-        '''
-        Splits dataset into a training, test, and validation groups based on
-        the proporations passed.
-
-        Parameters:
-            df (`pandas.DataFrame`): input dataset
-            train_pct (`float`): Percent of samples to be put into the training
-                dataset.
-            validate_pct (`float`): Percent of samples to be put into the
-                validation dataset; the rest go to the test dataset.
-            seed (`int`): the `numpy.random.seed` for repeatable
-        '''
-        np.random.seed(None)
-        if seed_st is None:
-            seed_st = np.random.get_state()
-        else:
-            try:
-                np.random.set_state(seed_st)
-            except TypeError:
-                print('`seed_st` not recognized; using a new seed state.\n')
-                seed_st = np.random.get_state()
-
-        perm = np.random.permutation(df.index)
-        m = len(df.index)
-        train_end = int(train_pct * m)
-        validate_end = int(validate_pct * m) + train_end
-        train = df.iloc[perm[:train_end]]
-        validate = df.iloc[perm[train_end:validate_end]]
-        test = df.iloc[perm[validate_end:]]
-        return train, validate, test, seed_st

@@ -180,6 +180,7 @@ class segment(object):
         array_b2 = self.tools.get_spectral_mean(band2_list, array)
         array_b3 = self.tools.get_spectral_mean(band3_list, array)
         array_der = (array_b1-array_b2)/(array_b2-array_b3)
+        array_der[array_der == 0] = np.nan
 
         metadata['bands'] = 1
         self.tools.del_meta_item(metadata, 'wavelength')
@@ -268,6 +269,7 @@ class segment(object):
         array_b1 = self.tools.get_spectral_mean(band1_list, array)
         array_b2 = self.tools.get_spectral_mean(band2_list, array)
         array_ratio = (array_b1/array_b2)
+        array_ratio[array_ratio == 0] = np.nan
 
         metadata['bands'] = 1
         self.tools.del_meta_item(metadata, 'wavelength')
@@ -360,6 +362,7 @@ class segment(object):
         array_b1 = self.tools.get_spectral_mean(band1_list, array)
         array_b2 = self.tools.get_spectral_mean(band2_list, array)
         array_ndi = (array_b1-array_b2)/(array_b1+array_b2)
+        array_ndi[array_ndi == 0] = np.nan
 
         metadata['bands'] = 1
         self.tools.del_meta_item(metadata, 'wavelength')
@@ -417,6 +420,7 @@ class segment(object):
 #        array_der = (array_b1-array_b2)/(array_b2-array_b3)
         array_mcari2 = ((1.5 * (2.5 * (array_b1 - array_b2) - 1.3 * (array_b1 - array_b3))) /
                         np.sqrt((2 * array_b1 + 1)**2 - (6 * array_b1 - 5 * np.sqrt(array_b2)) - 0.5))
+        array_mcari2[array_mcari2 == 0] = np.nan
 
         metadata['bands'] = 1
         self.tools.del_meta_item(metadata, 'wavelength')
