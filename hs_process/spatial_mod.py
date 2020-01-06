@@ -271,10 +271,12 @@ class spatial_mod(object):
             buf_pix (`int`): number of pixels to buffer
 
         Returns:
-            pix_ul (`int`): upper left pixel coordinate after applying the
-                buffer
-            pix_lr (`int`): lower right pixel coordinate after applying the
-                buffer
+            2-element `tuple` containing
+
+            - **pix_ul** (`int`): upper left pixel coordinate after applying the
+              buffer.
+            - **pix_lr** (`int`): lower right pixel coordinate after applying the
+              buffer.
         '''
         pix_lr = pix_ul + crop_pix
         if buf_pix is not None:
@@ -462,12 +464,14 @@ class spatial_mod(object):
                 name to identify each of the plots, and should be an integer.
 
         Returns:
-            df_plots (`pandas.DataFrame`): data for which to crop each plot;
-                includes 'plot_id', 'pix_e_ul', and 'pix_n_ul' columns. This
-                data can be passed to `spatial_mod.crop_single()` to perform
-                the actual cropping.
+            `pandas.DataFrame`:
+                - **df_plots** (`pandas.DataFrame`) -- data for
+                  which to crop each plot; includes 'plot_id', 'pix_e_ul', and
+                  'pix_n_ul' columns. This data can be passed to
+                  `spatial_mod.crop_single()` to perform the actual cropping.
 
-        Note: Either the pixel coordinate or the map unit coordinate should be
+        Note:
+            Either the pixel coordinate or the map unit coordinate should be
             passed for `crop_X_Y` and `buf_X_Y` in each direction (i.e.,
             easting and northing). Do not pass both.
         '''
@@ -555,12 +559,14 @@ class spatial_mod(object):
                 (default: `None`).
 
         Returns:
-            df_plots (`pandas.DataFrame`): data for which to crop each plot;
-                includes 'plot_id', 'pix_e_ul', and 'pix_n_ul' columns. This
-                data can be passed to `spatial_mod.crop_single()` to perform
-                the actual cropping.
+            `pandas.DataFrame`:
+                - **df_plots** (`pandas.DataFrame`) -- data for
+                  which to crop each plot; includes 'plot_id', 'pix_e_ul', and
+                  'pix_n_ul' columns. This data can be passed to
+                  `spatial_mod.crop_single()` to perform the actual cropping.
 
-        Note: Either the pixel coordinate or the map unit coordinate should be
+        Note:
+            Either the pixel coordinate or the map unit coordinate should be
             passed for `crop_X_Y` and `buf_X_Y` in each direction (i.e.,
             easting and northing). Do not pass both.
         '''
@@ -632,9 +638,11 @@ class spatial_mod(object):
                 `gdf` must be explicitly passed to
 
         Returns:
-            array_crop (`numpy.ndarray`): Cropped datacube
-            metadata (`dict`): Modified metadata describing the cropped
-                hyperspectral datacube (`array_crop`).
+            2-element `tuple` containing
+
+            - **array_crop** (`numpy.ndarray`): Cropped datacube.
+            - **metadata** (`dict`): Modified metadata describing the cropped
+              hyperspectral datacube (`array_crop`).
         '''
         crop_e_pix, crop_n_pix, crop_e_m, crop_n_m = self._handle_defaults(
                 crop_e_pix, crop_n_pix, crop_e_m, crop_n_m, group='crop')

@@ -1112,6 +1112,89 @@ class batch(object):
         plt.tight_layout()
         fig.savefig(fname_fig, dpi=300)
 
+    def cube_to_spectra(self, fname_list=None, base_dir=None, search_ext='bip',
+                        dir_level=0, base_dir_out=None,
+                        folder_name='cube_to_spec',
+                        name_append='cube-to-spec',
+                        geotiff=True, out_dtype=False, out_force=None,
+                        out_ext=False, out_interleave=False,
+                        out_byteorder=False):
+        '''
+        Calculates the mean and standard deviation for each cube in
+        `fname_sheet` and writes the result to a .spec file.
+
+        Parameters:
+            fname_list (`list`, optional): list of filenames to process; if
+                left to `None`, will look at `base_dir`, `search_ext`, and
+                `dir_level` parameters for files to process (default: `None`).
+            base_dir (`str`, optional): directory path to search for files to
+                spectrally clip; if `fname_list` is not `None`, `base_dir` will
+                be ignored (default: `None`).
+            search_ext (`str`): file format/extension to search for in all
+                directories and subdirectories to determine which files to
+                process; if `fname_list` is not `None`, `search_ext` will
+                be ignored (default: 'bip').
+            dir_level (`int`): The number of directory levels to search; if
+                `None`, searches all directory levels (default: 0).
+            base_dir_out (`str`): directory path to save all processed
+                datacubes; if set to `None`, a folder named according to the
+                `folder_name` parameter is added to `base_dir`
+            folder_name (`str`): folder to add to `base_dir_out` to save all
+                the processed datacubes (default: 'spec-clip').
+            name_append (`str`): name to append to the filename (default:
+                'spec-clip').
+            geotiff (`bool`): whether to save the masked RGB image as a geotiff
+                alongside the masked datacube.
+            out_XXX: Settings for saving the output files can be adjusted here
+                if desired. They are stored in `batch.io.defaults, and are
+                therefore accessible at a high level. See
+                `hsio.set_io_defaults()` for more information on each of the
+                settings.
+        '''
+        if fname_list is None and base_dir is not None:
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+        elif fname_list is None and base_dir is None:
+            # base_dir may have been stored to the `batch` object
+            base_dir = self.base_dir
+            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+                   'datacubes should be processed.\n')
+            assert base_dir is not None, msg
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+
+        if self.io.defaults.force is False:  # otherwise just overwrites if it exists
+            fname_list = self._check_processed(fname_list, base_dir_out,
+                                               folder_name, name_append)
+
+        for fname in fname_list:
+            print('\nCalculating mean spectra: {0}'.format(fname))
+            self.io.read_cube(fname)
+            base_dir = os.path.dirname(fname)
+            if base_dir_out is None:
+                dir_out, name_append = self._save_file_setup(
+                        base_dir, folder_name, name_append)
+            else:
+                dir_out, name_append = self._save_file_setup(
+                        base_dir_out, folder_name, name_append)
+
+            spec_mean, spec_std, array = self.io.tools.mean_datacube(
+                    self.io.spyfile)
+
+            name_print = self._get_name_print()
+            name_label = (name_print + name_append + '.' +
+                          self.io.defaults.interleave)
+            metadata = self.io.spyfile.metadata.copy()
+            # because this is specialized, we should make our own history str
+            hist_str = (" -> hs_process.batch.cube_to_spectra[<>]")
+            metadata['history'] += hist_str
+            name_label_spec = (os.path.splitext(name_label)[0] +
+                               '-mean.spec')
+            if geotiff is True:
+                self._write_geotiff(array, fname, dir_out, name_label,
+                                    metadata, self.io.tools)
+            # Now write spec (will change map info on metadata)
+            self._write_spec(dir_out, name_label_spec, spec_mean, spec_std,
+                             metadata)
+
     def segment_band_math(self, fname_list=None, base_dir=None,
                           search_ext='bip', dir_level=0, base_dir_out=None,
                           folder_name='band_math', name_append='band-math',
@@ -1229,258 +1312,6 @@ class batch(object):
 #                                    name_append, geotiff, method, wl1, wl2,
 #                                    wl3, b1, b2, b3, list_range, plot_out)
 
-
-    def segment_kmeans(self, fname_list=None, base_dir=None, search_ext='bip',
-                       dir_level=0, base_dir_out=None, folder_name='kmeans',
-                       name_append='kmeans', geotiff=True,
-                       n_classes=3, max_iter=100, plot_out=True,
-                       out_dtype=False, out_force=None,
-                       out_ext=False, out_interleave=False,
-                       out_byteorder=False):
-        '''
-        Batch processing tool to perform kmeans clustering on multiple
-        datacubes in the same way (uses Spectral Python kmeans tool).
-
-        Parameters:
-            n_classes (`int`): number of classes to cluster (default: 3).
-            max_iter (`int`): maximum iterations before terminating process
-                (default: 100).
-            plot_out (`bool`): whether to save a line plot of the spectra for
-                each class (default: `True`).
-            geotiff (`bool`): whether to save the masked RGB image as a geotiff
-                alongside the masked datacube.
-        '''
-        self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
-                                out_byteorder)
-        if fname_list is None and base_dir is not None:
-            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-        elif fname_list is None and base_dir is None:
-            # base_dir may have been stored to the `batch` object
-            base_dir = self.base_dir
-            msg = ('Please set `fname_list` or `base_dir` to indicate which '
-                   'datacubes should be processed.\n')
-            assert base_dir is not None, msg
-            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-
-        if self.io.defaults.force is False:  # otherwise just overwrites if it exists
-            fname_list = self._check_processed(fname_list, base_dir_out,
-                                               folder_name, name_append)
-        self._execute_kmeans(fname_list, base_dir_out, folder_name,
-                             name_append, geotiff, n_classes, max_iter,
-                             plot_out)
-
-#        if fname_list is not None:
-#            self._execute_kmeans(fname_list, base_dir_out, folder_name,
-#                                 name_append, geotiff, n_classes, max_iter,
-#                                 plot_out, mask_soil=False)
-#        elif base_dir is not None:
-#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-#            self._execute_kmeans(fname_list, base_dir_out, folder_name,
-#                                 name_append, geotiff, n_classes, max_iter,
-#                                 plot_out, mask_soil=False)
-#        else:  # fname_list and base_dir are both `None`
-#            # base_dir may have been stored to the `batch` object
-#            base_dir = self.base_dir
-#            msg = ('Please set `fname_list` or `base_dir` to indicate which '
-#                   'datacubes should be processed.\n')
-#            assert base_dir is not None, msg
-#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-#            self._execute_kmeans(fname_list, base_dir_out, folder_name,
-#                                 name_append, geotiff, n_classes, max_iter,
-#                                 plot_out, mask_soil=False)
-
-    def combine_kmeans_bandmath(self, fname_sheet, base_dir_out=None,
-                                folder_name='mask_combine',
-                                name_append='mask-combine',
-                                geotiff=True, kmeans_mask_classes=1,
-                                kmeans_filter='mcari2',
-                                mask_percentile=90, mask_side='lower',
-                                out_dtype=False, out_force=None, out_ext=False,
-                                out_interleave=False, out_byteorder=False):
-        '''
-
-        Parameters:
-            fname_sheet (`fname` or `Pandas.DataFrame): The filename of the
-                spreadsheed that provides the necessary information for batch
-                process cropping. See below for more information about the
-                required and optional contents of `fname_sheet` and how to
-                properly format it. Optionally, `fname_sheet` can be a
-                `Pandas.DataFrame`
-            kmeans_mask_classes (`int`): number of K-means classes to mask from
-                the datacube. By default, the classes with the lowest average
-                spectral value (e.g., NDVI, GNDVI, MCARI2, etc.; based on
-                `kmeans_filter` parameter) will be masked (default: 1).
-            kmeans_filter (`str`): the spectral index to base the K-means mask
-                on. Must be one of 'ndvi', 'gndvi', 'ndre', or 'mcari2'. Note
-                that the K-means aglorithm does not use the in its clustering
-                algorithm (default: 'mcari2').
-        Mask steps:
-            1. load kmeans-stats.csv
-            2. for each row, load spyfile based on "fname"
-            3. get class to mask based on:
-                a. find class with min ndvi: min_class = np.nanmin(class_X_ndvi)
-            4. mask all pixels of min_class
-            5. calculate band math (or load images with band math already calculated)
-            6. mask all pixels below threshold/perecentile
-                a. if percentile, use pctl to determine number of pixels to keep
-                b. if pctl = 90, we should keep 10% of total pixels:
-                    i. find total number of pixels
-                    ii. calculate what 10% is (155*46 = 7130); 7130 * .1 = 713
-                    iii. of pixels that are not masked by kmeans, find 713 pixels with highest bandmath
-                c. if thresh, number doesn't matter
-            7. apply the mask to the datacube and save spectra
-        '''
-        self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
-                                out_byteorder)
-
-        if isinstance(fname_sheet, pd.DataFrame):
-            df_kmeans = fname_sheet.copy()
-            fname_sheet = 'dataframe passed'
-        elif os.path.splitext(fname_sheet)[1] == '.csv':
-            df_kmeans = pd.read_csv(fname_sheet)
-
-        msg = ('<kmeans_filter> must be one of "ndvi", "gndvi", "ndre", '
-               'or "mcari2".')
-        assert kmeans_filter in ['ndvi', 'gndvi', 'ndre', 'mcari2'], msg
-        filter_str = '_{0}'.format(kmeans_filter)
-        filter_cols = [col for col in df_kmeans.columns if filter_str in col]
-
-        bandmath_pctl_str = '{0}_pctl'.format(kmeans_filter)
-        bandmath_side_str = '{0}_side'.format(kmeans_filter)
-        columns = ['fname', 'kmeans_class', 'kmeans_nonmasked_pct',
-                   bandmath_pctl_str, bandmath_side_str, 'total_nonmasked_pct']
-        df_stats = pd.DataFrame(columns=columns)
-
-        if self.io.defaults.force is False:  # otherwise just overwrites if it exists
-            fname_list = df_kmeans['fname'].tolist()
-            fname_list = self._check_processed(fname_list, base_dir_out,
-                                               folder_name, name_append)
-            df_kmeans = df_kmeans[df_kmeans['plot_id'].isin(fname_list)]
-
-        for idx, row in df_kmeans.iterrows():  # using stats-kmeans.csv
-            class_mask = self._get_class_mask(row, filter_cols,
-                                              n_classes=kmeans_mask_classes)
-            fname = row['fname']
-            self.io.read_cube(fname)
-            if base_dir_out is None:
-                dir_out, name_append = self._save_file_setup(
-                        os.path.dirname(fname), folder_name, name_append)
-            else:
-                dir_out, name_append = self._save_file_setup(
-                        base_dir_out, folder_name, name_append)
-            name_print = self._get_name_print()
-
-            dir_search = os.path.join(self.io.base_dir, 'kmeans')
-            array_kmeans, metadata_kmeans = self._get_array_similar(dir_search)
-            dir_search = os.path.join(self.io.base_dir, 'band_math')
-            array_bandmath, metadata_bandmath = self._get_array_similar(
-                    dir_search)
-
-            array_kmeans, metadata_kmeans = self.io.tools.mask_array(
-                    array_kmeans, metadata_kmeans, thresh=class_mask,
-                    side=None)  # when side=None, masks the exact match
-            kmeans_pct = (100 * (array_kmeans.count() /
-                            (array_kmeans.shape[0]*array_kmeans.shape[1])))
-
-            # by adding the kmeans mask, hstools.mask_array will consider that
-            # mask when masking by bandmath values (applicable for percentile)
-            array_bandmath = np.ma.masked_array(
-                    array_bandmath, mask=array_kmeans.mask)
-            mask_combined, metadata_bandmath = self.io.tools.mask_array(
-                    array_bandmath, metadata_bandmath,
-                    percentile=mask_percentile, side=mask_side)
-            total_pct = (100 * (mask_combined.count() /
-                            (mask_combined.shape[0]*mask_combined.shape[1])))
-            spec_mean, spec_std, datacube_masked = self.io.tools.mean_datacube(
-                    self.io.spyfile, mask_combined)
-
-            data = [os.path.basename(fname), class_mask, kmeans_pct,
-                    mask_percentile, mask_side, total_pct]
-            df_stats_temp = pd.DataFrame(data=[data], columns=columns)
-            df_stats = df_stats.append(df_stats_temp)
-            name_label = (name_print + name_append + '.' +
-                          self.io.defaults.interleave)
-            metadata = self.io.spyfile.metadata.copy()
-            # because this is specialized, we should make our own history str
-            hist_str = (" -> hs_process.batch.combine_kmeans_bandmath[<"
-                        "label: 'fname_sheet?' value:{0}; "
-                        "label: 'kmeans_class?' value:{1}; "
-                        "label: 'mask_percentile?' value:{2}; "
-                        "label: 'mask_side?' value:{3}>]"
-                        "".format(fname_sheet, class_mask, mask_percentile,
-                                  mask_side))
-            metadata['history'] += hist_str
-            self._write_datacube(dir_out, name_label, datacube_masked,
-                                 metadata)
-
-            name_label_spec = (os.path.splitext(name_label)[0] +
-                               '-spec-mean.spec')
-            self._write_spec(dir_out, name_label_spec, spec_mean, spec_std,
-                             metadata)
-        fname_stats = os.path.join(dir_out, name_append[1:] + '-stats.csv')
-        if os.path.isfile(fname_stats) and self.io.defaults.force is False:
-            df_stats_in = pd.read_csv(fname_stats)
-            df_stats = df_stats_in.append(df_stats)
-        df_stats.to_csv(fname_stats, index=False)
-
-    def cube_to_spectra(self, fname_list=None, base_dir=None, search_ext='bip',
-                        dir_level=0, base_dir_out=None,
-                        folder_name='cube_to_spec',
-                        name_append='cube-to-spec',
-                        geotiff=True, out_dtype=False, out_force=None,
-                        out_ext=False, out_interleave=False,
-                        out_byteorder=False):
-        '''
-        Calculates the mean and standard deviation for each cube in
-        `fname_sheet` and writes the result to a .spec file.
-
-        Parameters:
-
-        '''
-        if fname_list is None and base_dir is not None:
-            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-        elif fname_list is None and base_dir is None:
-            # base_dir may have been stored to the `batch` object
-            base_dir = self.base_dir
-            msg = ('Please set `fname_list` or `base_dir` to indicate which '
-                   'datacubes should be processed.\n')
-            assert base_dir is not None, msg
-            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-
-        if self.io.defaults.force is False:  # otherwise just overwrites if it exists
-            fname_list = self._check_processed(fname_list, base_dir_out,
-                                               folder_name, name_append)
-
-        for fname in fname_list:
-            print('\nCalculating mean spectra: {0}'.format(fname))
-            self.io.read_cube(fname)
-            base_dir = os.path.dirname(fname)
-            if base_dir_out is None:
-                dir_out, name_append = self._save_file_setup(
-                        base_dir, folder_name, name_append)
-            else:
-                dir_out, name_append = self._save_file_setup(
-                        base_dir_out, folder_name, name_append)
-
-            spec_mean, spec_std, array = self.io.tools.mean_datacube(
-                    self.io.spyfile)
-
-            name_print = self._get_name_print()
-            name_label = (name_print + name_append + '.' +
-                          self.io.defaults.interleave)
-            metadata = self.io.spyfile.metadata.copy()
-            # because this is specialized, we should make our own history str
-            hist_str = (" -> hs_process.batch.cube_to_spectra[<>]")
-            metadata['history'] += hist_str
-            name_label_spec = (os.path.splitext(name_label)[0] +
-                               '-mean.spec')
-            if geotiff is True:
-                self._write_geotiff(array, fname, dir_out, name_label,
-                                    metadata, self.io.tools)
-            # Now write spec (will change map info on metadata)
-            self._write_spec(dir_out, name_label_spec, spec_mean, spec_std,
-                             metadata)
-
     def segment_create_mask(self, fname_list=None, base_dir=None,
                             search_ext='bip', dir_level=0, mask_dir=None,
                             base_dir_out=None,
@@ -1593,24 +1424,35 @@ class batch(object):
 
         Note:
             `fname_sheet` may have the following required column headings:
-                i) "directory", ii) "name_short", iii) "name_long", iv) "ext",
-                v) "pix_e_ul", and vi) "pix_n_ul".
+                1. "directory"
+                2. "name_short"
+                3. "name_long"
+                4. "ext"
+                5. "pix_e_ul"
+                6. "pix_n_ul".
             With this minimum input, `batch.spatial_crop` will read in each
-                image, crop from the upper left pixel (determined as
-                `pix_e_ul`/`pix_n_ul`) to the lower right pixel calculated
-                based on `crop_e_pix`/`crop_n_pix` (which is the width of the
-                cropped area in units of pixels). `crop_e_pix` and `crop_n_pix`
-                have default values, but they can also be set in `fname_sheet`,
-                which will take precedence over the defaults.
+            image, crop from the upper left pixel (determined as
+            `pix_e_ul`/`pix_n_ul`) to the lower right pixel calculated
+            based on `crop_e_pix`/`crop_n_pix` (which is the width of the
+            cropped area in units of pixels). `crop_e_pix` and `crop_n_pix`
+            have default values, but they can also be set in `fname_sheet`,
+            which will take precedence over the defaults.
+
             `fname_sheet` may also have the following optional column headings:
-                vii) "crop_e_pix", viii) "crop_n_pix", ix) "crop_e_m",
-                x) "crop_n_m", xi) "buf_e_pix", xii) "buf_n_pix",
-                xiii) "buf_e_m", xiv) "buf_n_m", and xv) "plot_id".
+                7. "crop_e_pix"
+                8. "crop_n_pix"
+                9. "crop_e_m"
+                10. "crop_n_m"
+                11. "buf_e_pix"
+                12. "buf_n_pix",
+                13. "buf_e_m"
+                14. "buf_n_m"
+                15. "plot_id".
             These optional inputs allow more control over exactly how the image
-                will be cropped, and hopefully are self-explanatory until
-                adequate documentation is written. Any other columns can
-                be added to `fname_sheet`, but `batch.spatial_crop` does not
-                use them in any way.
+            will be cropped, and hopefully are self-explanatory until
+            adequate documentation is written. Any other columns can
+            be added to `fname_sheet`, but `batch.spatial_crop` does not
+            use them in any way.
         '''
         if method == 'many_gdf':
             msg1 = ('Please pass a valid `geopandas.GeoDataFrame` if using '
@@ -1835,11 +1677,80 @@ class batch(object):
 
         self._execute_spec_combine(fname_list, base_dir_out)
 
+    def spectra_to_csv(self, fname_list=None, base_dir=None, search_ext='spec',
+                       dir_level=0, base_dir_out=None):
+        '''
+        Reads all the .spec files in a direcory and saves their reflectance
+        information to a .csv
+
+        Parameters:
+            fname_list (`list`, optional): list of filenames to process; if
+                left to `None`, will look at `base_dir`, `search_ext`, and
+                `dir_level` parameters for files to process (default: `None`).
+            base_dir (`str`, optional): directory path to search for files to
+                spectrally clip; if `fname_list` is not `None`, `base_dir` will
+                be ignored (default: `None`).
+            search_ext (`str`): file format/extension to search for in all
+                directories and subdirectories to determine which files to
+                process; if `fname_list` is not `None`, `search_ext` will
+                be ignored (default: 'bip').
+            dir_level (`int`): The number of directory levels to search; if
+                `None`, searches all directory levels (default: 0).
+            base_dir_out (`str`): directory path to save all processed
+                datacubes; if set to `None`, a folder named according to the
+                `folder_name` parameter is added to `base_dir`
+        '''
+        if fname_list is None and base_dir is not None:
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+        elif fname_list is None and base_dir is None:
+            # base_dir may have been stored to the `batch` object
+            base_dir = self.base_dir
+            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+                   'datacubes should be processed.\n')
+            assert base_dir is not None, msg
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+
+        # load the data from the Spectral Python (SpyFile) object
+        df_spec = None
+        for fname in fname_list:
+            self.io.read_spec(fname + '.hdr')
+            meta_bands = self.io.tools.meta_bands
+            array = self.io.spyfile_spec.load()
+            data = list(np.reshape(array, (array.shape[2])) * 100)
+            data.insert(0, self.io.name_plot)
+            data.insert(0, os.path.basename(fname))
+            if df_spec is None:
+                columns = list(meta_bands.values())
+                columns.insert(0, 'wavelength')
+                columns.insert(0, np.nan)
+                bands = list(meta_bands.keys())
+                bands.insert(0, 'plot_id')
+                bands.insert(0, 'fname')
+                df_spec = pd.DataFrame(data=[bands], columns=columns)
+            df_spec_temp = pd.DataFrame(data=[data], columns=columns)
+            df_spec = df_spec.append(df_spec_temp)
+        fname_csv = os.path.join(base_dir, 'stats-spectra.csv')
+        df_spec.to_csv(fname_csv, index=False)
+
     def spectra_to_df(self, fname_list=None, base_dir=None, search_ext='spec',
                       dir_level=0):
         '''
         Reads all the .spec files in a direcory and returns their data as a
         pandas.DataFrame object.
+
+        Parameters:
+            fname_list (`list`, optional): list of filenames to process; if
+                left to `None`, will look at `base_dir`, `search_ext`, and
+                `dir_level` parameters for files to process (default: `None`).
+            base_dir (`str`, optional): directory path to search for files to
+                spectrally clip; if `fname_list` is not `None`, `base_dir` will
+                be ignored (default: `None`).
+            search_ext (`str`): file format/extension to search for in all
+                directories and subdirectories to determine which files to
+                process; if `fname_list` is not `None`, `search_ext` will
+                be ignored (default: 'bip').
+            dir_level (`int`): The number of directory levels to search; if
+                `None`, searches all directory levels (default: 0).
         '''
         if fname_list is None and base_dir is not None:
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
@@ -1879,40 +1790,195 @@ class batch(object):
 #        df_join = pd.merge(df_spec, df_data, on=[join_field])
 #        return df_spec
 
-    def spectra_to_csv(self, fname_list=None, base_dir=None, search_ext='spec',
-                       dir_level=0, base_dir_out=None):
-        '''
-        Reads all the .spec files in a direcory and saves their reflectance
-        information to a .csv
-        '''
-        if fname_list is None and base_dir is not None:
-            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-        elif fname_list is None and base_dir is None:
-            # base_dir may have been stored to the `batch` object
-            base_dir = self.base_dir
-            msg = ('Please set `fname_list` or `base_dir` to indicate which '
-                   'datacubes should be processed.\n')
-            assert base_dir is not None, msg
-            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+#    def combine_kmeans_bandmath(self, fname_sheet, base_dir_out=None,
+#                                folder_name='mask_combine',
+#                                name_append='mask-combine',
+#                                geotiff=True, kmeans_mask_classes=1,
+#                                kmeans_filter='mcari2',
+#                                mask_percentile=90, mask_side='lower',
+#                                out_dtype=False, out_force=None, out_ext=False,
+#                                out_interleave=False, out_byteorder=False):
+#        '''
+#
+#        Parameters:
+#            fname_sheet (`fname` or `Pandas.DataFrame): The filename of the
+#                spreadsheed that provides the necessary information for batch
+#                process cropping. See below for more information about the
+#                required and optional contents of `fname_sheet` and how to
+#                properly format it. Optionally, `fname_sheet` can be a
+#                `Pandas.DataFrame`
+#            kmeans_mask_classes (`int`): number of K-means classes to mask from
+#                the datacube. By default, the classes with the lowest average
+#                spectral value (e.g., NDVI, GNDVI, MCARI2, etc.; based on
+#                `kmeans_filter` parameter) will be masked (default: 1).
+#            kmeans_filter (`str`): the spectral index to base the K-means mask
+#                on. Must be one of 'ndvi', 'gndvi', 'ndre', or 'mcari2'. Note
+#                that the K-means aglorithm does not use the in its clustering
+#                algorithm (default: 'mcari2').
+#        Mask steps:
+#            1. load kmeans-stats.csv
+#            2. for each row, load spyfile based on "fname"
+#            3. get class to mask based on:
+#                a. find class with min ndvi: min_class = np.nanmin(class_X_ndvi)
+#            4. mask all pixels of min_class
+#            5. calculate band math (or load images with band math already calculated)
+#            6. mask all pixels below threshold/perecentile
+#                a. if percentile, use pctl to determine number of pixels to keep
+#                b. if pctl = 90, we should keep 10% of total pixels:
+#                    i. find total number of pixels
+#                    ii. calculate what 10% is (155*46 = 7130); 7130 * .1 = 713
+#                    iii. of pixels that are not masked by kmeans, find 713 pixels with highest bandmath
+#                c. if thresh, number doesn't matter
+#            7. apply the mask to the datacube and save spectra
+#        '''
+#        self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
+#                                out_byteorder)
+#
+#        if isinstance(fname_sheet, pd.DataFrame):
+#            df_kmeans = fname_sheet.copy()
+#            fname_sheet = 'dataframe passed'
+#        elif os.path.splitext(fname_sheet)[1] == '.csv':
+#            df_kmeans = pd.read_csv(fname_sheet)
+#
+#        msg = ('<kmeans_filter> must be one of "ndvi", "gndvi", "ndre", '
+#               'or "mcari2".')
+#        assert kmeans_filter in ['ndvi', 'gndvi', 'ndre', 'mcari2'], msg
+#        filter_str = '_{0}'.format(kmeans_filter)
+#        filter_cols = [col for col in df_kmeans.columns if filter_str in col]
+#
+#        bandmath_pctl_str = '{0}_pctl'.format(kmeans_filter)
+#        bandmath_side_str = '{0}_side'.format(kmeans_filter)
+#        columns = ['fname', 'kmeans_class', 'kmeans_nonmasked_pct',
+#                   bandmath_pctl_str, bandmath_side_str, 'total_nonmasked_pct']
+#        df_stats = pd.DataFrame(columns=columns)
+#
+#        if self.io.defaults.force is False:  # otherwise just overwrites if it exists
+#            fname_list = df_kmeans['fname'].tolist()
+#            fname_list = self._check_processed(fname_list, base_dir_out,
+#                                               folder_name, name_append)
+#            df_kmeans = df_kmeans[df_kmeans['plot_id'].isin(fname_list)]
+#
+#        for idx, row in df_kmeans.iterrows():  # using stats-kmeans.csv
+#            class_mask = self._get_class_mask(row, filter_cols,
+#                                              n_classes=kmeans_mask_classes)
+#            fname = row['fname']
+#            self.io.read_cube(fname)
+#            if base_dir_out is None:
+#                dir_out, name_append = self._save_file_setup(
+#                        os.path.dirname(fname), folder_name, name_append)
+#            else:
+#                dir_out, name_append = self._save_file_setup(
+#                        base_dir_out, folder_name, name_append)
+#            name_print = self._get_name_print()
+#
+#            dir_search = os.path.join(self.io.base_dir, 'kmeans')
+#            array_kmeans, metadata_kmeans = self._get_array_similar(dir_search)
+#            dir_search = os.path.join(self.io.base_dir, 'band_math')
+#            array_bandmath, metadata_bandmath = self._get_array_similar(
+#                    dir_search)
+#
+#            array_kmeans, metadata_kmeans = self.io.tools.mask_array(
+#                    array_kmeans, metadata_kmeans, thresh=class_mask,
+#                    side=None)  # when side=None, masks the exact match
+#            kmeans_pct = (100 * (array_kmeans.count() /
+#                            (array_kmeans.shape[0]*array_kmeans.shape[1])))
+#
+#            # by adding the kmeans mask, hstools.mask_array will consider that
+#            # mask when masking by bandmath values (applicable for percentile)
+#            array_bandmath = np.ma.masked_array(
+#                    array_bandmath, mask=array_kmeans.mask)
+#            mask_combined, metadata_bandmath = self.io.tools.mask_array(
+#                    array_bandmath, metadata_bandmath,
+#                    percentile=mask_percentile, side=mask_side)
+#            total_pct = (100 * (mask_combined.count() /
+#                            (mask_combined.shape[0]*mask_combined.shape[1])))
+#            spec_mean, spec_std, datacube_masked = self.io.tools.mean_datacube(
+#                    self.io.spyfile, mask_combined)
+#
+#            data = [os.path.basename(fname), class_mask, kmeans_pct,
+#                    mask_percentile, mask_side, total_pct]
+#            df_stats_temp = pd.DataFrame(data=[data], columns=columns)
+#            df_stats = df_stats.append(df_stats_temp)
+#            name_label = (name_print + name_append + '.' +
+#                          self.io.defaults.interleave)
+#            metadata = self.io.spyfile.metadata.copy()
+#            # because this is specialized, we should make our own history str
+#            hist_str = (" -> hs_process.batch.combine_kmeans_bandmath[<"
+#                        "label: 'fname_sheet?' value:{0}; "
+#                        "label: 'kmeans_class?' value:{1}; "
+#                        "label: 'mask_percentile?' value:{2}; "
+#                        "label: 'mask_side?' value:{3}>]"
+#                        "".format(fname_sheet, class_mask, mask_percentile,
+#                                  mask_side))
+#            metadata['history'] += hist_str
+#            self._write_datacube(dir_out, name_label, datacube_masked,
+#                                 metadata)
+#
+#            name_label_spec = (os.path.splitext(name_label)[0] +
+#                               '-spec-mean.spec')
+#            self._write_spec(dir_out, name_label_spec, spec_mean, spec_std,
+#                             metadata)
+#        fname_stats = os.path.join(dir_out, name_append[1:] + '-stats.csv')
+#        if os.path.isfile(fname_stats) and self.io.defaults.force is False:
+#            df_stats_in = pd.read_csv(fname_stats)
+#            df_stats = df_stats_in.append(df_stats)
+#        df_stats.to_csv(fname_stats, index=False)
 
-        # load the data from the Spectral Python (SpyFile) object
-        df_spec = None
-        for fname in fname_list:
-            self.io.read_spec(fname + '.hdr')
-            meta_bands = self.io.tools.meta_bands
-            array = self.io.spyfile_spec.load()
-            data = list(np.reshape(array, (array.shape[2])) * 100)
-            data.insert(0, self.io.name_plot)
-            data.insert(0, os.path.basename(fname))
-            if df_spec is None:
-                columns = list(meta_bands.values())
-                columns.insert(0, 'wavelength')
-                columns.insert(0, np.nan)
-                bands = list(meta_bands.keys())
-                bands.insert(0, 'plot_id')
-                bands.insert(0, 'fname')
-                df_spec = pd.DataFrame(data=[bands], columns=columns)
-            df_spec_temp = pd.DataFrame(data=[data], columns=columns)
-            df_spec = df_spec.append(df_spec_temp)
-        fname_csv = os.path.join(base_dir, 'stats-spectra.csv')
-        df_spec.to_csv(fname_csv, index=False)
+#    def segment_kmeans(self, fname_list=None, base_dir=None, search_ext='bip',
+#                       dir_level=0, base_dir_out=None, folder_name='kmeans',
+#                       name_append='kmeans', geotiff=True,
+#                       n_classes=3, max_iter=100, plot_out=True,
+#                       out_dtype=False, out_force=None,
+#                       out_ext=False, out_interleave=False,
+#                       out_byteorder=False):
+#        '''
+#        Batch processing tool to perform kmeans clustering on multiple
+#        datacubes in the same way (uses Spectral Python kmeans tool).
+#
+#        Parameters:
+#            n_classes (`int`): number of classes to cluster (default: 3).
+#            max_iter (`int`): maximum iterations before terminating process
+#                (default: 100).
+#            plot_out (`bool`): whether to save a line plot of the spectra for
+#                each class (default: `True`).
+#            geotiff (`bool`): whether to save the masked RGB image as a geotiff
+#                alongside the masked datacube.
+#        '''
+#        self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
+#                                out_byteorder)
+#        if fname_list is None and base_dir is not None:
+#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+#        elif fname_list is None and base_dir is None:
+#            # base_dir may have been stored to the `batch` object
+#            base_dir = self.base_dir
+#            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+#                   'datacubes should be processed.\n')
+#            assert base_dir is not None, msg
+#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+#
+#        if self.io.defaults.force is False:  # otherwise just overwrites if it exists
+#            fname_list = self._check_processed(fname_list, base_dir_out,
+#                                               folder_name, name_append)
+#        self._execute_kmeans(fname_list, base_dir_out, folder_name,
+#                             name_append, geotiff, n_classes, max_iter,
+#                             plot_out)
+#
+##        if fname_list is not None:
+##            self._execute_kmeans(fname_list, base_dir_out, folder_name,
+##                                 name_append, geotiff, n_classes, max_iter,
+##                                 plot_out, mask_soil=False)
+##        elif base_dir is not None:
+##            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+##            self._execute_kmeans(fname_list, base_dir_out, folder_name,
+##                                 name_append, geotiff, n_classes, max_iter,
+##                                 plot_out, mask_soil=False)
+##        else:  # fname_list and base_dir are both `None`
+##            # base_dir may have been stored to the `batch` object
+##            base_dir = self.base_dir
+##            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+##                   'datacubes should be processed.\n')
+##            assert base_dir is not None, msg
+##            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+##            self._execute_kmeans(fname_list, base_dir_out, folder_name,
+##                                 name_append, geotiff, n_classes, max_iter,
+##                                 plot_out, mask_soil=False)

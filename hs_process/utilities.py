@@ -847,10 +847,6 @@ class hstools(object):
             metadata (`dict`): dictionary of the metadata
             spyfile (`SpyFile` object or `numpy.ndarray`): The datacube being
                 accessed and/or manipulated.
-#
-#        Returns:
-#            meta_bands (`dict`): dictionary of the band information where the
-#                band name is the key and wavelength is the value.
         '''
         if spyfile is None:
             spyfile = self.spyfile
@@ -881,6 +877,15 @@ class hstools(object):
         self.meta_bands = meta_bands
 
     def clean_md_sets(self, metadata=None):
+        '''
+
+        Parameters:
+            metadata (`dict`, optional): Metadata dictionary to clean
+
+        Returns:
+            `dict`:
+                **metadata_out** (`dict`) -- Cleaned metadata dictionary.
+        '''
         if metadata is None:
             metadata = self.spyfile.metadata
         metadata_out = metadata.copy()
@@ -899,7 +904,9 @@ class hstools(object):
             key (`str`): dictionary key to delete
 
         Returns:
-            metadata (`dict`): Dictionary containing the modified metadata.
+            `dict`:
+                **metadata** (`dict`) -- Dictionary containing the modified
+                metadata.
         '''
         msg = ('Please be sure to base a metadata dictionary.')
         assert isinstance(metadata, dict), msg
@@ -913,18 +920,23 @@ class hstools(object):
 
     def get_band(self, target_wl, spyfile=None):
         '''
-        Returns band number of the closest target wavelength.
+        Finds the band number of the closest target wavelength.
 
         Parameters:
             target_wl (`int` or `float`): the target wavelength to retrieve the
                 band number for (required).
-            spyfile (`SpyFile` object): The datacube being accessed and/or
+            spyfile (`SpyFile` object, optional): The datacube being accessed and/or
                 manipulated; if `None`, uses `hstools.spyfile` (default:
                 `None`).
 
+        Returns:
+            `int`:
+                **key_band** (`int`) -- band number of the closest target
+                wavelength (`target_wl`).
+
         Example:
-            [1] hstools.get_band(703, spyfile)
-            >>> 151
+            >>> hstools.get_band(703, spyfile)
+            151
         '''
         if spyfile is None:
             spyfile = self.spyfile
@@ -945,13 +957,18 @@ class hstools(object):
         Parameters:
             target_band (`int` or `float`): the target band to retrieve
                 wavelength number for (required).
-            spyfile (`SpyFile` object): The datacube being accessed and/or
+            spyfile (`SpyFile` object, optional): The datacube being accessed and/or
                 manipulated; if `None`, uses `hstools.spyfile` (default:
                 `None`).
 
+        Returns:
+            `float`:
+                **key_wavelength** (`float`) -- wavelength of the closest
+                target band (`target_band`).
+
         Example:
-            [1] hstools.get_wavelength(151, spyfile)
-            >>> 702.52
+            >>> hstools.get_wavelength(151, spyfile)
+            702.52
         '''
         if spyfile is None:
             spyfile = self.spyfile
@@ -981,9 +998,11 @@ class hstools(object):
                 passed).
 
         Returns:
-            bands (`list`): the list of bands (band number) corresponding to
-                `wl_list`.
-            wls_mean (`float`): the mean wavelength from `wl_list`.
+            2-element `tuple` containing
+
+            - **bands** (`list`): the list of bands (band number) corresponding
+              to `wl_list`.
+            - **wls_mean** (`float`): the mean wavelength from `wl_list`.
         '''
         msg = ('"wl_list" must be a list.')
         assert isinstance(wl_list, list), msg
@@ -1017,8 +1036,17 @@ class hstools(object):
         Subtracts 1 from `band_num` and returns the band index(es).
 
         Parameters:
-            band_num (`int` or `list`): the target band number(s) to retrive
+            band_num (`int` or `list`): the target band number(s) to retrieve
             the band index for (required).
+
+        Returns:
+            `int` or `list`:
+                **band_idx** (`int`) -- band index of the passed band number
+                (`band_num`).
+
+        Example:
+            >>> hstools.get_band_index([4, 43, 111])
+            [3, 42, 110]
         '''
         if isinstance(band_num, list):
             band_num = np.array(band_num)
@@ -1039,8 +1067,9 @@ class hstools(object):
                 (default: `None`).
 
         Returns:
-            array_mean (`numpy.array` or `pandas.DataFrame`): The mean
-                reflectance from `spyfile` for the bands in `band_list`.
+            `numpy.array` or `pandas.DataFrame`:
+                **array_mean** (`numpy.array` or `pandas.DataFrame`): The
+                mean reflectance from `spyfile` for the bands in `band_list`.
         '''
         msg = ('"band_list" must be a list.')
         assert isinstance(band_list, list), msg
@@ -1078,6 +1107,15 @@ class hstools(object):
         Parameters:
             band_idx (`int` or `list`): the target band index(es) to retrive
                 the band number for (required).
+
+        Returns:
+            `int` or `list`:
+                **band_num** (`int` or `list`): band number of the passed
+                band index (`band_idx`).
+
+        Example:
+            >>> hstools.get_band_num([4, 43, 111])
+            [5, 44, 112]
         '''
         if isinstance(band_idx, list):
             band_idx = np.array(band_idx)
@@ -1098,8 +1136,9 @@ class hstools(object):
                 or to return index number (min=0) (default: True)
 
         Returns:
-            band_list (`list`): a list of all bands (either index or number
-                depending on how `index` is set) between a range in
+            `list`:
+                **band_list** (`list`): A list of all bands (either index or
+                number, depending on how `index` is set) between a range in
                 wavelength values.
         '''
         msg = ('"range_wl" must be a `list` or `tuple`.')
@@ -1136,8 +1175,9 @@ class hstools(object):
                 returned (default: `None`).
 
         Returns:
-            metadata_list (`list` or `str`): List of metadata set items (as
-                `str`), or if idx is not `None`, the item in the position
+            `list` or `str`:
+                **metadata_list** (`list` or `str`): List of metadata set items
+                (as `str`), or if idx is not `None`, the item in the position
                 described by `idx`.
         '''
         if isinstance(meta_set, str):
@@ -1185,6 +1225,14 @@ class hstools(object):
                 the x (easting) direction (meters).
             size_y (`float`): Ground resolved distance of the image pixels in
                 the y (northing) direction (meters).
+
+        Returns:
+            2-element `tuple` containing
+
+            - **utm_x_new** (`float`): The modified UTM x coordinate (easting)
+              of cropped plot.
+            - **utm_y_new** (`float`): The modified UTM y coordinate (northing)
+              of cropped plot.
         '''
         utm_x_new = utm_x + ((pix_e_ul + 1) * size_x)
         utm_y_new = utm_y - ((pix_n_ul + 1) * size_y)
@@ -1225,6 +1273,13 @@ class hstools(object):
                 everything below the threshold will be masked; if `None`, only
                 the values that exactly match the threshol will be masked
                 (default: 'lower').
+
+        Returns:
+            2-element `tuple` containing
+
+            - **array_mask** (`numpy.ndarray`): The masked `numpy.ndarray`
+              based on the passed threshold and/or percentile value.
+            - **metadata** (`dict`): The modified metadata.
         '''
         if isinstance(array, np.ma.core.MaskedArray):
             array_m = array.compressed()  # allows for accurate percentile calc
@@ -1338,6 +1393,17 @@ class hstools(object):
                 does not have similar dimensions to `spyfile`, the first band
                 (i.e., first two dimensions) of `mask` will be repeated n times
                 to match the number of bands of `spyfile`.
+
+        Returns:
+            3-element `tuple` containing
+
+            - **spec_mean** (`SpyFile.SpyFile` object): The mean spectra from
+              the input datacube.
+            - **spec_std** (`SpyFile.SpyFile` object): The standard deviation
+              of the spectra from the input datacube.
+            - **datacube_masked** (`numpy.ndarray`): The masked
+              `numpy.ndarray`; if `mask` = `None`, `datacube_masked` is
+              identical to the `SpyFile` data array.
         '''
         if isinstance(spyfile, SpyFile.SpyFile):
             self.load_spyfile(spyfile)
@@ -1374,6 +1440,13 @@ class hstools(object):
                 (default: 20).
             show_histogram (`bool`):
             spyfile (`SpyFile.SpyFile` object):
+
+        Returns:
+            2-element `tuple` containing
+
+            - **array_noshadow.mask** (`numpy.mask`): The mask indicating all
+              pixels that are likely shadow pixels.
+            - **metadata** (`dict`): The modified metadata.
         '''
         if spyfile is None:
             spyfile = self.spyfile
@@ -1403,7 +1476,8 @@ class hstools(object):
             value (`float`, `int`, or `str`): value to replace at idx
 
         Returns:
-            set_str (`str`):
+            `str`:
+                **set_str** (`str`): Modified metadata set string.
         '''
         metadata_list = self.get_meta_set(meta_set, idx=None)
         metadata_list[idx] = str(value)

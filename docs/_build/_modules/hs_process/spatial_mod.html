@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="python">
+  <head>
+    <meta charset="utf-8" />
+    <title>hs_process.spatial_mod &#8212; hs_process 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html">
+          EONR</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="https://github.com/tnigon/eonr">Github</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Contents <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hs_process.html">hs_process package</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary">
+<form action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="body col-md-9 content" role="main">
+      
+  <h1>Source code for hs_process.spatial_mod</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="k">import</span> <span class="n">Polygon</span>
+<span class="kn">import</span> <span class="nn">spectral.io.spyfile</span> <span class="k">as</span> <span class="nn">SpyFile</span>
+
+<span class="kn">from</span> <span class="nn">hs_process.utilities</span> <span class="k">import</span> <span class="n">defaults</span>
+<span class="kn">from</span> <span class="nn">hs_process.utilities</span> <span class="k">import</span> <span class="n">hstools</span>
+
+
+<div class="viewcode-block" id="spatial_mod"><a class="viewcode-back" href="../../my_hs_process.html#hs_process.spatial_mod.spatial_mod">[docs]</a><span class="k">class</span> <span class="nc">spatial_mod</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Class for manipulating data within the spatial domain (e.g., cropping by</span>
+<span class="sd">    geographical boundary)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">,</span> <span class="n">gdf</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        spyfile (`SpyFile` object): The Spectral Python datacube to manipulate.</span>
+<span class="sd">        gdf (`geopandas.DataFrame`): Polygon data that includes the plot_id and</span>
+<span class="sd">            its geometry.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span> <span class="o">=</span> <span class="n">spyfile</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gdf</span> <span class="o">=</span> <span class="n">gdf</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_e</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_n</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spy_ul_e_srs</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spy_ul_n_srs</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span> <span class="o">=</span> <span class="n">defaults</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_create_spyfile_extent_gdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">epsg</span><span class="o">=</span><span class="mi">32615</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">metadata</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span>
+        <span class="n">crs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;init&#39;</span><span class="p">:</span> <span class="s1">&#39;epsg:</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epsg</span><span class="p">)}</span>
+
+        <span class="n">e_m</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">][</span><span class="mi">5</span><span class="p">])</span>  <span class="c1"># pixel size</span>
+        <span class="n">n_m</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">][</span><span class="mi">6</span><span class="p">])</span>
+        <span class="n">size_x</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># number of pixels</span>
+        <span class="n">size_y</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">srs_e_m</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span>  <span class="c1"># UTM coordinate</span>
+        <span class="n">srs_n_m</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">][</span><span class="mi">4</span><span class="p">])</span>
+
+        <span class="n">e_nw</span> <span class="o">=</span> <span class="n">srs_e_m</span>
+        <span class="n">e_ne</span> <span class="o">=</span> <span class="n">srs_e_m</span> <span class="o">+</span> <span class="p">(</span><span class="n">size_x</span> <span class="o">*</span> <span class="n">e_m</span><span class="p">)</span>
+        <span class="n">e_se</span> <span class="o">=</span> <span class="n">srs_e_m</span> <span class="o">+</span> <span class="p">(</span><span class="n">size_x</span> <span class="o">*</span> <span class="n">e_m</span><span class="p">)</span>
+        <span class="n">e_sw</span> <span class="o">=</span> <span class="n">srs_e_m</span>
+        <span class="n">n_nw</span> <span class="o">=</span> <span class="n">srs_n_m</span>
+        <span class="n">n_ne</span> <span class="o">=</span> <span class="n">srs_n_m</span>
+        <span class="n">n_se</span> <span class="o">=</span> <span class="n">srs_n_m</span> <span class="o">-</span> <span class="p">(</span><span class="n">size_y</span> <span class="o">*</span> <span class="n">n_m</span><span class="p">)</span>
+        <span class="n">n_sw</span> <span class="o">=</span> <span class="n">srs_n_m</span> <span class="o">-</span> <span class="p">(</span><span class="n">size_y</span> <span class="o">*</span> <span class="n">n_m</span><span class="p">)</span>
+        <span class="n">coords_e</span> <span class="o">=</span> <span class="p">[</span><span class="n">e_nw</span><span class="p">,</span> <span class="n">e_ne</span><span class="p">,</span> <span class="n">e_se</span><span class="p">,</span> <span class="n">e_sw</span><span class="p">,</span> <span class="n">e_nw</span><span class="p">]</span>
+        <span class="n">coords_n</span> <span class="o">=</span> <span class="p">[</span><span class="n">n_nw</span><span class="p">,</span> <span class="n">n_ne</span><span class="p">,</span> <span class="n">n_se</span><span class="p">,</span> <span class="n">n_sw</span><span class="p">,</span> <span class="n">n_nw</span><span class="p">]</span>
+
+        <span class="n">polygon_geom</span> <span class="o">=</span> <span class="n">Polygon</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">coords_e</span><span class="p">,</span> <span class="n">coords_n</span><span class="p">))</span>
+        <span class="n">gdf_sp</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">crs</span><span class="o">=</span><span class="n">crs</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="p">[</span><span class="n">polygon_geom</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">gdf_sp</span>
+
+    <span class="k">def</span> <span class="nf">_overlay_gdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">,</span> <span class="n">gdf</span><span class="p">,</span> <span class="n">epsg_sp</span><span class="o">=</span><span class="mi">32615</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;intersection&#39;</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Performs a geopandas overlay between the input geodatafram (`gdf`) and</span>
+<span class="sd">        the extent of `spyfile`.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">gdf_sp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_spyfile_extent_gdf</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">epsg</span><span class="o">=</span><span class="n">epsg_sp</span><span class="p">)</span>
+        <span class="n">gdf_filter</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">overlay</span><span class="p">(</span><span class="n">gdf</span><span class="p">,</span> <span class="n">gdf_sp</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="n">how</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">gdf_filter</span>
+
+    <span class="k">def</span> <span class="nf">_find_plots_gdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">,</span> <span class="n">gdf</span><span class="p">,</span> <span class="n">plot_id_ref</span><span class="p">,</span> <span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="p">,</span>
+                        <span class="n">n_plots</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Calculates the number of x plots and y plots in image, determines</span>
+<span class="sd">        the plot ID number, and calculates and records start/end pixels for</span>
+<span class="sd">        each plot</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;plot_id&#39;</span><span class="p">,</span> <span class="s1">&#39;pix_e_ul&#39;</span><span class="p">,</span> <span class="s1">&#39;pix_n_ul&#39;</span><span class="p">,</span> <span class="s1">&#39;crop_e_pix&#39;</span><span class="p">,</span> <span class="s1">&#39;crop_n_pix&#39;</span><span class="p">]</span>
+        <span class="n">df_plots</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
+        <span class="n">gdf_filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_overlay_gdf</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">gdf</span><span class="p">)</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please be sure the reference plot (`plot_id_ref`): </span><span class="si">{0}</span><span class="s1"> is &#39;</span>
+               <span class="s1">&#39;within the spatial extent of the datacube (`spyfile`):  </span><span class="si">{1}</span><span class="se">\n</span><span class="s1">&#39;</span>
+               <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">plot_id_ref</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">filename</span><span class="p">))</span>
+
+        <span class="c1"># TODO: option to designate any column as the &quot;plot_id&quot; column.</span>
+        <span class="k">assert</span> <span class="n">plot_id_ref</span> <span class="ow">in</span> <span class="n">gdf_filter</span><span class="p">[</span><span class="s1">&#39;plot&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">msg</span>
+
+        <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">metadata</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span>
+<span class="c1">#        spy_ps_e = float(metadata[&#39;map info&#39;][5])  # pixel size</span>
+<span class="c1">#        spy_ps_n = float(metadata[&#39;map info&#39;][6])</span>
+        <span class="n">spy_srs_e_m</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span>  <span class="c1"># UTM coordinate</span>
+        <span class="n">spy_srs_n_m</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">][</span><span class="mi">4</span><span class="p">])</span>
+
+        <span class="n">gdf_temp</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">gdf_filter</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">centroid</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+               <span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">centroid</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+        <span class="c1">#       .assign(rep_val=lambda df: df[[&#39;x&#39;, &#39;y&#39;]].mean(axis=1))</span>
+<span class="c1">#               .sort_values(by=[&#39;y&#39;, &#39;x&#39;], ascending=[False, True])</span>
+               <span class="p">)</span>
+        <span class="n">gdf_temp</span> <span class="o">=</span> <span class="n">gdf_temp</span><span class="o">.</span><span class="n">astype</span><span class="p">({</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">})</span>
+        <span class="n">gdf_sort</span> <span class="o">=</span> <span class="n">gdf_temp</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">])</span>
+        <span class="n">gdf_sort</span> <span class="o">=</span> <span class="n">gdf_sort</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># reset the index</span>
+
+        <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">notnull</span><span class="p">(</span><span class="n">n_plots</span><span class="p">):</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">gdf_sort</span><span class="p">[</span><span class="n">gdf_sort</span><span class="p">[</span><span class="s1">&#39;plot&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">plot_id_ref</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">gdf_sort</span> <span class="o">=</span> <span class="n">gdf_sort</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx</span><span class="p">:</span><span class="n">idx</span> <span class="o">+</span> <span class="n">n_plots</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">gdf_sort</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="n">plot</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;plot&#39;</span><span class="p">]</span>
+            <span class="n">bounds</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">bounds</span>
+            <span class="n">plot_srs_w</span> <span class="o">=</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">plot_srs_s</span> <span class="o">=</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">plot_srs_e</span> <span class="o">=</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">plot_srs_n</span> <span class="o">=</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+            <span class="c1"># plot offset from datacube (from NW/upper left corner)</span>
+            <span class="n">offset_e</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">plot_srs_w</span> <span class="o">-</span> <span class="n">spy_srs_e_m</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_e</span><span class="p">)</span>
+            <span class="n">offset_n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">spy_srs_n_m</span> <span class="o">-</span> <span class="n">plot_srs_n</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_n</span><span class="p">)</span>
+            <span class="n">gdf_crop_e_pix</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">plot_srs_e</span> <span class="o">-</span> <span class="n">plot_srs_w</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_e</span><span class="p">)</span>
+            <span class="n">gdf_crop_n_pix</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">plot_srs_n</span> <span class="o">-</span> <span class="n">plot_srs_s</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_n</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">plot</span><span class="p">,</span> <span class="n">offset_e</span><span class="p">,</span> <span class="n">offset_n</span><span class="p">,</span> <span class="n">gdf_crop_e_pix</span><span class="p">,</span> <span class="n">gdf_crop_n_pix</span><span class="p">]</span>
+            <span class="n">df_plots_temp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="n">data</span><span class="p">])</span>
+            <span class="n">df_plots</span> <span class="o">=</span> <span class="n">df_plots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df_plots_temp</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1">#        if pix_e_ul is not None:  # compare user-identified pixel to gdf pixel</span>
+        <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">notnull</span><span class="p">(</span><span class="n">pix_e_ul</span><span class="p">):</span>  <span class="c1"># compare user-identified pixel to gdf pixel</span>
+            <span class="n">gdf_e</span> <span class="o">=</span> <span class="n">df_plots</span><span class="p">[</span><span class="n">df_plots</span><span class="p">[</span>
+                    <span class="s1">&#39;plot_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">plot_id_ref</span><span class="p">][</span><span class="s1">&#39;pix_e_ul&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+            <span class="n">delta_e</span> <span class="o">=</span> <span class="n">pix_e_ul</span> <span class="o">-</span> <span class="n">gdf_e</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">delta_e</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="c1"># positive means error of image georeferenced to the right/E</span>
+        <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">notnull</span><span class="p">(</span><span class="n">pix_n_ul</span><span class="p">):</span>  <span class="c1"># compare user-identified pixel to gdf pixel</span>
+            <span class="n">gdf_n</span> <span class="o">=</span> <span class="n">df_plots</span><span class="p">[</span><span class="n">df_plots</span><span class="p">[</span>
+                    <span class="s1">&#39;plot_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">plot_id_ref</span><span class="p">][</span><span class="s1">&#39;pix_n_ul&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+            <span class="c1"># positive means error of image georeferenced to the bottom/S</span>
+            <span class="n">delta_n</span> <span class="o">=</span> <span class="n">pix_n_ul</span> <span class="o">-</span> <span class="n">gdf_n</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">delta_n</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df_plots</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="n">plot_id</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;plot_id&#39;</span><span class="p">]</span>
+            <span class="n">gdf_e</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;pix_e_ul&#39;</span><span class="p">]</span>
+            <span class="n">shft_e</span> <span class="o">=</span> <span class="n">gdf_e</span> <span class="o">+</span> <span class="n">delta_e</span>  <span class="c1"># if `delta_e` is positive, move right/E</span>
+            <span class="n">df_plots</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df_plots</span><span class="p">[</span><span class="s1">&#39;plot_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">plot_id</span><span class="p">,</span> <span class="s1">&#39;pix_e_ul&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">shft_e</span>
+            <span class="n">gdf_n</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;pix_n_ul&#39;</span><span class="p">]</span>
+            <span class="n">shft_n</span> <span class="o">=</span> <span class="n">gdf_n</span> <span class="o">+</span> <span class="n">delta_n</span>  <span class="c1"># if `delta_n` is positive, move up/N</span>
+            <span class="n">df_plots</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df_plots</span><span class="p">[</span><span class="s1">&#39;plot_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">plot_id</span><span class="p">,</span> <span class="s1">&#39;pix_n_ul&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">shft_n</span>
+        <span class="k">return</span> <span class="n">df_plots</span>
+
+    <span class="k">def</span> <span class="nf">_record_pixels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plot_id_ul</span><span class="p">,</span> <span class="n">plot_n_start</span><span class="p">,</span> <span class="n">plot_n_end</span><span class="p">,</span> <span class="n">row_plot</span><span class="p">,</span>
+                       <span class="n">df_plots</span><span class="p">,</span> <span class="n">crop_e_pix</span><span class="p">,</span> <span class="n">crop_n_pix</span><span class="p">,</span> <span class="n">pix_e_ul</span><span class="p">,</span>
+                       <span class="n">pix_n_ul</span><span class="p">,</span> <span class="n">experiment</span><span class="o">=</span><span class="s1">&#39;wells&#39;</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">experiment</span> <span class="o">==</span> <span class="s1">&#39;wells&#39;</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">plot_n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">plot_n_start</span><span class="p">,</span> <span class="n">plot_n_end</span><span class="p">):</span>  <span class="c1"># top plots</span>
+                <span class="n">col_plot</span> <span class="o">=</span> <span class="p">(</span><span class="n">plot_n</span><span class="p">)</span> <span class="o">%</span> <span class="mi">5</span>
+                <span class="k">if</span> <span class="n">col_plot</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">row_plot</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">plot_id</span> <span class="o">=</span> <span class="n">plot_id_ul</span> <span class="o">-</span> <span class="p">(</span><span class="n">col_plot</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># E/W</span>
+                <span class="n">plot_id</span> <span class="o">=</span> <span class="n">plot_id</span> <span class="o">-</span> <span class="n">row_plot</span>  <span class="c1"># N/S</span>
+                <span class="n">col_pix</span> <span class="o">=</span> <span class="p">(</span><span class="n">col_plot</span> <span class="o">*</span> <span class="n">crop_e_pix</span><span class="p">)</span> <span class="o">+</span> <span class="n">pix_e_ul</span>
+                <span class="n">row_pix</span> <span class="o">=</span> <span class="p">(</span><span class="n">row_plot</span> <span class="o">*</span> <span class="n">crop_n_pix</span><span class="p">)</span> <span class="o">+</span> <span class="n">pix_n_ul</span>
+
+<span class="c1">#                array_crop, metadata = self.crop_single(</span>
+<span class="c1">#                    col_pix, row_pix, crop_e_pix,</span>
+<span class="c1">#                    crop_n_pix)  # lines and samples backwards in metadata</span>
+
+                <span class="n">df_temp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">plot_id</span><span class="p">,</span>
+                                              <span class="n">col_plot</span><span class="p">,</span> <span class="n">row_plot</span><span class="p">,</span>
+                                              <span class="n">col_pix</span><span class="p">,</span> <span class="n">row_pix</span><span class="p">]],</span>
+                                       <span class="n">columns</span><span class="o">=</span><span class="n">df_plots</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+                <span class="n">df_plots</span> <span class="o">=</span> <span class="n">df_plots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df_temp</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">df_plots</span><span class="p">,</span> <span class="n">row_plot</span>
+
+    <span class="k">def</span> <span class="nf">_calc_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plot_id_ul</span><span class="p">,</span> <span class="n">n_plots_x</span><span class="p">,</span> <span class="n">row_plots_top</span><span class="p">,</span> <span class="n">row_plots_bot</span><span class="p">,</span>
+                   <span class="n">crop_e_pix</span><span class="p">,</span> <span class="n">crop_n_pix</span><span class="p">,</span> <span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Calculates the number of x plots and y plots in image, determines</span>
+<span class="sd">        the plot ID number, and calculates and records start/end pixels for</span>
+<span class="sd">        each plot</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+<span class="c1">#        df_plots = pd.DataFrame(columns=[&#39;plot_id&#39;, &#39;col_plot&#39;,</span>
+<span class="c1">#                                         &#39;row_plot&#39;, &#39;col_pix&#39;, &#39;row_pix&#39;,</span>
+<span class="c1">#                                         &#39;array_crop&#39;, &#39;metadata&#39;])</span>
+        <span class="n">df_plots</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;fname_in&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_id&#39;</span><span class="p">,</span> <span class="s1">&#39;col_plot&#39;</span><span class="p">,</span>
+                                         <span class="s1">&#39;row_plot&#39;</span><span class="p">,</span> <span class="s1">&#39;pix_e_ul&#39;</span><span class="p">,</span> <span class="s1">&#39;pix_n_ul&#39;</span><span class="p">])</span>
+        <span class="n">row_plot</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">plot_n_start</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">plot_n_end</span> <span class="o">=</span> <span class="n">n_plots_x</span> <span class="o">*</span> <span class="n">row_plots_top</span>
+
+        <span class="n">df_plots</span><span class="p">,</span> <span class="n">row_plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_record_pixels</span><span class="p">(</span>
+                <span class="n">plot_id_ul</span><span class="p">,</span> <span class="n">plot_n_start</span><span class="p">,</span> <span class="n">plot_n_end</span><span class="p">,</span> <span class="n">row_plot</span><span class="p">,</span> <span class="n">df_plots</span><span class="p">,</span>
+                <span class="n">crop_e_pix</span><span class="p">,</span> <span class="n">crop_n_pix</span><span class="p">,</span> <span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">row_plots_bot</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># do the same for bottom, adjusting start/end</span>
+            <span class="n">plot_n_start</span> <span class="o">=</span> <span class="n">plot_n_end</span>
+            <span class="n">plot_n_bot</span> <span class="o">=</span> <span class="n">n_plots_x</span> <span class="o">*</span> <span class="n">row_plots_bot</span>
+            <span class="n">plot_n_end</span> <span class="o">=</span> <span class="n">plot_n_end</span> <span class="o">+</span> <span class="n">plot_n_bot</span>
+            <span class="n">df_plots</span><span class="p">,</span> <span class="n">row_plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_record_pixels</span><span class="p">(</span>
+                    <span class="n">plot_id_ul</span><span class="p">,</span> <span class="n">plot_n_start</span><span class="p">,</span> <span class="n">plot_n_end</span><span class="p">,</span> <span class="n">row_plot</span><span class="p">,</span> <span class="n">df_plots</span><span class="p">,</span>
+                    <span class="n">crop_e_pix</span><span class="p">,</span> <span class="n">crop_n_pix</span><span class="p">,</span> <span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">df_plots</span>
+
+    <span class="k">def</span> <span class="nf">_check_alley</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plot_id_ul</span><span class="p">,</span> <span class="n">n_plots_y</span><span class="p">,</span> <span class="n">rows_pix</span><span class="p">,</span>
+                     <span class="n">pix_n_ul</span><span class="p">,</span> <span class="n">crop_n_pix</span><span class="p">,</span> <span class="n">alley_size_pix</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Calculates whether there is an alleyway in the image (based on plot</span>
+<span class="sd">        configuration), then adjusts n_plots_y so it is correct after</span>
+<span class="sd">        considering the alley</span>
+
+<span class="sd">        rows_pix (`int`): number of pixel rows in image</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">plot_id_tens</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">plot_id_ul</span><span class="p">)</span> <span class="o">%</span> <span class="mi">100</span>
+        <span class="n">row_plots_top</span> <span class="o">=</span> <span class="n">plot_id_tens</span> <span class="o">%</span> <span class="n">n_plots_y</span>
+        <span class="k">if</span> <span class="n">row_plots_top</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># gets number of plots left in block</span>
+            <span class="n">row_plots_top</span> <span class="o">=</span> <span class="n">n_plots_y</span>  <span class="c1"># remainder is 0, not 9..</span>
+
+        <span class="c1"># we have plots left until alley, but image may not extend that far</span>
+        <span class="n">pix_avail</span> <span class="o">=</span> <span class="n">rows_pix</span> <span class="o">-</span> <span class="nb">abs</span><span class="p">(</span><span class="n">pix_n_ul</span><span class="p">)</span>  <span class="c1"># number of pixels south of ul</span>
+        <span class="n">row_plots_avail</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pix_avail</span> <span class="o">/</span> <span class="n">crop_n_pix</span><span class="p">)</span>  <span class="c1"># gets number of whole plots</span>
+        <span class="k">if</span> <span class="n">row_plots_top</span> <span class="o">&gt;</span> <span class="n">row_plots_avail</span><span class="p">:</span>
+            <span class="n">row_plots_top</span> <span class="o">=</span> <span class="n">row_plots_avail</span>
+
+        <span class="k">if</span> <span class="n">row_plots_top</span> <span class="o">&lt;</span> <span class="n">row_plots_avail</span><span class="p">:</span>  <span class="c1"># gets remaining pixels south of block</span>
+            <span class="n">pix_remain</span> <span class="o">=</span> <span class="p">(</span><span class="n">pix_avail</span> <span class="o">-</span> <span class="p">(</span><span class="n">row_plots_top</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">crop_n_pix</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># no plots at the bottom block, just at the top block</span>
+            <span class="n">row_plots_bot</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">return</span> <span class="n">row_plots_top</span><span class="p">,</span> <span class="n">row_plots_bot</span>
+
+        <span class="k">if</span> <span class="n">pix_remain</span> <span class="o">&gt;=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">alley_size_pix</span> <span class="o">+</span> <span class="n">crop_n_pix</span><span class="p">):</span>
+            <span class="c1"># have room for more plots (must still remove 2 rows of plots)</span>
+            <span class="c1"># calculate rows remain after skip</span>
+            <span class="n">row_plots_bot</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">abs</span><span class="p">((</span><span class="n">pix_remain</span> <span class="o">+</span> <span class="n">alley_size_pix</span><span class="p">)</span> <span class="o">/</span>
+                                     <span class="n">crop_n_pix</span><span class="p">))</span>
+<span class="c1">#            n_plots_y = row_plots_top + row_plots_bot</span>
+        <span class="c1"># these are for if alley_size_pix is large but crop_n_pix is relatively small..</span>
+        <span class="k">else</span><span class="p">:</span>
+<span class="c1">#            n_plots_y = row_plots_top</span>
+            <span class="n">row_plots_bot</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="c1">#        elif pix_remain &gt;= abs(crop_n_pix) * 2:</span>
+<span class="c1">#            # remove 2 rows of plots</span>
+<span class="c1">#            n_plots_y -= 2</span>
+<span class="c1">#        elif pix_remain &gt;= abs(crop_n_pix):</span>
+<span class="c1">#            # remove 1 row of plots</span>
+<span class="c1">#            n_plots_y -= 1</span>
+<span class="c1">#        else:</span>
+<span class="c1">#            # works out perfect.. don&#39;t have to change anything</span>
+<span class="c1">#            pass</span>
+        <span class="k">return</span> <span class="n">row_plots_top</span><span class="p">,</span> <span class="n">row_plots_bot</span>
+
+
+    <span class="k">def</span> <span class="nf">_get_corners</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pix_ul</span><span class="p">,</span> <span class="n">crop_pix</span><span class="p">,</span> <span class="n">buf_pix</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Gets the upper left and lower right corner of the cropped array. If</span>
+<span class="sd">        necessary, applies the buffer to the coordinates. This is a generic</span>
+<span class="sd">        function that can be used in either the easting or northing direction.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            pix_ul (`int`): upper left pixel coordinate as an index (first</span>
+<span class="sd">                pixel is zero; can be either easting or northing direction).</span>
+<span class="sd">            crop_pix (`int`): number of pixels to be cropped (before applying</span>
+<span class="sd">                the buffer).</span>
+<span class="sd">            buf_pix (`int`): number of pixels to buffer</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            2-element `tuple` containing</span>
+
+<span class="sd">            - **pix_ul** (`int`): upper left pixel coordinate after applying the</span>
+<span class="sd">              buffer.</span>
+<span class="sd">            - **pix_lr** (`int`): lower right pixel coordinate after applying the</span>
+<span class="sd">              buffer.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">pix_lr</span> <span class="o">=</span> <span class="n">pix_ul</span> <span class="o">+</span> <span class="n">crop_pix</span>
+        <span class="k">if</span> <span class="n">buf_pix</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">pix_ul</span> <span class="o">+=</span> <span class="n">buf_pix</span>
+            <span class="n">pix_lr</span> <span class="o">-=</span> <span class="n">buf_pix</span>
+        <span class="k">return</span> <span class="n">pix_ul</span><span class="p">,</span> <span class="n">pix_lr</span>
+
+    <span class="k">def</span> <span class="nf">_handle_defaults</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e_pix</span><span class="p">,</span> <span class="n">n_pix</span><span class="p">,</span> <span class="n">e_m</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s1">&#39;crop&#39;</span><span class="p">,</span>
+                         <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        If these are set to `None`, retrieves default values from</span>
+<span class="sd">        `spatial_mod.defaults`, which can be accessed and modified by an</span>
+<span class="sd">        instance of this class by a higher level program. Also converts</span>
+<span class="sd">        betweeen pixel units and map units if one is populated and the other is</span>
+<span class="sd">        `None`.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">group</span> <span class="o">==</span> <span class="s1">&#39;crop&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">e_pix</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">e_m</span><span class="p">):</span>
+                <span class="n">e_pix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">crop_defaults</span><span class="p">[</span><span class="s1">&#39;crop_e_pix&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">n_pix</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">notnull</span><span class="p">(</span><span class="n">n_m</span><span class="p">):</span>
+                <span class="n">n_pix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">crop_defaults</span><span class="p">[</span><span class="s1">&#39;crop_n_pix&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">group</span> <span class="o">==</span> <span class="s1">&#39;alley&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">e_pix</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">e_m</span><span class="p">):</span>
+                <span class="n">e_pix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">crop_defaults</span><span class="p">[</span><span class="s1">&#39;alley_size_e_pix&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">n_pix</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">notnull</span><span class="p">(</span><span class="n">n_m</span><span class="p">):</span>
+                <span class="n">n_pix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">crop_defaults</span><span class="p">[</span><span class="s1">&#39;alley_size_n_pix&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">group</span> <span class="o">==</span> <span class="s1">&#39;buffer&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">e_pix</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">e_m</span><span class="p">):</span>
+                <span class="n">e_pix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">crop_defaults</span><span class="p">[</span><span class="s1">&#39;buf_e_pix&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">n_pix</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">notnull</span><span class="p">(</span><span class="n">n_m</span><span class="p">):</span>
+                <span class="n">n_pix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">crop_defaults</span><span class="p">[</span><span class="s1">&#39;buf_n_pix&#39;</span><span class="p">]</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="n">e_pix</span><span class="p">,</span> <span class="n">n_pix</span><span class="p">,</span> <span class="n">e_m</span><span class="p">,</span> <span class="n">n_m</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">e_pix</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">notnull</span><span class="p">(</span><span class="n">e_m</span><span class="p">):</span>
+            <span class="n">e_pix</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">e_m</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_e</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">pd</span><span class="o">.</span><span class="n">notnull</span><span class="p">(</span><span class="n">e_pix</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">e_m</span><span class="p">):</span>
+            <span class="n">e_m</span> <span class="o">=</span> <span class="n">e_pix</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_e</span>
+        <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">n_pix</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">notnull</span><span class="p">(</span><span class="n">n_m</span><span class="p">):</span>
+            <span class="n">n_pix</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">n_m</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_n</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">pd</span><span class="o">.</span><span class="n">notnull</span><span class="p">(</span><span class="n">n_pix</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">n_m</span><span class="p">):</span>
+            <span class="n">n_m</span> <span class="o">=</span> <span class="n">n_pix</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_n</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">e_pix</span><span class="p">,</span> <span class="n">n_pix</span><span class="p">,</span> <span class="n">e_m</span><span class="p">,</span> <span class="n">n_m</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">e_pix</span><span class="p">,</span> <span class="n">n_pix</span><span class="p">,</span> <span class="n">e_m</span><span class="p">,</span> <span class="n">n_m</span>
+
+    <span class="k">def</span> <span class="nf">_read_plot_shp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Reads shapefile of plot bounds and record upper left (northwest)</span>
+<span class="sd">        corner of each plot</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">df_shp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;Please load a shapefile</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">df_shp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df_shp</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">drv</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">GetDriverByName</span><span class="p">(</span><span class="s1">&#39;ESRI Shapefile&#39;</span><span class="p">)</span>
+        <span class="n">ds_shp</span> <span class="o">=</span> <span class="n">drv</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fname_shp</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ds_shp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Could not open </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fname_shp</span><span class="p">))</span>
+        <span class="n">layer</span> <span class="o">=</span> <span class="n">ds_shp</span><span class="o">.</span><span class="n">GetLayer</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">layer</span><span class="p">:</span>
+            <span class="n">geom</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="n">GetGeometryRef</span><span class="p">()</span>
+            <span class="n">bounds</span> <span class="o">=</span> <span class="n">geom</span><span class="o">.</span><span class="n">GetBoundary</span><span class="p">()</span>
+            <span class="n">bounds_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">bounds</span><span class="o">.</span><span class="n">ExportToJson</span><span class="p">())</span>
+            <span class="n">bounds_coords</span> <span class="o">=</span> <span class="n">bounds_dict</span><span class="p">[</span><span class="s1">&#39;coordinates&#39;</span><span class="p">]</span>
+            <span class="n">plot_id</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="n">GetField</span><span class="p">(</span><span class="s1">&#39;plot&#39;</span><span class="p">)</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">bounds_coords</span><span class="p">)</span>
+            <span class="n">ul_x_utm</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">ul_y_utm</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+            <span class="n">df_temp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="n">plot_id</span><span class="p">,</span> <span class="n">ul_x_utm</span><span class="p">,</span> <span class="n">ul_y_utm</span><span class="p">]],</span>
+                                   <span class="n">columns</span><span class="o">=</span><span class="n">df_shp</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+            <span class="n">df_shp</span> <span class="o">=</span> <span class="n">df_shp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df_temp</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">df_shp</span> <span class="o">=</span> <span class="n">df_shp</span>
+
+    <span class="k">def</span> <span class="nf">_pix_to_mapunit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e_m</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">e_pix</span><span class="p">,</span> <span class="n">n_pix</span><span class="p">,</span> <span class="n">ps_e</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ps_n</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Converts between pixel units and map units (e.g., UTM meters).</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            e_m (`float`): easting map unit coordinate.</span>
+<span class="sd">            n_m (`float`): northing map unit coordinate.</span>
+<span class="sd">            e_pix (`int`): easting pixel coordinate.</span>
+<span class="sd">            n_pix (`int`): northing pixel coordinate.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">ps_e</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ps_e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_e</span>
+        <span class="k">if</span> <span class="n">ps_n</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ps_n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_n</span>
+
+        <span class="k">if</span> <span class="n">e_pix</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">e_m</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">e_pix</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">e_m</span> <span class="o">/</span> <span class="n">ps_e</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">e_pix</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">e_m</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">e_m</span> <span class="o">=</span> <span class="n">e_pix</span> <span class="o">*</span> <span class="n">ps_e</span>
+        <span class="k">if</span> <span class="n">n_pix</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">n_m</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">n_pix</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_m</span> <span class="o">/</span> <span class="n">ps_n</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">n_pix</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">n_m</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">n_m</span> <span class="o">=</span> <span class="n">n_pix</span> <span class="o">*</span> <span class="n">ps_n</span>
+        <span class="k">return</span> <span class="n">e_m</span><span class="p">,</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">e_pix</span><span class="p">,</span> <span class="n">n_pix</span>
+
+    <span class="k">def</span> <span class="nf">_shift_by_gdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gdf</span><span class="p">,</span> <span class="n">plot_id</span><span class="p">,</span> <span class="n">buf_e_m</span><span class="p">,</span> <span class="n">buf_n_m</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Applies a shift to the geotransform of a plot based on its location as</span>
+<span class="sd">        determined by the geometry of the `geopandas.GeoDataFrame`. This</span>
+<span class="sd">        effectively centers each cropped datacube within its plot boundary.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            df_plots (pandas.DataFrame):</span>
+<span class="sd">            gdf (geopandas.GeoDataFrame):</span>
+<span class="sd">            plot_id</span>
+<span class="sd">            buf_e_m</span>
+<span class="sd">            buf_n_m</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">gdf_plot</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;plot&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">plot_id</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">buf_e_m</span><span class="p">):</span>
+            <span class="n">buf_e_m</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">buf_n_m</span><span class="p">):</span>
+            <span class="n">buf_n_m</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">ul_x_utm</span> <span class="o">=</span> <span class="n">gdf_plot</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="s1">&#39;minx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">+</span> <span class="n">buf_e_m</span>
+        <span class="n">ul_y_utm</span> <span class="o">=</span> <span class="n">gdf_plot</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="s1">&#39;maxy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">-</span> <span class="n">buf_n_m</span>
+        <span class="k">return</span> <span class="n">ul_x_utm</span><span class="p">,</span> <span class="n">ul_y_utm</span>
+
+<div class="viewcode-block" id="spatial_mod.crop_many_gdf"><a class="viewcode-back" href="../../my_hs_process.html#hs_process.spatial_mod.spatial_mod.crop_many_gdf">[docs]</a>    <span class="k">def</span> <span class="nf">crop_many_gdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plot_id_ref</span><span class="p">,</span> <span class="n">pix_e_ul</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                      <span class="n">crop_e_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">crop_n_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">crop_e_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                      <span class="n">crop_n_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buf_e_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buf_n_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                      <span class="n">buf_e_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buf_n_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_plots</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                      <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gdf</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Crops many plots from a single image by comparing the image to a</span>
+<span class="sd">        polygon file (geopandas.GoeDataFrame) that contains plot information</span>
+<span class="sd">        and geometry of plot boundaries.</span>
+
+<span class="sd">        If `pix_e_ul` and `pix_n_ul` are passed, those pixel offests will be</span>
+<span class="sd">        compared to the upper left pixel of `plot_id_ref` and the difference in</span>
+<span class="sd">        both the easting and northing direction will be applied to all plots to</span>
+<span class="sd">        systematically shift the actual upper left pixel/cropping location for</span>
+<span class="sd">        each plot within the image.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            plot_id_ref (`int`): the plot ID of the reference plot, which must</span>
+<span class="sd">                be present in the datacube.</span>
+<span class="sd">            pix_e_ul (`int`): upper left pixel column (easting) of</span>
+<span class="sd">                `plot_id_ref`; this is used to calculate the offset between the</span>
+<span class="sd">                GeoDataFrame geometry and the approximate image georeference</span>
+<span class="sd">                error (default: 0).</span>
+<span class="sd">            pix_n_ul (`int`): upper left pixel row (northing) of `plot_id_ref`;</span>
+<span class="sd">                this is used to calculate the offset between the GeoDataFrame</span>
+<span class="sd">                geometry and the approximate image georeference error</span>
+<span class="sd">                (default: 0).</span>
+<span class="sd">            crop_e_m (`float`, optional): length of each row (easting</span>
+<span class="sd">                direction) in the cropped image (in map units; e.g., meters).</span>
+<span class="sd">            crop_n_m (`float`, optional): length of each column (northing</span>
+<span class="sd">                direction) in the cropped image (in map units; e.g., meters).</span>
+<span class="sd">            crop_e_pix (`int`, optional): number of pixels in each row in the</span>
+<span class="sd">                cropped image.</span>
+<span class="sd">            crop_n_pix (`int`, optional): number of pixels in each column in</span>
+<span class="sd">                the cropped image.</span>
+<span class="sd">            buf_e_m (`float`, optional): The buffer distance in the easting</span>
+<span class="sd">                direction (in map units; e.g., meters) to be applied after</span>
+<span class="sd">                calculating the original crop area; the buffer is considered</span>
+<span class="sd">                after `crop_X_m`/`crop_X_pix`. A positive value will reduce the</span>
+<span class="sd">                size of `crop_X_m`/`crop_X_pix`, and a negative value will</span>
+<span class="sd">                increase it.</span>
+<span class="sd">            buf_n_m (`float`, optional): The buffer distance in the northing</span>
+<span class="sd">                direction (in map units; e.g., meters) to be applied after</span>
+<span class="sd">                calculating the original crop area; the buffer is considered</span>
+<span class="sd">                after `crop_X_m`/`crop_X_pix`. A positive value will reduce the</span>
+<span class="sd">                size of `crop_X_m`/`crop_X_pix`, and a negative value will</span>
+<span class="sd">                increase it.</span>
+<span class="sd">            buf_e_pix (`int`, optional): The buffer distance in the easting</span>
+<span class="sd">                direction (in pixel units) to be applied after calculating the</span>
+<span class="sd">                original crop area.</span>
+<span class="sd">            buf_n_pix (`int`, optional): The buffer distance in the northing</span>
+<span class="sd">                direction (in pixel units) to be applied after calculating the</span>
+<span class="sd">                original crop area.</span>
+<span class="sd">            n_plots (`int`, optional): number of plots to crop, starting with</span>
+<span class="sd">                `plot_id_ref` and moving from West to East and North to South</span>
+<span class="sd">                (default; `None`).</span>
+<span class="sd">           spyfile (`SpyFile` object): The datacube to crop; if `None`, loads</span>
+<span class="sd">               datacube and band information from `spatial_mod.spyfile`</span>
+<span class="sd">               (default: `None`).</span>
+<span class="sd">            gdf (`geopandas.GeoDataFrame`): the plot names and polygon</span>
+<span class="sd">                geometery of each of the plots; &#39;plot&#39; must be used as a column</span>
+<span class="sd">                name to identify each of the plots, and should be an integer.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `pandas.DataFrame`:</span>
+<span class="sd">                - **df_plots** (`pandas.DataFrame`) -- data for</span>
+<span class="sd">                  which to crop each plot; includes &#39;plot_id&#39;, &#39;pix_e_ul&#39;, and</span>
+<span class="sd">                  &#39;pix_n_ul&#39; columns. This data can be passed to</span>
+<span class="sd">                  `spatial_mod.crop_single()` to perform the actual cropping.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            Either the pixel coordinate or the map unit coordinate should be</span>
+<span class="sd">            passed for `crop_X_Y` and `buf_X_Y` in each direction (i.e.,</span>
+<span class="sd">            easting and northing). Do not pass both.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">spyfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span>
+        <span class="k">if</span> <span class="n">gdf</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">gdf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gdf</span>
+
+        <span class="n">msg1</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please load a GeoDataFrame (geopandas library).</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">msg2</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please be sure `plot_id_ref` is present in `gdf` (i.e., &#39;</span>
+                <span class="s1">&#39;the GeoDataFrame).</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">gdf</span><span class="p">,</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">),</span> <span class="n">msg1</span>
+        <span class="k">assert</span> <span class="n">plot_id_ref</span> <span class="ow">in</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;plot&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">msg2</span>
+        <span class="n">df_plots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_plots_gdf</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">gdf</span><span class="p">,</span> <span class="n">plot_id_ref</span><span class="p">,</span>
+                                        <span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="p">,</span> <span class="n">n_plots</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
+        <span class="c1"># TODO: add crop_X and buf_X to df_plots</span>
+        <span class="k">return</span> <span class="n">df_plots</span></div>
+
+<div class="viewcode-block" id="spatial_mod.crop_many_grid"><a class="viewcode-back" href="../../my_hs_process.html#hs_process.spatial_mod.spatial_mod.crop_many_grid">[docs]</a>    <span class="k">def</span> <span class="nf">crop_many_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plot_id_ul</span><span class="p">,</span> <span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="p">,</span>
+                       <span class="n">crop_e_m</span><span class="o">=</span><span class="mf">9.170</span><span class="p">,</span> <span class="n">crop_n_m</span><span class="o">=</span><span class="mf">3.049</span><span class="p">,</span>
+                       <span class="n">crop_e_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">crop_n_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">buf_e_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buf_n_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">buf_e_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buf_n_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">alley_size_e_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alley_size_n_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">alley_size_e_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alley_size_n_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">n_plots_x</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_plots_y</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Crops many plots from a single image by calculating the distance</span>
+<span class="sd">        between plots based on `crop_X_Y`, `n_plots_X/Y`, and `alley_size_X_Y`</span>
+<span class="sd">        parameters.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            plot_id_ul (`int`): the plot ID of the upper left (northwest-most)</span>
+<span class="sd">                plot to be cropped.</span>
+<span class="sd">            pix_e_ul (`int`): upper left pixel column (easting) of</span>
+<span class="sd">                `plot_id_ul`.</span>
+<span class="sd">            pix_n_ul (`int`): upper left pixel row (northing) of `plot_id_ul`.</span>
+<span class="sd">            crop_e_m (`float`, optional): length of each row (easting</span>
+<span class="sd">                direction) in the cropped image (in map units; e.g., meters).</span>
+<span class="sd">            crop_n_m (`float`, optional): length of each column (northing</span>
+<span class="sd">                direction) in the cropped image (in map units; e.g., meters).</span>
+<span class="sd">            crop_e_pix (`int`, optional): number of pixels in each row in the</span>
+<span class="sd">                cropped image.</span>
+<span class="sd">            crop_n_pix (`int`, optional): number of pixels in each column in</span>
+<span class="sd">                the cropped image.</span>
+<span class="sd">            buf_e_m (`float`, optional): The buffer distance in the easting</span>
+<span class="sd">                direction (in map units; e.g., meters) to be applied after</span>
+<span class="sd">                calculating the original crop area; the buffer is considered</span>
+<span class="sd">                after `crop_X_m`/`crop_X_pix`. A positive value will reduce the</span>
+<span class="sd">                size of `crop_X_m`/`crop_X_pix`, and a negative value will</span>
+<span class="sd">                increase it.</span>
+<span class="sd">            buf_n_m (`float`, optional): The buffer distance in the northing</span>
+<span class="sd">                direction (in map units; e.g., meters) to be applied after</span>
+<span class="sd">                calculating the original crop area; the buffer is considered</span>
+<span class="sd">                after `crop_X_m`/`crop_X_pix`. A positive value will reduce the</span>
+<span class="sd">                size of `crop_X_m`/`crop_X_pix`, and a negative value will</span>
+<span class="sd">                increase it.</span>
+<span class="sd">            buf_e_pix (`int`, optional): The buffer distance in the easting</span>
+<span class="sd">                direction (in pixel units) to be applied after calculating the</span>
+<span class="sd">                original crop area.</span>
+<span class="sd">            buf_n_pix (`int`, optional): The buffer distance in the northing</span>
+<span class="sd">                direction (in pixel units) to be applied after calculating the</span>
+<span class="sd">                original crop area.</span>
+<span class="sd">            alley_size_e_m (`int`, optional): Should be passed if there are</span>
+<span class="sd">                alleys passing across the E/W direction of the plots that are</span>
+<span class="sd">                not accounted for by the `crop_X_Y` parameters. Used together</span>
+<span class="sd">                with `n_plots_x` to determine the plots represented in a</span>
+<span class="sd">                particular datacube.</span>
+<span class="sd">            alley_size_n_m (`int`, optional): Should be passed if there are</span>
+<span class="sd">                alleys passing across the N/S direction of the plots that are</span>
+<span class="sd">                not accounted for by the `crop_X_Y` parameters. Used together</span>
+<span class="sd">                with `n_plots_y` to determine the plots represented in a</span>
+<span class="sd">                particular datacube.</span>
+<span class="sd">            alley_size_e_pix (`float`, optional): see `alley_size_e_m`.</span>
+<span class="sd">            alley_size_n_pix (`float`, optional): see `alley_size_n_m`.</span>
+<span class="sd">            n_plots_x (`int`): number of plots in a row in east/west direction</span>
+<span class="sd">                (default: 5).</span>
+<span class="sd">            n_plots_y (`int`): number of plots in a row in north/south</span>
+<span class="sd">                direction (default: 9).</span>
+<span class="sd">            spyfile (`SpyFile` object): The datacube to crop; if `None`, loads</span>
+<span class="sd">                datacube and band information from `spatial_mod.spyfile`</span>
+<span class="sd">                (default: `None`).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `pandas.DataFrame`:</span>
+<span class="sd">                - **df_plots** (`pandas.DataFrame`) -- data for</span>
+<span class="sd">                  which to crop each plot; includes &#39;plot_id&#39;, &#39;pix_e_ul&#39;, and</span>
+<span class="sd">                  &#39;pix_n_ul&#39; columns. This data can be passed to</span>
+<span class="sd">                  `spatial_mod.crop_single()` to perform the actual cropping.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            Either the pixel coordinate or the map unit coordinate should be</span>
+<span class="sd">            passed for `crop_X_Y` and `buf_X_Y` in each direction (i.e.,</span>
+<span class="sd">            easting and northing). Do not pass both.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">spyfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+
+        <span class="n">msg1</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Either crop_size_XX_m or crop_size_XX_pix should be passed. &#39;</span>
+                <span class="s1">&#39;Please pass one or the other.&#39;</span><span class="p">)</span>
+        <span class="n">msg2</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Either crop_size_XX_m or crop_size_XX_pix should be passed. &#39;</span>
+                <span class="s1">&#39;Do not pass both.&#39;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span>
+                <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="p">[</span><span class="n">crop_e_m</span><span class="p">,</span> <span class="n">crop_e_pix</span><span class="p">]),</span> <span class="n">msg1</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span>
+                <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="p">[</span><span class="n">crop_e_m</span><span class="p">,</span> <span class="n">crop_e_pix</span><span class="p">]),</span> <span class="n">msg2</span>
+
+        <span class="n">crop_e_m</span><span class="p">,</span> <span class="n">crop_n_m</span><span class="p">,</span> <span class="n">crop_e_pix</span><span class="p">,</span> <span class="n">crop_n_pix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pix_to_mapunit</span><span class="p">(</span>
+                <span class="n">crop_e_m</span><span class="p">,</span> <span class="n">crop_n_m</span><span class="p">,</span> <span class="n">crop_e_pix</span><span class="p">,</span> <span class="n">crop_n_pix</span><span class="p">)</span>
+        <span class="n">buf_e_m</span><span class="p">,</span> <span class="n">buf_n_m</span><span class="p">,</span> <span class="n">buf_e_pix</span><span class="p">,</span> <span class="n">buf_n_pix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pix_to_mapunit</span><span class="p">(</span>
+                <span class="n">buf_e_m</span><span class="p">,</span> <span class="n">buf_n_m</span><span class="p">,</span> <span class="n">buf_e_pix</span><span class="p">,</span> <span class="n">buf_n_pix</span><span class="p">)</span>
+        <span class="n">alley_size_e_m</span><span class="p">,</span> <span class="n">alley_size_n_m</span><span class="p">,</span> <span class="n">alley_size_e_pix</span><span class="p">,</span> <span class="n">alley_size_e_pix</span> <span class="o">=</span>\
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pix_to_mapunit</span><span class="p">(</span><span class="n">alley_size_e_m</span><span class="p">,</span> <span class="n">alley_size_n_m</span><span class="p">,</span>
+                                 <span class="n">alley_size_e_pix</span><span class="p">,</span> <span class="n">alley_size_e_pix</span><span class="p">)</span>
+
+        <span class="n">row_plots_top</span><span class="p">,</span> <span class="n">row_plots_bot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_alley</span><span class="p">(</span>
+                <span class="n">plot_id_ul</span><span class="p">,</span> <span class="n">n_plots_y</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">nrows</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="p">,</span>
+                <span class="n">crop_n_pix</span><span class="p">,</span> <span class="n">alley_size_n_pix</span><span class="p">)</span>
+        <span class="n">df_plots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_size</span><span class="p">(</span><span class="n">plot_id_ul</span><span class="p">,</span> <span class="n">n_plots_x</span><span class="p">,</span> <span class="n">row_plots_top</span><span class="p">,</span>
+                                   <span class="n">row_plots_bot</span><span class="p">,</span> <span class="n">crop_e_pix</span><span class="p">,</span>
+                                   <span class="n">crop_n_pix</span><span class="p">,</span> <span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df_plots</span></div>
+
+<div class="viewcode-block" id="spatial_mod.crop_single"><a class="viewcode-back" href="../../my_hs_process.html#hs_process.spatial_mod.spatial_mod.crop_single">[docs]</a>    <span class="k">def</span> <span class="nf">crop_single</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="p">,</span> <span class="n">crop_e_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">crop_n_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">crop_e_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">crop_n_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">buf_e_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buf_n_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buf_e_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buf_n_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plot_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gdf</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Crops a single plot from an image. If `plot_id` and `gdf` are</span>
+<span class="sd">        explicitly passed (i.e., they will not be loaded from `spatial_mod`</span>
+<span class="sd">        class), the &quot;map info&quot; tag in the metadata will be adjusted to center</span>
+<span class="sd">        the cropped area within the appropriate plot geometry.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            pix_e_ul (`int`): upper left column (easting) to begin cropping</span>
+<span class="sd">            pix_n_ul (`int`): upper left row (northing) to begin cropping</span>
+<span class="sd">            crop_e_pix (`int`, optional): number of pixels in each row in the</span>
+<span class="sd">                cropped image</span>
+<span class="sd">            crop_n_pix (`int`, optional): number of pixels in each column in</span>
+<span class="sd">                the cropped image</span>
+<span class="sd">            crop_e_m (`float`, optional): length of each row (easting</span>
+<span class="sd">                     direction) in the cropped image (in map units; e.g.,</span>
+<span class="sd">                     meters).</span>
+<span class="sd">            crop_n_m (`float`, optional): length of each column (northing</span>
+<span class="sd">                     direction) in the cropped image (in map units; e.g.,</span>
+<span class="sd">                     meters).</span>
+<span class="sd">            buf_e_pix (`int`, optional): applied/calculated after</span>
+<span class="sd">                `crop_e_pix` and `crop_n_pix` are accounted for</span>
+<span class="sd">            buf_n_pix (`int`, optional):</span>
+<span class="sd">            buf_e_m (`float`, optional):</span>
+<span class="sd">            buf_n_m (`float`, optional):</span>
+<span class="sd">            spyfile (`SpyFile` object or `numpy.ndarray`): The datacube to</span>
+<span class="sd">                crop; if `numpy.ndarray` or `None`, loads band information from</span>
+<span class="sd">                `self.spyfile` (default: `None`).</span>
+<span class="sd">            plot_id (`int`): the plot ID of the area to be cropped.</span>
+<span class="sd">            gdf (`geopandas.GeoDataFrame`): the plot names and polygon</span>
+<span class="sd">                geometery of each of the plots; &#39;plot&#39; must be used as a column</span>
+<span class="sd">                name to identify each of the plots, and should be an integer.</span>
+<span class="sd">                `gdf` must be explicitly passed to</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            2-element `tuple` containing</span>
+
+<span class="sd">            - **array_crop** (`numpy.ndarray`): Cropped datacube.</span>
+<span class="sd">            - **metadata** (`dict`): Modified metadata describing the cropped</span>
+<span class="sd">              hyperspectral datacube (`array_crop`).</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">crop_e_pix</span><span class="p">,</span> <span class="n">crop_n_pix</span><span class="p">,</span> <span class="n">crop_e_m</span><span class="p">,</span> <span class="n">crop_n_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_defaults</span><span class="p">(</span>
+                <span class="n">crop_e_pix</span><span class="p">,</span> <span class="n">crop_n_pix</span><span class="p">,</span> <span class="n">crop_e_m</span><span class="p">,</span> <span class="n">crop_n_m</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s1">&#39;crop&#39;</span><span class="p">)</span>
+        <span class="n">buf_e_pix</span><span class="p">,</span> <span class="n">buf_n_pix</span><span class="p">,</span> <span class="n">buf_e_m</span><span class="p">,</span> <span class="n">buf_n_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_defaults</span><span class="p">(</span>
+                <span class="n">buf_e_pix</span><span class="p">,</span> <span class="n">buf_n_pix</span><span class="p">,</span> <span class="n">buf_e_m</span><span class="p">,</span> <span class="n">buf_n_m</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s1">&#39;buffer&#39;</span><span class="p">)</span>
+        <span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_e_lr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_corners</span><span class="p">(</span><span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">crop_e_pix</span><span class="p">,</span>
+                                               <span class="n">buf_e_pix</span><span class="p">)</span>
+        <span class="n">pix_n_ul</span><span class="p">,</span> <span class="n">pix_n_lr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_corners</span><span class="p">(</span><span class="n">pix_n_ul</span><span class="p">,</span> <span class="n">crop_n_pix</span><span class="p">,</span>
+                                               <span class="n">buf_n_pix</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">spyfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+            <span class="n">array_crop</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">read_subregion</span><span class="p">((</span><span class="n">pix_n_ul</span><span class="p">,</span> <span class="n">pix_n_lr</span><span class="p">),</span>
+                                                <span class="p">(</span><span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_e_lr</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+            <span class="n">array_crop</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">read_subregion</span><span class="p">((</span><span class="n">pix_n_ul</span><span class="p">,</span> <span class="n">pix_n_lr</span><span class="p">),</span>
+                                                <span class="p">(</span><span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_e_lr</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+            <span class="n">array_crop</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">pix_n_ul</span><span class="p">:</span><span class="n">pix_n_lr</span><span class="p">,</span> <span class="n">pix_e_ul</span><span class="p">:</span><span class="n">pix_e_lr</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span>
+        <span class="n">map_info_set</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">gdf</span><span class="p">,</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">)</span> <span class="ow">and</span> <span class="n">plot_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ul_x_utm</span><span class="p">,</span> <span class="n">ul_y_utm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shift_by_gdf</span><span class="p">(</span><span class="n">gdf</span><span class="p">,</span> <span class="n">plot_id</span><span class="p">,</span>
+                                                    <span class="n">buf_e_m</span><span class="p">,</span> <span class="n">buf_n_m</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">utm_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_meta_set</span><span class="p">(</span><span class="n">map_info_set</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="n">utm_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_meta_set</span><span class="p">(</span><span class="n">map_info_set</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+            <span class="n">ul_x_utm</span><span class="p">,</span> <span class="n">ul_y_utm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_UTM</span><span class="p">(</span><span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="p">,</span>
+                                                    <span class="n">utm_x</span><span class="p">,</span> <span class="n">utm_y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_e</span><span class="p">,</span>
+                                                    <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_n</span><span class="p">)</span>
+
+        <span class="n">map_info_set</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">modify_meta_set</span><span class="p">(</span><span class="n">map_info_set</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">ul_x_utm</span><span class="p">)</span>
+        <span class="n">map_info_set</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">modify_meta_set</span><span class="p">(</span><span class="n">map_info_set</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">ul_y_utm</span><span class="p">)</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">map_info_set</span>
+
+        <span class="n">hist_str</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot; -&gt; hs_process.crop_single[&lt;&quot;</span>
+                    <span class="s2">&quot;SpecPyFloatText label: &#39;pix_e_ul?&#39; value:</span><span class="si">{0}</span><span class="s2">; &quot;</span>
+                    <span class="s2">&quot;SpecPyFloatText label: &#39;pix_n_ul?&#39; value:</span><span class="si">{1}</span><span class="s2">; &quot;</span>
+                    <span class="s2">&quot;SpecPyFloatText label: &#39;pix_e_lr?&#39; value:</span><span class="si">{2}</span><span class="s2">; &quot;</span>
+                    <span class="s2">&quot;SpecPyFloatText label: &#39;pix_n_lr?&#39; value:</span><span class="si">{3}</span><span class="s2">&gt;]&quot;</span>
+                    <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="p">,</span> <span class="n">pix_e_lr</span><span class="p">,</span> <span class="n">pix_n_lr</span><span class="p">))</span>
+        <span class="c1"># If &quot;..crop_single&quot; is already included in the history, remove it</span>
+        <span class="n">idx_remove</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+                <span class="s1">&#39; -&gt; hs_process.crop_single[&lt;&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">idx_remove</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">hist_str</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">][:</span><span class="n">idx_remove</span><span class="p">]</span>
+            <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">hist_str</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;samples&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">array_crop</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;lines&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">array_crop</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+
+        <span class="k">return</span> <span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span></div>
+
+<div class="viewcode-block" id="spatial_mod.load_spyfile"><a class="viewcode-back" href="../../my_hs_process.html#hs_process.spatial_mod.spatial_mod.load_spyfile">[docs]</a>    <span class="k">def</span> <span class="nf">load_spyfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Loads a `SpyFile` (Spectral Python object) for data access and/or</span>
+<span class="sd">        manipulation by the `hstools` class.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            spyfile (`SpyFile` object): The datacube being accessed and/or</span>
+<span class="sd">                manipulated.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span> <span class="o">=</span> <span class="n">spyfile</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span> <span class="o">=</span> <span class="n">hstools</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ul_e_srs</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ul_n_srs</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">][</span><span class="mi">4</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_e</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">][</span><span class="mi">5</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_n</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">][</span><span class="mi">6</span><span class="p">])</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Map information was not able to be loaded from the &#39;</span>
+                  <span class="s1">&#39;`SpyFile`. Please be sure the metadata contains the &quot;map &#39;</span>
+                  <span class="s1">&#39;info&quot; tag with accurate geometric information.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ul_e_srs</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ul_n_srs</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_e</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_n</span> <span class="o">=</span> <span class="kc">None</span></div></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2020, Tyler J. Nigon.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

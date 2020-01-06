@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="python">
+  <head>
+    <meta charset="utf-8" />
+    <title>hs_process.spec_mod &#8212; hs_process 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html">
+          EONR</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="https://github.com/tnigon/eonr">Github</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Contents <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hs_process.html">hs_process package</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary">
+<form action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="body col-md-9 content" role="main">
+      
+  <h1>Source code for hs_process.spec_mod</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">factorial</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">spectral.io.envi</span> <span class="k">as</span> <span class="nn">envi</span>
+<span class="kn">import</span> <span class="nn">spectral.io.spyfile</span> <span class="k">as</span> <span class="nn">SpyFile</span>
+
+<span class="kn">from</span> <span class="nn">hs_process.utilities</span> <span class="k">import</span> <span class="n">hstools</span>
+
+
+<div class="viewcode-block" id="spec_mod"><a class="viewcode-back" href="../../hs_process.html#hs_process.spec_mod.spec_mod">[docs]</a><span class="k">class</span> <span class="nc">spec_mod</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Class for manipulating data within the spectral domain (usually</span>
+<span class="sd">    pixel-based)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span> <span class="o">=</span> <span class="n">spyfile</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span> <span class="o">=</span> <span class="n">hstools</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_savitzky_golay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">deriv</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Smooth (and optionally differentiate) data with a Savitzky-Golay</span>
+<span class="sd">        filter. The Savitzky-Golay filter removes high frequency noise from</span>
+<span class="sd">        data. It has the advantage of preserving the original shape and</span>
+<span class="sd">        features of the signal better than other types of filtering</span>
+<span class="sd">        approaches, such as moving averages techniques.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        y (`numpy.array`; shape (N,)): the values of the time history of the</span>
+<span class="sd">            signal.</span>
+<span class="sd">        window_size (`int`): the length of the window; must be an odd integer</span>
+<span class="sd">            number (default: 5).</span>
+<span class="sd">        order (`int`): the order of the polynomial used in the filtering; must</span>
+<span class="sd">            be less than `window_size` - 1 (default: 2).</span>
+<span class="sd">        deriv (`int`): the order of the derivative to compute (default: 0,</span>
+<span class="sd">              means only smoothing).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        ys (`ndarray`; shape (N)): the smoothed signal (or it&#39;s n-th</span>
+<span class="sd">           derivative).</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">        The Savitzky-Golay is a type of low-pass filter, particularly</span>
+<span class="sd">        suited for smoothing noisy data. The main idea behind this</span>
+<span class="sd">        approach is to make for each point a least-square fit with a</span>
+<span class="sd">        polynomial of high order over a odd-sized window centered at</span>
+<span class="sd">        the point.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">        t = np.linspace(-4, 4, 500)</span>
+<span class="sd">        y = np.exp( -t**2 ) + np.random.normal(0, 0.05, t.shape)</span>
+<span class="sd">        ysg = savitzky_golay(y, window_size=31, order=4)</span>
+<span class="sd">        import matplotlib.pyplot as plt</span>
+<span class="sd">        plt.plot(t, y, label=&#39;Noisy signal&#39;)</span>
+<span class="sd">        plt.plot(t, np.exp(-t**2), &#39;k&#39;, lw=1.5, label=&#39;Original signal&#39;)</span>
+<span class="sd">        plt.plot(t, ysg, &#39;r&#39;, label=&#39;Filtered signal&#39;)</span>
+<span class="sd">        plt.legend()</span>
+<span class="sd">        plt.show()</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">window_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">(</span><span class="n">window_size</span><span class="p">))</span>
+            <span class="n">order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">(</span><span class="n">order</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">msg</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Window_size/order have to be of type int&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">window_size</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">window_size</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Window_size must be a positive odd number&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">window_size</span> <span class="o">&lt;</span> <span class="n">order</span> <span class="o">+</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Window_size is too small for the polynomials &#39;</span>
+                            <span class="s1">&#39;order&#39;</span><span class="p">)</span>
+        <span class="n">order_range</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">order</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">half_window</span> <span class="o">=</span> <span class="p">(</span><span class="n">window_size</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="c1"># precompute coefficients</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mat</span><span class="p">([[</span><span class="n">k</span><span class="o">**</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">order_range</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">half_window</span><span class="p">,</span> <span class="n">half_window</span><span class="o">+</span><span class="mi">1</span><span class="p">)])</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">A</span><span class="p">[</span><span class="n">deriv</span><span class="p">]</span> <span class="o">*</span> <span class="n">rate</span><span class="o">**</span><span class="n">deriv</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">deriv</span><span class="p">)</span>
+        <span class="c1"># pad the signal at the extremes with values taken from the signal</span>
+        <span class="n">firstvals</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">half_window</span><span class="o">+</span><span class="mi">1</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">)</span>
+        <span class="n">lastvals</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="n">half_window</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">firstvals</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lastvals</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span> <span class="n">m</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;valid&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_smooth_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">19</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Applies the Savitzky Golay smoothing algorithm to the spectral</span>
+<span class="sd">        domain of each image pixel</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">array</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_sp</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span>
+        <span class="n">array_2d</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">array_2d_temp</span> <span class="o">=</span> <span class="n">array_2d</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">array_2d</span><span class="p">):</span>
+            <span class="n">array_2d_temp</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_savitzky_golay</span><span class="p">(</span>
+                    <span class="n">row</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="n">window_size</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
+<span class="c1">#            sns.lineplot(list(hs.meta_bands.keys()), array_2d[1000])</span>
+<span class="c1">#            sns.lineplot(list(hs.meta_bands.keys()), array_2d_temp[1000])</span>
+        <span class="k">return</span> <span class="n">array_2d_temp</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+
+<div class="viewcode-block" id="spec_mod.load_spyfile"><a class="viewcode-back" href="../../hs_process.html#hs_process.spec_mod.spec_mod.load_spyfile">[docs]</a>    <span class="k">def</span> <span class="nf">load_spyfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Loads a `SpyFile` (Spectral Python object) for data access and/or</span>
+<span class="sd">        manipulation by the `hstools` class.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            spyfile (`SpyFile` object): The datacube being accessed and/or</span>
+<span class="sd">                manipulated.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span> <span class="o">=</span> <span class="n">spyfile</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span> <span class="o">=</span> <span class="n">hstools</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ul_e_srs</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ul_n_srs</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">][</span><span class="mi">4</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_e</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">][</span><span class="mi">5</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_n</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">][</span><span class="mi">6</span><span class="p">])</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Map information was not able to be loaded from the &#39;</span>
+                  <span class="s1">&#39;`SpyFile`. Please be sure the metadata contains the &quot;map &#39;</span>
+                  <span class="s1">&#39;info&quot; tag with accurate geometric information.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ul_e_srs</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ul_n_srs</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_e</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_n</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="spec_mod.spectral_clip"><a class="viewcode-back" href="../../hs_process.html#hs_process.spec_mod.spec_mod.spectral_clip">[docs]</a>    <span class="k">def</span> <span class="nf">spectral_clip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wl_bands</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">420</span><span class="p">],</span> <span class="p">[</span><span class="mi">760</span><span class="p">,</span> <span class="mi">776</span><span class="p">],</span> <span class="p">[</span><span class="mi">813</span><span class="p">,</span> <span class="mi">827</span><span class="p">],</span>
+                                      <span class="p">[</span><span class="mi">880</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]],</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Removes/clips designated wavelength bands from the hyperspectral</span>
+<span class="sd">        datacube.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            wl_bands (`list` or `list of lists`): minimum and maximum</span>
+<span class="sd">                wavelenths to clip from image; if multiple groups of</span>
+<span class="sd">                wavelengths should be cut, this should be a list of lists. For</span>
+<span class="sd">                example, wl_bands=[760, 776] will clip all bands greater than</span>
+<span class="sd">                760.0 nm and less than 776.0 nm;</span>
+<span class="sd">                wl_bands = [[0, 420], [760, 776], [813, 827], [880, 1000]]</span>
+<span class="sd">                will clip all band less than 420.0 nm, bands greater than 760.0</span>
+<span class="sd">                nm and less than 776.0 nm, bands greater than 813.0 nm and less</span>
+<span class="sd">                than 827.0 nm, and bands greater than 880 nm (default).</span>
+<span class="sd">            spyfile (`SpyFile` object or `numpy.ndarray`): The data cube to</span>
+<span class="sd">                clip; if `numpy.ndarray` or `None`, loads band information from</span>
+<span class="sd">                `self.spyfile` (default: `None`).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            2-element `tuple` containing</span>
+
+<span class="sd">            - **array_clip** (`numpy.ndarray`): Clipped datacube.</span>
+<span class="sd">            - **metadata** (`dict`): Modified metadata describing the clipped</span>
+<span class="sd">              hyperspectral datacube (`array_clip`).</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">spyfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wl_bands</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">spec_clip_groups</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_range</span><span class="p">(</span>
+                    <span class="n">grp</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">grp</span> <span class="ow">in</span> <span class="n">wl_bands</span><span class="p">]</span>
+            <span class="n">spec_clip</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="n">spec_clip_groups</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">spec_clip</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_range</span><span class="p">(</span><span class="n">wl_bands</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">meta_bands</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_num</span><span class="p">(</span><span class="n">spec_clip</span><span class="p">):</span>
+            <span class="n">meta_bands</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="c1">#        tools.meta_bands = meta_bands</span>
+        <span class="n">array_clip</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">spec_clip</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span>
+        <span class="n">hist_str</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot; -&gt; hs_process.spectral_clip[&lt;SpecPyFloatText label: &quot;</span>
+                    <span class="s2">&quot;&#39;wl_bands?&#39; value:</span><span class="si">{0}</span><span class="s2">&gt;]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wl_bands</span><span class="p">))</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">hist_str</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;bands&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">meta_bands</span><span class="p">)</span>
+
+        <span class="n">band</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">wavelength</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">band</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">wavelength</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="n">band_str</span> <span class="o">=</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">band</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span>
+        <span class="n">wavelength</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="n">wavelength_str</span> <span class="o">=</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">wl</span><span class="p">)</span> <span class="k">for</span> <span class="n">wl</span> <span class="ow">in</span> <span class="n">wavelength</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;band names&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">band_str</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;wavelength&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wavelength_str</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+
+        <span class="k">return</span> <span class="n">array_clip</span><span class="p">,</span> <span class="n">metadata</span></div>
+
+<div class="viewcode-block" id="spec_mod.spectral_smooth"><a class="viewcode-back" href="../../hs_process.html#hs_process.spec_mod.spec_mod.spectral_smooth">[docs]</a>    <span class="k">def</span> <span class="nf">spectral_smooth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Performs Savitzky-Golay smoothing on the spectral domain</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            window_size (`int`): the length of the window; must be an odd integer</span>
+<span class="sd">                number (default: 11).</span>
+<span class="sd">            order (`int`): the order of the polynomial used in the filtering; must</span>
+<span class="sd">                be less than `window_size` - 1 (default: 2).</span>
+<span class="sd">            spyfile (`SpyFile` object or `numpy.ndarray`): The data cube to</span>
+<span class="sd">                clip; if `numpy.ndarray` or `None`, loads band information from</span>
+<span class="sd">                `self.spyfile` (default: `None`).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            2-element `tuple` containing</span>
+
+<span class="sd">            - **array_smooth** (`numpy.ndarray`): Clipped datacube.</span>
+<span class="sd">            - **metadata** (`dict`): Modified metadata describing the smoothed</span>
+<span class="sd">              hyperspectral datacube (`array_smooth`).</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">spyfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+
+        <span class="n">array_smooth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_smooth_image</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">window_size</span><span class="p">,</span> <span class="n">order</span><span class="p">)</span>
+
+        <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span>
+        <span class="n">hist_str</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot; -&gt; hs_process.spectral_smooth[&lt;&quot;</span>
+                    <span class="s2">&quot;SpecPyFloatText label: &#39;window_size?&#39; value:</span><span class="si">{0}</span><span class="s2">; &quot;</span>
+                    <span class="s2">&quot;SpecPyFloatText label: &#39;polynomial_order?&#39; value:</span><span class="si">{1}</span><span class="s2">&gt;&quot;</span>
+                    <span class="s2">&quot;]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">window_size</span><span class="p">,</span> <span class="n">order</span><span class="p">))</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">hist_str</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;bands&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">nbands</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+
+        <span class="k">return</span> <span class="n">array_smooth</span><span class="p">,</span> <span class="n">metadata</span></div></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2020, Tyler J. Nigon.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

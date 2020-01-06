@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="python">
+  <head>
+    <meta charset="utf-8" />
+    <title>hs_process.segment &#8212; hs_process 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html">
+          EONR</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="https://github.com/tnigon/eonr">Github</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Contents <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../hs_process.html">hs_process package</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary">
+<form action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="body col-md-9 content" role="main">
+      
+  <h1>Source code for hs_process.segment</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">spectral</span> <span class="k">import</span> <span class="n">kmeans</span>
+<span class="kn">import</span> <span class="nn">spectral.io.spyfile</span> <span class="k">as</span> <span class="nn">SpyFile</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="k">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="kn">from</span> <span class="nn">hs_process.utilities</span> <span class="k">import</span> <span class="n">defaults</span>
+<span class="kn">from</span> <span class="nn">hs_process.utilities</span> <span class="k">import</span> <span class="n">hstools</span>
+
+
+<div class="viewcode-block" id="segment"><a class="viewcode-back" href="../../hs_process.html#hs_process.segment.segment">[docs]</a><span class="k">class</span> <span class="nc">segment</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Class for aiding in the segmentation/masking of image data to include</span>
+<span class="sd">    pixels that are of most interest.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        spyfile (`SpyFile` object): The Spectral Python datacube to manipulate.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span> <span class="o">=</span> <span class="n">spyfile</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span> <span class="o">=</span> <span class="n">hstools</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_e</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_n</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spy_ul_e_srs</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spy_ul_n_srs</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span> <span class="o">=</span> <span class="n">defaults</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_check_bands_wls</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wl</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Checks to be sure there is a valid wavelength or band to be used</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">msg1</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;At least one of either `wl</span><span class="si">{0}</span><span class="s1">` or `b</span><span class="si">{0}</span><span class="s1">` must be passed. &#39;</span>
+                <span class="s1">&#39;Please check your inputs.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">wl</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">b</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg1</span><span class="p">)</span>
+        <span class="n">msg2</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Both `wl</span><span class="si">{0}</span><span class="s1"> and b</span><span class="si">{0}</span><span class="s1"> were passed, but only one can be used &#39;</span>
+                <span class="s1">&#39;to deterimine which image band to use; the wavelength band &#39;</span>
+                <span class="s1">&#39;(`wl</span><span class="si">{0}</span><span class="s1">`=</span><span class="si">{1}</span><span class="s1">) will be used for the band math operation.</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">wl</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">wl</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">b</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">msg2</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">wl</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">b</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># use wl</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">wl</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">b</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># get wl</span>
+            <span class="n">wl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_wavelength</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">wl</span>
+
+    <span class="k">def</span> <span class="nf">_check_classes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array_class</span><span class="p">,</span> <span class="n">n_pix</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Checks that enough classes were assigned</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">unique_classes</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">array_class</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">unique_classes_mod</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">unique_classes</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="n">counts_mod</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">counts</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">unique</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">unique_classes</span><span class="p">,</span> <span class="n">counts</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">n_pix</span><span class="p">:</span>
+                <span class="n">unique_classes_mod</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">unique</span><span class="p">)</span>
+                <span class="n">counts_mod</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">unique_classes_mod</span><span class="p">,</span> <span class="n">counts_mod</span>
+
+    <span class="k">def</span> <span class="nf">_get_band_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wl_list</span><span class="p">,</span> <span class="n">list_range</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Determines how a list of wavelengths should be consolidated, if at all.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wl_list</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="n">list_range</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;When using a `list_range`, please be sure each passed &#39;</span>
+                   <span class="s1">&#39;&quot;band&quot; is a list of exactly two wavelength values.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">wl_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="n">msg</span>
+            <span class="n">band_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_range</span><span class="p">(</span><span class="n">wl_list</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wl_list</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="n">list_range</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">band_list</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">b_i</span> <span class="ow">in</span> <span class="n">wl_list</span><span class="p">:</span>
+                <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band</span><span class="p">(</span><span class="n">b_i</span><span class="p">)</span>
+                <span class="n">band_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># just a single band; disregards `list_range`</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band</span><span class="p">(</span><span class="n">wl_list</span><span class="p">)</span>
+            <span class="n">band_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">band_list</span>
+
+    <span class="k">def</span> <span class="nf">_get_wavelength_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">band_list_in</span><span class="p">,</span> <span class="n">list_range</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Determines how a list of bands should be consolidated, if at all.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">band_list_in</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="n">list_range</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;When using a `list_range`, please be sure each passed &#39;</span>
+                   <span class="s1">&#39;&quot;band&quot; is a list of exactly two wavelength values.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">band_list_in</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="n">msg</span>
+            <span class="n">wl_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_range</span><span class="p">(</span><span class="n">band_list_in</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">band_list_in</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="n">list_range</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">wl_list</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">b_i</span> <span class="ow">in</span> <span class="n">band_list_in</span><span class="p">:</span>
+                <span class="n">wl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_wavelength</span><span class="p">(</span><span class="n">b_i</span><span class="p">)</span>
+                <span class="n">wl_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wl</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># just a single band; disregards `list_range`</span>
+            <span class="n">wl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_wavelength</span><span class="p">(</span><span class="n">band_list_in</span><span class="p">)</span>
+            <span class="n">wl_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">wl</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">wl_list</span>
+
+<div class="viewcode-block" id="segment.band_math_derivative"><a class="viewcode-back" href="../../hs_process.html#hs_process.segment.segment.band_math_derivative">[docs]</a>    <span class="k">def</span> <span class="nf">band_math_derivative</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wl1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wl2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wl3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                             <span class="n">b1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">b2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">b3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                             <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">list_range</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">print_out</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Calculates a derivative-type spectral index from two input bands</span>
+<span class="sd">        and/or wavelengths. Bands/wavelengths can be input as two individual</span>
+<span class="sd">        bands, two sets of bands (i.e., list of bands), or range of bands</span>
+<span class="sd">        (i.e., list of two bands indicating the lower and upper range).</span>
+
+<span class="sd">        der_index = (wl1 - wl2) / (wl2 - wl3)</span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            wl1 (`int`, `float`, or `list`): the wavelength (or set of</span>
+<span class="sd">                wavelengths) to be used as the first parameter of the</span>
+<span class="sd">                derivative index; if `list`, then consolidates all</span>
+<span class="sd">                bands between two wavelength values by calculating the mean</span>
+<span class="sd">                pixel value across all bands in that range (default: `None`).</span>
+<span class="sd">            wl2 (`int`, `float`, or `list`): the wavelength (or set of</span>
+<span class="sd">                wavelengths) to be used as the second parameter of the</span>
+<span class="sd">                derivative index; if `list`, then consolidates all</span>
+<span class="sd">                bands between two wavelength values by calculating the mean</span>
+<span class="sd">                pixel value across all bands in that range (default: `None`).</span>
+<span class="sd">            b1 (`int`, `float`, or `list`): the band (or set of bands) to be</span>
+<span class="sd">                used as the first parameter of the derivative index;</span>
+<span class="sd">                if `list`, then consolidates all bands between two band values</span>
+<span class="sd">                by calculating the mean pixel value across all bands in that</span>
+<span class="sd">                range (default: `None`).</span>
+<span class="sd">            b2 (`int`, `float`, or `list`): the band (or set of bands) to be</span>
+<span class="sd">                used as the second parameter of the derivative</span>
+<span class="sd">                index; if `list`, then consolidates all bands between two band</span>
+<span class="sd">                values by calculating the mean pixel value across all bands in</span>
+<span class="sd">                that range (default: `None`).</span>
+<span class="sd">            spyfile (`SpyFile` object or `numpy.ndarray`): The datacube to</span>
+<span class="sd">                crop; if `numpy.ndarray` or `None`, loads band information from</span>
+<span class="sd">                `self.spyfile` (default: `None`).</span>
+<span class="sd">            list_range (`bool`): Whether bands/wavelengths passed as a list is</span>
+<span class="sd">                interpreted as a range of bands (`True`) or for each individual</span>
+<span class="sd">                band in the list (`False`). If `list_range` is `True`,</span>
+<span class="sd">                `b1`/`wl1` and `b2`/`wl2` should be lists with two items, and</span>
+<span class="sd">                all bands/wavelegths between the two values will be used</span>
+<span class="sd">                (default: `True`).</span>
+<span class="sd">            print_out (`bool`): Whether to print out the actual bands and</span>
+<span class="sd">                wavelengths being used in the NDI calculation (default:</span>
+<span class="sd">                `True`).</span>
+<span class="sd">            &#39;&#39;&#39;</span>
+        <span class="n">wl1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_bands_wls</span><span class="p">(</span><span class="n">wl1</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">wl2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_bands_wls</span><span class="p">(</span><span class="n">wl2</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">wl3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_bands_wls</span><span class="p">(</span><span class="n">wl3</span><span class="p">,</span> <span class="n">b3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="c1"># Now, band input is converted to wavelength input and this can be used</span>
+
+        <span class="k">if</span> <span class="n">spyfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span>
+
+        <span class="n">band1_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_band_list</span><span class="p">(</span><span class="n">wl1</span><span class="p">,</span> <span class="n">list_range</span><span class="p">)</span>
+        <span class="n">band2_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_band_list</span><span class="p">(</span><span class="n">wl2</span><span class="p">,</span> <span class="n">list_range</span><span class="p">)</span>
+        <span class="n">band3_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_band_list</span><span class="p">(</span><span class="n">wl3</span><span class="p">,</span> <span class="n">list_range</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">print_out</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">wl1_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_wavelength_list</span><span class="p">(</span><span class="n">band1_list</span><span class="p">,</span> <span class="n">list_range</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">wl2_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_wavelength_list</span><span class="p">(</span><span class="n">band2_list</span><span class="p">,</span> <span class="n">list_range</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">wl3_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_wavelength_list</span><span class="p">(</span><span class="n">band3_list</span><span class="p">,</span> <span class="n">list_range</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Bands used (`b1`): </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">band1_list</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bands used (`b2`): </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">band2_list</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bands used (`b3`): </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">band3_list</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Wavelengths used (`b1`): </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wl1_list</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Wavelengths used (`b2`): </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wl2_list</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Wavelengths used (`b3`): </span><span class="si">{0}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wl3_list</span><span class="p">))</span>
+
+        <span class="n">array_b1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_spectral_mean</span><span class="p">(</span><span class="n">band1_list</span><span class="p">,</span> <span class="n">array</span><span class="p">)</span>
+        <span class="n">array_b2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_spectral_mean</span><span class="p">(</span><span class="n">band2_list</span><span class="p">,</span> <span class="n">array</span><span class="p">)</span>
+        <span class="n">array_b3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_spectral_mean</span><span class="p">(</span><span class="n">band3_list</span><span class="p">,</span> <span class="n">array</span><span class="p">)</span>
+        <span class="n">array_der</span> <span class="o">=</span> <span class="p">(</span><span class="n">array_b1</span><span class="o">-</span><span class="n">array_b2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">array_b2</span><span class="o">-</span><span class="n">array_b3</span><span class="p">)</span>
+        <span class="n">array_der</span><span class="p">[</span><span class="n">array_der</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;bands&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">del_meta_item</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="s1">&#39;wavelength&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">del_meta_item</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="s1">&#39;band names&#39;</span><span class="p">)</span>
+        <span class="n">hist_str</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot; -&gt; hs_process.band_math_ndi[&lt;&quot;</span>
+                    <span class="s2">&quot;label: &#39;wl1?&#39; value:</span><span class="si">{0}</span><span class="s2">; &quot;</span>
+                    <span class="s2">&quot;label: &#39;wl2?&#39; value:</span><span class="si">{1}</span><span class="s2">; &quot;</span>
+                    <span class="s2">&quot;label: &#39;wl3?&#39; value:</span><span class="si">{2}</span><span class="s2">; &quot;</span>
+                    <span class="s2">&quot;label: &#39;list_range?&#39; value:</span><span class="si">{3}</span><span class="s2">&gt;]&quot;</span>
+                    <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wl1_list</span><span class="p">,</span> <span class="n">wl2_list</span><span class="p">,</span> <span class="n">wl3_list</span><span class="p">,</span> <span class="n">list_range</span><span class="p">))</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">hist_str</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;samples&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">array_der</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;lines&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">array_der</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">array_der</span><span class="p">,</span> <span class="n">metadata</span></div>
+
+<div class="viewcode-block" id="segment.band_math_ratio"><a class="viewcode-back" href="../../hs_process.html#hs_process.segment.segment.band_math_ratio">[docs]</a>    <span class="k">def</span> <span class="nf">band_math_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wl1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wl2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">b1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">b2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">list_range</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">print_out</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Calculates a simple ratio spectral index from two input band and/or</span>
+<span class="sd">        wavelengths. Bands/wavelengths can be input as two individual bands,</span>
+<span class="sd">        two sets of bands (i.e., list of bands), or a range of bands (i.e.,</span>
+<span class="sd">        list of two bands indicating the lower and upper range).</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            wl1 (`int`, `float`, or `list`): the wavelength (or set of</span>
+<span class="sd">                wavelengths) to be used as the first parameter of the</span>
+<span class="sd">                normalized difference index; if `list`, then consolidates all</span>
+<span class="sd">                bands between two wavelength values by calculating the mean</span>
+<span class="sd">                pixel value across all bands in that range (default: `None`).</span>
+<span class="sd">            wl2 (`int`, `float`, or `list`): the wavelength (or set of</span>
+<span class="sd">                wavelengths) to be used as the second parameter of the</span>
+<span class="sd">                normalized difference index; if `list`, then consolidates all</span>
+<span class="sd">                bands between two wavelength values by calculating the mean</span>
+<span class="sd">                pixel value across all bands in that range (default: `None`).</span>
+<span class="sd">            b1 (`int`, `float`, or `list`): the band (or set of bands) to be</span>
+<span class="sd">                used as the first parameter (numerator) of the ratio index; if</span>
+<span class="sd">                `list`, then consolidates all bands between two band values by</span>
+<span class="sd">                calculating the mean pixel value across all bands in that</span>
+<span class="sd">                range (default: `None`).</span>
+<span class="sd">            b2 (`int`, `float`, or `list`): the bands (or set of bands) to be\</span>
+<span class="sd">                used as the second parameter (denominator) of the ratio index;</span>
+<span class="sd">                if `list`, then consolidates all bands between two bands values</span>
+<span class="sd">                by calculating the mean pixel value across all bands in that</span>
+<span class="sd">                range (default: `None`).</span>
+<span class="sd">            spyfile (`SpyFile` object or `numpy.ndarray`): The datacube to</span>
+<span class="sd">                crop; if `numpy.ndarray` or `None`, loads band information from</span>
+<span class="sd">                `self.spyfile` (default: `None`).</span>
+<span class="sd">            list_range (`bool`): Whether a band passed as a list is interpreted as a</span>
+<span class="sd">                range of bands (`True`) or for each individual band in the</span>
+<span class="sd">                list (`False`). If `list_range` is `True`, `b1`/`wl1` and</span>
+<span class="sd">                `b2`/`wl2` should be lists with two items, and all</span>
+<span class="sd">                bands/wavelegths between the two values will be used (default:</span>
+<span class="sd">                `True`).</span>
+<span class="sd">            print_out (`bool`): Whether to print out the actual bands and</span>
+<span class="sd">                wavelengths being used in the NDI calculation (default:</span>
+<span class="sd">                `True`).</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">wl1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_bands_wls</span><span class="p">(</span><span class="n">wl1</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">wl2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_bands_wls</span><span class="p">(</span><span class="n">wl2</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="c1"># Now, band input is converted to wavelength input and this can be used</span>
+
+        <span class="k">if</span> <span class="n">spyfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span>
+
+        <span class="n">band1_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_band_list</span><span class="p">(</span><span class="n">wl1</span><span class="p">,</span> <span class="n">list_range</span><span class="p">)</span>
+        <span class="n">band2_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_band_list</span><span class="p">(</span><span class="n">wl2</span><span class="p">,</span> <span class="n">list_range</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">print_out</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">wl1_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_wavelength_list</span><span class="p">(</span><span class="n">band1_list</span><span class="p">,</span> <span class="n">list_range</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">wl2_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_wavelength_list</span><span class="p">(</span><span class="n">band2_list</span><span class="p">,</span> <span class="n">list_range</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Bands used (`b1`): </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">band1_list</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bands used (`b2`): </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">band2_list</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Wavelengths used (`b1`): </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wl1_list</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Wavelengths used (`b2`): </span><span class="si">{0}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wl2_list</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;(</span><span class="si">{0:.0f}</span><span class="s1">/</span><span class="si">{1:.0f}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">wl1_list</span><span class="p">),</span>
+                                             <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">wl2_list</span><span class="p">)))</span>
+
+        <span class="n">array_b1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_spectral_mean</span><span class="p">(</span><span class="n">band1_list</span><span class="p">,</span> <span class="n">array</span><span class="p">)</span>
+        <span class="n">array_b2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_spectral_mean</span><span class="p">(</span><span class="n">band2_list</span><span class="p">,</span> <span class="n">array</span><span class="p">)</span>
+        <span class="n">array_ratio</span> <span class="o">=</span> <span class="p">(</span><span class="n">array_b1</span><span class="o">/</span><span class="n">array_b2</span><span class="p">)</span>
+        <span class="n">array_ratio</span><span class="p">[</span><span class="n">array_ratio</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;bands&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">del_meta_item</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="s1">&#39;wavelength&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">del_meta_item</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="s1">&#39;band names&#39;</span><span class="p">)</span>
+        <span class="n">hist_str</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot; -&gt; hs_process.band_math_ratio[&lt;&quot;</span>
+                    <span class="s2">&quot;label: &#39;b1?&#39; value:</span><span class="si">{0}</span><span class="s2">; &quot;</span>
+                    <span class="s2">&quot;label: &#39;b2?&#39; value:</span><span class="si">{1}</span><span class="s2">; &quot;</span>
+                    <span class="s2">&quot;label: &#39;list_range?&#39; value:</span><span class="si">{2}</span><span class="s2">&gt;]&quot;</span>
+                    <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b1</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="n">list_range</span><span class="p">))</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">hist_str</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;samples&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">array_ratio</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;lines&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">array_ratio</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">array_ratio</span><span class="p">,</span> <span class="n">metadata</span></div>
+
+<span class="c1">#        if name is None:</span>
+<span class="c1">#            name = &#39;ratio_{0:.0f}_{1:.0f}&#39;.format(wl1, wl2)</span>
+<span class="c1">#        fname_out_envi = os.path.join(</span>
+<span class="c1">#            base_dir_out, (name_print + &#39;_&#39; + str(name) + &#39;.&#39; + interleave))</span>
+<span class="c1">#        print(&#39;Calculating normalized difference index for {0}: &#39;</span>
+<span class="c1">#              &#39;{1:.0f}/{2:.0f}&#39;.format(name_print, wl1, wl2))</span>
+<span class="c1">#        return array_index</span>
+
+<div class="viewcode-block" id="segment.band_math_ndi"><a class="viewcode-back" href="../../hs_process.html#hs_process.segment.segment.band_math_ndi">[docs]</a>    <span class="k">def</span> <span class="nf">band_math_ndi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wl1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wl2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">b1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">b2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                      <span class="n">list_range</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">print_out</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Calculates a normalized difference spectral index from two input bands</span>
+<span class="sd">        and/or wavelengths. Bands/wavelengths can be input as two individual</span>
+<span class="sd">        bands, two sets of bands (i.e., list of bands), or range of bands</span>
+<span class="sd">        (i.e., list of two bands indicating the lower and upper range).</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            wl1 (`int`, `float`, or `list`): the wavelength (or set of</span>
+<span class="sd">                wavelengths) to be used as the first parameter of the</span>
+<span class="sd">                normalized difference index; if `list`, then consolidates all</span>
+<span class="sd">                bands between two wavelength values by calculating the mean</span>
+<span class="sd">                pixel value across all bands in that range (default: `None`).</span>
+<span class="sd">            wl2 (`int`, `float`, or `list`): the wavelength (or set of</span>
+<span class="sd">                wavelengths) to be used as the second parameter of the</span>
+<span class="sd">                normalized difference index; if `list`, then consolidates all</span>
+<span class="sd">                bands between two wavelength values by calculating the mean</span>
+<span class="sd">                pixel value across all bands in that range (default: `None`).</span>
+<span class="sd">            b1 (`int`, `float`, or `list`): the band (or set of bands) to be</span>
+<span class="sd">                used as the first parameter of the normalized difference index;</span>
+<span class="sd">                if `list`, then consolidates all bands between two band values</span>
+<span class="sd">                by calculating the mean pixel value across all bands in that</span>
+<span class="sd">                range (default: `None`).</span>
+<span class="sd">            b2 (`int`, `float`, or `list`): the band (or set of bands) to be</span>
+<span class="sd">                used as the second parameter of the normalized difference</span>
+<span class="sd">                index; if `list`, then consolidates all bands between two band</span>
+<span class="sd">                values by calculating the mean pixel value across all bands in</span>
+<span class="sd">                that range (default: `None`).</span>
+<span class="sd">            spyfile (`SpyFile` object or `numpy.ndarray`): The datacube to</span>
+<span class="sd">                crop; if `numpy.ndarray` or `None`, loads band information from</span>
+<span class="sd">                `self.spyfile` (default: `None`).</span>
+<span class="sd">            list_range (`bool`): Whether bands/wavelengths passed as a list is</span>
+<span class="sd">                interpreted as a range of bands (`True`) or for each individual</span>
+<span class="sd">                band in the list (`False`). If `list_range` is `True`,</span>
+<span class="sd">                `b1`/`wl1` and `b2`/`wl2` should be lists with two items, and</span>
+<span class="sd">                all bands/wavelegths between the two values will be used</span>
+<span class="sd">                (default: `True`).</span>
+<span class="sd">            print_out (`bool`): Whether to print out the actual bands and</span>
+<span class="sd">                wavelengths being used in the NDI calculation (default:</span>
+<span class="sd">                `True`).</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">wl1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_bands_wls</span><span class="p">(</span><span class="n">wl1</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">wl2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_bands_wls</span><span class="p">(</span><span class="n">wl2</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="c1"># Now, band input is converted to wavelength input and this can be used</span>
+
+        <span class="k">if</span> <span class="n">spyfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span>
+
+        <span class="n">band1_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_band_list</span><span class="p">(</span><span class="n">wl1</span><span class="p">,</span> <span class="n">list_range</span><span class="p">)</span>
+        <span class="n">band2_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_band_list</span><span class="p">(</span><span class="n">wl2</span><span class="p">,</span> <span class="n">list_range</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">print_out</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">wl1_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_wavelength_list</span><span class="p">(</span><span class="n">band1_list</span><span class="p">,</span> <span class="n">list_range</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">wl2_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_wavelength_list</span><span class="p">(</span><span class="n">band2_list</span><span class="p">,</span> <span class="n">list_range</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Bands used (`b1`): </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">band1_list</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bands used (`b2`): </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">band2_list</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Wavelengths used (`b1`): </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wl1_list</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Wavelengths used (`b2`): </span><span class="si">{0}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wl2_list</span><span class="p">))</span>
+
+        <span class="n">array_b1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_spectral_mean</span><span class="p">(</span><span class="n">band1_list</span><span class="p">,</span> <span class="n">array</span><span class="p">)</span>
+        <span class="n">array_b2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_spectral_mean</span><span class="p">(</span><span class="n">band2_list</span><span class="p">,</span> <span class="n">array</span><span class="p">)</span>
+        <span class="n">array_ndi</span> <span class="o">=</span> <span class="p">(</span><span class="n">array_b1</span><span class="o">-</span><span class="n">array_b2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">array_b1</span><span class="o">+</span><span class="n">array_b2</span><span class="p">)</span>
+        <span class="n">array_ndi</span><span class="p">[</span><span class="n">array_ndi</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;bands&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">del_meta_item</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="s1">&#39;wavelength&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">del_meta_item</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="s1">&#39;band names&#39;</span><span class="p">)</span>
+        <span class="n">hist_str</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot; -&gt; hs_process.band_math_ndi[&lt;&quot;</span>
+                    <span class="s2">&quot;label: &#39;wl1?&#39; value:</span><span class="si">{0}</span><span class="s2">; &quot;</span>
+                    <span class="s2">&quot;label: &#39;wl2?&#39; value:</span><span class="si">{1}</span><span class="s2">; &quot;</span>
+                    <span class="s2">&quot;label: &#39;list_range?&#39; value:</span><span class="si">{2}</span><span class="s2">&gt;]&quot;</span>
+                    <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wl1_list</span><span class="p">,</span> <span class="n">wl2_list</span><span class="p">,</span> <span class="n">list_range</span><span class="p">))</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">hist_str</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;samples&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">array_ndi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;lines&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">array_ndi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">array_ndi</span><span class="p">,</span> <span class="n">metadata</span></div>
+
+<div class="viewcode-block" id="segment.band_math_mcari2"><a class="viewcode-back" href="../../hs_process.html#hs_process.segment.segment.band_math_mcari2">[docs]</a>    <span class="k">def</span> <span class="nf">band_math_mcari2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wl1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wl2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wl3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">b1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">b2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">b3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">list_range</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                         <span class="n">print_out</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Calculates the MCARI2 spectral index</span>
+<span class="sd">            &#39;&#39;&#39;</span>
+        <span class="n">wl1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_bands_wls</span><span class="p">(</span><span class="n">wl1</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">wl2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_bands_wls</span><span class="p">(</span><span class="n">wl2</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">wl3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_bands_wls</span><span class="p">(</span><span class="n">wl3</span><span class="p">,</span> <span class="n">b3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="c1"># Now, band input is converted to wavelength input and this can be used</span>
+
+        <span class="k">if</span> <span class="n">spyfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span>
+
+        <span class="n">band1_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_band_list</span><span class="p">(</span><span class="n">wl1</span><span class="p">,</span> <span class="n">list_range</span><span class="p">)</span>
+        <span class="n">band2_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_band_list</span><span class="p">(</span><span class="n">wl2</span><span class="p">,</span> <span class="n">list_range</span><span class="p">)</span>
+        <span class="n">band3_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_band_list</span><span class="p">(</span><span class="n">wl3</span><span class="p">,</span> <span class="n">list_range</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">print_out</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">wl1_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_wavelength_list</span><span class="p">(</span><span class="n">band1_list</span><span class="p">,</span> <span class="n">list_range</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">wl2_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_wavelength_list</span><span class="p">(</span><span class="n">band2_list</span><span class="p">,</span> <span class="n">list_range</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">wl3_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_wavelength_list</span><span class="p">(</span><span class="n">band3_list</span><span class="p">,</span> <span class="n">list_range</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Bands used (`b1`): </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">band1_list</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bands used (`b2`): </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">band2_list</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bands used (`b3`): </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">band3_list</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Wavelengths used (`b1`): </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wl1_list</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Wavelengths used (`b2`): </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wl2_list</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Wavelengths used (`b3`): </span><span class="si">{0}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wl3_list</span><span class="p">))</span>
+
+        <span class="n">array_b1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_spectral_mean</span><span class="p">(</span><span class="n">band1_list</span><span class="p">,</span> <span class="n">array</span><span class="p">)</span>
+        <span class="n">array_b2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_spectral_mean</span><span class="p">(</span><span class="n">band2_list</span><span class="p">,</span> <span class="n">array</span><span class="p">)</span>
+        <span class="n">array_b3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_spectral_mean</span><span class="p">(</span><span class="n">band3_list</span><span class="p">,</span> <span class="n">array</span><span class="p">)</span>
+<span class="c1">#        array_der = (array_b1-array_b2)/(array_b2-array_b3)</span>
+        <span class="n">array_mcari2</span> <span class="o">=</span> <span class="p">((</span><span class="mf">1.5</span> <span class="o">*</span> <span class="p">(</span><span class="mf">2.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">array_b1</span> <span class="o">-</span> <span class="n">array_b2</span><span class="p">)</span> <span class="o">-</span> <span class="mf">1.3</span> <span class="o">*</span> <span class="p">(</span><span class="n">array_b1</span> <span class="o">-</span> <span class="n">array_b3</span><span class="p">)))</span> <span class="o">/</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">array_b1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="p">(</span><span class="mi">6</span> <span class="o">*</span> <span class="n">array_b1</span> <span class="o">-</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">array_b2</span><span class="p">))</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">))</span>
+        <span class="n">array_mcari2</span><span class="p">[</span><span class="n">array_mcari2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;bands&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">del_meta_item</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="s1">&#39;wavelength&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">del_meta_item</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="s1">&#39;band names&#39;</span><span class="p">)</span>
+        <span class="n">hist_str</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot; -&gt; hs_process.band_math_mcari2[&lt;&quot;</span>
+                    <span class="s2">&quot;label: &#39;wl1?&#39; value:</span><span class="si">{0}</span><span class="s2">; &quot;</span>
+                    <span class="s2">&quot;label: &#39;wl2?&#39; value:</span><span class="si">{1}</span><span class="s2">; &quot;</span>
+                    <span class="s2">&quot;label: &#39;wl3?&#39; value:</span><span class="si">{2}</span><span class="s2">; &quot;</span>
+                    <span class="s2">&quot;label: &#39;list_range?&#39; value:</span><span class="si">{3}</span><span class="s2">&gt;]&quot;</span>
+                    <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wl1_list</span><span class="p">,</span> <span class="n">wl2_list</span><span class="p">,</span> <span class="n">wl3_list</span><span class="p">,</span> <span class="n">list_range</span><span class="p">))</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">hist_str</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;samples&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">array_mcari2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;lines&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">array_mcari2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">array_mcari2</span><span class="p">,</span> <span class="n">metadata</span></div>
+
+<div class="viewcode-block" id="segment.kmeans"><a class="viewcode-back" href="../../hs_process.html#hs_process.segment.segment.kmeans">[docs]</a>    <span class="k">def</span> <span class="nf">kmeans</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_classes</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        If there are more soil pixels than vegetation pixels, will vegetation be</span>
+<span class="sd">        class 0 instead of class 2?</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            n_classes (`int`): number of classes (default: 3).</span>
+<span class="sd">            max_iter (`int`): maximum iterations before terminating process</span>
+<span class="sd">                (default: 100).</span>
+<span class="sd">            spyfile (`SpyFile` object or `numpy.ndarray`): The datacube to</span>
+<span class="sd">                crop; if `numpy.ndarray` or `None`, loads band information from</span>
+<span class="sd">                `self.spyfile` (default: `None`).</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">spyfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span>
+
+        <span class="n">array_class</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">kmeans</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">n_classes</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">)</span>
+<span class="c1">#        print(len(np.unique(array_class)))</span>
+        <span class="n">unique_classes</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_classes</span><span class="p">(</span><span class="n">array_class</span><span class="p">,</span> <span class="n">n_pix</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="c1">#        print(len(unique_classes))</span>
+<span class="c1">#        n = 0</span>
+<span class="c1">#        # the following checks that there are as many classes as desired; if</span>
+<span class="c1">#        # not, reruns kmeans with 1 additional</span>
+<span class="c1">#        msg = (&#39;Failure to get enough kmeans classes.&#39;)</span>
+<span class="c1">#        while len(unique_classes) &lt; n_classes:</span>
+<span class="c1">#            n += 1</span>
+<span class="c1">#            print(&#39;Not enough clusters found; increasing `n_classes` to {0} &#39;</span>
+<span class="c1">#                  &#39;and trying again..\n&#39;.format(n_classes + n))</span>
+<span class="c1">#            array_class, c = kmeans(spyfile, n_classes + n, max_iter)</span>
+<span class="c1">#            unique_classes, counts = self._check_classes(array_class, n_pix=5)</span>
+<span class="c1">#            assert (n_classes + n &lt;= n_classes + 5), msg</span>
+<span class="c1">#</span>
+<span class="c1">#    def _fix_kmeans_result(array_class):</span>
+<span class="c1">#        &#39;&#39;&#39;</span>
+<span class="c1">#        Reassigns class ID based on updated spectra (`c` array)</span>
+<span class="c1">#        &#39;&#39;&#39;</span>
+<span class="c1">#</span>
+<span class="c1">#</span>
+<span class="c1">#</span>
+<span class="c1">#        if len(c) &gt; len(unique_classes):</span>
+<span class="c1">#            # remove from c</span>
+<span class="c1">#            c_len = list(range(0, len(c)))</span>
+<span class="c1">#            list_dif = np.setdiff1d(c_len, list(unique_classes))</span>
+<span class="c1">#            for i in sorted(list_dif, reverse=True):</span>
+<span class="c1">#                print(len(c))</span>
+<span class="c1">##                del c[i]</span>
+<span class="c1">##            for i in list_dif:</span>
+<span class="c1">#                c = np.delete(c, i, 0)</span>
+
+
+        <span class="n">df_class_spec</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">transpose</span><span class="p">())</span>
+
+<span class="c1">#        nir_b = self.tools.get_band(760)</span>
+<span class="c1">#        re_b = self.tools.get_band(720)</span>
+<span class="c1">#        red_b = self.tools.get_band(680)</span>
+<span class="c1">#        green_b = self.tools.get_band(555)</span>
+<span class="c1">#        nir = df_class_spec.iloc[nir_b]</span>
+<span class="c1">#        re = df_class_spec.iloc[re_b]</span>
+<span class="c1">#        red = df_class_spec.iloc[red_b]</span>
+<span class="c1">#        green = df_class_spec.iloc[green_b]</span>
+<span class="c1">#        df_ndvi = (nir-red)/(nir+red)</span>
+<span class="c1">#        df_gndvi = (nir-green)/(nir+green)</span>
+<span class="c1">#        df_rendvi = (nir-re)/(nir+re)</span>
+
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;bands&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">del_meta_item</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="s1">&#39;wavelength&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">del_meta_item</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="s1">&#39;band names&#39;</span><span class="p">)</span>
+        <span class="n">hist_str</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot; -&gt; hs_process.segment.kmeans[&lt;&quot;</span>
+                    <span class="s2">&quot;label: &#39;n_classes?&#39; value:</span><span class="si">{0}</span><span class="s2">; &quot;</span>
+                    <span class="s2">&quot;label: &#39;max_iter?&#39; value:</span><span class="si">{1}</span><span class="s2">&gt;]&quot;</span>
+                    <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n_classes</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">))</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">hist_str</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;samples&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">array_class</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;lines&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">array_class</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">array_class</span><span class="p">,</span> <span class="n">df_class_spec</span><span class="p">,</span> <span class="n">metadata</span></div>
+
+<div class="viewcode-block" id="segment.load_spyfile"><a class="viewcode-back" href="../../hs_process.html#hs_process.segment.segment.load_spyfile">[docs]</a>    <span class="k">def</span> <span class="nf">load_spyfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Loads a `SpyFile` (Spectral Python object) for data access and/or</span>
+<span class="sd">        manipulation by the `hstools` class.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            spyfile (`SpyFile` object): The datacube being accessed and/or</span>
+<span class="sd">                manipulated.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span> <span class="o">=</span> <span class="n">spyfile</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span> <span class="o">=</span> <span class="n">hstools</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ul_e_srs</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ul_n_srs</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">][</span><span class="mi">4</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_e</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">][</span><span class="mi">5</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_n</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">][</span><span class="mi">6</span><span class="p">])</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Map information was not able to be loaded from the &#39;</span>
+                  <span class="s1">&#39;`SpyFile`. Please be sure the metadata contains the &quot;map &#39;</span>
+                  <span class="s1">&#39;info&quot; tag with accurate geometric information.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ul_e_srs</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ul_n_srs</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_e</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_n</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="segment.veg_spectra"><a class="viewcode-back" href="../../hs_process.html#hs_process.segment.segment.veg_spectra">[docs]</a>    <span class="k">def</span> <span class="nf">veg_spectra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array_veg</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">percentile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">side</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Calculates the average spectra across vegetation pixels</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            array_veg (`numpy.ndarray`): a single-band image array, presumably</span>
+<span class="sd">                that discriminates vegetation pixels from other pixels such as</span>
+<span class="sd">                soil, shadow, etc.</span>
+<span class="sd">            thresh (`float`): The value for which to base the threshold</span>
+<span class="sd">                (default: `None`).</span>
+<span class="sd">            percentile (`float` or `int`): The percentile of pixels to mask; if</span>
+<span class="sd">                `percentile`=95 and `side`=&#39;lower&#39;, the lowest 95% of pixels</span>
+<span class="sd">                will be masked prior to calculating the mean spectra across</span>
+<span class="sd">                pixels (default: `None`; range: 0-100).</span>
+<span class="sd">            side (`str`): The side of the threshold or percentile for which to</span>
+<span class="sd">                apply the mask. Must be either &#39;lower&#39; or &#39;upper&#39;; if &#39;lower&#39;,</span>
+<span class="sd">                everything below the threshold/percentile will be masked</span>
+<span class="sd">                (default: &#39;lower&#39;).</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">spyfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+
+<span class="c1">#        if remove_shadow is True:</span>
+<span class="c1">#            shadow_mask, metadata = self.tools.mask_shadow(</span>
+<span class="c1">#                    shadow_pctl=shadow_pctl, show_histogram=True,</span>
+<span class="c1">#                    spyfile=spyfile)</span>
+<span class="c1">#            array_veg = np.ma.array(array_veg, mask=shadow_mask)</span>
+<span class="c1">#        else:</span>
+<span class="c1">#            if not isinstance(array_veg, np.ma.core.MaskedArray):</span>
+<span class="c1">#                array_veg = np.ma.array(array_veg, mask=False)</span>
+<span class="c1">#            metadata = self.spyfile.metadata</span>
+
+        <span class="n">mask_array</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">mask_array</span><span class="p">(</span>
+                <span class="n">array_veg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="n">thresh</span><span class="p">,</span>
+                <span class="n">percentile</span><span class="o">=</span><span class="n">percentile</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">side</span><span class="p">)</span>
+
+        <span class="n">mask_array_3d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">spyfile</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">band</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">spyfile</span><span class="o">.</span><span class="n">nbands</span><span class="p">):</span>
+            <span class="n">mask_array_3d</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">band</span><span class="p">]</span> <span class="o">=</span> <span class="n">mask_array</span><span class="o">.</span><span class="n">mask</span>
+        <span class="n">datacube_masked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">(</span><span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">(),</span>
+                                             <span class="n">mask</span><span class="o">=</span><span class="n">mask_array_3d</span><span class="p">)</span>
+        <span class="n">spec_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">datacube_masked</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">spec_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">datacube_masked</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="c1">#        a = spec_mean.reshape(len(spec_mean))</span>
+        <span class="n">spec_mean</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">spec_mean</span><span class="p">)</span>
+        <span class="n">spec_std</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">spec_std</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">spec_mean</span><span class="p">,</span> <span class="n">spec_std</span><span class="p">,</span> <span class="n">datacube_masked</span><span class="p">,</span> <span class="n">metadata</span></div>
+
+<div class="viewcode-block" id="segment.mask_datacube"><a class="viewcode-back" href="../../hs_process.html#hs_process.segment.segment.mask_datacube">[docs]</a>    <span class="k">def</span> <span class="nf">mask_datacube</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Applies `mask` to `spyfile`, then returns the datcube (as a np.array)</span>
+<span class="sd">        and the mean spectra</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            mask (`numpy.ndarray`): the mask to apply to `spyfile`; if `mask`</span>
+<span class="sd">                does not have similar dimensions to `spyfile`, the first band</span>
+<span class="sd">                (i.e., first two dimensions) of `mask` will be repeated n times</span>
+<span class="sd">                to match the number of bands of `spyfile`.</span>
+<span class="sd">            spyfile (`SpyFile` object): The datacube being accessed and/or</span>
+<span class="sd">                manipulated.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">spyfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">):</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">mask</span>
+        <span class="k">if</span> <span class="n">mask</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+            <span class="n">mask_1d</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">spyfile</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">band</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">spyfile</span><span class="o">.</span><span class="n">nbands</span><span class="p">):</span>
+                <span class="n">mask</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">band</span><span class="p">]</span> <span class="o">=</span> <span class="n">mask_1d</span>
+
+        <span class="n">datacube_masked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">(</span><span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">(),</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span>
+        <span class="n">spec_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">datacube_masked</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">spec_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">datacube_masked</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">spec_mean</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">spec_mean</span><span class="p">)</span>
+        <span class="n">spec_std</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">spec_std</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">spec_mean</span><span class="p">,</span> <span class="n">spec_std</span><span class="p">,</span> <span class="n">datacube_masked</span></div></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2020, Tyler J. Nigon.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

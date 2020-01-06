@@ -141,9 +141,11 @@ class spec_mod(object):
                 `self.spyfile` (default: `None`).
 
         Returns:
-            array_clip (`numpy.ndarray`): Clipped datacube
-            metadata (`dict`): Modified metadata describing the clipped
-                hyperspectral datacube (`array_clip`).
+            2-element `tuple` containing
+
+            - **array_clip** (`numpy.ndarray`): Clipped datacube.
+            - **metadata** (`dict`): Modified metadata describing the clipped
+              hyperspectral datacube (`array_clip`).
         '''
         if spyfile is None:
             spyfile = self.spyfile
@@ -200,6 +202,13 @@ class spec_mod(object):
             spyfile (`SpyFile` object or `numpy.ndarray`): The data cube to
                 clip; if `numpy.ndarray` or `None`, loads band information from
                 `self.spyfile` (default: `None`).
+
+        Returns:
+            2-element `tuple` containing
+
+            - **array_smooth** (`numpy.ndarray`): Clipped datacube.
+            - **metadata** (`dict`): Modified metadata describing the smoothed
+              hyperspectral datacube (`array_smooth`).
         '''
         if spyfile is None:
             spyfile = self.spyfile

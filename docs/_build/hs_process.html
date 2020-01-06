@@ -1,0 +1,2781 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="python">
+  <head>
+    <meta charset="utf-8" />
+    <title>hs_process package &#8212; hs_process 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to hs_process&#39;s documentation!" href="index.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          EONR</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="https://github.com/tnigon/eonr">Github</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Contents <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">hs_process package</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="index.html" title="Previous Chapter: Welcome to hs_process's documentation!"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Welcome to hs...</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/hs_process.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">hs_process package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-hs_process.batch">hs_process.batch module</a></li>
+<li><a class="reference internal" href="#module-hs_process.segment">hs_process.segment module</a></li>
+<li><a class="reference internal" href="#module-hs_process.spatial_mod">hs_process.spatial_mod module</a></li>
+<li><a class="reference internal" href="#module-hs_process.spec_mod">hs_process.spec_mod module</a></li>
+<li><a class="reference internal" href="#module-hs_process.utilities">hs_process.utilities module</a></li>
+<li><a class="reference internal" href="#module-hs_process">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+<form action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="body col-md-9 content" role="main">
+      
+  <div class="section" id="hs-process-package">
+<h1>hs_process package<a class="headerlink" href="#hs-process-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-hs_process.batch">
+<span id="hs-process-batch-module"></span><h2>hs_process.batch module<a class="headerlink" href="#module-hs_process.batch" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hs_process.batch.batch">
+<em class="property">class </em><code class="sig-prename descclassname">hs_process.batch.</code><code class="sig-name descname">batch</code><span class="sig-paren">(</span><em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='.bip'</em>, <em class="sig-param">dir_level=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/batch.html#batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Parent class for batch processing hyperspectral image data</p>
+<dl class="method">
+<dt id="hs_process.batch.batch.cube_to_spectra">
+<code class="sig-name descname">cube_to_spectra</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None</em>, <em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='bip'</em>, <em class="sig-param">dir_level=0</em>, <em class="sig-param">base_dir_out=None</em>, <em class="sig-param">folder_name='cube_to_spec'</em>, <em class="sig-param">name_append='cube-to-spec'</em>, <em class="sig-param">geotiff=True</em>, <em class="sig-param">out_dtype=False</em>, <em class="sig-param">out_force=None</em>, <em class="sig-param">out_ext=False</em>, <em class="sig-param">out_interleave=False</em>, <em class="sig-param">out_byteorder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/batch.html#batch.cube_to_spectra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.batch.cube_to_spectra" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the mean and standard deviation for each cube in
+<cite>fname_sheet</cite> and writes the result to a .spec file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_list</strong> (<cite>list</cite>, optional) -- list of filenames to process; if
+left to <cite>None</cite>, will look at <cite>base_dir</cite>, <cite>search_ext</cite>, and
+<cite>dir_level</cite> parameters for files to process (default: <cite>None</cite>).</p></li>
+<li><p><strong>base_dir</strong> (<cite>str</cite>, optional) -- directory path to search for files to
+spectrally clip; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>base_dir</cite> will
+be ignored (default: <cite>None</cite>).</p></li>
+<li><p><strong>search_ext</strong> (<cite>str</cite>) -- file format/extension to search for in all
+directories and subdirectories to determine which files to
+process; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>search_ext</cite> will
+be ignored (default: 'bip').</p></li>
+<li><p><strong>dir_level</strong> (<cite>int</cite>) -- The number of directory levels to search; if
+<cite>None</cite>, searches all directory levels (default: 0).</p></li>
+<li><p><strong>base_dir_out</strong> (<cite>str</cite>) -- directory path to save all processed
+datacubes; if set to <cite>None</cite>, a folder named according to the
+<cite>folder_name</cite> parameter is added to <cite>base_dir</cite></p></li>
+<li><p><strong>folder_name</strong> (<cite>str</cite>) -- folder to add to <cite>base_dir_out</cite> to save all
+the processed datacubes (default: 'spec-clip').</p></li>
+<li><p><strong>name_append</strong> (<cite>str</cite>) -- name to append to the filename (default:
+'spec-clip').</p></li>
+<li><p><strong>geotiff</strong> (<cite>bool</cite>) -- whether to save the masked RGB image as a geotiff
+alongside the masked datacube.</p></li>
+<li><p><strong>out_XXX</strong> -- Settings for saving the output files can be adjusted here
+if desired. They are stored in <cite>batch.io.defaults, and are
+therefore accessible at a high level. See
+`hsio.set_io_defaults()</cite> for more information on each of the
+settings.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.batch.batch.segment_band_math">
+<code class="sig-name descname">segment_band_math</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None</em>, <em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='bip'</em>, <em class="sig-param">dir_level=0</em>, <em class="sig-param">base_dir_out=None</em>, <em class="sig-param">folder_name='band_math'</em>, <em class="sig-param">name_append='band-math'</em>, <em class="sig-param">geotiff=True</em>, <em class="sig-param">method='ndi'</em>, <em class="sig-param">wl1=None</em>, <em class="sig-param">wl2=None</em>, <em class="sig-param">wl3=None</em>, <em class="sig-param">b1=None</em>, <em class="sig-param">b2=None</em>, <em class="sig-param">b3=None</em>, <em class="sig-param">list_range=True</em>, <em class="sig-param">plot_out=True</em>, <em class="sig-param">out_dtype=False</em>, <em class="sig-param">out_force=None</em>, <em class="sig-param">out_ext=False</em>, <em class="sig-param">out_interleave=False</em>, <em class="sig-param">out_byteorder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/batch.html#batch.segment_band_math"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.batch.segment_band_math" title="Permalink to this definition">¶</a></dt>
+<dd><p>Batch processing tool to perform band math on multiple datacubes in the
+same way.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>method</strong> (<cite>str</cite>) -- Must be one of &quot;ndi&quot; (normalized difference index),
+&quot;ratio&quot; (simple ratio index), &quot;derivative&quot; (deriviative-type
+index), or &quot;mcari2&quot; (modified chlorophyll absorption index2).
+Indicates what kind of band
+math should be performed on the input datacube. The &quot;ndi&quot;
+method leverages <cite>segment.band_math_ndi()</cite>, the &quot;ratio&quot;
+method leverages <cite>segment.band_math_ratio()</cite>, and the
+&quot;derivative&quot; method leverages <cite>segment.band_math_derivative()</cite>.
+Please see the <cite>segment</cite> documentation for more information
+(default: &quot;ndi&quot;).</p></li>
+<li><p><strong>wl1</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the wavelength (or set of
+wavelengths) to be used as the first parameter of the
+band math index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>wl2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the wavelength (or set of
+wavelengths) to be used as the second parameter of the
+band math index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b1</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the band (or set of bands) to be
+used as the first parameter of the band math index;
+if <cite>list</cite>, then consolidates all bands between two band values
+by calculating the mean pixel value across all bands in that
+range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the band (or set of bands) to be
+used as the second parameter of the band math
+index; if <cite>list</cite>, then consolidates all bands between two band
+values by calculating the mean pixel value across all bands in
+that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>list_range</strong> (<cite>bool</cite>) -- Whether bands/wavelengths passed as a list is
+interpreted as a range of bands (<cite>True</cite>) or for each individual
+band in the list (<cite>False</cite>). If <cite>list_range</cite> is <cite>True</cite>,
+<cite>b1</cite>/<cite>wl1</cite> and <cite>b2</cite>/<cite>wl2</cite> should be lists with two items, and
+all bands/wavelegths between the two values will be used
+(default: <cite>True</cite>).</p></li>
+<li><p><strong>plot_out</strong> (<cite>bool</cite>) -- whether to save a histogram of the band math
+result (default: <cite>True</cite>).</p></li>
+<li><p><strong>geotiff</strong> (<cite>bool</cite>) -- whether to save the masked RGB image as a geotiff
+alongside the masked datacube.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.batch.batch.segment_create_mask">
+<code class="sig-name descname">segment_create_mask</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None</em>, <em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='bip'</em>, <em class="sig-param">dir_level=0</em>, <em class="sig-param">mask_dir=None</em>, <em class="sig-param">base_dir_out=None</em>, <em class="sig-param">folder_name='mask'</em>, <em class="sig-param">name_append='mask'</em>, <em class="sig-param">geotiff=True</em>, <em class="sig-param">mask_thresh=None</em>, <em class="sig-param">mask_percentile=None</em>, <em class="sig-param">mask_side='lower'</em>, <em class="sig-param">out_dtype=False</em>, <em class="sig-param">out_force=None</em>, <em class="sig-param">out_ext=False</em>, <em class="sig-param">out_interleave=False</em>, <em class="sig-param">out_byteorder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/batch.html#batch.segment_create_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.batch.segment_create_mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Batch processing tool to create a masked array on many datacubes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mask_thresh</strong> (<cite>float</cite> or <cite>int</cite>) -- The value for which to mask the
+array; should be used with <cite>side</cite> parameter (default: <cite>None</cite>).</p></li>
+<li><p><strong>mask_percentile</strong> (<cite>float</cite> or <cite>int</cite>) -- The percentile of pixels to
+mask; if <cite>percentile`=95 and `side`='lower', the lowest 95% of
+pixels will be masked following the band math operation
+(default: `None</cite>; range: 0-100).</p></li>
+<li><p><strong>mask_side</strong> (<cite>str</cite>) -- The side of the threshold or percentile for
+which to apply the mask. Must be either 'lower' or 'upper'; if
+'lower', everything below the threshold/percentile will be
+masked (default: 'lower').</p></li>
+<li><p><strong>geotiff</strong> (<cite>bool</cite>) -- whether to save the masked RGB image as a geotiff
+alongside the masked datacube.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.batch.batch.spatial_crop">
+<code class="sig-name descname">spatial_crop</code><span class="sig-paren">(</span><em class="sig-param">fname_sheet</em>, <em class="sig-param">base_dir_out=None</em>, <em class="sig-param">folder_name='spatial_crop'</em>, <em class="sig-param">name_append='spatial-crop'</em>, <em class="sig-param">geotiff=True</em>, <em class="sig-param">method='single'</em>, <em class="sig-param">gdf=None</em>, <em class="sig-param">out_dtype=False</em>, <em class="sig-param">out_force=None</em>, <em class="sig-param">out_ext=False</em>, <em class="sig-param">out_interleave=False</em>, <em class="sig-param">out_byteorder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/batch.html#batch.spatial_crop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.batch.spatial_crop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterates through spreadsheet that provides necessary information about
+how each image should be cropped and how it should be saved.</p>
+<p>If <cite>gdf</cite> is passed (a geopandas.GoeDataFrame polygon file), the cropped
+images will be shifted to the center of appropriate &quot;plot&quot; polygon.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_sheet</strong> (<cite>fname</cite> or <a href="#id1"><span class="problematic" id="id2">`</span></a>Pandas.DataFrame) -- The filename of the
+spreadsheed that provides the necessary information for batch
+process cropping. See below for more information about the
+required and optional contents of <cite>fname_sheet</cite> and how to
+properly format it. Optionally, <cite>fname_sheet</cite> can be a
+<cite>Pandas.DataFrame</cite></p></li>
+<li><p><strong>base_dir_out</strong> (<cite>str</cite>) -- output directory of the cropped image
+(default: <cite>None</cite>).</p></li>
+<li><p><strong>folder_name</strong> (<cite>str</cite>) -- folder to add to <cite>base_dir_out</cite> to save all
+the processed datacubes (default: 'spatial_crop').</p></li>
+<li><p><strong>name_append</strong> (<cite>str</cite>) -- name to append to the filename (default:
+'spatial-crop').</p></li>
+<li><p><strong>geotiff</strong> (<cite>bool</cite>) -- whether to save an RGB image as a geotiff
+alongside the cropped datacube.</p></li>
+<li><p><strong>method</strong> (<cite>str</cite>) -- Must be one of &quot;single&quot;, &quot;many_grid&quot;, or
+&quot;many_gdf&quot;. Indicates whether a single plot should be cropped
+from the input datacube or if many/multiple plots should be
+cropped from the input datacube. The &quot;single&quot; method leverages
+<cite>spatial_mod.crop_single()</cite>, the &quot;many_grid&quot; method leverages
+<cite>spatial_mod.crop_many_grid()</cite>, and the &quot;many_gdf&quot; method
+leverages <cite>spatial_mod.crop_many_gdf()</cite> (there are two methods
+available to peform cropping for many/mulitple plots). Please
+see the <cite>spatial_mod</cite> documentation for more information
+(default: &quot;single&quot;).</p></li>
+<li><p><strong>gdf</strong> (<cite>geopandas.GeoDataFrame</cite>) -- the plot names and polygon
+geometery of each of the plots; 'plot' must be used as a column
+name to identify each of the plots, and should be an integer.</p></li>
+<li><p><strong>out_XXX</strong> -- Settings for saving the output files can be adjusted here
+if desired. They are stored in <cite>batch.io.defaults, and are
+therefore accessible at a high level. See
+`hsio.set_io_defaults()</cite> for more information on each of the
+settings.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<dl class="simple">
+<dt><cite>fname_sheet</cite> may have the following required column headings:</dt><dd><ol class="arabic simple">
+<li><p>&quot;directory&quot;</p></li>
+<li><p>&quot;name_short&quot;</p></li>
+<li><p>&quot;name_long&quot;</p></li>
+<li><p>&quot;ext&quot;</p></li>
+<li><p>&quot;pix_e_ul&quot;</p></li>
+<li><p>&quot;pix_n_ul&quot;.</p></li>
+</ol>
+</dd>
+</dl>
+<p>With this minimum input, <cite>batch.spatial_crop</cite> will read in each
+image, crop from the upper left pixel (determined as
+<cite>pix_e_ul</cite>/<cite>pix_n_ul</cite>) to the lower right pixel calculated
+based on <cite>crop_e_pix</cite>/<cite>crop_n_pix</cite> (which is the width of the
+cropped area in units of pixels). <cite>crop_e_pix</cite> and <cite>crop_n_pix</cite>
+have default values, but they can also be set in <cite>fname_sheet</cite>,
+which will take precedence over the defaults.</p>
+<dl class="simple">
+<dt><cite>fname_sheet</cite> may also have the following optional column headings:</dt><dd><ol class="arabic simple" start="7">
+<li><p>&quot;crop_e_pix&quot;</p></li>
+<li><p>&quot;crop_n_pix&quot;</p></li>
+<li><p>&quot;crop_e_m&quot;</p></li>
+<li><p>&quot;crop_n_m&quot;</p></li>
+<li><p>&quot;buf_e_pix&quot;</p></li>
+<li><p>&quot;buf_n_pix&quot;,</p></li>
+<li><p>&quot;buf_e_m&quot;</p></li>
+<li><p>&quot;buf_n_m&quot;</p></li>
+<li><p>&quot;plot_id&quot;.</p></li>
+</ol>
+</dd>
+</dl>
+<p>These optional inputs allow more control over exactly how the image
+will be cropped, and hopefully are self-explanatory until
+adequate documentation is written. Any other columns can
+be added to <cite>fname_sheet</cite>, but <cite>batch.spatial_crop</cite> does not
+use them in any way.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.batch.batch.spectra_combine">
+<code class="sig-name descname">spectra_combine</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None</em>, <em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='bip'</em>, <em class="sig-param">dir_level=0</em>, <em class="sig-param">base_dir_out=None</em>, <em class="sig-param">out_dtype=False</em>, <em class="sig-param">out_force=None</em>, <em class="sig-param">out_ext=False</em>, <em class="sig-param">out_interleave=False</em>, <em class="sig-param">out_byteorder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/batch.html#batch.spectra_combine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.batch.spectra_combine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Batch processing tool to gather all pixels from every image in a
+directory, compute the mean and standard deviation, and save as a
+single spectra (i.e., equivalent to a single spectral pixel with no
+spatial information).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_list</strong> (<cite>list</cite>, optional) -- list of filenames to process; if
+left to <cite>None</cite>, will look at <cite>base_dir</cite>, <cite>search_ext</cite>, and
+<cite>dir_level</cite> parameters for files to process (default: <cite>None</cite>).</p></li>
+<li><p><strong>base_dir</strong> (<cite>str</cite>, optional) -- directory path to search for files to
+spectrally clip; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>base_dir</cite> will
+be ignored (default: <cite>None</cite>).</p></li>
+<li><p><strong>search_ext</strong> (<cite>str</cite>) -- file format/extension to search for in all
+directories and subdirectories to determine which files to
+process; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>search_ext</cite> will
+be ignored (default: 'bip').</p></li>
+<li><p><strong>dir_level</strong> (<cite>int</cite>) -- The number of directory levels to search; if
+<cite>None</cite>, searches all directory levels (default: 0).</p></li>
+<li><p><strong>base_dir_out</strong> (<cite>str</cite>) -- directory path to save all processed
+datacubes; if set to <cite>None</cite>, a folder named according to the
+<cite>folder_name</cite> parameter is added to <cite>base_dir</cite></p></li>
+<li><p><strong>out_XXX</strong> -- Settings for saving the output files can be adjusted here
+if desired. They are stored in <cite>batch.io.defaults, and are
+therefore accessible at a high level. See
+`hsio.set_io_defaults()</cite> for more information on each of the
+settings.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.batch.batch.spectra_to_csv">
+<code class="sig-name descname">spectra_to_csv</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None</em>, <em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='spec'</em>, <em class="sig-param">dir_level=0</em>, <em class="sig-param">base_dir_out=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/batch.html#batch.spectra_to_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.batch.spectra_to_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads all the .spec files in a direcory and saves their reflectance
+information to a .csv</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_list</strong> (<cite>list</cite>, optional) -- list of filenames to process; if
+left to <cite>None</cite>, will look at <cite>base_dir</cite>, <cite>search_ext</cite>, and
+<cite>dir_level</cite> parameters for files to process (default: <cite>None</cite>).</p></li>
+<li><p><strong>base_dir</strong> (<cite>str</cite>, optional) -- directory path to search for files to
+spectrally clip; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>base_dir</cite> will
+be ignored (default: <cite>None</cite>).</p></li>
+<li><p><strong>search_ext</strong> (<cite>str</cite>) -- file format/extension to search for in all
+directories and subdirectories to determine which files to
+process; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>search_ext</cite> will
+be ignored (default: 'bip').</p></li>
+<li><p><strong>dir_level</strong> (<cite>int</cite>) -- The number of directory levels to search; if
+<cite>None</cite>, searches all directory levels (default: 0).</p></li>
+<li><p><strong>base_dir_out</strong> (<cite>str</cite>) -- directory path to save all processed
+datacubes; if set to <cite>None</cite>, a folder named according to the
+<cite>folder_name</cite> parameter is added to <cite>base_dir</cite></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.batch.batch.spectra_to_df">
+<code class="sig-name descname">spectra_to_df</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None</em>, <em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='spec'</em>, <em class="sig-param">dir_level=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/batch.html#batch.spectra_to_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.batch.spectra_to_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads all the .spec files in a direcory and returns their data as a
+pandas.DataFrame object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_list</strong> (<cite>list</cite>, optional) -- list of filenames to process; if
+left to <cite>None</cite>, will look at <cite>base_dir</cite>, <cite>search_ext</cite>, and
+<cite>dir_level</cite> parameters for files to process (default: <cite>None</cite>).</p></li>
+<li><p><strong>base_dir</strong> (<cite>str</cite>, optional) -- directory path to search for files to
+spectrally clip; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>base_dir</cite> will
+be ignored (default: <cite>None</cite>).</p></li>
+<li><p><strong>search_ext</strong> (<cite>str</cite>) -- file format/extension to search for in all
+directories and subdirectories to determine which files to
+process; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>search_ext</cite> will
+be ignored (default: 'bip').</p></li>
+<li><p><strong>dir_level</strong> (<cite>int</cite>) -- The number of directory levels to search; if
+<cite>None</cite>, searches all directory levels (default: 0).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.batch.batch.spectral_clip">
+<code class="sig-name descname">spectral_clip</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None, base_dir=None, search_ext='bip', dir_level=0, base_dir_out=None, folder_name='spec_clip', name_append='spec-clip', wl_bands=[[0, 420], [760, 776], [813, 827], [880, 1000]], out_dtype=False, out_force=None, out_ext=False, out_interleave=False, out_byteorder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/batch.html#batch.spectral_clip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.batch.spectral_clip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Batch processing tool to spectrally clip multiple datacubes in the same
+way.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_list</strong> (<cite>list</cite>, optional) -- list of filenames to process; if
+left to <cite>None</cite>, will look at <cite>base_dir</cite>, <cite>search_ext</cite>, and
+<cite>dir_level</cite> parameters for files to process (default: <cite>None</cite>).</p></li>
+<li><p><strong>base_dir</strong> (<cite>str</cite>, optional) -- directory path to search for files to
+spectrally clip; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>base_dir</cite> will
+be ignored (default: <cite>None</cite>).</p></li>
+<li><p><strong>search_ext</strong> (<cite>str</cite>) -- file format/extension to search for in all
+directories and subdirectories to determine which files to
+process; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>search_ext</cite> will
+be ignored (default: 'bip').</p></li>
+<li><p><strong>dir_level</strong> (<cite>int</cite>) -- The number of directory levels to search; if
+<cite>None</cite>, searches all directory levels (default: 0).</p></li>
+<li><p><strong>base_dir_out</strong> (<cite>str</cite>) -- directory path to save all processed
+datacubes; if set to <cite>None</cite>, a folder named according to the
+<cite>folder_name</cite> parameter is added to <cite>base_dir</cite></p></li>
+<li><p><strong>folder_name</strong> (<cite>str</cite>) -- folder to add to <cite>base_dir_out</cite> to save all
+the processed datacubes (default: 'spec-clip').</p></li>
+<li><p><strong>name_append</strong> (<cite>str</cite>) -- name to append to the filename (default:
+'spec-clip').</p></li>
+<li><p><strong>wl_bands</strong> (<cite>list</cite> or <cite>list of lists</cite>) -- minimum and maximum
+wavelenths to clip from image; if multiple groups of
+wavelengths should be cut, this should be a list of lists. For
+example, wl_bands=[760, 776] will clip all bands greater than
+760.0 nm and less than 776.0 nm;
+wl_bands = [[0, 420], [760, 776], [813, 827], [880, 1000]]
+will clip all band less than 420.0 nm, bands greater than 760.0
+nm and less than 776.0 nm, bands greater than 813.0 nm and less
+than 827.0 nm, and bands greater than 880 nm (default).</p></li>
+<li><p><strong>out_XXX</strong> -- Settings for saving the output files can be adjusted here
+if desired. They are stored in <cite>batch.io.defaults, and are
+therefore accessible at a high level. See
+`hsio.set_io_defaults()</cite> for more information on each of the
+settings.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.batch.batch.spectral_smooth">
+<code class="sig-name descname">spectral_smooth</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None</em>, <em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='bip'</em>, <em class="sig-param">dir_level=0</em>, <em class="sig-param">base_dir_out=None</em>, <em class="sig-param">folder_name='spec_smooth'</em>, <em class="sig-param">name_append='spec-smooth'</em>, <em class="sig-param">window_size=11</em>, <em class="sig-param">order=2</em>, <em class="sig-param">stats=False</em>, <em class="sig-param">out_dtype=False</em>, <em class="sig-param">out_force=None</em>, <em class="sig-param">out_ext=False</em>, <em class="sig-param">out_interleave=False</em>, <em class="sig-param">out_byteorder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/batch.html#batch.spectral_smooth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.batch.spectral_smooth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Batch processing tool to spectrally smooth multiple datacubes in the
+same way.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_list</strong> (<cite>list</cite>, optional) -- list of filenames to process; if
+left to <cite>None</cite>, will look at <cite>base_dir</cite>, <cite>search_ext</cite>, and
+<cite>dir_level</cite> parameters for files to process (default: <cite>None</cite>).</p></li>
+<li><p><strong>base_dir</strong> (<cite>str</cite>, optional) -- directory path to search for files to
+spectrally clip; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>base_dir</cite> will
+be ignored (default: <cite>None</cite>).</p></li>
+<li><p><strong>search_ext</strong> (<cite>str</cite>) -- file format/extension to search for in all
+directories and subdirectories to determine which files to
+process; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>search_ext</cite> will
+be ignored (default: 'bip').</p></li>
+<li><p><strong>dir_level</strong> (<cite>int</cite>) -- The number of directory levels to search; if
+<cite>None</cite>, searches all directory levels (default: 0).</p></li>
+<li><p><strong>base_dir_out</strong> (<cite>str</cite>) -- directory path to save all processed
+datacubes; if set to <cite>None</cite>, a folder named according to the
+<cite>folder_name</cite> parameter is added to <cite>base_dir</cite></p></li>
+<li><p><strong>folder_name</strong> (<cite>str</cite>) -- folder to add to <cite>base_dir_out</cite> to save all
+the processed datacubes (default: 'spec-smooth').</p></li>
+<li><p><strong>name_append</strong> (<cite>str</cite>) -- name to append to the filename (default:
+'spec-smooth').</p></li>
+<li><p><strong>window_size</strong> (<cite>int</cite>) -- the length of the window; must be an odd
+integer number (default: 11).</p></li>
+<li><p><strong>order</strong> (<cite>int</cite>) -- the order of the polynomial used in the filtering;
+must be less than <cite>window_size</cite> - 1 (default: 2).</p></li>
+<li><p><strong>stats</strong> (<cite>bool</cite>) -- whether to compute some basic descriptive
+statistics (mean, st. dev., and coefficient of variation) of
+the smoothed data array (default: <cite>False</cite>)</p></li>
+<li><p><strong>out_XXX</strong> -- Settings for saving the output files can be adjusted here
+if desired. They are stored in <cite>batch.io.defaults, and are
+therefore accessible at a high level. See
+`hsio.set_io_defaults()</cite> for more information on each of the
+settings.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hs_process.segment">
+<span id="hs-process-segment-module"></span><h2>hs_process.segment module<a class="headerlink" href="#module-hs_process.segment" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hs_process.segment.segment">
+<em class="property">class </em><code class="sig-prename descclassname">hs_process.segment.</code><code class="sig-name descname">segment</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/segment.html#segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.segment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for aiding in the segmentation/masking of image data to include
+pixels that are of most interest.</p>
+<dl class="method">
+<dt id="hs_process.segment.segment.band_math_derivative">
+<code class="sig-name descname">band_math_derivative</code><span class="sig-paren">(</span><em class="sig-param">wl1=None</em>, <em class="sig-param">wl2=None</em>, <em class="sig-param">wl3=None</em>, <em class="sig-param">b1=None</em>, <em class="sig-param">b2=None</em>, <em class="sig-param">b3=None</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">list_range=True</em>, <em class="sig-param">print_out=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/segment.html#segment.band_math_derivative"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.segment.band_math_derivative" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates a derivative-type spectral index from two input bands
+and/or wavelengths. Bands/wavelengths can be input as two individual
+bands, two sets of bands (i.e., list of bands), or range of bands
+(i.e., list of two bands indicating the lower and upper range).</p>
+<p>der_index = (wl1 - wl2) / (wl2 - wl3)
+:param wl1: the wavelength (or set of</p>
+<blockquote>
+<div><p>wavelengths) to be used as the first parameter of the
+derivative index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wl2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the wavelength (or set of
+wavelengths) to be used as the second parameter of the
+derivative index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b1</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the band (or set of bands) to be
+used as the first parameter of the derivative index;
+if <cite>list</cite>, then consolidates all bands between two band values
+by calculating the mean pixel value across all bands in that
+range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the band (or set of bands) to be
+used as the second parameter of the derivative
+index; if <cite>list</cite>, then consolidates all bands between two band
+values by calculating the mean pixel value across all bands in
+that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The datacube to
+crop; if <cite>numpy.ndarray</cite> or <cite>None</cite>, loads band information from
+<cite>self.spyfile</cite> (default: <cite>None</cite>).</p></li>
+<li><p><strong>list_range</strong> (<cite>bool</cite>) -- Whether bands/wavelengths passed as a list is
+interpreted as a range of bands (<cite>True</cite>) or for each individual
+band in the list (<cite>False</cite>). If <cite>list_range</cite> is <cite>True</cite>,
+<cite>b1</cite>/<cite>wl1</cite> and <cite>b2</cite>/<cite>wl2</cite> should be lists with two items, and
+all bands/wavelegths between the two values will be used
+(default: <cite>True</cite>).</p></li>
+<li><p><strong>print_out</strong> (<cite>bool</cite>) -- Whether to print out the actual bands and
+wavelengths being used in the NDI calculation (default:
+<cite>True</cite>).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.segment.segment.band_math_mcari2">
+<code class="sig-name descname">band_math_mcari2</code><span class="sig-paren">(</span><em class="sig-param">wl1=None</em>, <em class="sig-param">wl2=None</em>, <em class="sig-param">wl3=None</em>, <em class="sig-param">b1=None</em>, <em class="sig-param">b2=None</em>, <em class="sig-param">b3=None</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">list_range=True</em>, <em class="sig-param">print_out=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/segment.html#segment.band_math_mcari2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.segment.band_math_mcari2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the MCARI2 spectral index</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.segment.segment.band_math_ndi">
+<code class="sig-name descname">band_math_ndi</code><span class="sig-paren">(</span><em class="sig-param">wl1=None</em>, <em class="sig-param">wl2=None</em>, <em class="sig-param">b1=None</em>, <em class="sig-param">b2=None</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">list_range=True</em>, <em class="sig-param">print_out=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/segment.html#segment.band_math_ndi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.segment.band_math_ndi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates a normalized difference spectral index from two input bands
+and/or wavelengths. Bands/wavelengths can be input as two individual
+bands, two sets of bands (i.e., list of bands), or range of bands
+(i.e., list of two bands indicating the lower and upper range).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wl1</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the wavelength (or set of
+wavelengths) to be used as the first parameter of the
+normalized difference index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>wl2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the wavelength (or set of
+wavelengths) to be used as the second parameter of the
+normalized difference index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b1</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the band (or set of bands) to be
+used as the first parameter of the normalized difference index;
+if <cite>list</cite>, then consolidates all bands between two band values
+by calculating the mean pixel value across all bands in that
+range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the band (or set of bands) to be
+used as the second parameter of the normalized difference
+index; if <cite>list</cite>, then consolidates all bands between two band
+values by calculating the mean pixel value across all bands in
+that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The datacube to
+crop; if <cite>numpy.ndarray</cite> or <cite>None</cite>, loads band information from
+<cite>self.spyfile</cite> (default: <cite>None</cite>).</p></li>
+<li><p><strong>list_range</strong> (<cite>bool</cite>) -- Whether bands/wavelengths passed as a list is
+interpreted as a range of bands (<cite>True</cite>) or for each individual
+band in the list (<cite>False</cite>). If <cite>list_range</cite> is <cite>True</cite>,
+<cite>b1</cite>/<cite>wl1</cite> and <cite>b2</cite>/<cite>wl2</cite> should be lists with two items, and
+all bands/wavelegths between the two values will be used
+(default: <cite>True</cite>).</p></li>
+<li><p><strong>print_out</strong> (<cite>bool</cite>) -- Whether to print out the actual bands and
+wavelengths being used in the NDI calculation (default:
+<cite>True</cite>).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.segment.segment.band_math_ratio">
+<code class="sig-name descname">band_math_ratio</code><span class="sig-paren">(</span><em class="sig-param">wl1=None</em>, <em class="sig-param">wl2=None</em>, <em class="sig-param">b1=None</em>, <em class="sig-param">b2=None</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">list_range=True</em>, <em class="sig-param">print_out=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/segment.html#segment.band_math_ratio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.segment.band_math_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates a simple ratio spectral index from two input band and/or
+wavelengths. Bands/wavelengths can be input as two individual bands,
+two sets of bands (i.e., list of bands), or a range of bands (i.e.,
+list of two bands indicating the lower and upper range).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wl1</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the wavelength (or set of
+wavelengths) to be used as the first parameter of the
+normalized difference index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>wl2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the wavelength (or set of
+wavelengths) to be used as the second parameter of the
+normalized difference index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b1</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the band (or set of bands) to be
+used as the first parameter (numerator) of the ratio index; if
+<cite>list</cite>, then consolidates all bands between two band values by
+calculating the mean pixel value across all bands in that
+range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the bands (or set of bands) to be                used as the second parameter (denominator) of the ratio index;
+if <cite>list</cite>, then consolidates all bands between two bands values
+by calculating the mean pixel value across all bands in that
+range (default: <cite>None</cite>).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The datacube to
+crop; if <cite>numpy.ndarray</cite> or <cite>None</cite>, loads band information from
+<cite>self.spyfile</cite> (default: <cite>None</cite>).</p></li>
+<li><p><strong>list_range</strong> (<cite>bool</cite>) -- Whether a band passed as a list is interpreted as a
+range of bands (<cite>True</cite>) or for each individual band in the
+list (<cite>False</cite>). If <cite>list_range</cite> is <cite>True</cite>, <cite>b1</cite>/<cite>wl1</cite> and
+<cite>b2</cite>/<cite>wl2</cite> should be lists with two items, and all
+bands/wavelegths between the two values will be used (default:
+<cite>True</cite>).</p></li>
+<li><p><strong>print_out</strong> (<cite>bool</cite>) -- Whether to print out the actual bands and
+wavelengths being used in the NDI calculation (default:
+<cite>True</cite>).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.segment.segment.kmeans">
+<code class="sig-name descname">kmeans</code><span class="sig-paren">(</span><em class="sig-param">n_classes=3</em>, <em class="sig-param">max_iter=100</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/segment.html#segment.kmeans"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.segment.kmeans" title="Permalink to this definition">¶</a></dt>
+<dd><p>If there are more soil pixels than vegetation pixels, will vegetation be
+class 0 instead of class 2?</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_classes</strong> (<cite>int</cite>) -- number of classes (default: 3).</p></li>
+<li><p><strong>max_iter</strong> (<cite>int</cite>) -- maximum iterations before terminating process
+(default: 100).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The datacube to
+crop; if <cite>numpy.ndarray</cite> or <cite>None</cite>, loads band information from
+<cite>self.spyfile</cite> (default: <cite>None</cite>).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.segment.segment.load_spyfile">
+<code class="sig-name descname">load_spyfile</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/segment.html#segment.load_spyfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.segment.load_spyfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a <cite>SpyFile</cite> (Spectral Python object) for data access and/or
+manipulation by the <cite>hstools</cite> class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>spyfile</strong> (<cite>SpyFile</cite> object) -- The datacube being accessed and/or
+manipulated.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.segment.segment.mask_datacube">
+<code class="sig-name descname">mask_datacube</code><span class="sig-paren">(</span><em class="sig-param">mask</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/segment.html#segment.mask_datacube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.segment.mask_datacube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies <cite>mask</cite> to <cite>spyfile</cite>, then returns the datcube (as a np.array)
+and the mean spectra</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mask</strong> (<cite>numpy.ndarray</cite>) -- the mask to apply to <cite>spyfile</cite>; if <cite>mask</cite>
+does not have similar dimensions to <cite>spyfile</cite>, the first band
+(i.e., first two dimensions) of <cite>mask</cite> will be repeated n times
+to match the number of bands of <cite>spyfile</cite>.</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object) -- The datacube being accessed and/or
+manipulated.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.segment.segment.veg_spectra">
+<code class="sig-name descname">veg_spectra</code><span class="sig-paren">(</span><em class="sig-param">array_veg</em>, <em class="sig-param">thresh=None</em>, <em class="sig-param">percentile=None</em>, <em class="sig-param">side='lower'</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/segment.html#segment.veg_spectra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.segment.veg_spectra" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the average spectra across vegetation pixels</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array_veg</strong> (<cite>numpy.ndarray</cite>) -- a single-band image array, presumably
+that discriminates vegetation pixels from other pixels such as
+soil, shadow, etc.</p></li>
+<li><p><strong>thresh</strong> (<cite>float</cite>) -- The value for which to base the threshold
+(default: <cite>None</cite>).</p></li>
+<li><p><strong>percentile</strong> (<cite>float</cite> or <cite>int</cite>) -- The percentile of pixels to mask; if
+<cite>percentile`=95 and `side`='lower', the lowest 95% of pixels
+will be masked prior to calculating the mean spectra across
+pixels (default: `None</cite>; range: 0-100).</p></li>
+<li><p><strong>side</strong> (<cite>str</cite>) -- The side of the threshold or percentile for which to
+apply the mask. Must be either 'lower' or 'upper'; if 'lower',
+everything below the threshold/percentile will be masked
+(default: 'lower').</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hs_process.spatial_mod">
+<span id="hs-process-spatial-mod-module"></span><h2>hs_process.spatial_mod module<a class="headerlink" href="#module-hs_process.spatial_mod" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hs_process.spatial_mod.spatial_mod">
+<em class="property">class </em><code class="sig-prename descclassname">hs_process.spatial_mod.</code><code class="sig-name descname">spatial_mod</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em>, <em class="sig-param">gdf=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/spatial_mod.html#spatial_mod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spatial_mod.spatial_mod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for manipulating data within the spatial domain (e.g., cropping by
+geographical boundary)</p>
+<dl class="method">
+<dt id="hs_process.spatial_mod.spatial_mod.crop_many_gdf">
+<code class="sig-name descname">crop_many_gdf</code><span class="sig-paren">(</span><em class="sig-param">plot_id_ref</em>, <em class="sig-param">pix_e_ul=0</em>, <em class="sig-param">pix_n_ul=0</em>, <em class="sig-param">crop_e_m=None</em>, <em class="sig-param">crop_n_m=None</em>, <em class="sig-param">crop_e_pix=None</em>, <em class="sig-param">crop_n_pix=None</em>, <em class="sig-param">buf_e_m=None</em>, <em class="sig-param">buf_n_m=None</em>, <em class="sig-param">buf_e_pix=None</em>, <em class="sig-param">buf_n_pix=None</em>, <em class="sig-param">n_plots=None</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">gdf=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/spatial_mod.html#spatial_mod.crop_many_gdf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spatial_mod.spatial_mod.crop_many_gdf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Crops many plots from a single image by comparing the image to a
+polygon file (geopandas.GoeDataFrame) that contains plot information
+and geometry of plot boundaries.</p>
+<p>If <cite>pix_e_ul</cite> and <cite>pix_n_ul</cite> are passed, those pixel offests will be
+compared to the upper left pixel of <cite>plot_id_ref</cite> and the difference in
+both the easting and northing direction will be applied to all plots to
+systematically shift the actual upper left pixel/cropping location for
+each plot within the image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>plot_id_ref</strong> (<cite>int</cite>) -- the plot ID of the reference plot, which must
+be present in the datacube.</p></li>
+<li><p><strong>pix_e_ul</strong> (<cite>int</cite>) -- upper left pixel column (easting) of
+<cite>plot_id_ref</cite>; this is used to calculate the offset between the
+GeoDataFrame geometry and the approximate image georeference
+error (default: 0).</p></li>
+<li><p><strong>pix_n_ul</strong> (<cite>int</cite>) -- upper left pixel row (northing) of <cite>plot_id_ref</cite>;
+this is used to calculate the offset between the GeoDataFrame
+geometry and the approximate image georeference error
+(default: 0).</p></li>
+<li><p><strong>crop_e_m</strong> (<cite>float</cite>, optional) -- length of each row (easting
+direction) in the cropped image (in map units; e.g., meters).</p></li>
+<li><p><strong>crop_n_m</strong> (<cite>float</cite>, optional) -- length of each column (northing
+direction) in the cropped image (in map units; e.g., meters).</p></li>
+<li><p><strong>crop_e_pix</strong> (<cite>int</cite>, optional) -- number of pixels in each row in the
+cropped image.</p></li>
+<li><p><strong>crop_n_pix</strong> (<cite>int</cite>, optional) -- number of pixels in each column in
+the cropped image.</p></li>
+<li><p><strong>buf_e_m</strong> (<cite>float</cite>, optional) -- The buffer distance in the easting
+direction (in map units; e.g., meters) to be applied after
+calculating the original crop area; the buffer is considered
+after <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>. A positive value will reduce the
+size of <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>, and a negative value will
+increase it.</p></li>
+<li><p><strong>buf_n_m</strong> (<cite>float</cite>, optional) -- The buffer distance in the northing
+direction (in map units; e.g., meters) to be applied after
+calculating the original crop area; the buffer is considered
+after <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>. A positive value will reduce the
+size of <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>, and a negative value will
+increase it.</p></li>
+<li><p><strong>buf_e_pix</strong> (<cite>int</cite>, optional) -- The buffer distance in the easting
+direction (in pixel units) to be applied after calculating the
+original crop area.</p></li>
+<li><p><strong>buf_n_pix</strong> (<cite>int</cite>, optional) -- The buffer distance in the northing
+direction (in pixel units) to be applied after calculating the
+original crop area.</p></li>
+<li><p><strong>n_plots</strong> -- number of plots to crop, starting with
+<cite>plot_id_ref</cite> and moving from West to East and North to South
+(default; <cite>None</cite>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>df_plots</strong> (<cite>pandas.DataFrame</cite>) -- data for
+which to crop each plot; includes 'plot_id', 'pix_e_ul', and
+'pix_n_ul' columns. This data can be passed to
+<cite>spatial_mod.crop_single()</cite> to perform the actual cropping.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>pandas.DataFrame</cite></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Either the pixel coordinate or the map unit coordinate should be
+passed for <cite>crop_X_Y</cite> and <cite>buf_X_Y</cite> in each direction (i.e.,
+easting and northing). Do not pass both.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.spatial_mod.spatial_mod.crop_many_grid">
+<code class="sig-name descname">crop_many_grid</code><span class="sig-paren">(</span><em class="sig-param">plot_id_ul</em>, <em class="sig-param">pix_e_ul</em>, <em class="sig-param">pix_n_ul</em>, <em class="sig-param">crop_e_m=9.17</em>, <em class="sig-param">crop_n_m=3.049</em>, <em class="sig-param">crop_e_pix=None</em>, <em class="sig-param">crop_n_pix=None</em>, <em class="sig-param">buf_e_pix=None</em>, <em class="sig-param">buf_n_pix=None</em>, <em class="sig-param">buf_e_m=None</em>, <em class="sig-param">buf_n_m=None</em>, <em class="sig-param">alley_size_e_m=None</em>, <em class="sig-param">alley_size_n_m=None</em>, <em class="sig-param">alley_size_e_pix=None</em>, <em class="sig-param">alley_size_n_pix=None</em>, <em class="sig-param">n_plots_x=5</em>, <em class="sig-param">n_plots_y=9</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/spatial_mod.html#spatial_mod.crop_many_grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spatial_mod.spatial_mod.crop_many_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Crops many plots from a single image by calculating the distance
+between plots based on <cite>crop_X_Y</cite>, <cite>n_plots_X/Y</cite>, and <cite>alley_size_X_Y</cite>
+parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>plot_id_ul</strong> (<cite>int</cite>) -- the plot ID of the upper left (northwest-most)
+plot to be cropped.</p></li>
+<li><p><strong>pix_e_ul</strong> (<cite>int</cite>) -- upper left pixel column (easting) of
+<cite>plot_id_ul</cite>.</p></li>
+<li><p><strong>pix_n_ul</strong> (<cite>int</cite>) -- upper left pixel row (northing) of <cite>plot_id_ul</cite>.</p></li>
+<li><p><strong>crop_e_m</strong> (<cite>float</cite>, optional) -- length of each row (easting
+direction) in the cropped image (in map units; e.g., meters).</p></li>
+<li><p><strong>crop_n_m</strong> (<cite>float</cite>, optional) -- length of each column (northing
+direction) in the cropped image (in map units; e.g., meters).</p></li>
+<li><p><strong>crop_e_pix</strong> (<cite>int</cite>, optional) -- number of pixels in each row in the
+cropped image.</p></li>
+<li><p><strong>crop_n_pix</strong> (<cite>int</cite>, optional) -- number of pixels in each column in
+the cropped image.</p></li>
+<li><p><strong>buf_e_m</strong> (<cite>float</cite>, optional) -- The buffer distance in the easting
+direction (in map units; e.g., meters) to be applied after
+calculating the original crop area; the buffer is considered
+after <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>. A positive value will reduce the
+size of <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>, and a negative value will
+increase it.</p></li>
+<li><p><strong>buf_n_m</strong> (<cite>float</cite>, optional) -- The buffer distance in the northing
+direction (in map units; e.g., meters) to be applied after
+calculating the original crop area; the buffer is considered
+after <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>. A positive value will reduce the
+size of <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>, and a negative value will
+increase it.</p></li>
+<li><p><strong>buf_e_pix</strong> (<cite>int</cite>, optional) -- The buffer distance in the easting
+direction (in pixel units) to be applied after calculating the
+original crop area.</p></li>
+<li><p><strong>buf_n_pix</strong> (<cite>int</cite>, optional) -- The buffer distance in the northing
+direction (in pixel units) to be applied after calculating the
+original crop area.</p></li>
+<li><p><strong>alley_size_e_m</strong> (<cite>int</cite>, optional) -- Should be passed if there are
+alleys passing across the E/W direction of the plots that are
+not accounted for by the <cite>crop_X_Y</cite> parameters. Used together
+with <cite>n_plots_x</cite> to determine the plots represented in a
+particular datacube.</p></li>
+<li><p><strong>alley_size_n_m</strong> (<cite>int</cite>, optional) -- Should be passed if there are
+alleys passing across the N/S direction of the plots that are
+not accounted for by the <cite>crop_X_Y</cite> parameters. Used together
+with <cite>n_plots_y</cite> to determine the plots represented in a
+particular datacube.</p></li>
+<li><p><strong>alley_size_e_pix</strong> (<cite>float</cite>, optional) -- see <cite>alley_size_e_m</cite>.</p></li>
+<li><p><strong>alley_size_n_pix</strong> (<cite>float</cite>, optional) -- see <cite>alley_size_n_m</cite>.</p></li>
+<li><p><strong>n_plots_x</strong> (<cite>int</cite>) -- number of plots in a row in east/west direction
+(default: 5).</p></li>
+<li><p><strong>n_plots_y</strong> (<cite>int</cite>) -- number of plots in a row in north/south
+direction (default: 9).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object) -- The datacube to crop; if <cite>None</cite>, loads
+datacube and band information from <cite>spatial_mod.spyfile</cite>
+(default: <cite>None</cite>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>df_plots</strong> (<cite>pandas.DataFrame</cite>) -- data for
+which to crop each plot; includes 'plot_id', 'pix_e_ul', and
+'pix_n_ul' columns. This data can be passed to
+<cite>spatial_mod.crop_single()</cite> to perform the actual cropping.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>pandas.DataFrame</cite></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Either the pixel coordinate or the map unit coordinate should be
+passed for <cite>crop_X_Y</cite> and <cite>buf_X_Y</cite> in each direction (i.e.,
+easting and northing). Do not pass both.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.spatial_mod.spatial_mod.crop_single">
+<code class="sig-name descname">crop_single</code><span class="sig-paren">(</span><em class="sig-param">pix_e_ul</em>, <em class="sig-param">pix_n_ul</em>, <em class="sig-param">crop_e_pix=None</em>, <em class="sig-param">crop_n_pix=None</em>, <em class="sig-param">crop_e_m=None</em>, <em class="sig-param">crop_n_m=None</em>, <em class="sig-param">buf_e_pix=None</em>, <em class="sig-param">buf_n_pix=None</em>, <em class="sig-param">buf_e_m=None</em>, <em class="sig-param">buf_n_m=None</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">plot_id=None</em>, <em class="sig-param">gdf=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/spatial_mod.html#spatial_mod.crop_single"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spatial_mod.spatial_mod.crop_single" title="Permalink to this definition">¶</a></dt>
+<dd><p>Crops a single plot from an image. If <cite>plot_id</cite> and <cite>gdf</cite> are
+explicitly passed (i.e., they will not be loaded from <cite>spatial_mod</cite>
+class), the &quot;map info&quot; tag in the metadata will be adjusted to center
+the cropped area within the appropriate plot geometry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pix_e_ul</strong> (<cite>int</cite>) -- upper left column (easting) to begin cropping</p></li>
+<li><p><strong>pix_n_ul</strong> (<cite>int</cite>) -- upper left row (northing) to begin cropping</p></li>
+<li><p><strong>crop_e_pix</strong> (<cite>int</cite>, optional) -- number of pixels in each row in the
+cropped image</p></li>
+<li><p><strong>crop_n_pix</strong> (<cite>int</cite>, optional) -- number of pixels in each column in
+the cropped image</p></li>
+<li><p><strong>crop_e_m</strong> (<cite>float</cite>, optional) -- length of each row (easting
+direction) in the cropped image (in map units; e.g.,
+meters).</p></li>
+<li><p><strong>crop_n_m</strong> (<cite>float</cite>, optional) -- length of each column (northing
+direction) in the cropped image (in map units; e.g.,
+meters).</p></li>
+<li><p><strong>buf_e_pix</strong> (<cite>int</cite>, optional) -- applied/calculated after
+<cite>crop_e_pix</cite> and <cite>crop_n_pix</cite> are accounted for</p></li>
+<li><p><strong>buf_n_pix</strong> (<cite>int</cite>, optional) -- </p></li>
+<li><p><strong>buf_e_m</strong> (<cite>float</cite>, optional) -- </p></li>
+<li><p><strong>buf_n_m</strong> (<cite>float</cite>, optional) -- </p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The datacube to
+crop; if <cite>numpy.ndarray</cite> or <cite>None</cite>, loads band information from
+<cite>self.spyfile</cite> (default: <cite>None</cite>).</p></li>
+<li><p><strong>plot_id</strong> (<cite>int</cite>) -- the plot ID of the area to be cropped.</p></li>
+<li><p><strong>gdf</strong> (<cite>geopandas.GeoDataFrame</cite>) -- the plot names and polygon
+geometery of each of the plots; 'plot' must be used as a column
+name to identify each of the plots, and should be an integer.
+<cite>gdf</cite> must be explicitly passed to</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>2-element <cite>tuple</cite> containing</p>
+<ul class="simple">
+<li><p><strong>array_crop</strong> (<cite>numpy.ndarray</cite>): Cropped datacube.</p></li>
+<li><p><strong>metadata</strong> (<cite>dict</cite>): Modified metadata describing the cropped
+hyperspectral datacube (<cite>array_crop</cite>).</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.spatial_mod.spatial_mod.load_spyfile">
+<code class="sig-name descname">load_spyfile</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/spatial_mod.html#spatial_mod.load_spyfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spatial_mod.spatial_mod.load_spyfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a <cite>SpyFile</cite> (Spectral Python object) for data access and/or
+manipulation by the <cite>hstools</cite> class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>spyfile</strong> (<cite>SpyFile</cite> object) -- The datacube being accessed and/or
+manipulated.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hs_process.spec_mod">
+<span id="hs-process-spec-mod-module"></span><h2>hs_process.spec_mod module<a class="headerlink" href="#module-hs_process.spec_mod" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hs_process.spec_mod.spec_mod">
+<em class="property">class </em><code class="sig-prename descclassname">hs_process.spec_mod.</code><code class="sig-name descname">spec_mod</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/spec_mod.html#spec_mod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spec_mod.spec_mod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for manipulating data within the spectral domain (usually
+pixel-based)</p>
+<dl class="method">
+<dt id="hs_process.spec_mod.spec_mod.load_spyfile">
+<code class="sig-name descname">load_spyfile</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/spec_mod.html#spec_mod.load_spyfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spec_mod.spec_mod.load_spyfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a <cite>SpyFile</cite> (Spectral Python object) for data access and/or
+manipulation by the <cite>hstools</cite> class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>spyfile</strong> (<cite>SpyFile</cite> object) -- The datacube being accessed and/or
+manipulated.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.spec_mod.spec_mod.spectral_clip">
+<code class="sig-name descname">spectral_clip</code><span class="sig-paren">(</span><em class="sig-param">wl_bands=[[0, 420], [760, 776], [813, 827], [880, 1000]], spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/spec_mod.html#spec_mod.spectral_clip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spec_mod.spec_mod.spectral_clip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes/clips designated wavelength bands from the hyperspectral
+datacube.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wl_bands</strong> (<cite>list</cite> or <cite>list of lists</cite>) -- minimum and maximum
+wavelenths to clip from image; if multiple groups of
+wavelengths should be cut, this should be a list of lists. For
+example, wl_bands=[760, 776] will clip all bands greater than
+760.0 nm and less than 776.0 nm;
+wl_bands = [[0, 420], [760, 776], [813, 827], [880, 1000]]
+will clip all band less than 420.0 nm, bands greater than 760.0
+nm and less than 776.0 nm, bands greater than 813.0 nm and less
+than 827.0 nm, and bands greater than 880 nm (default).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The data cube to
+clip; if <cite>numpy.ndarray</cite> or <cite>None</cite>, loads band information from
+<cite>self.spyfile</cite> (default: <cite>None</cite>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>2-element <cite>tuple</cite> containing</p>
+<ul class="simple">
+<li><p><strong>array_clip</strong> (<cite>numpy.ndarray</cite>): Clipped datacube.</p></li>
+<li><p><strong>metadata</strong> (<cite>dict</cite>): Modified metadata describing the clipped
+hyperspectral datacube (<cite>array_clip</cite>).</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.spec_mod.spec_mod.spectral_smooth">
+<code class="sig-name descname">spectral_smooth</code><span class="sig-paren">(</span><em class="sig-param">window_size=11</em>, <em class="sig-param">order=2</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/spec_mod.html#spec_mod.spectral_smooth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spec_mod.spec_mod.spectral_smooth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs Savitzky-Golay smoothing on the spectral domain</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>window_size</strong> (<cite>int</cite>) -- the length of the window; must be an odd integer
+number (default: 11).</p></li>
+<li><p><strong>order</strong> (<cite>int</cite>) -- the order of the polynomial used in the filtering; must
+be less than <cite>window_size</cite> - 1 (default: 2).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The data cube to
+clip; if <cite>numpy.ndarray</cite> or <cite>None</cite>, loads band information from
+<cite>self.spyfile</cite> (default: <cite>None</cite>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>2-element <cite>tuple</cite> containing</p>
+<ul class="simple">
+<li><p><strong>array_smooth</strong> (<cite>numpy.ndarray</cite>): Clipped datacube.</p></li>
+<li><p><strong>metadata</strong> (<cite>dict</cite>): Modified metadata describing the smoothed
+hyperspectral datacube (<cite>array_smooth</cite>).</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hs_process.utilities">
+<span id="hs-process-utilities-module"></span><h2>hs_process.utilities module<a class="headerlink" href="#module-hs_process.utilities" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hs_process.utilities.defaults">
+<em class="property">class </em><code class="sig-prename descclassname">hs_process.utilities.</code><code class="sig-name descname">defaults</code><a class="reference internal" href="_modules/hs_process/utilities.html#defaults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class containing all defaults for writing an ENVI datacube to file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dtype</strong> (<cite>numpy.dtype</cite> or <cite>str</cite>) -- The data type with which to store
+the image. For example, to store the image in 16-bit unsigned
+integer format, the argument could be any of numpy.uint16,
+'u2', 'uint16', or 'H' (default=np.float32).</p></li>
+<li><p><strong>force</strong> (<cite>bool</cite>) -- If <cite>hdr_file</cite> or its associated image file exist,
+<cite>force=True</cite> will overwrite the files; otherwise, an exception
+will be raised if either file exists (default=False).</p></li>
+<li><p><strong>ext</strong> (<cite>str</cite>) -- The extension to use for saving the image file; if not
+specified, a default extension is determined based on the
+<cite>interleave</cite>. For example, if <cite>interleave`='bip', then `ext</cite> is
+set to 'bip' as well. If <cite>ext</cite> is an empty string, the image
+file will have the same name as the .hdr, but without the
+'.hdr' extension (default: None).</p></li>
+<li><p><strong>interleave</strong> (<cite>str</cite>) -- The band interleave format to use for writing
+the file; <cite>interleave</cite> should be one of 'bil', 'bip', or 'bsq'
+(default='bip').</p></li>
+<li><p><strong>byteorder</strong> (<cite>int</cite> or <cite>str</cite>) -- Specifies the byte order (endian-ness)
+of the data as written to disk. For little endian, this value
+should be either 0 or 'little'. For big endian, it should be
+either 1 or 'big'. If not specified, native byte order will be
+used (default=None).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="hs_process.utilities.defaults.byteorder">
+<code class="sig-name descname">byteorder</code><em class="property"> = 0</em><a class="headerlink" href="#hs_process.utilities.defaults.byteorder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.utilities.defaults.crop_defaults">
+<code class="sig-name descname">crop_defaults</code><em class="property"> = {'alley_size_e_m': None, 'alley_size_e_pix': None, 'alley_size_n_m': None, 'alley_size_n_pix': None, 'buf_e_m': None, 'buf_e_pix': 0, 'buf_n_m': None, 'buf_n_pix': 0, 'crop_e_m': None, 'crop_e_pix': 90, 'crop_n_m': None, 'crop_n_pix': 120, 'directory': None, 'ext': 'bip', 'name_long': None, 'name_short': None, 'pix_e_ul': 0, 'pix_n_ul': 0, 'plot_id': None}</em><a class="headerlink" href="#hs_process.utilities.defaults.crop_defaults" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.utilities.defaults.dtype">
+<code class="sig-name descname">dtype</code><a class="headerlink" href="#hs_process.utilities.defaults.dtype" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.float32</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.utilities.defaults.envi_write">
+<code class="sig-name descname">envi_write</code><em class="property"> = {'byteorder': 0, 'dtype': &lt;class 'numpy.float32'&gt;, 'ext': '', 'force': False, 'interleave': 'bip'}</em><a class="headerlink" href="#hs_process.utilities.defaults.envi_write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.utilities.defaults.ext">
+<code class="sig-name descname">ext</code><em class="property"> = ''</em><a class="headerlink" href="#hs_process.utilities.defaults.ext" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.utilities.defaults.force">
+<code class="sig-name descname">force</code><em class="property"> = False</em><a class="headerlink" href="#hs_process.utilities.defaults.force" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.utilities.defaults.interleave">
+<code class="sig-name descname">interleave</code><em class="property"> = 'bip'</em><a class="headerlink" href="#hs_process.utilities.defaults.interleave" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.utilities.defaults.spat_crop_cols">
+<code class="sig-name descname">spat_crop_cols</code><em class="property"> = {'alley_size_e_m': 'alley_size_e_m', 'alley_size_e_pix': 'alley_size_e_pix', 'alley_size_n_m': 'alley_size_n_m', 'alley_size_n_pix': 'alley_size_n_pix', 'buf_e_m': 'buf_e_m', 'buf_e_pix': 'buf_e_pix', 'buf_n_m': 'buf_n_m', 'buf_n_pix': 'buf_n_pix', 'crop_e_m': 'crop_e_m', 'crop_e_pix': 'crop_e_pix', 'crop_n_m': 'crop_n_m', 'crop_n_pix': 'crop_n_pix', 'directory': 'directory', 'ext': 'ext', 'fname': 'fname', 'n_plots': 'n_plots', 'n_plots_x': 'n_plots_x', 'n_plots_y': 'n_plots_y', 'name_long': 'name_long', 'name_short': 'name_short', 'pix_e_ul': 'pix_e_ul', 'pix_n_ul': 'pix_n_ul', 'plot_id': 'plot_id'}</em><a class="headerlink" href="#hs_process.utilities.defaults.spat_crop_cols" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hs_process.utilities.hsio">
+<em class="property">class </em><code class="sig-prename descclassname">hs_process.utilities.</code><code class="sig-name descname">hsio</code><span class="sig-paren">(</span><em class="sig-param">fname_in=None</em>, <em class="sig-param">name_long=None</em>, <em class="sig-param">name_plot=None</em>, <em class="sig-param">name_short=None</em>, <em class="sig-param">str_plot='plot_'</em>, <em class="sig-param">individual_plot=False</em>, <em class="sig-param">fname_hdr_spec=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hsio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hsio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for reading and writing hyperspectral data files and accessing,
+interpreting, and modifying its associated metadata.</p>
+<dl class="simple">
+<dt>TODO: Create a temporary Spyfile using envi.create_imamge() and saving to a</dt><dd><p>temporary location. This can be used to hold intermediate SpyFiles
+without actually saving them to disk.. (good idea?)</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="hs_process.utilities.hsio.read_cube">
+<code class="sig-name descname">read_cube</code><span class="sig-paren">(</span><em class="sig-param">fname_hdr=None</em>, <em class="sig-param">name_long=None</em>, <em class="sig-param">name_plot=None</em>, <em class="sig-param">name_short=None</em>, <em class="sig-param">individual_plot=False</em>, <em class="sig-param">overwrite=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hsio.read_cube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hsio.read_cube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads in a hyperspectral datacube</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_hdr</strong> (<em>str</em>) -- filename of datacube to be read (default: <cite>None</cite>).</p></li>
+<li><p><strong>name_long</strong> (<em>str</em>) -- Spectronon processing appends processing names to
+the filenames; this indicates those processing names that are
+repetitive and can be deleted from the filename following
+processing (default: <cite>None</cite>).</p></li>
+<li><p><strong>name_plot</strong> (<cite>str</cite>) -- numeric text that describes the plot number
+(default: <cite>None</cite>).</p></li>
+<li><p><strong>name_short</strong> (<cite>str</cite>) -- The base name of the image file (see note above
+about <cite>name_long</cite>; default: <cite>None</cite>).</p></li>
+<li><p><strong>individual_plot</strong> (<cite>bool</cite>) -- Indicates whether image (and its
+filename) is for an individual plot (<cite>True</cite>), or for many plots
+(<cite>False</cite>; default: <cite>False</cite>).</p></li>
+<li><p><strong>overwrite</strong> (<cite>bool</cite>) -- Whether to overwrite any of the previous
+user-passed variables, including <cite>name_long</cite>, <cite>name_plot</cite>, and
+<cite>name_short</cite>; any of the current user-passed variables will
+overwrite previous ones whether <cite>overwrite</cite> is <cite>True</cite> or
+<cite>False</cite> (default: <cite>False</cite>).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hsio.read_spec">
+<code class="sig-name descname">read_spec</code><span class="sig-paren">(</span><em class="sig-param">fname_hdr_spec</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hsio.read_spec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hsio.read_spec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads in a hyperspectral spectrum file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fname_hdr_spec</strong> (<cite>str</cite>) -- filename of spectra to be read.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hsio.set_io_defaults">
+<code class="sig-name descname">set_io_defaults</code><span class="sig-paren">(</span><em class="sig-param">dtype=False</em>, <em class="sig-param">force=None</em>, <em class="sig-param">ext=False</em>, <em class="sig-param">interleave=False</em>, <em class="sig-param">byteorder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hsio.set_io_defaults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hsio.set_io_defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets any of the ENVI file writing parameters to <cite>hsio</cite>; if any
+parameter is left unchanged from its default, it will remain as-is
+(it will not be set).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dtype</strong> (<cite>numpy.dtype</cite> or <cite>str</cite>) -- The data type with which to store
+the image. For example, to store the image in 16-bit unsigned
+integer format, the argument could be any of numpy.uint16,
+'u2', 'uint16', or 'H' (default=`False`).</p></li>
+<li><p><strong>force</strong> (<cite>bool</cite>) -- If <cite>hdr_file</cite> or its associated image file exist,
+<cite>force=True</cite> will overwrite the files; otherwise, an exception
+will be raised if either file exists (default=`None`).</p></li>
+<li><p><strong>ext</strong> (<cite>str</cite>) -- The extension to use for saving the image file; if not
+specified, a default extension is determined based on the
+<cite>interleave</cite>. For example, if <cite>interleave`='bip', then `ext</cite> is
+set to 'bip' as well. If <cite>ext</cite> is an empty string, the image
+file will have the same name as the .hdr, but without the
+'.hdr' extension (default: <cite>False</cite>).</p></li>
+<li><p><strong>interleave</strong> (<cite>str</cite>) -- The band interleave format to use for writing
+the file; <cite>interleave</cite> should be one of 'bil', 'bip', or 'bsq'
+(default=`False`).</p></li>
+<li><p><strong>byteorder</strong> (<cite>int</cite> or <cite>str</cite>) -- Specifies the byte order (endian-ness)
+of the data as written to disk. For little endian, this value
+should be either 0 or 'little'. For big endian, it should be
+either 1 or 'big'. If not specified, native byte order will be
+used (default=`False`).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hsio.show_img">
+<code class="sig-name descname">show_img</code><span class="sig-paren">(</span><em class="sig-param">spyfile=None</em>, <em class="sig-param">band_r=120</em>, <em class="sig-param">band_g=76</em>, <em class="sig-param">band_b=32</em>, <em class="sig-param">inline=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hsio.show_img"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hsio.show_img" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays a datacube as a 3-band RGB image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The data cube to
+display; if <cite>None</cite>, loads from <cite>self.spyfile</cite> (default:
+<cite>None</cite>).</p></li>
+<li><p><strong>band_r</strong> (<cite>int</cite>) -- Band to display on the red channel (default: 120)</p></li>
+<li><p><strong>band_g</strong> (<cite>int</cite>) -- Band to display on the green channel (default: 76)</p></li>
+<li><p><strong>band_b</strong> (<cite>int</cite>) -- Band to display on the blue channel (default: 32)</p></li>
+<li><p><strong>inline</strong> (<cite>bool</cite>) -- If <cite>True</cite>, displays in the IPython console; else
+displays in a pop-out window (default: <cite>True</cite>).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hsio.write_cube">
+<code class="sig-name descname">write_cube</code><span class="sig-paren">(</span><em class="sig-param">hdr_file</em>, <em class="sig-param">spyfile</em>, <em class="sig-param">dtype=&lt;class 'numpy.float32'&gt;</em>, <em class="sig-param">force=False</em>, <em class="sig-param">ext=None</em>, <em class="sig-param">interleave='bip'</em>, <em class="sig-param">byteorder=None</em>, <em class="sig-param">metadata=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hsio.write_cube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hsio.write_cube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper function that accesses the Spectral Python package to save a
+datacube to file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hdr_file</strong> (<cite>str</cite>) -- Output header file path (with the '.hdr'
+extension).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The hyperspectral
+datacube to save. If <cite>numpy.ndarray</cite>, then metadata (<cite>dict</cite>)
+should also be passed.</p></li>
+<li><p><strong>dtype</strong> (<cite>numpy.dtype</cite> or <cite>str</cite>) -- The data type with which to store
+the image. For example, to store the image in 16-bit unsigned
+integer format, the argument could be any of numpy.uint16,
+'u2', 'uint16', or 'H' (default=np.float32).</p></li>
+<li><p><strong>force</strong> (<cite>bool</cite>) -- If <cite>hdr_file</cite> or its associated image file exist,
+<cite>force=True</cite> will overwrite the files; otherwise, an exception
+will be raised if either file exists (default=False).</p></li>
+<li><p><strong>ext</strong> (<cite>str</cite>) -- The extension to use for saving the image file; if not
+specified, a default extension is determined based on the
+<cite>interleave</cite>. For example, if <cite>interleave`='bip', then `ext</cite> is
+set to 'bip' as well. If <cite>ext</cite> is an empty string, the image
+file will have the same name as the .hdr, but without the
+'.hdr' extension (default: None).</p></li>
+<li><p><strong>interleave</strong> (<cite>str</cite>) -- The band interleave format to use for writing
+the file; <cite>interleave</cite> should be one of 'bil', 'bip', or 'bsq'
+(default='bip').</p></li>
+<li><p><strong>byteorder</strong> (<cite>int</cite> or <cite>str</cite>) -- Specifies the byte order (endian-ness)
+of the data as written to disk. For little endian, this value
+should be either 0 or 'little'. For big endian, it should be
+either 1 or 'big'. If not specified, native byte order will be
+used (default=None).</p></li>
+<li><p><strong>metadata</strong> (<cite>dict</cite>) -- Metadata to write to the ENVI .hdr file
+describing the hyperspectral data cube being saved. If
+<cite>SpyFile</cite> object is passed to <cite>spyfile</cite>, <cite>metadata</cite> will
+overwrite any existing metadata stored by the <cite>SpyFile</cite> object
+(default=None).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hsio.write_spec">
+<code class="sig-name descname">write_spec</code><span class="sig-paren">(</span><em class="sig-param">hdr_file</em>, <em class="sig-param">df_mean</em>, <em class="sig-param">df_std</em>, <em class="sig-param">dtype=&lt;class 'numpy.float32'&gt;</em>, <em class="sig-param">force=True</em>, <em class="sig-param">ext='.spec'</em>, <em class="sig-param">interleave='bip'</em>, <em class="sig-param">byteorder=0</em>, <em class="sig-param">metadata=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hsio.write_spec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hsio.write_spec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper function that accesses the Spectral Python package to save a
+single spectra to file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hdr_file</strong> (<cite>str</cite>) -- Output header file path (with the '.hdr'
+extension).</p></li>
+<li><p><strong>df_mean</strong> (<cite>pandas.Series</cite> or <cite>numpy.ndarray</cite>) -- Mean spectra, stored as a df row,
+where columns are the bands.</p></li>
+<li><p><strong>df_std</strong> (<cite>pandas.Series</cite> or <cite>numpy.ndarray</cite>) -- Standard deviation of each spectra,
+stored as a df row, where columns are the bands. This will be
+saved to the .hdr file.</p></li>
+<li><p><strong>dtype</strong> (<cite>numpy.dtype</cite> or <cite>str</cite>) -- The data type with which to store
+the image. For example, to store the image in 16-bit unsigned
+integer format, the argument could be any of numpy.uint16,
+'u2', 'uint16', or 'H' (default=np.float32).</p></li>
+<li><p><strong>force</strong> (<cite>bool</cite>) -- If <cite>hdr_file</cite> or its associated image file exist,
+<cite>force=True</cite> will overwrite the files; otherwise, an exception
+will be raised if either file exists (default=False).</p></li>
+<li><p><strong>ext</strong> (<cite>str</cite>) -- The extension to use for saving the image file; if not
+specified, a default extension is determined based on the
+<cite>interleave</cite>. For example, if <cite>interleave`='bip', then `ext</cite> is
+set to 'bip' as well. If <cite>ext</cite> is an empty string, the image
+file will have the same name as the .hdr, but without the
+'.hdr' extension (default: '.spec').</p></li>
+<li><p><strong>interleave</strong> (<cite>str</cite>) -- The band interleave format to use for writing
+the file; <cite>interleave</cite> should be one of 'bil', 'bip', or 'bsq'
+(default='bip').</p></li>
+<li><p><strong>byteorder</strong> (<cite>int</cite> or <cite>str</cite>) -- Specifies the byte order (endian-ness)
+of the data as written to disk. For little endian, this value
+should be either 0 or 'little'. For big endian, it should be
+either 1 or 'big'. If not specified, native byte order will be
+used (default=None).</p></li>
+<li><p><strong>metadata</strong> (<cite>dict</cite>) -- Metadata to write to the ENVI .hdr file
+describing the spectra being saved; if <cite>None</cite>, will try to pull
+metadata template from self.spyfile.metadata (default=None).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hsio.write_tif">
+<code class="sig-name descname">write_tif</code><span class="sig-paren">(</span><em class="sig-param">fname_tif</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">projection_out=None</em>, <em class="sig-param">geotransform_out=None</em>, <em class="sig-param">inline=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hsio.write_tif"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hsio.write_tif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper function that accesses the GDAL Python package to save a
+small datacube subset (i.e., three bands or less) to file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_tif</strong> (<cite>str</cite>) -- Output image file path (with the '.tif'
+extension).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The data cube to
+save. If <cite>numpy.ndarray</cite>, then metadata (<cite>dict</cite>) should also be
+passed.</p></li>
+<li><p><strong>projection_out</strong> (<cite>str</cite>) -- (default: <cite>self.projection_out</cite>)</p></li>
+<li><p><strong>geotransform_out</strong> (<cite>str</cite>) -- (default: <cite>self.geotransform_out</cite>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>TOOD:</dt><dd><p>Use rasterio package instead of GDAL</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hs_process.utilities.hstools">
+<em class="property">class </em><code class="sig-prename descclassname">hs_process.utilities.</code><code class="sig-name descname">hstools</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hstools"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Basic tools for manipulating Spyfiles and accessing their metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>spyfile</strong> (<cite>SpyFile</cite> object) -- The datacube being accessed and/or
+manipulated.</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="hs_process.utilities.hstools.clean_md_sets">
+<code class="sig-name descname">clean_md_sets</code><span class="sig-paren">(</span><em class="sig-param">metadata=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hstools.clean_md_sets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.clean_md_sets" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>metadata</strong> (<cite>dict</cite>, optional) -- Metadata dictionary to clean</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>metadata_out</strong> (<cite>dict</cite>) -- Cleaned metadata dictionary.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>dict</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.del_meta_item">
+<code class="sig-name descname">del_meta_item</code><span class="sig-paren">(</span><em class="sig-param">metadata</em>, <em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hstools.del_meta_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.del_meta_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes metadata item from SpyFile object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metadata</strong> (<cite>dict</cite>) -- dictionary of the metadata</p></li>
+<li><p><strong>key</strong> (<cite>str</cite>) -- dictionary key to delete</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>metadata</strong> (<cite>dict</cite>) -- Dictionary containing the modified
+metadata.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>dict</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.get_UTM">
+<code class="sig-name descname">get_UTM</code><span class="sig-paren">(</span><em class="sig-param">pix_e_ul</em>, <em class="sig-param">pix_n_ul</em>, <em class="sig-param">utm_x</em>, <em class="sig-param">utm_y</em>, <em class="sig-param">size_x</em>, <em class="sig-param">size_y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hstools.get_UTM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.get_UTM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the new UTM coordinate of cropped plot to modify the
+&quot;map info&quot; tag of the .hdr file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pix_e_ul</strong> (<cite>int</cite>) -- upper left column (easting) where image cropping
+begins.</p></li>
+<li><p><strong>pix_n_ul</strong> (<cite>int</cite>) -- upper left row (northing) where image cropping
+begins.</p></li>
+<li><p><strong>utm_x</strong> (<cite>float</cite>) -- UTM easting coordinates (meters) of the original
+image (from the upper left).</p></li>
+<li><p><strong>utm_y</strong> (<cite>float</cite>) -- UTM northing coordinates (meters) of the original
+image (from the upper left).</p></li>
+<li><p><strong>size_x</strong> (<cite>float</cite>) -- Ground resolved distance of the image pixels in
+the x (easting) direction (meters).</p></li>
+<li><p><strong>size_y</strong> (<cite>float</cite>) -- Ground resolved distance of the image pixels in
+the y (northing) direction (meters).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>2-element <cite>tuple</cite> containing</p>
+<ul class="simple">
+<li><p><strong>utm_x_new</strong> (<cite>float</cite>): The modified UTM x coordinate (easting)
+of cropped plot.</p></li>
+<li><p><strong>utm_y_new</strong> (<cite>float</cite>): The modified UTM y coordinate (northing)
+of cropped plot.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.get_band">
+<code class="sig-name descname">get_band</code><span class="sig-paren">(</span><em class="sig-param">target_wl</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hstools.get_band"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.get_band" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the band number of the closest target wavelength.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target_wl</strong> (<cite>int</cite> or <cite>float</cite>) -- the target wavelength to retrieve the
+band number for (required).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object, optional) -- The datacube being accessed and/or
+manipulated; if <cite>None</cite>, uses <cite>hstools.spyfile</cite> (default:
+<cite>None</cite>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>key_band</strong> (<cite>int</cite>) -- band number of the closest target
+wavelength (<cite>target_wl</cite>).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>int</cite></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hstools</span><span class="o">.</span><span class="n">get_band</span><span class="p">(</span><span class="mi">703</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">)</span>
+<span class="go">151</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.get_band_index">
+<code class="sig-name descname">get_band_index</code><span class="sig-paren">(</span><em class="sig-param">band_num</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hstools.get_band_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.get_band_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subtracts 1 from <cite>band_num</cite> and returns the band index(es).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>band_num</strong> (<cite>int</cite> or <cite>list</cite>) -- the target band number(s) to retrieve</p></li>
+<li><p><strong>band index for</strong> (<em>the</em>) -- </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>band_idx</strong> (<cite>int</cite>) -- band index of the passed band number
+(<cite>band_num</cite>).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>int</cite> or <cite>list</cite></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hstools</span><span class="o">.</span><span class="n">get_band_index</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">111</span><span class="p">])</span>
+<span class="go">[3, 42, 110]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.get_band_num">
+<code class="sig-name descname">get_band_num</code><span class="sig-paren">(</span><em class="sig-param">band_idx</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hstools.get_band_num"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.get_band_num" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds 1 to <cite>band_idx</cite> and returns the band number(s).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>band_idx</strong> (<cite>int</cite> or <cite>list</cite>) -- the target band index(es) to retrive
+the band number for (required).</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>band_num</strong> (<cite>int</cite> or <cite>list</cite>): band number of the passed
+band index (<cite>band_idx</cite>).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>int</cite> or <cite>list</cite></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hstools</span><span class="o">.</span><span class="n">get_band_num</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">111</span><span class="p">])</span>
+<span class="go">[5, 44, 112]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.get_band_range">
+<code class="sig-name descname">get_band_range</code><span class="sig-paren">(</span><em class="sig-param">range_wl</em>, <em class="sig-param">index=True</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hstools.get_band_range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.get_band_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the band index or band number for all bands within a
+wavelength range.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>range_wl</strong> (<cite>list</cite>) -- the minimum and maximum wavelength to consider;
+values should be <cite>int</cite> or <cite>float</cite>.</p></li>
+<li><p><strong>index</strong> (<em>bool</em>) -- Indicates whether to return the band number (min=1)
+or to return index number (min=0) (default: True)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>band_list</strong> (<cite>list</cite>): A list of all bands (either index or
+number, depending on how <cite>index</cite> is set) between a range in
+wavelength values.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>list</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.get_center_wl">
+<code class="sig-name descname">get_center_wl</code><span class="sig-paren">(</span><em class="sig-param">wl_list</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">wls=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hstools.get_center_wl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.get_center_wl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets band numbers and mean wavelength from all wavelengths (or bands)
+in <cite>wl_list</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wl_list</strong> (<cite>list</cite>) -- the list of bands to get information for
+(required).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object) -- The datacube being accessed and/or
+manipulated; if <cite>None</cite>, uses <cite>hstools.spyfile</cite> (default:
+<cite>None</cite>).</p></li>
+<li><p><strong>wls</strong> (<cite>bool</cite>) -- whether wavelengths are passed in <cite>wl_list</cite> or if
+bands are passed in <cite>wl_list</cite> (default: <cite>True</cite> - wavelenghts
+passed).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>2-element <cite>tuple</cite> containing</p>
+<ul class="simple">
+<li><p><strong>bands</strong> (<cite>list</cite>): the list of bands (band number) corresponding
+to <cite>wl_list</cite>.</p></li>
+<li><p><strong>wls_mean</strong> (<cite>float</cite>): the mean wavelength from <cite>wl_list</cite>.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.get_meta_set">
+<code class="sig-name descname">get_meta_set</code><span class="sig-paren">(</span><em class="sig-param">meta_set</em>, <em class="sig-param">idx=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hstools.get_meta_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.get_meta_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads metadata &quot;set&quot; (i.e., string representation of a Python set;
+common in .hdr files), taking care to remove leading and trailing
+spaces.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>meta_set</strong> (<cite>str</cite>) -- the string representation of the metadata set</p></li>
+<li><p><strong>idx</strong> (<cite>int</cite>) -- index to be read; if <cite>None</cite>, the whole list is
+returned (default: <cite>None</cite>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>metadata_list</strong> (<cite>list</cite> or <cite>str</cite>): List of metadata set items
+(as <cite>str</cite>), or if idx is not <cite>None</cite>, the item in the position
+described by <cite>idx</cite>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>list</cite> or <cite>str</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.get_spectral_mean">
+<code class="sig-name descname">get_spectral_mean</code><span class="sig-paren">(</span><em class="sig-param">band_list</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hstools.get_spectral_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.get_spectral_mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the spectral mean of a datacube from a list of bands</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>band_list</strong> (<cite>list</cite>) -- the list of bands to calculate the spectral
+mean for on the datacube (required).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The datacube being
+accessed and/or manipulated; if <cite>None</cite>, uses <cite>hstools.spyfile</cite>
+(default: <cite>None</cite>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>array_mean</strong> (<cite>numpy.array</cite> or <cite>pandas.DataFrame</cite>): The
+mean reflectance from <cite>spyfile</cite> for the bands in <cite>band_list</cite>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>numpy.array</cite> or <cite>pandas.DataFrame</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.get_wavelength">
+<code class="sig-name descname">get_wavelength</code><span class="sig-paren">(</span><em class="sig-param">target_band</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hstools.get_wavelength"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.get_wavelength" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns actual wavelength of the closest target band.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target_band</strong> (<cite>int</cite> or <cite>float</cite>) -- the target band to retrieve
+wavelength number for (required).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object, optional) -- The datacube being accessed and/or
+manipulated; if <cite>None</cite>, uses <cite>hstools.spyfile</cite> (default:
+<cite>None</cite>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>key_wavelength</strong> (<cite>float</cite>) -- wavelength of the closest
+target band (<cite>target_band</cite>).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>float</cite></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hstools</span><span class="o">.</span><span class="n">get_wavelength</span><span class="p">(</span><span class="mi">151</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">)</span>
+<span class="go">702.52</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.load_spyfile">
+<code class="sig-name descname">load_spyfile</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hstools.load_spyfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.load_spyfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a <cite>SpyFile</cite> (Spectral Python object) for data access and/or
+manipulation by the <cite>hstools</cite> class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>spyfile</strong> (<cite>SpyFile</cite> object) -- The datacube being accessed and/or
+manipulated.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.mask_array">
+<code class="sig-name descname">mask_array</code><span class="sig-paren">(</span><em class="sig-param">array</em>, <em class="sig-param">metadata</em>, <em class="sig-param">thresh=None</em>, <em class="sig-param">percentile=None</em>, <em class="sig-param">side='lower'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hstools.mask_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.mask_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a masked numpy array based on a threshold value. If <cite>array</cite> is
+already a masked array, that mask is maintained and the new mask(s) is/
+are added to the original mask.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array</strong> (<cite>numpy.ndarray</cite>) -- The data array to mask.</p></li>
+<li><p><strong>thresh</strong> (<cite>float</cite> or <cite>list</cite>) -- The value for which to base the
+threshold; if <cite>thresh</cite> is <cite>list</cite> and <cite>side</cite> is <cite>None</cite>, then
+all values in <cite>thresh</cite> will be masked; if <cite>thresh</cite> is <cite>list</cite>
+and <cite>side</cite> is not <cite>None</cite>, then only the first value in the
+list will be considered for thresholding (default: <cite>None</cite>).</p></li>
+<li><p><strong>percentile</strong> (<cite>float</cite>) -- The percentile of pixels to mask; if
+<cite>percentile`=95 and `side`='lower', the lowest 95% of pixels
+will be masked prior to calculating the mean spectra across
+pixels (default: `None</cite>; range: 0-100).</p></li>
+<li><p><strong>side</strong> (<cite>str</cite>) -- The side of the threshold for which to apply the
+mask. Must be either 'lower', 'upper', or <cite>None</cite>; if 'lower',
+everything below the threshold will be masked; if <cite>None</cite>, only
+the values that exactly match the threshol will be masked
+(default: 'lower').</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>2-element <cite>tuple</cite> containing</p>
+<ul class="simple">
+<li><p><strong>array_mask</strong> (<cite>numpy.ndarray</cite>): The masked <cite>numpy.ndarray</cite>
+based on the passed threshold and/or percentile value.</p></li>
+<li><p><strong>metadata</strong> (<cite>dict</cite>): The modified metadata.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.mask_datacube">
+<code class="sig-name descname">mask_datacube</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em>, <em class="sig-param">mask</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hstools.mask_datacube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.mask_datacube" title="Permalink to this definition">¶</a></dt>
+<dd><p>DO NOT USE; USE mean_datacube() INSTEAD AND PASS A MASK.</p>
+<p>Applies <cite>mask</cite> to <cite>spyfile</cite>, then returns the datcube (as a np.array)
+and the mean spectra</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The hyperspectral
+datacube to mask.</p></li>
+<li><p><strong>mask</strong> (<cite>numpy.ndarray</cite>) -- the mask to apply to <cite>spyfile</cite>; if <cite>mask</cite>
+does not have similar dimensions to <cite>spyfile</cite>, the first band
+(i.e., first two dimensions) of <cite>mask</cite> will be repeated n times
+to match the number of bands of <cite>spyfile</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.mask_shadow">
+<code class="sig-name descname">mask_shadow</code><span class="sig-paren">(</span><em class="sig-param">shadow_pctl=20</em>, <em class="sig-param">show_histogram=False</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hstools.mask_shadow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.mask_shadow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a <cite>numpy.mask</cite> of all pixels that are likely shadow pixels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shadow_pctl</strong> (<cite>int</cite>) -- the percentile of pixels in the image to mask
+(default: 20).</p></li>
+<li><p><strong>show_histogram</strong> (<cite>bool</cite>) -- </p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile.SpyFile</cite> object) -- </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>2-element <cite>tuple</cite> containing</p>
+<ul class="simple">
+<li><p><strong>array_noshadow.mask</strong> (<cite>numpy.mask</cite>): The mask indicating all
+pixels that are likely shadow pixels.</p></li>
+<li><p><strong>metadata</strong> (<cite>dict</cite>): The modified metadata.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.mean_datacube">
+<code class="sig-name descname">mean_datacube</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em>, <em class="sig-param">mask=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hstools.mean_datacube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.mean_datacube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the mean spectra for a datcube; if <cite>mask</cite> is passed (as a
+np.array), then the mask is applied to <cite>spyfile</cite> prior to computing
+the mean spectra.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The hyperspectral
+datacube to mask.</p></li>
+<li><p><strong>mask</strong> (<cite>numpy.ndarray</cite>) -- the mask to apply to <cite>spyfile</cite>; if <cite>mask</cite>
+does not have similar dimensions to <cite>spyfile</cite>, the first band
+(i.e., first two dimensions) of <cite>mask</cite> will be repeated n times
+to match the number of bands of <cite>spyfile</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>3-element <cite>tuple</cite> containing</p>
+<ul class="simple">
+<li><p><strong>spec_mean</strong> (<cite>SpyFile.SpyFile</cite> object): The mean spectra from
+the input datacube.</p></li>
+<li><p><strong>spec_std</strong> (<cite>SpyFile.SpyFile</cite> object): The standard deviation
+of the spectra from the input datacube.</p></li>
+<li><p><strong>datacube_masked</strong> (<cite>numpy.ndarray</cite>): The masked
+<cite>numpy.ndarray</cite>; if <cite>mask</cite> = <cite>None</cite>, <cite>datacube_masked</cite> is
+identical to the <cite>SpyFile</cite> data array.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.modify_meta_set">
+<code class="sig-name descname">modify_meta_set</code><span class="sig-paren">(</span><em class="sig-param">meta_set</em>, <em class="sig-param">idx</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/utilities.html#hstools.modify_meta_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.modify_meta_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modifies metadata &quot;set&quot; (i.e., string representation of a Python set;
+common in .hdr files) by converting string to list, then adjusts the
+value of an item by its index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>meta_set</strong> (<cite>str</cite>) -- the string representation of the metadata set</p></li>
+<li><p><strong>idx</strong> (<cite>int</cite>) -- index to be modified; if <cite>None</cite>, the whole meta_set is
+returned (default: <cite>None</cite>).</p></li>
+<li><p><strong>value</strong> (<cite>float</cite>, <cite>int</cite>, or <cite>str</cite>) -- value to replace at idx</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>set_str</strong> (<cite>str</cite>): Modified metadata set string.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>str</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hs_process">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-hs_process" title="Permalink to this headline">¶</a></h2>
+<p>Copyright &amp;copy; 2019 Tyler J Nigon. All rights reserved.</p>
+<p>The Hyperspectral package uses several classes to abstract some of the
+processing tasks.</p>
+<dl class="class">
+<dt id="hs_process.batch">
+<em class="property">class </em><code class="sig-prename descclassname">hs_process.</code><code class="sig-name descname">batch</code><span class="sig-paren">(</span><em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='.bip'</em>, <em class="sig-param">dir_level=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/batch.html#batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Parent class for batch processing hyperspectral image data</p>
+<dl class="method">
+<dt id="hs_process.batch.cube_to_spectra">
+<code class="sig-name descname">cube_to_spectra</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None</em>, <em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='bip'</em>, <em class="sig-param">dir_level=0</em>, <em class="sig-param">base_dir_out=None</em>, <em class="sig-param">folder_name='cube_to_spec'</em>, <em class="sig-param">name_append='cube-to-spec'</em>, <em class="sig-param">geotiff=True</em>, <em class="sig-param">out_dtype=False</em>, <em class="sig-param">out_force=None</em>, <em class="sig-param">out_ext=False</em>, <em class="sig-param">out_interleave=False</em>, <em class="sig-param">out_byteorder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/batch.html#batch.cube_to_spectra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.cube_to_spectra" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the mean and standard deviation for each cube in
+<cite>fname_sheet</cite> and writes the result to a .spec file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_list</strong> (<cite>list</cite>, optional) -- list of filenames to process; if
+left to <cite>None</cite>, will look at <cite>base_dir</cite>, <cite>search_ext</cite>, and
+<cite>dir_level</cite> parameters for files to process (default: <cite>None</cite>).</p></li>
+<li><p><strong>base_dir</strong> (<cite>str</cite>, optional) -- directory path to search for files to
+spectrally clip; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>base_dir</cite> will
+be ignored (default: <cite>None</cite>).</p></li>
+<li><p><strong>search_ext</strong> (<cite>str</cite>) -- file format/extension to search for in all
+directories and subdirectories to determine which files to
+process; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>search_ext</cite> will
+be ignored (default: 'bip').</p></li>
+<li><p><strong>dir_level</strong> (<cite>int</cite>) -- The number of directory levels to search; if
+<cite>None</cite>, searches all directory levels (default: 0).</p></li>
+<li><p><strong>base_dir_out</strong> (<cite>str</cite>) -- directory path to save all processed
+datacubes; if set to <cite>None</cite>, a folder named according to the
+<cite>folder_name</cite> parameter is added to <cite>base_dir</cite></p></li>
+<li><p><strong>folder_name</strong> (<cite>str</cite>) -- folder to add to <cite>base_dir_out</cite> to save all
+the processed datacubes (default: 'spec-clip').</p></li>
+<li><p><strong>name_append</strong> (<cite>str</cite>) -- name to append to the filename (default:
+'spec-clip').</p></li>
+<li><p><strong>geotiff</strong> (<cite>bool</cite>) -- whether to save the masked RGB image as a geotiff
+alongside the masked datacube.</p></li>
+<li><p><strong>out_XXX</strong> -- Settings for saving the output files can be adjusted here
+if desired. They are stored in <cite>batch.io.defaults, and are
+therefore accessible at a high level. See
+`hsio.set_io_defaults()</cite> for more information on each of the
+settings.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.batch.segment_band_math">
+<code class="sig-name descname">segment_band_math</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None</em>, <em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='bip'</em>, <em class="sig-param">dir_level=0</em>, <em class="sig-param">base_dir_out=None</em>, <em class="sig-param">folder_name='band_math'</em>, <em class="sig-param">name_append='band-math'</em>, <em class="sig-param">geotiff=True</em>, <em class="sig-param">method='ndi'</em>, <em class="sig-param">wl1=None</em>, <em class="sig-param">wl2=None</em>, <em class="sig-param">wl3=None</em>, <em class="sig-param">b1=None</em>, <em class="sig-param">b2=None</em>, <em class="sig-param">b3=None</em>, <em class="sig-param">list_range=True</em>, <em class="sig-param">plot_out=True</em>, <em class="sig-param">out_dtype=False</em>, <em class="sig-param">out_force=None</em>, <em class="sig-param">out_ext=False</em>, <em class="sig-param">out_interleave=False</em>, <em class="sig-param">out_byteorder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/batch.html#batch.segment_band_math"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.segment_band_math" title="Permalink to this definition">¶</a></dt>
+<dd><p>Batch processing tool to perform band math on multiple datacubes in the
+same way.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>method</strong> (<cite>str</cite>) -- Must be one of &quot;ndi&quot; (normalized difference index),
+&quot;ratio&quot; (simple ratio index), &quot;derivative&quot; (deriviative-type
+index), or &quot;mcari2&quot; (modified chlorophyll absorption index2).
+Indicates what kind of band
+math should be performed on the input datacube. The &quot;ndi&quot;
+method leverages <cite>segment.band_math_ndi()</cite>, the &quot;ratio&quot;
+method leverages <cite>segment.band_math_ratio()</cite>, and the
+&quot;derivative&quot; method leverages <cite>segment.band_math_derivative()</cite>.
+Please see the <cite>segment</cite> documentation for more information
+(default: &quot;ndi&quot;).</p></li>
+<li><p><strong>wl1</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the wavelength (or set of
+wavelengths) to be used as the first parameter of the
+band math index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>wl2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the wavelength (or set of
+wavelengths) to be used as the second parameter of the
+band math index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b1</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the band (or set of bands) to be
+used as the first parameter of the band math index;
+if <cite>list</cite>, then consolidates all bands between two band values
+by calculating the mean pixel value across all bands in that
+range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the band (or set of bands) to be
+used as the second parameter of the band math
+index; if <cite>list</cite>, then consolidates all bands between two band
+values by calculating the mean pixel value across all bands in
+that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>list_range</strong> (<cite>bool</cite>) -- Whether bands/wavelengths passed as a list is
+interpreted as a range of bands (<cite>True</cite>) or for each individual
+band in the list (<cite>False</cite>). If <cite>list_range</cite> is <cite>True</cite>,
+<cite>b1</cite>/<cite>wl1</cite> and <cite>b2</cite>/<cite>wl2</cite> should be lists with two items, and
+all bands/wavelegths between the two values will be used
+(default: <cite>True</cite>).</p></li>
+<li><p><strong>plot_out</strong> (<cite>bool</cite>) -- whether to save a histogram of the band math
+result (default: <cite>True</cite>).</p></li>
+<li><p><strong>geotiff</strong> (<cite>bool</cite>) -- whether to save the masked RGB image as a geotiff
+alongside the masked datacube.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.batch.segment_create_mask">
+<code class="sig-name descname">segment_create_mask</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None</em>, <em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='bip'</em>, <em class="sig-param">dir_level=0</em>, <em class="sig-param">mask_dir=None</em>, <em class="sig-param">base_dir_out=None</em>, <em class="sig-param">folder_name='mask'</em>, <em class="sig-param">name_append='mask'</em>, <em class="sig-param">geotiff=True</em>, <em class="sig-param">mask_thresh=None</em>, <em class="sig-param">mask_percentile=None</em>, <em class="sig-param">mask_side='lower'</em>, <em class="sig-param">out_dtype=False</em>, <em class="sig-param">out_force=None</em>, <em class="sig-param">out_ext=False</em>, <em class="sig-param">out_interleave=False</em>, <em class="sig-param">out_byteorder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/batch.html#batch.segment_create_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.segment_create_mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Batch processing tool to create a masked array on many datacubes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mask_thresh</strong> (<cite>float</cite> or <cite>int</cite>) -- The value for which to mask the
+array; should be used with <cite>side</cite> parameter (default: <cite>None</cite>).</p></li>
+<li><p><strong>mask_percentile</strong> (<cite>float</cite> or <cite>int</cite>) -- The percentile of pixels to
+mask; if <cite>percentile`=95 and `side`='lower', the lowest 95% of
+pixels will be masked following the band math operation
+(default: `None</cite>; range: 0-100).</p></li>
+<li><p><strong>mask_side</strong> (<cite>str</cite>) -- The side of the threshold or percentile for
+which to apply the mask. Must be either 'lower' or 'upper'; if
+'lower', everything below the threshold/percentile will be
+masked (default: 'lower').</p></li>
+<li><p><strong>geotiff</strong> (<cite>bool</cite>) -- whether to save the masked RGB image as a geotiff
+alongside the masked datacube.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.batch.spatial_crop">
+<code class="sig-name descname">spatial_crop</code><span class="sig-paren">(</span><em class="sig-param">fname_sheet</em>, <em class="sig-param">base_dir_out=None</em>, <em class="sig-param">folder_name='spatial_crop'</em>, <em class="sig-param">name_append='spatial-crop'</em>, <em class="sig-param">geotiff=True</em>, <em class="sig-param">method='single'</em>, <em class="sig-param">gdf=None</em>, <em class="sig-param">out_dtype=False</em>, <em class="sig-param">out_force=None</em>, <em class="sig-param">out_ext=False</em>, <em class="sig-param">out_interleave=False</em>, <em class="sig-param">out_byteorder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/batch.html#batch.spatial_crop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.spatial_crop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterates through spreadsheet that provides necessary information about
+how each image should be cropped and how it should be saved.</p>
+<p>If <cite>gdf</cite> is passed (a geopandas.GoeDataFrame polygon file), the cropped
+images will be shifted to the center of appropriate &quot;plot&quot; polygon.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_sheet</strong> (<cite>fname</cite> or <a href="#id3"><span class="problematic" id="id4">`</span></a>Pandas.DataFrame) -- The filename of the
+spreadsheed that provides the necessary information for batch
+process cropping. See below for more information about the
+required and optional contents of <cite>fname_sheet</cite> and how to
+properly format it. Optionally, <cite>fname_sheet</cite> can be a
+<cite>Pandas.DataFrame</cite></p></li>
+<li><p><strong>base_dir_out</strong> (<cite>str</cite>) -- output directory of the cropped image
+(default: <cite>None</cite>).</p></li>
+<li><p><strong>folder_name</strong> (<cite>str</cite>) -- folder to add to <cite>base_dir_out</cite> to save all
+the processed datacubes (default: 'spatial_crop').</p></li>
+<li><p><strong>name_append</strong> (<cite>str</cite>) -- name to append to the filename (default:
+'spatial-crop').</p></li>
+<li><p><strong>geotiff</strong> (<cite>bool</cite>) -- whether to save an RGB image as a geotiff
+alongside the cropped datacube.</p></li>
+<li><p><strong>method</strong> (<cite>str</cite>) -- Must be one of &quot;single&quot;, &quot;many_grid&quot;, or
+&quot;many_gdf&quot;. Indicates whether a single plot should be cropped
+from the input datacube or if many/multiple plots should be
+cropped from the input datacube. The &quot;single&quot; method leverages
+<cite>spatial_mod.crop_single()</cite>, the &quot;many_grid&quot; method leverages
+<cite>spatial_mod.crop_many_grid()</cite>, and the &quot;many_gdf&quot; method
+leverages <cite>spatial_mod.crop_many_gdf()</cite> (there are two methods
+available to peform cropping for many/mulitple plots). Please
+see the <cite>spatial_mod</cite> documentation for more information
+(default: &quot;single&quot;).</p></li>
+<li><p><strong>gdf</strong> (<cite>geopandas.GeoDataFrame</cite>) -- the plot names and polygon
+geometery of each of the plots; 'plot' must be used as a column
+name to identify each of the plots, and should be an integer.</p></li>
+<li><p><strong>out_XXX</strong> -- Settings for saving the output files can be adjusted here
+if desired. They are stored in <cite>batch.io.defaults, and are
+therefore accessible at a high level. See
+`hsio.set_io_defaults()</cite> for more information on each of the
+settings.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<dl class="simple">
+<dt><cite>fname_sheet</cite> may have the following required column headings:</dt><dd><ol class="arabic simple">
+<li><p>&quot;directory&quot;</p></li>
+<li><p>&quot;name_short&quot;</p></li>
+<li><p>&quot;name_long&quot;</p></li>
+<li><p>&quot;ext&quot;</p></li>
+<li><p>&quot;pix_e_ul&quot;</p></li>
+<li><p>&quot;pix_n_ul&quot;.</p></li>
+</ol>
+</dd>
+</dl>
+<p>With this minimum input, <cite>batch.spatial_crop</cite> will read in each
+image, crop from the upper left pixel (determined as
+<cite>pix_e_ul</cite>/<cite>pix_n_ul</cite>) to the lower right pixel calculated
+based on <cite>crop_e_pix</cite>/<cite>crop_n_pix</cite> (which is the width of the
+cropped area in units of pixels). <cite>crop_e_pix</cite> and <cite>crop_n_pix</cite>
+have default values, but they can also be set in <cite>fname_sheet</cite>,
+which will take precedence over the defaults.</p>
+<dl class="simple">
+<dt><cite>fname_sheet</cite> may also have the following optional column headings:</dt><dd><ol class="arabic simple" start="7">
+<li><p>&quot;crop_e_pix&quot;</p></li>
+<li><p>&quot;crop_n_pix&quot;</p></li>
+<li><p>&quot;crop_e_m&quot;</p></li>
+<li><p>&quot;crop_n_m&quot;</p></li>
+<li><p>&quot;buf_e_pix&quot;</p></li>
+<li><p>&quot;buf_n_pix&quot;,</p></li>
+<li><p>&quot;buf_e_m&quot;</p></li>
+<li><p>&quot;buf_n_m&quot;</p></li>
+<li><p>&quot;plot_id&quot;.</p></li>
+</ol>
+</dd>
+</dl>
+<p>These optional inputs allow more control over exactly how the image
+will be cropped, and hopefully are self-explanatory until
+adequate documentation is written. Any other columns can
+be added to <cite>fname_sheet</cite>, but <cite>batch.spatial_crop</cite> does not
+use them in any way.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.batch.spectra_combine">
+<code class="sig-name descname">spectra_combine</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None</em>, <em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='bip'</em>, <em class="sig-param">dir_level=0</em>, <em class="sig-param">base_dir_out=None</em>, <em class="sig-param">out_dtype=False</em>, <em class="sig-param">out_force=None</em>, <em class="sig-param">out_ext=False</em>, <em class="sig-param">out_interleave=False</em>, <em class="sig-param">out_byteorder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/batch.html#batch.spectra_combine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.spectra_combine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Batch processing tool to gather all pixels from every image in a
+directory, compute the mean and standard deviation, and save as a
+single spectra (i.e., equivalent to a single spectral pixel with no
+spatial information).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_list</strong> (<cite>list</cite>, optional) -- list of filenames to process; if
+left to <cite>None</cite>, will look at <cite>base_dir</cite>, <cite>search_ext</cite>, and
+<cite>dir_level</cite> parameters for files to process (default: <cite>None</cite>).</p></li>
+<li><p><strong>base_dir</strong> (<cite>str</cite>, optional) -- directory path to search for files to
+spectrally clip; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>base_dir</cite> will
+be ignored (default: <cite>None</cite>).</p></li>
+<li><p><strong>search_ext</strong> (<cite>str</cite>) -- file format/extension to search for in all
+directories and subdirectories to determine which files to
+process; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>search_ext</cite> will
+be ignored (default: 'bip').</p></li>
+<li><p><strong>dir_level</strong> (<cite>int</cite>) -- The number of directory levels to search; if
+<cite>None</cite>, searches all directory levels (default: 0).</p></li>
+<li><p><strong>base_dir_out</strong> (<cite>str</cite>) -- directory path to save all processed
+datacubes; if set to <cite>None</cite>, a folder named according to the
+<cite>folder_name</cite> parameter is added to <cite>base_dir</cite></p></li>
+<li><p><strong>out_XXX</strong> -- Settings for saving the output files can be adjusted here
+if desired. They are stored in <cite>batch.io.defaults, and are
+therefore accessible at a high level. See
+`hsio.set_io_defaults()</cite> for more information on each of the
+settings.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.batch.spectra_to_csv">
+<code class="sig-name descname">spectra_to_csv</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None</em>, <em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='spec'</em>, <em class="sig-param">dir_level=0</em>, <em class="sig-param">base_dir_out=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/batch.html#batch.spectra_to_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.spectra_to_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads all the .spec files in a direcory and saves their reflectance
+information to a .csv</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_list</strong> (<cite>list</cite>, optional) -- list of filenames to process; if
+left to <cite>None</cite>, will look at <cite>base_dir</cite>, <cite>search_ext</cite>, and
+<cite>dir_level</cite> parameters for files to process (default: <cite>None</cite>).</p></li>
+<li><p><strong>base_dir</strong> (<cite>str</cite>, optional) -- directory path to search for files to
+spectrally clip; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>base_dir</cite> will
+be ignored (default: <cite>None</cite>).</p></li>
+<li><p><strong>search_ext</strong> (<cite>str</cite>) -- file format/extension to search for in all
+directories and subdirectories to determine which files to
+process; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>search_ext</cite> will
+be ignored (default: 'bip').</p></li>
+<li><p><strong>dir_level</strong> (<cite>int</cite>) -- The number of directory levels to search; if
+<cite>None</cite>, searches all directory levels (default: 0).</p></li>
+<li><p><strong>base_dir_out</strong> (<cite>str</cite>) -- directory path to save all processed
+datacubes; if set to <cite>None</cite>, a folder named according to the
+<cite>folder_name</cite> parameter is added to <cite>base_dir</cite></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.batch.spectra_to_df">
+<code class="sig-name descname">spectra_to_df</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None</em>, <em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='spec'</em>, <em class="sig-param">dir_level=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/batch.html#batch.spectra_to_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.spectra_to_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads all the .spec files in a direcory and returns their data as a
+pandas.DataFrame object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_list</strong> (<cite>list</cite>, optional) -- list of filenames to process; if
+left to <cite>None</cite>, will look at <cite>base_dir</cite>, <cite>search_ext</cite>, and
+<cite>dir_level</cite> parameters for files to process (default: <cite>None</cite>).</p></li>
+<li><p><strong>base_dir</strong> (<cite>str</cite>, optional) -- directory path to search for files to
+spectrally clip; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>base_dir</cite> will
+be ignored (default: <cite>None</cite>).</p></li>
+<li><p><strong>search_ext</strong> (<cite>str</cite>) -- file format/extension to search for in all
+directories and subdirectories to determine which files to
+process; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>search_ext</cite> will
+be ignored (default: 'bip').</p></li>
+<li><p><strong>dir_level</strong> (<cite>int</cite>) -- The number of directory levels to search; if
+<cite>None</cite>, searches all directory levels (default: 0).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.batch.spectral_clip">
+<code class="sig-name descname">spectral_clip</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None, base_dir=None, search_ext='bip', dir_level=0, base_dir_out=None, folder_name='spec_clip', name_append='spec-clip', wl_bands=[[0, 420], [760, 776], [813, 827], [880, 1000]], out_dtype=False, out_force=None, out_ext=False, out_interleave=False, out_byteorder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/batch.html#batch.spectral_clip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.spectral_clip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Batch processing tool to spectrally clip multiple datacubes in the same
+way.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_list</strong> (<cite>list</cite>, optional) -- list of filenames to process; if
+left to <cite>None</cite>, will look at <cite>base_dir</cite>, <cite>search_ext</cite>, and
+<cite>dir_level</cite> parameters for files to process (default: <cite>None</cite>).</p></li>
+<li><p><strong>base_dir</strong> (<cite>str</cite>, optional) -- directory path to search for files to
+spectrally clip; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>base_dir</cite> will
+be ignored (default: <cite>None</cite>).</p></li>
+<li><p><strong>search_ext</strong> (<cite>str</cite>) -- file format/extension to search for in all
+directories and subdirectories to determine which files to
+process; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>search_ext</cite> will
+be ignored (default: 'bip').</p></li>
+<li><p><strong>dir_level</strong> (<cite>int</cite>) -- The number of directory levels to search; if
+<cite>None</cite>, searches all directory levels (default: 0).</p></li>
+<li><p><strong>base_dir_out</strong> (<cite>str</cite>) -- directory path to save all processed
+datacubes; if set to <cite>None</cite>, a folder named according to the
+<cite>folder_name</cite> parameter is added to <cite>base_dir</cite></p></li>
+<li><p><strong>folder_name</strong> (<cite>str</cite>) -- folder to add to <cite>base_dir_out</cite> to save all
+the processed datacubes (default: 'spec-clip').</p></li>
+<li><p><strong>name_append</strong> (<cite>str</cite>) -- name to append to the filename (default:
+'spec-clip').</p></li>
+<li><p><strong>wl_bands</strong> (<cite>list</cite> or <cite>list of lists</cite>) -- minimum and maximum
+wavelenths to clip from image; if multiple groups of
+wavelengths should be cut, this should be a list of lists. For
+example, wl_bands=[760, 776] will clip all bands greater than
+760.0 nm and less than 776.0 nm;
+wl_bands = [[0, 420], [760, 776], [813, 827], [880, 1000]]
+will clip all band less than 420.0 nm, bands greater than 760.0
+nm and less than 776.0 nm, bands greater than 813.0 nm and less
+than 827.0 nm, and bands greater than 880 nm (default).</p></li>
+<li><p><strong>out_XXX</strong> -- Settings for saving the output files can be adjusted here
+if desired. They are stored in <cite>batch.io.defaults, and are
+therefore accessible at a high level. See
+`hsio.set_io_defaults()</cite> for more information on each of the
+settings.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.batch.spectral_smooth">
+<code class="sig-name descname">spectral_smooth</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None</em>, <em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='bip'</em>, <em class="sig-param">dir_level=0</em>, <em class="sig-param">base_dir_out=None</em>, <em class="sig-param">folder_name='spec_smooth'</em>, <em class="sig-param">name_append='spec-smooth'</em>, <em class="sig-param">window_size=11</em>, <em class="sig-param">order=2</em>, <em class="sig-param">stats=False</em>, <em class="sig-param">out_dtype=False</em>, <em class="sig-param">out_force=None</em>, <em class="sig-param">out_ext=False</em>, <em class="sig-param">out_interleave=False</em>, <em class="sig-param">out_byteorder=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/batch.html#batch.spectral_smooth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.spectral_smooth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Batch processing tool to spectrally smooth multiple datacubes in the
+same way.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_list</strong> (<cite>list</cite>, optional) -- list of filenames to process; if
+left to <cite>None</cite>, will look at <cite>base_dir</cite>, <cite>search_ext</cite>, and
+<cite>dir_level</cite> parameters for files to process (default: <cite>None</cite>).</p></li>
+<li><p><strong>base_dir</strong> (<cite>str</cite>, optional) -- directory path to search for files to
+spectrally clip; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>base_dir</cite> will
+be ignored (default: <cite>None</cite>).</p></li>
+<li><p><strong>search_ext</strong> (<cite>str</cite>) -- file format/extension to search for in all
+directories and subdirectories to determine which files to
+process; if <cite>fname_list</cite> is not <cite>None</cite>, <cite>search_ext</cite> will
+be ignored (default: 'bip').</p></li>
+<li><p><strong>dir_level</strong> (<cite>int</cite>) -- The number of directory levels to search; if
+<cite>None</cite>, searches all directory levels (default: 0).</p></li>
+<li><p><strong>base_dir_out</strong> (<cite>str</cite>) -- directory path to save all processed
+datacubes; if set to <cite>None</cite>, a folder named according to the
+<cite>folder_name</cite> parameter is added to <cite>base_dir</cite></p></li>
+<li><p><strong>folder_name</strong> (<cite>str</cite>) -- folder to add to <cite>base_dir_out</cite> to save all
+the processed datacubes (default: 'spec-smooth').</p></li>
+<li><p><strong>name_append</strong> (<cite>str</cite>) -- name to append to the filename (default:
+'spec-smooth').</p></li>
+<li><p><strong>window_size</strong> (<cite>int</cite>) -- the length of the window; must be an odd
+integer number (default: 11).</p></li>
+<li><p><strong>order</strong> (<cite>int</cite>) -- the order of the polynomial used in the filtering;
+must be less than <cite>window_size</cite> - 1 (default: 2).</p></li>
+<li><p><strong>stats</strong> (<cite>bool</cite>) -- whether to compute some basic descriptive
+statistics (mean, st. dev., and coefficient of variation) of
+the smoothed data array (default: <cite>False</cite>)</p></li>
+<li><p><strong>out_XXX</strong> -- Settings for saving the output files can be adjusted here
+if desired. They are stored in <cite>batch.io.defaults, and are
+therefore accessible at a high level. See
+`hsio.set_io_defaults()</cite> for more information on each of the
+settings.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hs_process.segment">
+<em class="property">class </em><code class="sig-prename descclassname">hs_process.</code><code class="sig-name descname">segment</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/segment.html#segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for aiding in the segmentation/masking of image data to include
+pixels that are of most interest.</p>
+<dl class="method">
+<dt id="hs_process.segment.band_math_derivative">
+<code class="sig-name descname">band_math_derivative</code><span class="sig-paren">(</span><em class="sig-param">wl1=None</em>, <em class="sig-param">wl2=None</em>, <em class="sig-param">wl3=None</em>, <em class="sig-param">b1=None</em>, <em class="sig-param">b2=None</em>, <em class="sig-param">b3=None</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">list_range=True</em>, <em class="sig-param">print_out=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/segment.html#segment.band_math_derivative"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.band_math_derivative" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates a derivative-type spectral index from two input bands
+and/or wavelengths. Bands/wavelengths can be input as two individual
+bands, two sets of bands (i.e., list of bands), or range of bands
+(i.e., list of two bands indicating the lower and upper range).</p>
+<p>der_index = (wl1 - wl2) / (wl2 - wl3)
+:param wl1: the wavelength (or set of</p>
+<blockquote>
+<div><p>wavelengths) to be used as the first parameter of the
+derivative index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wl2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the wavelength (or set of
+wavelengths) to be used as the second parameter of the
+derivative index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b1</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the band (or set of bands) to be
+used as the first parameter of the derivative index;
+if <cite>list</cite>, then consolidates all bands between two band values
+by calculating the mean pixel value across all bands in that
+range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the band (or set of bands) to be
+used as the second parameter of the derivative
+index; if <cite>list</cite>, then consolidates all bands between two band
+values by calculating the mean pixel value across all bands in
+that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The datacube to
+crop; if <cite>numpy.ndarray</cite> or <cite>None</cite>, loads band information from
+<cite>self.spyfile</cite> (default: <cite>None</cite>).</p></li>
+<li><p><strong>list_range</strong> (<cite>bool</cite>) -- Whether bands/wavelengths passed as a list is
+interpreted as a range of bands (<cite>True</cite>) or for each individual
+band in the list (<cite>False</cite>). If <cite>list_range</cite> is <cite>True</cite>,
+<cite>b1</cite>/<cite>wl1</cite> and <cite>b2</cite>/<cite>wl2</cite> should be lists with two items, and
+all bands/wavelegths between the two values will be used
+(default: <cite>True</cite>).</p></li>
+<li><p><strong>print_out</strong> (<cite>bool</cite>) -- Whether to print out the actual bands and
+wavelengths being used in the NDI calculation (default:
+<cite>True</cite>).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.segment.band_math_mcari2">
+<code class="sig-name descname">band_math_mcari2</code><span class="sig-paren">(</span><em class="sig-param">wl1=None</em>, <em class="sig-param">wl2=None</em>, <em class="sig-param">wl3=None</em>, <em class="sig-param">b1=None</em>, <em class="sig-param">b2=None</em>, <em class="sig-param">b3=None</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">list_range=True</em>, <em class="sig-param">print_out=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/segment.html#segment.band_math_mcari2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.band_math_mcari2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the MCARI2 spectral index</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.segment.band_math_ndi">
+<code class="sig-name descname">band_math_ndi</code><span class="sig-paren">(</span><em class="sig-param">wl1=None</em>, <em class="sig-param">wl2=None</em>, <em class="sig-param">b1=None</em>, <em class="sig-param">b2=None</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">list_range=True</em>, <em class="sig-param">print_out=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/segment.html#segment.band_math_ndi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.band_math_ndi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates a normalized difference spectral index from two input bands
+and/or wavelengths. Bands/wavelengths can be input as two individual
+bands, two sets of bands (i.e., list of bands), or range of bands
+(i.e., list of two bands indicating the lower and upper range).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wl1</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the wavelength (or set of
+wavelengths) to be used as the first parameter of the
+normalized difference index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>wl2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the wavelength (or set of
+wavelengths) to be used as the second parameter of the
+normalized difference index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b1</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the band (or set of bands) to be
+used as the first parameter of the normalized difference index;
+if <cite>list</cite>, then consolidates all bands between two band values
+by calculating the mean pixel value across all bands in that
+range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the band (or set of bands) to be
+used as the second parameter of the normalized difference
+index; if <cite>list</cite>, then consolidates all bands between two band
+values by calculating the mean pixel value across all bands in
+that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The datacube to
+crop; if <cite>numpy.ndarray</cite> or <cite>None</cite>, loads band information from
+<cite>self.spyfile</cite> (default: <cite>None</cite>).</p></li>
+<li><p><strong>list_range</strong> (<cite>bool</cite>) -- Whether bands/wavelengths passed as a list is
+interpreted as a range of bands (<cite>True</cite>) or for each individual
+band in the list (<cite>False</cite>). If <cite>list_range</cite> is <cite>True</cite>,
+<cite>b1</cite>/<cite>wl1</cite> and <cite>b2</cite>/<cite>wl2</cite> should be lists with two items, and
+all bands/wavelegths between the two values will be used
+(default: <cite>True</cite>).</p></li>
+<li><p><strong>print_out</strong> (<cite>bool</cite>) -- Whether to print out the actual bands and
+wavelengths being used in the NDI calculation (default:
+<cite>True</cite>).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.segment.band_math_ratio">
+<code class="sig-name descname">band_math_ratio</code><span class="sig-paren">(</span><em class="sig-param">wl1=None</em>, <em class="sig-param">wl2=None</em>, <em class="sig-param">b1=None</em>, <em class="sig-param">b2=None</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">list_range=True</em>, <em class="sig-param">print_out=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/segment.html#segment.band_math_ratio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.band_math_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates a simple ratio spectral index from two input band and/or
+wavelengths. Bands/wavelengths can be input as two individual bands,
+two sets of bands (i.e., list of bands), or a range of bands (i.e.,
+list of two bands indicating the lower and upper range).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wl1</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the wavelength (or set of
+wavelengths) to be used as the first parameter of the
+normalized difference index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>wl2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the wavelength (or set of
+wavelengths) to be used as the second parameter of the
+normalized difference index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b1</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the band (or set of bands) to be
+used as the first parameter (numerator) of the ratio index; if
+<cite>list</cite>, then consolidates all bands between two band values by
+calculating the mean pixel value across all bands in that
+range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the bands (or set of bands) to be                used as the second parameter (denominator) of the ratio index;
+if <cite>list</cite>, then consolidates all bands between two bands values
+by calculating the mean pixel value across all bands in that
+range (default: <cite>None</cite>).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The datacube to
+crop; if <cite>numpy.ndarray</cite> or <cite>None</cite>, loads band information from
+<cite>self.spyfile</cite> (default: <cite>None</cite>).</p></li>
+<li><p><strong>list_range</strong> (<cite>bool</cite>) -- Whether a band passed as a list is interpreted as a
+range of bands (<cite>True</cite>) or for each individual band in the
+list (<cite>False</cite>). If <cite>list_range</cite> is <cite>True</cite>, <cite>b1</cite>/<cite>wl1</cite> and
+<cite>b2</cite>/<cite>wl2</cite> should be lists with two items, and all
+bands/wavelegths between the two values will be used (default:
+<cite>True</cite>).</p></li>
+<li><p><strong>print_out</strong> (<cite>bool</cite>) -- Whether to print out the actual bands and
+wavelengths being used in the NDI calculation (default:
+<cite>True</cite>).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.segment.kmeans">
+<code class="sig-name descname">kmeans</code><span class="sig-paren">(</span><em class="sig-param">n_classes=3</em>, <em class="sig-param">max_iter=100</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/segment.html#segment.kmeans"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.kmeans" title="Permalink to this definition">¶</a></dt>
+<dd><p>If there are more soil pixels than vegetation pixels, will vegetation be
+class 0 instead of class 2?</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_classes</strong> (<cite>int</cite>) -- number of classes (default: 3).</p></li>
+<li><p><strong>max_iter</strong> (<cite>int</cite>) -- maximum iterations before terminating process
+(default: 100).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The datacube to
+crop; if <cite>numpy.ndarray</cite> or <cite>None</cite>, loads band information from
+<cite>self.spyfile</cite> (default: <cite>None</cite>).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.segment.load_spyfile">
+<code class="sig-name descname">load_spyfile</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/segment.html#segment.load_spyfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.load_spyfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a <cite>SpyFile</cite> (Spectral Python object) for data access and/or
+manipulation by the <cite>hstools</cite> class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>spyfile</strong> (<cite>SpyFile</cite> object) -- The datacube being accessed and/or
+manipulated.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.segment.mask_datacube">
+<code class="sig-name descname">mask_datacube</code><span class="sig-paren">(</span><em class="sig-param">mask</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/segment.html#segment.mask_datacube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.mask_datacube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies <cite>mask</cite> to <cite>spyfile</cite>, then returns the datcube (as a np.array)
+and the mean spectra</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mask</strong> (<cite>numpy.ndarray</cite>) -- the mask to apply to <cite>spyfile</cite>; if <cite>mask</cite>
+does not have similar dimensions to <cite>spyfile</cite>, the first band
+(i.e., first two dimensions) of <cite>mask</cite> will be repeated n times
+to match the number of bands of <cite>spyfile</cite>.</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object) -- The datacube being accessed and/or
+manipulated.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.segment.veg_spectra">
+<code class="sig-name descname">veg_spectra</code><span class="sig-paren">(</span><em class="sig-param">array_veg</em>, <em class="sig-param">thresh=None</em>, <em class="sig-param">percentile=None</em>, <em class="sig-param">side='lower'</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/segment.html#segment.veg_spectra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.veg_spectra" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the average spectra across vegetation pixels</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array_veg</strong> (<cite>numpy.ndarray</cite>) -- a single-band image array, presumably
+that discriminates vegetation pixels from other pixels such as
+soil, shadow, etc.</p></li>
+<li><p><strong>thresh</strong> (<cite>float</cite>) -- The value for which to base the threshold
+(default: <cite>None</cite>).</p></li>
+<li><p><strong>percentile</strong> (<cite>float</cite> or <cite>int</cite>) -- The percentile of pixels to mask; if
+<cite>percentile`=95 and `side`='lower', the lowest 95% of pixels
+will be masked prior to calculating the mean spectra across
+pixels (default: `None</cite>; range: 0-100).</p></li>
+<li><p><strong>side</strong> (<cite>str</cite>) -- The side of the threshold or percentile for which to
+apply the mask. Must be either 'lower' or 'upper'; if 'lower',
+everything below the threshold/percentile will be masked
+(default: 'lower').</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hs_process.spatial_mod">
+<em class="property">class </em><code class="sig-prename descclassname">hs_process.</code><code class="sig-name descname">spatial_mod</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em>, <em class="sig-param">gdf=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/spatial_mod.html#spatial_mod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spatial_mod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for manipulating data within the spatial domain (e.g., cropping by
+geographical boundary)</p>
+<dl class="method">
+<dt id="hs_process.spatial_mod.crop_many_gdf">
+<code class="sig-name descname">crop_many_gdf</code><span class="sig-paren">(</span><em class="sig-param">plot_id_ref</em>, <em class="sig-param">pix_e_ul=0</em>, <em class="sig-param">pix_n_ul=0</em>, <em class="sig-param">crop_e_m=None</em>, <em class="sig-param">crop_n_m=None</em>, <em class="sig-param">crop_e_pix=None</em>, <em class="sig-param">crop_n_pix=None</em>, <em class="sig-param">buf_e_m=None</em>, <em class="sig-param">buf_n_m=None</em>, <em class="sig-param">buf_e_pix=None</em>, <em class="sig-param">buf_n_pix=None</em>, <em class="sig-param">n_plots=None</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">gdf=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/spatial_mod.html#spatial_mod.crop_many_gdf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spatial_mod.crop_many_gdf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Crops many plots from a single image by comparing the image to a
+polygon file (geopandas.GoeDataFrame) that contains plot information
+and geometry of plot boundaries.</p>
+<p>If <cite>pix_e_ul</cite> and <cite>pix_n_ul</cite> are passed, those pixel offests will be
+compared to the upper left pixel of <cite>plot_id_ref</cite> and the difference in
+both the easting and northing direction will be applied to all plots to
+systematically shift the actual upper left pixel/cropping location for
+each plot within the image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>plot_id_ref</strong> (<cite>int</cite>) -- the plot ID of the reference plot, which must
+be present in the datacube.</p></li>
+<li><p><strong>pix_e_ul</strong> (<cite>int</cite>) -- upper left pixel column (easting) of
+<cite>plot_id_ref</cite>; this is used to calculate the offset between the
+GeoDataFrame geometry and the approximate image georeference
+error (default: 0).</p></li>
+<li><p><strong>pix_n_ul</strong> (<cite>int</cite>) -- upper left pixel row (northing) of <cite>plot_id_ref</cite>;
+this is used to calculate the offset between the GeoDataFrame
+geometry and the approximate image georeference error
+(default: 0).</p></li>
+<li><p><strong>crop_e_m</strong> (<cite>float</cite>, optional) -- length of each row (easting
+direction) in the cropped image (in map units; e.g., meters).</p></li>
+<li><p><strong>crop_n_m</strong> (<cite>float</cite>, optional) -- length of each column (northing
+direction) in the cropped image (in map units; e.g., meters).</p></li>
+<li><p><strong>crop_e_pix</strong> (<cite>int</cite>, optional) -- number of pixels in each row in the
+cropped image.</p></li>
+<li><p><strong>crop_n_pix</strong> (<cite>int</cite>, optional) -- number of pixels in each column in
+the cropped image.</p></li>
+<li><p><strong>buf_e_m</strong> (<cite>float</cite>, optional) -- The buffer distance in the easting
+direction (in map units; e.g., meters) to be applied after
+calculating the original crop area; the buffer is considered
+after <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>. A positive value will reduce the
+size of <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>, and a negative value will
+increase it.</p></li>
+<li><p><strong>buf_n_m</strong> (<cite>float</cite>, optional) -- The buffer distance in the northing
+direction (in map units; e.g., meters) to be applied after
+calculating the original crop area; the buffer is considered
+after <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>. A positive value will reduce the
+size of <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>, and a negative value will
+increase it.</p></li>
+<li><p><strong>buf_e_pix</strong> (<cite>int</cite>, optional) -- The buffer distance in the easting
+direction (in pixel units) to be applied after calculating the
+original crop area.</p></li>
+<li><p><strong>buf_n_pix</strong> (<cite>int</cite>, optional) -- The buffer distance in the northing
+direction (in pixel units) to be applied after calculating the
+original crop area.</p></li>
+<li><p><strong>n_plots</strong> -- number of plots to crop, starting with
+<cite>plot_id_ref</cite> and moving from West to East and North to South
+(default; <cite>None</cite>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>df_plots</strong> (<cite>pandas.DataFrame</cite>) -- data for
+which to crop each plot; includes 'plot_id', 'pix_e_ul', and
+'pix_n_ul' columns. This data can be passed to
+<cite>spatial_mod.crop_single()</cite> to perform the actual cropping.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>pandas.DataFrame</cite></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Either the pixel coordinate or the map unit coordinate should be
+passed for <cite>crop_X_Y</cite> and <cite>buf_X_Y</cite> in each direction (i.e.,
+easting and northing). Do not pass both.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.spatial_mod.crop_many_grid">
+<code class="sig-name descname">crop_many_grid</code><span class="sig-paren">(</span><em class="sig-param">plot_id_ul</em>, <em class="sig-param">pix_e_ul</em>, <em class="sig-param">pix_n_ul</em>, <em class="sig-param">crop_e_m=9.17</em>, <em class="sig-param">crop_n_m=3.049</em>, <em class="sig-param">crop_e_pix=None</em>, <em class="sig-param">crop_n_pix=None</em>, <em class="sig-param">buf_e_pix=None</em>, <em class="sig-param">buf_n_pix=None</em>, <em class="sig-param">buf_e_m=None</em>, <em class="sig-param">buf_n_m=None</em>, <em class="sig-param">alley_size_e_m=None</em>, <em class="sig-param">alley_size_n_m=None</em>, <em class="sig-param">alley_size_e_pix=None</em>, <em class="sig-param">alley_size_n_pix=None</em>, <em class="sig-param">n_plots_x=5</em>, <em class="sig-param">n_plots_y=9</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/spatial_mod.html#spatial_mod.crop_many_grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spatial_mod.crop_many_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Crops many plots from a single image by calculating the distance
+between plots based on <cite>crop_X_Y</cite>, <cite>n_plots_X/Y</cite>, and <cite>alley_size_X_Y</cite>
+parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>plot_id_ul</strong> (<cite>int</cite>) -- the plot ID of the upper left (northwest-most)
+plot to be cropped.</p></li>
+<li><p><strong>pix_e_ul</strong> (<cite>int</cite>) -- upper left pixel column (easting) of
+<cite>plot_id_ul</cite>.</p></li>
+<li><p><strong>pix_n_ul</strong> (<cite>int</cite>) -- upper left pixel row (northing) of <cite>plot_id_ul</cite>.</p></li>
+<li><p><strong>crop_e_m</strong> (<cite>float</cite>, optional) -- length of each row (easting
+direction) in the cropped image (in map units; e.g., meters).</p></li>
+<li><p><strong>crop_n_m</strong> (<cite>float</cite>, optional) -- length of each column (northing
+direction) in the cropped image (in map units; e.g., meters).</p></li>
+<li><p><strong>crop_e_pix</strong> (<cite>int</cite>, optional) -- number of pixels in each row in the
+cropped image.</p></li>
+<li><p><strong>crop_n_pix</strong> (<cite>int</cite>, optional) -- number of pixels in each column in
+the cropped image.</p></li>
+<li><p><strong>buf_e_m</strong> (<cite>float</cite>, optional) -- The buffer distance in the easting
+direction (in map units; e.g., meters) to be applied after
+calculating the original crop area; the buffer is considered
+after <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>. A positive value will reduce the
+size of <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>, and a negative value will
+increase it.</p></li>
+<li><p><strong>buf_n_m</strong> (<cite>float</cite>, optional) -- The buffer distance in the northing
+direction (in map units; e.g., meters) to be applied after
+calculating the original crop area; the buffer is considered
+after <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>. A positive value will reduce the
+size of <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>, and a negative value will
+increase it.</p></li>
+<li><p><strong>buf_e_pix</strong> (<cite>int</cite>, optional) -- The buffer distance in the easting
+direction (in pixel units) to be applied after calculating the
+original crop area.</p></li>
+<li><p><strong>buf_n_pix</strong> (<cite>int</cite>, optional) -- The buffer distance in the northing
+direction (in pixel units) to be applied after calculating the
+original crop area.</p></li>
+<li><p><strong>alley_size_e_m</strong> (<cite>int</cite>, optional) -- Should be passed if there are
+alleys passing across the E/W direction of the plots that are
+not accounted for by the <cite>crop_X_Y</cite> parameters. Used together
+with <cite>n_plots_x</cite> to determine the plots represented in a
+particular datacube.</p></li>
+<li><p><strong>alley_size_n_m</strong> (<cite>int</cite>, optional) -- Should be passed if there are
+alleys passing across the N/S direction of the plots that are
+not accounted for by the <cite>crop_X_Y</cite> parameters. Used together
+with <cite>n_plots_y</cite> to determine the plots represented in a
+particular datacube.</p></li>
+<li><p><strong>alley_size_e_pix</strong> (<cite>float</cite>, optional) -- see <cite>alley_size_e_m</cite>.</p></li>
+<li><p><strong>alley_size_n_pix</strong> (<cite>float</cite>, optional) -- see <cite>alley_size_n_m</cite>.</p></li>
+<li><p><strong>n_plots_x</strong> (<cite>int</cite>) -- number of plots in a row in east/west direction
+(default: 5).</p></li>
+<li><p><strong>n_plots_y</strong> (<cite>int</cite>) -- number of plots in a row in north/south
+direction (default: 9).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object) -- The datacube to crop; if <cite>None</cite>, loads
+datacube and band information from <cite>spatial_mod.spyfile</cite>
+(default: <cite>None</cite>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>df_plots</strong> (<cite>pandas.DataFrame</cite>) -- data for
+which to crop each plot; includes 'plot_id', 'pix_e_ul', and
+'pix_n_ul' columns. This data can be passed to
+<cite>spatial_mod.crop_single()</cite> to perform the actual cropping.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>pandas.DataFrame</cite></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Either the pixel coordinate or the map unit coordinate should be
+passed for <cite>crop_X_Y</cite> and <cite>buf_X_Y</cite> in each direction (i.e.,
+easting and northing). Do not pass both.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.spatial_mod.crop_single">
+<code class="sig-name descname">crop_single</code><span class="sig-paren">(</span><em class="sig-param">pix_e_ul</em>, <em class="sig-param">pix_n_ul</em>, <em class="sig-param">crop_e_pix=None</em>, <em class="sig-param">crop_n_pix=None</em>, <em class="sig-param">crop_e_m=None</em>, <em class="sig-param">crop_n_m=None</em>, <em class="sig-param">buf_e_pix=None</em>, <em class="sig-param">buf_n_pix=None</em>, <em class="sig-param">buf_e_m=None</em>, <em class="sig-param">buf_n_m=None</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">plot_id=None</em>, <em class="sig-param">gdf=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/spatial_mod.html#spatial_mod.crop_single"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spatial_mod.crop_single" title="Permalink to this definition">¶</a></dt>
+<dd><p>Crops a single plot from an image. If <cite>plot_id</cite> and <cite>gdf</cite> are
+explicitly passed (i.e., they will not be loaded from <cite>spatial_mod</cite>
+class), the &quot;map info&quot; tag in the metadata will be adjusted to center
+the cropped area within the appropriate plot geometry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pix_e_ul</strong> (<cite>int</cite>) -- upper left column (easting) to begin cropping</p></li>
+<li><p><strong>pix_n_ul</strong> (<cite>int</cite>) -- upper left row (northing) to begin cropping</p></li>
+<li><p><strong>crop_e_pix</strong> (<cite>int</cite>, optional) -- number of pixels in each row in the
+cropped image</p></li>
+<li><p><strong>crop_n_pix</strong> (<cite>int</cite>, optional) -- number of pixels in each column in
+the cropped image</p></li>
+<li><p><strong>crop_e_m</strong> (<cite>float</cite>, optional) -- length of each row (easting
+direction) in the cropped image (in map units; e.g.,
+meters).</p></li>
+<li><p><strong>crop_n_m</strong> (<cite>float</cite>, optional) -- length of each column (northing
+direction) in the cropped image (in map units; e.g.,
+meters).</p></li>
+<li><p><strong>buf_e_pix</strong> (<cite>int</cite>, optional) -- applied/calculated after
+<cite>crop_e_pix</cite> and <cite>crop_n_pix</cite> are accounted for</p></li>
+<li><p><strong>buf_n_pix</strong> (<cite>int</cite>, optional) -- </p></li>
+<li><p><strong>buf_e_m</strong> (<cite>float</cite>, optional) -- </p></li>
+<li><p><strong>buf_n_m</strong> (<cite>float</cite>, optional) -- </p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The datacube to
+crop; if <cite>numpy.ndarray</cite> or <cite>None</cite>, loads band information from
+<cite>self.spyfile</cite> (default: <cite>None</cite>).</p></li>
+<li><p><strong>plot_id</strong> (<cite>int</cite>) -- the plot ID of the area to be cropped.</p></li>
+<li><p><strong>gdf</strong> (<cite>geopandas.GeoDataFrame</cite>) -- the plot names and polygon
+geometery of each of the plots; 'plot' must be used as a column
+name to identify each of the plots, and should be an integer.
+<cite>gdf</cite> must be explicitly passed to</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>2-element <cite>tuple</cite> containing</p>
+<ul class="simple">
+<li><p><strong>array_crop</strong> (<cite>numpy.ndarray</cite>): Cropped datacube.</p></li>
+<li><p><strong>metadata</strong> (<cite>dict</cite>): Modified metadata describing the cropped
+hyperspectral datacube (<cite>array_crop</cite>).</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.spatial_mod.load_spyfile">
+<code class="sig-name descname">load_spyfile</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/spatial_mod.html#spatial_mod.load_spyfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spatial_mod.load_spyfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a <cite>SpyFile</cite> (Spectral Python object) for data access and/or
+manipulation by the <cite>hstools</cite> class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>spyfile</strong> (<cite>SpyFile</cite> object) -- The datacube being accessed and/or
+manipulated.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hs_process.spec_mod">
+<em class="property">class </em><code class="sig-prename descclassname">hs_process.</code><code class="sig-name descname">spec_mod</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/spec_mod.html#spec_mod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spec_mod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for manipulating data within the spectral domain (usually
+pixel-based)</p>
+<dl class="method">
+<dt id="hs_process.spec_mod.load_spyfile">
+<code class="sig-name descname">load_spyfile</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/spec_mod.html#spec_mod.load_spyfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spec_mod.load_spyfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a <cite>SpyFile</cite> (Spectral Python object) for data access and/or
+manipulation by the <cite>hstools</cite> class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>spyfile</strong> (<cite>SpyFile</cite> object) -- The datacube being accessed and/or
+manipulated.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.spec_mod.spectral_clip">
+<code class="sig-name descname">spectral_clip</code><span class="sig-paren">(</span><em class="sig-param">wl_bands=[[0, 420], [760, 776], [813, 827], [880, 1000]], spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/spec_mod.html#spec_mod.spectral_clip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spec_mod.spectral_clip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes/clips designated wavelength bands from the hyperspectral
+datacube.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wl_bands</strong> (<cite>list</cite> or <cite>list of lists</cite>) -- minimum and maximum
+wavelenths to clip from image; if multiple groups of
+wavelengths should be cut, this should be a list of lists. For
+example, wl_bands=[760, 776] will clip all bands greater than
+760.0 nm and less than 776.0 nm;
+wl_bands = [[0, 420], [760, 776], [813, 827], [880, 1000]]
+will clip all band less than 420.0 nm, bands greater than 760.0
+nm and less than 776.0 nm, bands greater than 813.0 nm and less
+than 827.0 nm, and bands greater than 880 nm (default).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The data cube to
+clip; if <cite>numpy.ndarray</cite> or <cite>None</cite>, loads band information from
+<cite>self.spyfile</cite> (default: <cite>None</cite>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>2-element <cite>tuple</cite> containing</p>
+<ul class="simple">
+<li><p><strong>array_clip</strong> (<cite>numpy.ndarray</cite>): Clipped datacube.</p></li>
+<li><p><strong>metadata</strong> (<cite>dict</cite>): Modified metadata describing the clipped
+hyperspectral datacube (<cite>array_clip</cite>).</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.spec_mod.spectral_smooth">
+<code class="sig-name descname">spectral_smooth</code><span class="sig-paren">(</span><em class="sig-param">window_size=11</em>, <em class="sig-param">order=2</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hs_process/spec_mod.html#spec_mod.spectral_smooth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spec_mod.spectral_smooth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs Savitzky-Golay smoothing on the spectral domain</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>window_size</strong> (<cite>int</cite>) -- the length of the window; must be an odd integer
+number (default: 11).</p></li>
+<li><p><strong>order</strong> (<cite>int</cite>) -- the order of the polynomial used in the filtering; must
+be less than <cite>window_size</cite> - 1 (default: 2).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The data cube to
+clip; if <cite>numpy.ndarray</cite> or <cite>None</cite>, loads band information from
+<cite>self.spyfile</cite> (default: <cite>None</cite>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>2-element <cite>tuple</cite> containing</p>
+<ul class="simple">
+<li><p><strong>array_smooth</strong> (<cite>numpy.ndarray</cite>): Clipped datacube.</p></li>
+<li><p><strong>metadata</strong> (<cite>dict</cite>): Modified metadata describing the smoothed
+hyperspectral datacube (<cite>array_smooth</cite>).</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2020, Tyler J. Nigon.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
