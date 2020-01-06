@@ -104,7 +104,7 @@ class defaults:
 class hsio(object):
     '''
     Class for reading and writing hyperspectral data files and accessing,
-    interpreting, and modifying its assoicated metadata.
+    interpreting, and modifying its associated metadata.
 
     TODO: Create a temporary Spyfile using envi.create_imamge() and saving to a
         temporary location. This can be used to hold intermediate SpyFiles
@@ -1266,6 +1266,7 @@ class hstools(object):
             mask_combine = np.logical_or(mask_combine, array_m.mask)
         except AttributeError as err:
             pass  # array_m does not have a mask
+        array = np.ma.masked_invalid(array)  # masks out invalid data (e.g., NaN, inf)
         array_mask = np.ma.array(array, mask=mask_combine)
         unmasked_pct = 100 * (array_mask.count() /
                               (array.shape[0]*array.shape[1]))

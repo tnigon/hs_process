@@ -292,8 +292,7 @@ class batch(object):
             data = [fname, self.io.name_plot, stat_mask_mean]
             df_stats_temp = pd.DataFrame(data=[data], columns=columns)
             df_stats = df_stats.append(df_stats_temp, ignore_index=True)
-
-            spec_mean, spec_std, datacube_masked = self.io.tools.mask_datacube(
+            spec_mean, spec_std, datacube_masked = self.io.tools.mean_datacube(
                     array, array_mask.mask)
 #            metadata = self.io.spyfile.metadata.copy()
             # because this is specialized, we should make our own history str
@@ -940,12 +939,12 @@ class batch(object):
             if name_to_match in fname:
                 fname_similar.append(fname)
         msg1 = ('No files found with a similar name to {0}. Please be '
-                'sure to images are created before continuing (e.g., did '
-                'you perform K-means classification and band math) yet?'
-                ''.format(name_to_match))
+                'sure the images are created before continuing (e.g., did '
+                'you perform band math yet?)\n\nbase_dir: {1}'
+                ''.format(name_to_match, base_dir))
         msg2 = ('Multiple files found with a similar name to {0}. Please '
-                'delete files that are not relevant to continue.'
-                ''.format(name_to_match))
+                'delete files that are not relevant to continue.\n\nbase_dir: '
+                '{1}'.format(name_to_match, base_dir))
         assert len(fname_similar) != 0, msg1
         assert len(fname_similar) == 1, msg2
         return fname_similar[0]
@@ -1392,7 +1391,7 @@ class batch(object):
                     percentile=mask_percentile, side=mask_side)
             total_pct = (100 * (mask_combined.count() /
                             (mask_combined.shape[0]*mask_combined.shape[1])))
-            spec_mean, spec_std, datacube_masked = self.io.tools.mask_datacube(
+            spec_mean, spec_std, datacube_masked = self.io.tools.mean_datacube(
                     self.io.spyfile, mask_combined)
 
             data = [os.path.basename(fname), class_mask, kmeans_pct,

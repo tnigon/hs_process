@@ -32,9 +32,8 @@ __license__ = (
         'SOFTWARE.')
 __email__ = 'nigo0024@umn.edu'
 
-from .analyze import analyze
+#from .analyze import analyze
 from .batch import batch
-#from .hstools import hsio
 from .utilities import hsio
 from .utilities import defaults
 from .utilities import hstools
@@ -45,8 +44,7 @@ from .spec_mod import spec_mod
 name = 'hs_process'
 __version__ = '0.0.1'
 
-__all__ = ['analyze',
-           'batch',
+__all__ = ['batch',
            'segment',
            'spatial_mod',
            'spec_mod']

@@ -312,14 +312,16 @@ class spatial_mod(object):
             if pd.isnull(n_pix) and pd.notnull(n_m):
                 n_pix = self.defaults.crop_defaults['buf_n_pix']
 
+        print(e_pix, n_pix, e_m, n_m)
         if pd.isnull(e_pix) and pd.notnull(e_m):
-            e_pix = e_m / self.spy_ps_e
+            e_pix = int(round(e_m / self.spy_ps_e))
         elif pd.notnull(e_pix) and pd.isnull(e_m):
             e_m = e_pix * self.spy_ps_e
         if pd.isnull(n_pix) and pd.notnull(n_m):
-            n_pix = n_m / self.spy_ps_n
+            n_pix = int(round(n_m / self.spy_ps_n))
         elif pd.notnull(n_pix) and pd.isnull(n_m):
             n_m = n_pix * self.spy_ps_n
+        print(e_pix, n_pix, e_m, n_m)
         return e_pix, n_pix, e_m, n_m
 
     def _read_plot_shp(self):
