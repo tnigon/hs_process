@@ -6,6 +6,7 @@
     <title>hs_process.spatial_mod &#8212; hs_process 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
@@ -35,14 +36,14 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="../../index.html">
-          EONR</a>
+          hs_process</a>
         <span class="navbar-text navbar-version pull-left"><b></b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
           <ul class="nav navbar-nav">
             
-                <li><a href="https://github.com/tnigon/eonr">Github</a></li>
+                <li><a href="https://github.com/tnigon/hs_process">Github</a></li>
             
             
               <li class="dropdown globaltoc-container">
@@ -53,9 +54,16 @@
      href="../../index.html">Contents <b class="caret"></b></a>
   <ul class="dropdown-menu globaltoc"
       role="menu"
-      aria-labelledby="dLabelGlobalToc"><p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../hs_process.html">hs_process package</a></li>
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Home</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../installation.html">1. Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../my_hs_process_api.html">2. API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../license.html">3. License</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../my_hs_process_api.html">2. API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">3. License</a></li>
 </ul>
 </ul>
 </li>
@@ -116,7 +124,7 @@
 <span class="kn">from</span> <span class="nn">hs_process.utilities</span> <span class="k">import</span> <span class="n">hstools</span>
 
 
-<div class="viewcode-block" id="spatial_mod"><a class="viewcode-back" href="../../my_hs_process.html#hs_process.spatial_mod.spatial_mod">[docs]</a><span class="k">class</span> <span class="nc">spatial_mod</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="spatial_mod"><a class="viewcode-back" href="../../api/hs_process.spatial_mod.spatial_mod.html#hs_process.spatial_mod.spatial_mod">[docs]</a><span class="k">class</span> <span class="nc">spatial_mod</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Class for manipulating data within the spatial domain (e.g., cropping by</span>
 <span class="sd">    geographical boundary)</span>
@@ -505,7 +513,7 @@
         <span class="n">ul_y_utm</span> <span class="o">=</span> <span class="n">gdf_plot</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="s1">&#39;maxy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">-</span> <span class="n">buf_n_m</span>
         <span class="k">return</span> <span class="n">ul_x_utm</span><span class="p">,</span> <span class="n">ul_y_utm</span>
 
-<div class="viewcode-block" id="spatial_mod.crop_many_gdf"><a class="viewcode-back" href="../../my_hs_process.html#hs_process.spatial_mod.spatial_mod.crop_many_gdf">[docs]</a>    <span class="k">def</span> <span class="nf">crop_many_gdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plot_id_ref</span><span class="p">,</span> <span class="n">pix_e_ul</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<div class="viewcode-block" id="spatial_mod.crop_many_gdf"><a class="viewcode-back" href="../../api/hs_process.spatial_mod.spatial_mod.html#hs_process.spatial_mod.spatial_mod.crop_many_gdf">[docs]</a>    <span class="k">def</span> <span class="nf">crop_many_gdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plot_id_ref</span><span class="p">,</span> <span class="n">pix_e_ul</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
                       <span class="n">crop_e_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">crop_n_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">crop_e_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                       <span class="n">crop_n_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buf_e_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buf_n_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                       <span class="n">buf_e_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buf_n_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_plots</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -598,7 +606,7 @@
         <span class="c1"># TODO: add crop_X and buf_X to df_plots</span>
         <span class="k">return</span> <span class="n">df_plots</span></div>
 
-<div class="viewcode-block" id="spatial_mod.crop_many_grid"><a class="viewcode-back" href="../../my_hs_process.html#hs_process.spatial_mod.spatial_mod.crop_many_grid">[docs]</a>    <span class="k">def</span> <span class="nf">crop_many_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plot_id_ul</span><span class="p">,</span> <span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="p">,</span>
+<div class="viewcode-block" id="spatial_mod.crop_many_grid"><a class="viewcode-back" href="../../api/hs_process.spatial_mod.spatial_mod.html#hs_process.spatial_mod.spatial_mod.crop_many_grid">[docs]</a>    <span class="k">def</span> <span class="nf">crop_many_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plot_id_ul</span><span class="p">,</span> <span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="p">,</span>
                        <span class="n">crop_e_m</span><span class="o">=</span><span class="mf">9.170</span><span class="p">,</span> <span class="n">crop_n_m</span><span class="o">=</span><span class="mf">3.049</span><span class="p">,</span>
                        <span class="n">crop_e_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">crop_n_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                        <span class="n">buf_e_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buf_n_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -705,7 +713,7 @@
                                    <span class="n">crop_n_pix</span><span class="p">,</span> <span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">df_plots</span></div>
 
-<div class="viewcode-block" id="spatial_mod.crop_single"><a class="viewcode-back" href="../../my_hs_process.html#hs_process.spatial_mod.spatial_mod.crop_single">[docs]</a>    <span class="k">def</span> <span class="nf">crop_single</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="p">,</span> <span class="n">crop_e_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="spatial_mod.crop_single"><a class="viewcode-back" href="../../api/hs_process.spatial_mod.spatial_mod.html#hs_process.spatial_mod.spatial_mod.crop_single">[docs]</a>    <span class="k">def</span> <span class="nf">crop_single</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="p">,</span> <span class="n">crop_e_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                     <span class="n">crop_n_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">crop_e_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">crop_n_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                     <span class="n">buf_e_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buf_n_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buf_e_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buf_n_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                     <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plot_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gdf</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -806,7 +814,7 @@
 
         <span class="k">return</span> <span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span></div>
 
-<div class="viewcode-block" id="spatial_mod.load_spyfile"><a class="viewcode-back" href="../../my_hs_process.html#hs_process.spatial_mod.spatial_mod.load_spyfile">[docs]</a>    <span class="k">def</span> <span class="nf">load_spyfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">):</span>
+<div class="viewcode-block" id="spatial_mod.load_spyfile"><a class="viewcode-back" href="../../api/hs_process.spatial_mod.spatial_mod.html#hs_process.spatial_mod.spatial_mod.load_spyfile">[docs]</a>    <span class="k">def</span> <span class="nf">load_spyfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Loads a `SpyFile` (Spectral Python object) for data access and/or</span>
 <span class="sd">        manipulation by the `hstools` class.</span>

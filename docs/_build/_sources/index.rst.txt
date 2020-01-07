@@ -1,20 +1,44 @@
-.. hs_process documentation master file, created by
-   sphinx-quickstart on Mon Jan  6 00:06:29 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
 
-Welcome to hs_process's documentation!
-======================================
+========================
+hs_process Documentation
+========================
+
+*A Python package for processing and manipulating aerial hyperspectral imagery*
+
+.. |version_current| replace:: 0.0.1
+Current version: |version_current|
+
+``hs_process`` emphasizes the ability to batch process datacubes, with the overall goal of keeping the processing pipeline as "hands-off" as possible. There is also a focus of maintaining the ability to have control over the subjective aspects of processing.
+
+
+##################
+Table of Contents
+##################
+
+*Navigate the* **hs_process Documentation** *using the* **"Contents"** *dropdown in the Navigation Bar*
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :numbered:
+   :titlesonly:
 
-   hs_process
+   Home <index>
+   installation
+   my_hs_process_api
+   license
 
+
+##################
+Troubleshooting
+##################
+Please report any issues you encounter through the `Github issue tracker <https://github.com/tnigon/hs_process/issues>`_.
+
+
+###################
 Indices and tables
-==================
+###################
 
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+

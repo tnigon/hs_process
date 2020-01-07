@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="python">
+  <head>
+    <meta charset="utf-8" />
+    <title>2.4.1.1. defaults &#8212; hs_process 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2.4.1.2. hsio" href="hs_process.utilities.hsio.html" />
+    <link rel="prev" title="2.3.1.1. spec_mod" href="hs_process.spec_mod.spec_mod.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          hs_process</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="https://github.com/tnigon/hs_process">Github</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Contents <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Home</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../installation.html">1. Installation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../my_hs_process_api.html">2. API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="hs_process.segment.segment.html">2.1.1.1. segment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.spatial_mod.spatial_mod.html">2.2.1.1. spatial_mod</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.spec_mod.spec_mod.html">2.3.1.1. spec_mod</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.4.1.1. defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.utilities.hsio.html">2.4.1.2. hsio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.utilities.hstools.html">2.4.1.3. hstools</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">3. License</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">1. Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../my_hs_process_api.html">2. API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="hs_process.segment.segment.html">2.1.1.1. segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spatial_mod.spatial_mod.html">2.2.1.1. spatial_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spec_mod.spec_mod.html">2.3.1.1. spec_mod</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.4.1.1. defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.utilities.hsio.html">2.4.1.2. hsio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.utilities.hstools.html">2.4.1.3. hstools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">3. License</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="hs_process.spec_mod.spec_mod.html" title="Previous Chapter: 2.3.1.1. spec_mod"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; 2.3.1.1. spec_mod</span>
+    </a>
+  </li>
+  <li>
+    <a href="hs_process.utilities.hsio.html" title="Next Chapter: 2.4.1.2. hsio"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">2.4.1.2. hsio &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../_sources/api/hs_process.utilities.defaults.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">2.4.1.1. defaults</a></li>
+</ul>
+
+<form action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="body col-md-9 content" role="main">
+      
+  <div class="section" id="defaults">
+<h1>2.4.1.1. defaults<a class="headerlink" href="#defaults" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="hs_process.utilities.defaults">
+<em class="property">class </em><code class="sig-prename descclassname">hs_process.utilities.</code><code class="sig-name descname">defaults</code><a class="reference internal" href="../_modules/hs_process/utilities.html#defaults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class containing all defaults for writing an ENVI datacube to file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dtype</strong> (<cite>numpy.dtype</cite> or <cite>str</cite>) -- The data type with which to store
+the image. For example, to store the image in 16-bit unsigned
+integer format, the argument could be any of numpy.uint16,
+'u2', 'uint16', or 'H' (default=np.float32).</p></li>
+<li><p><strong>force</strong> (<cite>bool</cite>) -- If <cite>hdr_file</cite> or its associated image file exist,
+<cite>force=True</cite> will overwrite the files; otherwise, an exception
+will be raised if either file exists (default=False).</p></li>
+<li><p><strong>ext</strong> (<cite>str</cite>) -- The extension to use for saving the image file; if not
+specified, a default extension is determined based on the
+<cite>interleave</cite>. For example, if <cite>interleave`='bip', then `ext</cite> is
+set to 'bip' as well. If <cite>ext</cite> is an empty string, the image
+file will have the same name as the .hdr, but without the
+'.hdr' extension (default: None).</p></li>
+<li><p><strong>interleave</strong> (<cite>str</cite>) -- The band interleave format to use for writing
+the file; <cite>interleave</cite> should be one of 'bil', 'bip', or 'bsq'
+(default='bip').</p></li>
+<li><p><strong>byteorder</strong> (<cite>int</cite> or <cite>str</cite>) -- Specifies the byte order (endian-ness)
+of the data as written to disk. For little endian, this value
+should be either 0 or 'little'. For big endian, it should be
+either 1 or 'big'. If not specified, native byte order will be
+used (default=None).</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Attributes Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.utilities.defaults.byteorder" title="hs_process.utilities.defaults.byteorder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">byteorder</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.utilities.defaults.crop_defaults" title="hs_process.utilities.defaults.crop_defaults"><code class="xref py py-obj docutils literal notranslate"><span class="pre">crop_defaults</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.utilities.defaults.envi_write" title="hs_process.utilities.defaults.envi_write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">envi_write</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.utilities.defaults.ext" title="hs_process.utilities.defaults.ext"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ext</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.utilities.defaults.force" title="hs_process.utilities.defaults.force"><code class="xref py py-obj docutils literal notranslate"><span class="pre">force</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.utilities.defaults.interleave" title="hs_process.utilities.defaults.interleave"><code class="xref py py-obj docutils literal notranslate"><span class="pre">interleave</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.utilities.defaults.spat_crop_cols" title="hs_process.utilities.defaults.spat_crop_cols"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spat_crop_cols</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Documentation</p>
+<dl class="attribute">
+<dt id="hs_process.utilities.defaults.byteorder">
+<code class="sig-name descname">byteorder</code><em class="property"> = 0</em><a class="headerlink" href="#hs_process.utilities.defaults.byteorder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.utilities.defaults.crop_defaults">
+<code class="sig-name descname">crop_defaults</code><em class="property"> = {'alley_size_e_m': None, 'alley_size_e_pix': None, 'alley_size_n_m': None, 'alley_size_n_pix': None, 'buf_e_m': None, 'buf_e_pix': 0, 'buf_n_m': None, 'buf_n_pix': 0, 'crop_e_m': None, 'crop_e_pix': 90, 'crop_n_m': None, 'crop_n_pix': 120, 'directory': None, 'ext': 'bip', 'name_long': None, 'name_short': None, 'pix_e_ul': 0, 'pix_n_ul': 0, 'plot_id': None}</em><a class="headerlink" href="#hs_process.utilities.defaults.crop_defaults" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.utilities.defaults.envi_write">
+<code class="sig-name descname">envi_write</code><em class="property"> = {'byteorder': 0, 'dtype': &lt;class 'numpy.float32'&gt;, 'ext': '', 'force': False, 'interleave': 'bip'}</em><a class="headerlink" href="#hs_process.utilities.defaults.envi_write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.utilities.defaults.ext">
+<code class="sig-name descname">ext</code><em class="property"> = ''</em><a class="headerlink" href="#hs_process.utilities.defaults.ext" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.utilities.defaults.force">
+<code class="sig-name descname">force</code><em class="property"> = False</em><a class="headerlink" href="#hs_process.utilities.defaults.force" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.utilities.defaults.interleave">
+<code class="sig-name descname">interleave</code><em class="property"> = 'bip'</em><a class="headerlink" href="#hs_process.utilities.defaults.interleave" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.utilities.defaults.spat_crop_cols">
+<code class="sig-name descname">spat_crop_cols</code><em class="property"> = {'alley_size_e_m': 'alley_size_e_m', 'alley_size_e_pix': 'alley_size_e_pix', 'alley_size_n_m': 'alley_size_n_m', 'alley_size_n_pix': 'alley_size_n_pix', 'buf_e_m': 'buf_e_m', 'buf_e_pix': 'buf_e_pix', 'buf_n_m': 'buf_n_m', 'buf_n_pix': 'buf_n_pix', 'crop_e_m': 'crop_e_m', 'crop_e_pix': 'crop_e_pix', 'crop_n_m': 'crop_n_m', 'crop_n_pix': 'crop_n_pix', 'directory': 'directory', 'ext': 'ext', 'fname': 'fname', 'n_plots': 'n_plots', 'n_plots_x': 'n_plots_x', 'n_plots_y': 'n_plots_y', 'name_long': 'name_long', 'name_short': 'name_short', 'pix_e_ul': 'pix_e_ul', 'pix_n_ul': 'pix_n_ul', 'plot_id': 'plot_id'}</em><a class="headerlink" href="#hs_process.utilities.defaults.spat_crop_cols" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2020, Tyler J. Nigon.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

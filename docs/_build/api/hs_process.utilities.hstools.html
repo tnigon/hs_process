@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="python">
+  <head>
+    <meta charset="utf-8" />
+    <title>2.4.1.3. hstools &#8212; hs_process 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3. License" href="../license.html" />
+    <link rel="prev" title="2.4.1.2. hsio" href="hs_process.utilities.hsio.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          hs_process</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="https://github.com/tnigon/hs_process">Github</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Contents <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Home</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../installation.html">1. Installation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../my_hs_process_api.html">2. API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="hs_process.segment.segment.html">2.1.1.1. segment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.spatial_mod.spatial_mod.html">2.2.1.1. spatial_mod</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.spec_mod.spec_mod.html">2.3.1.1. spec_mod</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.utilities.defaults.html">2.4.1.1. defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.utilities.hsio.html">2.4.1.2. hsio</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.4.1.3. hstools</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">3. License</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">1. Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../my_hs_process_api.html">2. API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="hs_process.segment.segment.html">2.1.1.1. segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spatial_mod.spatial_mod.html">2.2.1.1. spatial_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spec_mod.spec_mod.html">2.3.1.1. spec_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.utilities.defaults.html">2.4.1.1. defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.utilities.hsio.html">2.4.1.2. hsio</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.4.1.3. hstools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">3. License</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="hs_process.utilities.hsio.html" title="Previous Chapter: 2.4.1.2. hsio"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; 2.4.1.2. hsio</span>
+    </a>
+  </li>
+  <li>
+    <a href="../license.html" title="Next Chapter: 3. License"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">3. License &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../_sources/api/hs_process.utilities.hstools.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">2.4.1.3. hstools</a></li>
+</ul>
+
+<form action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="body col-md-9 content" role="main">
+      
+  <div class="section" id="hstools">
+<h1>2.4.1.3. hstools<a class="headerlink" href="#hstools" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="hs_process.utilities.hstools">
+<em class="property">class </em><code class="sig-prename descclassname">hs_process.utilities.</code><code class="sig-name descname">hstools</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Basic tools for manipulating Spyfiles and accessing their metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>spyfile</strong> (<cite>SpyFile</cite> object) -- The datacube being accessed and/or
+manipulated.</p>
+</dd>
+</dl>
+<p class="rubric">Methods Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.clean_md_sets" title="hs_process.utilities.hstools.clean_md_sets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_md_sets</span></code></a>([metadata])</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">param metadata</dt>
+<dd class="field-odd"><p>Metadata dictionary to clean</p>
+</dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.del_meta_item" title="hs_process.utilities.hstools.del_meta_item"><code class="xref py py-obj docutils literal notranslate"><span class="pre">del_meta_item</span></code></a>(metadata, key)</p></td>
+<td><p>Deletes metadata item from SpyFile object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.get_UTM" title="hs_process.utilities.hstools.get_UTM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_UTM</span></code></a>(pix_e_ul, pix_n_ul, utm_x, utm_y, ...)</p></td>
+<td><p>Calculates the new UTM coordinate of cropped plot to modify the &quot;map info&quot; tag of the .hdr file.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.get_band" title="hs_process.utilities.hstools.get_band"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_band</span></code></a>(target_wl[, spyfile])</p></td>
+<td><p>Finds the band number of the closest target wavelength.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.get_band_index" title="hs_process.utilities.hstools.get_band_index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_band_index</span></code></a>(band_num)</p></td>
+<td><p>Subtracts 1 from <cite>band_num</cite> and returns the band index(es).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.get_band_num" title="hs_process.utilities.hstools.get_band_num"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_band_num</span></code></a>(band_idx)</p></td>
+<td><p>Adds 1 to <cite>band_idx</cite> and returns the band number(s).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.get_band_range" title="hs_process.utilities.hstools.get_band_range"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_band_range</span></code></a>(range_wl[, index, spyfile])</p></td>
+<td><p>Retrieves the band index or band number for all bands within a wavelength range.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.get_center_wl" title="hs_process.utilities.hstools.get_center_wl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_center_wl</span></code></a>(wl_list[, spyfile, wls])</p></td>
+<td><p>Gets band numbers and mean wavelength from all wavelengths (or bands) in <cite>wl_list</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.get_meta_set" title="hs_process.utilities.hstools.get_meta_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_meta_set</span></code></a>(meta_set[, idx])</p></td>
+<td><p>Reads metadata &quot;set&quot; (i.e., string representation of a Python set; common in .hdr files), taking care to remove leading and trailing spaces.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.get_spectral_mean" title="hs_process.utilities.hstools.get_spectral_mean"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_spectral_mean</span></code></a>(band_list[, spyfile])</p></td>
+<td><p>Gets the spectral mean of a datacube from a list of bands</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.get_wavelength" title="hs_process.utilities.hstools.get_wavelength"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_wavelength</span></code></a>(target_band[, spyfile])</p></td>
+<td><p>Returns actual wavelength of the closest target band.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.load_spyfile" title="hs_process.utilities.hstools.load_spyfile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_spyfile</span></code></a>(spyfile)</p></td>
+<td><p>Loads a <cite>SpyFile</cite> (Spectral Python object) for data access and/or manipulation by the <cite>hstools</cite> class.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.mask_array" title="hs_process.utilities.hstools.mask_array"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mask_array</span></code></a>(array, metadata[, thresh, ...])</p></td>
+<td><p>Creates a masked numpy array based on a threshold value.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.mask_datacube" title="hs_process.utilities.hstools.mask_datacube"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mask_datacube</span></code></a>(spyfile, mask)</p></td>
+<td><p>DO NOT USE; USE mean_datacube() INSTEAD AND PASS A MASK.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.mask_shadow" title="hs_process.utilities.hstools.mask_shadow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mask_shadow</span></code></a>([shadow_pctl, show_histogram, ...])</p></td>
+<td><p>Creates a <cite>numpy.mask</cite> of all pixels that are likely shadow pixels.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.mean_datacube" title="hs_process.utilities.hstools.mean_datacube"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mean_datacube</span></code></a>(spyfile[, mask])</p></td>
+<td><p>Calculates the mean spectra for a datcube; if <cite>mask</cite> is passed (as a np.array), then the mask is applied to <cite>spyfile</cite> prior to computing the mean spectra.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.modify_meta_set" title="hs_process.utilities.hstools.modify_meta_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">modify_meta_set</span></code></a>(meta_set, idx, value)</p></td>
+<td><p>Modifies metadata &quot;set&quot; (i.e., string representation of a Python set; common in .hdr files) by converting string to list, then adjusts the value of an item by its index.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="method">
+<dt id="hs_process.utilities.hstools.clean_md_sets">
+<code class="sig-name descname">clean_md_sets</code><span class="sig-paren">(</span><em class="sig-param">metadata=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.clean_md_sets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.clean_md_sets" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>metadata</strong> (<cite>dict</cite>, optional) -- Metadata dictionary to clean</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>metadata_out</strong> (<cite>dict</cite>) -- Cleaned metadata dictionary.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>dict</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.del_meta_item">
+<code class="sig-name descname">del_meta_item</code><span class="sig-paren">(</span><em class="sig-param">metadata</em>, <em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.del_meta_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.del_meta_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes metadata item from SpyFile object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metadata</strong> (<cite>dict</cite>) -- dictionary of the metadata</p></li>
+<li><p><strong>key</strong> (<cite>str</cite>) -- dictionary key to delete</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>metadata</strong> (<cite>dict</cite>) -- Dictionary containing the modified
+metadata.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>dict</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.get_UTM">
+<code class="sig-name descname">get_UTM</code><span class="sig-paren">(</span><em class="sig-param">pix_e_ul</em>, <em class="sig-param">pix_n_ul</em>, <em class="sig-param">utm_x</em>, <em class="sig-param">utm_y</em>, <em class="sig-param">size_x</em>, <em class="sig-param">size_y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_UTM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.get_UTM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the new UTM coordinate of cropped plot to modify the
+&quot;map info&quot; tag of the .hdr file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pix_e_ul</strong> (<cite>int</cite>) -- upper left column (easting) where image cropping
+begins.</p></li>
+<li><p><strong>pix_n_ul</strong> (<cite>int</cite>) -- upper left row (northing) where image cropping
+begins.</p></li>
+<li><p><strong>utm_x</strong> (<cite>float</cite>) -- UTM easting coordinates (meters) of the original
+image (from the upper left).</p></li>
+<li><p><strong>utm_y</strong> (<cite>float</cite>) -- UTM northing coordinates (meters) of the original
+image (from the upper left).</p></li>
+<li><p><strong>size_x</strong> (<cite>float</cite>) -- Ground resolved distance of the image pixels in
+the x (easting) direction (meters).</p></li>
+<li><p><strong>size_y</strong> (<cite>float</cite>) -- Ground resolved distance of the image pixels in
+the y (northing) direction (meters).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>2-element <cite>tuple</cite> containing</p>
+<ul class="simple">
+<li><p><strong>utm_x_new</strong> (<cite>float</cite>): The modified UTM x coordinate (easting)
+of cropped plot.</p></li>
+<li><p><strong>utm_y_new</strong> (<cite>float</cite>): The modified UTM y coordinate (northing)
+of cropped plot.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.get_band">
+<code class="sig-name descname">get_band</code><span class="sig-paren">(</span><em class="sig-param">target_wl</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_band"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.get_band" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the band number of the closest target wavelength.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target_wl</strong> (<cite>int</cite> or <cite>float</cite>) -- the target wavelength to retrieve the
+band number for (required).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object, optional) -- The datacube being accessed and/or
+manipulated; if <cite>None</cite>, uses <cite>hstools.spyfile</cite> (default:
+<cite>None</cite>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>key_band</strong> (<cite>int</cite>) -- band number of the closest target
+wavelength (<cite>target_wl</cite>).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>int</cite></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hstools</span><span class="o">.</span><span class="n">get_band</span><span class="p">(</span><span class="mi">703</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">)</span>
+<span class="go">151</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.get_band_index">
+<code class="sig-name descname">get_band_index</code><span class="sig-paren">(</span><em class="sig-param">band_num</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_band_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.get_band_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subtracts 1 from <cite>band_num</cite> and returns the band index(es).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>band_num</strong> (<cite>int</cite> or <cite>list</cite>) -- the target band number(s) to retrieve</p></li>
+<li><p><strong>band index for</strong> (<em>the</em>) -- </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>band_idx</strong> (<cite>int</cite>) -- band index of the passed band number
+(<cite>band_num</cite>).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>int</cite> or <cite>list</cite></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hstools</span><span class="o">.</span><span class="n">get_band_index</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">111</span><span class="p">])</span>
+<span class="go">[3, 42, 110]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.get_band_num">
+<code class="sig-name descname">get_band_num</code><span class="sig-paren">(</span><em class="sig-param">band_idx</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_band_num"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.get_band_num" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds 1 to <cite>band_idx</cite> and returns the band number(s).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>band_idx</strong> (<cite>int</cite> or <cite>list</cite>) -- the target band index(es) to retrive
+the band number for (required).</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>band_num</strong> (<cite>int</cite> or <cite>list</cite>): band number of the passed
+band index (<cite>band_idx</cite>).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>int</cite> or <cite>list</cite></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hstools</span><span class="o">.</span><span class="n">get_band_num</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">111</span><span class="p">])</span>
+<span class="go">[5, 44, 112]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.get_band_range">
+<code class="sig-name descname">get_band_range</code><span class="sig-paren">(</span><em class="sig-param">range_wl</em>, <em class="sig-param">index=True</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_band_range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.get_band_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the band index or band number for all bands within a
+wavelength range.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>range_wl</strong> (<cite>list</cite>) -- the minimum and maximum wavelength to consider;
+values should be <cite>int</cite> or <cite>float</cite>.</p></li>
+<li><p><strong>index</strong> (<em>bool</em>) -- Indicates whether to return the band number (min=1)
+or to return index number (min=0) (default: True)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>band_list</strong> (<cite>list</cite>): A list of all bands (either index or
+number, depending on how <cite>index</cite> is set) between a range in
+wavelength values.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>list</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.get_center_wl">
+<code class="sig-name descname">get_center_wl</code><span class="sig-paren">(</span><em class="sig-param">wl_list</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">wls=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_center_wl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.get_center_wl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets band numbers and mean wavelength from all wavelengths (or bands)
+in <cite>wl_list</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wl_list</strong> (<cite>list</cite>) -- the list of bands to get information for
+(required).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object) -- The datacube being accessed and/or
+manipulated; if <cite>None</cite>, uses <cite>hstools.spyfile</cite> (default:
+<cite>None</cite>).</p></li>
+<li><p><strong>wls</strong> (<cite>bool</cite>) -- whether wavelengths are passed in <cite>wl_list</cite> or if
+bands are passed in <cite>wl_list</cite> (default: <cite>True</cite> - wavelenghts
+passed).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>2-element <cite>tuple</cite> containing</p>
+<ul class="simple">
+<li><p><strong>bands</strong> (<cite>list</cite>): the list of bands (band number) corresponding
+to <cite>wl_list</cite>.</p></li>
+<li><p><strong>wls_mean</strong> (<cite>float</cite>): the mean wavelength from <cite>wl_list</cite>.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.get_meta_set">
+<code class="sig-name descname">get_meta_set</code><span class="sig-paren">(</span><em class="sig-param">meta_set</em>, <em class="sig-param">idx=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_meta_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.get_meta_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads metadata &quot;set&quot; (i.e., string representation of a Python set;
+common in .hdr files), taking care to remove leading and trailing
+spaces.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>meta_set</strong> (<cite>str</cite>) -- the string representation of the metadata set</p></li>
+<li><p><strong>idx</strong> (<cite>int</cite>) -- index to be read; if <cite>None</cite>, the whole list is
+returned (default: <cite>None</cite>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>metadata_list</strong> (<cite>list</cite> or <cite>str</cite>): List of metadata set items
+(as <cite>str</cite>), or if idx is not <cite>None</cite>, the item in the position
+described by <cite>idx</cite>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>list</cite> or <cite>str</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.get_spectral_mean">
+<code class="sig-name descname">get_spectral_mean</code><span class="sig-paren">(</span><em class="sig-param">band_list</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_spectral_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.get_spectral_mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the spectral mean of a datacube from a list of bands</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>band_list</strong> (<cite>list</cite>) -- the list of bands to calculate the spectral
+mean for on the datacube (required).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The datacube being
+accessed and/or manipulated; if <cite>None</cite>, uses <cite>hstools.spyfile</cite>
+(default: <cite>None</cite>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>array_mean</strong> (<cite>numpy.array</cite> or <cite>pandas.DataFrame</cite>): The
+mean reflectance from <cite>spyfile</cite> for the bands in <cite>band_list</cite>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>numpy.array</cite> or <cite>pandas.DataFrame</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.get_wavelength">
+<code class="sig-name descname">get_wavelength</code><span class="sig-paren">(</span><em class="sig-param">target_band</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_wavelength"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.get_wavelength" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns actual wavelength of the closest target band.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target_band</strong> (<cite>int</cite> or <cite>float</cite>) -- the target band to retrieve
+wavelength number for (required).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object, optional) -- The datacube being accessed and/or
+manipulated; if <cite>None</cite>, uses <cite>hstools.spyfile</cite> (default:
+<cite>None</cite>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>key_wavelength</strong> (<cite>float</cite>) -- wavelength of the closest
+target band (<cite>target_band</cite>).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>float</cite></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hstools</span><span class="o">.</span><span class="n">get_wavelength</span><span class="p">(</span><span class="mi">151</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">)</span>
+<span class="go">702.52</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.load_spyfile">
+<code class="sig-name descname">load_spyfile</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.load_spyfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.load_spyfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a <cite>SpyFile</cite> (Spectral Python object) for data access and/or
+manipulation by the <cite>hstools</cite> class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>spyfile</strong> (<cite>SpyFile</cite> object) -- The datacube being accessed and/or
+manipulated.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.mask_array">
+<code class="sig-name descname">mask_array</code><span class="sig-paren">(</span><em class="sig-param">array</em>, <em class="sig-param">metadata</em>, <em class="sig-param">thresh=None</em>, <em class="sig-param">percentile=None</em>, <em class="sig-param">side='lower'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.mask_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.mask_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a masked numpy array based on a threshold value. If <cite>array</cite> is
+already a masked array, that mask is maintained and the new mask(s) is/
+are added to the original mask.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array</strong> (<cite>numpy.ndarray</cite>) -- The data array to mask.</p></li>
+<li><p><strong>thresh</strong> (<cite>float</cite> or <cite>list</cite>) -- The value for which to base the
+threshold; if <cite>thresh</cite> is <cite>list</cite> and <cite>side</cite> is <cite>None</cite>, then
+all values in <cite>thresh</cite> will be masked; if <cite>thresh</cite> is <cite>list</cite>
+and <cite>side</cite> is not <cite>None</cite>, then only the first value in the
+list will be considered for thresholding (default: <cite>None</cite>).</p></li>
+<li><p><strong>percentile</strong> (<cite>float</cite>) -- The percentile of pixels to mask; if
+<cite>percentile`=95 and `side`='lower', the lowest 95% of pixels
+will be masked prior to calculating the mean spectra across
+pixels (default: `None</cite>; range: 0-100).</p></li>
+<li><p><strong>side</strong> (<cite>str</cite>) -- The side of the threshold for which to apply the
+mask. Must be either 'lower', 'upper', or <cite>None</cite>; if 'lower',
+everything below the threshold will be masked; if <cite>None</cite>, only
+the values that exactly match the threshol will be masked
+(default: 'lower').</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>2-element <cite>tuple</cite> containing</p>
+<ul class="simple">
+<li><p><strong>array_mask</strong> (<cite>numpy.ndarray</cite>): The masked <cite>numpy.ndarray</cite>
+based on the passed threshold and/or percentile value.</p></li>
+<li><p><strong>metadata</strong> (<cite>dict</cite>): The modified metadata.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.mask_datacube">
+<code class="sig-name descname">mask_datacube</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em>, <em class="sig-param">mask</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.mask_datacube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.mask_datacube" title="Permalink to this definition">¶</a></dt>
+<dd><p>DO NOT USE; USE mean_datacube() INSTEAD AND PASS A MASK.</p>
+<p>Applies <cite>mask</cite> to <cite>spyfile</cite>, then returns the datcube (as a np.array)
+and the mean spectra</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The hyperspectral
+datacube to mask.</p></li>
+<li><p><strong>mask</strong> (<cite>numpy.ndarray</cite>) -- the mask to apply to <cite>spyfile</cite>; if <cite>mask</cite>
+does not have similar dimensions to <cite>spyfile</cite>, the first band
+(i.e., first two dimensions) of <cite>mask</cite> will be repeated n times
+to match the number of bands of <cite>spyfile</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.mask_shadow">
+<code class="sig-name descname">mask_shadow</code><span class="sig-paren">(</span><em class="sig-param">shadow_pctl=20</em>, <em class="sig-param">show_histogram=False</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.mask_shadow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.mask_shadow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a <cite>numpy.mask</cite> of all pixels that are likely shadow pixels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shadow_pctl</strong> (<cite>int</cite>) -- the percentile of pixels in the image to mask
+(default: 20).</p></li>
+<li><p><strong>show_histogram</strong> (<cite>bool</cite>) -- </p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile.SpyFile</cite> object) -- </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>2-element <cite>tuple</cite> containing</p>
+<ul class="simple">
+<li><p><strong>array_noshadow.mask</strong> (<cite>numpy.mask</cite>): The mask indicating all
+pixels that are likely shadow pixels.</p></li>
+<li><p><strong>metadata</strong> (<cite>dict</cite>): The modified metadata.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.mean_datacube">
+<code class="sig-name descname">mean_datacube</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em>, <em class="sig-param">mask=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.mean_datacube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.mean_datacube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the mean spectra for a datcube; if <cite>mask</cite> is passed (as a
+np.array), then the mask is applied to <cite>spyfile</cite> prior to computing
+the mean spectra.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The hyperspectral
+datacube to mask.</p></li>
+<li><p><strong>mask</strong> (<cite>numpy.ndarray</cite>) -- the mask to apply to <cite>spyfile</cite>; if <cite>mask</cite>
+does not have similar dimensions to <cite>spyfile</cite>, the first band
+(i.e., first two dimensions) of <cite>mask</cite> will be repeated n times
+to match the number of bands of <cite>spyfile</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>3-element <cite>tuple</cite> containing</p>
+<ul class="simple">
+<li><p><strong>spec_mean</strong> (<cite>SpyFile.SpyFile</cite> object): The mean spectra from
+the input datacube.</p></li>
+<li><p><strong>spec_std</strong> (<cite>SpyFile.SpyFile</cite> object): The standard deviation
+of the spectra from the input datacube.</p></li>
+<li><p><strong>datacube_masked</strong> (<cite>numpy.ndarray</cite>): The masked
+<cite>numpy.ndarray</cite>; if <cite>mask</cite> = <cite>None</cite>, <cite>datacube_masked</cite> is
+identical to the <cite>SpyFile</cite> data array.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.utilities.hstools.modify_meta_set">
+<code class="sig-name descname">modify_meta_set</code><span class="sig-paren">(</span><em class="sig-param">meta_set</em>, <em class="sig-param">idx</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.modify_meta_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.modify_meta_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modifies metadata &quot;set&quot; (i.e., string representation of a Python set;
+common in .hdr files) by converting string to list, then adjusts the
+value of an item by its index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>meta_set</strong> (<cite>str</cite>) -- the string representation of the metadata set</p></li>
+<li><p><strong>idx</strong> (<cite>int</cite>) -- index to be modified; if <cite>None</cite>, the whole meta_set is
+returned (default: <cite>None</cite>).</p></li>
+<li><p><strong>value</strong> (<cite>float</cite>, <cite>int</cite>, or <cite>str</cite>) -- value to replace at idx</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>set_str</strong> (<cite>str</cite>): Modified metadata set string.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>str</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2020, Tyler J. Nigon.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

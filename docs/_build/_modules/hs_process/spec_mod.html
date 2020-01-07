@@ -6,6 +6,7 @@
     <title>hs_process.spec_mod &#8212; hs_process 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
@@ -35,14 +36,14 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="../../index.html">
-          EONR</a>
+          hs_process</a>
         <span class="navbar-text navbar-version pull-left"><b></b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
           <ul class="nav navbar-nav">
             
-                <li><a href="https://github.com/tnigon/eonr">Github</a></li>
+                <li><a href="https://github.com/tnigon/hs_process">Github</a></li>
             
             
               <li class="dropdown globaltoc-container">
@@ -53,9 +54,16 @@
      href="../../index.html">Contents <b class="caret"></b></a>
   <ul class="dropdown-menu globaltoc"
       role="menu"
-      aria-labelledby="dLabelGlobalToc"><p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../hs_process.html">hs_process package</a></li>
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Home</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../installation.html">1. Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../my_hs_process_api.html">2. API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../license.html">3. License</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../my_hs_process_api.html">2. API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">3. License</a></li>
 </ul>
 </ul>
 </li>
@@ -114,7 +122,7 @@
 <span class="kn">from</span> <span class="nn">hs_process.utilities</span> <span class="k">import</span> <span class="n">hstools</span>
 
 
-<div class="viewcode-block" id="spec_mod"><a class="viewcode-back" href="../../hs_process.html#hs_process.spec_mod.spec_mod">[docs]</a><span class="k">class</span> <span class="nc">spec_mod</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="spec_mod"><a class="viewcode-back" href="../../api/hs_process.spec_mod.spec_mod.html#hs_process.spec_mod.spec_mod">[docs]</a><span class="k">class</span> <span class="nc">spec_mod</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Class for manipulating data within the spectral domain (usually</span>
 <span class="sd">    pixel-based)</span>
@@ -200,7 +208,7 @@
 <span class="c1">#            sns.lineplot(list(hs.meta_bands.keys()), array_2d_temp[1000])</span>
         <span class="k">return</span> <span class="n">array_2d_temp</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
 
-<div class="viewcode-block" id="spec_mod.load_spyfile"><a class="viewcode-back" href="../../hs_process.html#hs_process.spec_mod.spec_mod.load_spyfile">[docs]</a>    <span class="k">def</span> <span class="nf">load_spyfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">):</span>
+<div class="viewcode-block" id="spec_mod.load_spyfile"><a class="viewcode-back" href="../../api/hs_process.spec_mod.spec_mod.html#hs_process.spec_mod.spec_mod.load_spyfile">[docs]</a>    <span class="k">def</span> <span class="nf">load_spyfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Loads a `SpyFile` (Spectral Python object) for data access and/or</span>
 <span class="sd">        manipulation by the `hstools` class.</span>
@@ -225,7 +233,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_e</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_n</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="spec_mod.spectral_clip"><a class="viewcode-back" href="../../hs_process.html#hs_process.spec_mod.spec_mod.spectral_clip">[docs]</a>    <span class="k">def</span> <span class="nf">spectral_clip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wl_bands</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">420</span><span class="p">],</span> <span class="p">[</span><span class="mi">760</span><span class="p">,</span> <span class="mi">776</span><span class="p">],</span> <span class="p">[</span><span class="mi">813</span><span class="p">,</span> <span class="mi">827</span><span class="p">],</span>
+<div class="viewcode-block" id="spec_mod.spectral_clip"><a class="viewcode-back" href="../../api/hs_process.spec_mod.spec_mod.html#hs_process.spec_mod.spec_mod.spectral_clip">[docs]</a>    <span class="k">def</span> <span class="nf">spectral_clip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wl_bands</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">420</span><span class="p">],</span> <span class="p">[</span><span class="mi">760</span><span class="p">,</span> <span class="mi">776</span><span class="p">],</span> <span class="p">[</span><span class="mi">813</span><span class="p">,</span> <span class="mi">827</span><span class="p">],</span>
                                       <span class="p">[</span><span class="mi">880</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]],</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Removes/clips designated wavelength bands from the hyperspectral</span>
@@ -295,7 +303,7 @@
 
         <span class="k">return</span> <span class="n">array_clip</span><span class="p">,</span> <span class="n">metadata</span></div>
 
-<div class="viewcode-block" id="spec_mod.spectral_smooth"><a class="viewcode-back" href="../../hs_process.html#hs_process.spec_mod.spec_mod.spectral_smooth">[docs]</a>    <span class="k">def</span> <span class="nf">spectral_smooth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="spec_mod.spectral_smooth"><a class="viewcode-back" href="../../api/hs_process.spec_mod.spec_mod.html#hs_process.spec_mod.spec_mod.spectral_smooth">[docs]</a>    <span class="k">def</span> <span class="nf">spectral_smooth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Performs Savitzky-Golay smoothing on the spectral domain</span>
 

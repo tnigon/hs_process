@@ -6,6 +6,7 @@
     <title>hs_process.utilities &#8212; hs_process 0.0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
@@ -35,14 +36,14 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="../../index.html">
-          EONR</a>
+          hs_process</a>
         <span class="navbar-text navbar-version pull-left"><b></b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
           <ul class="nav navbar-nav">
             
-                <li><a href="https://github.com/tnigon/eonr">Github</a></li>
+                <li><a href="https://github.com/tnigon/hs_process">Github</a></li>
             
             
               <li class="dropdown globaltoc-container">
@@ -53,9 +54,16 @@
      href="../../index.html">Contents <b class="caret"></b></a>
   <ul class="dropdown-menu globaltoc"
       role="menu"
-      aria-labelledby="dLabelGlobalToc"><p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../hs_process.html">hs_process package</a></li>
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Home</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../installation.html">1. Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../my_hs_process_api.html">2. API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../license.html">3. License</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../my_hs_process_api.html">2. API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">3. License</a></li>
 </ul>
 </ul>
 </li>
@@ -119,7 +127,7 @@
 <span class="kn">import</span> <span class="nn">sys</span>
 
 
-<div class="viewcode-block" id="defaults"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.defaults">[docs]</a><span class="k">class</span> <span class="nc">defaults</span><span class="p">:</span>
+<div class="viewcode-block" id="defaults"><a class="viewcode-back" href="../../api/hs_process.utilities.defaults.html#hs_process.utilities.defaults">[docs]</a><span class="k">class</span> <span class="nc">defaults</span><span class="p">:</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Class containing all defaults for writing an ENVI datacube to file.</span>
 
@@ -206,7 +214,7 @@
             <span class="s1">&#39;plot_id&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span></div>
 
 
-<div class="viewcode-block" id="hsio"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hsio">[docs]</a><span class="k">class</span> <span class="nc">hsio</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="hsio"><a class="viewcode-back" href="../../api/hs_process.utilities.hsio.html#hs_process.utilities.hsio">[docs]</a><span class="k">class</span> <span class="nc">hsio</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Class for reading and writing hyperspectral data files and accessing,</span>
 <span class="sd">    interpreting, and modifying its associated metadata.</span>
@@ -528,7 +536,7 @@
             <span class="k">return</span> <span class="s1">&#39;&#39;</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="n">s</span><span class="p">)</span>
 
-<div class="viewcode-block" id="hsio.read_cube"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hsio.read_cube">[docs]</a>    <span class="k">def</span> <span class="nf">read_cube</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_hdr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name_long</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name_plot</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="hsio.read_cube"><a class="viewcode-back" href="../../api/hs_process.utilities.hsio.html#hs_process.utilities.hsio.read_cube">[docs]</a>    <span class="k">def</span> <span class="nf">read_cube</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_hdr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name_long</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name_plot</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                   <span class="n">name_short</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">individual_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Reads in a hyperspectral datacube</span>
@@ -586,7 +594,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">name_long</span> <span class="o">=</span> <span class="n">basename</span><span class="p">[</span><span class="n">basename</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">basename</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)):]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name_plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="hsio.read_spec"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hsio.read_spec">[docs]</a>    <span class="k">def</span> <span class="nf">read_spec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_hdr_spec</span><span class="p">):</span>
+<div class="viewcode-block" id="hsio.read_spec"><a class="viewcode-back" href="../../api/hs_process.utilities.hsio.html#hs_process.utilities.hsio.read_spec">[docs]</a>    <span class="k">def</span> <span class="nf">read_spec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_hdr_spec</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Reads in a hyperspectral spectrum file</span>
 
@@ -604,7 +612,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">name_long</span> <span class="o">=</span> <span class="n">basename</span><span class="p">[</span><span class="n">basename</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">basename</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)):]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name_plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="hsio.set_io_defaults"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hsio.set_io_defaults">[docs]</a>    <span class="k">def</span> <span class="nf">set_io_defaults</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<div class="viewcode-block" id="hsio.set_io_defaults"><a class="viewcode-back" href="../../api/hs_process.utilities.hsio.html#hs_process.utilities.hsio.set_io_defaults">[docs]</a>    <span class="k">def</span> <span class="nf">set_io_defaults</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                         <span class="n">interleave</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">byteorder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Sets any of the ENVI file writing parameters to `hsio`; if any</span>
@@ -645,7 +653,7 @@
         <span class="k">if</span> <span class="n">byteorder</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">byteorder</span> <span class="o">=</span> <span class="n">byteorder</span></div>
 
-<div class="viewcode-block" id="hsio.show_img"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hsio.show_img">[docs]</a>    <span class="k">def</span> <span class="nf">show_img</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">band_r</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">band_g</span><span class="o">=</span><span class="mi">76</span><span class="p">,</span> <span class="n">band_b</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+<div class="viewcode-block" id="hsio.show_img"><a class="viewcode-back" href="../../api/hs_process.utilities.hsio.html#hs_process.utilities.hsio.show_img">[docs]</a>    <span class="k">def</span> <span class="nf">show_img</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">band_r</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">band_g</span><span class="o">=</span><span class="mi">76</span><span class="p">,</span> <span class="n">band_b</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
                  <span class="n">inline</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Displays a datacube as a 3-band RGB image.</span>
@@ -696,7 +704,7 @@
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="hsio.write_cube"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hsio.write_cube">[docs]</a>    <span class="k">def</span> <span class="nf">write_cube</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hdr_file</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+<div class="viewcode-block" id="hsio.write_cube"><a class="viewcode-back" href="../../api/hs_process.utilities.hsio.html#hs_process.utilities.hsio.write_cube">[docs]</a>    <span class="k">def</span> <span class="nf">write_cube</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hdr_file</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
                    <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">interleave</span><span class="o">=</span><span class="s1">&#39;bip&#39;</span><span class="p">,</span> <span class="n">byteorder</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                    <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
@@ -747,7 +755,7 @@
                         <span class="n">interleave</span><span class="o">=</span><span class="n">interleave</span><span class="p">,</span> <span class="n">byteorder</span><span class="o">=</span><span class="n">byteorder</span><span class="p">,</span>
                         <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="hsio.write_spec"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hsio.write_spec">[docs]</a>    <span class="k">def</span> <span class="nf">write_spec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hdr_file</span><span class="p">,</span> <span class="n">df_mean</span><span class="p">,</span> <span class="n">df_std</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+<div class="viewcode-block" id="hsio.write_spec"><a class="viewcode-back" href="../../api/hs_process.utilities.hsio.html#hs_process.utilities.hsio.write_spec">[docs]</a>    <span class="k">def</span> <span class="nf">write_spec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hdr_file</span><span class="p">,</span> <span class="n">df_mean</span><span class="p">,</span> <span class="n">df_std</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
                    <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="s1">&#39;.spec&#39;</span><span class="p">,</span> <span class="n">interleave</span><span class="o">=</span><span class="s1">&#39;bip&#39;</span><span class="p">,</span> <span class="n">byteorder</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
                    <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
@@ -827,7 +835,7 @@
                         <span class="n">byteorder</span><span class="o">=</span><span class="n">byteorder</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span>
                         <span class="n">ext</span><span class="o">=</span><span class="n">ext</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="hsio.write_tif"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hsio.write_tif">[docs]</a>    <span class="k">def</span> <span class="nf">write_tif</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_tif</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="hsio.write_tif"><a class="viewcode-back" href="../../api/hs_process.utilities.hsio.html#hs_process.utilities.hsio.write_tif">[docs]</a>    <span class="k">def</span> <span class="nf">write_tif</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_tif</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                   <span class="n">projection_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">geotransform_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Wrapper function that accesses the GDAL Python package to save a</span>
@@ -926,7 +934,7 @@
         <span class="n">tif_out</span> <span class="o">=</span> <span class="kc">None</span></div></div>
 
 
-<div class="viewcode-block" id="hstools"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hstools">[docs]</a><span class="k">class</span> <span class="nc">hstools</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="hstools"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools">[docs]</a><span class="k">class</span> <span class="nc">hstools</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Basic tools for manipulating Spyfiles and accessing their metadata.</span>
 
@@ -981,7 +989,7 @@
                     <span class="n">meta_bands</span><span class="p">[</span><span class="n">band_names</span><span class="p">[</span><span class="n">idx</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">wl_names</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">meta_bands</span> <span class="o">=</span> <span class="n">meta_bands</span>
 
-<div class="viewcode-block" id="hstools.clean_md_sets"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hstools.clean_md_sets">[docs]</a>    <span class="k">def</span> <span class="nf">clean_md_sets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="hstools.clean_md_sets"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.clean_md_sets">[docs]</a>    <span class="k">def</span> <span class="nf">clean_md_sets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 
 <span class="sd">        Parameters:</span>
@@ -1000,7 +1008,7 @@
                 <span class="n">metadata_out</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">set_str</span>
         <span class="k">return</span> <span class="n">metadata_out</span></div>
 
-<div class="viewcode-block" id="hstools.del_meta_item"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hstools.del_meta_item">[docs]</a>    <span class="k">def</span> <span class="nf">del_meta_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="hstools.del_meta_item"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.del_meta_item">[docs]</a>    <span class="k">def</span> <span class="nf">del_meta_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Deletes metadata item from SpyFile object.</span>
 
@@ -1023,7 +1031,7 @@
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> not a valid key in input dictionary.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">metadata</span></div>
 
-<div class="viewcode-block" id="hstools.get_band"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hstools.get_band">[docs]</a>    <span class="k">def</span> <span class="nf">get_band</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_wl</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="hstools.get_band"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.get_band">[docs]</a>    <span class="k">def</span> <span class="nf">get_band</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_wl</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Finds the band number of the closest target wavelength.</span>
 
@@ -1055,7 +1063,7 @@
 <span class="c1">#        key_wavelength = sorted(list(self.meta_bands.values()))[key_band-1]</span>
         <span class="k">return</span> <span class="n">key_band</span></div>
 
-<div class="viewcode-block" id="hstools.get_wavelength"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hstools.get_wavelength">[docs]</a>    <span class="k">def</span> <span class="nf">get_wavelength</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_band</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="hstools.get_wavelength"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.get_wavelength">[docs]</a>    <span class="k">def</span> <span class="nf">get_wavelength</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_band</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Returns actual wavelength of the closest target band.</span>
 
@@ -1087,7 +1095,7 @@
 <span class="c1">#        key_wavelength = sorted(list(self.meta_bands.values()))[key_band-1]</span>
         <span class="k">return</span> <span class="n">key_wavelength</span></div>
 
-<div class="viewcode-block" id="hstools.get_center_wl"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hstools.get_center_wl">[docs]</a>    <span class="k">def</span> <span class="nf">get_center_wl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wl_list</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wls</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="hstools.get_center_wl"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.get_center_wl">[docs]</a>    <span class="k">def</span> <span class="nf">get_center_wl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wl_list</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wls</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Gets band numbers and mean wavelength from all wavelengths (or bands)</span>
 <span class="sd">        in `wl_list`.</span>
@@ -1136,7 +1144,7 @@
 
         <span class="k">return</span> <span class="n">bands</span><span class="p">,</span> <span class="n">wls_mean</span></div>
 
-<div class="viewcode-block" id="hstools.get_band_index"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hstools.get_band_index">[docs]</a>    <span class="k">def</span> <span class="nf">get_band_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">band_num</span><span class="p">):</span>
+<div class="viewcode-block" id="hstools.get_band_index"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.get_band_index">[docs]</a>    <span class="k">def</span> <span class="nf">get_band_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">band_num</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Subtracts 1 from `band_num` and returns the band index(es).</span>
 
@@ -1160,7 +1168,7 @@
             <span class="n">band_idx</span> <span class="o">=</span> <span class="n">band_num</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="n">band_idx</span></div>
 
-<div class="viewcode-block" id="hstools.get_spectral_mean"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hstools.get_spectral_mean">[docs]</a>    <span class="k">def</span> <span class="nf">get_spectral_mean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">band_list</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="hstools.get_spectral_mean"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.get_spectral_mean">[docs]</a>    <span class="k">def</span> <span class="nf">get_spectral_mean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">band_list</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Gets the spectral mean of a datacube from a list of bands</span>
 
@@ -1205,7 +1213,7 @@
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">array_mean</span></div>
 
-<div class="viewcode-block" id="hstools.get_band_num"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hstools.get_band_num">[docs]</a>    <span class="k">def</span> <span class="nf">get_band_num</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">band_idx</span><span class="p">):</span>
+<div class="viewcode-block" id="hstools.get_band_num"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.get_band_num">[docs]</a>    <span class="k">def</span> <span class="nf">get_band_num</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">band_idx</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Adds 1 to `band_idx` and returns the band number(s).</span>
 
@@ -1229,7 +1237,7 @@
             <span class="n">band_num</span> <span class="o">=</span> <span class="n">band_idx</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="n">band_num</span></div>
 
-<div class="viewcode-block" id="hstools.get_band_range"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hstools.get_band_range">[docs]</a>    <span class="k">def</span> <span class="nf">get_band_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">range_wl</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="hstools.get_band_range"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.get_band_range">[docs]</a>    <span class="k">def</span> <span class="nf">get_band_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">range_wl</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Retrieves the band index or band number for all bands within a</span>
 <span class="sd">        wavelength range.</span>
@@ -1268,7 +1276,7 @@
         <span class="n">band_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">band_min</span><span class="p">,</span> <span class="n">band_max</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
         <span class="k">return</span> <span class="n">band_list</span></div>
 
-<div class="viewcode-block" id="hstools.get_meta_set"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hstools.get_meta_set">[docs]</a>    <span class="k">def</span> <span class="nf">get_meta_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">meta_set</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="hstools.get_meta_set"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.get_meta_set">[docs]</a>    <span class="k">def</span> <span class="nf">get_meta_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">meta_set</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Reads metadata &quot;set&quot; (i.e., string representation of a Python set;</span>
 <span class="sd">        common in .hdr files), taking care to remove leading and trailing</span>
@@ -1312,7 +1320,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">metadata_list</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="hstools.get_UTM"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hstools.get_UTM">[docs]</a>    <span class="k">def</span> <span class="nf">get_UTM</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="p">,</span> <span class="n">utm_x</span><span class="p">,</span> <span class="n">utm_y</span><span class="p">,</span> <span class="n">size_x</span><span class="p">,</span> <span class="n">size_y</span><span class="p">):</span>
+<div class="viewcode-block" id="hstools.get_UTM"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.get_UTM">[docs]</a>    <span class="k">def</span> <span class="nf">get_UTM</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="p">,</span> <span class="n">utm_x</span><span class="p">,</span> <span class="n">utm_y</span><span class="p">,</span> <span class="n">size_x</span><span class="p">,</span> <span class="n">size_y</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Calculates the new UTM coordinate of cropped plot to modify the</span>
 <span class="sd">        &quot;map info&quot; tag of the .hdr file.</span>
@@ -1343,7 +1351,7 @@
         <span class="n">utm_y_new</span> <span class="o">=</span> <span class="n">utm_y</span> <span class="o">-</span> <span class="p">((</span><span class="n">pix_n_ul</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">size_y</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">utm_x_new</span><span class="p">,</span> <span class="n">utm_y_new</span></div>
 
-<div class="viewcode-block" id="hstools.load_spyfile"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hstools.load_spyfile">[docs]</a>    <span class="k">def</span> <span class="nf">load_spyfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">):</span>
+<div class="viewcode-block" id="hstools.load_spyfile"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.load_spyfile">[docs]</a>    <span class="k">def</span> <span class="nf">load_spyfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Loads a `SpyFile` (Spectral Python object) for data access and/or</span>
 <span class="sd">        manipulation by the `hstools` class.</span>
@@ -1355,7 +1363,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span> <span class="o">=</span> <span class="n">spyfile</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_get_meta_bands</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="hstools.mask_array"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hstools.mask_array">[docs]</a>    <span class="k">def</span> <span class="nf">mask_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">percentile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="hstools.mask_array"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.mask_array">[docs]</a>    <span class="k">def</span> <span class="nf">mask_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">percentile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                    <span class="n">side</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Creates a masked numpy array based on a threshold value. If `array` is</span>
@@ -1445,7 +1453,7 @@
         <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">hist_str</span>
         <span class="k">return</span> <span class="n">array_mask</span><span class="p">,</span> <span class="n">metadata</span></div>
 
-<div class="viewcode-block" id="hstools.mask_datacube"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hstools.mask_datacube">[docs]</a>    <span class="k">def</span> <span class="nf">mask_datacube</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">,</span> <span class="n">mask</span><span class="p">):</span>
+<div class="viewcode-block" id="hstools.mask_datacube"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.mask_datacube">[docs]</a>    <span class="k">def</span> <span class="nf">mask_datacube</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">,</span> <span class="n">mask</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        DO NOT USE; USE mean_datacube() INSTEAD AND PASS A MASK.</span>
 
@@ -1485,7 +1493,7 @@
         <span class="n">spec_std</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">spec_std</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">spec_mean</span><span class="p">,</span> <span class="n">spec_std</span><span class="p">,</span> <span class="n">datacube_masked</span></div>
 
-<div class="viewcode-block" id="hstools.mean_datacube"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hstools.mean_datacube">[docs]</a>    <span class="k">def</span> <span class="nf">mean_datacube</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="hstools.mean_datacube"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.mean_datacube">[docs]</a>    <span class="k">def</span> <span class="nf">mean_datacube</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Calculates the mean spectra for a datcube; if `mask` is passed (as a</span>
 <span class="sd">        np.array), then the mask is applied to `spyfile` prior to computing</span>
@@ -1535,7 +1543,7 @@
         <span class="n">spec_std</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">spec_std</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">spec_mean</span><span class="p">,</span> <span class="n">spec_std</span><span class="p">,</span> <span class="n">datacube_masked</span></div>
 
-<div class="viewcode-block" id="hstools.mask_shadow"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hstools.mask_shadow">[docs]</a>    <span class="k">def</span> <span class="nf">mask_shadow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shadow_pctl</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">show_histogram</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<div class="viewcode-block" id="hstools.mask_shadow"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.mask_shadow">[docs]</a>    <span class="k">def</span> <span class="nf">mask_shadow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shadow_pctl</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">show_histogram</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                     <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Creates a `numpy.mask` of all pixels that are likely shadow pixels.</span>
@@ -1568,7 +1576,7 @@
                 <span class="n">side</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">show_histogram</span><span class="o">=</span><span class="n">show_histogram</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">array_noshadow</span><span class="o">.</span><span class="n">mask</span><span class="p">,</span> <span class="n">metadata</span></div>
 
-<div class="viewcode-block" id="hstools.modify_meta_set"><a class="viewcode-back" href="../../hs_process.html#hs_process.utilities.hstools.modify_meta_set">[docs]</a>    <span class="k">def</span> <span class="nf">modify_meta_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">meta_set</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="hstools.modify_meta_set"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.modify_meta_set">[docs]</a>    <span class="k">def</span> <span class="nf">modify_meta_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">meta_set</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Modifies metadata &quot;set&quot; (i.e., string representation of a Python set;</span>
 <span class="sd">        common in .hdr files) by converting string to list, then adjusts the</span>

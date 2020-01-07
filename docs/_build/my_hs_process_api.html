@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="python">
+  <head>
+    <meta charset="utf-8" />
+    <title>2. API &#8212; hs_process 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3. License" href="license.html" />
+    <link rel="prev" title="1. Installation" href="installation.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          hs_process</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="https://github.com/tnigon/hs_process">Github</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Contents <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Home</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="installation.html">1. Installation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2. API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="license.html">3. License</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">1. Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2. API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">3. License</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="installation.html" title="Previous Chapter: 1. Installation"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; 1. Installation</span>
+    </a>
+  </li>
+  <li>
+    <a href="license.html" title="Next Chapter: 3. License"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">3. License &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/my_hs_process_api.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">2. API</a><ul>
+<li><a class="reference internal" href="#batch-processing">2.1. Batch Processing</a></li>
+<li><a class="reference internal" href="#segementation">2.2. Segementation</a></li>
+<li><a class="reference internal" href="#spatial-modifications">2.3. Spatial Modifications</a></li>
+<li><a class="reference internal" href="#spectral-modifications">2.4. Spectral Modifications</a></li>
+<li><a class="reference internal" href="#utilities">2.5. Utilities</a></li>
+</ul>
+</li>
+</ul>
+
+<form action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="body col-md-9 content" role="main">
+      
+  <div class="section" id="api">
+<h1>2. API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="batch-processing">
+<h2>2.1. <a class="reference external" href="api/hs_process.batch.batch.html">Batch Processing</a><a class="headerlink" href="#batch-processing" title="Permalink to this headline">¶</a></h2>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/hs_process.batch.batch.html#hs_process.batch.batch" title="hs_process.batch.batch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">batch</span></code></a>([base_dir, search_ext, dir_level])</p></td>
+<td><p>Parent class for batch processing hyperspectral image data</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">defaults</span></code></p></td>
+<td><p>Class containing all defaults for writing an ENVI datacube to file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">hsio</span></code>([fname_in, name_long, name_plot, ...])</p></td>
+<td><p>Class for reading and writing hyperspectral data files and accessing, interpreting, and modifying its associated metadata.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">segment</span></code>(spyfile)</p></td>
+<td><p>Class for aiding in the segmentation/masking of image data to include pixels that are of most interest.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">spatial_mod</span></code>(spyfile[, gdf])</p></td>
+<td><p>Class for manipulating data within the spatial domain (e.g., cropping by geographical boundary)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">spec_mod</span></code>(spyfile)</p></td>
+<td><p>Class for manipulating data within the spectral domain (usually pixel-based)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="segementation">
+<h2>2.2. <a class="reference external" href="api/hs_process.segment.segment.html">Segementation</a><a class="headerlink" href="#segementation" title="Permalink to this headline">¶</a></h2>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">defaults</span></code></p></td>
+<td><p>Class containing all defaults for writing an ENVI datacube to file.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">hstools</span></code>(spyfile)</p></td>
+<td><p>Basic tools for manipulating Spyfiles and accessing their metadata.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/hs_process.segment.segment.html#hs_process.segment.segment" title="hs_process.segment.segment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">segment</span></code></a>(spyfile)</p></td>
+<td><p>Class for aiding in the segmentation/masking of image data to include pixels that are of most interest.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="spatial-modifications">
+<h2>2.3. <a class="reference external" href="api/hs_process.spatial_mod.spatial_mod.html">Spatial Modifications</a><a class="headerlink" href="#spatial-modifications" title="Permalink to this headline">¶</a></h2>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Polygon</span></code>([shell, holes])</p></td>
+<td><p>A two-dimensional figure bounded by a linear ring</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">defaults</span></code></p></td>
+<td><p>Class containing all defaults for writing an ENVI datacube to file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">hstools</span></code>(spyfile)</p></td>
+<td><p>Basic tools for manipulating Spyfiles and accessing their metadata.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/hs_process.spatial_mod.spatial_mod.html#hs_process.spatial_mod.spatial_mod" title="hs_process.spatial_mod.spatial_mod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spatial_mod</span></code></a>(spyfile[, gdf])</p></td>
+<td><p>Class for manipulating data within the spatial domain (e.g., cropping by geographical boundary)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="spectral-modifications">
+<h2>2.4. <a class="reference external" href="api/hs_process.spec_mod.spec_mod.html">Spectral Modifications</a><a class="headerlink" href="#spectral-modifications" title="Permalink to this headline">¶</a></h2>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">hstools</span></code>(spyfile)</p></td>
+<td><p>Basic tools for manipulating Spyfiles and accessing their metadata.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/hs_process.spec_mod.spec_mod.html#hs_process.spec_mod.spec_mod" title="hs_process.spec_mod.spec_mod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spec_mod</span></code></a>(spyfile)</p></td>
+<td><p>Class for manipulating data within the spectral domain (usually pixel-based)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="utilities">
+<h2>2.5. Utilities<a class="headerlink" href="#utilities" title="Permalink to this headline">¶</a></h2>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/hs_process.utilities.defaults.html#hs_process.utilities.defaults" title="hs_process.utilities.defaults"><code class="xref py py-obj docutils literal notranslate"><span class="pre">defaults</span></code></a></p></td>
+<td><p>Class containing all defaults for writing an ENVI datacube to file.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/hs_process.utilities.hsio.html#hs_process.utilities.hsio" title="hs_process.utilities.hsio"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hsio</span></code></a>([fname_in, name_long, name_plot, ...])</p></td>
+<td><p>Class for reading and writing hyperspectral data files and accessing, interpreting, and modifying its associated metadata.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/hs_process.utilities.hstools.html#hs_process.utilities.hstools" title="hs_process.utilities.hstools"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hstools</span></code></a>(spyfile)</p></td>
+<td><p>Basic tools for manipulating Spyfiles and accessing their metadata.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2020, Tyler J. Nigon.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

@@ -19,9 +19,9 @@ import sphinx_bootstrap_theme
 import recommonmark
 from recommonmark.transform import AutoStructify
 
-autodoc_default_options = {
-    'members': None
-}
+# autodoc_default_options = {
+#     'members': None
+# }
 
 autosummary_generate = True
 
@@ -43,15 +43,20 @@ release = '0.0.1'
 extensions = [
     'sphinx.ext.autodoc',
     # 'docfx_yaml.extension',  # creates configuration.yaml file
-    # 'sphinx.ext.autosummary',  # Creates TOC sub-level for EONR methods
+    'sphinx.ext.autosummary',  # Creates TOC sub-level for hs_process methods
     'sphinx.ext.intersphinx',
     'sphinx.ext.doctest',
     'sphinx.ext.mathjax',
     'sphinx.ext.viewcode',
     'recommonmark',
     'nbsphinx',  # converts Jupyter notebooks to html
-    'sphinx.ext.napoleon'  # for parsing docstrings
+    'sphinx.ext.napoleon',  # for parsing docstrings
+    'sphinx_automodapi.automodapi',  # Generates individual pages for each function
+    'sphinx_automodapi.smart_resolver'  # Tries to resolve errors that import classes from other files
 ]
+
+automodapi_inheritance_diagram = False  # indicates whether to show inheritance diagrams by default
+numpydoc_show_class_members = False  # needed to avoid having methods and attributes of classes being shown multiple times.
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -97,12 +102,12 @@ html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
 #
 html_theme_options = {
     # Navigation bar title. (Default: ``project`` value)
-    'navbar_title': "EONR",
+    'navbar_title': "hs_process",
     'navbar_links': [
-        ('Github', "https://github.com/tnigon/eonr", True)
+        ('Github', "https://github.com/tnigon/hs_process", True)
     ],
     'navbar_site_name': "Contents",
-    'globaltoc_depth': 1,
+    'globaltoc_depth': 3,
     'navbar_pagenav': False,  # sidebar is doing this
     # 'navbar_pagenav_name': "Page Menu",
     'navbar_fixed_top': "true",
