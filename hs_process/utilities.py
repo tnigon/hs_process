@@ -728,7 +728,8 @@ class hsio(object):
                         ext=ext)
 
     def write_tif(self, fname_tif, spyfile=None, fname_in=None,
-                  projection_out=None, geotransform_out=None, inline=True):
+                  projection_out=None, geotransform_out=None, metadata=None,
+                  inline=True):
         '''
         Wrapper function that accesses the GDAL Python package to save a
         small datacube subset (i.e., three bands or less) to file.
@@ -775,8 +776,17 @@ class hsio(object):
             img_ds = self._read_envi_gdal()
         if projection_out is None:
             projection_out = img_ds.GetProjection()
-        if geotransform_out is None:
+        if geotransform_out is None and metadata is None:
             geotransform_out = img_ds.GetGeoTransform()
+        elif geotransform_out is None and metadata is not None:
+            map_set = metadata['map info']
+            ul_x_utm = self.tools.get_meta_set(map_set, 3)
+            ul_y_utm = self.tools.get_meta_set(map_set, 4)
+            size_x_m = self.tools.get_meta_set(map_set, 5)
+            size_y_m = self.tools.get_meta_set(map_set, 6)
+            # Note the last pixel size must be negative to begin at upper left
+            geotransform_out = [ul_x_utm, size_x_m, 0.0, ul_y_utm, 0.0,
+                                -size_y_m]
 
         drv = gdal.GetDriverByName('GTiff')
         drv.Register()
