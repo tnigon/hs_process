@@ -113,6 +113,11 @@ class hsio(object):
     def __init__(self, fname_in=None, name_long=None, name_plot=None,
                  name_short=None, str_plot='plot_', individual_plot=False,
                  fname_hdr_spec=None):
+        '''
+        Parameters:
+            fname_in (`str`, optional): The filename of the image datacube to
+                be read in initially.
+        '''
         self.fname_in = fname_in
         self.name_long = name_long
         self.name_plot = name_plot
@@ -722,7 +727,7 @@ class hsio(object):
                         byteorder=byteorder, metadata=metadata, force=force,
                         ext=ext)
 
-    def write_tif(self, fname_tif, spyfile=None,
+    def write_tif(self, fname_tif, spyfile=None, fname_in=None,
                   projection_out=None, geotransform_out=None, inline=True):
         '''
         Wrapper function that accesses the GDAL Python package to save a
@@ -734,6 +739,7 @@ class hsio(object):
             spyfile (`SpyFile` object or `numpy.ndarray`): The data cube to
                 save. If `numpy.ndarray`, then metadata (`dict`) should also be
                 passed.
+            fname_in (`str`):
             projection_out (`str`): (default: `self.projection_out`)
             geotransform_out (`str`): (default: `self.geotransform_out`)
 
@@ -747,6 +753,8 @@ class hsio(object):
         else:
             assert isinstance(spyfile, np.ndarray)
             array = spyfile
+        if fname_in is not None:
+            self.fname_in = fname_in
         if projection_out is None or geotransform_out is None:
             print('Either `projection_out` is `None` or `geotransform_out` is '
                   '`None` (or both are). Retrieving projection and '
