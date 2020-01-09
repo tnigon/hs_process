@@ -739,7 +739,8 @@ class hsio(object):
             spyfile (`SpyFile` object or `numpy.ndarray`): The data cube to
                 save. If `numpy.ndarray`, then metadata (`dict`) should also be
                 passed.
-            fname_in (`str`):
+            fname_in (`str`, optional): The filename of the image datacube to
+                be read in initially.
             projection_out (`str`): (default: `self.projection_out`)
             geotransform_out (`str`): (default: `self.geotransform_out`)
 
@@ -755,6 +756,16 @@ class hsio(object):
             array = spyfile
         if fname_in is not None:
             self.fname_in = fname_in
+            if os.path.splitext(fname_in)[1] != '.hdr':
+                self.fname_hdr = fname_in + '.hdr'
+            else:
+                self.fname_hdr = fname_in
+                self.fname_in = os.path.splitext(fname_in)[0]
+            self.read_cube(fname_hdr=self.fname_hdr, name_long=self.name_long,
+                           name_plot=self.name_plot,
+                           name_short=self.name_short,
+                           individual_plot=self.individual_plot,
+                           overwrite=False)
         if projection_out is None or geotransform_out is None:
             print('Either `projection_out` is `None` or `geotransform_out` is '
                   '`None` (or both are). Retrieving projection and '
