@@ -232,3 +232,6 @@ class spec_mod(object):
         self.tools.spyfile.metadata = metadata
 
         return array_smooth, metadata
+
+# TODO: Add normalization function for light scattering
+# https://link.springer.com/chapter/10.1007/978-1-4939-2836-1_4#Sec12

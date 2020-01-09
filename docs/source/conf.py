@@ -104,7 +104,8 @@ html_theme_options = {
     # Navigation bar title. (Default: ``project`` value)
     'navbar_title': "hs_process",
     'navbar_links': [
-        ('Github', "https://github.com/tnigon/hs_process", True)
+        ('Github', "https://github.com/tnigon/hs_process", True),
+        ('Spectral Python', "http://www.spectralpython.net/", True)
     ],
     'navbar_site_name': "Contents",
     'globaltoc_depth': 3,
