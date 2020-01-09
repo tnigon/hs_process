@@ -744,6 +744,9 @@ class hsio(object):
                 be read in initially.
             projection_out (`str`): (default: `self.projection_out`)
             geotransform_out (`str`): (default: `self.geotransform_out`)
+            metadata (`dict`): Metadata information; if geotransform_out is not
+                passed, "map info" is accessed from `metadata` and
+                geotransform_out is created from that "map info".
 
         TOOD:
             Use rasterio package instead of GDAL
