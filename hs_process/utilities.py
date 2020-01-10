@@ -751,6 +751,12 @@ class hsio(object):
         TOOD:
             Use rasterio package instead of GDAL
         '''
+        msg = ('The directory passed in `fname_tif` does not exist. Please be '
+               'sure to create the directory prior to writing the geotif.\n'
+               'Try:\n'
+               'os.mkdir(os.path.dirname(fname_tif))'
+               ''.format(os.path.dirname(fname_tif)))
+        assert os.path.isdir(os.path.dirname(fname_tif)) is True, msg
         if spyfile is None:
             spyfile = self.spyfile
         if isinstance(spyfile, SpyFile.SpyFile):
