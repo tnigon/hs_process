@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="python">
+  <head>
+    <meta charset="utf-8" />
+    <title>Tutorial &#8212; hs_process 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          hs_process</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="https://github.com/tnigon/hs_process">Github</a></li>
+                <li><a href="http://www.spectralpython.net/">Spectral Python</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Contents <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="my_hs_process_api.html">1. API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="license.html">2. License</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="my_hs_process_api.html">1. API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">2. License</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/eonr_tutorial.ipynb.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">Tutorial</a><ul>
+<li><a class="reference internal" href="#Follow-along">Follow along</a></li>
+<li><a class="reference internal" href="#Load-modules">Load modules</a></li>
+<li><a class="reference internal" href="#Load-the-data">Load the data</a></li>
+<li><a class="reference internal" href="#Set-column-names-(pre-init)">Set column names <em>(pre-init)</em></a></li>
+<li><a class="reference internal" href="#Set-units">Set units</a></li>
+<li><a class="reference internal" href="#Set-economic-conditions">Set economic conditions</a></li>
+<li><a class="reference internal" href="#Initialize-EONR">Initialize <code class="docutils literal notranslate"><span class="pre">EONR</span></code></a></li>
+<li><a class="reference internal" href="#Calculate-the-EONR">Calculate the EONR</a></li>
+<li><a class="reference internal" href="#Plotting-the-EONR">Plotting the EONR</a></li>
+<li><a class="reference internal" href="#Accesing-complete-results">Accesing complete results</a></li>
+<li><a class="reference internal" href="#Visualizing-all-confidence-intervals">Visualizing all confidence intervals</a></li>
+<li><a class="reference internal" href="#Accessing-complete-CI-results">Accessing complete CI results</a></li>
+<li><a class="reference internal" href="#Adjusting-the-economic-scenario">Adjusting the economic scenario</a></li>
+<li><a class="reference internal" href="#Environmental-observations">Environmental observations</a></li>
+<li><a class="reference internal" href="#Calculate-mineralization">Calculate mineralization</a></li>
+<li><a class="reference internal" href="#Run-EONR-for-the-socially-optimum-rate">Run <code class="docutils literal notranslate"><span class="pre">EONR</span></code> for the socially optimum rate</a></li>
+<li><a class="reference internal" href="#Saving-the-data">Saving the data</a></li>
+</ul>
+</li>
+</ul>
+
+<form action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="body col-md-9 content" role="main">
+      
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 7ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="Tutorial">
+<h1>Tutorial<a class="headerlink" href="#Tutorial" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Follow-along">
+<h2>Follow along<a class="headerlink" href="#Follow-along" title="Permalink to this headline">¶</a></h2>
+<p>Code for all the examples is located in your <code class="docutils literal notranslate"><span class="pre">PYTHONPATH/Lib/site-packages/eonr/examples</span></code> folder. With that said, you should be able to make use of <code class="docutils literal notranslate"><span class="pre">EONR</span></code> by following and executing the commands in this tutorial using either the sample data provided or substituting in your own data.</p>
+<p><em>You will find the following code included in the</em> <code class="docutils literal notranslate"><span class="pre">tutorial.py</span></code> <em>or</em> <code class="docutils literal notranslate"><span class="pre">tutorial.ipynb</span></code> <em>(for</em> <a class="reference external" href="https://jupyter.org/">Jupyter notebooks</a><em>) files in your</em> <code class="docutils literal notranslate"><span class="pre">PYTHONPATH/Lib/site-packages/eonr/examples</span></code> <em>folder - feel free to load that into your Python IDE to follow along.</em></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="Load-modules">
+<h2>Load modules<a class="headerlink" href="#Load-modules" title="Permalink to this headline">¶</a></h2>
+<p>After <a class="reference external" href="installation.md">installation</a>, load <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> and the <code class="docutils literal notranslate"><span class="pre">EONR</span></code> module in a Python interpreter:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">eonr</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;EONR version: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">eonr</span><span class="o">.</span><span class="n">__version__</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+EONR version: 0.2.0
+</pre></div></div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="Load-the-data">
+<h2>Load the data<a class="headerlink" href="#Load-the-data" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">EONR</span></code> uses Pandas dataframes to access and manipulate the experimental data.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">df_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;minnesota_2012.csv&#39;</span><span class="p">))</span>
+<span class="n">df_data</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>location</th>
+      <th>plot</th>
+      <th>trt</th>
+      <th>rep</th>
+      <th>time_n</th>
+      <th>rate_n_applied_kgha</th>
+      <th>yld_grain_dry_kgha</th>
+      <th>nup_total_kgha</th>
+      <th>soil_plus_fert_n_kgha</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>101</td>
+      <td>8</td>
+      <td>1</td>
+      <td>Pre</td>
+      <td>235.3785</td>
+      <td>12410.916200</td>
+      <td>198.759898</td>
+      <td>284.69590</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>102</td>
+      <td>3</td>
+      <td>1</td>
+      <td>Pre</td>
+      <td>67.2510</td>
+      <td>10627.946000</td>
+      <td>147.971755</td>
+      <td>116.56840</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>103</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Pre</td>
+      <td>0.0000</td>
+      <td>7428.081218</td>
+      <td>98.769392</td>
+      <td>38.10890</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>104</td>
+      <td>2</td>
+      <td>1</td>
+      <td>Pre</td>
+      <td>33.6255</td>
+      <td>9202.953180</td>
+      <td>111.440210</td>
+      <td>71.73440</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>105</td>
+      <td>4</td>
+      <td>2</td>
+      <td>Pre</td>
+      <td>100.8765</td>
+      <td>10841.127180</td>
+      <td>142.663887</td>
+      <td>154.67730</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>106</td>
+      <td>7</td>
+      <td>2</td>
+      <td>Pre</td>
+      <td>201.7530</td>
+      <td>10646.649330</td>
+      <td>178.802092</td>
+      <td>255.55380</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>107</td>
+      <td>6</td>
+      <td>2</td>
+      <td>Pre</td>
+      <td>168.1275</td>
+      <td>12367.436000</td>
+      <td>186.053531</td>
+      <td>201.75300</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>108</td>
+      <td>5</td>
+      <td>2</td>
+      <td>Pre</td>
+      <td>134.5020</td>
+      <td>13366.361700</td>
+      <td>196.737290</td>
+      <td>168.12750</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>201</td>
+      <td>7</td>
+      <td>1</td>
+      <td>Pre</td>
+      <td>201.7530</td>
+      <td>14232.053480</td>
+      <td>228.775204</td>
+      <td>251.07040</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>202</td>
+      <td>5</td>
+      <td>1</td>
+      <td>Pre</td>
+      <td>134.5020</td>
+      <td>14384.824980</td>
+      <td>226.006218</td>
+      <td>183.81940</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>203</td>
+      <td>6</td>
+      <td>1</td>
+      <td>Pre</td>
+      <td>168.1275</td>
+      <td>13592.219290</td>
+      <td>182.423028</td>
+      <td>206.23640</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>204</td>
+      <td>4</td>
+      <td>1</td>
+      <td>Pre</td>
+      <td>100.8765</td>
+      <td>14091.078390</td>
+      <td>187.745096</td>
+      <td>138.98540</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>205</td>
+      <td>3</td>
+      <td>2</td>
+      <td>Pre</td>
+      <td>67.2510</td>
+      <td>10739.981390</td>
+      <td>133.470950</td>
+      <td>121.05180</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>206</td>
+      <td>1</td>
+      <td>2</td>
+      <td>Pre</td>
+      <td>0.0000</td>
+      <td>8375.090921</td>
+      <td>109.460245</td>
+      <td>53.80080</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>207</td>
+      <td>8</td>
+      <td>2</td>
+      <td>Pre</td>
+      <td>235.3785</td>
+      <td>13797.485850</td>
+      <td>195.932161</td>
+      <td>269.00400</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>208</td>
+      <td>2</td>
+      <td>2</td>
+      <td>Pre</td>
+      <td>33.6255</td>
+      <td>9713.487469</td>
+      <td>113.903035</td>
+      <td>67.25100</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>301</td>
+      <td>3</td>
+      <td>3</td>
+      <td>Pre</td>
+      <td>67.2510</td>
+      <td>12579.012170</td>
+      <td>180.812783</td>
+      <td>106.48075</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>302</td>
+      <td>7</td>
+      <td>3</td>
+      <td>Pre</td>
+      <td>201.7530</td>
+      <td>13604.571780</td>
+      <td>208.724988</td>
+      <td>240.98275</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>303</td>
+      <td>2</td>
+      <td>3</td>
+      <td>Pre</td>
+      <td>33.6255</td>
+      <td>10185.959390</td>
+      <td>121.505528</td>
+      <td>68.37185</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>304</td>
+      <td>6</td>
+      <td>3</td>
+      <td>Pre</td>
+      <td>168.1275</td>
+      <td>14305.321460</td>
+      <td>204.391319</td>
+      <td>202.87385</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>305</td>
+      <td>8</td>
+      <td>4</td>
+      <td>Pre</td>
+      <td>235.3785</td>
+      <td>13929.592020</td>
+      <td>186.775288</td>
+      <td>267.88315</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>306</td>
+      <td>4</td>
+      <td>4</td>
+      <td>Pre</td>
+      <td>100.8765</td>
+      <td>10975.799250</td>
+      <td>147.057081</td>
+      <td>133.38115</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>307</td>
+      <td>5</td>
+      <td>4</td>
+      <td>Pre</td>
+      <td>134.5020</td>
+      <td>11338.070290</td>
+      <td>148.348790</td>
+      <td>162.52325</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>308</td>
+      <td>1</td>
+      <td>4</td>
+      <td>Pre</td>
+      <td>0.0000</td>
+      <td>5821.373521</td>
+      <td>68.791363</td>
+      <td>28.02125</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>401</td>
+      <td>5</td>
+      <td>3</td>
+      <td>Pre</td>
+      <td>134.5020</td>
+      <td>13755.002370</td>
+      <td>198.844611</td>
+      <td>173.73175</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>402</td>
+      <td>1</td>
+      <td>3</td>
+      <td>Pre</td>
+      <td>0.0000</td>
+      <td>9077.628329</td>
+      <td>122.207140</td>
+      <td>39.22975</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>403</td>
+      <td>4</td>
+      <td>3</td>
+      <td>Pre</td>
+      <td>100.8765</td>
+      <td>13760.323240</td>
+      <td>181.734857</td>
+      <td>135.62285</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>404</td>
+      <td>8</td>
+      <td>3</td>
+      <td>Pre</td>
+      <td>235.3785</td>
+      <td>14896.886860</td>
+      <td>227.454749</td>
+      <td>270.12485</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>405</td>
+      <td>2</td>
+      <td>4</td>
+      <td>Pre</td>
+      <td>33.6255</td>
+      <td>10551.466010</td>
+      <td>144.282839</td>
+      <td>66.13015</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>406</td>
+      <td>6</td>
+      <td>4</td>
+      <td>Pre</td>
+      <td>168.1275</td>
+      <td>15621.406530</td>
+      <td>227.056199</td>
+      <td>200.63215</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>407</td>
+      <td>3</td>
+      <td>4</td>
+      <td>Pre</td>
+      <td>67.2510</td>
+      <td>10950.450720</td>
+      <td>146.628851</td>
+      <td>95.27225</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>2012</td>
+      <td>Minnesota</td>
+      <td>408</td>
+      <td>7</td>
+      <td>4</td>
+      <td>Pre</td>
+      <td>201.7530</td>
+      <td>13838.222530</td>
+      <td>210.340625</td>
+      <td>229.77425</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="Set-column-names-(pre-init)">
+<h2>Set column names <em>(pre-init)</em><a class="headerlink" href="#Set-column-names-(pre-init)" title="Permalink to this headline">¶</a></h2>
+<p><em>The table containing the experimental data</em> <strong>must</strong> <em>have a minimum of two columns:</em></p>
+<ul class="simple">
+<li><p><em>Nitrogen fertilizer rate</em></p></li>
+<li><p><em>Grain yield</em></p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">EONR</span></code> accepts custom column names. Just be sure to set them by either using <code class="docutils literal notranslate"><span class="pre">EONR.set_column_names()</span></code> or by passing them to <code class="docutils literal notranslate"><span class="pre">EONR.calculate_eonr()</span></code>. We will declare the names of the these two columns as they exist in the <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> dataframe so they can be passed to <code class="docutils literal notranslate"><span class="pre">EONR</span></code> later:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">col_n_app</span> <span class="o">=</span> <span class="s1">&#39;rate_n_applied_kgha&#39;</span>
+<span class="n">col_yld</span> <span class="o">=</span> <span class="s1">&#39;yld_grain_dry_kgha&#39;</span>
+</pre></div>
+</div>
+</div>
+<p>Each row of data in our dataframe should correspond to a nitrogen rate treatment plot. It is common to have several other columns describing each treatment plot (e.g., year, location, replication, nitrogen timing, etc.). These aren’t necessary, but <code class="docutils literal notranslate"><span class="pre">EONR</span></code> will try pull information from “year”, “location”, and “nitrogen timing” for labeling the plots that are generated (as you’ll see towards the end of this tutorial).</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="Set-units">
+<h2>Set units<a class="headerlink" href="#Set-units" title="Permalink to this headline">¶</a></h2>
+<p>Although optional, it is good practice to declare units so we don’t get confused:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">unit_currency</span> <span class="o">=</span> <span class="s1">&#39;$&#39;</span>
+<span class="n">unit_fert</span> <span class="o">=</span> <span class="s1">&#39;kg&#39;</span>
+<span class="n">unit_grain</span> <span class="o">=</span> <span class="s1">&#39;kg&#39;</span>
+<span class="n">unit_area</span> <span class="o">=</span> <span class="s1">&#39;ha&#39;</span>
+</pre></div>
+</div>
+</div>
+<p>These unit variables are only used for plotting (titles and axes labels), and they are not actually used for any computations. Because the initial parameter guess is critically important for fitting the model(s), there is logic built in that adjusts this intitial guess based on the units provided here.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="Set-economic-conditions">
+<h2>Set economic conditions<a class="headerlink" href="#Set-economic-conditions" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">EONR</span></code> computes the <em>Economic</em> Optimum Nitrogen Rate for any economic scenario that we define. All that is required is to declare the cost of the nitrogen fertilizer (per unit, as defined above) and the price of grain (also per unit). Note that the cost of nitrogen fertilizer can be set to zero, and the <em>Agronomic</em> Optimum Nitrogen Rate will be computed.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cost_n_fert</span> <span class="o">=</span> <span class="mf">0.88</span>  <span class="c1"># in USD per kg nitrogen</span>
+<span class="n">price_grain</span> <span class="o">=</span> <span class="mf">0.157</span>  <span class="c1"># in USD per kg grain</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="Initialize-EONR">
+<h2>Initialize <code class="docutils literal notranslate"><span class="pre">EONR</span></code><a class="headerlink" href="#Initialize-EONR" title="Permalink to this headline">¶</a></h2>
+<p>At this point, we can initialize an instance of <code class="docutils literal notranslate"><span class="pre">EONR</span></code>.</p>
+<p><em>Before doing so, we may want to set the base directory.</em> <code class="docutils literal notranslate"><span class="pre">EONR.base_dir</span></code> <em>is the default location for saving plots and data processed by</em> <code class="docutils literal notranslate"><span class="pre">EONR</span></code><em>. If</em> <code class="docutils literal notranslate"><span class="pre">EONR.base_dir</span></code> <em>is not set, it will be set to be a folder named “eonr_tutorial” in the current working directory during the intitialization (to see your current working directory, type</em> <code class="docutils literal notranslate"><span class="pre">os.getcwd()</span></code><em>). If you do not wish to use this as your current working directory, it can be passed to the</em> <code class="docutils literal notranslate"><span class="pre">EONR</span></code> <em>instance using the</em>
+<code class="docutils literal notranslate"><span class="pre">base_dir</span></code> <em>keyword.</em></p>
+<p>For demonstration purposes, we will set <code class="docutils literal notranslate"><span class="pre">EONR.base_dir</span></code> to what would be the default folder if nothing were passed to the <code class="docutils literal notranslate"><span class="pre">base_dir</span></code> keyword –&gt; that is, we will choose a folder named “eonr_advanced_tutorial” in the current working directory (<code class="docutils literal notranslate"><span class="pre">EONR</span></code> will create the directory if it does not exist).</p>
+<p>And finally, to create an instance of <code class="docutils literal notranslate"><span class="pre">EONR</span></code>, pass the appropriate variables to <code class="docutils literal notranslate"><span class="pre">EONR()</span></code>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">base_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s1">&#39;eonr_tutorial&#39;</span><span class="p">)</span>
+
+<span class="n">my_eonr</span> <span class="o">=</span> <span class="n">eonr</span><span class="o">.</span><span class="n">EONR</span><span class="p">(</span><span class="n">cost_n_fert</span><span class="o">=</span><span class="n">cost_n_fert</span><span class="p">,</span>
+                    <span class="n">price_grain</span><span class="o">=</span><span class="n">price_grain</span><span class="p">,</span>
+                    <span class="n">col_n_app</span><span class="o">=</span><span class="n">col_n_app</span><span class="p">,</span>
+                    <span class="n">col_yld</span><span class="o">=</span><span class="n">col_yld</span><span class="p">,</span>
+                    <span class="n">unit_currency</span><span class="o">=</span><span class="n">unit_currency</span><span class="p">,</span>
+                    <span class="n">unit_grain</span><span class="o">=</span><span class="n">unit_grain</span><span class="p">,</span>
+                    <span class="n">unit_fert</span><span class="o">=</span><span class="n">unit_fert</span><span class="p">,</span>
+                    <span class="n">unit_area</span><span class="o">=</span><span class="n">unit_area</span><span class="p">,</span>
+                    <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Notice the <code class="docutils literal notranslate"><span class="pre">model</span></code> keywork argument was set to <code class="docutils literal notranslate"><span class="pre">None</span></code> (default=‘quad_plateau’). This keyword is used to define which model to use to fit the experimental data. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, <code class="docutils literal notranslate"><span class="pre">EONR</span></code> will try all supported models (i.e., as of v. 0.2.0, both ‘quad_plateau’ and ‘quadratic’ models are supported), and use the model that fits the data best as determined by the highest <span class="math notranslate nohighlight">\(\text{r}^2\)</span>.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="Calculate-the-EONR">
+<h2>Calculate the EONR<a class="headerlink" href="#Calculate-the-EONR" title="Permalink to this headline">¶</a></h2>
+<p>With <code class="docutils literal notranslate"><span class="pre">my_eonr</span></code> initialized as an instance of <code class="docutils literal notranslate"><span class="pre">EONR</span></code>, we can now calculate the economic optimum nitrogen rate by calling the <code class="docutils literal notranslate"><span class="pre">calculate_eonr()</span></code> method and passing the dataframe with the loaded data:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">my_eonr</span><span class="o">.</span><span class="n">calculate_eonr</span><span class="p">(</span><span class="n">df_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+Computing EONR for Minnesota 2012 Pre
+Cost of N fertilizer: $0.88 per kg
+Price grain: $0.16 per kg
+Fixed costs: $0.00 per ha
+Checking quadratic and quadric-plateau models for best fit..
+Quadratic model r^2: 0.72
+Quadratic-plateau model r^2: 0.73
+Using the quadratic-plateau model..
+Economic optimum N rate (EONR): 162.3 kg per ha [130.5, 207.8] (90.0% confidence)
+Maximum return to N (MRTN): $767.93 per ha
+</pre></div></div>
+</div>
+<p>It may take a few seconds to run, but it will take much longer if you choose to compute the bootstrap confidence intervals in addition to the profile-likelihood confidence intervals. Please see the <a class="reference external" href="advanced_tutorial.html#Bootstrap-confidence-intervals">Advanced tutorial</a> describing how to compute the bootstrap CIs (<code class="docutils literal notranslate"><span class="pre">EONR</span></code> does not run the bootstrap CIs by default).</p>
+<p>And that’s it! The economic optimum for this dataset and economic scenario was <strong>162 kg nitrogen per ha</strong> (with 90% confidence bounds at <strong>131</strong> and <strong>208 kg per ha</strong>) and resulted in a maximum net return of nearly <strong>$770 per ha</strong>.</p>
+<p>Notice the <span class="math notranslate nohighlight">\(\text{r}^2\)</span> for the quadratic-plateau model was greater than that of the quadratic model, so the quadratic-plateau model was used (the model used is recorded in <code class="docutils literal notranslate"><span class="pre">EONR.df_results</span></code> and will be displayed in the plot legend - see below).</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="Plotting-the-EONR">
+<h2>Plotting the EONR<a class="headerlink" href="#Plotting-the-EONR" title="Permalink to this headline">¶</a></h2>
+<p>This is great, but of course it’d be useful to see our data and results plotted. Do this by calling the <code class="docutils literal notranslate"><span class="pre">plot_eonr()</span></code> module and <em>(optionally)</em> passing the minimum/maximum values for each axis:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">my_eonr</span><span class="o">.</span><span class="n">plot_eonr</span><span class="p">(</span><span class="n">x_min</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span> <span class="n">x_max</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">y_min</span><span class="o">=-</span><span class="mi">100</span><span class="p">,</span> <span class="n">y_max</span><span class="o">=</span><span class="mi">1400</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/eonr_tutorial_18_0.png" src="_images/eonr_tutorial_18_0.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>The blue points are <strong>experimental data</strong> (yield value in \$ per ha as a function of nitrogen rate)</p></li>
+<li><p>The blue line is the best-fit quadratic-plateau model representing <strong>gross return to nitrogen</strong></p></li>
+<li><p>The red line is the <strong>cost of nitrogen fertilizer</strong></p></li>
+<li><p>The green line is the difference between the two and represents the <strong>net return to nitrogen</strong></p></li>
+<li><p>The green point is the <strong>Economic Optimum Nitrogen Rate (EONR)</strong></p></li>
+<li><p>The transparent grey box surrounding the EONR/MRTN (green point) illustrates the <strong>90% confidence intervals</strong></p></li>
+</ul>
+<p>The EONR is the point on the x-axis where the net return curve (green) reaches the maximum return. The return to nitrogen at the EONR is the <strong>Maximum Return to Nitrogen (MRTN)</strong>, indicating the profit that is earned at the economic optimum nitrogen rate.</p>
+<p>Notice the economic scenario (i.e., grain price, nitrogen fertilizer cost, etc.) and the “Base zero” values in the upper right corner describing the assumptions of EONR calculatioon. <em>Base zero</em> refers to the initial y-intercept of the gross return model (this setting can be turned on/off by setting <code class="docutils literal notranslate"><span class="pre">EONR.base_zero</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code>. See the <a class="reference external" href="advanced_tutorial.html#Turn-base_zero-off">Advanced tutorial</a> and the <a class="reference external" href="my_eonr.html#module-eonr.eonr">API</a> for more information.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="Accesing-complete-results">
+<h2>Accesing complete results<a class="headerlink" href="#Accesing-complete-results" title="Permalink to this headline">¶</a></h2>
+<p>All results (e.g., EONR, MRTN, <span class="math notranslate nohighlight">\(\text{r}^2\)</span> and root mean squared errors from best-fit models, confidence intervals, etc.) are stored in the <code class="docutils literal notranslate"><span class="pre">EONR.df_results</span></code> dataframe:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">my_eonr</span><span class="o">.</span><span class="n">df_results</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>price_grain</th>
+      <th>cost_n_fert</th>
+      <th>cost_n_social</th>
+      <th>costs_fixed</th>
+      <th>price_ratio</th>
+      <th>unit_price_grain</th>
+      <th>unit_cost_n</th>
+      <th>location</th>
+      <th>year</th>
+      <th>time_n</th>
+      <th>...</th>
+      <th>mrtn</th>
+      <th>grtn_r2_adj</th>
+      <th>grtn_rmse</th>
+      <th>grtn_max_y</th>
+      <th>grtn_crit_x</th>
+      <th>grtn_y_int</th>
+      <th>scn_lin_r2</th>
+      <th>scn_lin_rmse</th>
+      <th>scn_exp_r2</th>
+      <th>scn_exp_rmse</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.157</td>
+      <td>0.88</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>5.605096</td>
+      <td>$ per ha</td>
+      <td>$ per kg</td>
+      <td>Minnesota</td>
+      <td>2012</td>
+      <td>Pre</td>
+      <td>...</td>
+      <td>767.930477</td>
+      <td>0.728926</td>
+      <td>181.225993</td>
+      <td>917.43358</td>
+      <td>177.439985</td>
+      <td>0.002964</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+<p>1 rows × 33 columns</p>
+</div></div>
+</div>
+<p>See the <a class="reference external" href="advanced_tutorial.html#View-results">Advanced tutorial</a> for a description of every column.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="Visualizing-all-confidence-intervals">
+<h2>Visualizing all confidence intervals<a class="headerlink" href="#Visualizing-all-confidence-intervals" title="Permalink to this headline">¶</a></h2>
+<p>By default, the confidence intervals (CIs) are calculated at many alpha levels. Noting that <span class="math notranslate nohighlight">\(\text{CI} = 1-\alpha\)</span>, let’s plot the <strong>Wald</strong> CIs and <strong>profile-likelihood</strong> CIs for a range of <span class="math notranslate nohighlight">\(\alpha\)</span> values.</p>
+<p><code class="docutils literal notranslate"><span class="pre">EONR.plot_modify_size()</span></code> can be called to make basic adjustments to the figure size. Because <code class="docutils literal notranslate"><span class="pre">EONR.fig_tau.fig</span></code> is a Matplotlib figure object, you’ll be able to make any customizations within the Matplotlib API as well.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">my_eonr</span><span class="o">.</span><span class="n">plot_tau</span><span class="p">()</span>
+<span class="n">my_eonr</span><span class="o">.</span><span class="n">fig_tau</span> <span class="o">=</span> <span class="n">my_eonr</span><span class="o">.</span><span class="n">plot_modify_size</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">my_eonr</span><span class="o">.</span><span class="n">fig_tau</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span> <span class="n">plotsize_x</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">plotsize_y</span><span class="o">=</span><span class="mf">4.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/eonr_tutorial_23_0.png" src="_images/eonr_tutorial_23_0.png" />
+</div>
+</div>
+<p>This plot shows the lower and upper confidence intervals of the <em>True EONR</em> (<em>True EONR</em> refers to the actual EONR value, which is not actually known due to uncertainty in the dataset). At 0% confidence, the <em>True EONR</em> is the <em>maximum likelihood</em> value, but as we increase the confidence level from 67%, 80%, 90%, 95%, and 99%, the statistical range of the <em>True EONR</em> widens.</p>
+<p>In general, the profile-likelihood CIs are considered the most accurate of the three methods because they reflect the actual, often asymmetric, uncertainty in a parameter estimate <a class="reference external" href="https://www.tandfonline.com/doi/abs/10.1080/01621459.1990.10476233">Cook &amp; Weisberg, 1990</a>.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="Accessing-complete-CI-results">
+<h2>Accessing complete CI results<a class="headerlink" href="#Accessing-complete-CI-results" title="Permalink to this headline">¶</a></h2>
+<p>All data relating to the calculation of the CIs are saved in the <code class="docutils literal notranslate"><span class="pre">EONR.df_ci</span></code> dataframe:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">my_eonr</span><span class="o">.</span><span class="n">df_ci</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>run_n</th>
+      <th>location</th>
+      <th>year</th>
+      <th>time_n</th>
+      <th>price_grain</th>
+      <th>cost_n_fert</th>
+      <th>cost_n_social</th>
+      <th>price_ratio</th>
+      <th>f_stat</th>
+      <th>t_stat</th>
+      <th>level</th>
+      <th>wald_l</th>
+      <th>wald_u</th>
+      <th>pl_l</th>
+      <th>pl_u</th>
+      <th>boot_l</th>
+      <th>boot_u</th>
+      <th>opt_method_l</th>
+      <th>opt_method_u</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Minnesota</td>
+      <td>2012</td>
+      <td>Pre</td>
+      <td>0.157</td>
+      <td>0.88</td>
+      <td>0.0</td>
+      <td>5.605096</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>N/A</td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>Minnesota</td>
+      <td>2012</td>
+      <td>Pre</td>
+      <td>0.157</td>
+      <td>0.88</td>
+      <td>0.0</td>
+      <td>5.605096</td>
+      <td>0.016070</td>
+      <td>0.126767</td>
+      <td>0.100</td>
+      <td>158.247550</td>
+      <td>166.432039</td>
+      <td>159.432270</td>
+      <td>165.322890</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Nelder-Mead</td>
+      <td>Nelder-Mead</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>Minnesota</td>
+      <td>2012</td>
+      <td>Pre</td>
+      <td>0.157</td>
+      <td>0.88</td>
+      <td>0.0</td>
+      <td>5.605096</td>
+      <td>0.065374</td>
+      <td>0.255684</td>
+      <td>0.200</td>
+      <td>154.085886</td>
+      <td>170.593703</td>
+      <td>156.557488</td>
+      <td>168.432973</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Nelder-Mead</td>
+      <td>Nelder-Mead</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>Minnesota</td>
+      <td>2012</td>
+      <td>Pre</td>
+      <td>0.157</td>
+      <td>0.88</td>
+      <td>0.0</td>
+      <td>5.605096</td>
+      <td>0.151446</td>
+      <td>0.389161</td>
+      <td>0.300</td>
+      <td>149.777004</td>
+      <td>174.902584</td>
+      <td>153.670496</td>
+      <td>171.730580</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Nelder-Mead</td>
+      <td>Nelder-Mead</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>Minnesota</td>
+      <td>2012</td>
+      <td>Pre</td>
+      <td>0.157</td>
+      <td>0.88</td>
+      <td>0.0</td>
+      <td>5.605096</td>
+      <td>0.281127</td>
+      <td>0.530214</td>
+      <td>0.400</td>
+      <td>145.223559</td>
+      <td>179.456029</td>
+      <td>150.721517</td>
+      <td>175.297880</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Nelder-Mead</td>
+      <td>Nelder-Mead</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1</td>
+      <td>Minnesota</td>
+      <td>2012</td>
+      <td>Pre</td>
+      <td>0.157</td>
+      <td>0.88</td>
+      <td>0.0</td>
+      <td>5.605096</td>
+      <td>0.466549</td>
+      <td>0.683044</td>
+      <td>0.500</td>
+      <td>140.289960</td>
+      <td>184.389628</td>
+      <td>147.647498</td>
+      <td>179.255088</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Nelder-Mead</td>
+      <td>Nelder-Mead</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1</td>
+      <td>Minnesota</td>
+      <td>2012</td>
+      <td>Pre</td>
+      <td>0.157</td>
+      <td>0.88</td>
+      <td>0.0</td>
+      <td>5.605096</td>
+      <td>0.729644</td>
+      <td>0.854192</td>
+      <td>0.600</td>
+      <td>134.765004</td>
+      <td>189.914585</td>
+      <td>144.357366</td>
+      <td>183.796319</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Nelder-Mead</td>
+      <td>Nelder-Mead</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1</td>
+      <td>Minnesota</td>
+      <td>2012</td>
+      <td>Pre</td>
+      <td>0.157</td>
+      <td>0.88</td>
+      <td>0.0</td>
+      <td>5.605096</td>
+      <td>0.969292</td>
+      <td>0.984526</td>
+      <td>0.667</td>
+      <td>130.557584</td>
+      <td>194.122004</td>
+      <td>141.960754</td>
+      <td>187.330059</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Nelder-Mead</td>
+      <td>Nelder-Mead</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1</td>
+      <td>Minnesota</td>
+      <td>2012</td>
+      <td>Pre</td>
+      <td>0.157</td>
+      <td>0.88</td>
+      <td>0.0</td>
+      <td>5.605096</td>
+      <td>1.113663</td>
+      <td>1.055302</td>
+      <td>0.700</td>
+      <td>128.272818</td>
+      <td>196.406771</td>
+      <td>140.698855</td>
+      <td>189.275802</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Nelder-Mead</td>
+      <td>Nelder-Mead</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>Minnesota</td>
+      <td>2012</td>
+      <td>Pre</td>
+      <td>0.157</td>
+      <td>0.88</td>
+      <td>0.0</td>
+      <td>5.605096</td>
+      <td>1.719858</td>
+      <td>1.311434</td>
+      <td>0.800</td>
+      <td>120.004454</td>
+      <td>204.675134</td>
+      <td>136.361782</td>
+      <td>196.472716</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Nelder-Mead</td>
+      <td>Nelder-Mead</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1</td>
+      <td>Minnesota</td>
+      <td>2012</td>
+      <td>Pre</td>
+      <td>0.157</td>
+      <td>0.88</td>
+      <td>0.0</td>
+      <td>5.605096</td>
+      <td>2.887033</td>
+      <td>1.699127</td>
+      <td>0.900</td>
+      <td>107.489043</td>
+      <td>217.190545</td>
+      <td>130.457577</td>
+      <td>207.827070</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Nelder-Mead</td>
+      <td>Nelder-Mead</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1</td>
+      <td>Minnesota</td>
+      <td>2012</td>
+      <td>Pre</td>
+      <td>0.157</td>
+      <td>0.88</td>
+      <td>0.0</td>
+      <td>5.605096</td>
+      <td>4.182964</td>
+      <td>2.045230</td>
+      <td>0.950</td>
+      <td>96.316254</td>
+      <td>228.363335</td>
+      <td>125.804436</td>
+      <td>218.441868</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Nelder-Mead</td>
+      <td>Nelder-Mead</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>1</td>
+      <td>Minnesota</td>
+      <td>2012</td>
+      <td>Pre</td>
+      <td>0.157</td>
+      <td>0.88</td>
+      <td>0.0</td>
+      <td>5.605096</td>
+      <td>7.597663</td>
+      <td>2.756386</td>
+      <td>0.990</td>
+      <td>73.358903</td>
+      <td>251.320685</td>
+      <td>117.769597</td>
+      <td>241.793290</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Nelder-Mead</td>
+      <td>Nelder-Mead</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="Adjusting-the-economic-scenario">
+<h2>Adjusting the economic scenario<a class="headerlink" href="#Adjusting-the-economic-scenario" title="Permalink to this headline">¶</a></h2>
+<p>These results were calculated for a specific economic scenario, but the cost of fertilizer and price of grain can be adjusted to run <code class="docutils literal notranslate"><span class="pre">EONR</span></code> for another economic scenario. Just adjust the economic scenario by passing any of:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cost_n_fert</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">price_grain</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cost_n_social</span></code></p></li>
+</ul>
+<p>to <code class="docutils literal notranslate"><span class="pre">EONR.update_econ()</span></code>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cost_n_fert</span> <span class="o">=</span> <span class="mf">1.32</span>  <span class="c1"># adjusted from $0.88 per kg nitrogen</span>
+<span class="n">my_eonr</span><span class="o">.</span><span class="n">update_econ</span><span class="p">(</span><span class="n">cost_n_fert</span><span class="o">=</span><span class="n">cost_n_fert</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="Environmental-observations">
+<h2>Environmental observations<a class="headerlink" href="#Environmental-observations" title="Permalink to this headline">¶</a></h2>
+<p>You’ll notice above that we can pass the <code class="docutils literal notranslate"><span class="pre">cost_n_social</span></code> variable to <code class="docutils literal notranslate"><span class="pre">EONR.update_econ()</span></code>. This is becuase <code class="docutils literal notranslate"><span class="pre">EONR</span></code> will calculate the <strong>Socially Optimum Nitrogen Rate (SONR)</strong> if certain environmental data are available. For more information about the <strong>SONR</strong>, refer to the <a class="reference external" href="background.html#The-social-cost-of-nitrogen">Background chapter</a>.</p>
+<p>In the same way that <code class="docutils literal notranslate"><span class="pre">cost_n_fert</span></code> was adjusted in the previous code, <code class="docutils literal notranslate"><span class="pre">cost_n_social</span></code> will be set (for the first time):</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cost_n_social</span> <span class="o">=</span> <span class="mf">1.10</span> <span class="c1"># in USD per kg nitrogen</span>
+<span class="n">my_eonr</span><span class="o">.</span><span class="n">update_econ</span><span class="p">(</span><span class="n">cost_n_social</span><span class="o">=</span><span class="n">cost_n_social</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="Calculate-mineralization">
+<h2>Calculate mineralization<a class="headerlink" href="#Calculate-mineralization" title="Permalink to this headline">¶</a></h2>
+<p>You may have noticed that <a class="reference external" href="tutorial.html#Load-the-data">the loaded data</a> for this tutorial contains columns for nitrogen uptake (“nup_total_kgha”) and available nitrogen (“soil_plus_fert_n_kgha”). This data can be used to calculate the approximate net mineralization for the zero rate, which can be assumed to consistent across all rates. Total crop available nitrogen can then be assumed to be the sum of fertilizer, soil, and net mineralized nitrogen. We can then calculate the <strong>SONR</strong> as long
+as the column names are correctly set.</p>
+<p>The column names were set for nitrogen fertilizer rate (<code class="docutils literal notranslate"><span class="pre">col_n_app</span></code>) and grain yield (<code class="docutils literal notranslate"><span class="pre">col_yld</span></code>) during the initialization of <code class="docutils literal notranslate"><span class="pre">EONR</span></code>, but they haven’t been set for the nitrogen uptake or available nitrogen columns. This can be done (even after initilization of <code class="docutils literal notranslate"><span class="pre">EONR</span></code>) using <code class="docutils literal notranslate"><span class="pre">EONR.set_column_names()</span></code>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">calc_mineralization</span><span class="p">(</span><span class="n">df_data</span><span class="p">,</span> <span class="n">units_fert</span><span class="o">=</span><span class="s1">&#39;kgha&#39;</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Calculates mineralization and adds &quot;crop_available_n&quot; to df</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">df_trt0</span> <span class="o">=</span> <span class="n">df_data</span><span class="p">[</span><span class="n">df_data</span><span class="p">[</span><span class="s1">&#39;rate_n_applied_kgha&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">df_trt0</span><span class="p">[</span><span class="s1">&#39;mineralize_n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_trt0</span><span class="p">[</span><span class="s1">&#39;nup_total_kgha&#39;</span><span class="p">]</span> <span class="o">-</span>
+                               <span class="n">df_trt0</span><span class="p">[</span><span class="s1">&#39;soil_plus_fert_n_kgha&#39;</span><span class="p">])</span>
+    <span class="n">trt0_mineralize</span> <span class="o">=</span> <span class="n">df_trt0</span><span class="p">[</span><span class="s1">&#39;mineralize_n&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">crop_n_label</span> <span class="o">=</span> <span class="s1">&#39;crop_n_available_&#39;</span> <span class="o">+</span> <span class="n">units_fert</span>
+    <span class="n">df_data</span><span class="p">[</span><span class="n">crop_n_label</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_data</span><span class="p">[</span><span class="s1">&#39;soil_plus_fert_n_kgha&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">trt0_mineralize</span>
+    <span class="k">return</span> <span class="n">df_data</span>
+
+<span class="n">df_data</span> <span class="o">=</span> <span class="n">calc_mineralization</span><span class="p">(</span><span class="n">df_data</span><span class="p">)</span>
+
+<span class="n">col_crop_nup</span> <span class="o">=</span> <span class="s1">&#39;nup_total_kgha&#39;</span>
+<span class="n">col_n_avail</span> <span class="o">=</span> <span class="s1">&#39;crop_n_available_kgha&#39;</span>
+
+<span class="n">my_eonr</span><span class="o">.</span><span class="n">set_column_names</span><span class="p">(</span><span class="n">col_crop_nup</span><span class="o">=</span><span class="n">col_crop_nup</span><span class="p">,</span>
+                         <span class="n">col_n_avail</span><span class="o">=</span><span class="n">col_n_avail</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">EONR</span></code> simply subtracts <em>end of season total nitrogen uptake</em> from <em>available nitrogen</em> to get <strong>net crop nitrogen use</strong>, which is subsequently used to calculate the <strong>SONR</strong>.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="Run-EONR-for-the-socially-optimum-rate">
+<h2>Run <code class="docutils literal notranslate"><span class="pre">EONR</span></code> for the socially optimum rate<a class="headerlink" href="#Run-EONR-for-the-socially-optimum-rate" title="Permalink to this headline">¶</a></h2>
+<p>Then simply run <code class="docutils literal notranslate"><span class="pre">EONR.calculate_eonr()</span></code> again to calculate the <strong>SONR</strong> for the updated economic scenario:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">my_eonr</span><span class="o">.</span><span class="n">calculate_eonr</span><span class="p">(</span><span class="n">df_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+Computing SONR for Minnesota 2012 Pre
+Cost of N fertilizer: $1.32 per kg
+Price grain: $0.16 per kg
+Fixed costs: $0.00 per ha
+Social cost of N: $1.10 per kg
+Checking quadratic and quadric-plateau models for best fit..
+Quadratic model r^2: 0.72
+Quadratic-plateau model r^2: 0.73
+Using the quadratic-plateau model..
+Socially optimum N rate (SONR): 149.6 kg per ha [122.4, 186.3] (90.0% confidence)
+Maximum return to N (MRTN): $684.60 per ha
+</pre></div></div>
+</div>
+<p>The new results are appended to the <code class="docutils literal notranslate"><span class="pre">EONR.df_results</span></code> dataframe:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">my_eonr</span><span class="o">.</span><span class="n">df_results</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>price_grain</th>
+      <th>cost_n_fert</th>
+      <th>cost_n_social</th>
+      <th>costs_fixed</th>
+      <th>price_ratio</th>
+      <th>unit_price_grain</th>
+      <th>unit_cost_n</th>
+      <th>location</th>
+      <th>year</th>
+      <th>time_n</th>
+      <th>...</th>
+      <th>mrtn</th>
+      <th>grtn_r2_adj</th>
+      <th>grtn_rmse</th>
+      <th>grtn_max_y</th>
+      <th>grtn_crit_x</th>
+      <th>grtn_y_int</th>
+      <th>scn_lin_r2</th>
+      <th>scn_lin_rmse</th>
+      <th>scn_exp_r2</th>
+      <th>scn_exp_rmse</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.157</td>
+      <td>0.88</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>5.605096</td>
+      <td>$ per ha</td>
+      <td>$ per kg</td>
+      <td>Minnesota</td>
+      <td>2012</td>
+      <td>Pre</td>
+      <td>...</td>
+      <td>767.930477</td>
+      <td>0.728926</td>
+      <td>181.225993</td>
+      <td>917.43358</td>
+      <td>177.439985</td>
+      <td>0.002964</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.157</td>
+      <td>1.32</td>
+      <td>1.1</td>
+      <td>0.0</td>
+      <td>15.414013</td>
+      <td>$ per ha</td>
+      <td>$ per kg</td>
+      <td>Minnesota</td>
+      <td>2012</td>
+      <td>Pre</td>
+      <td>...</td>
+      <td>684.596933</td>
+      <td>0.728926</td>
+      <td>181.225993</td>
+      <td>917.43358</td>
+      <td>177.439985</td>
+      <td>0.002964</td>
+      <td>0.777106</td>
+      <td>139.314</td>
+      <td>0.836099</td>
+      <td>21.1184</td>
+    </tr>
+  </tbody>
+</table>
+<p>2 rows × 33 columns</p>
+</div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">EONR.plot_eonr()</span></code> and <code class="docutils literal notranslate"><span class="pre">EONR.plot_tau()</span></code> can be called again to plot the new results:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">my_eonr</span><span class="o">.</span><span class="n">plot_eonr</span><span class="p">(</span><span class="n">x_min</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span> <span class="n">x_max</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">y_min</span><span class="o">=-</span><span class="mi">200</span><span class="p">,</span> <span class="n">y_max</span><span class="o">=</span><span class="mi">1400</span><span class="p">)</span>
+<span class="n">my_eonr</span><span class="o">.</span><span class="n">plot_tau</span><span class="p">()</span>
+<span class="n">fig_tau</span> <span class="o">=</span> <span class="n">my_eonr</span><span class="o">.</span><span class="n">plot_modify_size</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">my_eonr</span><span class="o">.</span><span class="n">fig_tau</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span> <span class="n">plotsize_x</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">plotsize_y</span><span class="o">=</span><span class="mf">4.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/eonr_tutorial_37_0.png" src="_images/eonr_tutorial_37_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/eonr_tutorial_37_1.png" src="_images/eonr_tutorial_37_1.png" />
+</div>
+</div>
+<p>Notice the added data in the nitrogen response plot:</p>
+<ul class="simple">
+<li><p>The gold points represent <strong>net crop nitrogen use</strong> (expressed as a \$ amount based on the value set for <code class="docutils literal notranslate"><span class="pre">cost_n_social</span></code>)</p></li>
+<li><p>The gold line is the best-fit exponential model representing <strong>net crop nitrogen use</strong> (<code class="docutils literal notranslate"><span class="pre">EONR</span></code> fits both a linear and exponential model for this, then uses whichever has a higher <span class="math notranslate nohighlight">\(\text{r}^2\)</span>)</p></li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="Saving-the-data">
+<h2>Saving the data<a class="headerlink" href="#Saving-the-data" title="Permalink to this headline">¶</a></h2>
+<p>The results generated by <code class="docutils literal notranslate"><span class="pre">EONR</span></code> can be saved to the <code class="docutils literal notranslate"><span class="pre">EONR.base_dir</span></code> using the <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> <code class="docutils literal notranslate"><span class="pre">df.to_csv()</span></code> function. A folder will be created in the base_dir whose name is determined by the <strong>current economic scenario</strong> of <code class="docutils literal notranslate"><span class="pre">my_eonr</span></code> (in this case “social_154_1100”, corresponding to <code class="docutils literal notranslate"><span class="pre">cost_n_social</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">price_ratio</span> <span class="pre">=</span> <span class="pre">15.4</span></code>, and <code class="docutils literal notranslate"><span class="pre">cost_n_social</span> <span class="pre">=</span> <span class="pre">1.10</span></code> for “social”, “154”, and “1100” in the folder name, respectively):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">my_eonr</span><span class="o">.</span><span class="n">base_dir</span><span class="p">)</span>
+
+<span class="n">my_eonr</span><span class="o">.</span><span class="n">df_results</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">my_eonr</span><span class="o">.</span><span class="n">base_dir</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;tutorial_results.csv&#39;</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">my_eonr</span><span class="o">.</span><span class="n">df_ci</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">my_eonr</span><span class="o">.</span><span class="n">base_dir</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;tutorial_ci.csv&#39;</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+F:\nigo0024\Documents\GitHub\eonr\docs\source\eonr_tutorial\social_154_1100
+</pre></div></div>
+</div>
+<p>Upon generating figures using <code class="docutils literal notranslate"><span class="pre">EONR.plot_eonr()</span></code> or <code class="docutils literal notranslate"><span class="pre">EONR.plot_tau()</span></code>, the <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> figures are stored to the <code class="docutils literal notranslate"><span class="pre">EONR</span></code> class. They can be saved to file by using <code class="docutils literal notranslate"><span class="pre">EONR.plot_save()</span></code>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fname_eonr_plot</span> <span class="o">=</span> <span class="s1">&#39;eonr_mn2012_pre.png&#39;</span>
+<span class="n">fname_tau_plot</span> <span class="o">=</span> <span class="s1">&#39;tau_mn2012_pre.png&#39;</span>
+
+<span class="n">my_eonr</span><span class="o">.</span><span class="n">plot_save</span><span class="p">(</span><span class="n">fname</span><span class="o">=</span><span class="n">fname_eonr_plot</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">my_eonr</span><span class="o">.</span><span class="n">fig_eonr</span><span class="p">)</span>
+<span class="n">my_eonr</span><span class="o">.</span><span class="n">plot_save</span><span class="p">(</span><span class="n">fname</span><span class="o">=</span><span class="n">fname_tau_plot</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">my_eonr</span><span class="o">.</span><span class="n">fig_tau</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2020, Tyler J. Nigon.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

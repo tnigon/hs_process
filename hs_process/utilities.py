@@ -19,23 +19,23 @@ class defaults:
     Class containing all defaults for writing an ENVI datacube to file.
 
     Parameters:
-        dtype (`numpy.dtype` or `str`): The data type with which to store
+        dtype (``numpy.dtype`` or ``str``): The data type with which to store
             the image. For example, to store the image in 16-bit unsigned
             integer format, the argument could be any of numpy.uint16,
             'u2', 'uint16', or 'H' (default=np.float32).
-        force (`bool`): If `hdr_file` or its associated image file exist,
-            `force=True` will overwrite the files; otherwise, an exception
+        force (``bool``): If ``hdr_file`` or its associated image file exist,
+            ``force=True`` will overwrite the files; otherwise, an exception
             will be raised if either file exists (default=False).
-        ext (`str`): The extension to use for saving the image file; if not
+        ext (``str``): The extension to use for saving the image file; if not
             specified, a default extension is determined based on the
-            `interleave`. For example, if `interleave`='bip', then `ext` is
-            set to 'bip' as well. If `ext` is an empty string, the image
+            ``interleave``. For example, if ``interleave``='bip', then ``ext`` is
+            set to 'bip' as well. If ``ext`` is an empty string, the image
             file will have the same name as the .hdr, but without the
             '.hdr' extension (default: None).
-        interleave (`str`): The band interleave format to use for writing
-            the file; `interleave` should be one of 'bil', 'bip', or 'bsq'
+        interleave (``str``): The band interleave format to use for writing
+            the file; ``interleave`` should be one of 'bil', 'bip', or 'bsq'
             (default='bip').
-        byteorder (`int` or `str`): Specifies the byte order (endian-ness)
+        byteorder (``int`` or ``str``): Specifies the byte order (endian-ness)
             of the data as written to disk. For little endian, this value
             should be either 0 or 'little'. For big endian, it should be
             either 1 or 'big'. If not specified, native byte order will be
@@ -115,7 +115,7 @@ class hsio(object):
                  fname_hdr_spec=None):
         '''
         Parameters:
-            fname_in (`str`, optional): The filename of the image datacube to
+            fname_in (``str``, optional): The filename of the image datacube to
                 be read in initially.
         '''
         self.fname_in = fname_in
@@ -169,11 +169,11 @@ class hsio(object):
         Deletes metadata item from SpyFile object.
 
         Parameters:
-            metadata (`dict`): dictionary of the metadata
-            key (`str`): dictionary key to delete
+            metadata (``dict``): dictionary of the metadata
+            key (``str``): dictionary key to delete
 
         Returns:
-            metadata (`dict`): Dictionary containing the modified metadata.
+            metadata (``dict``): Dictionary containing the modified metadata.
         '''
         msg = ('Please be sure to base a metadata dictionary.')
         assert isinstance(metadata, dict), msg
@@ -192,14 +192,14 @@ class hsio(object):
         spaces.
 
         Parameters:
-            meta_set (`str`): the string representation of the metadata set
-            idx (`int`): index to be read; if `None`, the whole list is
-                returned (default: `None`).
+            meta_set (``str``): the string representation of the metadata set
+            idx (``int``): index to be read; if ``None``, the whole list is
+                returned (default: ``None``).
 
         Returns:
-            metadata_list (`list` or `str`): List of metadata set items (as
-                `str`), or if idx is not `None`, the item in the position
-                described by `idx`.
+            metadata_list (``list`` or ``str``): List of metadata set items (as
+                ``str``), or if idx is not ``None``, the item in the position
+                described by ``idx``.
         '''
         if isinstance(meta_set, str):
             meta_set_list = meta_set[1:-1].split(",")
@@ -235,13 +235,13 @@ class hsio(object):
         value of an item by its index.
 
         Parameters:
-            meta_set (`str`): the string representation of the metadata set
-            idx (`int`): index to be modified; if `None`, the whole meta_set is
-                returned (default: `None`).
-            value (`float`, `int`, or `str`): value to replace at idx
+            meta_set (``str``): the string representation of the metadata set
+            idx (``int``): index to be modified; if ``None``, the whole meta_set is
+                returned (default: ``None``).
+            value (``float``, ``int``, or ``str``): value to replace at idx
 
         Returns:
-            set_str (`str`):
+            set_str (``str``):
         '''
         metadata_list = self._get_meta_set(meta_set, idx=None)
         metadata_list[idx] = str(value)
@@ -250,17 +250,17 @@ class hsio(object):
 
     def _parse_fname(self, fname_hdr=None, str_plot='plot_', overwrite=True):
         '''
-        Parses the filename for `name_long` (text after the first dash,
-        inclusive), `name_short` (text before the first dash), and `name_plot`
-        (numeric text following `str_plot`).
+        Parses the filename for ``name_long`` (text after the first dash,
+        inclusive), ``name_short`` (text before the first dash), and ``name_plot``
+        (numeric text following ``str_plot``).
 
         Parameters:
-            fname_hdr (`str`): input filename.
-            str_plot (`str`): text to search for that precedes the numeric text
+            fname_hdr (``str``): input filename.
+            str_plot (``str``): text to search for that precedes the numeric text
                 that describes the plot number.
-            overwrite (`bool`): whether the class instances of `name_long`,
-                `name_short`, and `name_plot` should be overwritten based on
-                `fname_in` (default: `True`).
+            overwrite (``bool``): whether the class instances of ``name_long``,
+                ``name_short``, and ``name_plot`` should be overwritten based on
+                ``fname_in`` (default: ``True``).
         '''
         if fname_hdr is None:
             fname_hdr = self.fname_in + '.hdr'
@@ -314,8 +314,8 @@ class hsio(object):
         display
 
         Parameters:
-            spec (`bool`): Whether the file to be read is an image (`False`) or
-                a spectrum (`True`; default: `False`).
+            spec (``bool``): Whether the file to be read is an image (``False``) or
+                a spectrum (``True``; default: ``False``).
         '''
         if spec is False:
 #            fname_hdr = self.fname_in + '.hdr'
@@ -350,11 +350,11 @@ class hsio(object):
         Reads and ENVI file via GDAL
 
         Parameters:
-            fname_in (`str`): filename of the ENVI file to read (not the .hdr;
-                default: `None`).
+            fname_in (``str``): filename of the ENVI file to read (not the .hdr;
+                default: ``None``).
 
         Returns:
-            img_ds (`GDAL object`): GDAL dataset containing the image
+            img_ds (``GDAL object``): GDAL dataset containing the image
             infromation
         '''
         if fname_in is None:
@@ -371,10 +371,10 @@ class hsio(object):
         Reads the .hdr file and returns a dictionary of the metadata
 
         Parameters:
-            fname_hdr (`str`): filename of .hdr file
+            fname_hdr (``str``): filename of .hdr file
 
         Returns:
-            metadata (`dict`): dictionary of the metadata
+            metadata (``dict``): dictionary of the metadata
         '''
         if fname_hdr is None:
             fname_hdr = self.fname_in + '.hdr'
@@ -399,9 +399,9 @@ class hsio(object):
         dictionary.
 
         Parameters:
-            fname_hdr (`str`): filename of .hdr file to write (default:
-                `None`).
-            metadata (`dict`): dictionary of the metadata (default: `None`).
+            fname_hdr (``str``): filename of .hdr file to write (default:
+                ``None``).
+            metadata (``dict``): dictionary of the metadata (default: ``None``).
         '''
         if fname_hdr is None:
             fname_hdr = self.fname_in + '.hdr'
@@ -419,10 +419,10 @@ class hsio(object):
 
     def _xstr(self, s):
         '''
-        Function for safely returning an empty string (e.g., `None`).
+        Function for safely returning an empty string (e.g., ``None``).
 
         Parameters:
-            s (`str` or `None`): the variable that may contain a string.
+            s (``str`` or ``None``): the variable that may contain a string.
         '''
         if s is None:
             return ''
@@ -434,23 +434,23 @@ class hsio(object):
         Reads in a hyperspectral datacube
 
         Parameters:
-            fname_hdr (str): filename of datacube to be read (default: `None`).
+            fname_hdr (str): filename of datacube to be read (default: ``None``).
             name_long (str): Spectronon processing appends processing names to
                 the filenames; this indicates those processing names that are
                 repetitive and can be deleted from the filename following
-                processing (default: `None`).
-            name_plot (`str`): numeric text that describes the plot number
-                (default: `None`).
-            name_short (`str`): The base name of the image file (see note above
-                about `name_long`; default: `None`).
-            individual_plot (`bool`): Indicates whether image (and its
-                filename) is for an individual plot (`True`), or for many plots
-                (`False`; default: `False`).
-            overwrite (`bool`): Whether to overwrite any of the previous
-                user-passed variables, including `name_long`, `name_plot`, and
-                `name_short`; any of the current user-passed variables will
-                overwrite previous ones whether `overwrite` is `True` or
-                `False` (default: `False`).
+                processing (default: ``None``).
+            name_plot (``str``): numeric text that describes the plot number
+                (default: ``None``).
+            name_short (``str``): The base name of the image file (see note above
+                about ``name_long``; default: ``None``).
+            individual_plot (``bool``): Indicates whether image (and its
+                filename) is for an individual plot (``True``), or for many plots
+                (``False``; default: ``False``).
+            overwrite (``bool``): Whether to overwrite any of the previous
+                user-passed variables, including ``name_long``, ``name_plot``, and
+                ``name_short``; any of the current user-passed variables will
+                overwrite previous ones whether ``overwrite`` is ``True`` or
+                ``False`` (default: ``False``).
         '''
         # Basically resets static __init__ variables for the new filename
         # If variables are already set and overwrite is False, they will remain
@@ -491,7 +491,7 @@ class hsio(object):
         Reads in a hyperspectral spectrum file
 
         Parameters:
-            fname_hdr_spec (`str`): filename of spectra to be read.
+            fname_hdr_spec (``str``): filename of spectra to be read.
         '''
         if os.path.splitext(fname_hdr_spec)[1] != '.hdr':
             fname_hdr_spec = fname_hdr_spec + '.hdr'
@@ -507,32 +507,32 @@ class hsio(object):
     def set_io_defaults(self, dtype=False, force=None, ext=False,
                         interleave=False, byteorder=False):
         '''
-        Sets any of the ENVI file writing parameters to `hsio`; if any
+        Sets any of the ENVI file writing parameters to ``hsio``; if any
         parameter is left unchanged from its default, it will remain as-is
         (it will not be set).
 
         Parameters:
-            dtype (`numpy.dtype` or `str`): The data type with which to store
+            dtype (``numpy.dtype`` or ``str``): The data type with which to store
                 the image. For example, to store the image in 16-bit unsigned
                 integer format, the argument could be any of numpy.uint16,
-                'u2', 'uint16', or 'H' (default=`False`).
-            force (`bool`): If `hdr_file` or its associated image file exist,
-                `force=True` will overwrite the files; otherwise, an exception
-                will be raised if either file exists (default=`None`).
-            ext (`str`): The extension to use for saving the image file; if not
+                'u2', 'uint16', or 'H' (default=``False``).
+            force (``bool``): If ``hdr_file`` or its associated image file exist,
+                ``force=True`` will overwrite the files; otherwise, an exception
+                will be raised if either file exists (default=``None``).
+            ext (``str``): The extension to use for saving the image file; if not
                 specified, a default extension is determined based on the
-                `interleave`. For example, if `interleave`='bip', then `ext` is
-                set to 'bip' as well. If `ext` is an empty string, the image
+                ``interleave``. For example, if ``interleave``='bip', then ``ext`` is
+                set to 'bip' as well. If ``ext`` is an empty string, the image
                 file will have the same name as the .hdr, but without the
-                '.hdr' extension (default: `False`).
-            interleave (`str`): The band interleave format to use for writing
-                the file; `interleave` should be one of 'bil', 'bip', or 'bsq'
-                (default=`False`).
-            byteorder (`int` or `str`): Specifies the byte order (endian-ness)
+                '.hdr' extension (default: ``False``).
+            interleave (``str``): The band interleave format to use for writing
+                the file; ``interleave`` should be one of 'bil', 'bip', or 'bsq'
+                (default=``False``).
+            byteorder (``int`` or ``str``): Specifies the byte order (endian-ness)
                 of the data as written to disk. For little endian, this value
                 should be either 0 or 'little'. For big endian, it should be
                 either 1 or 'big'. If not specified, native byte order will be
-                used (default=`False`).
+                used (default=``False``).
         '''
         if dtype is not False:
             self.defaults.dtype = dtype
@@ -551,14 +551,14 @@ class hsio(object):
         Displays a datacube as a 3-band RGB image.
 
         Parameters:
-            spyfile (`SpyFile` object or `numpy.ndarray`): The data cube to
-                display; if `None`, loads from `self.spyfile` (default:
-                `None`).
-            band_r (`int`): Band to display on the red channel (default: 120)
-            band_g (`int`): Band to display on the green channel (default: 76)
-            band_b (`int`): Band to display on the blue channel (default: 32)
-            inline (`bool`): If `True`, displays in the IPython console; else
-                displays in a pop-out window (default: `True`).
+            spyfile (``SpyFile`` object or ``numpy.ndarray``): The data cube to
+                display; if ``None``, loads from ``self.spyfile`` (default:
+                ``None``).
+            band_r (``int``): Band to display on the red channel (default: 120)
+            band_g (``int``): Band to display on the green channel (default: 76)
+            band_b (``int``): Band to display on the blue channel (default: 32)
+            inline (``bool``): If ``True``, displays in the IPython console; else
+                displays in a pop-out window (default: ``True``).
         '''
         if inline is True:
             get_ipython().run_line_magic('matplotlib', 'inline')
@@ -596,54 +596,79 @@ class hsio(object):
         plt.show()
         print('\n')
 
-    def write_cube(self, hdr_file, spyfile, dtype=np.float32,
-                   force=False, ext=None, interleave='bip', byteorder=None,
-                   metadata=None):
+    def write_cube(self, fname_hdr, spyfile, metadata=None, dtype=None,
+                   force=None, ext=None, interleave=None, byteorder=None):
         '''
         Wrapper function that accesses the Spectral Python package to save a
         datacube to file.
 
         Parameters:
-            hdr_file (`str`): Output header file path (with the '.hdr'
+            fname_hdr (``str``): Output header file path (with the '.hdr'
                 extension).
-            spyfile (`SpyFile` object or `numpy.ndarray`): The hyperspectral
-                datacube to save. If `numpy.ndarray`, then metadata (`dict`)
+            spyfile (``SpyFile`` object or ``numpy.ndarray``): The hyperspectral
+                datacube to save. If ``numpy.ndarray``, then metadata (``dict``)
                 should also be passed.
-            dtype (`numpy.dtype` or `str`): The data type with which to store
+            metadata (``dict``): Metadata to write to the ENVI .hdr file
+                describing the hyperspectral data cube being saved. If
+                ``SpyFile`` object is passed to ``spyfile``, ``metadata`` will
+                overwrite any existing metadata stored by the ``SpyFile`` object
+                (default=None).
+            dtype (``numpy.dtype`` or ``str``): The data type with which to store
                 the image. For example, to store the image in 16-bit unsigned
                 integer format, the argument could be any of numpy.uint16,
-                'u2', 'uint16', or 'H' (default=np.float32).
-            force (`bool`): If `hdr_file` or its associated image file exist,
-                `force=True` will overwrite the files; otherwise, an exception
-                will be raised if either file exists (default=False).
-            ext (`str`): The extension to use for saving the image file; if not
+                'u2', 'uint16', or 'H' (default=None).
+            force (``bool``): If ``hdr_file`` or its associated image file exist,
+                ``force=True`` will overwrite the files; otherwise, an exception
+                will be raised if either file exists (default=None).
+            ext (``str``): The extension to use for saving the image file; if not
                 specified, a default extension is determined based on the
-                `interleave`. For example, if `interleave`='bip', then `ext` is
-                set to 'bip' as well. If `ext` is an empty string, the image
+                ``interleave``. For example, if ``interleave``='bip', then ``ext`` is
+                set to 'bip' as well. If ``ext`` is an empty string, the image
                 file will have the same name as the .hdr, but without the
                 '.hdr' extension (default: None).
-            interleave (`str`): The band interleave format to use for writing
-                the file; `interleave` should be one of 'bil', 'bip', or 'bsq'
-                (default='bip').
-            byteorder (`int` or `str`): Specifies the byte order (endian-ness)
+            interleave (``str``): The band interleave format to use for writing
+                the file; ``interleave`` should be one of 'bil', 'bip', or 'bsq'
+                (default=None).
+            byteorder (``int`` or ``str``): Specifies the byte order (endian-ness)
                 of the data as written to disk. For little endian, this value
                 should be either 0 or 'little'. For big endian, it should be
                 either 1 or 'big'. If not specified, native byte order will be
                 used (default=None).
-            metadata (`dict`): Metadata to write to the ENVI .hdr file
-                describing the hyperspectral data cube being saved. If
-                `SpyFile` object is passed to `spyfile`, `metadata` will
-                overwrite any existing metadata stored by the `SpyFile` object
-                (default=None).
+
+        Note:
+            If ``dtype``, ``force``, ``ext``, ``interleave``, and ``byteorder`` are not
+            passed, default values will be pulled from ``hsio.defaults``. Thus,
+            ``hsio.defaults`` can be modified prior to calling
+            ``hsio.write_cube()`` to avoid having to pass each of thes parameters
+            in the ``hsio.write_cube()`` function (see the
+            ``hsio.set_io_defaults()`` function for support on setting these
+            defaults and for more information on the parameters). Each of these
+            parameters are passed directly to the Spectral Python
+            ``envi.save_image()`` function. For more information, please refer to
+            the Spectral Python documentation.
         '''
+        if dtype is None:
+            dtype = self.defaults.dtype
+        if force is None:
+            force = self.defaults.force
         if ext is None:
-            ext = '.' + interleave
+            ext = self.defaults.ext
+        if interleave is None:
+            interleave = self.defaults.interleave
+        if byteorder is None:
+            byteorder = self.defaults.byteorder
+
         if metadata is None and isinstance(spyfile, SpyFile.SpyFile):
             metadata = spyfile.metadata
-        if os.path.splitext(hdr_file)[1] != '.hdr':
-            hdr_file = hdr_file + '.hdr'
+        elif metadata is None and isinstance(spyfile, np.ndarray):
+            raise TypeError('`spyfile` of type `numpy.ndarray` was passed, so '
+                            '`metadata` must not be `None`.')
+
+        metadata['interleave'] = interleave
+        if os.path.splitext(fname_hdr)[1] != '.hdr':
+            fname_hdr = fname_hdr + '.hdr'
         metadata = self.tools.clean_md_sets(metadata=metadata)
-        envi.save_image(hdr_file, spyfile, dtype=dtype, force=force, ext=ext,
+        envi.save_image(fname_hdr, spyfile, dtype=dtype, force=force, ext=ext,
                         interleave=interleave, byteorder=byteorder,
                         metadata=metadata)
 
@@ -655,36 +680,36 @@ class hsio(object):
         single spectra to file.
 
         Parameters:
-            hdr_file (`str`): Output header file path (with the '.hdr'
+            hdr_file (``str``): Output header file path (with the '.hdr'
                 extension).
-            df_mean (`pandas.Series` or `numpy.ndarray`): Mean spectra, stored as a df row,
+            df_mean (``pandas.Series`` or ``numpy.ndarray``): Mean spectra, stored as a df row,
                 where columns are the bands.
-            df_std (`pandas.Series` or `numpy.ndarray`): Standard deviation of each spectra,
+            df_std (``pandas.Series`` or ``numpy.ndarray``): Standard deviation of each spectra,
                 stored as a df row, where columns are the bands. This will be
                 saved to the .hdr file.
-            dtype (`numpy.dtype` or `str`): The data type with which to store
+            dtype (``numpy.dtype`` or ``str``): The data type with which to store
                 the image. For example, to store the image in 16-bit unsigned
                 integer format, the argument could be any of numpy.uint16,
                 'u2', 'uint16', or 'H' (default=np.float32).
-            force (`bool`): If `hdr_file` or its associated image file exist,
-                `force=True` will overwrite the files; otherwise, an exception
+            force (``bool``): If ``hdr_file`` or its associated image file exist,
+                ``force=True`` will overwrite the files; otherwise, an exception
                 will be raised if either file exists (default=False).
-            ext (`str`): The extension to use for saving the image file; if not
+            ext (``str``): The extension to use for saving the image file; if not
                 specified, a default extension is determined based on the
-                `interleave`. For example, if `interleave`='bip', then `ext` is
-                set to 'bip' as well. If `ext` is an empty string, the image
+                ``interleave``. For example, if ``interleave``='bip', then ``ext`` is
+                set to 'bip' as well. If ``ext`` is an empty string, the image
                 file will have the same name as the .hdr, but without the
                 '.hdr' extension (default: '.spec').
-            interleave (`str`): The band interleave format to use for writing
-                the file; `interleave` should be one of 'bil', 'bip', or 'bsq'
+            interleave (``str``): The band interleave format to use for writing
+                the file; ``interleave`` should be one of 'bil', 'bip', or 'bsq'
                 (default='bip').
-            byteorder (`int` or `str`): Specifies the byte order (endian-ness)
+            byteorder (``int`` or ``str``): Specifies the byte order (endian-ness)
                 of the data as written to disk. For little endian, this value
                 should be either 0 or 'little'. For big endian, it should be
                 either 1 or 'big'. If not specified, native byte order will be
                 used (default=None).
-            metadata (`dict`): Metadata to write to the ENVI .hdr file
-                describing the spectra being saved; if `None`, will try to pull
+            metadata (``dict``): Metadata to write to the ENVI .hdr file
+                describing the spectra being saved; if ``None``, will try to pull
                 metadata template from self.spyfile.metadata (default=None).
         '''
         if ext is None:
@@ -735,17 +760,17 @@ class hsio(object):
         small datacube subset (i.e., three bands or less) to file.
 
         Parameters:
-            fname_tif (`str`): Output image file path (with the '.tif'
+            fname_tif (``str``): Output image file path (with the '.tif'
                 extension).
-            spyfile (`SpyFile` object or `numpy.ndarray`): The data cube to
-                save. If `numpy.ndarray`, then metadata (`dict`) should also be
+            spyfile (``SpyFile`` object or ``numpy.ndarray``): The data cube to
+                save. If ``numpy.ndarray``, then metadata (``dict``) should also be
                 passed.
-            fname_in (`str`, optional): The filename of the image datacube to
+            fname_in (``str``, optional): The filename of the image datacube to
                 be read in initially.
-            projection_out (`str`): (default: `self.projection_out`)
-            geotransform_out (`str`): (default: `self.geotransform_out`)
-            metadata (`dict`): Metadata information; if geotransform_out is not
-                passed, "map info" is accessed from `metadata` and
+            projection_out (``str``): (default: ``self.projection_out``)
+            geotransform_out (``str``): (default: ``self.geotransform_out``)
+            metadata (``dict``): Metadata information; if geotransform_out is not
+                passed, "map info" is accessed from ``metadata`` and
                 geotransform_out is created from that "map info".
 
         TOOD:
@@ -864,7 +889,7 @@ class hstools(object):
     Basic tools for manipulating Spyfiles and accessing their metadata.
 
     Parameters:
-        spyfile (`SpyFile` object): The datacube being accessed and/or
+        spyfile (``SpyFile`` object): The datacube being accessed and/or
             manipulated.
     '''
     def __init__(self, spyfile, ):
@@ -882,8 +907,8 @@ class hstools(object):
         saves as a dictionary
 
         Parameters:
-            metadata (`dict`): dictionary of the metadata
-            spyfile (`SpyFile` object or `numpy.ndarray`): The datacube being
+            metadata (``dict``): dictionary of the metadata
+            spyfile (``SpyFile`` object or ``numpy.ndarray``): The datacube being
                 accessed and/or manipulated.
         '''
         if spyfile is None:
@@ -918,11 +943,11 @@ class hstools(object):
         '''
 
         Parameters:
-            metadata (`dict`, optional): Metadata dictionary to clean
+            metadata (``dict``, optional): Metadata dictionary to clean
 
         Returns:
-            `dict`:
-                **metadata_out** (`dict`) -- Cleaned metadata dictionary.
+            ``dict``:
+                **metadata_out** (``dict``) -- Cleaned metadata dictionary.
         '''
         if metadata is None:
             metadata = self.spyfile.metadata
@@ -938,12 +963,12 @@ class hstools(object):
         Deletes metadata item from SpyFile object.
 
         Parameters:
-            metadata (`dict`): dictionary of the metadata
-            key (`str`): dictionary key to delete
+            metadata (``dict``): dictionary of the metadata
+            key (``str``): dictionary key to delete
 
         Returns:
-            `dict`:
-                **metadata** (`dict`) -- Dictionary containing the modified
+            ``dict``:
+                **metadata** (``dict``) -- Dictionary containing the modified
                 metadata.
         '''
         msg = ('Please be sure to base a metadata dictionary.')
@@ -961,16 +986,16 @@ class hstools(object):
         Finds the band number of the closest target wavelength.
 
         Parameters:
-            target_wl (`int` or `float`): the target wavelength to retrieve the
+            target_wl (``int`` or ``float``): the target wavelength to retrieve the
                 band number for (required).
-            spyfile (`SpyFile` object, optional): The datacube being accessed and/or
-                manipulated; if `None`, uses `hstools.spyfile` (default:
-                `None`).
+            spyfile (``SpyFile`` object, optional): The datacube being accessed and/or
+                manipulated; if ``None``, uses ``hstools.spyfile`` (default:
+                ``None``).
 
         Returns:
-            `int`:
-                **key_band** (`int`) -- band number of the closest target
-                wavelength (`target_wl`).
+            ``int``:
+                **key_band** (``int``) -- band number of the closest target
+                wavelength (``target_wl``).
 
         Example:
             >>> hstools.get_band(703, spyfile)
@@ -993,16 +1018,16 @@ class hstools(object):
         Returns actual wavelength of the closest target band.
 
         Parameters:
-            target_band (`int` or `float`): the target band to retrieve
+            target_band (``int`` or ``float``): the target band to retrieve
                 wavelength number for (required).
-            spyfile (`SpyFile` object, optional): The datacube being accessed and/or
-                manipulated; if `None`, uses `hstools.spyfile` (default:
-                `None`).
+            spyfile (``SpyFile`` object, optional): The datacube being accessed and/or
+                manipulated; if ``None``, uses ``hstools.spyfile`` (default:
+                ``None``).
 
         Returns:
-            `float`:
-                **key_wavelength** (`float`) -- wavelength of the closest
-                target band (`target_band`).
+            ``float``:
+                **key_wavelength** (``float``) -- wavelength of the closest
+                target band (``target_band``).
 
         Example:
             >>> hstools.get_wavelength(151, spyfile)
@@ -1023,24 +1048,24 @@ class hstools(object):
     def get_center_wl(self, wl_list, spyfile=None, wls=True):
         '''
         Gets band numbers and mean wavelength from all wavelengths (or bands)
-        in `wl_list`.
+        in ``wl_list``.
 
         Parameters:
-            wl_list (`list`): the list of bands to get information for
+            wl_list (``list``): the list of bands to get information for
                 (required).
-            spyfile (`SpyFile` object): The datacube being accessed and/or
-                manipulated; if `None`, uses `hstools.spyfile` (default:
-                `None`).
-            wls (`bool`): whether wavelengths are passed in `wl_list` or if
-                bands are passed in `wl_list` (default: `True` - wavelenghts
+            spyfile (``SpyFile`` object): The datacube being accessed and/or
+                manipulated; if ``None``, uses ``hstools.spyfile`` (default:
+                ``None``).
+            wls (``bool``): whether wavelengths are passed in ``wl_list`` or if
+                bands are passed in ``wl_list`` (default: ``True`` - wavelenghts
                 passed).
 
         Returns:
-            2-element `tuple` containing
+            2-element ``tuple`` containing
 
-            - **bands** (`list`): the list of bands (band number) corresponding
-              to `wl_list`.
-            - **wls_mean** (`float`): the mean wavelength from `wl_list`.
+            - **bands** (``list``): the list of bands (band number) corresponding
+              to ``wl_list``.
+            - **wls_mean** (``float``): the mean wavelength from ``wl_list``.
         '''
         msg = ('"wl_list" must be a list.')
         assert isinstance(wl_list, list), msg
@@ -1071,16 +1096,16 @@ class hstools(object):
 
     def get_band_index(self, band_num):
         '''
-        Subtracts 1 from `band_num` and returns the band index(es).
+        Subtracts 1 from ``band_num`` and returns the band index(es).
 
         Parameters:
-            band_num (`int` or `list`): the target band number(s) to retrieve
+            band_num (``int`` or ``list``): the target band number(s) to retrieve
             the band index for (required).
 
         Returns:
-            `int` or `list`:
-                **band_idx** (`int`) -- band index of the passed band number
-                (`band_num`).
+            ``int`` or ``list``:
+                **band_idx** (``int``) -- band index of the passed band number
+                (``band_num``).
 
         Example:
             >>> hstools.get_band_index([4, 43, 111])
@@ -1098,16 +1123,16 @@ class hstools(object):
         Gets the spectral mean of a datacube from a list of bands
 
         Parameters:
-            band_list (`list`): the list of bands to calculate the spectral
+            band_list (``list``): the list of bands to calculate the spectral
                 mean for on the datacube (required).
-            spyfile (`SpyFile` object or `numpy.ndarray`): The datacube being
-                accessed and/or manipulated; if `None`, uses `hstools.spyfile`
-                (default: `None`).
+            spyfile (``SpyFile`` object or ``numpy.ndarray``): The datacube being
+                accessed and/or manipulated; if ``None``, uses ``hstools.spyfile``
+                (default: ``None``).
 
         Returns:
-            `numpy.array` or `pandas.DataFrame`:
-                **array_mean** (`numpy.array` or `pandas.DataFrame`): The
-                mean reflectance from `spyfile` for the bands in `band_list`.
+            ``numpy.array`` or ``pandas.DataFrame``:
+                **array_mean** (``numpy.array`` or ``pandas.DataFrame``): The
+                mean reflectance from ``spyfile`` for the bands in ``band_list``.
         '''
         msg = ('"band_list" must be a list.')
         assert isinstance(band_list, list), msg
@@ -1140,16 +1165,16 @@ class hstools(object):
 
     def get_band_num(self, band_idx):
         '''
-        Adds 1 to `band_idx` and returns the band number(s).
+        Adds 1 to ``band_idx`` and returns the band number(s).
 
         Parameters:
-            band_idx (`int` or `list`): the target band index(es) to retrive
+            band_idx (``int`` or ``list``): the target band index(es) to retrive
                 the band number for (required).
 
         Returns:
-            `int` or `list`:
-                **band_num** (`int` or `list`): band number of the passed
-                band index (`band_idx`).
+            ``int`` or ``list``:
+                **band_num** (``int`` or ``list``): band number of the passed
+                band index (``band_idx``).
 
         Example:
             >>> hstools.get_band_num([4, 43, 111])
@@ -1168,15 +1193,15 @@ class hstools(object):
         wavelength range.
 
         Parameters:
-            range_wl (`list`): the minimum and maximum wavelength to consider;
-                values should be `int` or `float`.
+            range_wl (``list``): the minimum and maximum wavelength to consider;
+                values should be ``int`` or ``float``.
             index (bool): Indicates whether to return the band number (min=1)
                 or to return index number (min=0) (default: True)
 
         Returns:
-            `list`:
-                **band_list** (`list`): A list of all bands (either index or
-                number, depending on how `index` is set) between a range in
+            ``list``:
+                **band_list** (``list``): A list of all bands (either index or
+                number, depending on how ``index`` is set) between a range in
                 wavelength values.
         '''
         msg = ('"range_wl" must be a `list` or `tuple`.')
@@ -1208,15 +1233,15 @@ class hstools(object):
         spaces.
 
         Parameters:
-            meta_set (`str`): the string representation of the metadata set
-            idx (`int`): index to be read; if `None`, the whole list is
-                returned (default: `None`).
+            meta_set (``str``): the string representation of the metadata set
+            idx (``int``): index to be read; if ``None``, the whole list is
+                returned (default: ``None``).
 
         Returns:
-            `list` or `str`:
-                **metadata_list** (`list` or `str`): List of metadata set items
-                (as `str`), or if idx is not `None`, the item in the position
-                described by `idx`.
+            ``list`` or ``str``:
+                **metadata_list** (``list`` or ``str``): List of metadata set items
+                (as ``str``), or if idx is not ``None``, the item in the position
+                described by ``idx``.
         '''
         if isinstance(meta_set, str):
             meta_set_list = meta_set[1:-1].split(",")
@@ -1251,25 +1276,25 @@ class hstools(object):
         "map info" tag of the .hdr file.
 
         Parameters:
-            pix_e_ul (`int`): upper left column (easting) where image cropping
+            pix_e_ul (``int``): upper left column (easting) where image cropping
                 begins.
-            pix_n_ul (`int`): upper left row (northing) where image cropping
+            pix_n_ul (``int``): upper left row (northing) where image cropping
                 begins.
-            utm_x (`float`): UTM easting coordinates (meters) of the original
+            utm_x (``float``): UTM easting coordinates (meters) of the original
                 image (from the upper left).
-            utm_y (`float`): UTM northing coordinates (meters) of the original
+            utm_y (``float``): UTM northing coordinates (meters) of the original
                 image (from the upper left).
-            size_x (`float`): Ground resolved distance of the image pixels in
+            size_x (``float``): Ground resolved distance of the image pixels in
                 the x (easting) direction (meters).
-            size_y (`float`): Ground resolved distance of the image pixels in
+            size_y (``float``): Ground resolved distance of the image pixels in
                 the y (northing) direction (meters).
 
         Returns:
-            2-element `tuple` containing
+            2-element ``tuple`` containing
 
-            - **utm_x_new** (`float`): The modified UTM x coordinate (easting)
+            - **utm_x_new** (``float``): The modified UTM x coordinate (easting)
               of cropped plot.
-            - **utm_y_new** (`float`): The modified UTM y coordinate (northing)
+            - **utm_y_new** (``float``): The modified UTM y coordinate (northing)
               of cropped plot.
         '''
         utm_x_new = utm_x + ((pix_e_ul + 1) * size_x)
@@ -1278,11 +1303,11 @@ class hstools(object):
 
     def load_spyfile(self, spyfile):
         '''
-        Loads a `SpyFile` (Spectral Python object) for data access and/or
-        manipulation by the `hstools` class.
+        Loads a ``SpyFile`` (Spectral Python object) for data access and/or
+        manipulation by the ``hstools`` class.
 
         Parameters:
-            spyfile (`SpyFile` object): The datacube being accessed and/or
+            spyfile (``SpyFile`` object): The datacube being accessed and/or
                 manipulated.
         '''
         self.spyfile = spyfile
@@ -1291,33 +1316,33 @@ class hstools(object):
     def mask_array(self, array, metadata, thresh=None, percentile=None,
                    side='lower'):
         '''
-        Creates a masked numpy array based on a threshold value. If `array` is
+        Creates a masked numpy array based on a threshold value. If ``array`` is
         already a masked array, that mask is maintained and the new mask(s) is/
         are added to the original mask.
 
         Parameters:
-            array (`numpy.ndarray`): The data array to mask.
-            thresh (`float` or `list`): The value for which to base the
-                threshold; if `thresh` is `list` and `side` is `None`, then
-                all values in `thresh` will be masked; if `thresh` is `list`
-                and `side` is not `None`, then only the first value in the
-                list will be considered for thresholding (default: `None`).
-            percentile (`float`): The percentile of pixels to mask; if
-                `percentile`=95 and `side`='lower', the lowest 95% of pixels
+            array (``numpy.ndarray``): The data array to mask.
+            thresh (``float`` or ``list``): The value for which to base the
+                threshold; if ``thresh`` is ``list`` and ``side`` is ``None``, then
+                all values in ``thresh`` will be masked; if ``thresh`` is ``list``
+                and ``side`` is not ``None``, then only the first value in the
+                list will be considered for thresholding (default: ``None``).
+            percentile (``float``): The percentile of pixels to mask; if
+                ``percentile``=95 and ``side``='lower', the lowest 95% of pixels
                 will be masked prior to calculating the mean spectra across
-                pixels (default: `None`; range: 0-100).
-            side (`str`): The side of the threshold for which to apply the
-                mask. Must be either 'lower', 'upper', or `None`; if 'lower',
-                everything below the threshold will be masked; if `None`, only
+                pixels (default: ``None``; range: 0-100).
+            side (``str``): The side of the threshold for which to apply the
+                mask. Must be either 'lower', 'upper', or ``None``; if 'lower',
+                everything below the threshold will be masked; if ``None``, only
                 the values that exactly match the threshol will be masked
                 (default: 'lower').
 
         Returns:
-            2-element `tuple` containing
+            2-element ``tuple`` containing
 
-            - **array_mask** (`numpy.ndarray`): The masked `numpy.ndarray`
+            - **array_mask** (``numpy.ndarray``): The masked ``numpy.ndarray``
               based on the passed threshold and/or percentile value.
-            - **metadata** (`dict`): The modified metadata.
+            - **metadata** (``dict``): The modified metadata.
         '''
         if isinstance(array, np.ma.core.MaskedArray):
             array_m = array.compressed()  # allows for accurate percentile calc
@@ -1383,16 +1408,16 @@ class hstools(object):
         DO NOT USE; USE mean_datacube() INSTEAD AND PASS A MASK.
 
 
-        Applies `mask` to `spyfile`, then returns the datcube (as a np.array)
+        Applies ``mask`` to ``spyfile``, then returns the datcube (as a np.array)
         and the mean spectra
 
         Parameters:
-            spyfile (`SpyFile` object or `numpy.ndarray`): The hyperspectral
+            spyfile (``SpyFile`` object or ``numpy.ndarray``): The hyperspectral
                 datacube to mask.
-            mask (`numpy.ndarray`): the mask to apply to `spyfile`; if `mask`
-                does not have similar dimensions to `spyfile`, the first band
-                (i.e., first two dimensions) of `mask` will be repeated n times
-                to match the number of bands of `spyfile`.
+            mask (``numpy.ndarray``): the mask to apply to ``spyfile``; if ``mask``
+                does not have similar dimensions to ``spyfile``, the first band
+                (i.e., first two dimensions) of ``mask`` will be repeated n times
+                to match the number of bands of ``spyfile``.
         '''
         if isinstance(spyfile, SpyFile.SpyFile):
             self.load_spyfile(spyfile)
@@ -1420,28 +1445,28 @@ class hstools(object):
 
     def mean_datacube(self, spyfile, mask=None):
         '''
-        Calculates the mean spectra for a datcube; if `mask` is passed (as a
-        np.array), then the mask is applied to `spyfile` prior to computing
+        Calculates the mean spectra for a datcube; if ``mask`` is passed (as a
+        np.array), then the mask is applied to ``spyfile`` prior to computing
         the mean spectra.
 
         Parameters:
-            spyfile (`SpyFile` object or `numpy.ndarray`): The hyperspectral
+            spyfile (``SpyFile`` object or ``numpy.ndarray``): The hyperspectral
                 datacube to mask.
-            mask (`numpy.ndarray`): the mask to apply to `spyfile`; if `mask`
-                does not have similar dimensions to `spyfile`, the first band
-                (i.e., first two dimensions) of `mask` will be repeated n times
-                to match the number of bands of `spyfile`.
+            mask (``numpy.ndarray``): the mask to apply to ``spyfile``; if ``mask``
+                does not have similar dimensions to ``spyfile``, the first band
+                (i.e., first two dimensions) of ``mask`` will be repeated n times
+                to match the number of bands of ``spyfile``.
 
         Returns:
-            3-element `tuple` containing
+            3-element ``tuple`` containing
 
-            - **spec_mean** (`SpyFile.SpyFile` object): The mean spectra from
+            - **spec_mean** (``SpyFile.SpyFile`` object): The mean spectra from
               the input datacube.
-            - **spec_std** (`SpyFile.SpyFile` object): The standard deviation
+            - **spec_std** (``SpyFile.SpyFile`` object): The standard deviation
               of the spectra from the input datacube.
-            - **datacube_masked** (`numpy.ndarray`): The masked
-              `numpy.ndarray`; if `mask` = `None`, `datacube_masked` is
-              identical to the `SpyFile` data array.
+            - **datacube_masked** (``numpy.ndarray``): The masked
+              ``numpy.ndarray``; if ``mask`` = ``None``, ``datacube_masked`` is
+              identical to the ``SpyFile`` data array.
         '''
         if isinstance(spyfile, SpyFile.SpyFile):
             self.load_spyfile(spyfile)
@@ -1471,20 +1496,20 @@ class hstools(object):
     def mask_shadow(self, shadow_pctl=20, show_histogram=False,
                     spyfile=None):
         '''
-        Creates a `numpy.mask` of all pixels that are likely shadow pixels.
+        Creates a ``numpy.mask`` of all pixels that are likely shadow pixels.
 
         Parameters:
-            shadow_pctl (`int`): the percentile of pixels in the image to mask
+            shadow_pctl (``int``): the percentile of pixels in the image to mask
                 (default: 20).
-            show_histogram (`bool`):
-            spyfile (`SpyFile.SpyFile` object):
+            show_histogram (``bool``):
+            spyfile (``SpyFile.SpyFile`` object):
 
         Returns:
-            2-element `tuple` containing
+            2-element ``tuple`` containing
 
-            - **array_noshadow.mask** (`numpy.mask`): The mask indicating all
+            - **array_noshadow.mask** (``numpy.mask``): The mask indicating all
               pixels that are likely shadow pixels.
-            - **metadata** (`dict`): The modified metadata.
+            - **metadata** (``dict``): The modified metadata.
         '''
         if spyfile is None:
             spyfile = self.spyfile
@@ -1508,14 +1533,14 @@ class hstools(object):
         value of an item by its index.
 
         Parameters:
-            meta_set (`str`): the string representation of the metadata set
-            idx (`int`): index to be modified; if `None`, the whole meta_set is
-                returned (default: `None`).
-            value (`float`, `int`, or `str`): value to replace at idx
+            meta_set (``str``): the string representation of the metadata set
+            idx (``int``): index to be modified; if ``None``, the whole meta_set is
+                returned (default: ``None``).
+            value (``float``, ``int``, or ``str``): value to replace at idx
 
         Returns:
-            `str`:
-                **set_str** (`str`): Modified metadata set string.
+            ``str``:
+                **set_str** (``str``): Modified metadata set string.
         '''
         metadata_list = self.get_meta_set(meta_set, idx=None)
         metadata_list[idx] = str(value)

@@ -13,6 +13,8 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
 <meta charset='utf-8'>
@@ -44,6 +46,7 @@
           <ul class="nav navbar-nav">
             
                 <li><a href="https://github.com/tnigon/hs_process">Github</a></li>
+                <li><a href="http://www.spectralpython.net/">Spectral Python</a></li>
             
             
               <li class="dropdown globaltoc-container">
@@ -56,14 +59,12 @@
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Home</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../installation.html">1. Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../my_hs_process_api.html">2. API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../license.html">3. License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../my_hs_process_api.html">1. API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../license.html">2. License</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation.html">1. Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../my_hs_process_api.html">2. API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../license.html">3. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../my_hs_process_api.html">1. API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">2. License</a></li>
 </ul>
 </ul>
 </li>
@@ -414,20 +415,19 @@
         <span class="k">if</span> <span class="n">group</span> <span class="o">==</span> <span class="s1">&#39;crop&#39;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">e_pix</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">e_m</span><span class="p">):</span>
                 <span class="n">e_pix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">crop_defaults</span><span class="p">[</span><span class="s1">&#39;crop_e_pix&#39;</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">n_pix</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">notnull</span><span class="p">(</span><span class="n">n_m</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">n_pix</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">n_m</span><span class="p">):</span>
                 <span class="n">n_pix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">crop_defaults</span><span class="p">[</span><span class="s1">&#39;crop_n_pix&#39;</span><span class="p">]</span>
         <span class="k">elif</span> <span class="n">group</span> <span class="o">==</span> <span class="s1">&#39;alley&#39;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">e_pix</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">e_m</span><span class="p">):</span>
                 <span class="n">e_pix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">crop_defaults</span><span class="p">[</span><span class="s1">&#39;alley_size_e_pix&#39;</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">n_pix</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">notnull</span><span class="p">(</span><span class="n">n_m</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">n_pix</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">n_m</span><span class="p">):</span>
                 <span class="n">n_pix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">crop_defaults</span><span class="p">[</span><span class="s1">&#39;alley_size_n_pix&#39;</span><span class="p">]</span>
         <span class="k">elif</span> <span class="n">group</span> <span class="o">==</span> <span class="s1">&#39;buffer&#39;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">e_pix</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">e_m</span><span class="p">):</span>
                 <span class="n">e_pix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">crop_defaults</span><span class="p">[</span><span class="s1">&#39;buf_e_pix&#39;</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">n_pix</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">notnull</span><span class="p">(</span><span class="n">n_m</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">n_pix</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">n_m</span><span class="p">):</span>
                 <span class="n">n_pix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">crop_defaults</span><span class="p">[</span><span class="s1">&#39;buf_n_pix&#39;</span><span class="p">]</span>
 
-        <span class="nb">print</span><span class="p">(</span><span class="n">e_pix</span><span class="p">,</span> <span class="n">n_pix</span><span class="p">,</span> <span class="n">e_m</span><span class="p">,</span> <span class="n">n_m</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">e_pix</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">notnull</span><span class="p">(</span><span class="n">e_m</span><span class="p">):</span>
             <span class="n">e_pix</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">e_m</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_e</span><span class="p">))</span>
         <span class="k">elif</span> <span class="n">pd</span><span class="o">.</span><span class="n">notnull</span><span class="p">(</span><span class="n">e_pix</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">e_m</span><span class="p">):</span>
@@ -436,7 +436,6 @@
             <span class="n">n_pix</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">n_m</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_n</span><span class="p">))</span>
         <span class="k">elif</span> <span class="n">pd</span><span class="o">.</span><span class="n">notnull</span><span class="p">(</span><span class="n">n_pix</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">n_m</span><span class="p">):</span>
             <span class="n">n_m</span> <span class="o">=</span> <span class="n">n_pix</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_n</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">e_pix</span><span class="p">,</span> <span class="n">n_pix</span><span class="p">,</span> <span class="n">e_m</span><span class="p">,</span> <span class="n">n_m</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">e_pix</span><span class="p">,</span> <span class="n">n_pix</span><span class="p">,</span> <span class="n">e_m</span><span class="p">,</span> <span class="n">n_m</span>
 
     <span class="k">def</span> <span class="nf">_read_plot_shp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -716,7 +715,8 @@
 <div class="viewcode-block" id="spatial_mod.crop_single"><a class="viewcode-back" href="../../api/hs_process.spatial_mod.spatial_mod.html#hs_process.spatial_mod.spatial_mod.crop_single">[docs]</a>    <span class="k">def</span> <span class="nf">crop_single</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="p">,</span> <span class="n">crop_e_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                     <span class="n">crop_n_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">crop_e_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">crop_n_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                     <span class="n">buf_e_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buf_n_pix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buf_e_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buf_n_m</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                    <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plot_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gdf</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                    <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plot_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gdf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">name_append</span><span class="o">=</span><span class="s1">&#39;spatial-crop-single&#39;</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Crops a single plot from an image. If `plot_id` and `gdf` are</span>
 <span class="sd">        explicitly passed (i.e., they will not be loaded from `spatial_mod`</span>
@@ -749,6 +749,8 @@
 <span class="sd">                geometery of each of the plots; &#39;plot&#39; must be used as a column</span>
 <span class="sd">                name to identify each of the plots, and should be an integer.</span>
 <span class="sd">                `gdf` must be explicitly passed to</span>
+<span class="sd">            name_append (`str`): NOT YET SUPPORTED; name to append to the</span>
+<span class="sd">                filename (default: &#39;spatial-crop-single&#39;).</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            2-element `tuple` containing</span>
@@ -787,7 +789,8 @@
             <span class="n">utm_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_meta_set</span><span class="p">(</span><span class="n">map_info_set</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
             <span class="n">utm_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_meta_set</span><span class="p">(</span><span class="n">map_info_set</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
             <span class="n">ul_x_utm</span><span class="p">,</span> <span class="n">ul_y_utm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_UTM</span><span class="p">(</span><span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="p">,</span>
-                                                    <span class="n">utm_x</span><span class="p">,</span> <span class="n">utm_y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_e</span><span class="p">,</span>
+                                                    <span class="n">utm_x</span><span class="p">,</span> <span class="n">utm_y</span><span class="p">,</span>
+                                                    <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_e</span><span class="p">,</span>
                                                     <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_n</span><span class="p">)</span>
 
         <span class="n">map_info_set</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">modify_meta_set</span><span class="p">(</span><span class="n">map_info_set</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">ul_x_utm</span><span class="p">)</span>
@@ -810,6 +813,13 @@
             <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">hist_str</span>
         <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;samples&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">array_crop</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;lines&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">array_crop</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># TODO: Figure out if/when the &#39;label&#39; tag should be changed.</span>
+<span class="c1">#        label = metadata[&#39;label&#39;]</span>
+<span class="c1">#        if label is not None:</span>
+<span class="c1">#            name_label = (os.path.splitext(label)[0] + &#39;-&#39; + name_append + &#39;.&#39;</span>
+<span class="c1">#                          + self.defaults.interleave)</span>
+<span class="c1">#        metadata[&#39;label&#39;] = name_label</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
 
         <span class="k">return</span> <span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span></div>

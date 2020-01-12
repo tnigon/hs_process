@@ -13,6 +13,8 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
 <meta charset='utf-8'>
@@ -44,6 +46,7 @@
           <ul class="nav navbar-nav">
             
                 <li><a href="https://github.com/tnigon/hs_process">Github</a></li>
+                <li><a href="http://www.spectralpython.net/">Spectral Python</a></li>
             
             
               <li class="dropdown globaltoc-container">
@@ -56,14 +59,12 @@
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Home</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../installation.html">1. Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../my_hs_process_api.html">2. API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../license.html">3. License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../my_hs_process_api.html">1. API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../license.html">2. License</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation.html">1. Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../my_hs_process_api.html">2. API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../license.html">3. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../my_hs_process_api.html">1. API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">2. License</a></li>
 </ul>
 </ul>
 </li>
@@ -132,23 +133,23 @@
 <span class="sd">    Class containing all defaults for writing an ENVI datacube to file.</span>
 
 <span class="sd">    Parameters:</span>
-<span class="sd">        dtype (`numpy.dtype` or `str`): The data type with which to store</span>
+<span class="sd">        dtype (``numpy.dtype`` or ``str``): The data type with which to store</span>
 <span class="sd">            the image. For example, to store the image in 16-bit unsigned</span>
 <span class="sd">            integer format, the argument could be any of numpy.uint16,</span>
 <span class="sd">            &#39;u2&#39;, &#39;uint16&#39;, or &#39;H&#39; (default=np.float32).</span>
-<span class="sd">        force (`bool`): If `hdr_file` or its associated image file exist,</span>
-<span class="sd">            `force=True` will overwrite the files; otherwise, an exception</span>
+<span class="sd">        force (``bool``): If ``hdr_file`` or its associated image file exist,</span>
+<span class="sd">            ``force=True`` will overwrite the files; otherwise, an exception</span>
 <span class="sd">            will be raised if either file exists (default=False).</span>
-<span class="sd">        ext (`str`): The extension to use for saving the image file; if not</span>
+<span class="sd">        ext (``str``): The extension to use for saving the image file; if not</span>
 <span class="sd">            specified, a default extension is determined based on the</span>
-<span class="sd">            `interleave`. For example, if `interleave`=&#39;bip&#39;, then `ext` is</span>
-<span class="sd">            set to &#39;bip&#39; as well. If `ext` is an empty string, the image</span>
+<span class="sd">            ``interleave``. For example, if ``interleave``=&#39;bip&#39;, then ``ext`` is</span>
+<span class="sd">            set to &#39;bip&#39; as well. If ``ext`` is an empty string, the image</span>
 <span class="sd">            file will have the same name as the .hdr, but without the</span>
 <span class="sd">            &#39;.hdr&#39; extension (default: None).</span>
-<span class="sd">        interleave (`str`): The band interleave format to use for writing</span>
-<span class="sd">            the file; `interleave` should be one of &#39;bil&#39;, &#39;bip&#39;, or &#39;bsq&#39;</span>
+<span class="sd">        interleave (``str``): The band interleave format to use for writing</span>
+<span class="sd">            the file; ``interleave`` should be one of &#39;bil&#39;, &#39;bip&#39;, or &#39;bsq&#39;</span>
 <span class="sd">            (default=&#39;bip&#39;).</span>
-<span class="sd">        byteorder (`int` or `str`): Specifies the byte order (endian-ness)</span>
+<span class="sd">        byteorder (``int`` or ``str``): Specifies the byte order (endian-ness)</span>
 <span class="sd">            of the data as written to disk. For little endian, this value</span>
 <span class="sd">            should be either 0 or &#39;little&#39;. For big endian, it should be</span>
 <span class="sd">            either 1 or &#39;big&#39;. If not specified, native byte order will be</span>
@@ -226,6 +227,11 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_in</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name_long</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name_plot</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">name_short</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">str_plot</span><span class="o">=</span><span class="s1">&#39;plot_&#39;</span><span class="p">,</span> <span class="n">individual_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">fname_hdr_spec</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            fname_in (``str``, optional): The filename of the image datacube to</span>
+<span class="sd">                be read in initially.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fname_in</span> <span class="o">=</span> <span class="n">fname_in</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name_long</span> <span class="o">=</span> <span class="n">name_long</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name_plot</span> <span class="o">=</span> <span class="n">name_plot</span>
@@ -277,11 +283,11 @@
 <span class="sd">        Deletes metadata item from SpyFile object.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            metadata (`dict`): dictionary of the metadata</span>
-<span class="sd">            key (`str`): dictionary key to delete</span>
+<span class="sd">            metadata (``dict``): dictionary of the metadata</span>
+<span class="sd">            key (``str``): dictionary key to delete</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            metadata (`dict`): Dictionary containing the modified metadata.</span>
+<span class="sd">            metadata (``dict``): Dictionary containing the modified metadata.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please be sure to base a metadata dictionary.&#39;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span> <span class="n">msg</span>
@@ -300,14 +306,14 @@
 <span class="sd">        spaces.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            meta_set (`str`): the string representation of the metadata set</span>
-<span class="sd">            idx (`int`): index to be read; if `None`, the whole list is</span>
-<span class="sd">                returned (default: `None`).</span>
+<span class="sd">            meta_set (``str``): the string representation of the metadata set</span>
+<span class="sd">            idx (``int``): index to be read; if ``None``, the whole list is</span>
+<span class="sd">                returned (default: ``None``).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            metadata_list (`list` or `str`): List of metadata set items (as</span>
-<span class="sd">                `str`), or if idx is not `None`, the item in the position</span>
-<span class="sd">                described by `idx`.</span>
+<span class="sd">            metadata_list (``list`` or ``str``): List of metadata set items (as</span>
+<span class="sd">                ``str``), or if idx is not ``None``, the item in the position</span>
+<span class="sd">                described by ``idx``.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">meta_set</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">meta_set_list</span> <span class="o">=</span> <span class="n">meta_set</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
@@ -343,13 +349,13 @@
 <span class="sd">        value of an item by its index.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            meta_set (`str`): the string representation of the metadata set</span>
-<span class="sd">            idx (`int`): index to be modified; if `None`, the whole meta_set is</span>
-<span class="sd">                returned (default: `None`).</span>
-<span class="sd">            value (`float`, `int`, or `str`): value to replace at idx</span>
+<span class="sd">            meta_set (``str``): the string representation of the metadata set</span>
+<span class="sd">            idx (``int``): index to be modified; if ``None``, the whole meta_set is</span>
+<span class="sd">                returned (default: ``None``).</span>
+<span class="sd">            value (``float``, ``int``, or ``str``): value to replace at idx</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            set_str (`str`):</span>
+<span class="sd">            set_str (``str``):</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">metadata_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_meta_set</span><span class="p">(</span><span class="n">meta_set</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
         <span class="n">metadata_list</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
@@ -358,17 +364,17 @@
 
     <span class="k">def</span> <span class="nf">_parse_fname</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_hdr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">str_plot</span><span class="o">=</span><span class="s1">&#39;plot_&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Parses the filename for `name_long` (text after the first dash,</span>
-<span class="sd">        inclusive), `name_short` (text before the first dash), and `name_plot`</span>
-<span class="sd">        (numeric text following `str_plot`).</span>
+<span class="sd">        Parses the filename for ``name_long`` (text after the first dash,</span>
+<span class="sd">        inclusive), ``name_short`` (text before the first dash), and ``name_plot``</span>
+<span class="sd">        (numeric text following ``str_plot``).</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            fname_hdr (`str`): input filename.</span>
-<span class="sd">            str_plot (`str`): text to search for that precedes the numeric text</span>
+<span class="sd">            fname_hdr (``str``): input filename.</span>
+<span class="sd">            str_plot (``str``): text to search for that precedes the numeric text</span>
 <span class="sd">                that describes the plot number.</span>
-<span class="sd">            overwrite (`bool`): whether the class instances of `name_long`,</span>
-<span class="sd">                `name_short`, and `name_plot` should be overwritten based on</span>
-<span class="sd">                `fname_in` (default: `True`).</span>
+<span class="sd">            overwrite (``bool``): whether the class instances of ``name_long``,</span>
+<span class="sd">                ``name_short``, and ``name_plot`` should be overwritten based on</span>
+<span class="sd">                ``fname_in`` (default: ``True``).</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">fname_hdr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">fname_hdr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fname_in</span> <span class="o">+</span> <span class="s1">&#39;.hdr&#39;</span>
@@ -422,8 +428,8 @@
 <span class="sd">        display</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            spec (`bool`): Whether the file to be read is an image (`False`) or</span>
-<span class="sd">                a spectrum (`True`; default: `False`).</span>
+<span class="sd">            spec (``bool``): Whether the file to be read is an image (``False``) or</span>
+<span class="sd">                a spectrum (``True``; default: ``False``).</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">spec</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
 <span class="c1">#            fname_hdr = self.fname_in + &#39;.hdr&#39;</span>
@@ -458,11 +464,11 @@
 <span class="sd">        Reads and ENVI file via GDAL</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            fname_in (`str`): filename of the ENVI file to read (not the .hdr;</span>
-<span class="sd">                default: `None`).</span>
+<span class="sd">            fname_in (``str``): filename of the ENVI file to read (not the .hdr;</span>
+<span class="sd">                default: ``None``).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            img_ds (`GDAL object`): GDAL dataset containing the image</span>
+<span class="sd">            img_ds (``GDAL object``): GDAL dataset containing the image</span>
 <span class="sd">            infromation</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">fname_in</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -479,10 +485,10 @@
 <span class="sd">        Reads the .hdr file and returns a dictionary of the metadata</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            fname_hdr (`str`): filename of .hdr file</span>
+<span class="sd">            fname_hdr (``str``): filename of .hdr file</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            metadata (`dict`): dictionary of the metadata</span>
+<span class="sd">            metadata (``dict``): dictionary of the metadata</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">fname_hdr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">fname_hdr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fname_in</span> <span class="o">+</span> <span class="s1">&#39;.hdr&#39;</span>
@@ -507,9 +513,9 @@
 <span class="sd">        dictionary.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            fname_hdr (`str`): filename of .hdr file to write (default:</span>
-<span class="sd">                `None`).</span>
-<span class="sd">            metadata (`dict`): dictionary of the metadata (default: `None`).</span>
+<span class="sd">            fname_hdr (``str``): filename of .hdr file to write (default:</span>
+<span class="sd">                ``None``).</span>
+<span class="sd">            metadata (``dict``): dictionary of the metadata (default: ``None``).</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">fname_hdr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">fname_hdr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fname_in</span> <span class="o">+</span> <span class="s1">&#39;.hdr&#39;</span>
@@ -527,10 +533,10 @@
 
     <span class="k">def</span> <span class="nf">_xstr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Function for safely returning an empty string (e.g., `None`).</span>
+<span class="sd">        Function for safely returning an empty string (e.g., ``None``).</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            s (`str` or `None`): the variable that may contain a string.</span>
+<span class="sd">            s (``str`` or ``None``): the variable that may contain a string.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="s1">&#39;&#39;</span>
@@ -542,23 +548,23 @@
 <span class="sd">        Reads in a hyperspectral datacube</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            fname_hdr (str): filename of datacube to be read (default: `None`).</span>
+<span class="sd">            fname_hdr (str): filename of datacube to be read (default: ``None``).</span>
 <span class="sd">            name_long (str): Spectronon processing appends processing names to</span>
 <span class="sd">                the filenames; this indicates those processing names that are</span>
 <span class="sd">                repetitive and can be deleted from the filename following</span>
-<span class="sd">                processing (default: `None`).</span>
-<span class="sd">            name_plot (`str`): numeric text that describes the plot number</span>
-<span class="sd">                (default: `None`).</span>
-<span class="sd">            name_short (`str`): The base name of the image file (see note above</span>
-<span class="sd">                about `name_long`; default: `None`).</span>
-<span class="sd">            individual_plot (`bool`): Indicates whether image (and its</span>
-<span class="sd">                filename) is for an individual plot (`True`), or for many plots</span>
-<span class="sd">                (`False`; default: `False`).</span>
-<span class="sd">            overwrite (`bool`): Whether to overwrite any of the previous</span>
-<span class="sd">                user-passed variables, including `name_long`, `name_plot`, and</span>
-<span class="sd">                `name_short`; any of the current user-passed variables will</span>
-<span class="sd">                overwrite previous ones whether `overwrite` is `True` or</span>
-<span class="sd">                `False` (default: `False`).</span>
+<span class="sd">                processing (default: ``None``).</span>
+<span class="sd">            name_plot (``str``): numeric text that describes the plot number</span>
+<span class="sd">                (default: ``None``).</span>
+<span class="sd">            name_short (``str``): The base name of the image file (see note above</span>
+<span class="sd">                about ``name_long``; default: ``None``).</span>
+<span class="sd">            individual_plot (``bool``): Indicates whether image (and its</span>
+<span class="sd">                filename) is for an individual plot (``True``), or for many plots</span>
+<span class="sd">                (``False``; default: ``False``).</span>
+<span class="sd">            overwrite (``bool``): Whether to overwrite any of the previous</span>
+<span class="sd">                user-passed variables, including ``name_long``, ``name_plot``, and</span>
+<span class="sd">                ``name_short``; any of the current user-passed variables will</span>
+<span class="sd">                overwrite previous ones whether ``overwrite`` is ``True`` or</span>
+<span class="sd">                ``False`` (default: ``False``).</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="c1"># Basically resets static __init__ variables for the new filename</span>
         <span class="c1"># If variables are already set and overwrite is False, they will remain</span>
@@ -599,7 +605,7 @@
 <span class="sd">        Reads in a hyperspectral spectrum file</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            fname_hdr_spec (`str`): filename of spectra to be read.</span>
+<span class="sd">            fname_hdr_spec (``str``): filename of spectra to be read.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fname_hdr_spec</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;.hdr&#39;</span><span class="p">:</span>
             <span class="n">fname_hdr_spec</span> <span class="o">=</span> <span class="n">fname_hdr_spec</span> <span class="o">+</span> <span class="s1">&#39;.hdr&#39;</span>
@@ -615,32 +621,32 @@
 <div class="viewcode-block" id="hsio.set_io_defaults"><a class="viewcode-back" href="../../api/hs_process.utilities.hsio.html#hs_process.utilities.hsio.set_io_defaults">[docs]</a>    <span class="k">def</span> <span class="nf">set_io_defaults</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                         <span class="n">interleave</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">byteorder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Sets any of the ENVI file writing parameters to `hsio`; if any</span>
+<span class="sd">        Sets any of the ENVI file writing parameters to ``hsio``; if any</span>
 <span class="sd">        parameter is left unchanged from its default, it will remain as-is</span>
 <span class="sd">        (it will not be set).</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            dtype (`numpy.dtype` or `str`): The data type with which to store</span>
+<span class="sd">            dtype (``numpy.dtype`` or ``str``): The data type with which to store</span>
 <span class="sd">                the image. For example, to store the image in 16-bit unsigned</span>
 <span class="sd">                integer format, the argument could be any of numpy.uint16,</span>
-<span class="sd">                &#39;u2&#39;, &#39;uint16&#39;, or &#39;H&#39; (default=`False`).</span>
-<span class="sd">            force (`bool`): If `hdr_file` or its associated image file exist,</span>
-<span class="sd">                `force=True` will overwrite the files; otherwise, an exception</span>
-<span class="sd">                will be raised if either file exists (default=`None`).</span>
-<span class="sd">            ext (`str`): The extension to use for saving the image file; if not</span>
+<span class="sd">                &#39;u2&#39;, &#39;uint16&#39;, or &#39;H&#39; (default=``False``).</span>
+<span class="sd">            force (``bool``): If ``hdr_file`` or its associated image file exist,</span>
+<span class="sd">                ``force=True`` will overwrite the files; otherwise, an exception</span>
+<span class="sd">                will be raised if either file exists (default=``None``).</span>
+<span class="sd">            ext (``str``): The extension to use for saving the image file; if not</span>
 <span class="sd">                specified, a default extension is determined based on the</span>
-<span class="sd">                `interleave`. For example, if `interleave`=&#39;bip&#39;, then `ext` is</span>
-<span class="sd">                set to &#39;bip&#39; as well. If `ext` is an empty string, the image</span>
+<span class="sd">                ``interleave``. For example, if ``interleave``=&#39;bip&#39;, then ``ext`` is</span>
+<span class="sd">                set to &#39;bip&#39; as well. If ``ext`` is an empty string, the image</span>
 <span class="sd">                file will have the same name as the .hdr, but without the</span>
-<span class="sd">                &#39;.hdr&#39; extension (default: `False`).</span>
-<span class="sd">            interleave (`str`): The band interleave format to use for writing</span>
-<span class="sd">                the file; `interleave` should be one of &#39;bil&#39;, &#39;bip&#39;, or &#39;bsq&#39;</span>
-<span class="sd">                (default=`False`).</span>
-<span class="sd">            byteorder (`int` or `str`): Specifies the byte order (endian-ness)</span>
+<span class="sd">                &#39;.hdr&#39; extension (default: ``False``).</span>
+<span class="sd">            interleave (``str``): The band interleave format to use for writing</span>
+<span class="sd">                the file; ``interleave`` should be one of &#39;bil&#39;, &#39;bip&#39;, or &#39;bsq&#39;</span>
+<span class="sd">                (default=``False``).</span>
+<span class="sd">            byteorder (``int`` or ``str``): Specifies the byte order (endian-ness)</span>
 <span class="sd">                of the data as written to disk. For little endian, this value</span>
 <span class="sd">                should be either 0 or &#39;little&#39;. For big endian, it should be</span>
 <span class="sd">                either 1 or &#39;big&#39;. If not specified, native byte order will be</span>
-<span class="sd">                used (default=`False`).</span>
+<span class="sd">                used (default=``False``).</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">dtype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">dtype</span>
@@ -659,14 +665,14 @@
 <span class="sd">        Displays a datacube as a 3-band RGB image.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            spyfile (`SpyFile` object or `numpy.ndarray`): The data cube to</span>
-<span class="sd">                display; if `None`, loads from `self.spyfile` (default:</span>
-<span class="sd">                `None`).</span>
-<span class="sd">            band_r (`int`): Band to display on the red channel (default: 120)</span>
-<span class="sd">            band_g (`int`): Band to display on the green channel (default: 76)</span>
-<span class="sd">            band_b (`int`): Band to display on the blue channel (default: 32)</span>
-<span class="sd">            inline (`bool`): If `True`, displays in the IPython console; else</span>
-<span class="sd">                displays in a pop-out window (default: `True`).</span>
+<span class="sd">            spyfile (``SpyFile`` object or ``numpy.ndarray``): The data cube to</span>
+<span class="sd">                display; if ``None``, loads from ``self.spyfile`` (default:</span>
+<span class="sd">                ``None``).</span>
+<span class="sd">            band_r (``int``): Band to display on the red channel (default: 120)</span>
+<span class="sd">            band_g (``int``): Band to display on the green channel (default: 76)</span>
+<span class="sd">            band_b (``int``): Band to display on the blue channel (default: 32)</span>
+<span class="sd">            inline (``bool``): If ``True``, displays in the IPython console; else</span>
+<span class="sd">                displays in a pop-out window (default: ``True``).</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">inline</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;matplotlib&#39;</span><span class="p">,</span> <span class="s1">&#39;inline&#39;</span><span class="p">)</span>
@@ -704,54 +710,79 @@
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="hsio.write_cube"><a class="viewcode-back" href="../../api/hs_process.utilities.hsio.html#hs_process.utilities.hsio.write_cube">[docs]</a>    <span class="k">def</span> <span class="nf">write_cube</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hdr_file</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
-                   <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">interleave</span><span class="o">=</span><span class="s1">&#39;bip&#39;</span><span class="p">,</span> <span class="n">byteorder</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                   <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="hsio.write_cube"><a class="viewcode-back" href="../../api/hs_process.utilities.hsio.html#hs_process.utilities.hsio.write_cube">[docs]</a>    <span class="k">def</span> <span class="nf">write_cube</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_hdr</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                   <span class="n">force</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">interleave</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">byteorder</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Wrapper function that accesses the Spectral Python package to save a</span>
 <span class="sd">        datacube to file.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            hdr_file (`str`): Output header file path (with the &#39;.hdr&#39;</span>
+<span class="sd">            fname_hdr (``str``): Output header file path (with the &#39;.hdr&#39;</span>
 <span class="sd">                extension).</span>
-<span class="sd">            spyfile (`SpyFile` object or `numpy.ndarray`): The hyperspectral</span>
-<span class="sd">                datacube to save. If `numpy.ndarray`, then metadata (`dict`)</span>
+<span class="sd">            spyfile (``SpyFile`` object or ``numpy.ndarray``): The hyperspectral</span>
+<span class="sd">                datacube to save. If ``numpy.ndarray``, then metadata (``dict``)</span>
 <span class="sd">                should also be passed.</span>
-<span class="sd">            dtype (`numpy.dtype` or `str`): The data type with which to store</span>
+<span class="sd">            metadata (``dict``): Metadata to write to the ENVI .hdr file</span>
+<span class="sd">                describing the hyperspectral data cube being saved. If</span>
+<span class="sd">                ``SpyFile`` object is passed to ``spyfile``, ``metadata`` will</span>
+<span class="sd">                overwrite any existing metadata stored by the ``SpyFile`` object</span>
+<span class="sd">                (default=None).</span>
+<span class="sd">            dtype (``numpy.dtype`` or ``str``): The data type with which to store</span>
 <span class="sd">                the image. For example, to store the image in 16-bit unsigned</span>
 <span class="sd">                integer format, the argument could be any of numpy.uint16,</span>
-<span class="sd">                &#39;u2&#39;, &#39;uint16&#39;, or &#39;H&#39; (default=np.float32).</span>
-<span class="sd">            force (`bool`): If `hdr_file` or its associated image file exist,</span>
-<span class="sd">                `force=True` will overwrite the files; otherwise, an exception</span>
-<span class="sd">                will be raised if either file exists (default=False).</span>
-<span class="sd">            ext (`str`): The extension to use for saving the image file; if not</span>
+<span class="sd">                &#39;u2&#39;, &#39;uint16&#39;, or &#39;H&#39; (default=None).</span>
+<span class="sd">            force (``bool``): If ``hdr_file`` or its associated image file exist,</span>
+<span class="sd">                ``force=True`` will overwrite the files; otherwise, an exception</span>
+<span class="sd">                will be raised if either file exists (default=None).</span>
+<span class="sd">            ext (``str``): The extension to use for saving the image file; if not</span>
 <span class="sd">                specified, a default extension is determined based on the</span>
-<span class="sd">                `interleave`. For example, if `interleave`=&#39;bip&#39;, then `ext` is</span>
-<span class="sd">                set to &#39;bip&#39; as well. If `ext` is an empty string, the image</span>
+<span class="sd">                ``interleave``. For example, if ``interleave``=&#39;bip&#39;, then ``ext`` is</span>
+<span class="sd">                set to &#39;bip&#39; as well. If ``ext`` is an empty string, the image</span>
 <span class="sd">                file will have the same name as the .hdr, but without the</span>
 <span class="sd">                &#39;.hdr&#39; extension (default: None).</span>
-<span class="sd">            interleave (`str`): The band interleave format to use for writing</span>
-<span class="sd">                the file; `interleave` should be one of &#39;bil&#39;, &#39;bip&#39;, or &#39;bsq&#39;</span>
-<span class="sd">                (default=&#39;bip&#39;).</span>
-<span class="sd">            byteorder (`int` or `str`): Specifies the byte order (endian-ness)</span>
+<span class="sd">            interleave (``str``): The band interleave format to use for writing</span>
+<span class="sd">                the file; ``interleave`` should be one of &#39;bil&#39;, &#39;bip&#39;, or &#39;bsq&#39;</span>
+<span class="sd">                (default=None).</span>
+<span class="sd">            byteorder (``int`` or ``str``): Specifies the byte order (endian-ness)</span>
 <span class="sd">                of the data as written to disk. For little endian, this value</span>
 <span class="sd">                should be either 0 or &#39;little&#39;. For big endian, it should be</span>
 <span class="sd">                either 1 or &#39;big&#39;. If not specified, native byte order will be</span>
 <span class="sd">                used (default=None).</span>
-<span class="sd">            metadata (`dict`): Metadata to write to the ENVI .hdr file</span>
-<span class="sd">                describing the hyperspectral data cube being saved. If</span>
-<span class="sd">                `SpyFile` object is passed to `spyfile`, `metadata` will</span>
-<span class="sd">                overwrite any existing metadata stored by the `SpyFile` object</span>
-<span class="sd">                (default=None).</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            If ``dtype``, ``force``, ``ext``, ``interleave``, and ``byteorder`` are not</span>
+<span class="sd">            passed, default values will be pulled from ``hsio.defaults``. Thus,</span>
+<span class="sd">            ``hsio.defaults`` can be modified prior to calling</span>
+<span class="sd">            ``hsio.write_cube()`` to avoid having to pass each of thes parameters</span>
+<span class="sd">            in the ``hsio.write_cube()`` function (see the</span>
+<span class="sd">            ``hsio.set_io_defaults()`` function for support on setting these</span>
+<span class="sd">            defaults and for more information on the parameters). Each of these</span>
+<span class="sd">            parameters are passed directly to the Spectral Python</span>
+<span class="sd">            ``envi.save_image()`` function. For more information, please refer to</span>
+<span class="sd">            the Spectral Python documentation.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">dtype</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dtype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">dtype</span>
+        <span class="k">if</span> <span class="n">force</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">force</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">force</span>
         <span class="k">if</span> <span class="n">ext</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">ext</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">interleave</span>
+            <span class="n">ext</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">ext</span>
+        <span class="k">if</span> <span class="n">interleave</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">interleave</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">interleave</span>
+        <span class="k">if</span> <span class="n">byteorder</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">byteorder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">byteorder</span>
+
         <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
             <span class="n">metadata</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">hdr_file</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;.hdr&#39;</span><span class="p">:</span>
-            <span class="n">hdr_file</span> <span class="o">=</span> <span class="n">hdr_file</span> <span class="o">+</span> <span class="s1">&#39;.hdr&#39;</span>
+        <span class="k">elif</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;`spyfile` of type `numpy.ndarray` was passed, so &#39;</span>
+                            <span class="s1">&#39;`metadata` must not be `None`.&#39;</span><span class="p">)</span>
+
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;interleave&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">interleave</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;.hdr&#39;</span><span class="p">:</span>
+            <span class="n">fname_hdr</span> <span class="o">=</span> <span class="n">fname_hdr</span> <span class="o">+</span> <span class="s1">&#39;.hdr&#39;</span>
         <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">clean_md_sets</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
-        <span class="n">envi</span><span class="o">.</span><span class="n">save_image</span><span class="p">(</span><span class="n">hdr_file</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="n">ext</span><span class="p">,</span>
+        <span class="n">envi</span><span class="o">.</span><span class="n">save_image</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="n">ext</span><span class="p">,</span>
                         <span class="n">interleave</span><span class="o">=</span><span class="n">interleave</span><span class="p">,</span> <span class="n">byteorder</span><span class="o">=</span><span class="n">byteorder</span><span class="p">,</span>
                         <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span></div>
 
@@ -763,36 +794,36 @@
 <span class="sd">        single spectra to file.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            hdr_file (`str`): Output header file path (with the &#39;.hdr&#39;</span>
+<span class="sd">            hdr_file (``str``): Output header file path (with the &#39;.hdr&#39;</span>
 <span class="sd">                extension).</span>
-<span class="sd">            df_mean (`pandas.Series` or `numpy.ndarray`): Mean spectra, stored as a df row,</span>
+<span class="sd">            df_mean (``pandas.Series`` or ``numpy.ndarray``): Mean spectra, stored as a df row,</span>
 <span class="sd">                where columns are the bands.</span>
-<span class="sd">            df_std (`pandas.Series` or `numpy.ndarray`): Standard deviation of each spectra,</span>
+<span class="sd">            df_std (``pandas.Series`` or ``numpy.ndarray``): Standard deviation of each spectra,</span>
 <span class="sd">                stored as a df row, where columns are the bands. This will be</span>
 <span class="sd">                saved to the .hdr file.</span>
-<span class="sd">            dtype (`numpy.dtype` or `str`): The data type with which to store</span>
+<span class="sd">            dtype (``numpy.dtype`` or ``str``): The data type with which to store</span>
 <span class="sd">                the image. For example, to store the image in 16-bit unsigned</span>
 <span class="sd">                integer format, the argument could be any of numpy.uint16,</span>
 <span class="sd">                &#39;u2&#39;, &#39;uint16&#39;, or &#39;H&#39; (default=np.float32).</span>
-<span class="sd">            force (`bool`): If `hdr_file` or its associated image file exist,</span>
-<span class="sd">                `force=True` will overwrite the files; otherwise, an exception</span>
+<span class="sd">            force (``bool``): If ``hdr_file`` or its associated image file exist,</span>
+<span class="sd">                ``force=True`` will overwrite the files; otherwise, an exception</span>
 <span class="sd">                will be raised if either file exists (default=False).</span>
-<span class="sd">            ext (`str`): The extension to use for saving the image file; if not</span>
+<span class="sd">            ext (``str``): The extension to use for saving the image file; if not</span>
 <span class="sd">                specified, a default extension is determined based on the</span>
-<span class="sd">                `interleave`. For example, if `interleave`=&#39;bip&#39;, then `ext` is</span>
-<span class="sd">                set to &#39;bip&#39; as well. If `ext` is an empty string, the image</span>
+<span class="sd">                ``interleave``. For example, if ``interleave``=&#39;bip&#39;, then ``ext`` is</span>
+<span class="sd">                set to &#39;bip&#39; as well. If ``ext`` is an empty string, the image</span>
 <span class="sd">                file will have the same name as the .hdr, but without the</span>
 <span class="sd">                &#39;.hdr&#39; extension (default: &#39;.spec&#39;).</span>
-<span class="sd">            interleave (`str`): The band interleave format to use for writing</span>
-<span class="sd">                the file; `interleave` should be one of &#39;bil&#39;, &#39;bip&#39;, or &#39;bsq&#39;</span>
+<span class="sd">            interleave (``str``): The band interleave format to use for writing</span>
+<span class="sd">                the file; ``interleave`` should be one of &#39;bil&#39;, &#39;bip&#39;, or &#39;bsq&#39;</span>
 <span class="sd">                (default=&#39;bip&#39;).</span>
-<span class="sd">            byteorder (`int` or `str`): Specifies the byte order (endian-ness)</span>
+<span class="sd">            byteorder (``int`` or ``str``): Specifies the byte order (endian-ness)</span>
 <span class="sd">                of the data as written to disk. For little endian, this value</span>
 <span class="sd">                should be either 0 or &#39;little&#39;. For big endian, it should be</span>
 <span class="sd">                either 1 or &#39;big&#39;. If not specified, native byte order will be</span>
 <span class="sd">                used (default=None).</span>
-<span class="sd">            metadata (`dict`): Metadata to write to the ENVI .hdr file</span>
-<span class="sd">                describing the spectra being saved; if `None`, will try to pull</span>
+<span class="sd">            metadata (``dict``): Metadata to write to the ENVI .hdr file</span>
+<span class="sd">                describing the spectra being saved; if ``None``, will try to pull</span>
 <span class="sd">                metadata template from self.spyfile.metadata (default=None).</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">ext</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -835,24 +866,36 @@
                         <span class="n">byteorder</span><span class="o">=</span><span class="n">byteorder</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span>
                         <span class="n">ext</span><span class="o">=</span><span class="n">ext</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="hsio.write_tif"><a class="viewcode-back" href="../../api/hs_process.utilities.hsio.html#hs_process.utilities.hsio.write_tif">[docs]</a>    <span class="k">def</span> <span class="nf">write_tif</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_tif</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                  <span class="n">projection_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">geotransform_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="hsio.write_tif"><a class="viewcode-back" href="../../api/hs_process.utilities.hsio.html#hs_process.utilities.hsio.write_tif">[docs]</a>    <span class="k">def</span> <span class="nf">write_tif</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_tif</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fname_in</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                  <span class="n">projection_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">geotransform_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                  <span class="n">inline</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Wrapper function that accesses the GDAL Python package to save a</span>
 <span class="sd">        small datacube subset (i.e., three bands or less) to file.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            fname_tif (`str`): Output image file path (with the &#39;.tif&#39;</span>
+<span class="sd">            fname_tif (``str``): Output image file path (with the &#39;.tif&#39;</span>
 <span class="sd">                extension).</span>
-<span class="sd">            spyfile (`SpyFile` object or `numpy.ndarray`): The data cube to</span>
-<span class="sd">                save. If `numpy.ndarray`, then metadata (`dict`) should also be</span>
+<span class="sd">            spyfile (``SpyFile`` object or ``numpy.ndarray``): The data cube to</span>
+<span class="sd">                save. If ``numpy.ndarray``, then metadata (``dict``) should also be</span>
 <span class="sd">                passed.</span>
-<span class="sd">            projection_out (`str`): (default: `self.projection_out`)</span>
-<span class="sd">            geotransform_out (`str`): (default: `self.geotransform_out`)</span>
+<span class="sd">            fname_in (``str``, optional): The filename of the image datacube to</span>
+<span class="sd">                be read in initially.</span>
+<span class="sd">            projection_out (``str``): (default: ``self.projection_out``)</span>
+<span class="sd">            geotransform_out (``str``): (default: ``self.geotransform_out``)</span>
+<span class="sd">            metadata (``dict``): Metadata information; if geotransform_out is not</span>
+<span class="sd">                passed, &quot;map info&quot; is accessed from ``metadata`` and</span>
+<span class="sd">                geotransform_out is created from that &quot;map info&quot;.</span>
 
 <span class="sd">        TOOD:</span>
 <span class="sd">            Use rasterio package instead of GDAL</span>
 <span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;The directory passed in `fname_tif` does not exist. Please be &#39;</span>
+               <span class="s1">&#39;sure to create the directory prior to writing the geotif.</span><span class="se">\n</span><span class="s1">&#39;</span>
+               <span class="s1">&#39;Try:</span><span class="se">\n</span><span class="s1">&#39;</span>
+               <span class="s1">&#39;os.mkdir(os.path.dirname(fname_tif))&#39;</span>
+               <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">fname_tif</span><span class="p">)))</span>
+        <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">fname_tif</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">,</span> <span class="n">msg</span>
         <span class="k">if</span> <span class="n">spyfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
@@ -860,6 +903,18 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
             <span class="n">array</span> <span class="o">=</span> <span class="n">spyfile</span>
+        <span class="k">if</span> <span class="n">fname_in</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fname_in</span> <span class="o">=</span> <span class="n">fname_in</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;.hdr&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="n">fname_in</span> <span class="o">+</span> <span class="s1">&#39;.hdr&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="n">fname_in</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fname_in</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname_hdr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fname_hdr</span><span class="p">,</span> <span class="n">name_long</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name_long</span><span class="p">,</span>
+                           <span class="n">name_plot</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name_plot</span><span class="p">,</span>
+                           <span class="n">name_short</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name_short</span><span class="p">,</span>
+                           <span class="n">individual_plot</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">individual_plot</span><span class="p">,</span>
+                           <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">projection_out</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">geotransform_out</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Either `projection_out` is `None` or `geotransform_out` is &#39;</span>
                   <span class="s1">&#39;`None` (or both are). Retrieving projection and &#39;</span>
@@ -869,8 +924,17 @@
             <span class="n">img_ds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_envi_gdal</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">projection_out</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">projection_out</span> <span class="o">=</span> <span class="n">img_ds</span><span class="o">.</span><span class="n">GetProjection</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">geotransform_out</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">geotransform_out</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">geotransform_out</span> <span class="o">=</span> <span class="n">img_ds</span><span class="o">.</span><span class="n">GetGeoTransform</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">geotransform_out</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">map_set</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">]</span>
+            <span class="n">ul_x_utm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_meta_set</span><span class="p">(</span><span class="n">map_set</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="n">ul_y_utm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_meta_set</span><span class="p">(</span><span class="n">map_set</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+            <span class="n">size_x_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_meta_set</span><span class="p">(</span><span class="n">map_set</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+            <span class="n">size_y_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_meta_set</span><span class="p">(</span><span class="n">map_set</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+            <span class="c1"># Note the last pixel size must be negative to begin at upper left</span>
+            <span class="n">geotransform_out</span> <span class="o">=</span> <span class="p">[</span><span class="n">ul_x_utm</span><span class="p">,</span> <span class="n">size_x_m</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">ul_y_utm</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span>
+                                <span class="o">-</span><span class="n">size_y_m</span><span class="p">]</span>
 
         <span class="n">drv</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">GetDriverByName</span><span class="p">(</span><span class="s1">&#39;GTiff&#39;</span><span class="p">)</span>
         <span class="n">drv</span><span class="o">.</span><span class="n">Register</span><span class="p">()</span>
@@ -939,7 +1003,7 @@
 <span class="sd">    Basic tools for manipulating Spyfiles and accessing their metadata.</span>
 
 <span class="sd">    Parameters:</span>
-<span class="sd">        spyfile (`SpyFile` object): The datacube being accessed and/or</span>
+<span class="sd">        spyfile (``SpyFile`` object): The datacube being accessed and/or</span>
 <span class="sd">            manipulated.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">,</span> <span class="p">):</span>
@@ -957,8 +1021,8 @@
 <span class="sd">        saves as a dictionary</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            metadata (`dict`): dictionary of the metadata</span>
-<span class="sd">            spyfile (`SpyFile` object or `numpy.ndarray`): The datacube being</span>
+<span class="sd">            metadata (``dict``): dictionary of the metadata</span>
+<span class="sd">            spyfile (``SpyFile`` object or ``numpy.ndarray``): The datacube being</span>
 <span class="sd">                accessed and/or manipulated.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">spyfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -993,11 +1057,11 @@
         <span class="sd">&#39;&#39;&#39;</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            metadata (`dict`, optional): Metadata dictionary to clean</span>
+<span class="sd">            metadata (``dict``, optional): Metadata dictionary to clean</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            `dict`:</span>
-<span class="sd">                **metadata_out** (`dict`) -- Cleaned metadata dictionary.</span>
+<span class="sd">            ``dict``:</span>
+<span class="sd">                **metadata_out** (``dict``) -- Cleaned metadata dictionary.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span>
@@ -1013,12 +1077,12 @@
 <span class="sd">        Deletes metadata item from SpyFile object.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            metadata (`dict`): dictionary of the metadata</span>
-<span class="sd">            key (`str`): dictionary key to delete</span>
+<span class="sd">            metadata (``dict``): dictionary of the metadata</span>
+<span class="sd">            key (``str``): dictionary key to delete</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            `dict`:</span>
-<span class="sd">                **metadata** (`dict`) -- Dictionary containing the modified</span>
+<span class="sd">            ``dict``:</span>
+<span class="sd">                **metadata** (``dict``) -- Dictionary containing the modified</span>
 <span class="sd">                metadata.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please be sure to base a metadata dictionary.&#39;</span><span class="p">)</span>
@@ -1036,16 +1100,16 @@
 <span class="sd">        Finds the band number of the closest target wavelength.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            target_wl (`int` or `float`): the target wavelength to retrieve the</span>
+<span class="sd">            target_wl (``int`` or ``float``): the target wavelength to retrieve the</span>
 <span class="sd">                band number for (required).</span>
-<span class="sd">            spyfile (`SpyFile` object, optional): The datacube being accessed and/or</span>
-<span class="sd">                manipulated; if `None`, uses `hstools.spyfile` (default:</span>
-<span class="sd">                `None`).</span>
+<span class="sd">            spyfile (``SpyFile`` object, optional): The datacube being accessed and/or</span>
+<span class="sd">                manipulated; if ``None``, uses ``hstools.spyfile`` (default:</span>
+<span class="sd">                ``None``).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            `int`:</span>
-<span class="sd">                **key_band** (`int`) -- band number of the closest target</span>
-<span class="sd">                wavelength (`target_wl`).</span>
+<span class="sd">            ``int``:</span>
+<span class="sd">                **key_band** (``int``) -- band number of the closest target</span>
+<span class="sd">                wavelength (``target_wl``).</span>
 
 <span class="sd">        Example:</span>
 <span class="sd">            &gt;&gt;&gt; hstools.get_band(703, spyfile)</span>
@@ -1068,16 +1132,16 @@
 <span class="sd">        Returns actual wavelength of the closest target band.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            target_band (`int` or `float`): the target band to retrieve</span>
+<span class="sd">            target_band (``int`` or ``float``): the target band to retrieve</span>
 <span class="sd">                wavelength number for (required).</span>
-<span class="sd">            spyfile (`SpyFile` object, optional): The datacube being accessed and/or</span>
-<span class="sd">                manipulated; if `None`, uses `hstools.spyfile` (default:</span>
-<span class="sd">                `None`).</span>
+<span class="sd">            spyfile (``SpyFile`` object, optional): The datacube being accessed and/or</span>
+<span class="sd">                manipulated; if ``None``, uses ``hstools.spyfile`` (default:</span>
+<span class="sd">                ``None``).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            `float`:</span>
-<span class="sd">                **key_wavelength** (`float`) -- wavelength of the closest</span>
-<span class="sd">                target band (`target_band`).</span>
+<span class="sd">            ``float``:</span>
+<span class="sd">                **key_wavelength** (``float``) -- wavelength of the closest</span>
+<span class="sd">                target band (``target_band``).</span>
 
 <span class="sd">        Example:</span>
 <span class="sd">            &gt;&gt;&gt; hstools.get_wavelength(151, spyfile)</span>
@@ -1098,24 +1162,24 @@
 <div class="viewcode-block" id="hstools.get_center_wl"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.get_center_wl">[docs]</a>    <span class="k">def</span> <span class="nf">get_center_wl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wl_list</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wls</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Gets band numbers and mean wavelength from all wavelengths (or bands)</span>
-<span class="sd">        in `wl_list`.</span>
+<span class="sd">        in ``wl_list``.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            wl_list (`list`): the list of bands to get information for</span>
+<span class="sd">            wl_list (``list``): the list of bands to get information for</span>
 <span class="sd">                (required).</span>
-<span class="sd">            spyfile (`SpyFile` object): The datacube being accessed and/or</span>
-<span class="sd">                manipulated; if `None`, uses `hstools.spyfile` (default:</span>
-<span class="sd">                `None`).</span>
-<span class="sd">            wls (`bool`): whether wavelengths are passed in `wl_list` or if</span>
-<span class="sd">                bands are passed in `wl_list` (default: `True` - wavelenghts</span>
+<span class="sd">            spyfile (``SpyFile`` object): The datacube being accessed and/or</span>
+<span class="sd">                manipulated; if ``None``, uses ``hstools.spyfile`` (default:</span>
+<span class="sd">                ``None``).</span>
+<span class="sd">            wls (``bool``): whether wavelengths are passed in ``wl_list`` or if</span>
+<span class="sd">                bands are passed in ``wl_list`` (default: ``True`` - wavelenghts</span>
 <span class="sd">                passed).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            2-element `tuple` containing</span>
+<span class="sd">            2-element ``tuple`` containing</span>
 
-<span class="sd">            - **bands** (`list`): the list of bands (band number) corresponding</span>
-<span class="sd">              to `wl_list`.</span>
-<span class="sd">            - **wls_mean** (`float`): the mean wavelength from `wl_list`.</span>
+<span class="sd">            - **bands** (``list``): the list of bands (band number) corresponding</span>
+<span class="sd">              to ``wl_list``.</span>
+<span class="sd">            - **wls_mean** (``float``): the mean wavelength from ``wl_list``.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;&quot;wl_list&quot; must be a list.&#39;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wl_list</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span> <span class="n">msg</span>
@@ -1146,16 +1210,16 @@
 
 <div class="viewcode-block" id="hstools.get_band_index"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.get_band_index">[docs]</a>    <span class="k">def</span> <span class="nf">get_band_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">band_num</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Subtracts 1 from `band_num` and returns the band index(es).</span>
+<span class="sd">        Subtracts 1 from ``band_num`` and returns the band index(es).</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            band_num (`int` or `list`): the target band number(s) to retrieve</span>
+<span class="sd">            band_num (``int`` or ``list``): the target band number(s) to retrieve</span>
 <span class="sd">            the band index for (required).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            `int` or `list`:</span>
-<span class="sd">                **band_idx** (`int`) -- band index of the passed band number</span>
-<span class="sd">                (`band_num`).</span>
+<span class="sd">            ``int`` or ``list``:</span>
+<span class="sd">                **band_idx** (``int``) -- band index of the passed band number</span>
+<span class="sd">                (``band_num``).</span>
 
 <span class="sd">        Example:</span>
 <span class="sd">            &gt;&gt;&gt; hstools.get_band_index([4, 43, 111])</span>
@@ -1173,16 +1237,16 @@
 <span class="sd">        Gets the spectral mean of a datacube from a list of bands</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            band_list (`list`): the list of bands to calculate the spectral</span>
+<span class="sd">            band_list (``list``): the list of bands to calculate the spectral</span>
 <span class="sd">                mean for on the datacube (required).</span>
-<span class="sd">            spyfile (`SpyFile` object or `numpy.ndarray`): The datacube being</span>
-<span class="sd">                accessed and/or manipulated; if `None`, uses `hstools.spyfile`</span>
-<span class="sd">                (default: `None`).</span>
+<span class="sd">            spyfile (``SpyFile`` object or ``numpy.ndarray``): The datacube being</span>
+<span class="sd">                accessed and/or manipulated; if ``None``, uses ``hstools.spyfile``</span>
+<span class="sd">                (default: ``None``).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            `numpy.array` or `pandas.DataFrame`:</span>
-<span class="sd">                **array_mean** (`numpy.array` or `pandas.DataFrame`): The</span>
-<span class="sd">                mean reflectance from `spyfile` for the bands in `band_list`.</span>
+<span class="sd">            ``numpy.array`` or ``pandas.DataFrame``:</span>
+<span class="sd">                **array_mean** (``numpy.array`` or ``pandas.DataFrame``): The</span>
+<span class="sd">                mean reflectance from ``spyfile`` for the bands in ``band_list``.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;&quot;band_list&quot; must be a list.&#39;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">band_list</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span> <span class="n">msg</span>
@@ -1215,16 +1279,16 @@
 
 <div class="viewcode-block" id="hstools.get_band_num"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.get_band_num">[docs]</a>    <span class="k">def</span> <span class="nf">get_band_num</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">band_idx</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Adds 1 to `band_idx` and returns the band number(s).</span>
+<span class="sd">        Adds 1 to ``band_idx`` and returns the band number(s).</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            band_idx (`int` or `list`): the target band index(es) to retrive</span>
+<span class="sd">            band_idx (``int`` or ``list``): the target band index(es) to retrive</span>
 <span class="sd">                the band number for (required).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            `int` or `list`:</span>
-<span class="sd">                **band_num** (`int` or `list`): band number of the passed</span>
-<span class="sd">                band index (`band_idx`).</span>
+<span class="sd">            ``int`` or ``list``:</span>
+<span class="sd">                **band_num** (``int`` or ``list``): band number of the passed</span>
+<span class="sd">                band index (``band_idx``).</span>
 
 <span class="sd">        Example:</span>
 <span class="sd">            &gt;&gt;&gt; hstools.get_band_num([4, 43, 111])</span>
@@ -1243,15 +1307,15 @@
 <span class="sd">        wavelength range.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            range_wl (`list`): the minimum and maximum wavelength to consider;</span>
-<span class="sd">                values should be `int` or `float`.</span>
+<span class="sd">            range_wl (``list``): the minimum and maximum wavelength to consider;</span>
+<span class="sd">                values should be ``int`` or ``float``.</span>
 <span class="sd">            index (bool): Indicates whether to return the band number (min=1)</span>
 <span class="sd">                or to return index number (min=0) (default: True)</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            `list`:</span>
-<span class="sd">                **band_list** (`list`): A list of all bands (either index or</span>
-<span class="sd">                number, depending on how `index` is set) between a range in</span>
+<span class="sd">            ``list``:</span>
+<span class="sd">                **band_list** (``list``): A list of all bands (either index or</span>
+<span class="sd">                number, depending on how ``index`` is set) between a range in</span>
 <span class="sd">                wavelength values.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;&quot;range_wl&quot; must be a `list` or `tuple`.&#39;</span><span class="p">)</span>
@@ -1283,15 +1347,15 @@
 <span class="sd">        spaces.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            meta_set (`str`): the string representation of the metadata set</span>
-<span class="sd">            idx (`int`): index to be read; if `None`, the whole list is</span>
-<span class="sd">                returned (default: `None`).</span>
+<span class="sd">            meta_set (``str``): the string representation of the metadata set</span>
+<span class="sd">            idx (``int``): index to be read; if ``None``, the whole list is</span>
+<span class="sd">                returned (default: ``None``).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            `list` or `str`:</span>
-<span class="sd">                **metadata_list** (`list` or `str`): List of metadata set items</span>
-<span class="sd">                (as `str`), or if idx is not `None`, the item in the position</span>
-<span class="sd">                described by `idx`.</span>
+<span class="sd">            ``list`` or ``str``:</span>
+<span class="sd">                **metadata_list** (``list`` or ``str``): List of metadata set items</span>
+<span class="sd">                (as ``str``), or if idx is not ``None``, the item in the position</span>
+<span class="sd">                described by ``idx``.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">meta_set</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">meta_set_list</span> <span class="o">=</span> <span class="n">meta_set</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
@@ -1326,25 +1390,25 @@
 <span class="sd">        &quot;map info&quot; tag of the .hdr file.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            pix_e_ul (`int`): upper left column (easting) where image cropping</span>
+<span class="sd">            pix_e_ul (``int``): upper left column (easting) where image cropping</span>
 <span class="sd">                begins.</span>
-<span class="sd">            pix_n_ul (`int`): upper left row (northing) where image cropping</span>
+<span class="sd">            pix_n_ul (``int``): upper left row (northing) where image cropping</span>
 <span class="sd">                begins.</span>
-<span class="sd">            utm_x (`float`): UTM easting coordinates (meters) of the original</span>
+<span class="sd">            utm_x (``float``): UTM easting coordinates (meters) of the original</span>
 <span class="sd">                image (from the upper left).</span>
-<span class="sd">            utm_y (`float`): UTM northing coordinates (meters) of the original</span>
+<span class="sd">            utm_y (``float``): UTM northing coordinates (meters) of the original</span>
 <span class="sd">                image (from the upper left).</span>
-<span class="sd">            size_x (`float`): Ground resolved distance of the image pixels in</span>
+<span class="sd">            size_x (``float``): Ground resolved distance of the image pixels in</span>
 <span class="sd">                the x (easting) direction (meters).</span>
-<span class="sd">            size_y (`float`): Ground resolved distance of the image pixels in</span>
+<span class="sd">            size_y (``float``): Ground resolved distance of the image pixels in</span>
 <span class="sd">                the y (northing) direction (meters).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            2-element `tuple` containing</span>
+<span class="sd">            2-element ``tuple`` containing</span>
 
-<span class="sd">            - **utm_x_new** (`float`): The modified UTM x coordinate (easting)</span>
+<span class="sd">            - **utm_x_new** (``float``): The modified UTM x coordinate (easting)</span>
 <span class="sd">              of cropped plot.</span>
-<span class="sd">            - **utm_y_new** (`float`): The modified UTM y coordinate (northing)</span>
+<span class="sd">            - **utm_y_new** (``float``): The modified UTM y coordinate (northing)</span>
 <span class="sd">              of cropped plot.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">utm_x_new</span> <span class="o">=</span> <span class="n">utm_x</span> <span class="o">+</span> <span class="p">((</span><span class="n">pix_e_ul</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">size_x</span><span class="p">)</span>
@@ -1353,11 +1417,11 @@
 
 <div class="viewcode-block" id="hstools.load_spyfile"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.load_spyfile">[docs]</a>    <span class="k">def</span> <span class="nf">load_spyfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Loads a `SpyFile` (Spectral Python object) for data access and/or</span>
-<span class="sd">        manipulation by the `hstools` class.</span>
+<span class="sd">        Loads a ``SpyFile`` (Spectral Python object) for data access and/or</span>
+<span class="sd">        manipulation by the ``hstools`` class.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            spyfile (`SpyFile` object): The datacube being accessed and/or</span>
+<span class="sd">            spyfile (``SpyFile`` object): The datacube being accessed and/or</span>
 <span class="sd">                manipulated.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span> <span class="o">=</span> <span class="n">spyfile</span>
@@ -1366,33 +1430,33 @@
 <div class="viewcode-block" id="hstools.mask_array"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.mask_array">[docs]</a>    <span class="k">def</span> <span class="nf">mask_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">percentile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                    <span class="n">side</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Creates a masked numpy array based on a threshold value. If `array` is</span>
+<span class="sd">        Creates a masked numpy array based on a threshold value. If ``array`` is</span>
 <span class="sd">        already a masked array, that mask is maintained and the new mask(s) is/</span>
 <span class="sd">        are added to the original mask.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            array (`numpy.ndarray`): The data array to mask.</span>
-<span class="sd">            thresh (`float` or `list`): The value for which to base the</span>
-<span class="sd">                threshold; if `thresh` is `list` and `side` is `None`, then</span>
-<span class="sd">                all values in `thresh` will be masked; if `thresh` is `list`</span>
-<span class="sd">                and `side` is not `None`, then only the first value in the</span>
-<span class="sd">                list will be considered for thresholding (default: `None`).</span>
-<span class="sd">            percentile (`float`): The percentile of pixels to mask; if</span>
-<span class="sd">                `percentile`=95 and `side`=&#39;lower&#39;, the lowest 95% of pixels</span>
+<span class="sd">            array (``numpy.ndarray``): The data array to mask.</span>
+<span class="sd">            thresh (``float`` or ``list``): The value for which to base the</span>
+<span class="sd">                threshold; if ``thresh`` is ``list`` and ``side`` is ``None``, then</span>
+<span class="sd">                all values in ``thresh`` will be masked; if ``thresh`` is ``list``</span>
+<span class="sd">                and ``side`` is not ``None``, then only the first value in the</span>
+<span class="sd">                list will be considered for thresholding (default: ``None``).</span>
+<span class="sd">            percentile (``float``): The percentile of pixels to mask; if</span>
+<span class="sd">                ``percentile``=95 and ``side``=&#39;lower&#39;, the lowest 95% of pixels</span>
 <span class="sd">                will be masked prior to calculating the mean spectra across</span>
-<span class="sd">                pixels (default: `None`; range: 0-100).</span>
-<span class="sd">            side (`str`): The side of the threshold for which to apply the</span>
-<span class="sd">                mask. Must be either &#39;lower&#39;, &#39;upper&#39;, or `None`; if &#39;lower&#39;,</span>
-<span class="sd">                everything below the threshold will be masked; if `None`, only</span>
+<span class="sd">                pixels (default: ``None``; range: 0-100).</span>
+<span class="sd">            side (``str``): The side of the threshold for which to apply the</span>
+<span class="sd">                mask. Must be either &#39;lower&#39;, &#39;upper&#39;, or ``None``; if &#39;lower&#39;,</span>
+<span class="sd">                everything below the threshold will be masked; if ``None``, only</span>
 <span class="sd">                the values that exactly match the threshol will be masked</span>
 <span class="sd">                (default: &#39;lower&#39;).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            2-element `tuple` containing</span>
+<span class="sd">            2-element ``tuple`` containing</span>
 
-<span class="sd">            - **array_mask** (`numpy.ndarray`): The masked `numpy.ndarray`</span>
+<span class="sd">            - **array_mask** (``numpy.ndarray``): The masked ``numpy.ndarray``</span>
 <span class="sd">              based on the passed threshold and/or percentile value.</span>
-<span class="sd">            - **metadata** (`dict`): The modified metadata.</span>
+<span class="sd">            - **metadata** (``dict``): The modified metadata.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">MaskedArray</span><span class="p">):</span>
             <span class="n">array_m</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">compressed</span><span class="p">()</span>  <span class="c1"># allows for accurate percentile calc</span>
@@ -1458,16 +1522,16 @@
 <span class="sd">        DO NOT USE; USE mean_datacube() INSTEAD AND PASS A MASK.</span>
 
 
-<span class="sd">        Applies `mask` to `spyfile`, then returns the datcube (as a np.array)</span>
+<span class="sd">        Applies ``mask`` to ``spyfile``, then returns the datcube (as a np.array)</span>
 <span class="sd">        and the mean spectra</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            spyfile (`SpyFile` object or `numpy.ndarray`): The hyperspectral</span>
+<span class="sd">            spyfile (``SpyFile`` object or ``numpy.ndarray``): The hyperspectral</span>
 <span class="sd">                datacube to mask.</span>
-<span class="sd">            mask (`numpy.ndarray`): the mask to apply to `spyfile`; if `mask`</span>
-<span class="sd">                does not have similar dimensions to `spyfile`, the first band</span>
-<span class="sd">                (i.e., first two dimensions) of `mask` will be repeated n times</span>
-<span class="sd">                to match the number of bands of `spyfile`.</span>
+<span class="sd">            mask (``numpy.ndarray``): the mask to apply to ``spyfile``; if ``mask``</span>
+<span class="sd">                does not have similar dimensions to ``spyfile``, the first band</span>
+<span class="sd">                (i.e., first two dimensions) of ``mask`` will be repeated n times</span>
+<span class="sd">                to match the number of bands of ``spyfile``.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
@@ -1495,28 +1559,28 @@
 
 <div class="viewcode-block" id="hstools.mean_datacube"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.mean_datacube">[docs]</a>    <span class="k">def</span> <span class="nf">mean_datacube</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Calculates the mean spectra for a datcube; if `mask` is passed (as a</span>
-<span class="sd">        np.array), then the mask is applied to `spyfile` prior to computing</span>
+<span class="sd">        Calculates the mean spectra for a datcube; if ``mask`` is passed (as a</span>
+<span class="sd">        np.array), then the mask is applied to ``spyfile`` prior to computing</span>
 <span class="sd">        the mean spectra.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            spyfile (`SpyFile` object or `numpy.ndarray`): The hyperspectral</span>
+<span class="sd">            spyfile (``SpyFile`` object or ``numpy.ndarray``): The hyperspectral</span>
 <span class="sd">                datacube to mask.</span>
-<span class="sd">            mask (`numpy.ndarray`): the mask to apply to `spyfile`; if `mask`</span>
-<span class="sd">                does not have similar dimensions to `spyfile`, the first band</span>
-<span class="sd">                (i.e., first two dimensions) of `mask` will be repeated n times</span>
-<span class="sd">                to match the number of bands of `spyfile`.</span>
+<span class="sd">            mask (``numpy.ndarray``): the mask to apply to ``spyfile``; if ``mask``</span>
+<span class="sd">                does not have similar dimensions to ``spyfile``, the first band</span>
+<span class="sd">                (i.e., first two dimensions) of ``mask`` will be repeated n times</span>
+<span class="sd">                to match the number of bands of ``spyfile``.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            3-element `tuple` containing</span>
+<span class="sd">            3-element ``tuple`` containing</span>
 
-<span class="sd">            - **spec_mean** (`SpyFile.SpyFile` object): The mean spectra from</span>
+<span class="sd">            - **spec_mean** (``SpyFile.SpyFile`` object): The mean spectra from</span>
 <span class="sd">              the input datacube.</span>
-<span class="sd">            - **spec_std** (`SpyFile.SpyFile` object): The standard deviation</span>
+<span class="sd">            - **spec_std** (``SpyFile.SpyFile`` object): The standard deviation</span>
 <span class="sd">              of the spectra from the input datacube.</span>
-<span class="sd">            - **datacube_masked** (`numpy.ndarray`): The masked</span>
-<span class="sd">              `numpy.ndarray`; if `mask` = `None`, `datacube_masked` is</span>
-<span class="sd">              identical to the `SpyFile` data array.</span>
+<span class="sd">            - **datacube_masked** (``numpy.ndarray``): The masked</span>
+<span class="sd">              ``numpy.ndarray``; if ``mask`` = ``None``, ``datacube_masked`` is</span>
+<span class="sd">              identical to the ``SpyFile`` data array.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
@@ -1546,20 +1610,20 @@
 <div class="viewcode-block" id="hstools.mask_shadow"><a class="viewcode-back" href="../../api/hs_process.utilities.hstools.html#hs_process.utilities.hstools.mask_shadow">[docs]</a>    <span class="k">def</span> <span class="nf">mask_shadow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shadow_pctl</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">show_histogram</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                     <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Creates a `numpy.mask` of all pixels that are likely shadow pixels.</span>
+<span class="sd">        Creates a ``numpy.mask`` of all pixels that are likely shadow pixels.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            shadow_pctl (`int`): the percentile of pixels in the image to mask</span>
+<span class="sd">            shadow_pctl (``int``): the percentile of pixels in the image to mask</span>
 <span class="sd">                (default: 20).</span>
-<span class="sd">            show_histogram (`bool`):</span>
-<span class="sd">            spyfile (`SpyFile.SpyFile` object):</span>
+<span class="sd">            show_histogram (``bool``):</span>
+<span class="sd">            spyfile (``SpyFile.SpyFile`` object):</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            2-element `tuple` containing</span>
+<span class="sd">            2-element ``tuple`` containing</span>
 
-<span class="sd">            - **array_noshadow.mask** (`numpy.mask`): The mask indicating all</span>
+<span class="sd">            - **array_noshadow.mask** (``numpy.mask``): The mask indicating all</span>
 <span class="sd">              pixels that are likely shadow pixels.</span>
-<span class="sd">            - **metadata** (`dict`): The modified metadata.</span>
+<span class="sd">            - **metadata** (``dict``): The modified metadata.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">spyfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
@@ -1583,14 +1647,14 @@
 <span class="sd">        value of an item by its index.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            meta_set (`str`): the string representation of the metadata set</span>
-<span class="sd">            idx (`int`): index to be modified; if `None`, the whole meta_set is</span>
-<span class="sd">                returned (default: `None`).</span>
-<span class="sd">            value (`float`, `int`, or `str`): value to replace at idx</span>
+<span class="sd">            meta_set (``str``): the string representation of the metadata set</span>
+<span class="sd">            idx (``int``): index to be modified; if ``None``, the whole meta_set is</span>
+<span class="sd">                returned (default: ``None``).</span>
+<span class="sd">            value (``float``, ``int``, or ``str``): value to replace at idx</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            `str`:</span>
-<span class="sd">                **set_str** (`str`): Modified metadata set string.</span>
+<span class="sd">            ``str``:</span>
+<span class="sd">                **set_str** (``str``): Modified metadata set string.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">metadata_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_meta_set</span><span class="p">(</span><span class="n">meta_set</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
         <span class="n">metadata_list</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>

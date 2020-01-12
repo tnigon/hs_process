@@ -13,6 +13,8 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
 <meta charset='utf-8'>
@@ -44,6 +46,7 @@
           <ul class="nav navbar-nav">
             
                 <li><a href="https://github.com/tnigon/hs_process">Github</a></li>
+                <li><a href="http://www.spectralpython.net/">Spectral Python</a></li>
             
             
               <li class="dropdown globaltoc-container">
@@ -56,14 +59,12 @@
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Home</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../installation.html">1. Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../my_hs_process_api.html">2. API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../license.html">3. License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../my_hs_process_api.html">1. API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../license.html">2. License</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation.html">1. Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../my_hs_process_api.html">2. API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../license.html">3. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../my_hs_process_api.html">1. API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">2. License</a></li>
 </ul>
 </ul>
 </li>
@@ -446,7 +447,6 @@
 <span class="c1">#</span>
 <span class="c1">#############################################</span>
 <span class="c1">#</span>
-<span class="c1">#            metadata[&#39;interleave&#39;] = self.io.defaults.interleave</span>
 <span class="c1">#            name_label_bm = (name_print + name_append + &#39;-{0}-{1}-{2}.&#39;</span>
 <span class="c1">#                             &#39;&#39;.format(method, int(np.mean(wl1)),</span>
 <span class="c1">#                                       int(np.mean(wl2))) +</span>
@@ -591,7 +591,6 @@
                                      <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#444444&#39;</span><span class="p">)</span>
 
             <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name_label</span>
-            <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;interleave&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">interleave</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_write_datacube</span><span class="p">(</span><span class="n">dir_out</span><span class="p">,</span> <span class="n">name_label</span><span class="p">,</span> <span class="n">array_bm</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">geotiff</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
@@ -721,7 +720,6 @@
                                          <span class="s1">&#39;.png&#39;</span><span class="p">)</span>
                 <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">fname_fig</span><span class="p">)</span>
 
-            <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;interleave&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">interleave</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_write_datacube</span><span class="p">(</span><span class="n">dir_out</span><span class="p">,</span> <span class="n">name_label</span><span class="p">,</span> <span class="n">array_class</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
 
 <span class="c1">#            name_label_spec = (os.path.splitext(name_label)[0] +</span>
@@ -784,7 +782,6 @@
                         <span class="n">cs</span><span class="p">[</span><span class="s1">&#39;pix_e_ul&#39;</span><span class="p">],</span> <span class="n">cs</span><span class="p">[</span><span class="s1">&#39;pix_n_ul&#39;</span><span class="p">],</span> <span class="n">cs</span><span class="p">[</span><span class="s1">&#39;crop_e_pix&#39;</span><span class="p">],</span>
                         <span class="n">cs</span><span class="p">[</span><span class="s1">&#39;crop_n_pix&#39;</span><span class="p">],</span> <span class="n">buf_e_pix</span><span class="o">=</span><span class="n">cs</span><span class="p">[</span><span class="s1">&#39;buf_e_pix&#39;</span><span class="p">],</span>
                         <span class="n">buf_n_pix</span><span class="o">=</span><span class="n">cs</span><span class="p">[</span><span class="s1">&#39;buf_n_pix&#39;</span><span class="p">])</span>
-                <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;interleave&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">interleave</span>
                 <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;plot_id&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">name_plot</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;plot_id&#39;</span><span class="p">])</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -828,7 +825,6 @@
                         <span class="n">name_plot</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
                     <span class="n">name_label</span> <span class="o">=</span> <span class="p">(</span><span class="n">name_print</span> <span class="o">+</span> <span class="n">name_plot</span> <span class="o">+</span> <span class="n">name_append</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span>
                                   <span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">interleave</span><span class="p">)</span>
-                    <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;interleave&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">interleave</span>
                     <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cs</span><span class="p">[</span><span class="s1">&#39;directory&#39;</span><span class="p">],</span> <span class="n">cs</span><span class="p">[</span><span class="s1">&#39;fname&#39;</span><span class="p">])</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_write_datacube</span><span class="p">(</span><span class="n">dir_out</span><span class="p">,</span> <span class="n">name_label</span><span class="p">,</span> <span class="n">array_crop</span><span class="p">,</span>
                                          <span class="n">metadata</span><span class="p">)</span>
@@ -845,13 +841,12 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name_label</span>
         <span class="n">hdr_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_out</span><span class="p">,</span> <span class="n">name_label</span> <span class="o">+</span> <span class="s1">&#39;.hdr&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">write_cube</span><span class="p">(</span><span class="n">hdr_file</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">write_cube</span><span class="p">(</span><span class="n">hdr_file</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span>
                            <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
                            <span class="n">force</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">force</span><span class="p">,</span>
                            <span class="n">ext</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">ext</span><span class="p">,</span>
                            <span class="n">interleave</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">interleave</span><span class="p">,</span>
-                           <span class="n">byteorder</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">byteorder</span><span class="p">,</span>
-                           <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
+                           <span class="n">byteorder</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">byteorder</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_write_geotiff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">dir_out</span><span class="p">,</span> <span class="n">name_label</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span>
                        <span class="n">tools</span><span class="p">):</span>
@@ -931,7 +926,6 @@
             <span class="n">array_clip</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_spectral_mod</span><span class="o">.</span><span class="n">spectral_clip</span><span class="p">(</span>
                     <span class="n">wl_bands</span><span class="o">=</span><span class="n">wl_bands</span><span class="p">)</span>
 
-            <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;interleave&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">interleave</span>
             <span class="n">name_label</span> <span class="o">=</span> <span class="p">(</span><span class="n">name_print</span> <span class="o">+</span> <span class="n">name_append</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span>
                           <span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">interleave</span><span class="p">)</span>
             <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name_label</span>
@@ -1008,7 +1002,6 @@
             <span class="n">array_smooth</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_spectral_mod</span><span class="o">.</span><span class="n">spectral_smooth</span><span class="p">(</span>
                     <span class="n">window_size</span><span class="o">=</span><span class="n">window_size</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
 
-            <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;interleave&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">interleave</span>
             <span class="n">name_label</span> <span class="o">=</span> <span class="p">(</span><span class="n">name_print</span> <span class="o">+</span> <span class="n">name_append</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span>
                           <span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">interleave</span><span class="p">)</span>
             <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name_label</span>
@@ -1148,7 +1141,7 @@
 <span class="sd">                will be saved.</span>
 <span class="sd">            folder_name (`str`): Folder to add to `base_dir_out` to save all</span>
 <span class="sd">                the processed datacubes.</span>
-<span class="sd">            name_append (`str`):</span>
+<span class="sd">            name_append (`str`): name to append to the filename.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
 <span class="c1">#        if base_dir_out is None:</span>
 <span class="c1">#            base_dir_out = os.path.join(self.base_dir, folder_name)</span>
@@ -1253,9 +1246,9 @@
 <span class="sd">                datacubes; if set to `None`, a folder named according to the</span>
 <span class="sd">                `folder_name` parameter is added to `base_dir`</span>
 <span class="sd">            folder_name (`str`): folder to add to `base_dir_out` to save all</span>
-<span class="sd">                the processed datacubes (default: &#39;spec-clip&#39;).</span>
+<span class="sd">                the processed datacubes (default: &#39;cube_to_spec&#39;).</span>
 <span class="sd">            name_append (`str`): name to append to the filename (default:</span>
-<span class="sd">                &#39;spec-clip&#39;).</span>
+<span class="sd">                &#39;cube-to-spec&#39;).</span>
 <span class="sd">            geotiff (`bool`): whether to save the masked RGB image as a geotiff</span>
 <span class="sd">                alongside the masked datacube.</span>
 <span class="sd">            out_XXX: Settings for saving the output files can be adjusted here</span>

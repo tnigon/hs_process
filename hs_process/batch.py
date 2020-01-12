@@ -333,7 +333,6 @@ class batch(object):
 #
 #############################################
 #
-#            metadata['interleave'] = self.io.defaults.interleave
 #            name_label_bm = (name_print + name_append + '-{0}-{1}-{2}.'
 #                             ''.format(method, int(np.mean(wl1)),
 #                                       int(np.mean(wl2))) +
@@ -478,7 +477,6 @@ class batch(object):
                                      color='#444444')
 
             metadata['label'] = name_label
-            metadata['interleave'] = self.io.defaults.interleave
 
             self._write_datacube(dir_out, name_label, array_bm, metadata)
             if geotiff is True:
@@ -608,7 +606,6 @@ class batch(object):
                                          '.png')
                 fig.savefig(fname_fig)
 
-            metadata['interleave'] = self.io.defaults.interleave
             self._write_datacube(dir_out, name_label, array_class, metadata)
 
 #            name_label_spec = (os.path.splitext(name_label)[0] +
@@ -671,7 +668,6 @@ class batch(object):
                         cs['pix_e_ul'], cs['pix_n_ul'], cs['crop_e_pix'],
                         cs['crop_n_pix'], buf_e_pix=cs['buf_e_pix'],
                         buf_n_pix=cs['buf_n_pix'])
-                metadata['interleave'] = self.io.defaults.interleave
                 if row['plot_id'] is not None:
                     name_plot = '_' + str(row['plot_id'])
                 else:
@@ -715,7 +711,6 @@ class batch(object):
                         name_plot = ''
                     name_label = (name_print + name_plot + name_append + '.' +
                                   self.io.defaults.interleave)
-                    metadata['interleave'] = self.io.defaults.interleave
                     fname = os.path.join(cs['directory'], cs['fname'])
                     self._write_datacube(dir_out, name_label, array_crop,
                                          metadata)
@@ -732,13 +727,12 @@ class batch(object):
         '''
         metadata['label'] = name_label
         hdr_file = os.path.join(dir_out, name_label + '.hdr')
-        self.io.write_cube(hdr_file, array,
+        self.io.write_cube(hdr_file, array, metadata=metadata,
                            dtype=self.io.defaults.dtype,
                            force=self.io.defaults.force,
                            ext=self.io.defaults.ext,
                            interleave=self.io.defaults.interleave,
-                           byteorder=self.io.defaults.byteorder,
-                           metadata=metadata)
+                           byteorder=self.io.defaults.byteorder)
 
     def _write_geotiff(self, array, fname, dir_out, name_label, metadata,
                        tools):
@@ -818,7 +812,6 @@ class batch(object):
             array_clip, metadata = self.my_spectral_mod.spectral_clip(
                     wl_bands=wl_bands)
 
-            metadata['interleave'] = self.io.defaults.interleave
             name_label = (name_print + name_append + '.' +
                           self.io.defaults.interleave)
             metadata['label'] = name_label
@@ -895,7 +888,6 @@ class batch(object):
             array_smooth, metadata = self.my_spectral_mod.spectral_smooth(
                     window_size=window_size, order=order)
 
-            metadata['interleave'] = self.io.defaults.interleave
             name_label = (name_print + name_append + '.' +
                           self.io.defaults.interleave)
             metadata['label'] = name_label
@@ -1035,7 +1027,7 @@ class batch(object):
                 will be saved.
             folder_name (`str`): Folder to add to `base_dir_out` to save all
                 the processed datacubes.
-            name_append (`str`):
+            name_append (`str`): name to append to the filename.
         '''
 #        if base_dir_out is None:
 #            base_dir_out = os.path.join(self.base_dir, folder_name)
@@ -1140,9 +1132,9 @@ class batch(object):
                 datacubes; if set to `None`, a folder named according to the
                 `folder_name` parameter is added to `base_dir`
             folder_name (`str`): folder to add to `base_dir_out` to save all
-                the processed datacubes (default: 'spec-clip').
+                the processed datacubes (default: 'cube_to_spec').
             name_append (`str`): name to append to the filename (default:
-                'spec-clip').
+                'cube-to-spec').
             geotiff (`bool`): whether to save the masked RGB image as a geotiff
                 alongside the masked datacube.
             out_XXX: Settings for saving the output files can be adjusted here

@@ -601,7 +601,8 @@ class spatial_mod(object):
     def crop_single(self, pix_e_ul, pix_n_ul, crop_e_pix=None,
                     crop_n_pix=None, crop_e_m=None, crop_n_m=None,
                     buf_e_pix=None, buf_n_pix=None, buf_e_m=None, buf_n_m=None,
-                    spyfile=None, plot_id=None, gdf=None):
+                    spyfile=None, plot_id=None, gdf=None,
+                    name_append='spatial-crop-single'):
         '''
         Crops a single plot from an image. If `plot_id` and `gdf` are
         explicitly passed (i.e., they will not be loaded from `spatial_mod`
@@ -634,6 +635,8 @@ class spatial_mod(object):
                 geometery of each of the plots; 'plot' must be used as a column
                 name to identify each of the plots, and should be an integer.
                 `gdf` must be explicitly passed to
+            name_append (`str`): NOT YET SUPPORTED; name to append to the
+                filename (default: 'spatial-crop-single').
 
         Returns:
             2-element `tuple` containing
@@ -672,7 +675,8 @@ class spatial_mod(object):
             utm_x = self.tools.get_meta_set(map_info_set, 3)
             utm_y = self.tools.get_meta_set(map_info_set, 4)
             ul_x_utm, ul_y_utm = self.tools.get_UTM(pix_e_ul, pix_n_ul,
-                                                    utm_x, utm_y, self.spy_ps_e,
+                                                    utm_x, utm_y,
+                                                    self.spy_ps_e,
                                                     self.spy_ps_n)
 
         map_info_set = self.tools.modify_meta_set(map_info_set, 3, ul_x_utm)
@@ -695,6 +699,13 @@ class spatial_mod(object):
             metadata['history'] += hist_str
         metadata['samples'] = array_crop.shape[1]
         metadata['lines'] = array_crop.shape[0]
+
+        # TODO: Figure out if/when the 'label' tag should be changed.
+#        label = metadata['label']
+#        if label is not None:
+#            name_label = (os.path.splitext(label)[0] + '-' + name_append + '.'
+#                          + self.defaults.interleave)
+#        metadata['label'] = name_label
         self.tools.spyfile.metadata = metadata
 
         return array_crop, metadata

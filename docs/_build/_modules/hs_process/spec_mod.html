@@ -13,6 +13,8 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
 <meta charset='utf-8'>
@@ -44,6 +46,7 @@
           <ul class="nav navbar-nav">
             
                 <li><a href="https://github.com/tnigon/hs_process">Github</a></li>
+                <li><a href="http://www.spectralpython.net/">Spectral Python</a></li>
             
             
               <li class="dropdown globaltoc-container">
@@ -56,14 +59,12 @@
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">Home</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../installation.html">1. Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../my_hs_process_api.html">2. API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../license.html">3. License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../my_hs_process_api.html">1. API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../license.html">2. License</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation.html">1. Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../my_hs_process_api.html">2. API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../license.html">3. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../my_hs_process_api.html">1. API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">2. License</a></li>
 </ul>
 </ul>
 </li>
@@ -345,6 +346,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
 
         <span class="k">return</span> <span class="n">array_smooth</span><span class="p">,</span> <span class="n">metadata</span></div></div>
+
+<span class="c1"># TODO: Add normalization function for light scattering</span>
+<span class="c1"># https://link.springer.com/chapter/10.1007/978-1-4939-2836-1_4#Sec12</span>
 </pre></div>
 
     </div>
