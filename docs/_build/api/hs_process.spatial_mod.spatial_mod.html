@@ -138,224 +138,225 @@ geographical boundary)</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.spatial_mod.spatial_mod.crop_many_gdf" title="hs_process.spatial_mod.spatial_mod.crop_many_gdf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">crop_many_gdf</span></code></a>(plot_id_ref[, pix_e_ul, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.spatial_mod.spatial_mod.crop_many_gdf" title="hs_process.spatial_mod.spatial_mod.crop_many_gdf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">crop_many_gdf</span></code></a>([spyfile, gdf, crop_e_m, ...])</p></td>
 <td><p>Crops many plots from a single image by comparing the image to a polygon file (geopandas.GoeDataFrame) that contains plot information and geometry of plot boundaries.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.spatial_mod.spatial_mod.crop_many_grid" title="hs_process.spatial_mod.spatial_mod.crop_many_grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">crop_many_grid</span></code></a>(plot_id_ul, pix_e_ul, pix_n_ul)</p></td>
-<td><p>Crops many plots from a single image by calculating the distance between plots based on <cite>crop_X_Y</cite>, <cite>n_plots_X/Y</cite>, and <cite>alley_size_X_Y</cite> parameters.</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">spatial_mod.crop_many_grid</span></code></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.spatial_mod.spatial_mod.crop_single" title="hs_process.spatial_mod.spatial_mod.crop_single"><code class="xref py py-obj docutils literal notranslate"><span class="pre">crop_single</span></code></a>(pix_e_ul, pix_n_ul[, ...])</p></td>
 <td><p>Crops a single plot from an image.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#hs_process.spatial_mod.spatial_mod.load_spyfile" title="hs_process.spatial_mod.spatial_mod.load_spyfile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_spyfile</span></code></a>(spyfile)</p></td>
-<td><p>Loads a <cite>SpyFile</cite> (Spectral Python object) for data access and/or manipulation by the <cite>hstools</cite> class.</p></td>
+<td><p>Loads a <code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> (Spectral Python object) for data access and/or manipulation by the <code class="docutils literal notranslate"><span class="pre">hstools</span></code> class.</p></td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Methods Documentation</p>
 <dl class="method">
 <dt id="hs_process.spatial_mod.spatial_mod.crop_many_gdf">
-<code class="sig-name descname">crop_many_gdf</code><span class="sig-paren">(</span><em class="sig-param">plot_id_ref</em>, <em class="sig-param">pix_e_ul=0</em>, <em class="sig-param">pix_n_ul=0</em>, <em class="sig-param">crop_e_m=None</em>, <em class="sig-param">crop_n_m=None</em>, <em class="sig-param">crop_e_pix=None</em>, <em class="sig-param">crop_n_pix=None</em>, <em class="sig-param">buf_e_m=None</em>, <em class="sig-param">buf_n_m=None</em>, <em class="sig-param">buf_e_pix=None</em>, <em class="sig-param">buf_n_pix=None</em>, <em class="sig-param">n_plots=None</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">gdf=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/spatial_mod.html#spatial_mod.crop_many_gdf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spatial_mod.spatial_mod.crop_many_gdf" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">crop_many_gdf</code><span class="sig-paren">(</span><em class="sig-param">spyfile=None</em>, <em class="sig-param">gdf=None</em>, <em class="sig-param">crop_e_m=None</em>, <em class="sig-param">crop_n_m=None</em>, <em class="sig-param">crop_e_pix=None</em>, <em class="sig-param">crop_n_pix=None</em>, <em class="sig-param">buf_e_m=None</em>, <em class="sig-param">buf_n_m=None</em>, <em class="sig-param">buf_e_pix=None</em>, <em class="sig-param">buf_n_pix=None</em>, <em class="sig-param">plot_id_ref=None</em>, <em class="sig-param">pix_e_ul=None</em>, <em class="sig-param">pix_n_ul=None</em>, <em class="sig-param">n_plots=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/spatial_mod.html#spatial_mod.crop_many_gdf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spatial_mod.spatial_mod.crop_many_gdf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Crops many plots from a single image by comparing the image to a
 polygon file (geopandas.GoeDataFrame) that contains plot information
 and geometry of plot boundaries.</p>
-<p>If <cite>pix_e_ul</cite> and <cite>pix_n_ul</cite> are passed, those pixel offests will be
-compared to the upper left pixel of <cite>plot_id_ref</cite> and the difference in
-both the easting and northing direction will be applied to all plots to
-systematically shift the actual upper left pixel/cropping location for
-each plot within the image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>plot_id_ref</strong> (<cite>int</cite>) -- the plot ID of the reference plot, which must
-be present in the datacube.</p></li>
-<li><p><strong>pix_e_ul</strong> (<cite>int</cite>) -- upper left pixel column (easting) of
-<cite>plot_id_ref</cite>; this is used to calculate the offset between the
-GeoDataFrame geometry and the approximate image georeference
-error (default: 0).</p></li>
-<li><p><strong>pix_n_ul</strong> (<cite>int</cite>) -- upper left pixel row (northing) of <cite>plot_id_ref</cite>;
-this is used to calculate the offset between the GeoDataFrame
-geometry and the approximate image georeference error
-(default: 0).</p></li>
-<li><p><strong>crop_e_m</strong> (<cite>float</cite>, optional) -- length of each row (easting
-direction) in the cropped image (in map units; e.g., meters).</p></li>
-<li><p><strong>crop_n_m</strong> (<cite>float</cite>, optional) -- length of each column (northing
-direction) in the cropped image (in map units; e.g., meters).</p></li>
-<li><p><strong>crop_e_pix</strong> (<cite>int</cite>, optional) -- number of pixels in each row in the
-cropped image.</p></li>
-<li><p><strong>crop_n_pix</strong> (<cite>int</cite>, optional) -- number of pixels in each column in
-the cropped image.</p></li>
-<li><p><strong>buf_e_m</strong> (<cite>float</cite>, optional) -- The buffer distance in the easting
+<li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object) -- The datacube to crop; if <code class="docutils literal notranslate"><span class="pre">None</span></code>,
+loads datacube and band information from
+<code class="docutils literal notranslate"><span class="pre">spatial_mod.spyfile</span></code> (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>gdf</strong> (<code class="docutils literal notranslate"><span class="pre">geopandas.GeoDataFrame</span></code>) -- the plot IDs and polygon
+geometery of each of the plots; 'plot' must be used as a column
+name to identify each of the plots, and should be an integer;
+if <code class="docutils literal notranslate"><span class="pre">None</span></code>, loads geodataframe from <code class="docutils literal notranslate"><span class="pre">spatial_mod.gdf</span></code>
+(default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>crop_e_m</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code>, optional) -- length of each row (easting
+direction) of the cropped image in map units (e.g., meters;
+default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>crop_n_m</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code>, optional) -- length of each column (northing
+direction) of the cropped image in map units (e.g., meters;
+default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
+<li><p><strong>crop_e_pix</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, optional) -- number of pixels in each row in the
+cropped image (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>crop_n_pix</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, optional) -- number of pixels in each column in
+the cropped image (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>buf_e_m</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code>, optional) -- The buffer distance in the easting
 direction (in map units; e.g., meters) to be applied after
 calculating the original crop area; the buffer is considered
-after <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>. A positive value will reduce the
-size of <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>, and a negative value will
-increase it.</p></li>
-<li><p><strong>buf_n_m</strong> (<cite>float</cite>, optional) -- The buffer distance in the northing
+after <code class="docutils literal notranslate"><span class="pre">crop_X_m</span></code> / <code class="docutils literal notranslate"><span class="pre">crop_X_pix</span></code>. A positive value will
+reduce the size of <code class="docutils literal notranslate"><span class="pre">crop_X_m</span></code> / <code class="docutils literal notranslate"><span class="pre">crop_X_pix</span></code>, and a
+negative value will increase it (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>buf_n_m</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code>, optional) -- The buffer distance in the northing
 direction (in map units; e.g., meters) to be applied after
 calculating the original crop area; the buffer is considered
-after <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>. A positive value will reduce the
-size of <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>, and a negative value will
-increase it.</p></li>
-<li><p><strong>buf_e_pix</strong> (<cite>int</cite>, optional) -- The buffer distance in the easting
+after <code class="docutils literal notranslate"><span class="pre">crop_X_m</span></code> / <code class="docutils literal notranslate"><span class="pre">crop_X_pix</span></code>. A positive value will
+reduce the size of <code class="docutils literal notranslate"><span class="pre">crop_X_m</span></code> / <code class="docutils literal notranslate"><span class="pre">crop_X_pix</span></code>, and a
+negative value will increase it (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>buf_e_pix</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, optional) -- The buffer distance in the easting
 direction (in pixel units) to be applied after calculating the
-original crop area.</p></li>
-<li><p><strong>buf_n_pix</strong> (<cite>int</cite>, optional) -- The buffer distance in the northing
+original crop area (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>buf_n_pix</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, optional) -- The buffer distance in the northing
 direction (in pixel units) to be applied after calculating the
-original crop area.</p></li>
-<li><p><strong>n_plots</strong> -- number of plots to crop, starting with
-<cite>plot_id_ref</cite> and moving from West to East and North to South
-(default; <cite>None</cite>).</p></li>
+original crop area (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>plot_id_ref</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, optional) -- the plot ID of the reference plot.
+<code class="docutils literal notranslate"><span class="pre">plot_id_ref</span></code> is required if passing <code class="docutils literal notranslate"><span class="pre">pix_e_ul</span></code>,
+<code class="docutils literal notranslate"><span class="pre">pix_n_ul</span></code>, or <code class="docutils literal notranslate"><span class="pre">n_plots</span></code> because it is used as the
+reference point for any of the adjustments/modifications
+dictated by said parameters. <code class="docutils literal notranslate"><span class="pre">plot_id_ref</span></code> must be present in
+the <code class="docutils literal notranslate"><span class="pre">gdf</span></code>, and the extent of <code class="docutils literal notranslate"><span class="pre">plot_id_ref</span></code> must intersect
+the extent of the datacube (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>pix_e_ul</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, optional) -- upper left pixel column (easting) of
+<code class="docutils literal notranslate"><span class="pre">plot_id_ref</span></code>; this is used to calculate the offset between
+the GeoDataFrame geometry and the approximate image
+georeference error (default: 0).</p></li>
+<li><p><strong>pix_n_ul</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, optional) -- upper left pixel row (northing) of
+<code class="docutils literal notranslate"><span class="pre">plot_id_ref</span></code>; this is used to calculate the offset between
+the GeoDataFrame geometry and the approximate image
+georeference error (default: 0).</p></li>
+<li><p><strong>n_plots</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, optional) -- number of plots to crop, starting with
+<code class="docutils literal notranslate"><span class="pre">plot_id_ref</span></code> and moving from West to East and North to
+South. This can be used to limit the number of cropped plots
+(default; <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><strong>df_plots</strong> (<cite>pandas.DataFrame</cite>) -- data for
+<li><p><strong>df_plots</strong> (<code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>) -- data for
 which to crop each plot; includes 'plot_id', 'pix_e_ul', and
 'pix_n_ul' columns. This data can be passed to
-<cite>spatial_mod.crop_single()</cite> to perform the actual cropping.</p></li>
+<code class="docutils literal notranslate"><span class="pre">spatial_mod.crop_single()</span></code> to perform the actual cropping.</p></li>
 </ul>
 </p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><cite>pandas.DataFrame</cite></p>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></p>
 </dd>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">pix_e_ul</span></code> or <code class="docutils literal notranslate"><span class="pre">pix_n_ul</span></code> are passed, the pixel offset from
+the northwest corner of <code class="docutils literal notranslate"><span class="pre">plot_id_ref</span></code> will be calculated. This
+offset is then applied to all plots within the extent of the image
+to systematically shift the actual upper left pixel locations for
+each plot, effectively shifting the easting and/or northing
+of the upper left pixel of the hyperspectral datacube to match that
+of the <code class="docutils literal notranslate"><span class="pre">gdf</span></code>. If the shift should only apply to a select number
+of plots, <code class="docutils literal notranslate"><span class="pre">n_plots</span></code> can be passed to restrict the number of plots
+that are processed.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>Either the pixel coordinate or the map unit coordinate should be
-passed for <cite>crop_X_Y</cite> and <cite>buf_X_Y</cite> in each direction (i.e.,
+passed for <code class="docutils literal notranslate"><span class="pre">crop_X_Y</span></code> and <code class="docutils literal notranslate"><span class="pre">buf_X_Y</span></code> in each direction (i.e.,
 easting and northing). Do not pass both.</p>
 </div>
-</dd></dl>
-
-<dl class="method">
-<dt id="hs_process.spatial_mod.spatial_mod.crop_many_grid">
-<code class="sig-name descname">crop_many_grid</code><span class="sig-paren">(</span><em class="sig-param">plot_id_ul</em>, <em class="sig-param">pix_e_ul</em>, <em class="sig-param">pix_n_ul</em>, <em class="sig-param">crop_e_m=9.17</em>, <em class="sig-param">crop_n_m=3.049</em>, <em class="sig-param">crop_e_pix=None</em>, <em class="sig-param">crop_n_pix=None</em>, <em class="sig-param">buf_e_pix=None</em>, <em class="sig-param">buf_n_pix=None</em>, <em class="sig-param">buf_e_m=None</em>, <em class="sig-param">buf_n_m=None</em>, <em class="sig-param">alley_size_e_m=None</em>, <em class="sig-param">alley_size_n_m=None</em>, <em class="sig-param">alley_size_e_pix=None</em>, <em class="sig-param">alley_size_n_pix=None</em>, <em class="sig-param">n_plots_x=5</em>, <em class="sig-param">n_plots_y=9</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/spatial_mod.html#spatial_mod.crop_many_grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spatial_mod.spatial_mod.crop_many_grid" title="Permalink to this definition">¶</a></dt>
-<dd><p>Crops many plots from a single image by calculating the distance
-between plots based on <cite>crop_X_Y</cite>, <cite>n_plots_X/Y</cite>, and <cite>alley_size_X_Y</cite>
-parameters.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>plot_id_ul</strong> (<cite>int</cite>) -- the plot ID of the upper left (northwest-most)
-plot to be cropped.</p></li>
-<li><p><strong>pix_e_ul</strong> (<cite>int</cite>) -- upper left pixel column (easting) of
-<cite>plot_id_ul</cite>.</p></li>
-<li><p><strong>pix_n_ul</strong> (<cite>int</cite>) -- upper left pixel row (northing) of <cite>plot_id_ul</cite>.</p></li>
-<li><p><strong>crop_e_m</strong> (<cite>float</cite>, optional) -- length of each row (easting
-direction) in the cropped image (in map units; e.g., meters).</p></li>
-<li><p><strong>crop_n_m</strong> (<cite>float</cite>, optional) -- length of each column (northing
-direction) in the cropped image (in map units; e.g., meters).</p></li>
-<li><p><strong>crop_e_pix</strong> (<cite>int</cite>, optional) -- number of pixels in each row in the
-cropped image.</p></li>
-<li><p><strong>crop_n_pix</strong> (<cite>int</cite>, optional) -- number of pixels in each column in
-the cropped image.</p></li>
-<li><p><strong>buf_e_m</strong> (<cite>float</cite>, optional) -- The buffer distance in the easting
-direction (in map units; e.g., meters) to be applied after
-calculating the original crop area; the buffer is considered
-after <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>. A positive value will reduce the
-size of <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>, and a negative value will
-increase it.</p></li>
-<li><p><strong>buf_n_m</strong> (<cite>float</cite>, optional) -- The buffer distance in the northing
-direction (in map units; e.g., meters) to be applied after
-calculating the original crop area; the buffer is considered
-after <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>. A positive value will reduce the
-size of <cite>crop_X_m</cite>/<cite>crop_X_pix</cite>, and a negative value will
-increase it.</p></li>
-<li><p><strong>buf_e_pix</strong> (<cite>int</cite>, optional) -- The buffer distance in the easting
-direction (in pixel units) to be applied after calculating the
-original crop area.</p></li>
-<li><p><strong>buf_n_pix</strong> (<cite>int</cite>, optional) -- The buffer distance in the northing
-direction (in pixel units) to be applied after calculating the
-original crop area.</p></li>
-<li><p><strong>alley_size_e_m</strong> (<cite>int</cite>, optional) -- Should be passed if there are
-alleys passing across the E/W direction of the plots that are
-not accounted for by the <cite>crop_X_Y</cite> parameters. Used together
-with <cite>n_plots_x</cite> to determine the plots represented in a
-particular datacube.</p></li>
-<li><p><strong>alley_size_n_m</strong> (<cite>int</cite>, optional) -- Should be passed if there are
-alleys passing across the N/S direction of the plots that are
-not accounted for by the <cite>crop_X_Y</cite> parameters. Used together
-with <cite>n_plots_y</cite> to determine the plots represented in a
-particular datacube.</p></li>
-<li><p><strong>alley_size_e_pix</strong> (<cite>float</cite>, optional) -- see <cite>alley_size_e_m</cite>.</p></li>
-<li><p><strong>alley_size_n_pix</strong> (<cite>float</cite>, optional) -- see <cite>alley_size_n_m</cite>.</p></li>
-<li><p><strong>n_plots_x</strong> (<cite>int</cite>) -- number of plots in a row in east/west direction
-(default: 5).</p></li>
-<li><p><strong>n_plots_y</strong> (<cite>int</cite>) -- number of plots in a row in north/south
-direction (default: 9).</p></li>
-<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object) -- The datacube to crop; if <cite>None</cite>, loads
-datacube and band information from <cite>spatial_mod.spyfile</cite>
-(default: <cite>None</cite>).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>df_plots</strong> (<cite>pandas.DataFrame</cite>) -- data for
-which to crop each plot; includes 'plot_id', 'pix_e_ul', and
-'pix_n_ul' columns. This data can be passed to
-<cite>spatial_mod.crop_single()</cite> to perform the actual cropping.</p></li>
-</ul>
-</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><cite>pandas.DataFrame</cite></p>
-</dd>
-</dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Either the pixel coordinate or the map unit coordinate should be
-passed for <cite>crop_X_Y</cite> and <cite>buf_X_Y</cite> in each direction (i.e.,
-easting and northing). Do not pass both.</p>
+<p class="rubric">Example</p>
+<p>Load packages</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">spatial_mod</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+</pre></div>
+</div>
+<p>Read datacube and spatial plot boundaries</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_gdf</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\plot_bounds_small\plot_bounds.shp&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">fname_gdf</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_spatial_mod</span> <span class="o">=</span> <span class="n">spatial_mod</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Execute <code class="docutils literal notranslate"><span class="pre">spatial_mod.crop_many_gdf()</span></code> to get instructions on how plots should be cropped</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">df_plots</span> <span class="o">=</span> <span class="n">my_spatial_mod</span><span class="o">.</span><span class="n">crop_many_gdf</span><span class="p">(</span><span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">gdf</span><span class="o">=</span><span class="n">gdf</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df_plots</span>
+<span class="go">    plot_id  pix_e_ul  pix_n_ul  crop_e_pix  crop_n_pix</span>
+<span class="go">0      1018       478         0         229          76</span>
+<span class="go">1       918       707         0         229          76</span>
+<span class="go">2       818       936         0         229          76</span>
+<span class="go">3       718      1165         0         229          76</span>
+<span class="go">4       618      1394         0         229          76</span>
+<span class="go">5      1017       478        76         229          76</span>
+<span class="go">6       917       707        76         229          76</span>
+<span class="go">7       817       936        76         229          76</span>
+<span class="go">8       717      1165        76         229          76</span>
+<span class="go">9       617      1394        76         229          76</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>Save a single cropped plot to a new directory</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_spatial_mod</span><span class="o">.</span><span class="n">crop_single</span><span class="p">(</span><span class="n">pix_e_ul</span><span class="o">=</span><span class="mi">478</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">crop_e_pix</span><span class="o">=</span><span class="mi">229</span><span class="p">,</span> <span class="n">crop_n_pix</span><span class="o">=</span><span class="mi">76</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">plot_id</span><span class="o">=</span><span class="mi">1018</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">new_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;crop_many_gdf&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">new_dir</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_out</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">new_dir</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">name_short</span> <span class="o">+</span> <span class="s1">&#39;_plot_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">1018</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.bip.hdr&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">write_cube</span><span class="p">(</span><span class="n">fname_out</span><span class="p">,</span> <span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
+<span class="go">Saving F:\nigo0024\Documents\hs_process_demo\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1018.bip</span>
+</pre></div>
+</div>
+<p>Save all cropped plots to the new directory using a for loop</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df_plots</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_spatial_mod</span><span class="o">.</span><span class="n">crop_single</span><span class="p">(</span><span class="n">pix_e_ul</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;pix_e_ul&#39;</span><span class="p">],</span> <span class="n">pix_n_ul</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;pix_n_ul&#39;</span><span class="p">],</span> <span class="n">crop_e_pix</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;crop_e_pix&#39;</span><span class="p">],</span> <span class="n">crop_n_pix</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;crop_n_pix&#39;</span><span class="p">],</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">plot_id</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;plot_id&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">fname_out</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">new_dir</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">name_short</span> <span class="o">+</span> <span class="s1">&#39;_plot_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;plot_id&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;.bip.hdr&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">io</span><span class="o">.</span><span class="n">write_cube</span><span class="p">(</span><span class="n">fname_out</span><span class="p">,</span> <span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># force=True to overwrite the plot_1018 image</span>
+<span class="go">Saving F:\nigo0024\Documents\hs_process_demo\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1018.bip</span>
+<span class="go">Saving F:\nigo0024\Documents\hs_process_demo\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_918.bip</span>
+<span class="go">Saving F:\nigo0024\Documents\hs_process_demo\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_818.bip</span>
+<span class="go">Saving F:\nigo0024\Documents\hs_process_demo\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_718.bip</span>
+<span class="go">Saving F:\nigo0024\Documents\hs_process_demo\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_618.bip</span>
+<span class="go">Saving F:\nigo0024\Documents\hs_process_demo\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1017.bip</span>
+<span class="go">Saving F:\nigo0024\Documents\hs_process_demo\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_917.bip</span>
+<span class="go">Saving F:\nigo0024\Documents\hs_process_demo\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_817.bip</span>
+<span class="go">Saving F:\nigo0024\Documents\hs_process_demo\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_717.bip</span>
+<span class="go">Saving F:\nigo0024\Documents\hs_process_demo\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_617.bip</span>
+<span class="gp">...</span>
+</pre></div>
 </div>
 </dd></dl>
 
 <dl class="method">
 <dt id="hs_process.spatial_mod.spatial_mod.crop_single">
 <code class="sig-name descname">crop_single</code><span class="sig-paren">(</span><em class="sig-param">pix_e_ul</em>, <em class="sig-param">pix_n_ul</em>, <em class="sig-param">crop_e_pix=None</em>, <em class="sig-param">crop_n_pix=None</em>, <em class="sig-param">crop_e_m=None</em>, <em class="sig-param">crop_n_m=None</em>, <em class="sig-param">buf_e_pix=None</em>, <em class="sig-param">buf_n_pix=None</em>, <em class="sig-param">buf_e_m=None</em>, <em class="sig-param">buf_n_m=None</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">plot_id=None</em>, <em class="sig-param">gdf=None</em>, <em class="sig-param">name_append='spatial-crop-single'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/spatial_mod.html#spatial_mod.crop_single"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spatial_mod.spatial_mod.crop_single" title="Permalink to this definition">¶</a></dt>
-<dd><p>Crops a single plot from an image. If <cite>plot_id</cite> and <cite>gdf</cite> are
-explicitly passed (i.e., they will not be loaded from <cite>spatial_mod</cite>
+<dd><p>Crops a single plot from an image. If <code class="docutils literal notranslate"><span class="pre">plot_id</span></code> and <code class="docutils literal notranslate"><span class="pre">gdf</span></code> are
+explicitly passed (i.e., they will not be loaded from <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code>
 class), the &quot;map info&quot; tag in the metadata will be adjusted to center
 the cropped area within the appropriate plot geometry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>pix_e_ul</strong> (<cite>int</cite>) -- upper left column (easting) to begin cropping</p></li>
-<li><p><strong>pix_n_ul</strong> (<cite>int</cite>) -- upper left row (northing) to begin cropping</p></li>
-<li><p><strong>crop_e_pix</strong> (<cite>int</cite>, optional) -- number of pixels in each row in the
+<li><p><strong>pix_e_ul</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) -- upper left column (easting) to begin cropping</p></li>
+<li><p><strong>pix_n_ul</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) -- upper left row (northing) to begin cropping</p></li>
+<li><p><strong>crop_e_pix</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, optional) -- number of pixels in each row in the
 cropped image</p></li>
-<li><p><strong>crop_n_pix</strong> (<cite>int</cite>, optional) -- number of pixels in each column in
+<li><p><strong>crop_n_pix</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, optional) -- number of pixels in each column in
 the cropped image</p></li>
-<li><p><strong>crop_e_m</strong> (<cite>float</cite>, optional) -- length of each row (easting
+<li><p><strong>crop_e_m</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code>, optional) -- length of each row (easting
 direction) in the cropped image (in map units; e.g.,
 meters).</p></li>
-<li><p><strong>crop_n_m</strong> (<cite>float</cite>, optional) -- length of each column (northing
+<li><p><strong>crop_n_m</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code>, optional) -- length of each column (northing
 direction) in the cropped image (in map units; e.g.,
 meters).</p></li>
-<li><p><strong>buf_e_pix</strong> (<cite>int</cite>, optional) -- applied/calculated after
-<cite>crop_e_pix</cite> and <cite>crop_n_pix</cite> are accounted for</p></li>
-<li><p><strong>buf_n_pix</strong> (<cite>int</cite>, optional) -- </p></li>
-<li><p><strong>buf_e_m</strong> (<cite>float</cite>, optional) -- </p></li>
-<li><p><strong>buf_n_m</strong> (<cite>float</cite>, optional) -- </p></li>
-<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The datacube to
-crop; if <cite>numpy.ndarray</cite> or <cite>None</cite>, loads band information from
-<cite>self.spyfile</cite> (default: <cite>None</cite>).</p></li>
-<li><p><strong>plot_id</strong> (<cite>int</cite>) -- the plot ID of the area to be cropped.</p></li>
-<li><p><strong>gdf</strong> (<cite>geopandas.GeoDataFrame</cite>) -- the plot names and polygon
+<li><p><strong>buf_e_pix</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, optional) -- applied/calculated after
+<code class="docutils literal notranslate"><span class="pre">crop_e_pix</span></code> and <code class="docutils literal notranslate"><span class="pre">crop_n_pix</span></code> are accounted for</p></li>
+<li><p><strong>buf_n_pix</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, optional) -- </p></li>
+<li><p><strong>buf_e_m</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code>, optional) -- </p></li>
+<li><p><strong>buf_n_m</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code>, optional) -- </p></li>
+<li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object or <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) -- The datacube to
+crop; if <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> or <code class="docutils literal notranslate"><span class="pre">None</span></code>, loads band information from
+<code class="docutils literal notranslate"><span class="pre">self.spyfile</span></code> (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>plot_id</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) -- the plot ID of the area to be cropped.</p></li>
+<li><p><strong>gdf</strong> (<code class="docutils literal notranslate"><span class="pre">geopandas.GeoDataFrame</span></code>) -- the plot names and polygon
 geometery of each of the plots; 'plot' must be used as a column
 name to identify each of the plots, and should be an integer.
-<cite>gdf</cite> must be explicitly passed to</p></li>
-<li><p><strong>name_append</strong> (<cite>str</cite>) -- NOT YET SUPPORTED; name to append to the
+<code class="docutils literal notranslate"><span class="pre">gdf</span></code> must be explicitly passed to</p></li>
+<li><p><strong>name_append</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- NOT YET SUPPORTED; name to append to the
 filename (default: 'spatial-crop-single').</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p>2-element <cite>tuple</cite> containing</p>
+<dd class="field-even"><p><p>2-element <code class="docutils literal notranslate"><span class="pre">tuple</span></code> containing</p>
 <ul class="simple">
-<li><p><strong>array_crop</strong> (<cite>numpy.ndarray</cite>): Cropped datacube.</p></li>
-<li><p><strong>metadata</strong> (<cite>dict</cite>): Modified metadata describing the cropped
-hyperspectral datacube (<cite>array_crop</cite>).</p></li>
+<li><p><strong>array_crop</strong> (<code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>): Cropped datacube.</p></li>
+<li><p><strong>metadata</strong> (<code class="docutils literal notranslate"><span class="pre">dict</span></code>): Modified metadata describing the cropped
+hyperspectral datacube (<code class="docutils literal notranslate"><span class="pre">array_crop</span></code>).</p></li>
 </ul>
 </p>
 </dd>
@@ -386,11 +387,11 @@ hyperspectral datacube (<cite>array_crop</cite>).</p></li>
 <dl class="method">
 <dt id="hs_process.spatial_mod.spatial_mod.load_spyfile">
 <code class="sig-name descname">load_spyfile</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/spatial_mod.html#spatial_mod.load_spyfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spatial_mod.spatial_mod.load_spyfile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Loads a <cite>SpyFile</cite> (Spectral Python object) for data access and/or
-manipulation by the <cite>hstools</cite> class.</p>
+<dd><p>Loads a <code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> (Spectral Python object) for data access and/or
+manipulation by the <code class="docutils literal notranslate"><span class="pre">hstools</span></code> class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>spyfile</strong> (<cite>SpyFile</cite> object) -- The datacube being accessed and/or
+<dd class="field-odd"><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object) -- The datacube being accessed and/or
 manipulated.</p>
 </dd>
 </dl>
@@ -401,7 +402,7 @@ manipulated.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_spatial_mod</span> <span class="o">=</span> <span class="n">spatial_mod</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_spatial_mod</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_spatial_mod</span><span class="o">.</span><span class="n">spyfile</span>
 <span class="go">Data Source:   &#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip&#39;</span>
 <span class="go"># Rows:            617</span>
 <span class="go"># Samples:        1827</span>
