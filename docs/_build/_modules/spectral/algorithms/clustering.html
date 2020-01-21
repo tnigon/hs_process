@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="python">
+  <head>
+    <meta charset="utf-8" />
+    <title>spectral.algorithms.clustering &#8212; hs_process 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../index.html">
+          hs_process</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="https://github.com/tnigon/hs_process">Github</a></li>
+                <li><a href="http://www.spectralpython.net/">Spectral Python</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../index.html">Contents <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../eonr_installation.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../my_hs_process_api.html">2. API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/hs_process.batch.batch.html">2.1.1. batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/hs_process.segment.segment.html">2.2.1. segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/hs_process.spatial_mod.spatial_mod.html">2.3.1. spatial_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/hs_process.spec_mod.spec_mod.html">2.4.1. spec_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/hs_process.utilities.defaults.html">2.5.1. defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/hs_process.utilities.hsio.html">2.5.2. hsio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/hs_process.utilities.hstools.html">2.5.3. hstools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../license.html">3. License</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary">
+<form action="../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="body col-md-9 content" role="main">
+      
+  <h1>Source code for spectral.algorithms.clustering</h1><div class="highlight"><pre>
+<span></span><span class="c1">#########################################################################</span>
+<span class="c1">#</span>
+<span class="c1">#   clustering.py - This file is part of the Spectral Python (SPy) package.</span>
+<span class="c1">#</span>
+<span class="c1">#   Copyright (C) 2001-2011 Thomas Boggs</span>
+<span class="c1">#</span>
+<span class="c1">#   Spectral Python is free software; you can redistribute it and/</span>
+<span class="c1">#   or modify it under the terms of the GNU General Public License</span>
+<span class="c1">#   as published by the Free Software Foundation; either version 2</span>
+<span class="c1">#   of the License, or (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1">#   Spectral Python is distributed in the hope that it will be useful,</span>
+<span class="c1">#   but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1">#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1">#   GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1">#   You should have received a copy of the GNU General Public License</span>
+<span class="c1">#   along with this software; if not, write to</span>
+<span class="c1">#</span>
+<span class="c1">#               Free Software Foundation, Inc.</span>
+<span class="c1">#               59 Temple Place, Suite 330</span>
+<span class="c1">#               Boston, MA 02111-1307</span>
+<span class="c1">#               USA</span>
+<span class="c1">#</span>
+<span class="c1">#########################################################################</span>
+<span class="c1">#</span>
+<span class="c1"># Send comments to:</span>
+<span class="c1"># Thomas Boggs, tboggs@users.sourceforge.net</span>
+<span class="c1">#</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Unsupervised clustering algorithms.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">from</span> <span class="nn">.classifiers</span> <span class="k">import</span> <span class="n">Classifier</span>
+
+<span class="kn">from</span> <span class="nn">warnings</span> <span class="k">import</span> <span class="n">warn</span>
+
+
+<span class="k">def</span> <span class="nf">L1</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">):</span>
+    <span class="s1">&#39;Returns L1 distance between 2 rank-1 arrays.&#39;</span>
+    <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="nb">abs</span><span class="p">((</span><span class="n">v1</span> <span class="o">-</span> <span class="n">v2</span><span class="p">)))</span>
+
+
+<span class="k">def</span> <span class="nf">L2</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">):</span>
+    <span class="s1">&#39;Returns Euclidean distance between 2 rank-1 arrays.&#39;</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">v1</span> <span class="o">-</span> <span class="n">v2</span>
+    <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">delta</span><span class="p">,</span> <span class="n">delta</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">KmeansClusterer</span><span class="p">(</span><span class="n">Classifier</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;An unsupervised classifier using an iterative clustering algorithm&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nclusters</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">maxIter</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">endCondition</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">distanceMeasure</span><span class="o">=</span><span class="n">L1</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        ARGUMENTS:</span>
+<span class="sd">            nclusters       Number of clusters to create. Default is 8</span>
+<span class="sd">            maxIter         Max number of iterations. Default is 20</span>
+<span class="sd">            endCondition    Optional comparison function. This should be a</span>
+<span class="sd">                            function which takes 2 MxN NumPy arrays as its</span>
+<span class="sd">                            arguments and returns non-zero when clustering</span>
+<span class="sd">                            is to be terminated. The two arguments are the</span>
+<span class="sd">                            cluster maps for the previous and current cluster</span>
+<span class="sd">                            cycle, respectively.</span>
+<span class="sd">            distanceMeasure The distance measure to use for comparison. The</span>
+<span class="sd">                            default is the L1 distance. For  Euclidean</span>
+<span class="sd">                            distance, specify L2 (no quotes).</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nclusters</span> <span class="o">=</span> <span class="n">nclusters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxIterations</span> <span class="o">=</span> <span class="n">maxIter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endCondition</span> <span class="o">=</span> <span class="n">endCondition</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">distanceMeasure</span> <span class="o">=</span> <span class="n">distanceMeasure</span>
+
+    <span class="k">def</span> <span class="nf">classify_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">startClusters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Performs iterative self-organizing clustering of image data.</span>
+
+<span class="sd">        USAGE: (clMap, centers) = cl.classify_image(image</span>
+<span class="sd">                                                   [, startClusters = None]</span>
+<span class="sd">                                                   [, iterations = None])</span>
+
+<span class="sd">        ARGUMENTS:</span>
+<span class="sd">            image           A SpyFile or an MxNxB NumPy array</span>
+<span class="sd">            startClusters   Initial cluster centers. This must be an</span>
+<span class="sd">                            nclusters x B array.</span>
+<span class="sd">            iterations      If this argument is passed and is a list object,</span>
+<span class="sd">                            each intermediate cluster map is appended to</span>
+<span class="sd">                            the list.</span>
+<span class="sd">        RETURN VALUES:</span>
+<span class="sd">            clMap           An MxN array whos values are the indices of the</span>
+<span class="sd">                            cluster for the corresponding element of image.</span>
+<span class="sd">            centers         An nclusters x B array of cluster centers.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">isoCluster</span><span class="p">(</span>
+            <span class="n">image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nclusters</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxIterations</span><span class="p">,</span> <span class="n">startClusters</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">endCondition</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">distanceMeasure</span><span class="p">,</span> <span class="n">iterations</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="kmeans"><a class="viewcode-back" href="../../../api/segment/hs_process.segment.kmeans.html#hs_process.segment.kmeans">[docs]</a><span class="k">def</span> <span class="nf">kmeans</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">nclusters</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_iterations</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Performs iterative clustering using the k-means algorithm.</span>
+
+<span class="sd">    Arguments:</span>
+
+<span class="sd">        `image` (:class:`numpy.ndarray` or :class:`spectral.Image`):</span>
+
+<span class="sd">            The `MxNxB` image on which to perform clustering.</span>
+
+<span class="sd">        `nclusters` (int) [default 10]:</span>
+
+<span class="sd">            Number of clusters to create.  The number produced may be less than</span>
+<span class="sd">            `nclusters`.</span>
+
+<span class="sd">        `max_iterations` (int) [default 20]:</span>
+
+<span class="sd">            Max number of iterations to perform.</span>
+
+<span class="sd">    Keyword Arguments:</span>
+
+<span class="sd">        `start_clusters` (:class:`numpy.ndarray`) [default None]:</span>
+
+<span class="sd">            `nclusters x B` array of initial cluster centers.  If not provided,</span>
+<span class="sd">            initial cluster centers will be spaced evenly along the diagonal of</span>
+<span class="sd">            the N-dimensional bounding box of the image data.</span>
+
+<span class="sd">        `compare` (callable object) [default None]:</span>
+
+<span class="sd">            Optional comparison function. `compare` must be a callable object</span>
+<span class="sd">            that takes 2 `MxN` :class:`numpy.ndarray` objects as its arguments</span>
+<span class="sd">            and returns non-zero when clustering is to be terminated. The two</span>
+<span class="sd">            arguments are the cluster maps for the previous and current cluster</span>
+<span class="sd">            cycle, respectively.</span>
+
+<span class="sd">        `distance` (callable object) [default :func:`~spectral.clustering.L2`]:</span>
+
+<span class="sd">            The distance measure to use for comparison. The default is to use</span>
+<span class="sd">            **L2** (Euclidean) distance. For Manhattan distance, specify</span>
+<span class="sd">            :func:`~spectral.clustering.L1`.</span>
+
+<span class="sd">        `frames` (list) [default None]:</span>
+
+<span class="sd">            If this argument is given and is a list object, each intermediate</span>
+<span class="sd">            cluster map is appended to the list.</span>
+
+<span class="sd">    Returns a 2-tuple containing:</span>
+
+<span class="sd">        `class_map` (:class:`numpy.ndarray`):</span>
+
+<span class="sd">            An `MxN` array whos values are the indices of the cluster for the</span>
+<span class="sd">            corresponding element of `image`.</span>
+
+<span class="sd">        `centers` (:class:`numpy.ndarray`):</span>
+
+<span class="sd">            An `nclusters x B` array of cluster centers.</span>
+
+<span class="sd">    Iterations are performed until clusters converge (no pixels reassigned</span>
+<span class="sd">    between iterations), `maxIterations` is reached, or `compare` returns</span>
+<span class="sd">    nonzero. If :exc:`KeyboardInterrupt` is generated (i.e., CTRL-C pressed)</span>
+<span class="sd">    while the algorithm is executing, clusters are returned from the previously</span>
+<span class="sd">    completed iteration.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="kn">import</span> <span class="nn">spectral</span>
+    <span class="kn">import</span> <span class="nn">numpy</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">kmeans_ndarray</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">nclusters</span><span class="p">,</span> <span class="n">max_iterations</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="n">status</span> <span class="o">=</span> <span class="n">spectral</span><span class="o">.</span><span class="n">_status</span>
+
+    <span class="c1"># defaults for kwargs</span>
+    <span class="n">start_clusters</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">compare</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">distance</span> <span class="o">=</span> <span class="n">L2</span>
+    <span class="n">iterations</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;start_clusters&#39;</span><span class="p">:</span>
+            <span class="n">start_clusters</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;compare&#39;</span><span class="p">:</span>
+            <span class="n">compare</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;distance&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">val</span> <span class="ow">in</span> <span class="p">(</span><span class="n">L1</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">):</span>
+                <span class="n">distance</span> <span class="o">=</span> <span class="n">L1</span>
+            <span class="k">elif</span> <span class="n">val</span> <span class="ow">in</span> <span class="p">(</span><span class="n">L2</span><span class="p">,</span> <span class="s1">&#39;L2&#39;</span><span class="p">):</span>
+                <span class="n">distance</span> <span class="o">=</span> <span class="n">L2</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Unrecognized keyword argument.&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;frames&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="s1">&#39;append&#39;</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;&quot;frames&quot; keyword argument must have &quot;append&quot;&#39;</span>
+                                <span class="s1">&#39;attribute.&#39;</span><span class="p">)</span>
+            <span class="n">iterations</span> <span class="o">=</span> <span class="n">frames</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s1">&#39;Unsupported keyword argument.&#39;</span><span class="p">)</span>
+
+    <span class="p">(</span><span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span><span class="p">,</span> <span class="n">nbands</span><span class="p">)</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">clusters</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span>
+    <span class="n">old_clusters</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">clusters</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">start_clusters</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="n">start_clusters</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">nclusters</span><span class="p">),</span> <span class="s1">&#39;There must be </span><span class="se">\</span>
+<span class="s1">        nclusters clusters in the startCenters array.&#39;</span>
+        <span class="n">centers</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">start_clusters</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Initializing clusters along diagonal of N-dimensional bounding box.&#39;</span><span class="p">)</span>
+        <span class="n">centers</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">nclusters</span><span class="p">,</span> <span class="n">nbands</span><span class="p">),</span> <span class="nb">float</span><span class="p">)</span>
+        <span class="n">boxMin</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">boxMax</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nrows</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ncols</span><span class="p">):</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+                <span class="n">boxMin</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">boxMin</span> <span class="o">&lt;</span> <span class="n">x</span><span class="p">,</span> <span class="n">boxMin</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+                <span class="n">boxMax</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">boxMax</span> <span class="o">&gt;</span> <span class="n">x</span><span class="p">,</span> <span class="n">boxMax</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="n">boxMin</span> <span class="o">=</span> <span class="n">boxMin</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">boxMax</span> <span class="o">=</span> <span class="n">boxMax</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="p">(</span><span class="n">boxMax</span> <span class="o">-</span> <span class="n">boxMin</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">nclusters</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nclusters</span><span class="p">):</span>
+            <span class="n">centers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">boxMin</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">delta</span>
+
+    <span class="n">itnum</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">itnum</span> <span class="o">&lt;=</span> <span class="n">max_iterations</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">status</span><span class="o">.</span><span class="n">display_percentage</span><span class="p">(</span><span class="s1">&#39;Iteration </span><span class="si">%d</span><span class="s1">...&#39;</span> <span class="o">%</span> <span class="n">itnum</span><span class="p">)</span>
+
+            <span class="c1"># Assign all pixels</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nrows</span><span class="p">):</span>
+                <span class="n">status</span><span class="o">.</span><span class="n">update_percentage</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">/</span> <span class="n">nrows</span> <span class="o">*</span> <span class="mf">100.</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ncols</span><span class="p">):</span>
+                    <span class="n">minDist</span> <span class="o">=</span> <span class="mf">1.e30</span>
+                    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nclusters</span><span class="p">):</span>
+                        <span class="n">dist</span> <span class="o">=</span> <span class="n">distance</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="n">centers</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="n">dist</span> <span class="o">&lt;</span> <span class="n">minDist</span><span class="p">):</span>
+                            <span class="n">clusters</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
+                            <span class="n">minDist</span> <span class="o">=</span> <span class="n">dist</span>
+
+            <span class="c1"># Update cluster centers</span>
+            <span class="n">sums</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nclusters</span><span class="p">,</span> <span class="n">nbands</span><span class="p">),</span> <span class="s1">&#39;d&#39;</span><span class="p">)</span>
+            <span class="n">counts</span> <span class="o">=</span> <span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">nclusters</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nrows</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ncols</span><span class="p">):</span>
+                    <span class="n">counts</span><span class="p">[</span><span class="n">clusters</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">sums</span><span class="p">[</span><span class="n">clusters</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">image</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+
+            <span class="n">old_centers</span> <span class="o">=</span> <span class="n">centers</span><span class="p">[:]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nclusters</span><span class="p">):</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">counts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+                    <span class="n">centers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">counts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">centers</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">centers</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">iterations</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">iterations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">clusters</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">compare</span> <span class="ow">and</span> <span class="n">compare</span><span class="p">(</span><span class="n">old_clusters</span><span class="p">,</span> <span class="n">clusters</span><span class="p">):</span>
+                <span class="n">status</span><span class="o">.</span><span class="n">end_percentage</span><span class="p">(</span><span class="s1">&#39;done.&#39;</span><span class="p">)</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">nChanged</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">clusters</span> <span class="o">!=</span> <span class="n">old_clusters</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">nChanged</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">status</span><span class="o">.</span><span class="n">end_percentage</span><span class="p">(</span><span class="s1">&#39;0 pixels reassigned.&#39;</span><span class="p">)</span>
+                    <span class="k">break</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">status</span><span class="o">.</span><span class="n">end_percentage</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> pixels reassigned.&#39;</span> \
+                                          <span class="o">%</span> <span class="p">(</span><span class="n">nChanged</span><span class="p">))</span>
+
+            <span class="n">old_clusters</span> <span class="o">=</span> <span class="n">clusters</span>
+            <span class="n">old_centers</span> <span class="o">=</span> <span class="n">centers</span>
+            <span class="n">clusters</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span>
+            <span class="n">itnum</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;KeyboardInterrupt: Returning clusters from previous iteration&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">old_clusters</span><span class="p">,</span> <span class="n">old_centers</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;kmeans terminated with&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">old_clusters</span><span class="o">.</span><span class="n">ravel</span><span class="p">())),</span> \
+        <span class="s1">&#39;clusters after&#39;</span><span class="p">,</span> <span class="n">itnum</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;iterations.&#39;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">status</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">old_clusters</span><span class="p">,</span> <span class="n">centers</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">kmeans_ndarray</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">nclusters</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_iterations</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Performs iterative clustering using the k-means algorithm.</span>
+
+<span class="sd">    Arguments:</span>
+
+<span class="sd">        `image` (:class:`numpy.ndarray` or :class:`spectral.Image`):</span>
+
+<span class="sd">            The `MxNxB` image on which to perform clustering.</span>
+
+<span class="sd">        `nclusters` (int) [default 10]:</span>
+
+<span class="sd">            Number of clusters to create.  The number produced may be less than</span>
+<span class="sd">            `nclusters`.</span>
+
+<span class="sd">        `max_iterations` (int) [default 20]:</span>
+
+<span class="sd">            Max number of iterations to perform.</span>
+
+<span class="sd">    Keyword Arguments:</span>
+
+<span class="sd">        `start_clusters` (:class:`numpy.ndarray`) [default None]:</span>
+
+<span class="sd">            `nclusters x B` array of initial cluster centers.  If not provided,</span>
+<span class="sd">            initial cluster centers will be spaced evenly along the diagonal of</span>
+<span class="sd">            the N-dimensional bounding box of the image data.</span>
+
+<span class="sd">        `compare` (callable object) [default None]:</span>
+
+<span class="sd">            Optional comparison function. `compare` must be a callable object</span>
+<span class="sd">            that takes 2 `MxN` :class:`numpy.ndarray` objects as its arguments</span>
+<span class="sd">            and returns non-zero when clustering is to be terminated. The two</span>
+<span class="sd">            arguments are the cluster maps for the previous and current cluster</span>
+<span class="sd">            cycle, respectively.</span>
+
+<span class="sd">        `distance` (callable object) [default :func:`~spectral.clustering.L2`]:</span>
+
+<span class="sd">            The distance measure to use for comparison. The default is to use</span>
+<span class="sd">            **L2** (Euclidean) distance. For Manhattan distance, specify</span>
+<span class="sd">            :func:`~spectral.clustering.L1`.</span>
+
+<span class="sd">        `frames` (list) [default None]:</span>
+
+<span class="sd">            If this argument is given and is a list object, each intermediate</span>
+<span class="sd">            cluster map is appended to the list.</span>
+
+<span class="sd">    Returns a 2-tuple containing:</span>
+
+<span class="sd">        `class_map` (:class:`numpy.ndarray`):</span>
+
+<span class="sd">            An `MxN` array whos values are the indices of the cluster for the</span>
+<span class="sd">            corresponding element of `image`.</span>
+
+<span class="sd">        `centers` (:class:`numpy.ndarray`):</span>
+
+<span class="sd">            An `nclusters x B` array of cluster centers.</span>
+
+<span class="sd">    Iterations are performed until clusters converge (no pixels reassigned</span>
+<span class="sd">    between iterations), `max_iterations` is reached, or `compare` returns</span>
+<span class="sd">    nonzero. If :exc:`KeyboardInterrupt` is generated (i.e., CTRL-C pressed)</span>
+<span class="sd">    while the algorithm is executing, clusters are returned from the previously</span>
+<span class="sd">    completed iteration.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="kn">import</span> <span class="nn">spectral</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+    <span class="kn">from</span> <span class="nn">spectral.algorithms.spymath</span> <span class="k">import</span> <span class="n">has_nan</span><span class="p">,</span> <span class="n">NaNValueError</span>
+
+    <span class="k">if</span> <span class="n">has_nan</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">NaNValueError</span><span class="p">(</span><span class="s1">&#39;Image data contains NaN values.&#39;</span><span class="p">)</span>
+
+    <span class="n">status</span> <span class="o">=</span> <span class="n">spectral</span><span class="o">.</span><span class="n">_status</span>
+    
+    <span class="c1"># defaults for kwargs</span>
+    <span class="n">start_clusters</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">compare</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">distance</span> <span class="o">=</span> <span class="n">L2</span>
+    <span class="n">iterations</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;start_clusters&#39;</span><span class="p">:</span>
+            <span class="n">start_clusters</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;compare&#39;</span><span class="p">:</span>
+            <span class="n">compare</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;distance&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">val</span> <span class="ow">in</span> <span class="p">(</span><span class="n">L1</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">):</span>
+                <span class="n">distance</span> <span class="o">=</span> <span class="n">L1</span>
+            <span class="k">elif</span> <span class="n">val</span> <span class="ow">in</span> <span class="p">(</span><span class="n">L2</span><span class="p">,</span> <span class="s1">&#39;L2&#39;</span><span class="p">):</span>
+                <span class="n">distance</span> <span class="o">=</span> <span class="n">L2</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Unrecognized keyword argument.&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;frames&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="s1">&#39;append&#39;</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;&quot;frames&quot; keyword argument must have &quot;append&quot;&#39;</span>
+                                <span class="s1">&#39;attribute.&#39;</span><span class="p">)</span>
+            <span class="n">iterations</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s1">&#39;Unsupported keyword argument.&#39;</span><span class="p">)</span>
+
+    <span class="p">(</span><span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span><span class="p">,</span> <span class="n">nbands</span><span class="p">)</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">nrows</span> <span class="o">*</span> <span class="n">ncols</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">nbands</span><span class="p">))</span>
+    <span class="n">clusters</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,),</span> <span class="nb">int</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">start_clusters</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="n">start_clusters</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">nclusters</span><span class="p">),</span> <span class="s1">&#39;There must be </span><span class="se">\</span>
+<span class="s1">        nclusters clusters in the startCenters array.&#39;</span>
+        <span class="n">centers</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">start_clusters</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Initializing clusters along diagonal of N-dimensional bounding box.&#39;</span><span class="p">)</span>
+        <span class="n">boxMin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">boxMax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="p">(</span><span class="n">boxMax</span> <span class="o">-</span> <span class="n">boxMin</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">nclusters</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">centers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">nclusters</span><span class="p">,</span> <span class="n">nbands</span><span class="p">),</span> <span class="nb">float</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nclusters</span><span class="p">):</span>
+            <span class="n">centers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">boxMin</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">delta</span>
+
+    <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">nclusters</span><span class="p">),</span> <span class="nb">float</span><span class="p">)</span>
+    <span class="n">old_centers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">centers</span><span class="p">)</span>
+    <span class="n">clusters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,),</span> <span class="nb">int</span><span class="p">)</span>
+    <span class="n">old_clusters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">clusters</span><span class="p">)</span>
+    <span class="n">diffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">itnum</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">itnum</span> <span class="o">&lt;=</span> <span class="n">max_iterations</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">status</span><span class="o">.</span><span class="n">display_percentage</span><span class="p">(</span><span class="s1">&#39;Iteration </span><span class="si">%d</span><span class="s1">...&#39;</span> <span class="o">%</span> <span class="n">itnum</span><span class="p">)</span>
+
+            <span class="c1"># Assign all pixels</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nclusters</span><span class="p">):</span>
+                <span class="n">diffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">centers</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">out</span><span class="o">=</span><span class="n">diffs</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">distance</span> <span class="o">==</span> <span class="n">L2</span><span class="p">:</span>
+                    <span class="n">distances</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ij,ij-&gt;i&#39;</span><span class="p">,</span> <span class="n">diffs</span><span class="p">,</span> <span class="n">diffs</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">diffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">diffs</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">diffs</span><span class="p">)</span>
+                    <span class="n">distances</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ij-&gt;i&#39;</span><span class="p">,</span> <span class="n">diffs</span><span class="p">)</span>
+            <span class="n">clusters</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">distances</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+            <span class="c1"># Update cluster centers</span>
+            <span class="n">old_centers</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">centers</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nclusters</span><span class="p">):</span>
+                <span class="n">inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">clusters</span> <span class="o">==</span> <span class="n">i</span><span class="p">)[:,</span> <span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">centers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="n">inds</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">iterations</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">iterations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">clusters</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">compare</span> <span class="ow">and</span> <span class="n">compare</span><span class="p">(</span><span class="n">old_clusters</span><span class="p">,</span> <span class="n">clusters</span><span class="p">):</span>
+                <span class="n">status</span><span class="o">.</span><span class="n">end_percentage</span><span class="p">(</span><span class="s1">&#39;done.&#39;</span><span class="p">)</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">nChanged</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">clusters</span> <span class="o">!=</span> <span class="n">old_clusters</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">nChanged</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">status</span><span class="o">.</span><span class="n">end_percentage</span><span class="p">(</span><span class="s1">&#39;0 pixels reassigned.&#39;</span><span class="p">)</span>
+                    <span class="k">break</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">status</span><span class="o">.</span><span class="n">end_percentage</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> pixels reassigned.&#39;</span> \
+                                          <span class="o">%</span> <span class="p">(</span><span class="n">nChanged</span><span class="p">))</span>
+
+            <span class="n">old_clusters</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">clusters</span>
+            <span class="n">old_centers</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">centers</span>
+            <span class="n">itnum</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;KeyboardInterrupt: Returning clusters from previous iteration.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">old_clusters</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span><span class="p">),</span> <span class="n">old_centers</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;kmeans terminated with&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">old_clusters</span><span class="o">.</span><span class="n">ravel</span><span class="p">())),</span> \
+        <span class="s1">&#39;clusters after&#39;</span><span class="p">,</span> <span class="n">itnum</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;iterations.&#39;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">status</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">old_clusters</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span><span class="p">),</span> <span class="n">centers</span><span class="p">)</span>
+
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2020, Tyler J. Nigon.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

@@ -542,87 +542,89 @@ class segment(object):
             self.spy_ps_e = None
             self.spy_ps_n = None
 
-    def veg_spectra(self, array_veg, thresh=None, percentile=None,
-                    side='lower', spyfile=None):
-        '''
-        Calculates the average spectra across vegetation pixels
+#    def veg_spectra(self, array_veg, thresh=None, percentile=None,
+#                    side='lower', spyfile=None):
+#        '''
+#        Calculates the average spectra across vegetation pixels
+#
+#        Parameters:
+#            array_veg (`numpy.ndarray`): a single-band image array, presumably
+#                that discriminates vegetation pixels from other pixels such as
+#                soil, shadow, etc.
+#            thresh (`float`): The value for which to base the threshold
+#                (default: `None`).
+#            percentile (`float` or `int`): The percentile of pixels to mask; if
+#                `percentile`=95 and `side`='lower', the lowest 95% of pixels
+#                will be masked prior to calculating the mean spectra across
+#                pixels (default: `None`; range: 0-100).
+#            side (`str`): The side of the threshold or percentile for which to
+#                apply the mask. Must be either 'lower' or 'upper'; if 'lower',
+#                everything below the threshold/percentile will be masked
+#                (default: 'lower').
+#        '''
+#        if spyfile is None:
+#            spyfile = self.spyfile
+#        elif isinstance(spyfile, SpyFile.SpyFile):
+#            self.load_spyfile(spyfile)
+#
+##        if remove_shadow is True:
+##            shadow_mask, metadata = self.tools.mask_shadow(
+##                    shadow_pctl=shadow_pctl, show_histogram=True,
+##                    spyfile=spyfile)
+##            array_veg = np.ma.array(array_veg, mask=shadow_mask)
+##        else:
+##            if not isinstance(array_veg, np.ma.core.MaskedArray):
+##                array_veg = np.ma.array(array_veg, mask=False)
+##            metadata = self.spyfile.metadata
+#
+#        mask_array, metadata = self.tools.mask_array(
+#                array_veg, self.spyfile.metadata, thresh=thresh,
+#                percentile=percentile, side=side)
+#
+#        mask_array_3d = np.empty(spyfile.shape)
+#        for band in range(spyfile.nbands):
+#            mask_array_3d[:, :, band] = mask_array.mask
+#        datacube_masked = np.ma.masked_array(spyfile.load(),
+#                                             mask=mask_array_3d)
+#        spec_mean = np.nanmean(datacube_masked, axis=(0, 1))
+#        spec_std = np.nanstd(datacube_masked, axis=(0, 1))
+##        a = spec_mean.reshape(len(spec_mean))
+#        spec_mean = pd.Series(spec_mean)
+#        spec_std = pd.Series(spec_std)
+#
+#        return spec_mean, spec_std, datacube_masked, metadata
 
-        Parameters:
-            array_veg (`numpy.ndarray`): a single-band image array, presumably
-                that discriminates vegetation pixels from other pixels such as
-                soil, shadow, etc.
-            thresh (`float`): The value for which to base the threshold
-                (default: `None`).
-            percentile (`float` or `int`): The percentile of pixels to mask; if
-                `percentile`=95 and `side`='lower', the lowest 95% of pixels
-                will be masked prior to calculating the mean spectra across
-                pixels (default: `None`; range: 0-100).
-            side (`str`): The side of the threshold or percentile for which to
-                apply the mask. Must be either 'lower' or 'upper'; if 'lower',
-                everything below the threshold/percentile will be masked
-                (default: 'lower').
-        '''
-        if spyfile is None:
-            spyfile = self.spyfile
-        elif isinstance(spyfile, SpyFile.SpyFile):
-            self.load_spyfile(spyfile)
-
-#        if remove_shadow is True:
-#            shadow_mask, metadata = self.tools.mask_shadow(
-#                    shadow_pctl=shadow_pctl, show_histogram=True,
-#                    spyfile=spyfile)
-#            array_veg = np.ma.array(array_veg, mask=shadow_mask)
-#        else:
-#            if not isinstance(array_veg, np.ma.core.MaskedArray):
-#                array_veg = np.ma.array(array_veg, mask=False)
-#            metadata = self.spyfile.metadata
-
-        mask_array, metadata = self.tools.mask_array(
-                array_veg, self.spyfile.metadata, thresh=thresh,
-                percentile=percentile, side=side)
-
-        mask_array_3d = np.empty(spyfile.shape)
-        for band in range(spyfile.nbands):
-            mask_array_3d[:, :, band] = mask_array.mask
-        datacube_masked = np.ma.masked_array(spyfile.load(),
-                                             mask=mask_array_3d)
-        spec_mean = np.nanmean(datacube_masked, axis=(0, 1))
-        spec_std = np.nanstd(datacube_masked, axis=(0, 1))
-#        a = spec_mean.reshape(len(spec_mean))
-        spec_mean = pd.Series(spec_mean)
-        spec_std = pd.Series(spec_std)
-
-        return spec_mean, spec_std, datacube_masked, metadata
-
-    def mask_datacube(self, mask, spyfile=None):
-        '''
-        Applies `mask` to `spyfile`, then returns the datcube (as a np.array)
-        and the mean spectra
-
-        Parameters:
-            mask (`numpy.ndarray`): the mask to apply to `spyfile`; if `mask`
-                does not have similar dimensions to `spyfile`, the first band
-                (i.e., first two dimensions) of `mask` will be repeated n times
-                to match the number of bands of `spyfile`.
-            spyfile (`SpyFile` object): The datacube being accessed and/or
-                manipulated.
-        '''
-        if spyfile is None:
-            spyfile = self.spyfile
-        elif isinstance(spyfile, SpyFile.SpyFile):
-            self.load_spyfile(spyfile)
-
-        if isinstance(mask, np.ma.masked_array):
-            mask = mask.mask
-        if mask.shape != spyfile.shape:
-            mask_1d = mask.copy()
-            mask = np.empty(spyfile.shape)
-            for band in range(spyfile.nbands):
-                mask[:, :, band] = mask_1d
-
-        datacube_masked = np.ma.masked_array(spyfile.load(), mask=mask)
-        spec_mean = np.nanmean(datacube_masked, axis=(0, 1))
-        spec_std = np.nanstd(datacube_masked, axis=(0, 1))
-        spec_mean = pd.Series(spec_mean)
-        spec_std = pd.Series(spec_std)
-        return spec_mean, spec_std, datacube_masked
+#    def mask_datacube(self, mask, spyfile=None):
+#        '''
+#        DO NOT USE; USE hstools.mask_datacube() INSTEAD AND PASS A MASK.
+#
+#        Applies `mask` to `spyfile`, then returns the datcube (as a np.array)
+#        and the mean spectra
+#
+#        Parameters:
+#            mask (`numpy.ndarray`): the mask to apply to `spyfile`; if `mask`
+#                does not have similar dimensions to `spyfile`, the first band
+#                (i.e., first two dimensions) of `mask` will be repeated n times
+#                to match the number of bands of `spyfile`.
+#            spyfile (`SpyFile` object): The datacube being accessed and/or
+#                manipulated.
+#        '''
+#        if spyfile is None:
+#            spyfile = self.spyfile
+#        elif isinstance(spyfile, SpyFile.SpyFile):
+#            self.load_spyfile(spyfile)
+#
+#        if isinstance(mask, np.ma.masked_array):
+#            mask = mask.mask
+#        if mask.shape != spyfile.shape:
+#            mask_1d = mask.copy()
+#            mask = np.empty(spyfile.shape)
+#            for band in range(spyfile.nbands):
+#                mask[:, :, band] = mask_1d
+#
+#        datacube_masked = np.ma.masked_array(spyfile.load(), mask=mask)
+#        spec_mean = np.nanmean(datacube_masked, axis=(0, 1))
+#        spec_std = np.nanstd(datacube_masked, axis=(0, 1))
+#        spec_mean = pd.Series(spec_mean)
+#        spec_std = pd.Series(spec_std)
+#        return spec_mean, spec_std, datacube_masked

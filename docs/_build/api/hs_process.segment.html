@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="python">
+  <head>
+    <meta charset="utf-8" />
+    <title>2.1.1.2. segment &#8212; hs_process 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2.1.1.3. spatial_mod" href="hs_process.spatial_mod.html" />
+    <link rel="prev" title="2.1.1.1. batch" href="hs_process.batch.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          hs_process</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="https://github.com/tnigon/hs_process">Github</a></li>
+                <li><a href="http://www.spectralpython.net/">Spectral Python</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Contents <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../eonr_installation.html">1. Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api2.html">2. API2</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="hs_process.batch.html">2.1.1.1. batch</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.1.1.2. segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spatial_mod.html">2.1.1.3. spatial_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spec_mod.html">2.1.1.4. spec_mod</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../my_hs_process_api.html">3. API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">4. License</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="hs_process.batch.html" title="Previous Chapter: 2.1.1.1. batch"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; 2.1.1.1. batch</span>
+    </a>
+  </li>
+  <li>
+    <a href="hs_process.spatial_mod.html" title="Next Chapter: 2.1.1.3. spatial_mod"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">2.1.1.3. spatial_mod &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../_sources/api/hs_process.segment.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">2.1.1.2. segment</a></li>
+</ul>
+
+<form action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="body col-md-9 content" role="main">
+      
+  <div class="section" id="segment">
+<h1>2.1.1.2. segment<a class="headerlink" href="#segment" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="hs_process.segment">
+<em class="property">class </em><code class="sig-prename descclassname">hs_process.</code><code class="sig-name descname">segment</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for aiding in the segmentation/masking of image data to include
+pixels that are of most interest.</p>
+<p class="rubric">Methods Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.segment.band_math_derivative" title="hs_process.segment.segment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">band_math_derivative</span></code></a>([wl1, wl2, wl3, b1, ...])</p></td>
+<td><p>Calculates a derivative-type spectral index from two input bands and/or wavelengths.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.segment.band_math_mcari2" title="hs_process.segment.segment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">band_math_mcari2</span></code></a>([wl1, wl2, wl3, b1, b2, ...])</p></td>
+<td><p>Calculates the MCARI2 spectral index</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.segment.band_math_ndi" title="hs_process.segment.segment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">band_math_ndi</span></code></a>([wl1, wl2, b1, b2, spyfile, ...])</p></td>
+<td><p>Calculates a normalized difference spectral index from two input bands and/or wavelengths.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.segment.band_math_ratio" title="hs_process.segment.segment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">band_math_ratio</span></code></a>([wl1, wl2, b1, b2, spyfile, ...])</p></td>
+<td><p>Calculates a simple ratio spectral index from two input band and/or wavelengths.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.segment.kmeans" title="hs_process.segment.segment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kmeans</span></code></a>([n_classes, max_iter, spyfile])</p></td>
+<td><p>If there are more soil pixels than vegetation pixels, will vegetation be class 0 instead of class 2?</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.segment.load_spyfile" title="hs_process.segment.segment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_spyfile</span></code></a>(spyfile)</p></td>
+<td><p>Loads a <cite>SpyFile</cite> (Spectral Python object) for data access and/or manipulation by the <cite>hstools</cite> class.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="method">
+<dt id="hs_process.segment.band_math_derivative">
+<code class="sig-name descname">band_math_derivative</code><span class="sig-paren">(</span><em class="sig-param">wl1=None</em>, <em class="sig-param">wl2=None</em>, <em class="sig-param">wl3=None</em>, <em class="sig-param">b1=None</em>, <em class="sig-param">b2=None</em>, <em class="sig-param">b3=None</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">list_range=True</em>, <em class="sig-param">print_out=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment.band_math_derivative"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.band_math_derivative" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates a derivative-type spectral index from two input bands
+and/or wavelengths. Bands/wavelengths can be input as two individual
+bands, two sets of bands (i.e., list of bands), or range of bands
+(i.e., list of two bands indicating the lower and upper range).</p>
+<p>der_index = (wl1 - wl2) / (wl2 - wl3)
+:param wl1: the wavelength (or set of</p>
+<blockquote>
+<div><p>wavelengths) to be used as the first parameter of the
+derivative index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wl2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the wavelength (or set of
+wavelengths) to be used as the second parameter of the
+derivative index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b1</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the band (or set of bands) to be
+used as the first parameter of the derivative index;
+if <cite>list</cite>, then consolidates all bands between two band values
+by calculating the mean pixel value across all bands in that
+range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the band (or set of bands) to be
+used as the second parameter of the derivative
+index; if <cite>list</cite>, then consolidates all bands between two band
+values by calculating the mean pixel value across all bands in
+that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The datacube to
+crop; if <cite>numpy.ndarray</cite> or <cite>None</cite>, loads band information from
+<cite>self.spyfile</cite> (default: <cite>None</cite>).</p></li>
+<li><p><strong>list_range</strong> (<cite>bool</cite>) -- Whether bands/wavelengths passed as a list is
+interpreted as a range of bands (<cite>True</cite>) or for each individual
+band in the list (<cite>False</cite>). If <cite>list_range</cite> is <cite>True</cite>,
+<cite>b1</cite>/<cite>wl1</cite> and <cite>b2</cite>/<cite>wl2</cite> should be lists with two items, and
+all bands/wavelegths between the two values will be used
+(default: <cite>True</cite>).</p></li>
+<li><p><strong>print_out</strong> (<cite>bool</cite>) -- Whether to print out the actual bands and
+wavelengths being used in the NDI calculation (default:
+<cite>True</cite>).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.segment.band_math_mcari2">
+<code class="sig-name descname">band_math_mcari2</code><span class="sig-paren">(</span><em class="sig-param">wl1=None</em>, <em class="sig-param">wl2=None</em>, <em class="sig-param">wl3=None</em>, <em class="sig-param">b1=None</em>, <em class="sig-param">b2=None</em>, <em class="sig-param">b3=None</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">list_range=True</em>, <em class="sig-param">print_out=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment.band_math_mcari2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.band_math_mcari2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the MCARI2 spectral index</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.segment.band_math_ndi">
+<code class="sig-name descname">band_math_ndi</code><span class="sig-paren">(</span><em class="sig-param">wl1=None</em>, <em class="sig-param">wl2=None</em>, <em class="sig-param">b1=None</em>, <em class="sig-param">b2=None</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">list_range=True</em>, <em class="sig-param">print_out=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment.band_math_ndi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.band_math_ndi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates a normalized difference spectral index from two input bands
+and/or wavelengths. Bands/wavelengths can be input as two individual
+bands, two sets of bands (i.e., list of bands), or range of bands
+(i.e., list of two bands indicating the lower and upper range).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wl1</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the wavelength (or set of
+wavelengths) to be used as the first parameter of the
+normalized difference index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>wl2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the wavelength (or set of
+wavelengths) to be used as the second parameter of the
+normalized difference index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b1</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the band (or set of bands) to be
+used as the first parameter of the normalized difference index;
+if <cite>list</cite>, then consolidates all bands between two band values
+by calculating the mean pixel value across all bands in that
+range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the band (or set of bands) to be
+used as the second parameter of the normalized difference
+index; if <cite>list</cite>, then consolidates all bands between two band
+values by calculating the mean pixel value across all bands in
+that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The datacube to
+crop; if <cite>numpy.ndarray</cite> or <cite>None</cite>, loads band information from
+<cite>self.spyfile</cite> (default: <cite>None</cite>).</p></li>
+<li><p><strong>list_range</strong> (<cite>bool</cite>) -- Whether bands/wavelengths passed as a list is
+interpreted as a range of bands (<cite>True</cite>) or for each individual
+band in the list (<cite>False</cite>). If <cite>list_range</cite> is <cite>True</cite>,
+<cite>b1</cite>/<cite>wl1</cite> and <cite>b2</cite>/<cite>wl2</cite> should be lists with two items, and
+all bands/wavelegths between the two values will be used
+(default: <cite>True</cite>).</p></li>
+<li><p><strong>print_out</strong> (<cite>bool</cite>) -- Whether to print out the actual bands and
+wavelengths being used in the NDI calculation (default:
+<cite>True</cite>).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.segment.band_math_ratio">
+<code class="sig-name descname">band_math_ratio</code><span class="sig-paren">(</span><em class="sig-param">wl1=None</em>, <em class="sig-param">wl2=None</em>, <em class="sig-param">b1=None</em>, <em class="sig-param">b2=None</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">list_range=True</em>, <em class="sig-param">print_out=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment.band_math_ratio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.band_math_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates a simple ratio spectral index from two input band and/or
+wavelengths. Bands/wavelengths can be input as two individual bands,
+two sets of bands (i.e., list of bands), or a range of bands (i.e.,
+list of two bands indicating the lower and upper range).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wl1</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the wavelength (or set of
+wavelengths) to be used as the first parameter of the
+normalized difference index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>wl2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the wavelength (or set of
+wavelengths) to be used as the second parameter of the
+normalized difference index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b1</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the band (or set of bands) to be
+used as the first parameter (numerator) of the ratio index; if
+<cite>list</cite>, then consolidates all bands between two band values by
+calculating the mean pixel value across all bands in that
+range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the bands (or set of bands) to be                used as the second parameter (denominator) of the ratio index;
+if <cite>list</cite>, then consolidates all bands between two bands values
+by calculating the mean pixel value across all bands in that
+range (default: <cite>None</cite>).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The datacube to
+crop; if <cite>numpy.ndarray</cite> or <cite>None</cite>, loads band information from
+<cite>self.spyfile</cite> (default: <cite>None</cite>).</p></li>
+<li><p><strong>list_range</strong> (<cite>bool</cite>) -- Whether a band passed as a list is interpreted as a
+range of bands (<cite>True</cite>) or for each individual band in the
+list (<cite>False</cite>). If <cite>list_range</cite> is <cite>True</cite>, <cite>b1</cite>/<cite>wl1</cite> and
+<cite>b2</cite>/<cite>wl2</cite> should be lists with two items, and all
+bands/wavelegths between the two values will be used (default:
+<cite>True</cite>).</p></li>
+<li><p><strong>print_out</strong> (<cite>bool</cite>) -- Whether to print out the actual bands and
+wavelengths being used in the NDI calculation (default:
+<cite>True</cite>).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.segment.kmeans">
+<code class="sig-name descname">kmeans</code><span class="sig-paren">(</span><em class="sig-param">n_classes=3</em>, <em class="sig-param">max_iter=100</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment.kmeans"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.kmeans" title="Permalink to this definition">¶</a></dt>
+<dd><p>If there are more soil pixels than vegetation pixels, will vegetation be
+class 0 instead of class 2?</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_classes</strong> (<cite>int</cite>) -- number of classes (default: 3).</p></li>
+<li><p><strong>max_iter</strong> (<cite>int</cite>) -- maximum iterations before terminating process
+(default: 100).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The datacube to
+crop; if <cite>numpy.ndarray</cite> or <cite>None</cite>, loads band information from
+<cite>self.spyfile</cite> (default: <cite>None</cite>).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.segment.load_spyfile">
+<code class="sig-name descname">load_spyfile</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment.load_spyfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.load_spyfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a <cite>SpyFile</cite> (Spectral Python object) for data access and/or
+manipulation by the <cite>hstools</cite> class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>spyfile</strong> (<cite>SpyFile</cite> object) -- The datacube being accessed and/or
+manipulated.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2020, Tyler J. Nigon.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

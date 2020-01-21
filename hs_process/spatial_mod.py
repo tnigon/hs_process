@@ -644,6 +644,26 @@ class spatial_mod(object):
             - **array_crop** (`numpy.ndarray`): Cropped datacube.
             - **metadata** (`dict`): Modified metadata describing the cropped
               hyperspectral datacube (`array_crop`).
+
+        Example:
+            >>> from hs_process import hsio
+            >>> from hs_process import spatial_mod
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> io = hsio(fname_in)
+            >>> my_spatial_mod = spatial_mod(io.spyfile)
+            >>> pix_e_ul = 100
+            >>> pix_n_ul = 50
+            >>> array_crop, metadata = my_spatial_mod.crop_single(pix_e_ul, pix_n_ul, crop_e_pix=200, crop_n_pix=50)
+            >>> io.spyfile
+        	Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
+        	# Rows:            617
+        	# Samples:        1827
+        	# Bands:           240
+        	Interleave:        BIP
+        	Quantization:  32 bits
+        	Data format:   float32
+            >>> array_crop.shape
+            (50, 200, 240)
         '''
         crop_e_pix, crop_n_pix, crop_e_m, crop_n_m = self._handle_defaults(
                 crop_e_pix, crop_n_pix, crop_e_m, crop_n_m, group='crop')
@@ -718,6 +738,22 @@ class spatial_mod(object):
         Parameters:
             spyfile (`SpyFile` object): The datacube being accessed and/or
                 manipulated.
+
+        Example:
+            >>> from hs_process import hsio
+            >>> from hs_process import spatial_mod
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> io = hsio(fname_in)
+            >>> my_spatial_mod = spatial_mod(io.spyfile)
+            >>> my_spatial_mod.load_spyfile(io.spyfile)
+            >>> io.tools.spyfile
+            Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
+            # Rows:            617
+            # Samples:        1827
+            # Bands:           240
+            Interleave:        BIP
+            Quantization:  32 bits
+            Data format:   float32
         '''
         self.spyfile = spyfile
         self.tools = hstools(spyfile)

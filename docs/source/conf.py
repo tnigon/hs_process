@@ -52,11 +52,13 @@ extensions = [
     'nbsphinx',  # converts Jupyter notebooks to html
     'sphinx.ext.napoleon',  # for parsing docstrings
     'sphinx_automodapi.automodapi',  # Generates individual pages for each function
-    'sphinx_automodapi.smart_resolver'  # Tries to resolve errors that import classes from other files
+    'sphinx_automodapi.smart_resolver',  # Tries to resolve errors that import classes from other files
+    'autodocsumm'
 ]
 
 automodapi_inheritance_diagram = False  # indicates whether to show inheritance diagrams by default
 numpydoc_show_class_members = False  # needed to avoid having methods and attributes of classes being shown multiple times.
+numpydoc_class_members_toctree = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

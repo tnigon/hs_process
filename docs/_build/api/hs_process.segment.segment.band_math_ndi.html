@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="python">
+  <head>
+    <meta charset="utf-8" />
+    <title>2.12. hs_process.segment.segment.band_math_ndi &#8212; hs_process 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2.13. hs_process.segment.segment.band_math_ratio" href="hs_process.segment.segment.band_math_ratio.html" />
+    <link rel="prev" title="2.11. hs_process.segment.segment.band_math_mcari2" href="hs_process.segment.segment.band_math_mcari2.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          hs_process</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="https://github.com/tnigon/hs_process">Github</a></li>
+                <li><a href="http://www.spectralpython.net/">Spectral Python</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Contents <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../eonr_installation.html">1. Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api2.html">2. API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="hs_process.batch.batch.cube_to_spectra.html">2.1. hs_process.batch.batch.cube_to_spectra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.batch.batch.segment_band_math.html">2.2. hs_process.batch.batch.segment_band_math</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.batch.batch.segment_create_mask.html">2.3. hs_process.batch.batch.segment_create_mask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.batch.batch.spatial_crop.html">2.4. hs_process.batch.batch.spatial_crop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.batch.batch.spectra_combine.html">2.5. hs_process.batch.batch.spectra_combine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.batch.batch.spectra_to_csv.html">2.6. hs_process.batch.batch.spectra_to_csv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.batch.batch.spectra_to_df.html">2.7. hs_process.batch.batch.spectra_to_df</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.batch.batch.spectral_clip.html">2.8. hs_process.batch.batch.spectral_clip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.batch.batch.spectral_smooth.html">2.9. hs_process.batch.batch.spectral_smooth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.segment.segment.band_math_derivative.html">2.10. hs_process.segment.segment.band_math_derivative</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.segment.segment.band_math_mcari2.html">2.11. hs_process.segment.segment.band_math_mcari2</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.12. hs_process.segment.segment.band_math_ndi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.segment.segment.band_math_ratio.html">2.13. hs_process.segment.segment.band_math_ratio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.segment.segment.kmeans.html">2.14. hs_process.segment.segment.kmeans</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.segment.segment.load_spyfile.html">2.15. hs_process.segment.segment.load_spyfile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spatial_mod.spatial_mod.crop_many_gdf.html">2.16. hs_process.spatial_mod.spatial_mod.crop_many_gdf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spatial_mod.spatial_mod.crop_many_grid.html">2.17. hs_process.spatial_mod.spatial_mod.crop_many_grid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spatial_mod.spatial_mod.crop_single.html">2.18. hs_process.spatial_mod.spatial_mod.crop_single</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spatial_mod.spatial_mod.load_spyfile.html">2.19. hs_process.spatial_mod.spatial_mod.load_spyfile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spec_mod.spec_mod.load_spyfile.html">2.20. hs_process.spec_mod.spec_mod.load_spyfile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spec_mod.spec_mod.spectral_clip.html">2.21. hs_process.spec_mod.spec_mod.spectral_clip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spec_mod.spec_mod.spectral_smooth.html">2.22. hs_process.spec_mod.spec_mod.spectral_smooth</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">3. License</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="hs_process.segment.segment.band_math_mcari2.html" title="Previous Chapter: 2.11. hs_process.segment.segment.band_math_mcari2"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; 2.11. hs_proc...</span>
+    </a>
+  </li>
+  <li>
+    <a href="hs_process.segment.segment.band_math_ratio.html" title="Next Chapter: 2.13. hs_process.segment.segment.band_math_ratio"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">2.13. hs_proc... &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../_sources/api/hs_process.segment.segment.band_math_ndi.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">2.12. hs_process.segment.segment.band_math_ndi</a></li>
+</ul>
+
+<form action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="body col-md-9 content" role="main">
+      
+  <div class="section" id="hs-process-segment-segment-band-math-ndi">
+<h1>2.12. hs_process.segment.segment.band_math_ndi<a class="headerlink" href="#hs-process-segment-segment-band-math-ndi" title="Permalink to this headline">¶</a></h1>
+<dl class="method">
+<dt id="hs_process.segment.segment.band_math_ndi">
+<code class="sig-prename descclassname">segment.</code><code class="sig-name descname">band_math_ndi</code><span class="sig-paren">(</span><em class="sig-param">wl1=None</em>, <em class="sig-param">wl2=None</em>, <em class="sig-param">b1=None</em>, <em class="sig-param">b2=None</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">list_range=True</em>, <em class="sig-param">print_out=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment.band_math_ndi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.segment.band_math_ndi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates a normalized difference spectral index from two input bands
+and/or wavelengths. Bands/wavelengths can be input as two individual
+bands, two sets of bands (i.e., list of bands), or range of bands
+(i.e., list of two bands indicating the lower and upper range).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wl1</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the wavelength (or set of
+wavelengths) to be used as the first parameter of the
+normalized difference index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>wl2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the wavelength (or set of
+wavelengths) to be used as the second parameter of the
+normalized difference index; if <cite>list</cite>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b1</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the band (or set of bands) to be
+used as the first parameter of the normalized difference index;
+if <cite>list</cite>, then consolidates all bands between two band values
+by calculating the mean pixel value across all bands in that
+range (default: <cite>None</cite>).</p></li>
+<li><p><strong>b2</strong> (<cite>int</cite>, <cite>float</cite>, or <cite>list</cite>) -- the band (or set of bands) to be
+used as the second parameter of the normalized difference
+index; if <cite>list</cite>, then consolidates all bands between two band
+values by calculating the mean pixel value across all bands in
+that range (default: <cite>None</cite>).</p></li>
+<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object or <cite>numpy.ndarray</cite>) -- The datacube to
+crop; if <cite>numpy.ndarray</cite> or <cite>None</cite>, loads band information from
+<cite>self.spyfile</cite> (default: <cite>None</cite>).</p></li>
+<li><p><strong>list_range</strong> (<cite>bool</cite>) -- Whether bands/wavelengths passed as a list is
+interpreted as a range of bands (<cite>True</cite>) or for each individual
+band in the list (<cite>False</cite>). If <cite>list_range</cite> is <cite>True</cite>,
+<cite>b1</cite>/<cite>wl1</cite> and <cite>b2</cite>/<cite>wl2</cite> should be lists with two items, and
+all bands/wavelegths between the two values will be used
+(default: <cite>True</cite>).</p></li>
+<li><p><strong>print_out</strong> (<cite>bool</cite>) -- Whether to print out the actual bands and
+wavelengths being used in the NDI calculation (default:
+<cite>True</cite>).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2020, Tyler J. Nigon.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

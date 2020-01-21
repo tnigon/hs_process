@@ -58,13 +58,18 @@
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul>
-<li class="toctree-l1"><a class="reference internal" href="../../index.html">Home</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../my_hs_process_api.html">1. API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../license.html">2. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../eonr_installation.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../my_hs_process_api.html">2. API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.batch.batch.html">2.1.1. batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.segment.segment.html">2.2.1. segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.spatial_mod.spatial_mod.html">2.3.1. spatial_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.spec_mod.spec_mod.html">2.4.1. spec_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.utilities.defaults.html">2.5.1. defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.utilities.hsio.html">2.5.2. hsio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.utilities.hstools.html">2.5.3. hstools</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../my_hs_process_api.html">1. API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../license.html">2. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">3. License</a></li>
 </ul>
 </ul>
 </li>
@@ -654,92 +659,94 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">spy_ul_e_srs</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">spy_ul_n_srs</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_e</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_n</span> <span class="o">=</span> <span class="kc">None</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_n</span> <span class="o">=</span> <span class="kc">None</span></div></div>
 
-<div class="viewcode-block" id="segment.veg_spectra"><a class="viewcode-back" href="../../api/hs_process.segment.segment.html#hs_process.segment.segment.veg_spectra">[docs]</a>    <span class="k">def</span> <span class="nf">veg_spectra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array_veg</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">percentile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                    <span class="n">side</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Calculates the average spectra across vegetation pixels</span>
+<span class="c1">#    def veg_spectra(self, array_veg, thresh=None, percentile=None,</span>
+<span class="c1">#                    side=&#39;lower&#39;, spyfile=None):</span>
+<span class="c1">#        &#39;&#39;&#39;</span>
+<span class="c1">#        Calculates the average spectra across vegetation pixels</span>
+<span class="c1">#</span>
+<span class="c1">#        Parameters:</span>
+<span class="c1">#            array_veg (`numpy.ndarray`): a single-band image array, presumably</span>
+<span class="c1">#                that discriminates vegetation pixels from other pixels such as</span>
+<span class="c1">#                soil, shadow, etc.</span>
+<span class="c1">#            thresh (`float`): The value for which to base the threshold</span>
+<span class="c1">#                (default: `None`).</span>
+<span class="c1">#            percentile (`float` or `int`): The percentile of pixels to mask; if</span>
+<span class="c1">#                `percentile`=95 and `side`=&#39;lower&#39;, the lowest 95% of pixels</span>
+<span class="c1">#                will be masked prior to calculating the mean spectra across</span>
+<span class="c1">#                pixels (default: `None`; range: 0-100).</span>
+<span class="c1">#            side (`str`): The side of the threshold or percentile for which to</span>
+<span class="c1">#                apply the mask. Must be either &#39;lower&#39; or &#39;upper&#39;; if &#39;lower&#39;,</span>
+<span class="c1">#                everything below the threshold/percentile will be masked</span>
+<span class="c1">#                (default: &#39;lower&#39;).</span>
+<span class="c1">#        &#39;&#39;&#39;</span>
+<span class="c1">#        if spyfile is None:</span>
+<span class="c1">#            spyfile = self.spyfile</span>
+<span class="c1">#        elif isinstance(spyfile, SpyFile.SpyFile):</span>
+<span class="c1">#            self.load_spyfile(spyfile)</span>
+<span class="c1">#</span>
+<span class="c1">##        if remove_shadow is True:</span>
+<span class="c1">##            shadow_mask, metadata = self.tools.mask_shadow(</span>
+<span class="c1">##                    shadow_pctl=shadow_pctl, show_histogram=True,</span>
+<span class="c1">##                    spyfile=spyfile)</span>
+<span class="c1">##            array_veg = np.ma.array(array_veg, mask=shadow_mask)</span>
+<span class="c1">##        else:</span>
+<span class="c1">##            if not isinstance(array_veg, np.ma.core.MaskedArray):</span>
+<span class="c1">##                array_veg = np.ma.array(array_veg, mask=False)</span>
+<span class="c1">##            metadata = self.spyfile.metadata</span>
+<span class="c1">#</span>
+<span class="c1">#        mask_array, metadata = self.tools.mask_array(</span>
+<span class="c1">#                array_veg, self.spyfile.metadata, thresh=thresh,</span>
+<span class="c1">#                percentile=percentile, side=side)</span>
+<span class="c1">#</span>
+<span class="c1">#        mask_array_3d = np.empty(spyfile.shape)</span>
+<span class="c1">#        for band in range(spyfile.nbands):</span>
+<span class="c1">#            mask_array_3d[:, :, band] = mask_array.mask</span>
+<span class="c1">#        datacube_masked = np.ma.masked_array(spyfile.load(),</span>
+<span class="c1">#                                             mask=mask_array_3d)</span>
+<span class="c1">#        spec_mean = np.nanmean(datacube_masked, axis=(0, 1))</span>
+<span class="c1">#        spec_std = np.nanstd(datacube_masked, axis=(0, 1))</span>
+<span class="c1">##        a = spec_mean.reshape(len(spec_mean))</span>
+<span class="c1">#        spec_mean = pd.Series(spec_mean)</span>
+<span class="c1">#        spec_std = pd.Series(spec_std)</span>
+<span class="c1">#</span>
+<span class="c1">#        return spec_mean, spec_std, datacube_masked, metadata</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            array_veg (`numpy.ndarray`): a single-band image array, presumably</span>
-<span class="sd">                that discriminates vegetation pixels from other pixels such as</span>
-<span class="sd">                soil, shadow, etc.</span>
-<span class="sd">            thresh (`float`): The value for which to base the threshold</span>
-<span class="sd">                (default: `None`).</span>
-<span class="sd">            percentile (`float` or `int`): The percentile of pixels to mask; if</span>
-<span class="sd">                `percentile`=95 and `side`=&#39;lower&#39;, the lowest 95% of pixels</span>
-<span class="sd">                will be masked prior to calculating the mean spectra across</span>
-<span class="sd">                pixels (default: `None`; range: 0-100).</span>
-<span class="sd">            side (`str`): The side of the threshold or percentile for which to</span>
-<span class="sd">                apply the mask. Must be either &#39;lower&#39; or &#39;upper&#39;; if &#39;lower&#39;,</span>
-<span class="sd">                everything below the threshold/percentile will be masked</span>
-<span class="sd">                (default: &#39;lower&#39;).</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="n">spyfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
-
-<span class="c1">#        if remove_shadow is True:</span>
-<span class="c1">#            shadow_mask, metadata = self.tools.mask_shadow(</span>
-<span class="c1">#                    shadow_pctl=shadow_pctl, show_histogram=True,</span>
-<span class="c1">#                    spyfile=spyfile)</span>
-<span class="c1">#            array_veg = np.ma.array(array_veg, mask=shadow_mask)</span>
-<span class="c1">#        else:</span>
-<span class="c1">#            if not isinstance(array_veg, np.ma.core.MaskedArray):</span>
-<span class="c1">#                array_veg = np.ma.array(array_veg, mask=False)</span>
-<span class="c1">#            metadata = self.spyfile.metadata</span>
-
-        <span class="n">mask_array</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">mask_array</span><span class="p">(</span>
-                <span class="n">array_veg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="n">thresh</span><span class="p">,</span>
-                <span class="n">percentile</span><span class="o">=</span><span class="n">percentile</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">side</span><span class="p">)</span>
-
-        <span class="n">mask_array_3d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">spyfile</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">band</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">spyfile</span><span class="o">.</span><span class="n">nbands</span><span class="p">):</span>
-            <span class="n">mask_array_3d</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">band</span><span class="p">]</span> <span class="o">=</span> <span class="n">mask_array</span><span class="o">.</span><span class="n">mask</span>
-        <span class="n">datacube_masked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">(</span><span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">(),</span>
-                                             <span class="n">mask</span><span class="o">=</span><span class="n">mask_array_3d</span><span class="p">)</span>
-        <span class="n">spec_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">datacube_masked</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-        <span class="n">spec_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">datacube_masked</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-<span class="c1">#        a = spec_mean.reshape(len(spec_mean))</span>
-        <span class="n">spec_mean</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">spec_mean</span><span class="p">)</span>
-        <span class="n">spec_std</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">spec_std</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">spec_mean</span><span class="p">,</span> <span class="n">spec_std</span><span class="p">,</span> <span class="n">datacube_masked</span><span class="p">,</span> <span class="n">metadata</span></div>
-
-<div class="viewcode-block" id="segment.mask_datacube"><a class="viewcode-back" href="../../api/hs_process.segment.segment.html#hs_process.segment.segment.mask_datacube">[docs]</a>    <span class="k">def</span> <span class="nf">mask_datacube</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Applies `mask` to `spyfile`, then returns the datcube (as a np.array)</span>
-<span class="sd">        and the mean spectra</span>
-
-<span class="sd">        Parameters:</span>
-<span class="sd">            mask (`numpy.ndarray`): the mask to apply to `spyfile`; if `mask`</span>
-<span class="sd">                does not have similar dimensions to `spyfile`, the first band</span>
-<span class="sd">                (i.e., first two dimensions) of `mask` will be repeated n times</span>
-<span class="sd">                to match the number of bands of `spyfile`.</span>
-<span class="sd">            spyfile (`SpyFile` object): The datacube being accessed and/or</span>
-<span class="sd">                manipulated.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="n">spyfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">):</span>
-            <span class="n">mask</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">mask</span>
-        <span class="k">if</span> <span class="n">mask</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
-            <span class="n">mask_1d</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">spyfile</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">band</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">spyfile</span><span class="o">.</span><span class="n">nbands</span><span class="p">):</span>
-                <span class="n">mask</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">band</span><span class="p">]</span> <span class="o">=</span> <span class="n">mask_1d</span>
-
-        <span class="n">datacube_masked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">(</span><span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">(),</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span>
-        <span class="n">spec_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">datacube_masked</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-        <span class="n">spec_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">datacube_masked</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-        <span class="n">spec_mean</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">spec_mean</span><span class="p">)</span>
-        <span class="n">spec_std</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">spec_std</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">spec_mean</span><span class="p">,</span> <span class="n">spec_std</span><span class="p">,</span> <span class="n">datacube_masked</span></div></div>
+<span class="c1">#    def mask_datacube(self, mask, spyfile=None):</span>
+<span class="c1">#        &#39;&#39;&#39;</span>
+<span class="c1">#        DO NOT USE; USE hstools.mask_datacube() INSTEAD AND PASS A MASK.</span>
+<span class="c1">#</span>
+<span class="c1">#        Applies `mask` to `spyfile`, then returns the datcube (as a np.array)</span>
+<span class="c1">#        and the mean spectra</span>
+<span class="c1">#</span>
+<span class="c1">#        Parameters:</span>
+<span class="c1">#            mask (`numpy.ndarray`): the mask to apply to `spyfile`; if `mask`</span>
+<span class="c1">#                does not have similar dimensions to `spyfile`, the first band</span>
+<span class="c1">#                (i.e., first two dimensions) of `mask` will be repeated n times</span>
+<span class="c1">#                to match the number of bands of `spyfile`.</span>
+<span class="c1">#            spyfile (`SpyFile` object): The datacube being accessed and/or</span>
+<span class="c1">#                manipulated.</span>
+<span class="c1">#        &#39;&#39;&#39;</span>
+<span class="c1">#        if spyfile is None:</span>
+<span class="c1">#            spyfile = self.spyfile</span>
+<span class="c1">#        elif isinstance(spyfile, SpyFile.SpyFile):</span>
+<span class="c1">#            self.load_spyfile(spyfile)</span>
+<span class="c1">#</span>
+<span class="c1">#        if isinstance(mask, np.ma.masked_array):</span>
+<span class="c1">#            mask = mask.mask</span>
+<span class="c1">#        if mask.shape != spyfile.shape:</span>
+<span class="c1">#            mask_1d = mask.copy()</span>
+<span class="c1">#            mask = np.empty(spyfile.shape)</span>
+<span class="c1">#            for band in range(spyfile.nbands):</span>
+<span class="c1">#                mask[:, :, band] = mask_1d</span>
+<span class="c1">#</span>
+<span class="c1">#        datacube_masked = np.ma.masked_array(spyfile.load(), mask=mask)</span>
+<span class="c1">#        spec_mean = np.nanmean(datacube_masked, axis=(0, 1))</span>
+<span class="c1">#        spec_std = np.nanstd(datacube_masked, axis=(0, 1))</span>
+<span class="c1">#        spec_mean = pd.Series(spec_mean)</span>
+<span class="c1">#        spec_std = pd.Series(spec_std)</span>
+<span class="c1">#        return spec_mean, spec_std, datacube_masked</span>
 </pre></div>
 
     </div>

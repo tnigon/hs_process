@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="python">
   <head>
     <meta charset="utf-8" />
-    <title>Installation &#8212; hs_process 0.0.1 documentation</title>
+    <title>1. Installation &#8212; hs_process 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
@@ -17,6 +17,8 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2. API" href="my_hs_process_api.html" />
+    <link rel="prev" title="hs_process Documentation" href="index.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -57,14 +59,10 @@
      href="index.html">Contents <b class="caret"></b></a>
   <ul class="dropdown-menu globaltoc"
       role="menu"
-      aria-labelledby="dLabelGlobalToc"><ul>
-<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="my_hs_process_api.html">1. API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="license.html">2. License</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="my_hs_process_api.html">1. API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">2. License</a></li>
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="my_hs_process_api.html">2. API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">3. License</a></li>
 </ul>
 </ul>
 </li>
@@ -73,6 +71,14 @@
             
               
                 
+  <li>
+    <a href="index.html" title="Previous Chapter: hs_process Documentation"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; hs_process Do...</span>
+    </a>
+  </li>
+  <li>
+    <a href="my_hs_process_api.html" title="Next Chapter: 2. API"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">2. API &raquo;</span>
+    </a>
+  </li>
               
             
             
@@ -104,11 +110,11 @@
   <div class="row">
       <div class="col-md-3">
         <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
-<li><a class="reference internal" href="#">Installation</a><ul>
-<li><a class="reference internal" href="#Overview">Overview</a></li>
-<li><a class="reference internal" href="#Install-Python">Install Python</a></li>
-<li><a class="reference internal" href="#Install-EONR">Install EONR</a></li>
-<li><a class="reference internal" href="#Dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#">1. Installation</a><ul>
+<li><a class="reference internal" href="#Overview">1.1. Overview</a></li>
+<li><a class="reference internal" href="#Install-Python">1.2. Install Python</a></li>
+<li><a class="reference internal" href="#Install-EONR">1.3. Install EONR</a></li>
+<li><a class="reference internal" href="#Dependencies">1.4. Dependencies</a></li>
 </ul>
 </li>
 </ul>
@@ -125,20 +131,20 @@
     <div class="body col-md-9 content" role="main">
       
   <div class="section" id="Installation">
-<h1>Installation<a class="headerlink" href="#Installation" title="Permalink to this headline">¶</a></h1>
+<h1>1. Installation<a class="headerlink" href="#Installation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="Overview">
-<h2>Overview<a class="headerlink" href="#Overview" title="Permalink to this headline">¶</a></h2>
+<h2>1.1. Overview<a class="headerlink" href="#Overview" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">EONR</span></code> is an open-source package written in Python. It runs on all major platforms (i.e., Windows, Linux, Mac).</p>
 </div>
 <div class="section" id="Install-Python">
-<h2>Install Python<a class="headerlink" href="#Install-Python" title="Permalink to this headline">¶</a></h2>
+<h2>1.2. Install Python<a class="headerlink" href="#Install-Python" title="Permalink to this headline">¶</a></h2>
 <p>If you don’t have Python (or don’t know), don’t worry. The EONR package was designed to be used with as little Python expertise as possible.</p>
 <p>There are many ways to download and install Python. As a scientist, my recommendation is definitely through the <a class="reference external" href="https://www.anaconda.com/distribution/#download-section">Anaconda distribution</a>. Anaconda will have the more popular packages already installed in your Python environment, and it comes with <a class="reference external" href="https://www.spyder-ide.org/">Spyder</a> and <a class="reference external" href="https://jupyter.org/">Jupyter notebooks</a>. Spyder and Jupyter make working with Python quite easy.</p>
 <p>Although I think you’ll find <code class="docutils literal notranslate"><span class="pre">EONR</span></code> to be pretty user-friendly, you may find it to your benefit to become a bit more familiar with Python before using <code class="docutils literal notranslate"><span class="pre">EONR</span></code>. If you’re a beginner, it will be helpful to read the <a class="reference external" href="https://docs.python.org/3/tutorial/">Python Tutorial</a> and/or get some hands-on practice with <a class="reference external" href="https://www.w3schools.com/python/">this Python Tutorial by w3Schools</a>.</p>
 <p><em>The best way to learn is to do.</em></p>
 </div>
 <div class="section" id="Install-EONR">
-<h2>Install EONR<a class="headerlink" href="#Install-EONR" title="Permalink to this headline">¶</a></h2>
+<h2>1.3. Install EONR<a class="headerlink" href="#Install-EONR" title="Permalink to this headline">¶</a></h2>
 <p>To install the latest release of <code class="docutils literal notranslate"><span class="pre">EONR</span></code>, you can use <a class="reference external" href="https://pypi.org/project/pip/">pip</a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">eonr</span>
 </pre></div>
@@ -154,7 +160,7 @@
 <p>The recommended folder directory for the <code class="docutils literal notranslate"><span class="pre">EONR</span></code> package is in the site-packages folder in your Python Path (alongside all other Python packages).</p>
 </div>
 <div class="section" id="Dependencies">
-<h2>Dependencies<a class="headerlink" href="#Dependencies" title="Permalink to this headline">¶</a></h2>
+<h2>1.4. Dependencies<a class="headerlink" href="#Dependencies" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">EONR</span></code> requires the following packages:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="http://matplotlib.org/">*Matplotlib</a></p></li>

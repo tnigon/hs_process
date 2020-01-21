@@ -1,0 +1,6 @@
+hs\_process.batch.batch.segment\_band\_math
+===========================================
+
+.. currentmodule:: hs_process.batch
+
+.. automethod:: batch.segment_band_math

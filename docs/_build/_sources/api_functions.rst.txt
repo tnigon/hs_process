@@ -1,0 +1,96 @@
+API Functions
+==============
+
+.. currentmodule:: hs_process.batch.batch
+
+.. autosummary::
+   :toctree: api/batch
+
+   cube_to_spectra
+   segment_band_math
+   segment_create_mask
+   spatial_crop
+   spectra_combine
+   spectra_to_csv
+   spectra_to_df
+   spectral_clip
+   spectral_smooth
+
+.. currentmodule:: hs_process.segment.segment
+
+.. autosummary::
+   :toctree: api/segment
+
+   band_math_derivative
+   band_math_mcari2
+   band_math_ndi
+   band_math_ratio
+   kmeans
+   load_spyfile
+
+.. currentmodule:: hs_process.spatial_mod.spatial_mod
+
+.. autosummary::
+   :toctree: api/spatial_mod
+
+   crop_many_gdf
+   crop_many_grid
+   crop_single
+   load_spyfile
+
+.. currentmodule:: hs_process.spec_mod.spec_mod
+
+.. autosummary::
+   :toctree: api/spec_mod
+
+   load_spyfile
+   spectral_clip
+   spectral_smooth
+
+.. currentmodule:: hs_process.defaults.defaults
+
+.. autosummary::
+   :toctree: api/defaults
+
+   byteorder
+   crop_defaults
+   envi_write
+   ext
+   force
+   interleave
+   spat_crop_cols
+
+.. currentmodule:: hs_process.hsio.hsio
+
+.. autosummary::
+   :toctree: api/hsio
+
+   read_cube
+   read_spec
+   set_io_defaults
+   show_img
+   write_cube
+   write_spec
+   write_tif
+
+.. currentmodule:: hs_process.hstools.hstools
+
+.. autosummary::
+   :toctree: api/hstools
+
+   clean_md_sets
+   del_meta_item
+   get_UTM
+   get_band
+   get_band_index
+   get_band_num
+   get_band_range
+   get_center_wl
+   get_meta_set
+   get_spectral_mean
+   get_wavelength
+   load_spyfile
+   mask_array
+   mask_shadow
+   mean_datacube
+   modify_meta_set

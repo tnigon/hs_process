@@ -1,0 +1,6 @@
+hs\_process.segment.segment.load\_spyfile
+=========================================
+
+.. currentmodule:: hs_process.segment
+
+.. automethod:: segment.load_spyfile

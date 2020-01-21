@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="python">
   <head>
     <meta charset="utf-8" />
-    <title>hstools &#8212; hs_process 0.0.1 documentation</title>
+    <title>2.5.3. hstools &#8212; hs_process 0.0.1 documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -17,6 +17,8 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3. License" href="../license.html" />
+    <link rel="prev" title="2.5.2. hsio" href="hs_process.utilities.hsio.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -57,14 +59,19 @@
      href="../index.html">Contents <b class="caret"></b></a>
   <ul class="dropdown-menu globaltoc"
       role="menu"
-      aria-labelledby="dLabelGlobalToc"><ul>
-<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../my_hs_process_api.html">1. API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../license.html">2. License</a></li>
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../eonr_installation.html">1. Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../my_hs_process_api.html">2. API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="hs_process.batch.batch.html">2.1.1. batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.segment.segment.html">2.2.1. segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spatial_mod.spatial_mod.html">2.3.1. spatial_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spec_mod.spec_mod.html">2.4.1. spec_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.utilities.defaults.html">2.5.1. defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.utilities.hsio.html">2.5.2. hsio</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.5.3. hstools</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../my_hs_process_api.html">1. API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">2. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">3. License</a></li>
 </ul>
 </ul>
 </li>
@@ -73,6 +80,14 @@
             
               
                 
+  <li>
+    <a href="hs_process.utilities.hsio.html" title="Previous Chapter: 2.5.2. hsio"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; 2.5.2. hsio</span>
+    </a>
+  </li>
+  <li>
+    <a href="../license.html" title="Next Chapter: 3. License"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">3. License &raquo;</span>
+    </a>
+  </li>
               
             
             
@@ -104,7 +119,7 @@
   <div class="row">
       <div class="col-md-3">
         <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
-<li><a class="reference internal" href="#">hstools</a></li>
+<li><a class="reference internal" href="#">2.5.3. hstools</a></li>
 </ul>
 
 <form action="../search.html" method="get">
@@ -119,7 +134,7 @@
     <div class="body col-md-9 content" role="main">
       
   <div class="section" id="hstools">
-<h1>hstools<a class="headerlink" href="#hstools" title="Permalink to this headline">¶</a></h1>
+<h1>2.5.3. hstools<a class="headerlink" href="#hstools" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="hs_process.utilities.hstools">
 <em class="property">class </em><code class="sig-prename descclassname">hs_process.utilities.</code><code class="sig-name descname">hstools</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools" title="Permalink to this definition">¶</a></dt>
@@ -139,12 +154,7 @@ manipulated.</p>
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.clean_md_sets" title="hs_process.utilities.hstools.clean_md_sets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_md_sets</span></code></a>([metadata])</p></td>
-<td><p><dl class="field-list simple">
-<dt class="field-odd">param metadata</dt>
-<dd class="field-odd"><p>Metadata dictionary to clean</p>
-</dd>
-</dl>
-</p></td>
+<td><p>Converts metadata items that are expressed as a list to be expressed as a dictionary.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.del_meta_item" title="hs_process.utilities.hstools.del_meta_item"><code class="xref py py-obj docutils literal notranslate"><span class="pre">del_meta_item</span></code></a>(metadata, key)</p></td>
 <td><p>Deletes metadata item from SpyFile object.</p></td>
@@ -182,16 +192,13 @@ manipulated.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.mask_array" title="hs_process.utilities.hstools.mask_array"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mask_array</span></code></a>(array, metadata[, thresh, ...])</p></td>
 <td><p>Creates a masked numpy array based on a threshold value.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.mask_datacube" title="hs_process.utilities.hstools.mask_datacube"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mask_datacube</span></code></a>(spyfile, mask)</p></td>
-<td><p>DO NOT USE; USE mean_datacube() INSTEAD AND PASS A MASK.</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">hstools.mask_shadow</span></code></p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.mask_shadow" title="hs_process.utilities.hstools.mask_shadow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mask_shadow</span></code></a>([shadow_pctl, show_histogram, ...])</p></td>
-<td><p>Creates a <code class="docutils literal notranslate"><span class="pre">numpy.mask</span></code> of all pixels that are likely shadow pixels.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.mean_datacube" title="hs_process.utilities.hstools.mean_datacube"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mean_datacube</span></code></a>(spyfile[, mask])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.mean_datacube" title="hs_process.utilities.hstools.mean_datacube"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mean_datacube</span></code></a>(spyfile[, mask])</p></td>
 <td><p>Calculates the mean spectra for a datcube; if <code class="docutils literal notranslate"><span class="pre">mask</span></code> is passed (as a np.array), then the mask is applied to <code class="docutils literal notranslate"><span class="pre">spyfile</span></code> prior to computing the mean spectra.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.modify_meta_set" title="hs_process.utilities.hstools.modify_meta_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">modify_meta_set</span></code></a>(meta_set, idx, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.utilities.hstools.modify_meta_set" title="hs_process.utilities.hstools.modify_meta_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">modify_meta_set</span></code></a>(meta_set, idx, value)</p></td>
 <td><p>Modifies metadata &quot;set&quot; (i.e., string representation of a Python set; common in .hdr files) by converting string to list, then adjusts the value of an item by its index.</p></td>
 </tr>
 </tbody>
@@ -200,7 +207,9 @@ manipulated.</p>
 <dl class="method">
 <dt id="hs_process.utilities.hstools.clean_md_sets">
 <code class="sig-name descname">clean_md_sets</code><span class="sig-paren">(</span><em class="sig-param">metadata=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.clean_md_sets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.clean_md_sets" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Converts metadata items that are expressed as a list to be expressed as
+a dictionary.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>metadata</strong> (<code class="docutils literal notranslate"><span class="pre">dict</span></code>, optional) -- Metadata dictionary to clean</p>
 </dd>
@@ -211,6 +220,24 @@ manipulated.</p>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">dict</span></code></p>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;samples&#39;</span><span class="p">:</span> <span class="mi">1827</span><span class="p">,</span>
+<span class="go">                &#39;lines&#39;: 617,</span>
+<span class="go">                &#39;bands&#39;: 4,</span>
+<span class="go">                &#39;file type&#39;: &#39;ENVI Standard&#39;,</span>
+<span class="go">                &#39;wavelength&#39;: [&#39;394.6&#39;, &#39;396.6528&#39;, &#39;398.7056&#39;,</span>
+<span class="go">                &#39;400.7584&#39;]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">clean_md_sets</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
+<span class="go">{&#39;samples&#39;: 1827,</span>
+<span class="go"> &#39;lines&#39;: 617,</span>
+<span class="go"> &#39;bands&#39;: 4,</span>
+<span class="go"> &#39;file type&#39;: &#39;ENVI Standard&#39;,</span>
+<span class="go"> &#39;wavelength&#39;: &#39;{394.6, 396.6528, 398.7056, 400.7584}&#39;}</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -232,6 +259,25 @@ metadata.</p>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">dict</span></code></p>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;samples&#39;</span><span class="p">:</span> <span class="mi">1827</span><span class="p">,</span>
+<span class="go">                &#39;lines&#39;: 617,</span>
+<span class="go">                &#39;bands&#39;: 4,</span>
+<span class="go">                &#39;file type&#39;: &#39;ENVI Standard&#39;,</span>
+<span class="go">                &#39;map info&#39;: &#39;{UTM, 1.0, 1.0, 421356.76707299997, 4844936.7317699995, 0.04, 0.04, 15, T, WGS-84, units  meters, rotation  0.000}&#39;,</span>
+<span class="go">                &#39;wavelength&#39;: [&#39;394.6&#39;, &#39;396.6528&#39;, &#39;398.7056&#39;,</span>
+<span class="go">                &#39;400.7584&#39;]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">del_meta_item</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="s1">&#39;map info&#39;</span><span class="p">)</span>
+<span class="go">{&#39;samples&#39;: 1827,</span>
+<span class="go"> &#39;lines&#39;: 617,</span>
+<span class="go"> &#39;bands&#39;: 4,</span>
+<span class="go"> &#39;file type&#39;: &#39;ENVI Standard&#39;,</span>
+<span class="go"> &#39;wavelength&#39;: [&#39;394.6&#39;, &#39;396.6528&#39;, &#39;398.7056&#39;, &#39;400.7584&#39;]}</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -242,14 +288,14 @@ metadata.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>pix_e_ul</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) -- upper left column (easting) where image cropping
-begins.</p></li>
+<li><p><strong>pix_e_ul</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) -- upper left column (easting) where image
+cropping                begins.</p></li>
 <li><p><strong>pix_n_ul</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) -- upper left row (northing) where image cropping
 begins.</p></li>
 <li><p><strong>utm_x</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code>) -- UTM easting coordinates (meters) of the original
 image (from the upper left).</p></li>
-<li><p><strong>utm_y</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code>) -- UTM northing coordinates (meters) of the original
-image (from the upper left).</p></li>
+<li><p><strong>utm_y</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code>) -- UTM northing coordinates (meters) of the
+original image (from the upper left).</p></li>
 <li><p><strong>size_x</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code>) -- Ground resolved distance of the image pixels in
 the x (easting) direction (meters).</p></li>
 <li><p><strong>size_y</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code>) -- Ground resolved distance of the image pixels in
@@ -267,6 +313,25 @@ of cropped plot.</p></li>
 </p>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">map_info_set</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">utm_x</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_meta_set</span><span class="p">(</span><span class="n">map_info_set</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">utm_y</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_meta_set</span><span class="p">(</span><span class="n">map_info_set</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spy_ps_e</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">map_info_set</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spy_ps_n</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">map_info_set</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ul_x_utm</span><span class="p">,</span> <span class="n">ul_y_utm</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_UTM</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span>
+<span class="go">                                          utm_x, utm_y,</span>
+<span class="go">                                          spy_ps_e,</span>
+<span class="go">                                          spy_ps_n)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ul_x_utm</span>
+<span class="go">441360.80707299995</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ul_y_utm</span>
+<span class="go">4855934.691769999</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -292,7 +357,10 @@ wavelength (<code class="docutils literal notranslate"><span class="pre">target_
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hstools</span><span class="o">.</span><span class="n">get_band</span><span class="p">(</span><span class="mi">703</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band</span><span class="p">(</span><span class="mi">703</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 <span class="go">151</span>
 </pre></div>
 </div>
@@ -318,7 +386,10 @@ wavelength (<code class="docutils literal notranslate"><span class="pre">target_
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hstools</span><span class="o">.</span><span class="n">get_band_index</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">111</span><span class="p">])</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_index</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">111</span><span class="p">])</span>
 <span class="go">[3, 42, 110]</span>
 </pre></div>
 </div>
@@ -330,8 +401,8 @@ wavelength (<code class="docutils literal notranslate"><span class="pre">target_
 <dd><p>Adds 1 to <code class="docutils literal notranslate"><span class="pre">band_idx</span></code> and returns the band number(s).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>band_idx</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">list</span></code>) -- the target band index(es) to retrive
-the band number for (required).</p>
+<dd class="field-odd"><p><strong>band_idx</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">list</span></code>) -- the target band index(es) to
+retrive the band number for (required).</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><strong>band_num</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">list</span></code>): band number of the passed
@@ -342,7 +413,10 @@ band index (<code class="docutils literal notranslate"><span class="pre">band_id
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hstools</span><span class="o">.</span><span class="n">get_band_num</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">111</span><span class="p">])</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_num</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">111</span><span class="p">])</span>
 <span class="go">[5, 44, 112]</span>
 </pre></div>
 </div>
@@ -358,8 +432,9 @@ wavelength range.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>range_wl</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code>) -- the minimum and maximum wavelength to consider;
 values should be <code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">float</span></code>.</p></li>
-<li><p><strong>index</strong> (<em>bool</em>) -- Indicates whether to return the band number (min=1)
-or to return index number (min=0) (default: True)</p></li>
+<li><p><strong>index</strong> (<em>bool</em>) -- Indicates whether to return the band number
+(<code class="docutils literal notranslate"><span class="pre">False</span></code>; min=1) or to return index number (<code class="docutils literal notranslate"><span class="pre">True</span></code>; min=0)
+(default: <code class="docutils literal notranslate"><span class="pre">True</span></code>).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -371,6 +446,16 @@ wavelength values.</p>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">list</span></code></p>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_range</span><span class="p">([</span><span class="mi">700</span><span class="p">,</span> <span class="mi">710</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+<span class="go">[150, 151, 152, 153, 154]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_range</span><span class="p">([</span><span class="mi">700</span><span class="p">,</span> <span class="mi">710</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+<span class="go">[149, 150, 151, 152, 153]</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -401,6 +486,17 @@ to <code class="docutils literal notranslate"><span class="pre">wl_list</span></
 </p>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bands</span><span class="p">,</span> <span class="n">wls_mean</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_center_wl</span><span class="p">([</span><span class="mi">700</span><span class="p">,</span> <span class="mi">710</span><span class="p">],</span> <span class="n">wls</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bands</span>
+<span class="go">[150, 155]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wls_mean</span>
+<span class="go">705.5992</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -418,14 +514,34 @@ returned (default: <code class="docutils literal notranslate"><span class="pre">
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>metadata_list</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code> or <code class="docutils literal notranslate"><span class="pre">str</span></code>): List of metadata set items
-(as <code class="docutils literal notranslate"><span class="pre">str</span></code>), or if idx is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, the item in the position
-described by <code class="docutils literal notranslate"><span class="pre">idx</span></code>.</p>
+<dd class="field-even"><p><strong>metadata_list</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code> or <code class="docutils literal notranslate"><span class="pre">str</span></code>): List of metadata set
+items (as <code class="docutils literal notranslate"><span class="pre">str</span></code>), or if idx is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, the item in the
+position described by <code class="docutils literal notranslate"><span class="pre">idx</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">list</span></code> or <code class="docutils literal notranslate"><span class="pre">str</span></code></p>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">map_info_set</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_meta_set</span><span class="p">(</span><span class="n">map_set</span><span class="p">)</span>
+<span class="go">[&#39;UTM&#39;,</span>
+<span class="go"> 1.0,</span>
+<span class="go"> 1.0,</span>
+<span class="go"> 441356.76707299997,</span>
+<span class="go"> 4855936.7317699995,</span>
+<span class="go"> 0.04,</span>
+<span class="go"> 0.04,</span>
+<span class="go"> 15,</span>
+<span class="go"> &#39;T&#39;,</span>
+<span class="go"> &#39;WGS-84&#39;,</span>
+<span class="go"> &#39;units  meters&#39;,</span>
+<span class="go"> &#39;rotation  0.000&#39;]</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -450,6 +566,15 @@ mean reflectance from <code class="docutils literal notranslate"><span class="pr
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">numpy.array</span></code> or <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></p>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">array_mean</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_spectral_mean</span><span class="p">([</span><span class="mi">76</span><span class="p">,</span> <span class="mi">77</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span> <span class="mi">80</span><span class="p">],</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">array_mean</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="go">0.06508882</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -475,7 +600,10 @@ target band (<code class="docutils literal notranslate"><span class="pre">target
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hstools</span><span class="o">.</span><span class="n">get_wavelength</span><span class="p">(</span><span class="mi">151</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_wavelength</span><span class="p">(</span><span class="mi">151</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 <span class="go">702.52</span>
 </pre></div>
 </div>
@@ -492,6 +620,21 @@ manipulation by the <code class="docutils literal notranslate"><span class="pre"
 manipulated.</p>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span>
+<span class="go">Data Source:   &#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip&#39;</span>
+<span class="go"># Rows:            617</span>
+<span class="go"># Samples:        1827</span>
+<span class="go"># Bands:           240</span>
+<span class="go">Interleave:        BIP</span>
+<span class="go">Quantization:  32 bits</span>
+<span class="go">Data format:   float32</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -505,18 +648,19 @@ are added to the original mask.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>array</strong> (<code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) -- The data array to mask.</p></li>
 <li><p><strong>thresh</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code> or <code class="docutils literal notranslate"><span class="pre">list</span></code>) -- The value for which to base the
-threshold; if <code class="docutils literal notranslate"><span class="pre">thresh</span></code> is <code class="docutils literal notranslate"><span class="pre">list</span></code> and <code class="docutils literal notranslate"><span class="pre">side</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, then
-all values in <code class="docutils literal notranslate"><span class="pre">thresh</span></code> will be masked; if <code class="docutils literal notranslate"><span class="pre">thresh</span></code> is <code class="docutils literal notranslate"><span class="pre">list</span></code>
-and <code class="docutils literal notranslate"><span class="pre">side</span></code> is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, then only the first value in the
-list will be considered for thresholding (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+threshold; if <code class="docutils literal notranslate"><span class="pre">thresh</span></code> is <code class="docutils literal notranslate"><span class="pre">list</span></code> and <code class="docutils literal notranslate"><span class="pre">side</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>,
+then all values in <code class="docutils literal notranslate"><span class="pre">thresh</span></code> will be masked; if <code class="docutils literal notranslate"><span class="pre">thresh</span></code> is
+<code class="docutils literal notranslate"><span class="pre">list</span></code> and <code class="docutils literal notranslate"><span class="pre">side</span></code> is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, then only the first
+value in the list will be considered for thresholding (default:
+<code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
 <li><p><strong>percentile</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code>) -- The percentile of pixels to mask; if
-<code class="docutils literal notranslate"><span class="pre">percentile``=95</span> <span class="pre">and</span> <span class="pre">``side``='lower',</span> <span class="pre">the</span> <span class="pre">lowest</span> <span class="pre">95%</span> <span class="pre">of</span> <span class="pre">pixels</span>
-<span class="pre">will</span> <span class="pre">be</span> <span class="pre">masked</span> <span class="pre">prior</span> <span class="pre">to</span> <span class="pre">calculating</span> <span class="pre">the</span> <span class="pre">mean</span> <span class="pre">spectra</span> <span class="pre">across</span>
-<span class="pre">pixels</span> <span class="pre">(default:</span> <span class="pre">``None</span></code>; range: 0-100).</p></li>
+<code class="docutils literal notranslate"><span class="pre">percentile</span></code> = 95 and <code class="docutils literal notranslate"><span class="pre">side</span></code> = 'lower', the lowest 95% of
+pixels will be masked prior to calculating the mean spectra
+across pixels (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>; range: 0-100).</p></li>
 <li><p><strong>side</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- The side of the threshold for which to apply the
 mask. Must be either 'lower', 'upper', or <code class="docutils literal notranslate"><span class="pre">None</span></code>; if 'lower',
-everything below the threshold will be masked; if <code class="docutils literal notranslate"><span class="pre">None</span></code>, only
-the values that exactly match the threshol will be masked
+everything below the threshold will be masked; if <code class="docutils literal notranslate"><span class="pre">None</span></code>,
+only the values that exactly match the threshol will be masked
 (default: 'lower').</p></li>
 </ul>
 </dd>
@@ -530,51 +674,16 @@ based on the passed threshold and/or percentile value.</p></li>
 </p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="hs_process.utilities.hstools.mask_datacube">
-<code class="sig-name descname">mask_datacube</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em>, <em class="sig-param">mask</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.mask_datacube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.mask_datacube" title="Permalink to this definition">¶</a></dt>
-<dd><p>DO NOT USE; USE mean_datacube() INSTEAD AND PASS A MASK.</p>
-<p>Applies <code class="docutils literal notranslate"><span class="pre">mask</span></code> to <code class="docutils literal notranslate"><span class="pre">spyfile</span></code>, then returns the datcube (as a np.array)
-and the mean spectra</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object or <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) -- The hyperspectral
-datacube to mask.</p></li>
-<li><p><strong>mask</strong> (<code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) -- the mask to apply to <code class="docutils literal notranslate"><span class="pre">spyfile</span></code>; if <code class="docutils literal notranslate"><span class="pre">mask</span></code>
-does not have similar dimensions to <code class="docutils literal notranslate"><span class="pre">spyfile</span></code>, the first band
-(i.e., first two dimensions) of <code class="docutils literal notranslate"><span class="pre">mask</span></code> will be repeated n times
-to match the number of bands of <code class="docutils literal notranslate"><span class="pre">spyfile</span></code>.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="hs_process.utilities.hstools.mask_shadow">
-<code class="sig-name descname">mask_shadow</code><span class="sig-paren">(</span><em class="sig-param">shadow_pctl=20</em>, <em class="sig-param">show_histogram=False</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.mask_shadow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.utilities.hstools.mask_shadow" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a <code class="docutils literal notranslate"><span class="pre">numpy.mask</span></code> of all pixels that are likely shadow pixels.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>shadow_pctl</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) -- the percentile of pixels in the image to mask
-(default: 20).</p></li>
-<li><p><strong>show_histogram</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) -- </p></li>
-<li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile.SpyFile</span></code> object) -- </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p>2-element <code class="docutils literal notranslate"><span class="pre">tuple</span></code> containing</p>
-<ul class="simple">
-<li><p><strong>array_noshadow.mask</strong> (<code class="docutils literal notranslate"><span class="pre">numpy.mask</span></code>): The mask indicating all
-pixels that are likely shadow pixels.</p></li>
-<li><p><strong>metadata</strong> (<code class="docutils literal notranslate"><span class="pre">dict</span></code>): The modified metadata.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">array</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">()[:,</span> <span class="p">:,</span> <span class="mi">151</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">array_mask</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">mask_array</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span> <span class="n">percentile</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">160</span><span class="p">:]</span>
+<span class="go">&quot;hs_process.mask_array[&lt;label: &#39;thresh?&#39; value:None; label: &#39;percentile?&#39; value:0.9; label: &#39;side?&#39; value:lower; label: &#39;unmasked_pct?&#39; value:91.20113478801234&gt;]&quot;</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -586,12 +695,12 @@ the mean spectra.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object or <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) -- The hyperspectral
-datacube to mask.</p></li>
-<li><p><strong>mask</strong> (<code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) -- the mask to apply to <code class="docutils literal notranslate"><span class="pre">spyfile</span></code>; if <code class="docutils literal notranslate"><span class="pre">mask</span></code>
-does not have similar dimensions to <code class="docutils literal notranslate"><span class="pre">spyfile</span></code>, the first band
-(i.e., first two dimensions) of <code class="docutils literal notranslate"><span class="pre">mask</span></code> will be repeated n times
-to match the number of bands of <code class="docutils literal notranslate"><span class="pre">spyfile</span></code>.</p></li>
+<li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object or <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) -- The
+hyperspectral datacube to mask.</p></li>
+<li><p><strong>mask</strong> (<code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) -- the mask to apply to <code class="docutils literal notranslate"><span class="pre">spyfile</span></code>; if
+<code class="docutils literal notranslate"><span class="pre">mask</span></code> does not have similar dimensions to <code class="docutils literal notranslate"><span class="pre">spyfile</span></code>, the
+first band (i.e., first two dimensions) of <code class="docutils literal notranslate"><span class="pre">mask</span></code> will be
+repeated n times to match the number of bands of <code class="docutils literal notranslate"><span class="pre">spyfile</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -608,6 +717,19 @@ identical to the <code class="docutils literal notranslate"><span class="pre">Sp
 </p>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">array</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">()[:,</span> <span class="p">:,</span> <span class="mi">151</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">array_mask</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">mask_array</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span> <span class="n">percentile</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spec_mean</span><span class="p">,</span> <span class="n">spec_std</span><span class="p">,</span> <span class="n">datacube_masked</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">mean_datacube</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">array_mask</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spec_mean</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="go">0.13062502443790436</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spec_std</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="go">0.04113079607486725</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -632,6 +754,16 @@ returned (default: <code class="docutils literal notranslate"><span class="pre">
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">map_info_set</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">map_info_set</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">modify_meta_set</span><span class="p">(</span><span class="n">map_info_set</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">441300.2</span><span class="p">)</span>
+<span class="go">&#39;{UTM, 1.0, 1.0, 441342.687073, 441300.2, 0.04, 0.04, 15, T, WGS-84, units  meters, rotation  0.000}&#39;</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </dd></dl>

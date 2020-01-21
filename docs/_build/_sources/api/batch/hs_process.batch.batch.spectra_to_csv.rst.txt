@@ -1,0 +1,6 @@
+hs\_process.batch.batch.spectra\_to\_csv
+========================================
+
+.. currentmodule:: hs_process.batch
+
+.. automethod:: batch.spectra_to_csv

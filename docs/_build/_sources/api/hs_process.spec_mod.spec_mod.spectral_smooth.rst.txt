@@ -1,0 +1,6 @@
+hs\_process.spec\_mod.spec\_mod.spectral\_smooth
+================================================
+
+.. currentmodule:: hs_process.spec_mod
+
+.. automethod:: spec_mod.spectral_smooth

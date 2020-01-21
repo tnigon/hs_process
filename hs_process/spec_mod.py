@@ -146,6 +146,37 @@ class spec_mod(object):
             - **array_clip** (`numpy.ndarray`): Clipped datacube.
             - **metadata** (`dict`): Modified metadata describing the clipped
               hyperspectral datacube (`array_clip`).
+
+        Example:
+            >>> from hs_process import hsio # load hiso
+            >>> from hs_process import spec_mod
+
+            >>> fname_hdr = r'F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> io = hsio()  # initialize the hsio class (note there are no required parameters)
+            >>> io.read_cube(fname_hdr)
+            >>> io.spyfile
+            Data Source:   'F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
+        	# Rows:            617
+        	# Samples:        1827
+        	# Bands:           240
+        	Interleave:        BIP
+        	Quantization:  32 bits
+        	Data format:   float32
+
+            >>> my_spec_mod = spec_mod(io.spyfile) #initalize
+            >>> array_clip, metadata = my_spec_mod.spectral_clip(wl_bands=[[0, 420], [760, 776], [813, 827], [880, 1000]]) #remove o2, EDGE, h20
+
+            >>> fname_hdr_clip = r'F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip.hdr'
+            >>> io.write_cube(fname_hdr_clip, array_clip, metadata)
+            >>> io.read_cube(fname_hdr_clip)
+            >>> io.spyfile
+            Data Source:   'F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip'
+        	# Rows:            617
+        	# Samples:        1827
+        	# Bands:           210
+        	Interleave:        BIP
+        	Quantization:  32 bits
+        	Data format:   float32
         '''
         if spyfile is None:
             spyfile = self.spyfile

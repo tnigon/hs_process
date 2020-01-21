@@ -23,7 +23,6 @@ hstools
       ~hstools.get_wavelength
       ~hstools.load_spyfile
       ~hstools.mask_array
-      ~hstools.mask_datacube
       ~hstools.mask_shadow
       ~hstools.mean_datacube
       ~hstools.modify_meta_set
@@ -43,7 +42,6 @@ hstools
    .. automethod:: get_wavelength
    .. automethod:: load_spyfile
    .. automethod:: mask_array
-   .. automethod:: mask_datacube
    .. automethod:: mask_shadow
    .. automethod:: mean_datacube
    .. automethod:: modify_meta_set

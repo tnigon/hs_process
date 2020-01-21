@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="python">
   <head>
     <meta charset="utf-8" />
-    <title>spatial_mod &#8212; hs_process 0.0.1 documentation</title>
+    <title>2.3.1. spatial_mod &#8212; hs_process 0.0.1 documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -57,14 +57,19 @@
      href="../index.html">Contents <b class="caret"></b></a>
   <ul class="dropdown-menu globaltoc"
       role="menu"
-      aria-labelledby="dLabelGlobalToc"><ul>
-<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../my_hs_process_api.html">1. API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../license.html">2. License</a></li>
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../eonr_installation.html">1. Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../my_hs_process_api.html">2. API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="hs_process.batch.batch.html">2.1.1. batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.segment.segment.html">2.2.1. segment</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.3.1. spatial_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spec_mod.spec_mod.html">2.4.1. spec_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.utilities.defaults.html">2.5.1. defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.utilities.hsio.html">2.5.2. hsio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.utilities.hstools.html">2.5.3. hstools</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../my_hs_process_api.html">1. API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">2. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">3. License</a></li>
 </ul>
 </ul>
 </li>
@@ -104,7 +109,7 @@
   <div class="row">
       <div class="col-md-3">
         <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
-<li><a class="reference internal" href="#">spatial_mod</a></li>
+<li><a class="reference internal" href="#">2.3.1. spatial_mod</a></li>
 </ul>
 
 <form action="../search.html" method="get">
@@ -119,7 +124,7 @@
     <div class="body col-md-9 content" role="main">
       
   <div class="section" id="spatial-mod">
-<h1>spatial_mod<a class="headerlink" href="#spatial-mod" title="Permalink to this headline">¶</a></h1>
+<h1>2.3.1. spatial_mod<a class="headerlink" href="#spatial-mod" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="hs_process.spatial_mod.spatial_mod">
 <em class="property">class </em><code class="sig-prename descclassname">hs_process.spatial_mod.</code><code class="sig-name descname">spatial_mod</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em>, <em class="sig-param">gdf=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/spatial_mod.html#spatial_mod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spatial_mod.spatial_mod" title="Permalink to this definition">¶</a></dt>
@@ -355,6 +360,27 @@ hyperspectral datacube (<cite>array_crop</cite>).</p></li>
 </p>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">spatial_mod</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_spatial_mod</span> <span class="o">=</span> <span class="n">spatial_mod</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pix_e_ul</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pix_n_ul</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_spatial_mod</span><span class="o">.</span><span class="n">crop_single</span><span class="p">(</span><span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="p">,</span> <span class="n">crop_e_pix</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">crop_n_pix</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span>
+<span class="go">    Data Source:   &#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip&#39;</span>
+<span class="go">    # Rows:            617</span>
+<span class="go">    # Samples:        1827</span>
+<span class="go">    # Bands:           240</span>
+<span class="go">    Interleave:        BIP</span>
+<span class="go">    Quantization:  32 bits</span>
+<span class="go">    Data format:   float32</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">array_crop</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(50, 200, 240)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -368,6 +394,23 @@ manipulation by the <cite>hstools</cite> class.</p>
 manipulated.</p>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">spatial_mod</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_spatial_mod</span> <span class="o">=</span> <span class="n">spatial_mod</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_spatial_mod</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span>
+<span class="go">Data Source:   &#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip&#39;</span>
+<span class="go"># Rows:            617</span>
+<span class="go"># Samples:        1827</span>
+<span class="go"># Bands:           240</span>
+<span class="go">Interleave:        BIP</span>
+<span class="go">Quantization:  32 bits</span>
+<span class="go">Data format:   float32</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </dd></dl>

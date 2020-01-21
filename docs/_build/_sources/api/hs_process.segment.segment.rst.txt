@@ -16,8 +16,6 @@ segment
       ~segment.band_math_ratio
       ~segment.kmeans
       ~segment.load_spyfile
-      ~segment.mask_datacube
-      ~segment.veg_spectra
 
    .. rubric:: Methods Documentation
 
@@ -27,5 +25,3 @@ segment
    .. automethod:: band_math_ratio
    .. automethod:: kmeans
    .. automethod:: load_spyfile
-   .. automethod:: mask_datacube
-   .. automethod:: veg_spectra

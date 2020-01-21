@@ -58,13 +58,18 @@
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul>
-<li class="toctree-l1"><a class="reference internal" href="../../index.html">Home</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../my_hs_process_api.html">1. API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../license.html">2. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../eonr_installation.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../my_hs_process_api.html">2. API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.batch.batch.html">2.1.1. batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.segment.segment.html">2.2.1. segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.spatial_mod.spatial_mod.html">2.3.1. spatial_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.spec_mod.spec_mod.html">2.4.1. spec_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.utilities.defaults.html">2.5.1. defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.utilities.hsio.html">2.5.2. hsio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.utilities.hstools.html">2.5.3. hstools</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../my_hs_process_api.html">1. API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../license.html">2. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">3. License</a></li>
 </ul>
 </ul>
 </li>
@@ -758,6 +763,26 @@
 <span class="sd">            - **array_crop** (`numpy.ndarray`): Cropped datacube.</span>
 <span class="sd">            - **metadata** (`dict`): Modified metadata describing the cropped</span>
 <span class="sd">              hyperspectral datacube (`array_crop`).</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; from hs_process import hsio</span>
+<span class="sd">            &gt;&gt;&gt; from hs_process import spatial_mod</span>
+<span class="sd">            &gt;&gt;&gt; fname_in = r&#39;F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="sd">            &gt;&gt;&gt; io = hsio(fname_in)</span>
+<span class="sd">            &gt;&gt;&gt; my_spatial_mod = spatial_mod(io.spyfile)</span>
+<span class="sd">            &gt;&gt;&gt; pix_e_ul = 100</span>
+<span class="sd">            &gt;&gt;&gt; pix_n_ul = 50</span>
+<span class="sd">            &gt;&gt;&gt; array_crop, metadata = my_spatial_mod.crop_single(pix_e_ul, pix_n_ul, crop_e_pix=200, crop_n_pix=50)</span>
+<span class="sd">            &gt;&gt;&gt; io.spyfile</span>
+<span class="sd">        	Data Source:   &#39;F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip&#39;</span>
+<span class="sd">        	# Rows:            617</span>
+<span class="sd">        	# Samples:        1827</span>
+<span class="sd">        	# Bands:           240</span>
+<span class="sd">        	Interleave:        BIP</span>
+<span class="sd">        	Quantization:  32 bits</span>
+<span class="sd">        	Data format:   float32</span>
+<span class="sd">            &gt;&gt;&gt; array_crop.shape</span>
+<span class="sd">            (50, 200, 240)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">crop_e_pix</span><span class="p">,</span> <span class="n">crop_n_pix</span><span class="p">,</span> <span class="n">crop_e_m</span><span class="p">,</span> <span class="n">crop_n_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_defaults</span><span class="p">(</span>
                 <span class="n">crop_e_pix</span><span class="p">,</span> <span class="n">crop_n_pix</span><span class="p">,</span> <span class="n">crop_e_m</span><span class="p">,</span> <span class="n">crop_n_m</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s1">&#39;crop&#39;</span><span class="p">)</span>
@@ -832,6 +857,22 @@
 <span class="sd">        Parameters:</span>
 <span class="sd">            spyfile (`SpyFile` object): The datacube being accessed and/or</span>
 <span class="sd">                manipulated.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; from hs_process import hsio</span>
+<span class="sd">            &gt;&gt;&gt; from hs_process import spatial_mod</span>
+<span class="sd">            &gt;&gt;&gt; fname_in = r&#39;F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="sd">            &gt;&gt;&gt; io = hsio(fname_in)</span>
+<span class="sd">            &gt;&gt;&gt; my_spatial_mod = spatial_mod(io.spyfile)</span>
+<span class="sd">            &gt;&gt;&gt; my_spatial_mod.load_spyfile(io.spyfile)</span>
+<span class="sd">            &gt;&gt;&gt; io.tools.spyfile</span>
+<span class="sd">            Data Source:   &#39;F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip&#39;</span>
+<span class="sd">            # Rows:            617</span>
+<span class="sd">            # Samples:        1827</span>
+<span class="sd">            # Bands:           240</span>
+<span class="sd">            Interleave:        BIP</span>
+<span class="sd">            Quantization:  32 bits</span>
+<span class="sd">            Data format:   float32</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span> <span class="o">=</span> <span class="n">spyfile</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tools</span> <span class="o">=</span> <span class="n">hstools</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>

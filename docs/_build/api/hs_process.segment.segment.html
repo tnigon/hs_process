@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="python">
   <head>
     <meta charset="utf-8" />
-    <title>2.1.1.1. segment &#8212; hs_process 0.0.1 documentation</title>
+    <title>2.2.1. segment &#8212; hs_process 0.0.1 documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -57,14 +57,19 @@
      href="../index.html">Contents <b class="caret"></b></a>
   <ul class="dropdown-menu globaltoc"
       role="menu"
-      aria-labelledby="dLabelGlobalToc"><ul>
-<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../my_hs_process_api.html">1. API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../license.html">2. License</a></li>
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../eonr_installation.html">1. Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../my_hs_process_api.html">2. API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="hs_process.batch.batch.html">2.1.1. batch</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.2.1. segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spatial_mod.spatial_mod.html">2.3.1. spatial_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spec_mod.spec_mod.html">2.4.1. spec_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.utilities.defaults.html">2.5.1. defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.utilities.hsio.html">2.5.2. hsio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.utilities.hstools.html">2.5.3. hstools</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../my_hs_process_api.html">1. API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../license.html">2. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">3. License</a></li>
 </ul>
 </ul>
 </li>
@@ -104,7 +109,7 @@
   <div class="row">
       <div class="col-md-3">
         <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
-<li><a class="reference internal" href="#">2.1.1.1. segment</a></li>
+<li><a class="reference internal" href="#">2.2.1. segment</a></li>
 </ul>
 
 <form action="../search.html" method="get">
@@ -119,7 +124,7 @@
     <div class="body col-md-9 content" role="main">
       
   <div class="section" id="segment">
-<h1>segment<a class="headerlink" href="#segment" title="Permalink to this headline">¶</a></h1>
+<h1>2.2.1. segment<a class="headerlink" href="#segment" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="hs_process.segment.segment">
 <em class="property">class </em><code class="sig-prename descclassname">hs_process.segment.</code><code class="sig-name descname">segment</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.segment" title="Permalink to this definition">¶</a></dt>
@@ -150,12 +155,6 @@ pixels that are of most interest.</p>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#hs_process.segment.segment.load_spyfile" title="hs_process.segment.segment.load_spyfile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_spyfile</span></code></a>(spyfile)</p></td>
 <td><p>Loads a <cite>SpyFile</cite> (Spectral Python object) for data access and/or manipulation by the <cite>hstools</cite> class.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.segment.segment.mask_datacube" title="hs_process.segment.segment.mask_datacube"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mask_datacube</span></code></a>(mask[, spyfile])</p></td>
-<td><p>Applies <cite>mask</cite> to <cite>spyfile</cite>, then returns the datcube (as a np.array) and the mean spectra</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.segment.segment.veg_spectra" title="hs_process.segment.segment.veg_spectra"><code class="xref py py-obj docutils literal notranslate"><span class="pre">veg_spectra</span></code></a>(array_veg[, thresh, percentile, ...])</p></td>
-<td><p>Calculates the average spectra across vegetation pixels</p></td>
 </tr>
 </tbody>
 </table>
@@ -337,50 +336,6 @@ manipulation by the <cite>hstools</cite> class.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>spyfile</strong> (<cite>SpyFile</cite> object) -- The datacube being accessed and/or
 manipulated.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="hs_process.segment.segment.mask_datacube">
-<code class="sig-name descname">mask_datacube</code><span class="sig-paren">(</span><em class="sig-param">mask</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment.mask_datacube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.segment.mask_datacube" title="Permalink to this definition">¶</a></dt>
-<dd><p>Applies <cite>mask</cite> to <cite>spyfile</cite>, then returns the datcube (as a np.array)
-and the mean spectra</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>mask</strong> (<cite>numpy.ndarray</cite>) -- the mask to apply to <cite>spyfile</cite>; if <cite>mask</cite>
-does not have similar dimensions to <cite>spyfile</cite>, the first band
-(i.e., first two dimensions) of <cite>mask</cite> will be repeated n times
-to match the number of bands of <cite>spyfile</cite>.</p></li>
-<li><p><strong>spyfile</strong> (<cite>SpyFile</cite> object) -- The datacube being accessed and/or
-manipulated.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="hs_process.segment.segment.veg_spectra">
-<code class="sig-name descname">veg_spectra</code><span class="sig-paren">(</span><em class="sig-param">array_veg</em>, <em class="sig-param">thresh=None</em>, <em class="sig-param">percentile=None</em>, <em class="sig-param">side='lower'</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment.veg_spectra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.segment.veg_spectra" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the average spectra across vegetation pixels</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>array_veg</strong> (<cite>numpy.ndarray</cite>) -- a single-band image array, presumably
-that discriminates vegetation pixels from other pixels such as
-soil, shadow, etc.</p></li>
-<li><p><strong>thresh</strong> (<cite>float</cite>) -- The value for which to base the threshold
-(default: <cite>None</cite>).</p></li>
-<li><p><strong>percentile</strong> (<cite>float</cite> or <cite>int</cite>) -- The percentile of pixels to mask; if
-<cite>percentile`=95 and `side`='lower', the lowest 95% of pixels
-will be masked prior to calculating the mean spectra across
-pixels (default: `None</cite>; range: 0-100).</p></li>
-<li><p><strong>side</strong> (<cite>str</cite>) -- The side of the threshold or percentile for which to
-apply the mask. Must be either 'lower' or 'upper'; if 'lower',
-everything below the threshold/percentile will be masked
-(default: 'lower').</p></li>
-</ul>
 </dd>
 </dl>
 </dd></dl>

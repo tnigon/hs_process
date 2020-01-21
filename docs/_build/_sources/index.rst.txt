@@ -18,12 +18,11 @@ Table of Contents
 *Navigate the* **hs_process Documentation** *using the* **"Contents"** *dropdown in the Navigation Bar*
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
    :numbered:
    :titlesonly:
 
-   Home <index>
-   installation
+   eonr_installation
    my_hs_process_api
    license
 

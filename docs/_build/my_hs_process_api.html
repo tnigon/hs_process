@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="python">
   <head>
     <meta charset="utf-8" />
-    <title>1. API &#8212; hs_process 0.0.1 documentation</title>
+    <title>2. API &#8212; hs_process 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
@@ -17,7 +17,8 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="2. License" href="license.html" />
+    <link rel="next" title="2.1.1. batch" href="api/hs_process.batch.batch.html" />
+    <link rel="prev" title="1. Installation" href="eonr_installation.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -59,13 +60,18 @@
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Home</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">1. API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="license.html">2. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eonr_installation.html">1. Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2. API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.batch.batch.html">2.1.1. batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.segment.segment.html">2.2.1. segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.spatial_mod.spatial_mod.html">2.3.1. spatial_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.spec_mod.spec_mod.html">2.4.1. spec_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.utilities.defaults.html">2.5.1. defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.utilities.hsio.html">2.5.2. hsio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.utilities.hstools.html">2.5.3. hstools</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">1. API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">2. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">3. License</a></li>
 </ul>
 </ul>
 </li>
@@ -75,7 +81,11 @@
               
                 
   <li>
-    <a href="license.html" title="Next Chapter: 2. License"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">2. License &raquo;</span>
+    <a href="eonr_installation.html" title="Previous Chapter: 1. Installation"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; 1. Installation</span>
+    </a>
+  </li>
+  <li>
+    <a href="api/hs_process.batch.batch.html" title="Next Chapter: 2.1.1. batch"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">2.1.1. batch &raquo;</span>
     </a>
   </li>
               
@@ -109,12 +119,12 @@
   <div class="row">
       <div class="col-md-3">
         <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
-<li><a class="reference internal" href="#">1. API</a><ul>
-<li><a class="reference internal" href="#batch-processing">1.1. Batch Processing</a></li>
-<li><a class="reference internal" href="#segementation">1.2. Segementation</a></li>
-<li><a class="reference internal" href="#spatial-modifications">1.3. Spatial Modifications</a></li>
-<li><a class="reference internal" href="#spectral-modifications">1.4. Spectral Modifications</a></li>
-<li><a class="reference internal" href="#utilities">1.5. Utilities</a></li>
+<li><a class="reference internal" href="#">2. API</a><ul>
+<li><a class="reference internal" href="#classes">2.1. Classes</a></li>
+<li><a class="reference internal" href="#id1">2.2. Classes</a></li>
+<li><a class="reference internal" href="#id2">2.3. Classes</a></li>
+<li><a class="reference internal" href="#id3">2.4. Classes</a></li>
+<li><a class="reference internal" href="#id4">2.5. Classes</a></li>
 </ul>
 </li>
 </ul>
@@ -130,10 +140,10 @@
       </div>
     <div class="body col-md-9 content" role="main">
       
-  <div class="section" id="api">
-<h1>1. API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="batch-processing">
-<h2>1.1. <a class="reference external" href="api/hs_process.batch.batch.html">Batch Processing</a><a class="headerlink" href="#batch-processing" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="module-hs_process.batch">
+<span id="api"></span><h1>2. API<a class="headerlink" href="#module-hs_process.batch" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="classes">
+<h2>2.1. Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
@@ -147,7 +157,7 @@
 <td><p>Class containing all defaults for writing an ENVI datacube to file.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">hsio</span></code>([fname_in, name_long, name_plot, ...])</p></td>
-<td><p>Class for reading and writing hyperspectral data files and accessing, interpreting, and modifying its associated metadata.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">hsio</span></code> is a class for reading and writing hyperspectral data files, as well as accessing, interpreting, and modifying its associated metadata.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">segment</span></code>(spyfile)</p></td>
 <td><p>Class for aiding in the segmentation/masking of image data to include pixels that are of most interest.</p></td>
@@ -160,9 +170,9 @@
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="segementation">
-<h2>1.2. <a class="reference external" href="api/hs_process.segment.segment.html">Segementation</a><a class="headerlink" href="#segementation" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-hs_process.segment"></span></div>
+<div class="section" id="id1">
+<h2>2.2. Classes<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
@@ -180,9 +190,9 @@
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="spatial-modifications">
-<h2>1.3. <a class="reference external" href="api/hs_process.spatial_mod.spatial_mod.html">Spatial Modifications</a><a class="headerlink" href="#spatial-modifications" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-hs_process.spatial_mod"></span></div>
+<div class="section" id="id2">
+<h2>2.3. Classes<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
@@ -203,9 +213,9 @@
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="spectral-modifications">
-<h2>1.4. <a class="reference external" href="api/hs_process.spec_mod.spec_mod.html">Spectral Modifications</a><a class="headerlink" href="#spectral-modifications" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-hs_process.spec_mod"></span></div>
+<div class="section" id="id3">
+<h2>2.4. Classes<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
@@ -220,9 +230,9 @@
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="utilities">
-<h2>1.5. Utilities<a class="headerlink" href="#utilities" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-hs_process.utilities"></span></div>
+<div class="section" id="id4">
+<h2>2.5. Classes<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
@@ -233,7 +243,7 @@
 <td><p>Class containing all defaults for writing an ENVI datacube to file.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/hs_process.utilities.hsio.html#hs_process.utilities.hsio" title="hs_process.utilities.hsio"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hsio</span></code></a>([fname_in, name_long, name_plot, ...])</p></td>
-<td><p>Class for reading and writing hyperspectral data files and accessing, interpreting, and modifying its associated metadata.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">hsio</span></code> is a class for reading and writing hyperspectral data files, as well as accessing, interpreting, and modifying its associated metadata.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/hs_process.utilities.hstools.html#hs_process.utilities.hstools" title="hs_process.utilities.hstools"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hstools</span></code></a>(spyfile)</p></td>
 <td><p>Basic tools for manipulating Spyfiles and accessing their metadata.</p></td>

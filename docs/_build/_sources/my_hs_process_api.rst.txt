@@ -1,27 +1,27 @@
 API
 =====
 
-`Batch Processing <api/hs_process.batch.batch.html>`__
-------------------------------------------------------
-.. automodsumm:: hs_process.batch
-   :classes-only:
+.. automodapi:: hs_process.batch
+   :no-heading:
+   :functions-only:
+   :headings: --
 
-`Segementation <api/hs_process.segment.segment.html>`__
--------------------------------------------------------
-.. automodsumm:: hs_process.segment
-   :classes-only:
+.. automodapi:: hs_process.segment
+   :no-heading:
+   :functions-only:
+   :headings: --
 
-`Spatial Modifications <api/hs_process.spatial_mod.spatial_mod.html>`__
------------------------------------------------------------------------
-.. automodsumm:: hs_process.spatial_mod
-   :classes-only:
+.. automodapi:: hs_process.spatial_mod
+   :no-heading:
+   :functions-only:
+   :headings: --
 
-`Spectral Modifications <api/hs_process.spec_mod.spec_mod.html>`__
-------------------------------------------------------------------
-.. automodsumm:: hs_process.spec_mod
-   :classes-only:
+.. automodapi:: hs_process.spec_mod
+   :no-heading:
+   :functions-only:
+   :headings: --
 
-Utilities
--------------
-.. automodsumm:: hs_process.utilities
-   :classes-only:
+.. automodapi:: hs_process.utilities
+   :no-heading:
+   :functions-only:
+   :headings: --

@@ -1,0 +1,6 @@
+hs\_process.batch.batch.cube\_to\_spectra
+=========================================
+
+.. currentmodule:: hs_process.batch
+
+.. automethod:: batch.cube_to_spectra
