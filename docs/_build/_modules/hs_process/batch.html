@@ -60,13 +60,13 @@
       aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="../../eonr_installation.html">1. Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../my_hs_process_api.html">2. API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.batch.batch.html">2.1.1. batch</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.segment.segment.html">2.2.1. segment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.spatial_mod.spatial_mod.html">2.3.1. spatial_mod</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.spec_mod.spec_mod.html">2.4.1. spec_mod</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.utilities.defaults.html">2.5.1. defaults</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.utilities.hsio.html">2.5.2. hsio</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.utilities.hstools.html">2.5.3. hstools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.batch.html">2.1.1. batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.defaults.html">2.1.2. defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.hsio.html">2.1.3. hsio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.hstools.html">2.1.4. hstools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.segment.html">2.1.5. segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.spatial_mod.html">2.1.6. spatial_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.spec_mod.html">2.1.7. spec_mod</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../license.html">3. License</a></li>
@@ -133,22 +133,38 @@
 <span class="kn">from</span> <span class="nn">hs_process.spatial_mod</span> <span class="k">import</span> <span class="n">spatial_mod</span>
 
 
-<div class="viewcode-block" id="batch"><a class="viewcode-back" href="../../api/hs_process.batch.batch.html#hs_process.batch.batch">[docs]</a><span class="k">class</span> <span class="nc">batch</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="batch"><a class="viewcode-back" href="../../api/hs_process.batch.html#hs_process.batch">[docs]</a><span class="k">class</span> <span class="nc">batch</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Parent class for batch processing hyperspectral image data</span>
+<span class="sd">    Class for batch processing hyperspectral image data. Makes use of</span>
+<span class="sd">    `segment`_, `spatial_mod`_, and `spec_mod`_ to batch process many</span>
+<span class="sd">    datacubes in a given directory. Supports options to save full</span>
+<span class="sd">    datacubes, geotiff renders, as well as summary statistics and/or</span>
+<span class="sd">    reports for the various tools.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        It may be a good idea to review and understand the `defaults`_,</span>
+<span class="sd">        `hsio`_, `hstools`_, `segment`_, `spatial_mod`_, and `spec_mod`_</span>
+<span class="sd">        classes prior to using the ``batch`` module.</span>
+
+<span class="sd">    .. _defaults: hs_process.defaults.html</span>
+<span class="sd">    .. _hsio: hs_process.hsio.html</span>
+<span class="sd">    .. _hstools: hs_process.hstools.html</span>
+<span class="sd">    .. _segment: hs_process.segment.html</span>
+<span class="sd">    .. _spatial_mod: hs_process.spatial_mod.html</span>
+<span class="sd">    .. _spec_mod: hs_process.spec_mod.html</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;.bip&#39;</span><span class="p">,</span> <span class="n">dir_level</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Parameters:</span>
-<span class="sd">            base_dir (`str`, optional): directory path to search for files to</span>
-<span class="sd">                spectrally clip; if `fname_list` is not `None`, `base_dir` will</span>
-<span class="sd">                be ignored (default: `None`).</span>
-<span class="sd">            search_ext (`str`): file format/extension to search for in all</span>
+<span class="sd">            base_dir (``str``, optional): directory path to search for files to</span>
+<span class="sd">                spectrally clip; if ``fname_list`` is not ``None``, ``base_dir`` will</span>
+<span class="sd">                be ignored (default: ``None``).</span>
+<span class="sd">            search_ext (``str``): file format/extension to search for in all</span>
 <span class="sd">                directories and subdirectories to determine which files to</span>
-<span class="sd">                process; if `fname_list` is not `None`, `search_ext` will</span>
+<span class="sd">                process; if ``fname_list`` is not ``None``, ``search_ext`` will</span>
 <span class="sd">                be ignored (default: &#39;bip&#39;).</span>
-<span class="sd">            dir_level (`int`): The number of directory levels to search; if</span>
-<span class="sd">                `None`, searches all directory levels (default: 0).</span>
+<span class="sd">            dir_level (``int``): The number of directory levels to search; if</span>
+<span class="sd">                ``None``, searches all directory levels (default: 0).</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">base_dir</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">search_ext</span> <span class="o">=</span> <span class="n">search_ext</span>
@@ -179,7 +195,7 @@
 <span class="sd">        Checks if any files in fname_list have already (presumably) undergone</span>
 <span class="sd">        processing. This is determined by checking if a file exists with a</span>
 <span class="sd">        particular name based on the filename in fname_list and naming</span>
-<span class="sd">        parameters (i.e,. `folder_name` and `name_append`).</span>
+<span class="sd">        parameters (i.e,. ``folder_name`` and ``name_append``).</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">append_extra</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">append_extra</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
@@ -200,11 +216,11 @@
                 <span class="n">fname_list_final</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;There are no files to process. Please check if files have &#39;</span>
                <span class="s1">&#39;already undergone processing. If existing files should be &#39;</span>
-               <span class="s1">&#39;overwritten, be sure to set the `out_force` parameter.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+               <span class="s1">&#39;overwritten, be sure to set the ``out_force`` parameter.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fname_list_final</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">),</span> <span class="n">msg</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Processing </span><span class="si">{0}</span><span class="s1"> files. If this is not what is expected, please &#39;</span>
               <span class="s1">&#39;check if files have already undergone processing. If existing &#39;</span>
-              <span class="s1">&#39;files should be overwritten, be sure to set the `out_force` &#39;</span>
+              <span class="s1">&#39;files should be overwritten, be sure to set the ``out_force`` &#39;</span>
               <span class="s1">&#39;parameter.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fname_list_final</span><span class="p">)))</span>
         <span class="k">return</span> <span class="n">fname_list_final</span>
 
@@ -213,9 +229,9 @@
 <span class="sd">        Reads the necessary information from the spreadsheet and saves it</span>
 <span class="sd">        to a dictionary</span>
 
-<span class="sd">        If this function causes an error, try checking `batch.defaults` - these</span>
+<span class="sd">        If this function causes an error, try checking ``batch.defaults`` - these</span>
 <span class="sd">        should be adjusted according to the default column names of the input</span>
-<span class="sd">        (i.e., `fname_sheet`).</span>
+<span class="sd">        (i.e., ``fname_sheet``).</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">crop_specs</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="s1">&#39;directory&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_try_dict</span><span class="p">(</span><span class="s1">&#39;directory&#39;</span><span class="p">,</span> <span class="n">row</span><span class="p">),</span>
@@ -274,8 +290,8 @@
 
     <span class="k">def</span> <span class="nf">_pix_to_mapunit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crop_specs</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Looks over specifications of `crop_specs`, and converts betweeen pixel</span>
-<span class="sd">        units and map units if one is populated and the other is `None`</span>
+<span class="sd">        Looks over specifications of ``crop_specs``, and converts betweeen pixel</span>
+<span class="sd">        units and map units if one is populated and the other is ``None``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">cs</span> <span class="o">=</span> <span class="n">crop_specs</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
@@ -319,7 +335,7 @@
         <span class="k">return</span> <span class="n">cs</span>
 
     <span class="k">def</span> <span class="nf">_many_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cs</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Wrapper to get consice access to `spatial_mod.crop_many_grid()&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;Wrapper to get consice access to ``spatial_mod.crop_many_grid()&#39;&#39;&#39;</span>
         <span class="n">df_plots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_spatial_mod</span><span class="o">.</span><span class="n">crop_many_grid</span><span class="p">(</span>
             <span class="n">cs</span><span class="p">[</span><span class="s1">&#39;plot_id&#39;</span><span class="p">],</span> <span class="n">pix_e_ul</span><span class="o">=</span><span class="n">cs</span><span class="p">[</span><span class="s1">&#39;pix_e_ul&#39;</span><span class="p">],</span> <span class="n">pix_n_ul</span><span class="o">=</span><span class="n">cs</span><span class="p">[</span><span class="s1">&#39;pix_n_ul&#39;</span><span class="p">],</span>
             <span class="n">crop_e_m</span><span class="o">=</span><span class="n">cs</span><span class="p">[</span><span class="s1">&#39;crop_e_m&#39;</span><span class="p">],</span> <span class="n">crop_n_m</span><span class="o">=</span><span class="n">cs</span><span class="p">[</span><span class="s1">&#39;crop_n_m&#39;</span><span class="p">],</span>
@@ -330,8 +346,8 @@
 
     <span class="k">def</span> <span class="nf">_many_gdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cs</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Wrapper to get consice access to `spatial_mod.crop_many_gdf();</span>
-<span class="sd">        `my_spatial_mod` already has access to `spyfile` and `gdf`, so no need</span>
+<span class="sd">        Wrapper to get consice access to ``spatial_mod.crop_many_gdf();</span>
+<span class="sd">        ``my_spatial_mod`` already has access to ``spyfile`` and ``gdf``, so no need</span>
 <span class="sd">        to pass them here.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">df_plots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_spatial_mod</span><span class="o">.</span><span class="n">crop_many_gdf</span><span class="p">(</span>
@@ -345,7 +361,7 @@
                          <span class="n">method</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;`method` must be one of either &quot;ndi&quot;, &quot;ratio&quot;, &quot;derivative&quot;, &#39;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;``method`` must be one of either &quot;ndi&quot;, &quot;ratio&quot;, &quot;derivative&quot;, &#39;</span>
                <span class="s1">&#39;or &quot;mcari2&quot;.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">method</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;ndi&#39;</span><span class="p">,</span> <span class="s1">&#39;ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;derivative&#39;</span><span class="p">,</span> <span class="s1">&#39;mcari2&#39;</span><span class="p">],</span> <span class="n">msg</span>
 
@@ -767,7 +783,7 @@
             <span class="n">cs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crop_read_sheet</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
             <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cs</span><span class="p">[</span><span class="s1">&#39;directory&#39;</span><span class="p">],</span> <span class="n">cs</span><span class="p">[</span><span class="s1">&#39;fname&#39;</span><span class="p">])</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Spatially cropping: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fname</span><span class="p">))</span>
-            <span class="n">name_long</span> <span class="o">=</span> <span class="n">cs</span><span class="p">[</span><span class="s1">&#39;name_long&#39;</span><span class="p">]</span>  <span class="c1"># `None` if it was never set</span>
+            <span class="n">name_long</span> <span class="o">=</span> <span class="n">cs</span><span class="p">[</span><span class="s1">&#39;name_long&#39;</span><span class="p">]</span>  <span class="c1"># ``None`` if it was never set</span>
             <span class="n">plot_id</span> <span class="o">=</span> <span class="n">cs</span><span class="p">[</span><span class="s1">&#39;plot_id&#39;</span><span class="p">]</span>
             <span class="n">name_short</span> <span class="o">=</span> <span class="n">cs</span><span class="p">[</span><span class="s1">&#39;name_short&#39;</span><span class="p">]</span>
             <span class="n">fname_hdr</span> <span class="o">=</span> <span class="n">fname</span> <span class="o">+</span> <span class="s1">&#39;.hdr&#39;</span>
@@ -842,7 +858,7 @@
 
     <span class="k">def</span> <span class="nf">_write_datacube</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dir_out</span><span class="p">,</span> <span class="n">name_label</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Writes a datacube to file using `hsio.write_cube()`</span>
+<span class="sd">        Writes a datacube to file using ``hsio.write_cube()``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name_label</span>
         <span class="n">hdr_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_out</span><span class="p">,</span> <span class="n">name_label</span> <span class="o">+</span> <span class="s1">&#39;.hdr&#39;</span><span class="p">)</span>
@@ -859,7 +875,7 @@
         <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Projection and Geotransform information are required for &#39;</span>
                <span class="s1">&#39;writing the geotiff. This comes from the input filename, &#39;</span>
                <span class="s1">&#39;so please be sure the correct filename is passed to &#39;</span>
-               <span class="s1">&#39;`fname`.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+               <span class="s1">&#39;``fname``.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">fname</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fname</span><span class="p">),</span> <span class="n">msg</span>
         <span class="n">fname_tif</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_out</span><span class="p">,</span>
                                  <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">name_label</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.tif&#39;</span><span class="p">)</span>
@@ -1064,7 +1080,7 @@
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Retrieves the array from a directory with a similar name to the loaded</span>
 <span class="sd">        datacube (i.e., there must be a datacube loaded; self.io.spyfile should</span>
-<span class="sd">        not be `None`; compares to `self.io.name_short`).</span>
+<span class="sd">        not be ``None``; compares to ``self.io.name_short``).</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">            dir_search: directory to search</span>
@@ -1083,11 +1099,11 @@
 
     <span class="k">def</span> <span class="nf">_get_class_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">filter_cols</span><span class="p">,</span> <span class="n">n_classes</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Finds the class with the lowest NDVI in `row` and returns the class ID</span>
+<span class="sd">        Finds the class with the lowest NDVI in ``row`` and returns the class ID</span>
 <span class="sd">        to be used to dictate which pixels get masked</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            n_classes (`int`): number of classes to mask; if 1, then will mask</span>
+<span class="sd">            n_classes (``int``): number of classes to mask; if 1, then will mask</span>
 <span class="sd">            the minimum ndvi; if more than 1, all classes (default: 1)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">row_ndvi</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">filter_cols</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
@@ -1118,7 +1134,7 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            out_files: include the full pathname, filename, and ext of all</span>
-<span class="sd">                files that have `search_exp` in their name.</span>
+<span class="sd">                files that have ``search_exp`` in their name.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">level</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">level</span> <span class="o">=</span> <span class="mi">1</span>
@@ -1142,11 +1158,11 @@
 <span class="sd">        Basic setup items when saving manipulated image files to disk</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            base_dir_out (`str`): Parent directory that all processed datacubes</span>
+<span class="sd">            base_dir_out (``str``): Parent directory that all processed datacubes</span>
 <span class="sd">                will be saved.</span>
-<span class="sd">            folder_name (`str`): Folder to add to `base_dir_out` to save all</span>
+<span class="sd">            folder_name (``str``): Folder to add to ``base_dir_out`` to save all</span>
 <span class="sd">                the processed datacubes.</span>
-<span class="sd">            name_append (`str`): name to append to the filename.</span>
+<span class="sd">            name_append (``str``): name to append to the filename.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
 <span class="c1">#        if base_dir_out is None:</span>
 <span class="c1">#            base_dir_out = os.path.join(self.base_dir, folder_name)</span>
@@ -1223,7 +1239,7 @@
         <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">fname_fig</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
 
-<div class="viewcode-block" id="batch.cube_to_spectra"><a class="viewcode-back" href="../../api/hs_process.batch.batch.html#hs_process.batch.batch.cube_to_spectra">[docs]</a>    <span class="k">def</span> <span class="nf">cube_to_spectra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;bip&#39;</span><span class="p">,</span>
+<div class="viewcode-block" id="batch.cube_to_spectra"><a class="viewcode-back" href="../../api/hs_process.batch.html#hs_process.batch.cube_to_spectra">[docs]</a>    <span class="k">def</span> <span class="nf">cube_to_spectra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;bip&#39;</span><span class="p">,</span>
                         <span class="n">dir_level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">base_dir_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                         <span class="n">folder_name</span><span class="o">=</span><span class="s1">&#39;cube_to_spec&#39;</span><span class="p">,</span>
                         <span class="n">name_append</span><span class="o">=</span><span class="s1">&#39;cube-to-spec&#39;</span><span class="p">,</span>
@@ -1232,42 +1248,90 @@
                         <span class="n">out_byteorder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Calculates the mean and standard deviation for each cube in</span>
-<span class="sd">        `fname_sheet` and writes the result to a .spec file.</span>
+<span class="sd">        ``fname_list`` and writes the result to a .spec file.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            fname_list (`list`, optional): list of filenames to process; if</span>
-<span class="sd">                left to `None`, will look at `base_dir`, `search_ext`, and</span>
-<span class="sd">                `dir_level` parameters for files to process (default: `None`).</span>
-<span class="sd">            base_dir (`str`, optional): directory path to search for files to</span>
-<span class="sd">                spectrally clip; if `fname_list` is not `None`, `base_dir` will</span>
-<span class="sd">                be ignored (default: `None`).</span>
-<span class="sd">            search_ext (`str`): file format/extension to search for in all</span>
+<span class="sd">            fname_list (``list``, optional): list of filenames to process; if</span>
+<span class="sd">                left to ``None``, will look at ``base_dir``, ``search_ext``, and</span>
+<span class="sd">                ``dir_level`` parameters for files to process (default: ``None``).</span>
+<span class="sd">            base_dir (``str``, optional): directory path to search for files to</span>
+<span class="sd">                spectrally clip; if ``fname_list`` is not ``None``, ``base_dir`` will</span>
+<span class="sd">                be ignored (default: ``None``).</span>
+<span class="sd">            search_ext (``str``): file format/extension to search for in all</span>
 <span class="sd">                directories and subdirectories to determine which files to</span>
-<span class="sd">                process; if `fname_list` is not `None`, `search_ext` will</span>
+<span class="sd">                process; if ``fname_list`` is not ``None``, ``search_ext`` will</span>
 <span class="sd">                be ignored (default: &#39;bip&#39;).</span>
-<span class="sd">            dir_level (`int`): The number of directory levels to search; if</span>
-<span class="sd">                `None`, searches all directory levels (default: 0).</span>
-<span class="sd">            base_dir_out (`str`): directory path to save all processed</span>
-<span class="sd">                datacubes; if set to `None`, a folder named according to the</span>
-<span class="sd">                `folder_name` parameter is added to `base_dir`</span>
-<span class="sd">            folder_name (`str`): folder to add to `base_dir_out` to save all</span>
+<span class="sd">            dir_level (``int``): The number of directory levels to search; if</span>
+<span class="sd">                ``None``, searches all directory levels (default: 0).</span>
+<span class="sd">            base_dir_out (``str``): directory path to save all processed</span>
+<span class="sd">                datacubes; if set to ``None``, a folder named according to the</span>
+<span class="sd">                ``folder_name`` parameter is added to ``base_dir``</span>
+<span class="sd">            folder_name (``str``): folder to add to ``base_dir_out`` to save all</span>
 <span class="sd">                the processed datacubes (default: &#39;cube_to_spec&#39;).</span>
-<span class="sd">            name_append (`str`): name to append to the filename (default:</span>
+<span class="sd">            name_append (``str``): name to append to the filename (default:</span>
 <span class="sd">                &#39;cube-to-spec&#39;).</span>
-<span class="sd">            geotiff (`bool`): whether to save the masked RGB image as a geotiff</span>
+<span class="sd">            geotiff (``bool``): whether to save the masked RGB image as a geotiff</span>
 <span class="sd">                alongside the masked datacube.</span>
 <span class="sd">            out_XXX: Settings for saving the output files can be adjusted here</span>
-<span class="sd">                if desired. They are stored in `batch.io.defaults, and are</span>
+<span class="sd">                if desired. They are stored in ``batch.io.defaults, and are</span>
 <span class="sd">                therefore accessible at a high level. See</span>
-<span class="sd">                `hsio.set_io_defaults()` for more information on each of the</span>
+<span class="sd">                ``hsio.set_io_defaults()`` for more information on each of the</span>
 <span class="sd">                settings.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            The following ``batch`` example builds on the API example results</span>
+<span class="sd">            of the `spatial_mod.crop_many_gdf`_ function. Please complete the</span>
+<span class="sd">            `spatial_mod.crop_many_gdf`_ example to be sure your directory</span>
+<span class="sd">            (i.e., ``base_dir``) is populated with multiple hyperspectral</span>
+<span class="sd">            datacubes. The following example will be using datacubes located in</span>
+<span class="sd">            the following directory:</span>
+<span class="sd">            ``F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf``</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            Load and initialize the ``batch`` module, checking to be sure the</span>
+<span class="sd">            directory exists.</span>
+
+<span class="sd">            &gt;&gt;&gt; import os</span>
+<span class="sd">            &gt;&gt;&gt; from hs_process import batch</span>
+<span class="sd">            &gt;&gt;&gt; base_dir = r&#39;F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf&#39;</span>
+<span class="sd">            &gt;&gt;&gt; print(os.path.isdir(base_dir))</span>
+<span class="sd">            True</span>
+<span class="sd">            &gt;&gt;&gt; hsbatch = batch(base_dir, search_ext=&#39;.bip&#39;)  # searches for all files in ``base_dir`` with a &quot;.bip&quot; file extension</span>
+
+<span class="sd">            Use ``batch.cube_to_spectra`` to calculate the *mean* and *standard</span>
+<span class="sd">            deviation* across all pixels for each of the datacubes in</span>
+<span class="sd">            ``base_dir``.</span>
+
+<span class="sd">            &gt;&gt;&gt; hsbatch.cube_to_spectra(base_dir=base_dir, geotiff=False)</span>
+<span class="sd">            Processing 40 files. If this is not what is expected, please check if files have already undergone processing. If existing files should be overwritten, be sure to set the ``out_force`` parameter.</span>
+
+<span class="sd">            Calculating mean spectra: F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011.bip</span>
+<span class="sd">            Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011.bip.hd-cube-to-spec-mean.spec</span>
+
+<span class="sd">            Calculating mean spectra: F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012.bip</span>
+<span class="sd">            Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012.bip.hd-cube-to-spec-mean.spec</span>
+
+<span class="sd">            Calculating mean spectra: F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013.bip</span>
+<span class="sd">            Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013.bip.hd-cube-to-spec-mean.spec</span>
+
+<span class="sd">            Visualize the unmasked array using ``hsio.show_img``. Set ``vmin``</span>
+<span class="sd">            and ``vmax`` to ensure the same color scale is used in comparing</span>
+<span class="sd">            the masked vs. unmasked arrays.</span>
+
+<span class="sd">            &gt;&gt;&gt; vmin = array.min()</span>
+<span class="sd">            &gt;&gt;&gt; vmax = array.max()</span>
+<span class="sd">            &gt;&gt;&gt; io.show_img(array, vmin=vmin, vmax=vmax)</span>
+
+<span class="sd">            .. image:: ../img/utilities/mask_array_800nm.png</span>
+
+<span class="sd">        .. _spatial_mod.crop_many_gdf: hs_process.spatial_mod.html#hs_process.spatial_mod.crop_many_gdf</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">fname_list</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">fname_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recurs_dir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="p">,</span> <span class="n">dir_level</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">fname_list</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># base_dir may have been stored to the `batch` object</span>
+            <span class="c1"># base_dir may have been stored to the ``batch`` object</span>
             <span class="n">base_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_dir</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please set `fname_list` or `base_dir` to indicate which &#39;</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please set ``fname_list`` or ``base_dir`` to indicate which &#39;</span>
                    <span class="s1">&#39;datacubes should be processed.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="k">assert</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">msg</span>
             <span class="n">fname_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recurs_dir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="p">,</span> <span class="n">dir_level</span><span class="p">)</span>
@@ -1306,7 +1370,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_write_spec</span><span class="p">(</span><span class="n">dir_out</span><span class="p">,</span> <span class="n">name_label_spec</span><span class="p">,</span> <span class="n">spec_mean</span><span class="p">,</span> <span class="n">spec_std</span><span class="p">,</span>
                              <span class="n">metadata</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="batch.segment_band_math"><a class="viewcode-back" href="../../api/hs_process.batch.batch.html#hs_process.batch.batch.segment_band_math">[docs]</a>    <span class="k">def</span> <span class="nf">segment_band_math</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="batch.segment_band_math"><a class="viewcode-back" href="../../api/hs_process.batch.html#hs_process.batch.segment_band_math">[docs]</a>    <span class="k">def</span> <span class="nf">segment_band_math</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                           <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;bip&#39;</span><span class="p">,</span> <span class="n">dir_level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">base_dir_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                           <span class="n">folder_name</span><span class="o">=</span><span class="s1">&#39;band_math&#39;</span><span class="p">,</span> <span class="n">name_append</span><span class="o">=</span><span class="s1">&#39;band-math&#39;</span><span class="p">,</span>
                           <span class="n">geotiff</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;ndi&#39;</span><span class="p">,</span> <span class="n">wl1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wl2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1319,45 +1383,45 @@
 <span class="sd">        same way.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            method (`str`): Must be one of &quot;ndi&quot; (normalized difference index),</span>
+<span class="sd">            method (``str``): Must be one of &quot;ndi&quot; (normalized difference index),</span>
 <span class="sd">                &quot;ratio&quot; (simple ratio index), &quot;derivative&quot; (deriviative-type</span>
 <span class="sd">                index), or &quot;mcari2&quot; (modified chlorophyll absorption index2).</span>
 <span class="sd">                Indicates what kind of band</span>
 <span class="sd">                math should be performed on the input datacube. The &quot;ndi&quot;</span>
-<span class="sd">                method leverages `segment.band_math_ndi()`, the &quot;ratio&quot;</span>
-<span class="sd">                method leverages `segment.band_math_ratio()`, and the</span>
-<span class="sd">                &quot;derivative&quot; method leverages `segment.band_math_derivative()`.</span>
-<span class="sd">                Please see the `segment` documentation for more information</span>
+<span class="sd">                method leverages ``segment.band_math_ndi()``, the &quot;ratio&quot;</span>
+<span class="sd">                method leverages ``segment.band_math_ratio()``, and the</span>
+<span class="sd">                &quot;derivative&quot; method leverages ``segment.band_math_derivative()``.</span>
+<span class="sd">                Please see the ``segment`` documentation for more information</span>
 <span class="sd">                (default: &quot;ndi&quot;).</span>
-<span class="sd">            wl1 (`int`, `float`, or `list`): the wavelength (or set of</span>
+<span class="sd">            wl1 (``int``, ``float``, or ``list``): the wavelength (or set of</span>
 <span class="sd">                wavelengths) to be used as the first parameter of the</span>
-<span class="sd">                band math index; if `list`, then consolidates all</span>
+<span class="sd">                band math index; if ``list``, then consolidates all</span>
 <span class="sd">                bands between two wavelength values by calculating the mean</span>
-<span class="sd">                pixel value across all bands in that range (default: `None`).</span>
-<span class="sd">            wl2 (`int`, `float`, or `list`): the wavelength (or set of</span>
+<span class="sd">                pixel value across all bands in that range (default: ``None``).</span>
+<span class="sd">            wl2 (``int``, ``float``, or ``list``): the wavelength (or set of</span>
 <span class="sd">                wavelengths) to be used as the second parameter of the</span>
-<span class="sd">                band math index; if `list`, then consolidates all</span>
+<span class="sd">                band math index; if ``list``, then consolidates all</span>
 <span class="sd">                bands between two wavelength values by calculating the mean</span>
-<span class="sd">                pixel value across all bands in that range (default: `None`).</span>
-<span class="sd">            b1 (`int`, `float`, or `list`): the band (or set of bands) to be</span>
+<span class="sd">                pixel value across all bands in that range (default: ``None``).</span>
+<span class="sd">            b1 (``int``, ``float``, or ``list``): the band (or set of bands) to be</span>
 <span class="sd">                used as the first parameter of the band math index;</span>
-<span class="sd">                if `list`, then consolidates all bands between two band values</span>
+<span class="sd">                if ``list``, then consolidates all bands between two band values</span>
 <span class="sd">                by calculating the mean pixel value across all bands in that</span>
-<span class="sd">                range (default: `None`).</span>
-<span class="sd">            b2 (`int`, `float`, or `list`): the band (or set of bands) to be</span>
+<span class="sd">                range (default: ``None``).</span>
+<span class="sd">            b2 (``int``, ``float``, or ``list``): the band (or set of bands) to be</span>
 <span class="sd">                used as the second parameter of the band math</span>
-<span class="sd">                index; if `list`, then consolidates all bands between two band</span>
+<span class="sd">                index; if ``list``, then consolidates all bands between two band</span>
 <span class="sd">                values by calculating the mean pixel value across all bands in</span>
-<span class="sd">                that range (default: `None`).</span>
-<span class="sd">            list_range (`bool`): Whether bands/wavelengths passed as a list is</span>
-<span class="sd">                interpreted as a range of bands (`True`) or for each individual</span>
-<span class="sd">                band in the list (`False`). If `list_range` is `True`,</span>
-<span class="sd">                `b1`/`wl1` and `b2`/`wl2` should be lists with two items, and</span>
+<span class="sd">                that range (default: ``None``).</span>
+<span class="sd">            list_range (``bool``): Whether bands/wavelengths passed as a list is</span>
+<span class="sd">                interpreted as a range of bands (``True``) or for each individual</span>
+<span class="sd">                band in the list (``False``). If ``list_range`` is ``True``,</span>
+<span class="sd">                ``b1``/``wl1`` and ``b2``/``wl2`` should be lists with two items, and</span>
 <span class="sd">                all bands/wavelegths between the two values will be used</span>
-<span class="sd">                (default: `True`).</span>
-<span class="sd">            plot_out (`bool`): whether to save a histogram of the band math</span>
-<span class="sd">                result (default: `True`).</span>
-<span class="sd">            geotiff (`bool`): whether to save the masked RGB image as a geotiff</span>
+<span class="sd">                (default: ``True``).</span>
+<span class="sd">            plot_out (``bool``): whether to save a histogram of the band math</span>
+<span class="sd">                result (default: ``True``).</span>
+<span class="sd">            geotiff (``bool``): whether to save the masked RGB image as a geotiff</span>
 <span class="sd">                alongside the masked datacube.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">set_io_defaults</span><span class="p">(</span><span class="n">out_dtype</span><span class="p">,</span> <span class="n">out_force</span><span class="p">,</span> <span class="n">out_ext</span><span class="p">,</span> <span class="n">out_interleave</span><span class="p">,</span>
@@ -1365,9 +1429,9 @@
         <span class="k">if</span> <span class="n">fname_list</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">fname_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recurs_dir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="p">,</span> <span class="n">dir_level</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">fname_list</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># base_dir may have been stored to the `batch` object</span>
+            <span class="c1"># base_dir may have been stored to the ``batch`` object</span>
             <span class="n">base_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_dir</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please set `fname_list` or `base_dir` to indicate which &#39;</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please set ``fname_list`` or ``base_dir`` to indicate which &#39;</span>
                    <span class="s1">&#39;datacubes should be processed.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="k">assert</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">msg</span>
             <span class="n">fname_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recurs_dir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="p">,</span> <span class="n">dir_level</span><span class="p">)</span>
@@ -1412,10 +1476,10 @@
 <span class="c1">#            self._execute_band_math(fname_list, base_dir_out, folder_name,</span>
 <span class="c1">#                                    name_append, geotiff, method, wl1, wl2,</span>
 <span class="c1">#                                    wl3, b1, b2, b3, list_range, plot_out)</span>
-<span class="c1">#        else:  # fname_list and base_dir are both `None`</span>
-<span class="c1">#            # base_dir may have been stored to the `batch` object</span>
+<span class="c1">#        else:  # fname_list and base_dir are both ``None``</span>
+<span class="c1">#            # base_dir may have been stored to the ``batch`` object</span>
 <span class="c1">#            base_dir = self.base_dir</span>
-<span class="c1">#            msg = (&#39;Please set `fname_list` or `base_dir` to indicate which &#39;</span>
+<span class="c1">#            msg = (&#39;Please set ``fname_list`` or ``base_dir`` to indicate which &#39;</span>
 <span class="c1">#                   &#39;datacubes should be processed.\n&#39;)</span>
 <span class="c1">#            assert base_dir is not None, msg</span>
 <span class="c1">#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)</span>
@@ -1423,7 +1487,7 @@
 <span class="c1">#                                    name_append, geotiff, method, wl1, wl2,</span>
 <span class="c1">#                                    wl3, b1, b2, b3, list_range, plot_out)</span>
 
-<div class="viewcode-block" id="batch.segment_create_mask"><a class="viewcode-back" href="../../api/hs_process.batch.batch.html#hs_process.batch.batch.segment_create_mask">[docs]</a>    <span class="k">def</span> <span class="nf">segment_create_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="batch.segment_create_mask"><a class="viewcode-back" href="../../api/hs_process.batch.html#hs_process.batch.segment_create_mask">[docs]</a>    <span class="k">def</span> <span class="nf">segment_create_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                             <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;bip&#39;</span><span class="p">,</span> <span class="n">dir_level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mask_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                             <span class="n">base_dir_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                             <span class="n">folder_name</span><span class="o">=</span><span class="s1">&#39;mask&#39;</span><span class="p">,</span> <span class="n">name_append</span><span class="o">=</span><span class="s1">&#39;mask&#39;</span><span class="p">,</span>
@@ -1435,17 +1499,17 @@
 <span class="sd">        Batch processing tool to create a masked array on many datacubes.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            mask_thresh (`float` or `int`): The value for which to mask the</span>
-<span class="sd">                array; should be used with `side` parameter (default: `None`).</span>
-<span class="sd">            mask_percentile (`float` or `int`): The percentile of pixels to</span>
-<span class="sd">                mask; if `percentile`=95 and `side`=&#39;lower&#39;, the lowest 95% of</span>
+<span class="sd">            mask_thresh (``float`` or ``int``): The value for which to mask the</span>
+<span class="sd">                array; should be used with ``side`` parameter (default: ``None``).</span>
+<span class="sd">            mask_percentile (``float`` or ``int``): The percentile of pixels to</span>
+<span class="sd">                mask; if ``percentile``=95 and ``side``=&#39;lower&#39;, the lowest 95% of</span>
 <span class="sd">                pixels will be masked following the band math operation</span>
-<span class="sd">                (default: `None`; range: 0-100).</span>
-<span class="sd">            mask_side (`str`): The side of the threshold or percentile for</span>
+<span class="sd">                (default: ``None``; range: 0-100).</span>
+<span class="sd">            mask_side (``str``): The side of the threshold or percentile for</span>
 <span class="sd">                which to apply the mask. Must be either &#39;lower&#39; or &#39;upper&#39;; if</span>
 <span class="sd">                &#39;lower&#39;, everything below the threshold/percentile will be</span>
 <span class="sd">                masked (default: &#39;lower&#39;).</span>
-<span class="sd">            geotiff (`bool`): whether to save the masked RGB image as a geotiff</span>
+<span class="sd">            geotiff (``bool``): whether to save the masked RGB image as a geotiff</span>
 <span class="sd">                alongside the masked datacube.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">set_io_defaults</span><span class="p">(</span><span class="n">out_dtype</span><span class="p">,</span> <span class="n">out_force</span><span class="p">,</span> <span class="n">out_ext</span><span class="p">,</span> <span class="n">out_interleave</span><span class="p">,</span>
@@ -1453,9 +1517,9 @@
         <span class="k">if</span> <span class="n">fname_list</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">fname_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recurs_dir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="p">,</span> <span class="n">dir_level</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">fname_list</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># base_dir may have been stored to the `batch` object</span>
+            <span class="c1"># base_dir may have been stored to the ``batch`` object</span>
             <span class="n">base_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_dir</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please set `fname_list` or `base_dir` to indicate which &#39;</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please set ``fname_list`` or ``base_dir`` to indicate which &#39;</span>
                    <span class="s1">&#39;datacubes should be processed.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="k">assert</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">msg</span>
             <span class="n">fname_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recurs_dir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="p">,</span> <span class="n">dir_level</span><span class="p">)</span>
@@ -1476,10 +1540,10 @@
 <span class="c1">#            self._execute_mask(fname_list, base_dir_out, folder_name,</span>
 <span class="c1">#                               name_append, geotiff, mask_thresh,</span>
 <span class="c1">#                               mask_percentile, mask_side)</span>
-<span class="c1">#        else:  # fname_list and base_dir are both `None`</span>
-<span class="c1">#            # base_dir may have been stored to the `batch` object</span>
+<span class="c1">#        else:  # fname_list and base_dir are both ``None``</span>
+<span class="c1">#            # base_dir may have been stored to the ``batch`` object</span>
 <span class="c1">#            base_dir = self.base_dir</span>
-<span class="c1">#            msg = (&#39;Please set `fname_list` or `base_dir` to indicate which &#39;</span>
+<span class="c1">#            msg = (&#39;Please set ``fname_list`` or ``base_dir`` to indicate which &#39;</span>
 <span class="c1">#                   &#39;datacubes should be processed.\n&#39;)</span>
 <span class="c1">#            assert base_dir is not None, msg</span>
 <span class="c1">#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)</span>
@@ -1487,7 +1551,7 @@
 <span class="c1">#                               name_append, geotiff, mask_thresh,</span>
 <span class="c1">#                               mask_percentile, mask_side)</span>
 
-<div class="viewcode-block" id="batch.spatial_crop"><a class="viewcode-back" href="../../api/hs_process.batch.batch.html#hs_process.batch.batch.spatial_crop">[docs]</a>    <span class="k">def</span> <span class="nf">spatial_crop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_sheet</span><span class="p">,</span> <span class="n">base_dir_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="batch.spatial_crop"><a class="viewcode-back" href="../../api/hs_process.batch.html#hs_process.batch.spatial_crop">[docs]</a>    <span class="k">def</span> <span class="nf">spatial_crop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_sheet</span><span class="p">,</span> <span class="n">base_dir_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                      <span class="n">folder_name</span><span class="o">=</span><span class="s1">&#39;spatial_crop&#39;</span><span class="p">,</span> <span class="n">name_append</span><span class="o">=</span><span class="s1">&#39;spatial-crop&#39;</span><span class="p">,</span>
                      <span class="n">geotiff</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;single&#39;</span><span class="p">,</span> <span class="n">gdf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">out_dtype</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                      <span class="n">out_force</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">out_ext</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">out_interleave</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -1496,60 +1560,61 @@
 <span class="sd">        Iterates through spreadsheet that provides necessary information about</span>
 <span class="sd">        how each image should be cropped and how it should be saved.</span>
 
-<span class="sd">        If `gdf` is passed (a geopandas.GoeDataFrame polygon file), the cropped</span>
+<span class="sd">        If ``gdf`` is passed (a geopandas.GoeDataFrame polygon file), the cropped</span>
 <span class="sd">        images will be shifted to the center of appropriate &quot;plot&quot; polygon.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            fname_sheet (`fname` or `Pandas.DataFrame): The filename of the</span>
+<span class="sd">            fname_sheet (``fname`` or ``Pandas.DataFrame): The filename of the</span>
 <span class="sd">                spreadsheed that provides the necessary information for batch</span>
 <span class="sd">                process cropping. See below for more information about the</span>
-<span class="sd">                required and optional contents of `fname_sheet` and how to</span>
-<span class="sd">                properly format it. Optionally, `fname_sheet` can be a</span>
-<span class="sd">                `Pandas.DataFrame`</span>
-<span class="sd">            base_dir_out (`str`): output directory of the cropped image</span>
-<span class="sd">                (default: `None`).</span>
-<span class="sd">            folder_name (`str`): folder to add to `base_dir_out` to save all</span>
+<span class="sd">                required and optional contents of ``fname_sheet`` and how to</span>
+<span class="sd">                properly format it. Optionally, ``fname_sheet`` can be a</span>
+<span class="sd">                ``Pandas.DataFrame``.</span>
+<span class="sd">            base_dir_out (``str``): output directory of the cropped image</span>
+<span class="sd">                (default: ``None``).</span>
+<span class="sd">            folder_name (``str``): folder to add to ``base_dir_out`` to save all</span>
 <span class="sd">                the processed datacubes (default: &#39;spatial_crop&#39;).</span>
-<span class="sd">            name_append (`str`): name to append to the filename (default:</span>
+<span class="sd">            name_append (``str``): name to append to the filename (default:</span>
 <span class="sd">                &#39;spatial-crop&#39;).</span>
-<span class="sd">            geotiff (`bool`): whether to save an RGB image as a geotiff</span>
+<span class="sd">            geotiff (``bool``): whether to save an RGB image as a geotiff</span>
 <span class="sd">                alongside the cropped datacube.</span>
-<span class="sd">            method (`str`): Must be one of &quot;single&quot;, &quot;many_grid&quot;, or</span>
+<span class="sd">            method (``str``): Must be one of &quot;single&quot;, &quot;many_grid&quot;, or</span>
 <span class="sd">                &quot;many_gdf&quot;. Indicates whether a single plot should be cropped</span>
 <span class="sd">                from the input datacube or if many/multiple plots should be</span>
 <span class="sd">                cropped from the input datacube. The &quot;single&quot; method leverages</span>
-<span class="sd">                `spatial_mod.crop_single()`, the &quot;many_grid&quot; method leverages</span>
-<span class="sd">                `spatial_mod.crop_many_grid()`, and the &quot;many_gdf&quot; method</span>
-<span class="sd">                leverages `spatial_mod.crop_many_gdf()` (there are two methods</span>
+<span class="sd">                `spatial_mod.crop_single()`_ and the &quot;many_gdf&quot; method</span>
+<span class="sd">                leverages `spatial_mod.crop_many_gdf()`_ (there are two methods</span>
 <span class="sd">                available to peform cropping for many/mulitple plots). Please</span>
-<span class="sd">                see the `spatial_mod` documentation for more information</span>
+<span class="sd">                see the ``spatial_mod`` documentation for more information</span>
 <span class="sd">                (default: &quot;single&quot;).</span>
-<span class="sd">            gdf (`geopandas.GeoDataFrame`): the plot names and polygon</span>
+<span class="sd">            gdf (``geopandas.GeoDataFrame``): the plot names and polygon</span>
 <span class="sd">                geometery of each of the plots; &#39;plot&#39; must be used as a column</span>
 <span class="sd">                name to identify each of the plots, and should be an integer.</span>
 <span class="sd">            out_XXX: Settings for saving the output files can be adjusted here</span>
-<span class="sd">                if desired. They are stored in `batch.io.defaults, and are</span>
+<span class="sd">                if desired. They are stored in ``batch.io.defaults``, and are</span>
 <span class="sd">                therefore accessible at a high level. See</span>
-<span class="sd">                `hsio.set_io_defaults()` for more information on each of the</span>
+<span class="sd">                `hsio.set_io_defaults()`_ for more information on each of the</span>
 <span class="sd">                settings.</span>
 
 <span class="sd">        Note:</span>
-<span class="sd">            `fname_sheet` may have the following required column headings:</span>
+<span class="sd">            ``fname_sheet`` may have the following required column headings</span>
+<span class="sd">            that correspond to the relevant parameters in</span>
+<span class="sd">            `spatial_mod.crop_single()`_ and `spatial_mod.crop_many_gdf()`_:</span>
 <span class="sd">                1. &quot;directory&quot;</span>
 <span class="sd">                2. &quot;name_short&quot;</span>
 <span class="sd">                3. &quot;name_long&quot;</span>
 <span class="sd">                4. &quot;ext&quot;</span>
 <span class="sd">                5. &quot;pix_e_ul&quot;</span>
 <span class="sd">                6. &quot;pix_n_ul&quot;.</span>
-<span class="sd">            With this minimum input, `batch.spatial_crop` will read in each</span>
+<span class="sd">            With this minimum input, ``batch.spatial_crop`` will read in each</span>
 <span class="sd">            image, crop from the upper left pixel (determined as</span>
-<span class="sd">            `pix_e_ul`/`pix_n_ul`) to the lower right pixel calculated</span>
-<span class="sd">            based on `crop_e_pix`/`crop_n_pix` (which is the width of the</span>
-<span class="sd">            cropped area in units of pixels). `crop_e_pix` and `crop_n_pix`</span>
-<span class="sd">            have default values, but they can also be set in `fname_sheet`,</span>
+<span class="sd">            ``pix_e_ul``/``pix_n_ul``) to the lower right pixel calculated</span>
+<span class="sd">            based on ``crop_e_pix``/``crop_n_pix`` (which is the width of the</span>
+<span class="sd">            cropped area in units of pixels). ``crop_e_pix`` and ``crop_n_pix``</span>
+<span class="sd">            have default values, but they can also be set in ``fname_sheet``,</span>
 <span class="sd">            which will take precedence over the defaults.</span>
-
-<span class="sd">            `fname_sheet` may also have the following optional column headings:</span>
+<span class="sd">            ``fname_sheet`` may also have the following optional column</span>
+<span class="sd">            headings:</span>
 <span class="sd">                7. &quot;crop_e_pix&quot;</span>
 <span class="sd">                8. &quot;crop_n_pix&quot;</span>
 <span class="sd">                9. &quot;crop_e_m&quot;</span>
@@ -1559,16 +1624,32 @@
 <span class="sd">                13. &quot;buf_e_m&quot;</span>
 <span class="sd">                14. &quot;buf_n_m&quot;</span>
 <span class="sd">                15. &quot;plot_id&quot;.</span>
-<span class="sd">            These optional inputs allow more control over exactly how the image</span>
-<span class="sd">            will be cropped, and hopefully are self-explanatory until</span>
-<span class="sd">            adequate documentation is written. Any other columns can</span>
-<span class="sd">            be added to `fname_sheet`, but `batch.spatial_crop` does not</span>
-<span class="sd">            use them in any way.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            1. These optional inputs passed via ``fname_sheet`` allow more</span>
+<span class="sd">            control over exactly how the images are to be cropped. For a more</span>
+<span class="sd">            detailed explanation of the information that many of these columns</span>
+<span class="sd">            are intended to contain, see the documentation for</span>
+<span class="sd">            `spatial_mod.crop_single()`_ and `spatial_mod.crop_many_gdf()`_.</span>
+<span class="sd">            Those parameters not referenced should be apparent in the API</span>
+<span class="sd">            examples and tutorials.</span>
+
+<span class="sd">            2. If the column names are different in ``fname_sheet`` than</span>
+<span class="sd">            described here, `defaults.spat_crop_cols()`_ can be modified to</span>
+<span class="sd">            indicate which columns correspond to the relevant information.</span>
+
+<span class="sd">            3. Any other columns can be added to ``fname_sheet``, but</span>
+<span class="sd">            ``batch.spatial_crop()`` does not use them in any way.</span>
+
+<span class="sd">        .. _hsio.set_io_defaults(): hs_process.hsio.html#hs_process.hsio.set_io_defaults</span>
+<span class="sd">        .. _spatial_mod.crop_single(): hs_process.spatial_mod.html#hs_process.spatial_mod.crop_single</span>
+<span class="sd">        .. _spatial_mod.crop_many_gdf(): hs_process.spatial_mod.html#hs_process.spatial_mod.crop_many_gdf</span>
+<span class="sd">        .. _defaults.spat_crop_cols(): hs_process.defaults.html#hs_process.defaults.spat_crop_cols</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;many_gdf&#39;</span><span class="p">:</span>
-            <span class="n">msg1</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please pass a valid `geopandas.GeoDataFrame` if using &#39;</span>
+            <span class="n">msg1</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please pass a valid ``geopandas.GeoDataFrame`` if using &#39;</span>
                     <span class="s1">&#39;the &quot;many_gdf&quot; method.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-            <span class="n">msg2</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please be sure the passed `geopandas.GeoDataFrame` has a &#39;</span>
+            <span class="n">msg2</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please be sure the passed ``geopandas.GeoDataFrame`` has a &#39;</span>
                     <span class="s1">&#39;column by the name of &quot;plot&quot;, indicating the plot ID for &#39;</span>
                     <span class="s1">&#39;each polygon geometry if using the &quot;many_gdf&quot; method.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">gdf</span><span class="p">,</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">),</span> <span class="n">msg1</span>
@@ -1578,7 +1659,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_execute_spat_crop</span><span class="p">(</span><span class="n">fname_sheet</span><span class="p">,</span> <span class="n">base_dir_out</span><span class="p">,</span> <span class="n">folder_name</span><span class="p">,</span>
                                 <span class="n">name_append</span><span class="p">,</span> <span class="n">geotiff</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">gdf</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="batch.spectral_clip"><a class="viewcode-back" href="../../api/hs_process.batch.batch.html#hs_process.batch.batch.spectral_clip">[docs]</a>    <span class="k">def</span> <span class="nf">spectral_clip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;bip&#39;</span><span class="p">,</span>
+<div class="viewcode-block" id="batch.spectral_clip"><a class="viewcode-back" href="../../api/hs_process.batch.html#hs_process.batch.spectral_clip">[docs]</a>    <span class="k">def</span> <span class="nf">spectral_clip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;bip&#39;</span><span class="p">,</span>
                       <span class="n">dir_level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">base_dir_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">folder_name</span><span class="o">=</span><span class="s1">&#39;spec_clip&#39;</span><span class="p">,</span>
                       <span class="n">name_append</span><span class="o">=</span><span class="s1">&#39;spec-clip&#39;</span><span class="p">,</span>
                       <span class="n">wl_bands</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">420</span><span class="p">],</span> <span class="p">[</span><span class="mi">760</span><span class="p">,</span> <span class="mi">776</span><span class="p">],</span> <span class="p">[</span><span class="mi">813</span><span class="p">,</span> <span class="mi">827</span><span class="p">],</span> <span class="p">[</span><span class="mi">880</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]],</span>
@@ -1589,26 +1670,26 @@
 <span class="sd">        way.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            fname_list (`list`, optional): list of filenames to process; if</span>
-<span class="sd">                left to `None`, will look at `base_dir`, `search_ext`, and</span>
-<span class="sd">                `dir_level` parameters for files to process (default: `None`).</span>
-<span class="sd">            base_dir (`str`, optional): directory path to search for files to</span>
-<span class="sd">                spectrally clip; if `fname_list` is not `None`, `base_dir` will</span>
-<span class="sd">                be ignored (default: `None`).</span>
-<span class="sd">            search_ext (`str`): file format/extension to search for in all</span>
+<span class="sd">            fname_list (``list``, optional): list of filenames to process; if</span>
+<span class="sd">                left to ``None``, will look at ``base_dir``, ``search_ext``, and</span>
+<span class="sd">                ``dir_level`` parameters for files to process (default: ``None``).</span>
+<span class="sd">            base_dir (``str``, optional): directory path to search for files to</span>
+<span class="sd">                spectrally clip; if ``fname_list`` is not ``None``, ``base_dir`` will</span>
+<span class="sd">                be ignored (default: ``None``).</span>
+<span class="sd">            search_ext (``str``): file format/extension to search for in all</span>
 <span class="sd">                directories and subdirectories to determine which files to</span>
-<span class="sd">                process; if `fname_list` is not `None`, `search_ext` will</span>
+<span class="sd">                process; if ``fname_list`` is not ``None``, ``search_ext`` will</span>
 <span class="sd">                be ignored (default: &#39;bip&#39;).</span>
-<span class="sd">            dir_level (`int`): The number of directory levels to search; if</span>
-<span class="sd">                `None`, searches all directory levels (default: 0).</span>
-<span class="sd">            base_dir_out (`str`): directory path to save all processed</span>
-<span class="sd">                datacubes; if set to `None`, a folder named according to the</span>
-<span class="sd">                `folder_name` parameter is added to `base_dir`</span>
-<span class="sd">            folder_name (`str`): folder to add to `base_dir_out` to save all</span>
+<span class="sd">            dir_level (``int``): The number of directory levels to search; if</span>
+<span class="sd">                ``None``, searches all directory levels (default: 0).</span>
+<span class="sd">            base_dir_out (``str``): directory path to save all processed</span>
+<span class="sd">                datacubes; if set to ``None``, a folder named according to the</span>
+<span class="sd">                ``folder_name`` parameter is added to ``base_dir``</span>
+<span class="sd">            folder_name (``str``): folder to add to ``base_dir_out`` to save all</span>
 <span class="sd">                the processed datacubes (default: &#39;spec-clip&#39;).</span>
-<span class="sd">            name_append (`str`): name to append to the filename (default:</span>
+<span class="sd">            name_append (``str``): name to append to the filename (default:</span>
 <span class="sd">                &#39;spec-clip&#39;).</span>
-<span class="sd">            wl_bands (`list` or `list of lists`): minimum and maximum</span>
+<span class="sd">            wl_bands (``list`` or ``list of lists``): minimum and maximum</span>
 <span class="sd">                wavelenths to clip from image; if multiple groups of</span>
 <span class="sd">                wavelengths should be cut, this should be a list of lists. For</span>
 <span class="sd">                example, wl_bands=[760, 776] will clip all bands greater than</span>
@@ -1618,9 +1699,9 @@
 <span class="sd">                nm and less than 776.0 nm, bands greater than 813.0 nm and less</span>
 <span class="sd">                than 827.0 nm, and bands greater than 880 nm (default).</span>
 <span class="sd">            out_XXX: Settings for saving the output files can be adjusted here</span>
-<span class="sd">                if desired. They are stored in `batch.io.defaults, and are</span>
+<span class="sd">                if desired. They are stored in ``batch.io.defaults, and are</span>
 <span class="sd">                therefore accessible at a high level. See</span>
-<span class="sd">                `hsio.set_io_defaults()` for more information on each of the</span>
+<span class="sd">                ``hsio.set_io_defaults()`` for more information on each of the</span>
 <span class="sd">                settings.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">set_io_defaults</span><span class="p">(</span><span class="n">out_dtype</span><span class="p">,</span> <span class="n">out_force</span><span class="p">,</span> <span class="n">out_ext</span><span class="p">,</span> <span class="n">out_interleave</span><span class="p">,</span>
@@ -1628,9 +1709,9 @@
         <span class="k">if</span> <span class="n">fname_list</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">fname_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recurs_dir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="p">,</span> <span class="n">dir_level</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">fname_list</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># base_dir may have been stored to the `batch` object</span>
+            <span class="c1"># base_dir may have been stored to the ``batch`` object</span>
             <span class="n">base_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_dir</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please set `fname_list` or `base_dir` to indicate which &#39;</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please set ``fname_list`` or ``base_dir`` to indicate which &#39;</span>
                    <span class="s1">&#39;datacubes should be processed.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="k">assert</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">msg</span>
             <span class="n">fname_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recurs_dir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="p">,</span> <span class="n">dir_level</span><span class="p">)</span>
@@ -1648,17 +1729,17 @@
 <span class="c1">#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)</span>
 <span class="c1">#            self._execute_spec_clip(fname_list, base_dir_out, folder_name,</span>
 <span class="c1">#                                    name_append, wl_bands)</span>
-<span class="c1">#        else:  # fname_list and base_dir are both `None`</span>
-<span class="c1">#            # base_dir may have been stored to the `batch` object</span>
+<span class="c1">#        else:  # fname_list and base_dir are both ``None``</span>
+<span class="c1">#            # base_dir may have been stored to the ``batch`` object</span>
 <span class="c1">#            base_dir = self.base_dir</span>
-<span class="c1">#            msg = (&#39;Please set `fname_list` or `base_dir` to indicate which &#39;</span>
+<span class="c1">#            msg = (&#39;Please set ``fname_list`` or ``base_dir`` to indicate which &#39;</span>
 <span class="c1">#                   &#39;datacubes should be processed.\n&#39;)</span>
 <span class="c1">#            assert base_dir is not None, msg</span>
 <span class="c1">#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)</span>
 <span class="c1">#            self._execute_spec_clip(fname_list, base_dir_out, folder_name,</span>
 <span class="c1">#                                    name_append, wl_bands)</span>
 
-<div class="viewcode-block" id="batch.spectral_smooth"><a class="viewcode-back" href="../../api/hs_process.batch.batch.html#hs_process.batch.batch.spectral_smooth">[docs]</a>    <span class="k">def</span> <span class="nf">spectral_smooth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;bip&#39;</span><span class="p">,</span>
+<div class="viewcode-block" id="batch.spectral_smooth"><a class="viewcode-back" href="../../api/hs_process.batch.html#hs_process.batch.spectral_smooth">[docs]</a>    <span class="k">def</span> <span class="nf">spectral_smooth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;bip&#39;</span><span class="p">,</span>
                         <span class="n">dir_level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">base_dir_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                         <span class="n">folder_name</span><span class="o">=</span><span class="s1">&#39;spec_smooth&#39;</span><span class="p">,</span> <span class="n">name_append</span><span class="o">=</span><span class="s1">&#39;spec-smooth&#39;</span><span class="p">,</span>
                         <span class="n">window_size</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">stats</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -1669,36 +1750,36 @@
 <span class="sd">        same way.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            fname_list (`list`, optional): list of filenames to process; if</span>
-<span class="sd">                left to `None`, will look at `base_dir`, `search_ext`, and</span>
-<span class="sd">                `dir_level` parameters for files to process (default: `None`).</span>
-<span class="sd">            base_dir (`str`, optional): directory path to search for files to</span>
-<span class="sd">                spectrally clip; if `fname_list` is not `None`, `base_dir` will</span>
-<span class="sd">                be ignored (default: `None`).</span>
-<span class="sd">            search_ext (`str`): file format/extension to search for in all</span>
+<span class="sd">            fname_list (``list``, optional): list of filenames to process; if</span>
+<span class="sd">                left to ``None``, will look at ``base_dir``, ``search_ext``, and</span>
+<span class="sd">                ``dir_level`` parameters for files to process (default: ``None``).</span>
+<span class="sd">            base_dir (``str``, optional): directory path to search for files to</span>
+<span class="sd">                spectrally clip; if ``fname_list`` is not ``None``, ``base_dir`` will</span>
+<span class="sd">                be ignored (default: ``None``).</span>
+<span class="sd">            search_ext (``str``): file format/extension to search for in all</span>
 <span class="sd">                directories and subdirectories to determine which files to</span>
-<span class="sd">                process; if `fname_list` is not `None`, `search_ext` will</span>
+<span class="sd">                process; if ``fname_list`` is not ``None``, ``search_ext`` will</span>
 <span class="sd">                be ignored (default: &#39;bip&#39;).</span>
-<span class="sd">            dir_level (`int`): The number of directory levels to search; if</span>
-<span class="sd">                `None`, searches all directory levels (default: 0).</span>
-<span class="sd">            base_dir_out (`str`): directory path to save all processed</span>
-<span class="sd">                datacubes; if set to `None`, a folder named according to the</span>
-<span class="sd">                `folder_name` parameter is added to `base_dir`</span>
-<span class="sd">            folder_name (`str`): folder to add to `base_dir_out` to save all</span>
+<span class="sd">            dir_level (``int``): The number of directory levels to search; if</span>
+<span class="sd">                ``None``, searches all directory levels (default: 0).</span>
+<span class="sd">            base_dir_out (``str``): directory path to save all processed</span>
+<span class="sd">                datacubes; if set to ``None``, a folder named according to the</span>
+<span class="sd">                ``folder_name`` parameter is added to ``base_dir``</span>
+<span class="sd">            folder_name (``str``): folder to add to ``base_dir_out`` to save all</span>
 <span class="sd">                the processed datacubes (default: &#39;spec-smooth&#39;).</span>
-<span class="sd">            name_append (`str`): name to append to the filename (default:</span>
+<span class="sd">            name_append (``str``): name to append to the filename (default:</span>
 <span class="sd">                &#39;spec-smooth&#39;).</span>
-<span class="sd">            window_size (`int`): the length of the window; must be an odd</span>
+<span class="sd">            window_size (``int``): the length of the window; must be an odd</span>
 <span class="sd">                integer number (default: 11).</span>
-<span class="sd">            order (`int`): the order of the polynomial used in the filtering;</span>
-<span class="sd">                must be less than `window_size` - 1 (default: 2).</span>
-<span class="sd">            stats (`bool`): whether to compute some basic descriptive</span>
+<span class="sd">            order (``int``): the order of the polynomial used in the filtering;</span>
+<span class="sd">                must be less than ``window_size`` - 1 (default: 2).</span>
+<span class="sd">            stats (``bool``): whether to compute some basic descriptive</span>
 <span class="sd">                statistics (mean, st. dev., and coefficient of variation) of</span>
-<span class="sd">                the smoothed data array (default: `False`)</span>
+<span class="sd">                the smoothed data array (default: ``False``)</span>
 <span class="sd">            out_XXX: Settings for saving the output files can be adjusted here</span>
-<span class="sd">                if desired. They are stored in `batch.io.defaults, and are</span>
+<span class="sd">                if desired. They are stored in ``batch.io.defaults, and are</span>
 <span class="sd">                therefore accessible at a high level. See</span>
-<span class="sd">                `hsio.set_io_defaults()` for more information on each of the</span>
+<span class="sd">                ``hsio.set_io_defaults()`` for more information on each of the</span>
 <span class="sd">                settings.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">set_io_defaults</span><span class="p">(</span><span class="n">out_dtype</span><span class="p">,</span> <span class="n">out_force</span><span class="p">,</span> <span class="n">out_ext</span><span class="p">,</span> <span class="n">out_interleave</span><span class="p">,</span>
@@ -1706,9 +1787,9 @@
         <span class="k">if</span> <span class="n">fname_list</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">fname_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recurs_dir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="p">,</span> <span class="n">dir_level</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">fname_list</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># base_dir may have been stored to the `batch` object</span>
+            <span class="c1"># base_dir may have been stored to the ``batch`` object</span>
             <span class="n">base_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_dir</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please set `fname_list` or `base_dir` to indicate which &#39;</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please set ``fname_list`` or ``base_dir`` to indicate which &#39;</span>
                    <span class="s1">&#39;datacubes should be processed.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="k">assert</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">msg</span>
             <span class="n">fname_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recurs_dir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="p">,</span> <span class="n">dir_level</span><span class="p">)</span>
@@ -1729,10 +1810,10 @@
 <span class="c1">#            df_stats = self._execute_spec_smooth(</span>
 <span class="c1">#                    fname_list, base_dir_out, folder_name, name_append,</span>
 <span class="c1">#                    window_size, order, stats)</span>
-<span class="c1">#        else:  # fname_list and base_dir are both `None`</span>
-<span class="c1">#            # base_dir may have been stored to the `batch` object</span>
+<span class="c1">#        else:  # fname_list and base_dir are both ``None``</span>
+<span class="c1">#            # base_dir may have been stored to the ``batch`` object</span>
 <span class="c1">#            base_dir = self.base_dir</span>
-<span class="c1">#            msg = (&#39;Please set `fname_list` or `base_dir` to indicate which &#39;</span>
+<span class="c1">#            msg = (&#39;Please set ``fname_list`` or ``base_dir`` to indicate which &#39;</span>
 <span class="c1">#                   &#39;datacubes should be processed.\n&#39;)</span>
 <span class="c1">#            assert base_dir is not None, msg</span>
 <span class="c1">#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)</span>
@@ -1742,7 +1823,7 @@
         <span class="k">if</span> <span class="n">df_stats</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">df_stats</span></div>
 
-<div class="viewcode-block" id="batch.spectra_combine"><a class="viewcode-back" href="../../api/hs_process.batch.batch.html#hs_process.batch.batch.spectra_combine">[docs]</a>    <span class="k">def</span> <span class="nf">spectra_combine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="batch.spectra_combine"><a class="viewcode-back" href="../../api/hs_process.batch.html#hs_process.batch.spectra_combine">[docs]</a>    <span class="k">def</span> <span class="nf">spectra_combine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                         <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;bip&#39;</span><span class="p">,</span> <span class="n">dir_level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">base_dir_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                         <span class="n">out_dtype</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">out_force</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">out_ext</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                         <span class="n">out_interleave</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">out_byteorder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -1753,25 +1834,25 @@
 <span class="sd">        spatial information).</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            fname_list (`list`, optional): list of filenames to process; if</span>
-<span class="sd">                left to `None`, will look at `base_dir`, `search_ext`, and</span>
-<span class="sd">                `dir_level` parameters for files to process (default: `None`).</span>
-<span class="sd">            base_dir (`str`, optional): directory path to search for files to</span>
-<span class="sd">                spectrally clip; if `fname_list` is not `None`, `base_dir` will</span>
-<span class="sd">                be ignored (default: `None`).</span>
-<span class="sd">            search_ext (`str`): file format/extension to search for in all</span>
+<span class="sd">            fname_list (``list``, optional): list of filenames to process; if</span>
+<span class="sd">                left to ``None``, will look at ``base_dir``, ``search_ext``, and</span>
+<span class="sd">                ``dir_level`` parameters for files to process (default: ``None``).</span>
+<span class="sd">            base_dir (``str``, optional): directory path to search for files to</span>
+<span class="sd">                spectrally clip; if ``fname_list`` is not ``None``, ``base_dir`` will</span>
+<span class="sd">                be ignored (default: ``None``).</span>
+<span class="sd">            search_ext (``str``): file format/extension to search for in all</span>
 <span class="sd">                directories and subdirectories to determine which files to</span>
-<span class="sd">                process; if `fname_list` is not `None`, `search_ext` will</span>
+<span class="sd">                process; if ``fname_list`` is not ``None``, ``search_ext`` will</span>
 <span class="sd">                be ignored (default: &#39;bip&#39;).</span>
-<span class="sd">            dir_level (`int`): The number of directory levels to search; if</span>
-<span class="sd">                `None`, searches all directory levels (default: 0).</span>
-<span class="sd">            base_dir_out (`str`): directory path to save all processed</span>
-<span class="sd">                datacubes; if set to `None`, a folder named according to the</span>
-<span class="sd">                `folder_name` parameter is added to `base_dir`</span>
+<span class="sd">            dir_level (``int``): The number of directory levels to search; if</span>
+<span class="sd">                ``None``, searches all directory levels (default: 0).</span>
+<span class="sd">            base_dir_out (``str``): directory path to save all processed</span>
+<span class="sd">                datacubes; if set to ``None``, a folder named according to the</span>
+<span class="sd">                ``folder_name`` parameter is added to ``base_dir``</span>
 <span class="sd">            out_XXX: Settings for saving the output files can be adjusted here</span>
-<span class="sd">                if desired. They are stored in `batch.io.defaults, and are</span>
+<span class="sd">                if desired. They are stored in ``batch.io.defaults, and are</span>
 <span class="sd">                therefore accessible at a high level. See</span>
-<span class="sd">                `hsio.set_io_defaults()` for more information on each of the</span>
+<span class="sd">                ``hsio.set_io_defaults()`` for more information on each of the</span>
 <span class="sd">                settings.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">set_io_defaults</span><span class="p">(</span><span class="n">out_dtype</span><span class="p">,</span> <span class="n">out_force</span><span class="p">,</span> <span class="n">out_ext</span><span class="p">,</span> <span class="n">out_interleave</span><span class="p">,</span>
@@ -1779,44 +1860,44 @@
         <span class="k">if</span> <span class="n">fname_list</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">fname_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recurs_dir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="p">,</span> <span class="n">dir_level</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">fname_list</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># base_dir may have been stored to the `batch` object</span>
+            <span class="c1"># base_dir may have been stored to the ``batch`` object</span>
             <span class="n">base_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_dir</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please set `fname_list` or `base_dir` to indicate which &#39;</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please set ``fname_list`` or ``base_dir`` to indicate which &#39;</span>
                    <span class="s1">&#39;datacubes should be processed.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="k">assert</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">msg</span>
             <span class="n">fname_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recurs_dir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="p">,</span> <span class="n">dir_level</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_execute_spec_combine</span><span class="p">(</span><span class="n">fname_list</span><span class="p">,</span> <span class="n">base_dir_out</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="batch.spectra_to_csv"><a class="viewcode-back" href="../../api/hs_process.batch.batch.html#hs_process.batch.batch.spectra_to_csv">[docs]</a>    <span class="k">def</span> <span class="nf">spectra_to_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;spec&#39;</span><span class="p">,</span>
+<div class="viewcode-block" id="batch.spectra_to_csv"><a class="viewcode-back" href="../../api/hs_process.batch.html#hs_process.batch.spectra_to_csv">[docs]</a>    <span class="k">def</span> <span class="nf">spectra_to_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;spec&#39;</span><span class="p">,</span>
                        <span class="n">dir_level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">base_dir_out</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Reads all the .spec files in a direcory and saves their reflectance</span>
 <span class="sd">        information to a .csv</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            fname_list (`list`, optional): list of filenames to process; if</span>
-<span class="sd">                left to `None`, will look at `base_dir`, `search_ext`, and</span>
-<span class="sd">                `dir_level` parameters for files to process (default: `None`).</span>
-<span class="sd">            base_dir (`str`, optional): directory path to search for files to</span>
-<span class="sd">                spectrally clip; if `fname_list` is not `None`, `base_dir` will</span>
-<span class="sd">                be ignored (default: `None`).</span>
-<span class="sd">            search_ext (`str`): file format/extension to search for in all</span>
+<span class="sd">            fname_list (``list``, optional): list of filenames to process; if</span>
+<span class="sd">                left to ``None``, will look at ``base_dir``, ``search_ext``, and</span>
+<span class="sd">                ``dir_level`` parameters for files to process (default: ``None``).</span>
+<span class="sd">            base_dir (``str``, optional): directory path to search for files to</span>
+<span class="sd">                spectrally clip; if ``fname_list`` is not ``None``, ``base_dir`` will</span>
+<span class="sd">                be ignored (default: ``None``).</span>
+<span class="sd">            search_ext (``str``): file format/extension to search for in all</span>
 <span class="sd">                directories and subdirectories to determine which files to</span>
-<span class="sd">                process; if `fname_list` is not `None`, `search_ext` will</span>
+<span class="sd">                process; if ``fname_list`` is not ``None``, ``search_ext`` will</span>
 <span class="sd">                be ignored (default: &#39;bip&#39;).</span>
-<span class="sd">            dir_level (`int`): The number of directory levels to search; if</span>
-<span class="sd">                `None`, searches all directory levels (default: 0).</span>
-<span class="sd">            base_dir_out (`str`): directory path to save all processed</span>
-<span class="sd">                datacubes; if set to `None`, a folder named according to the</span>
-<span class="sd">                `folder_name` parameter is added to `base_dir`</span>
+<span class="sd">            dir_level (``int``): The number of directory levels to search; if</span>
+<span class="sd">                ``None``, searches all directory levels (default: 0).</span>
+<span class="sd">            base_dir_out (``str``): directory path to save all processed</span>
+<span class="sd">                datacubes; if set to ``None``, a folder named according to the</span>
+<span class="sd">                ``folder_name`` parameter is added to ``base_dir``</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">fname_list</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">fname_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recurs_dir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="p">,</span> <span class="n">dir_level</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">fname_list</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># base_dir may have been stored to the `batch` object</span>
+            <span class="c1"># base_dir may have been stored to the ``batch`` object</span>
             <span class="n">base_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_dir</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please set `fname_list` or `base_dir` to indicate which &#39;</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please set ``fname_list`` or ``base_dir`` to indicate which &#39;</span>
                    <span class="s1">&#39;datacubes should be processed.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="k">assert</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">msg</span>
             <span class="n">fname_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recurs_dir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="p">,</span> <span class="n">dir_level</span><span class="p">)</span>
@@ -1843,32 +1924,32 @@
         <span class="n">fname_csv</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;stats-spectra.csv&#39;</span><span class="p">)</span>
         <span class="n">df_spec</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">fname_csv</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="batch.spectra_to_df"><a class="viewcode-back" href="../../api/hs_process.batch.batch.html#hs_process.batch.batch.spectra_to_df">[docs]</a>    <span class="k">def</span> <span class="nf">spectra_to_df</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;spec&#39;</span><span class="p">,</span>
+<div class="viewcode-block" id="batch.spectra_to_df"><a class="viewcode-back" href="../../api/hs_process.batch.html#hs_process.batch.spectra_to_df">[docs]</a>    <span class="k">def</span> <span class="nf">spectra_to_df</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;spec&#39;</span><span class="p">,</span>
                       <span class="n">dir_level</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Reads all the .spec files in a direcory and returns their data as a</span>
 <span class="sd">        pandas.DataFrame object.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            fname_list (`list`, optional): list of filenames to process; if</span>
-<span class="sd">                left to `None`, will look at `base_dir`, `search_ext`, and</span>
-<span class="sd">                `dir_level` parameters for files to process (default: `None`).</span>
-<span class="sd">            base_dir (`str`, optional): directory path to search for files to</span>
-<span class="sd">                spectrally clip; if `fname_list` is not `None`, `base_dir` will</span>
-<span class="sd">                be ignored (default: `None`).</span>
-<span class="sd">            search_ext (`str`): file format/extension to search for in all</span>
+<span class="sd">            fname_list (``list``, optional): list of filenames to process; if</span>
+<span class="sd">                left to ``None``, will look at ``base_dir``, ``search_ext``, and</span>
+<span class="sd">                ``dir_level`` parameters for files to process (default: ``None``).</span>
+<span class="sd">            base_dir (``str``, optional): directory path to search for files to</span>
+<span class="sd">                spectrally clip; if ``fname_list`` is not ``None``, ``base_dir`` will</span>
+<span class="sd">                be ignored (default: ``None``).</span>
+<span class="sd">            search_ext (``str``): file format/extension to search for in all</span>
 <span class="sd">                directories and subdirectories to determine which files to</span>
-<span class="sd">                process; if `fname_list` is not `None`, `search_ext` will</span>
+<span class="sd">                process; if ``fname_list`` is not ``None``, ``search_ext`` will</span>
 <span class="sd">                be ignored (default: &#39;bip&#39;).</span>
-<span class="sd">            dir_level (`int`): The number of directory levels to search; if</span>
-<span class="sd">                `None`, searches all directory levels (default: 0).</span>
+<span class="sd">            dir_level (``int``): The number of directory levels to search; if</span>
+<span class="sd">                ``None``, searches all directory levels (default: 0).</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">fname_list</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">fname_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recurs_dir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="p">,</span> <span class="n">dir_level</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">fname_list</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># base_dir may have been stored to the `batch` object</span>
+            <span class="c1"># base_dir may have been stored to the ``batch`` object</span>
             <span class="n">base_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_dir</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please set `fname_list` or `base_dir` to indicate which &#39;</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Please set ``fname_list`` or ``base_dir`` to indicate which &#39;</span>
                    <span class="s1">&#39;datacubes should be processed.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="k">assert</span> <span class="n">base_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">msg</span>
             <span class="n">fname_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recurs_dir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="p">,</span> <span class="n">dir_level</span><span class="p">)</span>
@@ -1912,17 +1993,17 @@
 <span class="c1">#        &#39;&#39;&#39;</span>
 <span class="c1">#</span>
 <span class="c1">#        Parameters:</span>
-<span class="c1">#            fname_sheet (`fname` or `Pandas.DataFrame): The filename of the</span>
+<span class="c1">#            fname_sheet (``fname`` or ``Pandas.DataFrame): The filename of the</span>
 <span class="c1">#                spreadsheed that provides the necessary information for batch</span>
 <span class="c1">#                process cropping. See below for more information about the</span>
-<span class="c1">#                required and optional contents of `fname_sheet` and how to</span>
-<span class="c1">#                properly format it. Optionally, `fname_sheet` can be a</span>
-<span class="c1">#                `Pandas.DataFrame`</span>
-<span class="c1">#            kmeans_mask_classes (`int`): number of K-means classes to mask from</span>
+<span class="c1">#                required and optional contents of ``fname_sheet`` and how to</span>
+<span class="c1">#                properly format it. Optionally, ``fname_sheet`` can be a</span>
+<span class="c1">#                ``Pandas.DataFrame``</span>
+<span class="c1">#            kmeans_mask_classes (``int``): number of K-means classes to mask from</span>
 <span class="c1">#                the datacube. By default, the classes with the lowest average</span>
 <span class="c1">#                spectral value (e.g., NDVI, GNDVI, MCARI2, etc.; based on</span>
-<span class="c1">#                `kmeans_filter` parameter) will be masked (default: 1).</span>
-<span class="c1">#            kmeans_filter (`str`): the spectral index to base the K-means mask</span>
+<span class="c1">#                ``kmeans_filter`` parameter) will be masked (default: 1).</span>
+<span class="c1">#            kmeans_filter (``str``): the spectral index to base the K-means mask</span>
 <span class="c1">#                on. Must be one of &#39;ndvi&#39;, &#39;gndvi&#39;, &#39;ndre&#39;, or &#39;mcari2&#39;. Note</span>
 <span class="c1">#                that the K-means aglorithm does not use the in its clustering</span>
 <span class="c1">#                algorithm (default: &#39;mcari2&#39;).</span>
@@ -2047,12 +2128,12 @@
 <span class="c1">#        datacubes in the same way (uses Spectral Python kmeans tool).</span>
 <span class="c1">#</span>
 <span class="c1">#        Parameters:</span>
-<span class="c1">#            n_classes (`int`): number of classes to cluster (default: 3).</span>
-<span class="c1">#            max_iter (`int`): maximum iterations before terminating process</span>
+<span class="c1">#            n_classes (``int``): number of classes to cluster (default: 3).</span>
+<span class="c1">#            max_iter (``int``): maximum iterations before terminating process</span>
 <span class="c1">#                (default: 100).</span>
-<span class="c1">#            plot_out (`bool`): whether to save a line plot of the spectra for</span>
-<span class="c1">#                each class (default: `True`).</span>
-<span class="c1">#            geotiff (`bool`): whether to save the masked RGB image as a geotiff</span>
+<span class="c1">#            plot_out (``bool``): whether to save a line plot of the spectra for</span>
+<span class="c1">#                each class (default: ``True``).</span>
+<span class="c1">#            geotiff (``bool``): whether to save the masked RGB image as a geotiff</span>
 <span class="c1">#                alongside the masked datacube.</span>
 <span class="c1">#        &#39;&#39;&#39;</span>
 <span class="c1">#        self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,</span>
@@ -2060,9 +2141,9 @@
 <span class="c1">#        if fname_list is None and base_dir is not None:</span>
 <span class="c1">#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)</span>
 <span class="c1">#        elif fname_list is None and base_dir is None:</span>
-<span class="c1">#            # base_dir may have been stored to the `batch` object</span>
+<span class="c1">#            # base_dir may have been stored to the ``batch`` object</span>
 <span class="c1">#            base_dir = self.base_dir</span>
-<span class="c1">#            msg = (&#39;Please set `fname_list` or `base_dir` to indicate which &#39;</span>
+<span class="c1">#            msg = (&#39;Please set ``fname_list`` or ``base_dir`` to indicate which &#39;</span>
 <span class="c1">#                   &#39;datacubes should be processed.\n&#39;)</span>
 <span class="c1">#            assert base_dir is not None, msg</span>
 <span class="c1">#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)</span>
@@ -2083,10 +2164,10 @@
 <span class="c1">##            self._execute_kmeans(fname_list, base_dir_out, folder_name,</span>
 <span class="c1">##                                 name_append, geotiff, n_classes, max_iter,</span>
 <span class="c1">##                                 plot_out, mask_soil=False)</span>
-<span class="c1">##        else:  # fname_list and base_dir are both `None`</span>
-<span class="c1">##            # base_dir may have been stored to the `batch` object</span>
+<span class="c1">##        else:  # fname_list and base_dir are both ``None``</span>
+<span class="c1">##            # base_dir may have been stored to the ``batch`` object</span>
 <span class="c1">##            base_dir = self.base_dir</span>
-<span class="c1">##            msg = (&#39;Please set `fname_list` or `base_dir` to indicate which &#39;</span>
+<span class="c1">##            msg = (&#39;Please set ``fname_list`` or ``base_dir`` to indicate which &#39;</span>
 <span class="c1">##                   &#39;datacubes should be processed.\n&#39;)</span>
 <span class="c1">##            assert base_dir is not None, msg</span>
 <span class="c1">##            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)</span>

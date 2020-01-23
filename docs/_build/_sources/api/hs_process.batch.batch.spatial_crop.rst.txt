@@ -1,6 +1,0 @@
-hs\_process.batch.batch.spatial\_crop
-=====================================
-
-.. currentmodule:: hs_process.batch
-
-.. automethod:: batch.spatial_crop

@@ -16,20 +16,36 @@ from hs_process.spatial_mod import spatial_mod
 
 class batch(object):
     '''
-    Parent class for batch processing hyperspectral image data
+    Class for batch processing hyperspectral image data. Makes use of
+    `segment`_, `spatial_mod`_, and `spec_mod`_ to batch process many
+    datacubes in a given directory. Supports options to save full
+    datacubes, geotiff renders, as well as summary statistics and/or
+    reports for the various tools.
+
+    Note:
+        It may be a good idea to review and understand the `defaults`_,
+        `hsio`_, `hstools`_, `segment`_, `spatial_mod`_, and `spec_mod`_
+        classes prior to using the ``batch`` module.
+
+    .. _defaults: hs_process.defaults.html
+    .. _hsio: hs_process.hsio.html
+    .. _hstools: hs_process.hstools.html
+    .. _segment: hs_process.segment.html
+    .. _spatial_mod: hs_process.spatial_mod.html
+    .. _spec_mod: hs_process.spec_mod.html
     '''
     def __init__(self, base_dir=None, search_ext='.bip', dir_level=0):
         '''
         Parameters:
-            base_dir (`str`, optional): directory path to search for files to
-                spectrally clip; if `fname_list` is not `None`, `base_dir` will
-                be ignored (default: `None`).
-            search_ext (`str`): file format/extension to search for in all
+            base_dir (``str``, optional): directory path to search for files to
+                spectrally clip; if ``fname_list`` is not ``None``, ``base_dir`` will
+                be ignored (default: ``None``).
+            search_ext (``str``): file format/extension to search for in all
                 directories and subdirectories to determine which files to
-                process; if `fname_list` is not `None`, `search_ext` will
+                process; if ``fname_list`` is not ``None``, ``search_ext`` will
                 be ignored (default: 'bip').
-            dir_level (`int`): The number of directory levels to search; if
-                `None`, searches all directory levels (default: 0).
+            dir_level (``int``): The number of directory levels to search; if
+                ``None``, searches all directory levels (default: 0).
         '''
         self.base_dir = base_dir
         self.search_ext = search_ext
@@ -60,7 +76,7 @@ class batch(object):
         Checks if any files in fname_list have already (presumably) undergone
         processing. This is determined by checking if a file exists with a
         particular name based on the filename in fname_list and naming
-        parameters (i.e,. `folder_name` and `name_append`).
+        parameters (i.e,. ``folder_name`` and ``name_append``).
         '''
         if append_extra is None:
             append_extra = ''
@@ -81,11 +97,11 @@ class batch(object):
                 fname_list_final.remove(fname)
         msg = ('There are no files to process. Please check if files have '
                'already undergone processing. If existing files should be '
-               'overwritten, be sure to set the `out_force` parameter.\n')
+               'overwritten, be sure to set the ``out_force`` parameter.\n')
         assert(len(fname_list_final) > 0), msg
         print('Processing {0} files. If this is not what is expected, please '
               'check if files have already undergone processing. If existing '
-              'files should be overwritten, be sure to set the `out_force` '
+              'files should be overwritten, be sure to set the ``out_force`` '
               'parameter.\n'.format(len(fname_list_final)))
         return fname_list_final
 
@@ -94,9 +110,9 @@ class batch(object):
         Reads the necessary information from the spreadsheet and saves it
         to a dictionary
 
-        If this function causes an error, try checking `batch.defaults` - these
+        If this function causes an error, try checking ``batch.defaults`` - these
         should be adjusted according to the default column names of the input
-        (i.e., `fname_sheet`).
+        (i.e., ``fname_sheet``).
         '''
         crop_specs = {
                 'directory': self._try_dict('directory', row),
@@ -155,8 +171,8 @@ class batch(object):
 
     def _pix_to_mapunit(self, crop_specs, spyfile=None):
         '''
-        Looks over specifications of `crop_specs`, and converts betweeen pixel
-        units and map units if one is populated and the other is `None`
+        Looks over specifications of ``crop_specs``, and converts betweeen pixel
+        units and map units if one is populated and the other is ``None``
         '''
         cs = crop_specs.copy()
 
@@ -200,7 +216,7 @@ class batch(object):
         return cs
 
     def _many_grid(self, cs):
-        '''Wrapper to get consice access to `spatial_mod.crop_many_grid()'''
+        '''Wrapper to get consice access to ``spatial_mod.crop_many_grid()'''
         df_plots = self.my_spatial_mod.crop_many_grid(
             cs['plot_id'], pix_e_ul=cs['pix_e_ul'], pix_n_ul=cs['pix_n_ul'],
             crop_e_m=cs['crop_e_m'], crop_n_m=cs['crop_n_m'],
@@ -211,8 +227,8 @@ class batch(object):
 
     def _many_gdf(self, cs):
         '''
-        Wrapper to get consice access to `spatial_mod.crop_many_gdf();
-        `my_spatial_mod` already has access to `spyfile` and `gdf`, so no need
+        Wrapper to get consice access to ``spatial_mod.crop_many_gdf();
+        ``my_spatial_mod`` already has access to ``spyfile`` and ``gdf``, so no need
         to pass them here.
         '''
         df_plots = self.my_spatial_mod.crop_many_gdf(
@@ -226,7 +242,7 @@ class batch(object):
                          method):
         '''
         '''
-        msg = ('`method` must be one of either "ndi", "ratio", "derivative", '
+        msg = ('``method`` must be one of either "ndi", "ratio", "derivative", '
                'or "mcari2".\n')
         assert method in ['ndi', 'ratio', 'derivative', 'mcari2'], msg
 
@@ -648,7 +664,7 @@ class batch(object):
             cs = self._crop_read_sheet(row)
             fname = os.path.join(cs['directory'], cs['fname'])
             print('\nSpatially cropping: {0}'.format(fname))
-            name_long = cs['name_long']  # `None` if it was never set
+            name_long = cs['name_long']  # ``None`` if it was never set
             plot_id = cs['plot_id']
             name_short = cs['name_short']
             fname_hdr = fname + '.hdr'
@@ -723,7 +739,7 @@ class batch(object):
 
     def _write_datacube(self, dir_out, name_label, array, metadata):
         '''
-        Writes a datacube to file using `hsio.write_cube()`
+        Writes a datacube to file using ``hsio.write_cube()``
         '''
         metadata['label'] = name_label
         hdr_file = os.path.join(dir_out, name_label + '.hdr')
@@ -740,7 +756,7 @@ class batch(object):
         msg = ('Projection and Geotransform information are required for '
                'writing the geotiff. This comes from the input filename, '
                'so please be sure the correct filename is passed to '
-               '`fname`.\n')
+               '``fname``.\n')
         assert fname is not None and os.path.isfile(fname), msg
         fname_tif = os.path.join(dir_out,
                                  os.path.splitext(name_label)[0] + '.tif')
@@ -945,7 +961,7 @@ class batch(object):
         '''
         Retrieves the array from a directory with a similar name to the loaded
         datacube (i.e., there must be a datacube loaded; self.io.spyfile should
-        not be `None`; compares to `self.io.name_short`).
+        not be ``None``; compares to ``self.io.name_short``).
 
         Parameters:
             dir_search: directory to search
@@ -964,11 +980,11 @@ class batch(object):
 
     def _get_class_mask(self, row, filter_cols, n_classes=1):
         '''
-        Finds the class with the lowest NDVI in `row` and returns the class ID
+        Finds the class with the lowest NDVI in ``row`` and returns the class ID
         to be used to dictate which pixels get masked
 
         Parameters:
-            n_classes (`int`): number of classes to mask; if 1, then will mask
+            n_classes (``int``): number of classes to mask; if 1, then will mask
             the minimum ndvi; if more than 1, all classes (default: 1)
         '''
         row_ndvi = row[filter_cols].astype(float)
@@ -999,7 +1015,7 @@ class batch(object):
 
         Returns:
             out_files: include the full pathname, filename, and ext of all
-                files that have `search_exp` in their name.
+                files that have ``search_exp`` in their name.
         '''
         if level is None:
             level = 1
@@ -1023,11 +1039,11 @@ class batch(object):
         Basic setup items when saving manipulated image files to disk
 
         Parameters:
-            base_dir_out (`str`): Parent directory that all processed datacubes
+            base_dir_out (``str``): Parent directory that all processed datacubes
                 will be saved.
-            folder_name (`str`): Folder to add to `base_dir_out` to save all
+            folder_name (``str``): Folder to add to ``base_dir_out`` to save all
                 the processed datacubes.
-            name_append (`str`): name to append to the filename.
+            name_append (``str``): name to append to the filename.
         '''
 #        if base_dir_out is None:
 #            base_dir_out = os.path.join(self.base_dir, folder_name)
@@ -1113,42 +1129,90 @@ class batch(object):
                         out_byteorder=False):
         '''
         Calculates the mean and standard deviation for each cube in
-        `fname_sheet` and writes the result to a .spec file.
+        ``fname_list`` and writes the result to a .spec file.
 
         Parameters:
-            fname_list (`list`, optional): list of filenames to process; if
-                left to `None`, will look at `base_dir`, `search_ext`, and
-                `dir_level` parameters for files to process (default: `None`).
-            base_dir (`str`, optional): directory path to search for files to
-                spectrally clip; if `fname_list` is not `None`, `base_dir` will
-                be ignored (default: `None`).
-            search_ext (`str`): file format/extension to search for in all
+            fname_list (``list``, optional): list of filenames to process; if
+                left to ``None``, will look at ``base_dir``, ``search_ext``, and
+                ``dir_level`` parameters for files to process (default: ``None``).
+            base_dir (``str``, optional): directory path to search for files to
+                spectrally clip; if ``fname_list`` is not ``None``, ``base_dir`` will
+                be ignored (default: ``None``).
+            search_ext (``str``): file format/extension to search for in all
                 directories and subdirectories to determine which files to
-                process; if `fname_list` is not `None`, `search_ext` will
+                process; if ``fname_list`` is not ``None``, ``search_ext`` will
                 be ignored (default: 'bip').
-            dir_level (`int`): The number of directory levels to search; if
-                `None`, searches all directory levels (default: 0).
-            base_dir_out (`str`): directory path to save all processed
-                datacubes; if set to `None`, a folder named according to the
-                `folder_name` parameter is added to `base_dir`
-            folder_name (`str`): folder to add to `base_dir_out` to save all
+            dir_level (``int``): The number of directory levels to search; if
+                ``None``, searches all directory levels (default: 0).
+            base_dir_out (``str``): directory path to save all processed
+                datacubes; if set to ``None``, a folder named according to the
+                ``folder_name`` parameter is added to ``base_dir``
+            folder_name (``str``): folder to add to ``base_dir_out`` to save all
                 the processed datacubes (default: 'cube_to_spec').
-            name_append (`str`): name to append to the filename (default:
+            name_append (``str``): name to append to the filename (default:
                 'cube-to-spec').
-            geotiff (`bool`): whether to save the masked RGB image as a geotiff
+            geotiff (``bool``): whether to save the masked RGB image as a geotiff
                 alongside the masked datacube.
             out_XXX: Settings for saving the output files can be adjusted here
-                if desired. They are stored in `batch.io.defaults, and are
+                if desired. They are stored in ``batch.io.defaults, and are
                 therefore accessible at a high level. See
-                `hsio.set_io_defaults()` for more information on each of the
+                ``hsio.set_io_defaults()`` for more information on each of the
                 settings.
+
+        Note:
+            The following ``batch`` example builds on the API example results
+            of the `spatial_mod.crop_many_gdf`_ function. Please complete the
+            `spatial_mod.crop_many_gdf`_ example to be sure your directory
+            (i.e., ``base_dir``) is populated with multiple hyperspectral
+            datacubes. The following example will be using datacubes located in
+            the following directory:
+            ``F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf``
+
+        Example:
+            Load and initialize the ``batch`` module, checking to be sure the
+            directory exists.
+
+            >>> import os
+            >>> from hs_process import batch
+            >>> base_dir = r'F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf'
+            >>> print(os.path.isdir(base_dir))
+            True
+            >>> hsbatch = batch(base_dir, search_ext='.bip')  # searches for all files in ``base_dir`` with a ".bip" file extension
+
+            Use ``batch.cube_to_spectra`` to calculate the *mean* and *standard
+            deviation* across all pixels for each of the datacubes in
+            ``base_dir``.
+
+            >>> hsbatch.cube_to_spectra(base_dir=base_dir, geotiff=False)
+            Processing 40 files. If this is not what is expected, please check if files have already undergone processing. If existing files should be overwritten, be sure to set the ``out_force`` parameter.
+
+            Calculating mean spectra: F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011.bip
+            Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011.bip.hd-cube-to-spec-mean.spec
+
+            Calculating mean spectra: F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012.bip
+            Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012.bip.hd-cube-to-spec-mean.spec
+
+            Calculating mean spectra: F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013.bip
+            Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013.bip.hd-cube-to-spec-mean.spec
+
+            Visualize the unmasked array using ``hsio.show_img``. Set ``vmin``
+            and ``vmax`` to ensure the same color scale is used in comparing
+            the masked vs. unmasked arrays.
+
+            >>> vmin = array.min()
+            >>> vmax = array.max()
+            >>> io.show_img(array, vmin=vmin, vmax=vmax)
+
+            .. image:: ../img/utilities/mask_array_800nm.png
+
+        .. _spatial_mod.crop_many_gdf: hs_process.spatial_mod.html#hs_process.spatial_mod.crop_many_gdf
         '''
         if fname_list is None and base_dir is not None:
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
         elif fname_list is None and base_dir is None:
-            # base_dir may have been stored to the `batch` object
+            # base_dir may have been stored to the ``batch`` object
             base_dir = self.base_dir
-            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
                    'datacubes should be processed.\n')
             assert base_dir is not None, msg
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
@@ -1200,45 +1264,45 @@ class batch(object):
         same way.
 
         Parameters:
-            method (`str`): Must be one of "ndi" (normalized difference index),
+            method (``str``): Must be one of "ndi" (normalized difference index),
                 "ratio" (simple ratio index), "derivative" (deriviative-type
                 index), or "mcari2" (modified chlorophyll absorption index2).
                 Indicates what kind of band
                 math should be performed on the input datacube. The "ndi"
-                method leverages `segment.band_math_ndi()`, the "ratio"
-                method leverages `segment.band_math_ratio()`, and the
-                "derivative" method leverages `segment.band_math_derivative()`.
-                Please see the `segment` documentation for more information
+                method leverages ``segment.band_math_ndi()``, the "ratio"
+                method leverages ``segment.band_math_ratio()``, and the
+                "derivative" method leverages ``segment.band_math_derivative()``.
+                Please see the ``segment`` documentation for more information
                 (default: "ndi").
-            wl1 (`int`, `float`, or `list`): the wavelength (or set of
+            wl1 (``int``, ``float``, or ``list``): the wavelength (or set of
                 wavelengths) to be used as the first parameter of the
-                band math index; if `list`, then consolidates all
+                band math index; if ``list``, then consolidates all
                 bands between two wavelength values by calculating the mean
-                pixel value across all bands in that range (default: `None`).
-            wl2 (`int`, `float`, or `list`): the wavelength (or set of
+                pixel value across all bands in that range (default: ``None``).
+            wl2 (``int``, ``float``, or ``list``): the wavelength (or set of
                 wavelengths) to be used as the second parameter of the
-                band math index; if `list`, then consolidates all
+                band math index; if ``list``, then consolidates all
                 bands between two wavelength values by calculating the mean
-                pixel value across all bands in that range (default: `None`).
-            b1 (`int`, `float`, or `list`): the band (or set of bands) to be
+                pixel value across all bands in that range (default: ``None``).
+            b1 (``int``, ``float``, or ``list``): the band (or set of bands) to be
                 used as the first parameter of the band math index;
-                if `list`, then consolidates all bands between two band values
+                if ``list``, then consolidates all bands between two band values
                 by calculating the mean pixel value across all bands in that
-                range (default: `None`).
-            b2 (`int`, `float`, or `list`): the band (or set of bands) to be
+                range (default: ``None``).
+            b2 (``int``, ``float``, or ``list``): the band (or set of bands) to be
                 used as the second parameter of the band math
-                index; if `list`, then consolidates all bands between two band
+                index; if ``list``, then consolidates all bands between two band
                 values by calculating the mean pixel value across all bands in
-                that range (default: `None`).
-            list_range (`bool`): Whether bands/wavelengths passed as a list is
-                interpreted as a range of bands (`True`) or for each individual
-                band in the list (`False`). If `list_range` is `True`,
-                `b1`/`wl1` and `b2`/`wl2` should be lists with two items, and
+                that range (default: ``None``).
+            list_range (``bool``): Whether bands/wavelengths passed as a list is
+                interpreted as a range of bands (``True``) or for each individual
+                band in the list (``False``). If ``list_range`` is ``True``,
+                ``b1``/``wl1`` and ``b2``/``wl2`` should be lists with two items, and
                 all bands/wavelegths between the two values will be used
-                (default: `True`).
-            plot_out (`bool`): whether to save a histogram of the band math
-                result (default: `True`).
-            geotiff (`bool`): whether to save the masked RGB image as a geotiff
+                (default: ``True``).
+            plot_out (``bool``): whether to save a histogram of the band math
+                result (default: ``True``).
+            geotiff (``bool``): whether to save the masked RGB image as a geotiff
                 alongside the masked datacube.
         '''
         self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
@@ -1246,9 +1310,9 @@ class batch(object):
         if fname_list is None and base_dir is not None:
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
         elif fname_list is None and base_dir is None:
-            # base_dir may have been stored to the `batch` object
+            # base_dir may have been stored to the ``batch`` object
             base_dir = self.base_dir
-            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
                    'datacubes should be processed.\n')
             assert base_dir is not None, msg
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
@@ -1293,10 +1357,10 @@ class batch(object):
 #            self._execute_band_math(fname_list, base_dir_out, folder_name,
 #                                    name_append, geotiff, method, wl1, wl2,
 #                                    wl3, b1, b2, b3, list_range, plot_out)
-#        else:  # fname_list and base_dir are both `None`
-#            # base_dir may have been stored to the `batch` object
+#        else:  # fname_list and base_dir are both ``None``
+#            # base_dir may have been stored to the ``batch`` object
 #            base_dir = self.base_dir
-#            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+#            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
 #                   'datacubes should be processed.\n')
 #            assert base_dir is not None, msg
 #            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
@@ -1316,17 +1380,17 @@ class batch(object):
         Batch processing tool to create a masked array on many datacubes.
 
         Parameters:
-            mask_thresh (`float` or `int`): The value for which to mask the
-                array; should be used with `side` parameter (default: `None`).
-            mask_percentile (`float` or `int`): The percentile of pixels to
-                mask; if `percentile`=95 and `side`='lower', the lowest 95% of
+            mask_thresh (``float`` or ``int``): The value for which to mask the
+                array; should be used with ``side`` parameter (default: ``None``).
+            mask_percentile (``float`` or ``int``): The percentile of pixels to
+                mask; if ``percentile``=95 and ``side``='lower', the lowest 95% of
                 pixels will be masked following the band math operation
-                (default: `None`; range: 0-100).
-            mask_side (`str`): The side of the threshold or percentile for
+                (default: ``None``; range: 0-100).
+            mask_side (``str``): The side of the threshold or percentile for
                 which to apply the mask. Must be either 'lower' or 'upper'; if
                 'lower', everything below the threshold/percentile will be
                 masked (default: 'lower').
-            geotiff (`bool`): whether to save the masked RGB image as a geotiff
+            geotiff (``bool``): whether to save the masked RGB image as a geotiff
                 alongside the masked datacube.
         '''
         self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
@@ -1334,9 +1398,9 @@ class batch(object):
         if fname_list is None and base_dir is not None:
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
         elif fname_list is None and base_dir is None:
-            # base_dir may have been stored to the `batch` object
+            # base_dir may have been stored to the ``batch`` object
             base_dir = self.base_dir
-            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
                    'datacubes should be processed.\n')
             assert base_dir is not None, msg
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
@@ -1357,10 +1421,10 @@ class batch(object):
 #            self._execute_mask(fname_list, base_dir_out, folder_name,
 #                               name_append, geotiff, mask_thresh,
 #                               mask_percentile, mask_side)
-#        else:  # fname_list and base_dir are both `None`
-#            # base_dir may have been stored to the `batch` object
+#        else:  # fname_list and base_dir are both ``None``
+#            # base_dir may have been stored to the ``batch`` object
 #            base_dir = self.base_dir
-#            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+#            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
 #                   'datacubes should be processed.\n')
 #            assert base_dir is not None, msg
 #            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
@@ -1377,60 +1441,61 @@ class batch(object):
         Iterates through spreadsheet that provides necessary information about
         how each image should be cropped and how it should be saved.
 
-        If `gdf` is passed (a geopandas.GoeDataFrame polygon file), the cropped
+        If ``gdf`` is passed (a geopandas.GoeDataFrame polygon file), the cropped
         images will be shifted to the center of appropriate "plot" polygon.
 
         Parameters:
-            fname_sheet (`fname` or `Pandas.DataFrame): The filename of the
+            fname_sheet (``fname`` or ``Pandas.DataFrame): The filename of the
                 spreadsheed that provides the necessary information for batch
                 process cropping. See below for more information about the
-                required and optional contents of `fname_sheet` and how to
-                properly format it. Optionally, `fname_sheet` can be a
-                `Pandas.DataFrame`
-            base_dir_out (`str`): output directory of the cropped image
-                (default: `None`).
-            folder_name (`str`): folder to add to `base_dir_out` to save all
+                required and optional contents of ``fname_sheet`` and how to
+                properly format it. Optionally, ``fname_sheet`` can be a
+                ``Pandas.DataFrame``.
+            base_dir_out (``str``): output directory of the cropped image
+                (default: ``None``).
+            folder_name (``str``): folder to add to ``base_dir_out`` to save all
                 the processed datacubes (default: 'spatial_crop').
-            name_append (`str`): name to append to the filename (default:
+            name_append (``str``): name to append to the filename (default:
                 'spatial-crop').
-            geotiff (`bool`): whether to save an RGB image as a geotiff
+            geotiff (``bool``): whether to save an RGB image as a geotiff
                 alongside the cropped datacube.
-            method (`str`): Must be one of "single", "many_grid", or
+            method (``str``): Must be one of "single", "many_grid", or
                 "many_gdf". Indicates whether a single plot should be cropped
                 from the input datacube or if many/multiple plots should be
                 cropped from the input datacube. The "single" method leverages
-                `spatial_mod.crop_single()`, the "many_grid" method leverages
-                `spatial_mod.crop_many_grid()`, and the "many_gdf" method
-                leverages `spatial_mod.crop_many_gdf()` (there are two methods
+                `spatial_mod.crop_single()`_ and the "many_gdf" method
+                leverages `spatial_mod.crop_many_gdf()`_ (there are two methods
                 available to peform cropping for many/mulitple plots). Please
-                see the `spatial_mod` documentation for more information
+                see the ``spatial_mod`` documentation for more information
                 (default: "single").
-            gdf (`geopandas.GeoDataFrame`): the plot names and polygon
+            gdf (``geopandas.GeoDataFrame``): the plot names and polygon
                 geometery of each of the plots; 'plot' must be used as a column
                 name to identify each of the plots, and should be an integer.
             out_XXX: Settings for saving the output files can be adjusted here
-                if desired. They are stored in `batch.io.defaults, and are
+                if desired. They are stored in ``batch.io.defaults``, and are
                 therefore accessible at a high level. See
-                `hsio.set_io_defaults()` for more information on each of the
+                `hsio.set_io_defaults()`_ for more information on each of the
                 settings.
 
         Note:
-            `fname_sheet` may have the following required column headings:
+            ``fname_sheet`` may have the following required column headings
+            that correspond to the relevant parameters in
+            `spatial_mod.crop_single()`_ and `spatial_mod.crop_many_gdf()`_:
                 1. "directory"
                 2. "name_short"
                 3. "name_long"
                 4. "ext"
                 5. "pix_e_ul"
                 6. "pix_n_ul".
-            With this minimum input, `batch.spatial_crop` will read in each
+            With this minimum input, ``batch.spatial_crop`` will read in each
             image, crop from the upper left pixel (determined as
-            `pix_e_ul`/`pix_n_ul`) to the lower right pixel calculated
-            based on `crop_e_pix`/`crop_n_pix` (which is the width of the
-            cropped area in units of pixels). `crop_e_pix` and `crop_n_pix`
-            have default values, but they can also be set in `fname_sheet`,
+            ``pix_e_ul``/``pix_n_ul``) to the lower right pixel calculated
+            based on ``crop_e_pix``/``crop_n_pix`` (which is the width of the
+            cropped area in units of pixels). ``crop_e_pix`` and ``crop_n_pix``
+            have default values, but they can also be set in ``fname_sheet``,
             which will take precedence over the defaults.
-
-            `fname_sheet` may also have the following optional column headings:
+            ``fname_sheet`` may also have the following optional column
+            headings:
                 7. "crop_e_pix"
                 8. "crop_n_pix"
                 9. "crop_e_m"
@@ -1440,16 +1505,32 @@ class batch(object):
                 13. "buf_e_m"
                 14. "buf_n_m"
                 15. "plot_id".
-            These optional inputs allow more control over exactly how the image
-            will be cropped, and hopefully are self-explanatory until
-            adequate documentation is written. Any other columns can
-            be added to `fname_sheet`, but `batch.spatial_crop` does not
-            use them in any way.
+
+        Note:
+            1. These optional inputs passed via ``fname_sheet`` allow more
+            control over exactly how the images are to be cropped. For a more
+            detailed explanation of the information that many of these columns
+            are intended to contain, see the documentation for
+            `spatial_mod.crop_single()`_ and `spatial_mod.crop_many_gdf()`_.
+            Those parameters not referenced should be apparent in the API
+            examples and tutorials.
+
+            2. If the column names are different in ``fname_sheet`` than
+            described here, `defaults.spat_crop_cols()`_ can be modified to
+            indicate which columns correspond to the relevant information.
+
+            3. Any other columns can be added to ``fname_sheet``, but
+            ``batch.spatial_crop()`` does not use them in any way.
+
+        .. _hsio.set_io_defaults(): hs_process.hsio.html#hs_process.hsio.set_io_defaults
+        .. _spatial_mod.crop_single(): hs_process.spatial_mod.html#hs_process.spatial_mod.crop_single
+        .. _spatial_mod.crop_many_gdf(): hs_process.spatial_mod.html#hs_process.spatial_mod.crop_many_gdf
+        .. _defaults.spat_crop_cols(): hs_process.defaults.html#hs_process.defaults.spat_crop_cols
         '''
         if method == 'many_gdf':
-            msg1 = ('Please pass a valid `geopandas.GeoDataFrame` if using '
+            msg1 = ('Please pass a valid ``geopandas.GeoDataFrame`` if using '
                     'the "many_gdf" method.\n')
-            msg2 = ('Please be sure the passed `geopandas.GeoDataFrame` has a '
+            msg2 = ('Please be sure the passed ``geopandas.GeoDataFrame`` has a '
                     'column by the name of "plot", indicating the plot ID for '
                     'each polygon geometry if using the "many_gdf" method.\n')
             assert isinstance(gdf, gpd.GeoDataFrame), msg1
@@ -1470,26 +1551,26 @@ class batch(object):
         way.
 
         Parameters:
-            fname_list (`list`, optional): list of filenames to process; if
-                left to `None`, will look at `base_dir`, `search_ext`, and
-                `dir_level` parameters for files to process (default: `None`).
-            base_dir (`str`, optional): directory path to search for files to
-                spectrally clip; if `fname_list` is not `None`, `base_dir` will
-                be ignored (default: `None`).
-            search_ext (`str`): file format/extension to search for in all
+            fname_list (``list``, optional): list of filenames to process; if
+                left to ``None``, will look at ``base_dir``, ``search_ext``, and
+                ``dir_level`` parameters for files to process (default: ``None``).
+            base_dir (``str``, optional): directory path to search for files to
+                spectrally clip; if ``fname_list`` is not ``None``, ``base_dir`` will
+                be ignored (default: ``None``).
+            search_ext (``str``): file format/extension to search for in all
                 directories and subdirectories to determine which files to
-                process; if `fname_list` is not `None`, `search_ext` will
+                process; if ``fname_list`` is not ``None``, ``search_ext`` will
                 be ignored (default: 'bip').
-            dir_level (`int`): The number of directory levels to search; if
-                `None`, searches all directory levels (default: 0).
-            base_dir_out (`str`): directory path to save all processed
-                datacubes; if set to `None`, a folder named according to the
-                `folder_name` parameter is added to `base_dir`
-            folder_name (`str`): folder to add to `base_dir_out` to save all
+            dir_level (``int``): The number of directory levels to search; if
+                ``None``, searches all directory levels (default: 0).
+            base_dir_out (``str``): directory path to save all processed
+                datacubes; if set to ``None``, a folder named according to the
+                ``folder_name`` parameter is added to ``base_dir``
+            folder_name (``str``): folder to add to ``base_dir_out`` to save all
                 the processed datacubes (default: 'spec-clip').
-            name_append (`str`): name to append to the filename (default:
+            name_append (``str``): name to append to the filename (default:
                 'spec-clip').
-            wl_bands (`list` or `list of lists`): minimum and maximum
+            wl_bands (``list`` or ``list of lists``): minimum and maximum
                 wavelenths to clip from image; if multiple groups of
                 wavelengths should be cut, this should be a list of lists. For
                 example, wl_bands=[760, 776] will clip all bands greater than
@@ -1499,9 +1580,9 @@ class batch(object):
                 nm and less than 776.0 nm, bands greater than 813.0 nm and less
                 than 827.0 nm, and bands greater than 880 nm (default).
             out_XXX: Settings for saving the output files can be adjusted here
-                if desired. They are stored in `batch.io.defaults, and are
+                if desired. They are stored in ``batch.io.defaults, and are
                 therefore accessible at a high level. See
-                `hsio.set_io_defaults()` for more information on each of the
+                ``hsio.set_io_defaults()`` for more information on each of the
                 settings.
         '''
         self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
@@ -1509,9 +1590,9 @@ class batch(object):
         if fname_list is None and base_dir is not None:
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
         elif fname_list is None and base_dir is None:
-            # base_dir may have been stored to the `batch` object
+            # base_dir may have been stored to the ``batch`` object
             base_dir = self.base_dir
-            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
                    'datacubes should be processed.\n')
             assert base_dir is not None, msg
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
@@ -1529,10 +1610,10 @@ class batch(object):
 #            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
 #            self._execute_spec_clip(fname_list, base_dir_out, folder_name,
 #                                    name_append, wl_bands)
-#        else:  # fname_list and base_dir are both `None`
-#            # base_dir may have been stored to the `batch` object
+#        else:  # fname_list and base_dir are both ``None``
+#            # base_dir may have been stored to the ``batch`` object
 #            base_dir = self.base_dir
-#            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+#            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
 #                   'datacubes should be processed.\n')
 #            assert base_dir is not None, msg
 #            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
@@ -1550,36 +1631,36 @@ class batch(object):
         same way.
 
         Parameters:
-            fname_list (`list`, optional): list of filenames to process; if
-                left to `None`, will look at `base_dir`, `search_ext`, and
-                `dir_level` parameters for files to process (default: `None`).
-            base_dir (`str`, optional): directory path to search for files to
-                spectrally clip; if `fname_list` is not `None`, `base_dir` will
-                be ignored (default: `None`).
-            search_ext (`str`): file format/extension to search for in all
+            fname_list (``list``, optional): list of filenames to process; if
+                left to ``None``, will look at ``base_dir``, ``search_ext``, and
+                ``dir_level`` parameters for files to process (default: ``None``).
+            base_dir (``str``, optional): directory path to search for files to
+                spectrally clip; if ``fname_list`` is not ``None``, ``base_dir`` will
+                be ignored (default: ``None``).
+            search_ext (``str``): file format/extension to search for in all
                 directories and subdirectories to determine which files to
-                process; if `fname_list` is not `None`, `search_ext` will
+                process; if ``fname_list`` is not ``None``, ``search_ext`` will
                 be ignored (default: 'bip').
-            dir_level (`int`): The number of directory levels to search; if
-                `None`, searches all directory levels (default: 0).
-            base_dir_out (`str`): directory path to save all processed
-                datacubes; if set to `None`, a folder named according to the
-                `folder_name` parameter is added to `base_dir`
-            folder_name (`str`): folder to add to `base_dir_out` to save all
+            dir_level (``int``): The number of directory levels to search; if
+                ``None``, searches all directory levels (default: 0).
+            base_dir_out (``str``): directory path to save all processed
+                datacubes; if set to ``None``, a folder named according to the
+                ``folder_name`` parameter is added to ``base_dir``
+            folder_name (``str``): folder to add to ``base_dir_out`` to save all
                 the processed datacubes (default: 'spec-smooth').
-            name_append (`str`): name to append to the filename (default:
+            name_append (``str``): name to append to the filename (default:
                 'spec-smooth').
-            window_size (`int`): the length of the window; must be an odd
+            window_size (``int``): the length of the window; must be an odd
                 integer number (default: 11).
-            order (`int`): the order of the polynomial used in the filtering;
-                must be less than `window_size` - 1 (default: 2).
-            stats (`bool`): whether to compute some basic descriptive
+            order (``int``): the order of the polynomial used in the filtering;
+                must be less than ``window_size`` - 1 (default: 2).
+            stats (``bool``): whether to compute some basic descriptive
                 statistics (mean, st. dev., and coefficient of variation) of
-                the smoothed data array (default: `False`)
+                the smoothed data array (default: ``False``)
             out_XXX: Settings for saving the output files can be adjusted here
-                if desired. They are stored in `batch.io.defaults, and are
+                if desired. They are stored in ``batch.io.defaults, and are
                 therefore accessible at a high level. See
-                `hsio.set_io_defaults()` for more information on each of the
+                ``hsio.set_io_defaults()`` for more information on each of the
                 settings.
         '''
         self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
@@ -1587,9 +1668,9 @@ class batch(object):
         if fname_list is None and base_dir is not None:
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
         elif fname_list is None and base_dir is None:
-            # base_dir may have been stored to the `batch` object
+            # base_dir may have been stored to the ``batch`` object
             base_dir = self.base_dir
-            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
                    'datacubes should be processed.\n')
             assert base_dir is not None, msg
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
@@ -1610,10 +1691,10 @@ class batch(object):
 #            df_stats = self._execute_spec_smooth(
 #                    fname_list, base_dir_out, folder_name, name_append,
 #                    window_size, order, stats)
-#        else:  # fname_list and base_dir are both `None`
-#            # base_dir may have been stored to the `batch` object
+#        else:  # fname_list and base_dir are both ``None``
+#            # base_dir may have been stored to the ``batch`` object
 #            base_dir = self.base_dir
-#            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+#            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
 #                   'datacubes should be processed.\n')
 #            assert base_dir is not None, msg
 #            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
@@ -1634,25 +1715,25 @@ class batch(object):
         spatial information).
 
         Parameters:
-            fname_list (`list`, optional): list of filenames to process; if
-                left to `None`, will look at `base_dir`, `search_ext`, and
-                `dir_level` parameters for files to process (default: `None`).
-            base_dir (`str`, optional): directory path to search for files to
-                spectrally clip; if `fname_list` is not `None`, `base_dir` will
-                be ignored (default: `None`).
-            search_ext (`str`): file format/extension to search for in all
+            fname_list (``list``, optional): list of filenames to process; if
+                left to ``None``, will look at ``base_dir``, ``search_ext``, and
+                ``dir_level`` parameters for files to process (default: ``None``).
+            base_dir (``str``, optional): directory path to search for files to
+                spectrally clip; if ``fname_list`` is not ``None``, ``base_dir`` will
+                be ignored (default: ``None``).
+            search_ext (``str``): file format/extension to search for in all
                 directories and subdirectories to determine which files to
-                process; if `fname_list` is not `None`, `search_ext` will
+                process; if ``fname_list`` is not ``None``, ``search_ext`` will
                 be ignored (default: 'bip').
-            dir_level (`int`): The number of directory levels to search; if
-                `None`, searches all directory levels (default: 0).
-            base_dir_out (`str`): directory path to save all processed
-                datacubes; if set to `None`, a folder named according to the
-                `folder_name` parameter is added to `base_dir`
+            dir_level (``int``): The number of directory levels to search; if
+                ``None``, searches all directory levels (default: 0).
+            base_dir_out (``str``): directory path to save all processed
+                datacubes; if set to ``None``, a folder named according to the
+                ``folder_name`` parameter is added to ``base_dir``
             out_XXX: Settings for saving the output files can be adjusted here
-                if desired. They are stored in `batch.io.defaults, and are
+                if desired. They are stored in ``batch.io.defaults, and are
                 therefore accessible at a high level. See
-                `hsio.set_io_defaults()` for more information on each of the
+                ``hsio.set_io_defaults()`` for more information on each of the
                 settings.
         '''
         self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
@@ -1660,9 +1741,9 @@ class batch(object):
         if fname_list is None and base_dir is not None:
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
         elif fname_list is None and base_dir is None:
-            # base_dir may have been stored to the `batch` object
+            # base_dir may have been stored to the ``batch`` object
             base_dir = self.base_dir
-            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
                    'datacubes should be processed.\n')
             assert base_dir is not None, msg
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
@@ -1676,28 +1757,28 @@ class batch(object):
         information to a .csv
 
         Parameters:
-            fname_list (`list`, optional): list of filenames to process; if
-                left to `None`, will look at `base_dir`, `search_ext`, and
-                `dir_level` parameters for files to process (default: `None`).
-            base_dir (`str`, optional): directory path to search for files to
-                spectrally clip; if `fname_list` is not `None`, `base_dir` will
-                be ignored (default: `None`).
-            search_ext (`str`): file format/extension to search for in all
+            fname_list (``list``, optional): list of filenames to process; if
+                left to ``None``, will look at ``base_dir``, ``search_ext``, and
+                ``dir_level`` parameters for files to process (default: ``None``).
+            base_dir (``str``, optional): directory path to search for files to
+                spectrally clip; if ``fname_list`` is not ``None``, ``base_dir`` will
+                be ignored (default: ``None``).
+            search_ext (``str``): file format/extension to search for in all
                 directories and subdirectories to determine which files to
-                process; if `fname_list` is not `None`, `search_ext` will
+                process; if ``fname_list`` is not ``None``, ``search_ext`` will
                 be ignored (default: 'bip').
-            dir_level (`int`): The number of directory levels to search; if
-                `None`, searches all directory levels (default: 0).
-            base_dir_out (`str`): directory path to save all processed
-                datacubes; if set to `None`, a folder named according to the
-                `folder_name` parameter is added to `base_dir`
+            dir_level (``int``): The number of directory levels to search; if
+                ``None``, searches all directory levels (default: 0).
+            base_dir_out (``str``): directory path to save all processed
+                datacubes; if set to ``None``, a folder named according to the
+                ``folder_name`` parameter is added to ``base_dir``
         '''
         if fname_list is None and base_dir is not None:
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
         elif fname_list is None and base_dir is None:
-            # base_dir may have been stored to the `batch` object
+            # base_dir may have been stored to the ``batch`` object
             base_dir = self.base_dir
-            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
                    'datacubes should be processed.\n')
             assert base_dir is not None, msg
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
@@ -1731,25 +1812,25 @@ class batch(object):
         pandas.DataFrame object.
 
         Parameters:
-            fname_list (`list`, optional): list of filenames to process; if
-                left to `None`, will look at `base_dir`, `search_ext`, and
-                `dir_level` parameters for files to process (default: `None`).
-            base_dir (`str`, optional): directory path to search for files to
-                spectrally clip; if `fname_list` is not `None`, `base_dir` will
-                be ignored (default: `None`).
-            search_ext (`str`): file format/extension to search for in all
+            fname_list (``list``, optional): list of filenames to process; if
+                left to ``None``, will look at ``base_dir``, ``search_ext``, and
+                ``dir_level`` parameters for files to process (default: ``None``).
+            base_dir (``str``, optional): directory path to search for files to
+                spectrally clip; if ``fname_list`` is not ``None``, ``base_dir`` will
+                be ignored (default: ``None``).
+            search_ext (``str``): file format/extension to search for in all
                 directories and subdirectories to determine which files to
-                process; if `fname_list` is not `None`, `search_ext` will
+                process; if ``fname_list`` is not ``None``, ``search_ext`` will
                 be ignored (default: 'bip').
-            dir_level (`int`): The number of directory levels to search; if
-                `None`, searches all directory levels (default: 0).
+            dir_level (``int``): The number of directory levels to search; if
+                ``None``, searches all directory levels (default: 0).
         '''
         if fname_list is None and base_dir is not None:
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
         elif fname_list is None and base_dir is None:
-            # base_dir may have been stored to the `batch` object
+            # base_dir may have been stored to the ``batch`` object
             base_dir = self.base_dir
-            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
                    'datacubes should be processed.\n')
             assert base_dir is not None, msg
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
@@ -1793,17 +1874,17 @@ class batch(object):
 #        '''
 #
 #        Parameters:
-#            fname_sheet (`fname` or `Pandas.DataFrame): The filename of the
+#            fname_sheet (``fname`` or ``Pandas.DataFrame): The filename of the
 #                spreadsheed that provides the necessary information for batch
 #                process cropping. See below for more information about the
-#                required and optional contents of `fname_sheet` and how to
-#                properly format it. Optionally, `fname_sheet` can be a
-#                `Pandas.DataFrame`
-#            kmeans_mask_classes (`int`): number of K-means classes to mask from
+#                required and optional contents of ``fname_sheet`` and how to
+#                properly format it. Optionally, ``fname_sheet`` can be a
+#                ``Pandas.DataFrame``
+#            kmeans_mask_classes (``int``): number of K-means classes to mask from
 #                the datacube. By default, the classes with the lowest average
 #                spectral value (e.g., NDVI, GNDVI, MCARI2, etc.; based on
-#                `kmeans_filter` parameter) will be masked (default: 1).
-#            kmeans_filter (`str`): the spectral index to base the K-means mask
+#                ``kmeans_filter`` parameter) will be masked (default: 1).
+#            kmeans_filter (``str``): the spectral index to base the K-means mask
 #                on. Must be one of 'ndvi', 'gndvi', 'ndre', or 'mcari2'. Note
 #                that the K-means aglorithm does not use the in its clustering
 #                algorithm (default: 'mcari2').
@@ -1928,12 +2009,12 @@ class batch(object):
 #        datacubes in the same way (uses Spectral Python kmeans tool).
 #
 #        Parameters:
-#            n_classes (`int`): number of classes to cluster (default: 3).
-#            max_iter (`int`): maximum iterations before terminating process
+#            n_classes (``int``): number of classes to cluster (default: 3).
+#            max_iter (``int``): maximum iterations before terminating process
 #                (default: 100).
-#            plot_out (`bool`): whether to save a line plot of the spectra for
-#                each class (default: `True`).
-#            geotiff (`bool`): whether to save the masked RGB image as a geotiff
+#            plot_out (``bool``): whether to save a line plot of the spectra for
+#                each class (default: ``True``).
+#            geotiff (``bool``): whether to save the masked RGB image as a geotiff
 #                alongside the masked datacube.
 #        '''
 #        self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
@@ -1941,9 +2022,9 @@ class batch(object):
 #        if fname_list is None and base_dir is not None:
 #            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
 #        elif fname_list is None and base_dir is None:
-#            # base_dir may have been stored to the `batch` object
+#            # base_dir may have been stored to the ``batch`` object
 #            base_dir = self.base_dir
-#            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+#            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
 #                   'datacubes should be processed.\n')
 #            assert base_dir is not None, msg
 #            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
@@ -1964,10 +2045,10 @@ class batch(object):
 ##            self._execute_kmeans(fname_list, base_dir_out, folder_name,
 ##                                 name_append, geotiff, n_classes, max_iter,
 ##                                 plot_out, mask_soil=False)
-##        else:  # fname_list and base_dir are both `None`
-##            # base_dir may have been stored to the `batch` object
+##        else:  # fname_list and base_dir are both ``None``
+##            # base_dir may have been stored to the ``batch`` object
 ##            base_dir = self.base_dir
-##            msg = ('Please set `fname_list` or `base_dir` to indicate which '
+##            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
 ##                   'datacubes should be processed.\n')
 ##            assert base_dir is not None, msg
 ##            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)

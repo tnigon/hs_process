@@ -1,7 +1,7 @@
 
-========================
+########################
 hs_process Documentation
-========================
+########################
 
 *A Python package for processing and manipulating aerial hyperspectral imagery*
 
@@ -11,9 +11,9 @@ Current version: |version_current|
 ``hs_process`` emphasizes the ability to batch process datacubes, with the overall goal of keeping the processing pipeline as "hands-off" as possible. There is also a focus of maintaining the ability to have control over the subjective aspects of processing.
 
 
-##################
+******************
 Table of Contents
-##################
+******************
 
 *Navigate the* **hs_process Documentation** *using the* **"Contents"** *dropdown in the Navigation Bar*
 
@@ -27,15 +27,15 @@ Table of Contents
    license
 
 
-##################
+******************
 Troubleshooting
-##################
+******************
 Please report any issues you encounter through the `Github issue tracker <https://github.com/tnigon/hs_process/issues>`_.
 
 
-###################
+******************
 Indices and tables
-###################
+******************
 
 * :ref:`genindex`
 * :ref:`modindex`

@@ -11,8 +11,8 @@ from hs_process.utilities import hstools
 
 class spec_mod(object):
     '''
-    Class for manipulating data within the spectral domain (usually
-    pixel-based)
+    Class for manipulating data within the spectral domain, which
+    is usually pixel-based.
     '''
     def __init__(self, spyfile):
         self.spyfile = spyfile
@@ -27,17 +27,17 @@ class spec_mod(object):
         approaches, such as moving averages techniques.
 
         Parameters:
-        y (`numpy.array`; shape (N,)): the values of the time history of the
+        y (``numpy.array``; shape (N,)): the values of the time history of the
             signal.
-        window_size (`int`): the length of the window; must be an odd integer
+        window_size (``int``): the length of the window; must be an odd integer
             number (default: 5).
-        order (`int`): the order of the polynomial used in the filtering; must
-            be less than `window_size` - 1 (default: 2).
-        deriv (`int`): the order of the derivative to compute (default: 0,
+        order (``int``): the order of the polynomial used in the filtering; must
+            be less than ``window_size`` - 1 (default: 2).
+        deriv (``int``): the order of the derivative to compute (default: 0,
               means only smoothing).
 
         Returns:
-        ys (`ndarray`; shape (N)): the smoothed signal (or it's n-th
+        ys (``ndarray``; shape (N)): the smoothed signal (or it's n-th
            derivative).
 
         Notes:
@@ -97,12 +97,33 @@ class spec_mod(object):
 
     def load_spyfile(self, spyfile):
         '''
-        Loads a `SpyFile` (Spectral Python object) for data access and/or
-        manipulation by the `hstools` class.
+        Loads a ``SpyFile`` (Spectral Python object) for data access and/or
+        manipulation by the ``hstools`` class.
 
         Parameters:
-            spyfile (`SpyFile` object): The datacube being accessed and/or
+            spyfile (``SpyFile`` object): The datacube being accessed and/or
                 manipulated.
+
+        Example:
+            Load and initialize the ``hsio`` and ``spec_mod`` modules
+
+            >>> from hs_process import hsio
+            >>> from hs_process import spec_mod
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> io = hsio(fname_in)
+            >>> my_segment = segment(io.spyfile)
+
+            Load datacube
+
+            >>> my_segment.load_spyfile(io.spyfile)
+            >>> my_segment.spyfile
+            Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
+            # Rows:            617
+            # Samples:        1827
+            # Bands:           240
+            Interleave:        BIP
+            Quantization:  32 bits
+            Data format:   float32
         '''
         self.spyfile = spyfile
         self.tools = hstools(spyfile)
@@ -113,7 +134,7 @@ class spec_mod(object):
             self.spy_ps_n = float(self.spyfile.metadata['map info'][6])
         except KeyError as e:
             print('Map information was not able to be loaded from the '
-                  '`SpyFile`. Please be sure the metadata contains the "map '
+                  '``SpyFile``. Please be sure the metadata contains the "map '
                   'info" tag with accurate geometric information.\n')
             self.spy_ul_e_srs = None
             self.spy_ul_n_srs = None
@@ -127,7 +148,7 @@ class spec_mod(object):
         datacube.
 
         Parameters:
-            wl_bands (`list` or `list of lists`): minimum and maximum
+            wl_bands (``list`` or ``list`` of ``lists``): minimum and maximum
                 wavelenths to clip from image; if multiple groups of
                 wavelengths should be cut, this should be a list of lists. For
                 example, wl_bands=[760, 776] will clip all bands greater than
@@ -136,26 +157,47 @@ class spec_mod(object):
                 will clip all band less than 420.0 nm, bands greater than 760.0
                 nm and less than 776.0 nm, bands greater than 813.0 nm and less
                 than 827.0 nm, and bands greater than 880 nm (default).
-            spyfile (`SpyFile` object or `numpy.ndarray`): The data cube to
-                clip; if `numpy.ndarray` or `None`, loads band information from
-                `self.spyfile` (default: `None`).
+            spyfile (``SpyFile`` object or ``numpy.ndarray``): The data cube to
+                clip; if ``numpy.ndarray`` or ``None``, loads band information
+                from ``spec_mod.spyfile`` (default: ``None``).
 
         Returns:
-            2-element `tuple` containing
+            2-element ``tuple`` containing
 
-            - **array_clip** (`numpy.ndarray`): Clipped datacube.
-            - **metadata** (`dict`): Modified metadata describing the clipped
-              hyperspectral datacube (`array_clip`).
+            - **array_clip** (``numpy.ndarray``): Clipped datacube.
+            - **metadata** (``dict``): Modified metadata describing the clipped
+              hyperspectral datacube (``array_clip``).
 
         Example:
-            >>> from hs_process import hsio # load hiso
-            >>> from hs_process import spec_mod
+            Load and initialize ``hsio`` and ``spec_mod``
 
-            >>> fname_hdr = r'F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
-            >>> io = hsio()  # initialize the hsio class (note there are no required parameters)
-            >>> io.read_cube(fname_hdr)
-            >>> io.spyfile
-            Data Source:   'F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
+            >>> from hs_process import hsio
+            >>> from hs_process import spec_mod
+            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> io1 = hsio()
+            >>> io1.read_cube(fname_hdr)
+            >>> my_spec_mod = spec_mod(io1.spyfile)
+
+            Using ``spec_mod.spectral_clip``, clip all spectral bands below
+            *420 nm* and above *880 nm*, as well as the bands near the oxygen
+            absorption (i.e., *760-776 nm*) and water absorption
+            (i.e., *813-827 nm*) regions.
+
+            >>> array_clip, metadata = my_spec_mod.spectral_clip(
+                    wl_bands=[[0, 420], [760, 776], [813, 827], [880, 1000]])
+
+            Save the clipped datacube
+
+            >>> fname_hdr_clip = r'F:\\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip.hdr'
+            >>> io1.write_cube(fname_hdr_clip, array_clip, metadata)
+
+            Initialize a second instance of ``hsio`` and read in the clipped
+            cube to compare the clipped cube to the unclipped cube
+
+            >>> io2 = hsio()  # initialize a second instance to compare cubes
+            >>> io2.read_cube(fname_hdr_clip)
+            >>> io1.spyfile
+            Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
         	# Rows:            617
         	# Samples:        1827
         	# Bands:           240
@@ -163,14 +205,11 @@ class spec_mod(object):
         	Quantization:  32 bits
         	Data format:   float32
 
-            >>> my_spec_mod = spec_mod(io.spyfile) #initalize
-            >>> array_clip, metadata = my_spec_mod.spectral_clip(wl_bands=[[0, 420], [760, 776], [813, 827], [880, 1000]]) #remove o2, EDGE, h20
+            The unclipped cube (above) has 240 spectral bands, while the
+            clipped cube (below) has 210.
 
-            >>> fname_hdr_clip = r'F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip.hdr'
-            >>> io.write_cube(fname_hdr_clip, array_clip, metadata)
-            >>> io.read_cube(fname_hdr_clip)
-            >>> io.spyfile
-            Data Source:   'F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip'
+            >>> io2.spyfile
+            Data Source:   'F:\\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip'
         	# Rows:            617
         	# Samples:        1827
         	# Bands:           210
@@ -226,20 +265,60 @@ class spec_mod(object):
         Performs Savitzky-Golay smoothing on the spectral domain
 
         Parameters:
-            window_size (`int`): the length of the window; must be an odd integer
-                number (default: 11).
-            order (`int`): the order of the polynomial used in the filtering; must
-                be less than `window_size` - 1 (default: 2).
-            spyfile (`SpyFile` object or `numpy.ndarray`): The data cube to
-                clip; if `numpy.ndarray` or `None`, loads band information from
-                `self.spyfile` (default: `None`).
+            window_size (``int``): the length of the window; must be an odd
+                integer number (default: 11).
+            order (``int``): the order of the polynomial used in the filtering;
+                must be less than ``window_size`` - 1 (default: 2).
+            spyfile (``SpyFile`` object or ``numpy.ndarray``): The data cube to
+                clip; if ``numpy.ndarray`` or ``None``, loads band information
+                from ``spec_mod.spyfile`` (default: ``None``).
 
         Returns:
-            2-element `tuple` containing
+            2-element ``tuple`` containing
 
-            - **array_smooth** (`numpy.ndarray`): Clipped datacube.
-            - **metadata** (`dict`): Modified metadata describing the smoothed
-              hyperspectral datacube (`array_smooth`).
+            - **array_smooth** (``numpy.ndarray``): Clipped datacube.
+            - **metadata** (``dict``): Modified metadata describing the smoothed
+              hyperspectral datacube (``array_smooth``).
+
+        Note:
+            Because the smoothing operation is performed for every pixel
+            individually, this function may take several minutes for large
+            images.
+
+        Example:
+            Load and initialize ``hsio`` and ``spec_mod``
+
+            >>> from hs_process import hsio
+            >>> from hs_process import spec_mod
+            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> io = hsio()
+            >>> io.read_cube(fname_hdr)
+            >>> my_spec_mod = spec_mod(io.spyfile)
+
+            Use ``spec_mod.spectral_smooth`` to perform a *Savitzky-Golay*
+            smoothing operation across the hyperspectral spectral signature.
+
+            >>> array_smooth, metadata = my_spec_mod.spectral_smooth(
+                    window_size=11, order=2)
+
+            Save the smoothed datacube using ``hsio.write_cube``
+
+            >>> fname_hdr_smooth = r'F:\\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-smooth.bip.hdr'
+            >>> io.write_cube(fname_hdr_smooth, array_smooth, metadata)
+            Saving F:\\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-smooth.bip
+
+            Open smoothed datacube in Spectronon software to visualize the
+            result of the smoothing for a specific pixel.
+
+            .. image:: ../img/spec_mod/spectral_smooth_before.png
+
+            Before smoothing (the spectral curve of the pixel at the *800th
+            column/sample* and *200th row/line* is plotted)
+
+            .. image:: ../img/spec_mod/spectral_smooth_after.png
+
+            And after smoothing (the spectral curve of the pixel at the *800th
+            column/sample* and *200th row/line* is plotted)
         '''
         if spyfile is None:
             spyfile = self.spyfile

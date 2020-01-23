@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 import pandas as pd
-from spectral import kmeans
 import spectral.io.spyfile as SpyFile
 import seaborn as sns
 from matplotlib import pyplot as plt
@@ -12,8 +11,8 @@ from hs_process.utilities import hstools
 
 class segment(object):
     '''
-    Class for aiding in the segmentation/masking of image data to include
-    pixels that are of most interest.
+    Class for aiding in the segmentation and/or masking of image
+    data to filter out pixels that are of least interest.
     '''
     def __init__(self, spyfile):
         '''
@@ -101,43 +100,43 @@ class segment(object):
             wl_list = [wl]
         return wl_list
 
-    def _kmeans(self, n_classes=3, max_iter=100, spyfile=None):
-        '''
-        Development version -- do not use..
-
-        If there are more soil pixels than vegetation pixels, will vegetation be
-        class 0 instead of class 2?
-
-        Parameters:
-            n_classes (``int``): number of classes (default: 3).
-            max_iter (``int``): maximum iterations before terminating process
-                (default: 100).
-            spyfile (``SpyFile`` object or ``numpy.ndarray``): The datacube to
-                crop; if ``numpy.ndarray`` or ``None``, loads band information from
-                ``self.spyfile`` (default: ``None``).
-        '''
-        if spyfile is None:
-            spyfile = self.spyfile
-        elif isinstance(spyfile, SpyFile.SpyFile):
-            self.load_spyfile(spyfile)
-        elif isinstance(spyfile, np.ndarray):
-            spyfile = self.spyfile
-        metadata = self.tools.spyfile.metadata
-        array_class, c = kmeans(spyfile, n_classes, max_iter)
-        unique_classes, counts = self._check_classes(array_class, n_pix=5)
-        df_class_spec = pd.DataFrame(c.transpose())
-
-        metadata['bands'] = 1
-        self.tools.del_meta_item(metadata, 'wavelength')
-        self.tools.del_meta_item(metadata, 'band names')
-        hist_str = (" -> hs_process.segment.kmeans[<"
-                    "label: 'n_classes?' value:{0}; "
-                    "label: 'max_iter?' value:{1}>]"
-                    "".format(n_classes, max_iter))
-        metadata['history'] += hist_str
-        metadata['samples'] = array_class.shape[1]
-        metadata['lines'] = array_class.shape[0]
-        return array_class, df_class_spec, metadata
+#    def _kmeans(self, n_classes=3, max_iter=100, spyfile=None):
+#        '''
+#        Development version -- do not use..
+#
+#        If there are more soil pixels than vegetation pixels, will vegetation be
+#        class 0 instead of class 2?
+#
+#        Parameters:
+#            n_classes (``int``): number of classes (default: 3).
+#            max_iter (``int``): maximum iterations before terminating process
+#                (default: 100).
+#            spyfile (``SpyFile`` object or ``numpy.ndarray``): The datacube to
+#                crop; if ``numpy.ndarray`` or ``None``, loads band information from
+#                ``self.spyfile`` (default: ``None``).
+#        '''
+#        if spyfile is None:
+#            spyfile = self.spyfile
+#        elif isinstance(spyfile, SpyFile.SpyFile):
+#            self.load_spyfile(spyfile)
+#        elif isinstance(spyfile, np.ndarray):
+#            spyfile = self.spyfile
+#        metadata = self.tools.spyfile.metadata
+#        array_class, c = kmeans(spyfile, n_classes, max_iter)
+#        unique_classes, counts = self._check_classes(array_class, n_pix=5)
+#        df_class_spec = pd.DataFrame(c.transpose())
+#
+#        metadata['bands'] = 1
+#        self.tools.del_meta_item(metadata, 'wavelength')
+#        self.tools.del_meta_item(metadata, 'band names')
+#        hist_str = (" -> hs_process.segment.kmeans[<"
+#                    "label: 'n_classes?' value:{0}; "
+#                    "label: 'max_iter?' value:{1}>]"
+#                    "".format(n_classes, max_iter))
+#        metadata['history'] += hist_str
+#        metadata['samples'] = array_class.shape[1]
+#        metadata['lines'] = array_class.shape[0]
+#        return array_class, df_class_spec, metadata
 
     def band_math_derivative(self, wl1=None, wl2=None, wl3=None,
                              b1=None, b2=None, b3=None,
@@ -203,7 +202,7 @@ class segment(object):
               derivative array (``array_der``).
 
         Example:
-            Load packages
+            Load ``hsio`` and ``segment`` modules
 
             >>> from hs_process import hsio
             >>> from hs_process import segment
@@ -211,19 +210,27 @@ class segment(object):
             >>> io = hsio(fname_in)
             >>> my_segment = segment(io.spyfile)
 
-            Calculate the MERIS Terrestrial Chlorophyll Index (MTCI; Dash and Curran, 2004)
+            Calculate the MERIS Terrestrial Chlorophyll Index (MTCI; Dash and
+            Curran, 2004) via ``segment.band_math_derivative``
 
-            >>> array_der, metadata = my_segment.band_math_derivative(wl1=754, wl2=709, wl3=681, spyfile=io.spyfile)
+            >>> array_mtci, metadata = my_segment.band_math_derivative(
+                    wl1=754, wl2=709, wl3=681, spyfile=io.spyfile)
             Bands used (``b1``): [176]
             Bands used (``b2``): [154]
             Bands used (``b3``): [141]
             Wavelengths used (``b1``): [753.84]
             Wavelengths used (``b2``): [708.6784]
             Wavelengths used (``b3``): [681.992]
-            >>> array_der.shape
+            >>> array_mtci.shape
             (617, 1827)
-            >>> np.nanmean(array_der)
+            >>> np.nanmean(array_mtci)
             8.58501
+
+            Show MTCI image via ``hsio.show_img``
+
+            >>> io.show_img(array_mtci, vmin=-2, vmax=15)
+
+            .. image:: ../img/segment/mtci.png
         '''
         wl1 = self._check_bands_wls(wl1, b1, 1)
         wl2 = self._check_bands_wls(wl2, b2, 2)
@@ -275,6 +282,155 @@ class segment(object):
         metadata['samples'] = array_der.shape[1]
         metadata['lines'] = array_der.shape[0]
         return array_der, metadata
+
+    def band_math_mcari2(self, wl1=None, wl2=None, wl3=None, b1=None, b2=None,
+                         b3=None, spyfile=None, list_range=True,
+                         print_out=True):
+        '''
+        Calculates the MCARI2 spectral index
+
+        Calculates the MCARI2 (Modified Chlorophyll Absorption Ratio Index
+        Improved; Haboudane et al., 2004) spectral index from three input bands
+        and/or wavelengths. Bands/wavelengths can be input as two individual
+        bands, two sets of bands (i.e., list of bands), or range of bands
+        (i.e., list of two bands indicating the lower and upper range).
+
+        Definition:
+            array_mcari2 = ((1.5 * (2.5 * (``wl1`` - ``wl2``) - 1.3 * (``wl1`` - ``wl3``))) / np.sqrt((2 * ``wl1`` + 1)**2 - (6 * ``wl1`` - 5 * np.sqrt(``wl2``)) - 0.5))
+
+        Parameters:
+            wl1 (``int``, ``float``, or ``list``): the wavelength (or set of
+                wavelengths) to be used as the first parameter of the
+                MCARI2 index; if ``list``, then consolidates all
+                bands between two wavelength values by calculating the mean
+                pixel value across all bands in that range (default: ``None``).
+            wl2 (``int``, ``float``, or ``list``): the wavelength (or set of
+                wavelengths) to be used as the second parameter of the
+                MCARI2 index; if ``list``, then consolidates all
+                bands between two wavelength values by calculating the mean
+                pixel value across all bands in that range (default: ``None``).
+            wl3 (``int``, ``float``, or ``list``): the wavelength (or set of
+                wavelengths) to be used as the third parameter of the
+                MCARI2 index; if ``list``, then consolidates all
+                bands between two wavelength values by calculating the mean
+                pixel value across all bands in that range (default: ``None``).
+            b1 (``int``, ``float``, or ``list``): the band (or set of bands) to
+                be used as the first parameter of the MCARI2 index;
+                if ``list``, then consolidates all bands between two band
+                values by calculating the mean pixel value across all bands in
+                that range (default: ``None``).
+            b2 (``int``, ``float``, or ``list``): the band (or set of bands) to
+                be used as the second parameter of the MCARI2 index; if
+                ``list``, then consolidates all bands between two band values
+                by calculating the mean pixel value across all bands in that
+                range (default: ``None``).
+            b3 (``int``, ``float``, or ``list``): the band (or set of bands) to
+                be used as the third parameter of the MCARI2 index; if
+                ``list``, then consolidates all bands between two band values
+                by calculating the mean pixel value across all bands in that
+                range (default: ``None``).
+            spyfile (``SpyFile`` object or ``numpy.ndarray``): The datacube to
+                crop; if ``numpy.ndarray`` or ``None``, loads band information
+                from ``self.spyfile`` (default: ``None``).
+            list_range (``bool``): Whether bands/wavelengths passed as a list
+                is interpreted as a range of bands (``True``) or for each
+                individual band in the list (``False``). If ``list_range`` is
+                ``True``, ``b1``/``wl1`` and ``b2``/``wl2`` should be lists
+                with two items, and all bands/wavelegths between the two values
+                will be used (default: ``True``).
+            print_out (``bool``): Whether to print out the actual bands and
+                wavelengths being used in the NDI calculation (default:
+                ``True``).
+
+        Returns:
+            2-element ``tuple`` containing
+
+            - **array_mcari2** (``numpy.ndarray``): MCARI2 spectral index band
+              math array.
+            - **metadata** (``dict``): Modified metadata describing the
+              MCARI2 index array (``array_mcari2``).
+
+        Example:
+            Load ``hsio`` and ``segment`` modules
+
+            >>> from hs_process import hsio
+            >>> from hs_process import segment
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> io = hsio(fname_in)
+            >>> my_segment = segment(io.spyfile)
+
+            Calculate the MCARI2 spectral index (Haboudane et al., 2004) via
+            ``segment.band_math_mcari2``
+
+            >>> array_mcari2, metadata = my_segment.band_math_mcari2(
+                    wl1=800, wl2=670, wl3=550, spyfile=io.spyfile)
+            Bands used (``b1``): [198]
+            Bands used (``b2``): [135]
+            Bands used (``b3``): [77]
+            Wavelengths used (``b1``): [799.0016]
+            Wavelengths used (``b2``): [669.6752]
+            Wavelengths used (``b3``): [550.6128]
+            >>> np.nanmean(array_mcari2)
+            0.5588388
+
+            Show MCARI2 image via ``hsio.show_img``
+
+            >>> io.show_img(array_mcari2)
+
+            .. image:: ../img/segment/mcari2.png
+        '''
+        wl1 = self._check_bands_wls(wl1, b1, 1)
+        wl2 = self._check_bands_wls(wl2, b2, 2)
+        wl3 = self._check_bands_wls(wl3, b3, 3)
+        # Now, band input is converted to wavelength input and this can be used
+
+        if spyfile is None:
+            spyfile = self.spyfile
+            array = spyfile.load()
+        elif isinstance(spyfile, SpyFile.SpyFile):
+            self.load_spyfile(spyfile)
+            array = spyfile.load()
+        elif isinstance(spyfile, np.ndarray):
+            array = spyfile.copy()
+            spyfile = self.spyfile
+        metadata = self.tools.spyfile.metadata
+
+        band1_list = self._get_band_list(wl1, list_range)
+        band2_list = self._get_band_list(wl2, list_range)
+        band3_list = self._get_band_list(wl3, list_range)
+
+        if print_out is True:
+            wl1_list = self._get_wavelength_list(band1_list, list_range=False)
+            wl2_list = self._get_wavelength_list(band2_list, list_range=False)
+            wl3_list = self._get_wavelength_list(band3_list, list_range=False)
+            print('\nBands used (``b1``): {0}'.format(band1_list))
+            print('Bands used (``b2``): {0}'.format(band2_list))
+            print('Bands used (``b3``): {0}'.format(band3_list))
+            print('\nWavelengths used (``b1``): {0}'.format(wl1_list))
+            print('Wavelengths used (``b2``): {0}'.format(wl2_list))
+            print('Wavelengths used (``b3``): {0}\n'.format(wl3_list))
+
+        array_b1 = self.tools.get_spectral_mean(band1_list, array)
+        array_b2 = self.tools.get_spectral_mean(band2_list, array)
+        array_b3 = self.tools.get_spectral_mean(band3_list, array)
+#        array_der = (array_b1-array_b2)/(array_b2-array_b3)
+        array_mcari2 = ((1.5 * (2.5 * (array_b1 - array_b2) - 1.3 * (array_b1 - array_b3))) /
+                        np.sqrt((2 * array_b1 + 1)**2 - (6 * array_b1 - 5 * np.sqrt(array_b2)) - 0.5))
+        array_mcari2[array_mcari2 == 0] = np.nan
+
+        metadata['bands'] = 1
+        self.tools.del_meta_item(metadata, 'wavelength')
+        self.tools.del_meta_item(metadata, 'band names')
+        hist_str = (" -> hs_process.band_math_mcari2[<"
+                    "label: 'wl1?' value:{0}; "
+                    "label: 'wl2?' value:{1}; "
+                    "label: 'wl3?' value:{2}; "
+                    "label: 'list_range?' value:{3}>]"
+                    "".format(wl1_list, wl2_list, wl3_list, list_range))
+        metadata['history'] += hist_str
+        metadata['samples'] = array_mcari2.shape[1]
+        metadata['lines'] = array_mcari2.shape[0]
+        return array_mcari2, metadata
 
     def band_math_ndi(self, wl1=None, wl2=None, b1=None, b2=None, spyfile=None,
                       list_range=True, print_out=True):
@@ -330,7 +486,7 @@ class segment(object):
               normalized difference array (``array_ndi``).
 
         Example:
-            Load packages
+            Load ``hsio`` and ``segment`` modules
 
             >>> from hs_process import hsio
             >>> from hs_process import segment
@@ -338,15 +494,23 @@ class segment(object):
             >>> io = hsio(fname_in)
             >>> my_segment = segment(io.spyfile)
 
-            Calculate the Normalized difference vegetation index using 10 nm bands centered at 800 nm and 680 nm
+            Calculate the Normalized difference vegetation index using 10 nm
+            bands centered at 800 nm and 680 nm via ``segment.band_math_ndi``
 
-            >>> array_ndi, metadata = my_segment.band_math_ndi(wl1=[795, 805], wl2=[675, 685], spyfile=io.spyfile)
+            >>> array_ndvi, metadata = my_segment.band_math_ndi(
+                    wl1=[795, 805], wl2=[675, 685], spyfile=io.spyfile)
             Bands used (``b1``): [197, 198, 199, 200]
             Bands used (``b2``): [138, 139, 140, 141, 142]
             Wavelengths used (``b1``): [796.9488, 799.0016, 801.0544, 803.1072]
             Wavelengths used (``b2``): [675.8336, 677.8864, 679.9392, 681.992, 684.0448]
-            >>> np.nanmean(array_ndi)
+            >>> np.nanmean(array_ndvi)
             0.80558914
+
+            Show NDVI image via ``hsio.show_img``
+
+            >>> io.show_img(array_ndvi)
+
+            .. image:: ../img/segment/ndvi.png
         '''
         wl1 = self._check_bands_wls(wl1, b1, 1)
         wl2 = self._check_bands_wls(wl2, b2, 2)
@@ -390,148 +554,6 @@ class segment(object):
         metadata['samples'] = array_ndi.shape[1]
         metadata['lines'] = array_ndi.shape[0]
         return array_ndi, metadata
-
-    def band_math_mcari2(self, wl1=None, wl2=None, wl3=None, b1=None, b2=None,
-                         b3=None, spyfile=None, list_range=True,
-                         print_out=True):
-        '''
-        Calculates the MCARI2 spectral index
-
-        Calculates the MCARI2 (Modified Chlorophyll Absorption Ratio Index
-        Improved; Haboudane et al., 2004) spectral index from three input bands
-        and/or wavelengths. Bands/wavelengths can be input as two individual
-        bands, two sets of bands (i.e., list of bands), or range of bands
-        (i.e., list of two bands indicating the lower and upper range).
-
-        Definition:
-            array_mcari2 = ((1.5 * (2.5 * (``wl1`` - ``wl2``) - 1.3 * (``wl1`` - ``wl3``))) /
-                            np.sqrt((2 * ``wl1`` + 1)**2 - (6 * ``wl1`` - 5 * np.sqrt(``wl2``)) - 0.5))
-
-        Parameters:
-            wl1 (``int``, ``float``, or ``list``): the wavelength (or set of
-                wavelengths) to be used as the first parameter of the
-                MCARI2 index; if ``list``, then consolidates all
-                bands between two wavelength values by calculating the mean
-                pixel value across all bands in that range (default: ``None``).
-            wl2 (``int``, ``float``, or ``list``): the wavelength (or set of
-                wavelengths) to be used as the second parameter of the
-                MCARI2 index; if ``list``, then consolidates all
-                bands between two wavelength values by calculating the mean
-                pixel value across all bands in that range (default: ``None``).
-            wl3 (``int``, ``float``, or ``list``): the wavelength (or set of
-                wavelengths) to be used as the third parameter of the
-                MCARI2 index; if ``list``, then consolidates all
-                bands between two wavelength values by calculating the mean
-                pixel value across all bands in that range (default: ``None``).
-            b1 (``int``, ``float``, or ``list``): the band (or set of bands) to
-                be used as the first parameter of the MCARI2 index;
-                if ``list``, then consolidates all bands between two band
-                values by calculating the mean pixel value across all bands in
-                that range (default: ``None``).
-            b2 (``int``, ``float``, or ``list``): the band (or set of bands) to
-                be used as the second parameter of the MCARI2 index; if
-                ``list``, then consolidates all bands between two band values
-                by calculating the mean pixel value across all bands in that
-                range (default: ``None``).
-            b3 (``int``, ``float``, or ``list``): the band (or set of bands) to
-                be used as the third parameter of the MCARI2 index; if
-                ``list``, then consolidates all bands between two band values
-                by calculating the mean pixel value across all bands in that
-                range (default: ``None``).
-            spyfile (``SpyFile`` object or ``numpy.ndarray``): The datacube to
-                crop; if ``numpy.ndarray`` or ``None``, loads band information
-                from ``self.spyfile`` (default: ``None``).
-            list_range (``bool``): Whether bands/wavelengths passed as a list
-                is interpreted as a range of bands (``True``) or for each
-                individual band in the list (``False``). If ``list_range`` is
-                ``True``, ``b1``/``wl1`` and ``b2``/``wl2`` should be lists
-                with two items, and all bands/wavelegths between the two values
-                will be used (default: ``True``).
-            print_out (``bool``): Whether to print out the actual bands and
-                wavelengths being used in the NDI calculation (default:
-                ``True``).
-
-        Returns:
-            2-element ``tuple`` containing
-
-            - **array_mcari2** (``numpy.ndarray``): MCARI2 spectral index band
-              math array.
-            - **metadata** (``dict``): Modified metadata describing the
-              MCARI2 index array (``array_mcari2``).
-
-        Example:
-            Load packages
-
-            >>> from hs_process import hsio
-            >>> from hs_process import segment
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
-            >>> io = hsio(fname_in)
-            >>> my_segment = segment(io.spyfile)
-
-            Calculate the MCARI2 spectral index (Haboudane et al., 2004)
-
-            >>> array_mcari2, metadata = my_segment.band_math_mcari2(wl1=800, wl2=670, wl3=550, spyfile=io.spyfile)
-            Bands used (``b1``): [198]
-            Bands used (``b2``): [135]
-            Bands used (``b3``): [77]
-            Wavelengths used (``b1``): [799.0016]
-            Wavelengths used (``b2``): [669.6752]
-            Wavelengths used (``b3``): [550.6128]
-            >>> np.nanmean(array_mcari2)
-            0.5588388
-        '''
-        wl1 = self._check_bands_wls(wl1, b1, 1)
-        wl2 = self._check_bands_wls(wl2, b2, 2)
-        wl3 = self._check_bands_wls(wl3, b3, 3)
-        # Now, band input is converted to wavelength input and this can be used
-
-        if spyfile is None:
-            spyfile = self.spyfile
-            array = spyfile.load()
-        elif isinstance(spyfile, SpyFile.SpyFile):
-            self.load_spyfile(spyfile)
-            array = spyfile.load()
-        elif isinstance(spyfile, np.ndarray):
-            array = spyfile.copy()
-            spyfile = self.spyfile
-        metadata = self.tools.spyfile.metadata
-
-        band1_list = self._get_band_list(wl1, list_range)
-        band2_list = self._get_band_list(wl2, list_range)
-        band3_list = self._get_band_list(wl3, list_range)
-
-        if print_out is True:
-            wl1_list = self._get_wavelength_list(band1_list, list_range=False)
-            wl2_list = self._get_wavelength_list(band2_list, list_range=False)
-            wl3_list = self._get_wavelength_list(band3_list, list_range=False)
-            print('\nBands used (``b1``): {0}'.format(band1_list))
-            print('Bands used (``b2``): {0}'.format(band2_list))
-            print('Bands used (``b3``): {0}'.format(band3_list))
-            print('\nWavelengths used (``b1``): {0}'.format(wl1_list))
-            print('Wavelengths used (``b2``): {0}'.format(wl2_list))
-            print('Wavelengths used (``b3``): {0}\n'.format(wl3_list))
-
-        array_b1 = self.tools.get_spectral_mean(band1_list, array)
-        array_b2 = self.tools.get_spectral_mean(band2_list, array)
-        array_b3 = self.tools.get_spectral_mean(band3_list, array)
-#        array_der = (array_b1-array_b2)/(array_b2-array_b3)
-        array_mcari2 = ((1.5 * (2.5 * (array_b1 - array_b2) - 1.3 * (array_b1 - array_b3))) /
-                        np.sqrt((2 * array_b1 + 1)**2 - (6 * array_b1 - 5 * np.sqrt(array_b2)) - 0.5))
-        array_mcari2[array_mcari2 == 0] = np.nan
-
-        metadata['bands'] = 1
-        self.tools.del_meta_item(metadata, 'wavelength')
-        self.tools.del_meta_item(metadata, 'band names')
-        hist_str = (" -> hs_process.band_math_mcari2[<"
-                    "label: 'wl1?' value:{0}; "
-                    "label: 'wl2?' value:{1}; "
-                    "label: 'wl3?' value:{2}; "
-                    "label: 'list_range?' value:{3}>]"
-                    "".format(wl1_list, wl2_list, wl3_list, list_range))
-        metadata['history'] += hist_str
-        metadata['samples'] = array_mcari2.shape[1]
-        metadata['lines'] = array_mcari2.shape[0]
-        return array_mcari2, metadata
 
     def band_math_ratio(self, wl1=None, wl2=None, b1=None, b2=None,
                         spyfile=None, list_range=True, print_out=True):
@@ -586,7 +608,7 @@ class segment(object):
               ratio array (``array_ratio``).
 
         Example:
-            Load packages
+            Load ``hsio`` and ``segment`` modules
 
             >>> from hs_process import hsio
             >>> from hs_process import segment
@@ -594,9 +616,12 @@ class segment(object):
             >>> io = hsio(fname_in)
             >>> my_segment = segment(io.spyfile)
 
-            Calculate a red/near-infrared band ratio using a range of bands (i.e., mimicking a broadband sensor)
+            Calculate a red/near-infrared band ratio using a range of bands
+            (i.e., mimicking a broadband sensor) via
+            ``segment.band_math_ratio``
 
-            >>> array_ratio, metadata = my_segment.band_math_ratio(wl1=[630, 690], wl2=[800, 860], list_range=True)
+            >>> array_ratio, metadata = my_segment.band_math_ratio(
+                    wl1=[630, 690], wl2=[800, 860], list_range=True)
             Bands used (``b1``): [116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144]
             Bands used (``b2``): [199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227]
             Wavelengths used (``b1``): [630.672, 632.7248, 634.7776, 636.8304, 638.8832, 640.936, 642.9888, 645.0416, 647.0944, 649.1472, 651.2, 653.2528, 655.3056, 657.3584, 659.4112, 661.464, 663.5168, 665.5696, 667.6224, 669.6752, 671.728, 673.7808, 675.8336, 677.8864, 679.9392, 681.992, 684.0448, 686.0976, 688.1504]
@@ -605,9 +630,13 @@ class segment(object):
             >>> np.nanmean(array_ratio)
             0.11956976
 
-            Notice that 29 spectral bands were consolidated (i.e., averaged) to mimic a single broad band. We can take the mean of two bands by changing ``list_range`` to ``False``, and this slightly changes the result.
+            Notice that 29 spectral bands were consolidated (i.e., averaged) to
+            mimic a single broad band. We can take the mean of two bands by
+            changing ``list_range`` to ``False``, and this slightly changes the
+            result.
 
-            >>> array_ratio, metadata = my_segment.band_math_ratio(wl1=[630, 690], wl2=[800, 860], list_range=False)
+            >>> array_ratio, metadata = my_segment.band_math_ratio(
+                    wl1=[630, 690], wl2=[800, 860], list_range=False)
             Bands used (``b1``): [116, 145]
             Bands used (``b2``): [198, 228]
             Wavelengths used (``b1``): [630.672, 690.2032]
@@ -615,6 +644,12 @@ class segment(object):
             (660/830)
             >>> np.nanmean(array_ratio)
             0.123936154
+
+            Show the red/near-infrared ratio image via ``hsio.show_img``
+
+            >>> io.show_img(array_ratio, vmax=0.3)
+
+            .. image:: ../img/segment/ratio_r_nir.png
         '''
         wl1 = self._check_bands_wls(wl1, b1, 1)
         wl2 = self._check_bands_wls(wl2, b2, 2)
@@ -672,11 +707,16 @@ class segment(object):
                 manipulated.
 
         Example:
+            Load ``hsio`` and ``segment`` modules
+
             >>> from hs_process import hsio
             >>> from hs_process import segment
             >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
             >>> my_segment = segment(io.spyfile)
+
+            Load datacube  via ``segment.load_spyfile``
+
             >>> my_segment.load_spyfile(io.spyfile)
             >>> my_segment.spyfile
             Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'

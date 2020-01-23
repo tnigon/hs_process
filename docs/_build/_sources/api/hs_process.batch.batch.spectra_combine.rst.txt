@@ -1,6 +1,0 @@
-hs\_process.batch.batch.spectra\_combine
-========================================
-
-.. currentmodule:: hs_process.batch
-
-.. automethod:: batch.spectra_combine

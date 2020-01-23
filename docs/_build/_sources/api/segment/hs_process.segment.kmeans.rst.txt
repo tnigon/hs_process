@@ -1,6 +1,0 @@
-hs\_process.segment.kmeans
-==========================
-
-.. currentmodule:: hs_process.segment
-
-.. autofunction:: kmeans

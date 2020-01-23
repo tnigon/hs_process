@@ -60,13 +60,13 @@
       aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="../../eonr_installation.html">1. Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../my_hs_process_api.html">2. API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.batch.batch.html">2.1.1. batch</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.segment.segment.html">2.2.1. segment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.spatial_mod.spatial_mod.html">2.3.1. spatial_mod</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.spec_mod.spec_mod.html">2.4.1. spec_mod</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.utilities.defaults.html">2.5.1. defaults</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.utilities.hsio.html">2.5.2. hsio</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.utilities.hstools.html">2.5.3. hstools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.batch.html">2.1.1. batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.defaults.html">2.1.2. defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.hsio.html">2.1.3. hsio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.hstools.html">2.1.4. hstools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.segment.html">2.1.5. segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.spatial_mod.html">2.1.6. spatial_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.spec_mod.html">2.1.7. spec_mod</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../license.html">3. License</a></li>
@@ -128,10 +128,10 @@
 <span class="kn">from</span> <span class="nn">hs_process.utilities</span> <span class="k">import</span> <span class="n">hstools</span>
 
 
-<div class="viewcode-block" id="spec_mod"><a class="viewcode-back" href="../../api/hs_process.spec_mod.spec_mod.html#hs_process.spec_mod.spec_mod">[docs]</a><span class="k">class</span> <span class="nc">spec_mod</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="spec_mod"><a class="viewcode-back" href="../../api/hs_process.spec_mod.html#hs_process.spec_mod">[docs]</a><span class="k">class</span> <span class="nc">spec_mod</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Class for manipulating data within the spectral domain (usually</span>
-<span class="sd">    pixel-based)</span>
+<span class="sd">    Class for manipulating data within the spectral domain, which</span>
+<span class="sd">    is usually pixel-based.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span> <span class="o">=</span> <span class="n">spyfile</span>
@@ -146,17 +146,17 @@
 <span class="sd">        approaches, such as moving averages techniques.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">        y (`numpy.array`; shape (N,)): the values of the time history of the</span>
+<span class="sd">        y (``numpy.array``; shape (N,)): the values of the time history of the</span>
 <span class="sd">            signal.</span>
-<span class="sd">        window_size (`int`): the length of the window; must be an odd integer</span>
+<span class="sd">        window_size (``int``): the length of the window; must be an odd integer</span>
 <span class="sd">            number (default: 5).</span>
-<span class="sd">        order (`int`): the order of the polynomial used in the filtering; must</span>
-<span class="sd">            be less than `window_size` - 1 (default: 2).</span>
-<span class="sd">        deriv (`int`): the order of the derivative to compute (default: 0,</span>
+<span class="sd">        order (``int``): the order of the polynomial used in the filtering; must</span>
+<span class="sd">            be less than ``window_size`` - 1 (default: 2).</span>
+<span class="sd">        deriv (``int``): the order of the derivative to compute (default: 0,</span>
 <span class="sd">              means only smoothing).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">        ys (`ndarray`; shape (N)): the smoothed signal (or it&#39;s n-th</span>
+<span class="sd">        ys (``ndarray``; shape (N)): the smoothed signal (or it&#39;s n-th</span>
 <span class="sd">           derivative).</span>
 
 <span class="sd">        Notes:</span>
@@ -214,14 +214,35 @@
 <span class="c1">#            sns.lineplot(list(hs.meta_bands.keys()), array_2d_temp[1000])</span>
         <span class="k">return</span> <span class="n">array_2d_temp</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
 
-<div class="viewcode-block" id="spec_mod.load_spyfile"><a class="viewcode-back" href="../../api/hs_process.spec_mod.spec_mod.html#hs_process.spec_mod.spec_mod.load_spyfile">[docs]</a>    <span class="k">def</span> <span class="nf">load_spyfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">):</span>
+<div class="viewcode-block" id="spec_mod.load_spyfile"><a class="viewcode-back" href="../../api/hs_process.spec_mod.html#hs_process.spec_mod.load_spyfile">[docs]</a>    <span class="k">def</span> <span class="nf">load_spyfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Loads a `SpyFile` (Spectral Python object) for data access and/or</span>
-<span class="sd">        manipulation by the `hstools` class.</span>
+<span class="sd">        Loads a ``SpyFile`` (Spectral Python object) for data access and/or</span>
+<span class="sd">        manipulation by the ``hstools`` class.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            spyfile (`SpyFile` object): The datacube being accessed and/or</span>
+<span class="sd">            spyfile (``SpyFile`` object): The datacube being accessed and/or</span>
 <span class="sd">                manipulated.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            Load and initialize the ``hsio`` and ``spec_mod`` modules</span>
+
+<span class="sd">            &gt;&gt;&gt; from hs_process import hsio</span>
+<span class="sd">            &gt;&gt;&gt; from hs_process import spec_mod</span>
+<span class="sd">            &gt;&gt;&gt; fname_in = r&#39;F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="sd">            &gt;&gt;&gt; io = hsio(fname_in)</span>
+<span class="sd">            &gt;&gt;&gt; my_segment = segment(io.spyfile)</span>
+
+<span class="sd">            Load datacube</span>
+
+<span class="sd">            &gt;&gt;&gt; my_segment.load_spyfile(io.spyfile)</span>
+<span class="sd">            &gt;&gt;&gt; my_segment.spyfile</span>
+<span class="sd">            Data Source:   &#39;F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip&#39;</span>
+<span class="sd">            # Rows:            617</span>
+<span class="sd">            # Samples:        1827</span>
+<span class="sd">            # Bands:           240</span>
+<span class="sd">            Interleave:        BIP</span>
+<span class="sd">            Quantization:  32 bits</span>
+<span class="sd">            Data format:   float32</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span> <span class="o">=</span> <span class="n">spyfile</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tools</span> <span class="o">=</span> <span class="n">hstools</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
@@ -232,21 +253,21 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_n</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">][</span><span class="mi">6</span><span class="p">])</span>
         <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Map information was not able to be loaded from the &#39;</span>
-                  <span class="s1">&#39;`SpyFile`. Please be sure the metadata contains the &quot;map &#39;</span>
+                  <span class="s1">&#39;``SpyFile``. Please be sure the metadata contains the &quot;map &#39;</span>
                   <span class="s1">&#39;info&quot; tag with accurate geometric information.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">spy_ul_e_srs</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">spy_ul_n_srs</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_e</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_n</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="spec_mod.spectral_clip"><a class="viewcode-back" href="../../api/hs_process.spec_mod.spec_mod.html#hs_process.spec_mod.spec_mod.spectral_clip">[docs]</a>    <span class="k">def</span> <span class="nf">spectral_clip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wl_bands</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">420</span><span class="p">],</span> <span class="p">[</span><span class="mi">760</span><span class="p">,</span> <span class="mi">776</span><span class="p">],</span> <span class="p">[</span><span class="mi">813</span><span class="p">,</span> <span class="mi">827</span><span class="p">],</span>
+<div class="viewcode-block" id="spec_mod.spectral_clip"><a class="viewcode-back" href="../../api/hs_process.spec_mod.html#hs_process.spec_mod.spectral_clip">[docs]</a>    <span class="k">def</span> <span class="nf">spectral_clip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wl_bands</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">420</span><span class="p">],</span> <span class="p">[</span><span class="mi">760</span><span class="p">,</span> <span class="mi">776</span><span class="p">],</span> <span class="p">[</span><span class="mi">813</span><span class="p">,</span> <span class="mi">827</span><span class="p">],</span>
                                       <span class="p">[</span><span class="mi">880</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]],</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Removes/clips designated wavelength bands from the hyperspectral</span>
 <span class="sd">        datacube.</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            wl_bands (`list` or `list of lists`): minimum and maximum</span>
+<span class="sd">            wl_bands (``list`` or ``list`` of ``lists``): minimum and maximum</span>
 <span class="sd">                wavelenths to clip from image; if multiple groups of</span>
 <span class="sd">                wavelengths should be cut, this should be a list of lists. For</span>
 <span class="sd">                example, wl_bands=[760, 776] will clip all bands greater than</span>
@@ -255,26 +276,47 @@
 <span class="sd">                will clip all band less than 420.0 nm, bands greater than 760.0</span>
 <span class="sd">                nm and less than 776.0 nm, bands greater than 813.0 nm and less</span>
 <span class="sd">                than 827.0 nm, and bands greater than 880 nm (default).</span>
-<span class="sd">            spyfile (`SpyFile` object or `numpy.ndarray`): The data cube to</span>
-<span class="sd">                clip; if `numpy.ndarray` or `None`, loads band information from</span>
-<span class="sd">                `self.spyfile` (default: `None`).</span>
+<span class="sd">            spyfile (``SpyFile`` object or ``numpy.ndarray``): The data cube to</span>
+<span class="sd">                clip; if ``numpy.ndarray`` or ``None``, loads band information</span>
+<span class="sd">                from ``spec_mod.spyfile`` (default: ``None``).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            2-element `tuple` containing</span>
+<span class="sd">            2-element ``tuple`` containing</span>
 
-<span class="sd">            - **array_clip** (`numpy.ndarray`): Clipped datacube.</span>
-<span class="sd">            - **metadata** (`dict`): Modified metadata describing the clipped</span>
-<span class="sd">              hyperspectral datacube (`array_clip`).</span>
+<span class="sd">            - **array_clip** (``numpy.ndarray``): Clipped datacube.</span>
+<span class="sd">            - **metadata** (``dict``): Modified metadata describing the clipped</span>
+<span class="sd">              hyperspectral datacube (``array_clip``).</span>
 
 <span class="sd">        Example:</span>
-<span class="sd">            &gt;&gt;&gt; from hs_process import hsio # load hiso</span>
-<span class="sd">            &gt;&gt;&gt; from hs_process import spec_mod</span>
+<span class="sd">            Load and initialize ``hsio`` and ``spec_mod``</span>
 
-<span class="sd">            &gt;&gt;&gt; fname_hdr = r&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
-<span class="sd">            &gt;&gt;&gt; io = hsio()  # initialize the hsio class (note there are no required parameters)</span>
-<span class="sd">            &gt;&gt;&gt; io.read_cube(fname_hdr)</span>
-<span class="sd">            &gt;&gt;&gt; io.spyfile</span>
-<span class="sd">            Data Source:   &#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip&#39;</span>
+<span class="sd">            &gt;&gt;&gt; from hs_process import hsio</span>
+<span class="sd">            &gt;&gt;&gt; from hs_process import spec_mod</span>
+<span class="sd">            &gt;&gt;&gt; fname_hdr = r&#39;F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="sd">            &gt;&gt;&gt; io1 = hsio()</span>
+<span class="sd">            &gt;&gt;&gt; io1.read_cube(fname_hdr)</span>
+<span class="sd">            &gt;&gt;&gt; my_spec_mod = spec_mod(io1.spyfile)</span>
+
+<span class="sd">            Using ``spec_mod.spectral_clip``, clip all spectral bands below</span>
+<span class="sd">            *420 nm* and above *880 nm*, as well as the bands near the oxygen</span>
+<span class="sd">            absorption (i.e., *760-776 nm*) and water absorption</span>
+<span class="sd">            (i.e., *813-827 nm*) regions.</span>
+
+<span class="sd">            &gt;&gt;&gt; array_clip, metadata = my_spec_mod.spectral_clip(</span>
+<span class="sd">                    wl_bands=[[0, 420], [760, 776], [813, 827], [880, 1000]])</span>
+
+<span class="sd">            Save the clipped datacube</span>
+
+<span class="sd">            &gt;&gt;&gt; fname_hdr_clip = r&#39;F:\\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip.hdr&#39;</span>
+<span class="sd">            &gt;&gt;&gt; io1.write_cube(fname_hdr_clip, array_clip, metadata)</span>
+
+<span class="sd">            Initialize a second instance of ``hsio`` and read in the clipped</span>
+<span class="sd">            cube to compare the clipped cube to the unclipped cube</span>
+
+<span class="sd">            &gt;&gt;&gt; io2 = hsio()  # initialize a second instance to compare cubes</span>
+<span class="sd">            &gt;&gt;&gt; io2.read_cube(fname_hdr_clip)</span>
+<span class="sd">            &gt;&gt;&gt; io1.spyfile</span>
+<span class="sd">            Data Source:   &#39;F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip&#39;</span>
 <span class="sd">        	# Rows:            617</span>
 <span class="sd">        	# Samples:        1827</span>
 <span class="sd">        	# Bands:           240</span>
@@ -282,14 +324,11 @@
 <span class="sd">        	Quantization:  32 bits</span>
 <span class="sd">        	Data format:   float32</span>
 
-<span class="sd">            &gt;&gt;&gt; my_spec_mod = spec_mod(io.spyfile) #initalize</span>
-<span class="sd">            &gt;&gt;&gt; array_clip, metadata = my_spec_mod.spectral_clip(wl_bands=[[0, 420], [760, 776], [813, 827], [880, 1000]]) #remove o2, EDGE, h20</span>
+<span class="sd">            The unclipped cube (above) has 240 spectral bands, while the</span>
+<span class="sd">            clipped cube (below) has 210.</span>
 
-<span class="sd">            &gt;&gt;&gt; fname_hdr_clip = r&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip.hdr&#39;</span>
-<span class="sd">            &gt;&gt;&gt; io.write_cube(fname_hdr_clip, array_clip, metadata)</span>
-<span class="sd">            &gt;&gt;&gt; io.read_cube(fname_hdr_clip)</span>
-<span class="sd">            &gt;&gt;&gt; io.spyfile</span>
-<span class="sd">            Data Source:   &#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip&#39;</span>
+<span class="sd">            &gt;&gt;&gt; io2.spyfile</span>
+<span class="sd">            Data Source:   &#39;F:\\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip&#39;</span>
 <span class="sd">        	# Rows:            617</span>
 <span class="sd">        	# Samples:        1827</span>
 <span class="sd">        	# Bands:           210</span>
@@ -340,25 +379,65 @@
 
         <span class="k">return</span> <span class="n">array_clip</span><span class="p">,</span> <span class="n">metadata</span></div>
 
-<div class="viewcode-block" id="spec_mod.spectral_smooth"><a class="viewcode-back" href="../../api/hs_process.spec_mod.spec_mod.html#hs_process.spec_mod.spec_mod.spectral_smooth">[docs]</a>    <span class="k">def</span> <span class="nf">spectral_smooth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="spec_mod.spectral_smooth"><a class="viewcode-back" href="../../api/hs_process.spec_mod.html#hs_process.spec_mod.spectral_smooth">[docs]</a>    <span class="k">def</span> <span class="nf">spectral_smooth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Performs Savitzky-Golay smoothing on the spectral domain</span>
 
 <span class="sd">        Parameters:</span>
-<span class="sd">            window_size (`int`): the length of the window; must be an odd integer</span>
-<span class="sd">                number (default: 11).</span>
-<span class="sd">            order (`int`): the order of the polynomial used in the filtering; must</span>
-<span class="sd">                be less than `window_size` - 1 (default: 2).</span>
-<span class="sd">            spyfile (`SpyFile` object or `numpy.ndarray`): The data cube to</span>
-<span class="sd">                clip; if `numpy.ndarray` or `None`, loads band information from</span>
-<span class="sd">                `self.spyfile` (default: `None`).</span>
+<span class="sd">            window_size (``int``): the length of the window; must be an odd</span>
+<span class="sd">                integer number (default: 11).</span>
+<span class="sd">            order (``int``): the order of the polynomial used in the filtering;</span>
+<span class="sd">                must be less than ``window_size`` - 1 (default: 2).</span>
+<span class="sd">            spyfile (``SpyFile`` object or ``numpy.ndarray``): The data cube to</span>
+<span class="sd">                clip; if ``numpy.ndarray`` or ``None``, loads band information</span>
+<span class="sd">                from ``spec_mod.spyfile`` (default: ``None``).</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            2-element `tuple` containing</span>
+<span class="sd">            2-element ``tuple`` containing</span>
 
-<span class="sd">            - **array_smooth** (`numpy.ndarray`): Clipped datacube.</span>
-<span class="sd">            - **metadata** (`dict`): Modified metadata describing the smoothed</span>
-<span class="sd">              hyperspectral datacube (`array_smooth`).</span>
+<span class="sd">            - **array_smooth** (``numpy.ndarray``): Clipped datacube.</span>
+<span class="sd">            - **metadata** (``dict``): Modified metadata describing the smoothed</span>
+<span class="sd">              hyperspectral datacube (``array_smooth``).</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            Because the smoothing operation is performed for every pixel</span>
+<span class="sd">            individually, this function may take several minutes for large</span>
+<span class="sd">            images.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            Load and initialize ``hsio`` and ``spec_mod``</span>
+
+<span class="sd">            &gt;&gt;&gt; from hs_process import hsio</span>
+<span class="sd">            &gt;&gt;&gt; from hs_process import spec_mod</span>
+<span class="sd">            &gt;&gt;&gt; fname_hdr = r&#39;F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="sd">            &gt;&gt;&gt; io = hsio()</span>
+<span class="sd">            &gt;&gt;&gt; io.read_cube(fname_hdr)</span>
+<span class="sd">            &gt;&gt;&gt; my_spec_mod = spec_mod(io.spyfile)</span>
+
+<span class="sd">            Use ``spec_mod.spectral_smooth`` to perform a *Savitzky-Golay*</span>
+<span class="sd">            smoothing operation across the hyperspectral spectral signature.</span>
+
+<span class="sd">            &gt;&gt;&gt; array_smooth, metadata = my_spec_mod.spectral_smooth(</span>
+<span class="sd">                    window_size=11, order=2)</span>
+
+<span class="sd">            Save the smoothed datacube using ``hsio.write_cube``</span>
+
+<span class="sd">            &gt;&gt;&gt; fname_hdr_smooth = r&#39;F:\\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-smooth.bip.hdr&#39;</span>
+<span class="sd">            &gt;&gt;&gt; io.write_cube(fname_hdr_smooth, array_smooth, metadata)</span>
+<span class="sd">            Saving F:\\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-smooth.bip</span>
+
+<span class="sd">            Open smoothed datacube in Spectronon software to visualize the</span>
+<span class="sd">            result of the smoothing for a specific pixel.</span>
+
+<span class="sd">            .. image:: ../img/spec_mod/spectral_smooth_before.png</span>
+
+<span class="sd">            Before smoothing (the spectral curve of the pixel at the *800th</span>
+<span class="sd">            column/sample* and *200th row/line* is plotted)</span>
+
+<span class="sd">            .. image:: ../img/spec_mod/spectral_smooth_after.png</span>
+
+<span class="sd">            And after smoothing (the spectral curve of the pixel at the *800th</span>
+<span class="sd">            column/sample* and *200th row/line* is plotted)</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">spyfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>

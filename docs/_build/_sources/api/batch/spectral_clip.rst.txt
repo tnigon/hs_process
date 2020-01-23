@@ -1,6 +1,0 @@
-hs\_process.batch.batch.spectral\_clip
-======================================
-
-.. currentmodule:: hs_process.batch
-
-.. automethod:: batch.spectral_clip

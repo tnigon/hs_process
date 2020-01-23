@@ -1,6 +1,0 @@
-hs\_process.segment.segment.band\_math\_mcari2
-==============================================
-
-.. currentmodule:: hs_process.segment
-
-.. automethod:: segment.band_math_mcari2

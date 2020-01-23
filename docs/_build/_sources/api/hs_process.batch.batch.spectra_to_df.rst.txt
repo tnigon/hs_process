@@ -1,6 +1,0 @@
-hs\_process.batch.batch.spectra\_to\_df
-=======================================
-
-.. currentmodule:: hs_process.batch
-
-.. automethod:: batch.spectra_to_df

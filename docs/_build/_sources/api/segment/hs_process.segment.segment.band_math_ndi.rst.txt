@@ -1,6 +1,0 @@
-hs\_process.segment.segment.band\_math\_ndi
-===========================================
-
-.. currentmodule:: hs_process.segment
-
-.. automethod:: segment.band_math_ndi

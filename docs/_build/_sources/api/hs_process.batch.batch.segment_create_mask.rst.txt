@@ -1,6 +1,0 @@
-hs\_process.batch.batch.segment\_create\_mask
-=============================================
-
-.. currentmodule:: hs_process.batch
-
-.. automethod:: batch.segment_create_mask

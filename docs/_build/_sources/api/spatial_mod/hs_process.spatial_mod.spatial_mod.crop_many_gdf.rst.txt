@@ -1,6 +1,0 @@
-hs\_process.spatial\_mod.spatial\_mod.crop\_many\_gdf
-=====================================================
-
-.. currentmodule:: hs_process.spatial_mod
-
-.. automethod:: spatial_mod.crop_many_gdf

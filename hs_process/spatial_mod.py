@@ -13,8 +13,8 @@ from hs_process.utilities import hstools
 
 class spatial_mod(object):
     '''
-    Class for manipulating data within the spatial domain (e.g., cropping by
-    geographical boundary)
+    Class for manipulating data within the spatial domain
+    (e.g., cropping a datacube by a geographical boundary).
     '''
     def __init__(self, spyfile, gdf=None):
         '''
@@ -29,6 +29,7 @@ class spatial_mod(object):
         self.spy_ps_n = None
         self.spy_ul_e_srs = None
         self.spy_ul_n_srs = None
+        self.tools = None
 
         self.defaults = defaults
         self.load_spyfile(spyfile)
@@ -40,12 +41,13 @@ class spatial_mod(object):
             metadata = spyfile.metadata
         crs = {'init': 'epsg:{0}'.format(epsg)}
 
-        e_m = float(metadata['map info'][5])  # pixel size
-        n_m = float(metadata['map info'][6])
+        map_info_set = self.tools.get_meta_set(metadata['map info'])
+        e_m = float(map_info_set[5])  # pixel size
+        n_m = float(map_info_set[6])
         size_x = spyfile.shape[1]  # number of pixels
         size_y = spyfile.shape[0]
-        srs_e_m = float(metadata['map info'][3])  # UTM coordinate
-        srs_n_m = float(metadata['map info'][4])
+        srs_e_m = float(map_info_set[3])  # UTM coordinate
+        srs_n_m = float(map_info_set[4])
 
         e_nw = srs_e_m
         e_ne = srs_e_m + (size_x * e_m)
@@ -130,6 +132,8 @@ class spatial_mod(object):
             gdf_crop_n_pix = int(abs(plot_srs_n - plot_srs_s) / self.spy_ps_n)
             data = [plot, offset_e, offset_n, gdf_crop_e_pix, gdf_crop_n_pix]
             df_plots_temp = pd.DataFrame(columns=columns, data=[data])
+
+            # TODO: Check array size and delete if there is no non-nan pixels
             df_plots = df_plots.append(df_plots_temp, ignore_index=True)
 
 #        if pix_e_ul is not None:  # compare user-identified pixel to gdf pixel
@@ -574,11 +578,11 @@ class spatial_mod(object):
             pix_e_ul (``int``, optional): upper left pixel column (easting) of
                 ``plot_id_ref``; this is used to calculate the offset between
                 the GeoDataFrame geometry and the approximate image
-                georeference error (default: 0).
+                georeference error (default: ``None``).
             pix_n_ul (``int``, optional): upper left pixel row (northing) of
                 ``plot_id_ref``; this is used to calculate the offset between
                 the GeoDataFrame geometry and the approximate image
-                georeference error (default: 0).
+                georeference error (default: ``None``).
             n_plots (``int``, optional): number of plots to crop, starting with
                 ``plot_id_ref`` and moving from West to East and North to
                 South. This can be used to limit the number of cropped plots
@@ -608,7 +612,7 @@ class spatial_mod(object):
             easting and northing). Do not pass both.
 
         Example:
-            Load packages
+            Load the ``hsio`` and ``spatial_mod`` modules
 
             >>> from hs_process import hsio
             >>> from hs_process import spatial_mod
@@ -618,12 +622,16 @@ class spatial_mod(object):
             Read datacube and spatial plot boundaries
 
             >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
-            >>> fname_gdf = r'F:\\nigo0024\Documents\hs_process_demo\plot_bounds_small\plot_bounds.shp'
+            >>> fname_gdf = r'F:\\nigo0024\Documents\hs_process_demo\plot_bounds_small\plot_bounds\plot_bounds.shp'
             >>> gdf = gpd.read_file(fname_gdf)
             >>> io = hsio(fname_in)
             >>> my_spatial_mod = spatial_mod(io.spyfile)
+            >>> dir_out = os.path.join(io.base_dir, 'spatial_mod', 'crop_many_gdf')
 
-            Execute ``spatial_mod.crop_many_gdf()`` to get instructions on how plots should be cropped
+            Get instructions on how plots should be cropped via
+            ``spatial_mod.crop_many_gdf()``; note that a ``pandas.DataFrame``
+            is returned with information describing how each plot should be
+            cropped.
 
             >>> df_plots = my_spatial_mod.crop_many_gdf(spyfile=io.spyfile, gdf=gdf)
             >>> df_plots
@@ -643,18 +651,30 @@ class spatial_mod(object):
             Save a single cropped plot to a new directory
 
             >>> array_crop, metadata = my_spatial_mod.crop_single(pix_e_ul=478, pix_n_ul=0, crop_e_pix=229, crop_n_pix=76, spyfile=io.spyfile, plot_id=1018)
-            >>> new_dir = os.path.join(io.base_dir, 'crop_many_gdf')
-            >>> os.mkdir(new_dir)
-            >>> fname_out = os.path.join(new_dir, io.name_short + '_plot_' + str(1018) + '.bip.hdr')
+            >>> fname_out = os.path.join(dir_out, io.name_short + '_plot_' + str(1018) + '.bip.hdr')
             >>> io.write_cube(fname_out, array_crop, metadata=metadata)
+            >>> fname_out_tif = os.path.join(dir_out, io.name_short + '_plot_' + str(1018) + '.tif')
+            >>> io.write_tif(fname_out_tif, spyfile=array_crop, metadata=metadata)
             Saving F:\\nigo0024\Documents\hs_process_demo\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1018.bip
 
-            Save all cropped plots to the new directory using a for loop
+            Using a for loop, use ``spatial_mod.crop_single`` and
+            ``hsio.write_cube`` to crop by plot and save cropped datacubes to
+            file
 
             >>> for idx, row in df_plots.iterrows():
-            >>>     array_crop, metadata = my_spatial_mod.crop_single(pix_e_ul=row['pix_e_ul'], pix_n_ul=row['pix_n_ul'], crop_e_pix=row['crop_e_pix'], crop_n_pix=row['crop_n_pix'], spyfile=io.spyfile, plot_id=row['plot_id'])
-            >>>     fname_out = os.path.join(new_dir, io.name_short + '_plot_' + str(row['plot_id']) + '.bip.hdr')
+            >>>     io.read_cube(fname_in, name_long=io.name_long,
+                                 name_plot=row['plot_id'],
+                                 name_short=io.name_short)
+            >>>     my_spatial_mod.load_spyfile(io.spyfile)
+            >>>     array_crop, metadata = my_spatial_mod.crop_single(
+                            pix_e_ul=row['pix_e_ul'], pix_n_ul=row['pix_n_ul'],
+                            crop_e_pix=row['crop_e_pix'], crop_n_pix=row['crop_n_pix'],
+                            buf_e_m=2.0, buf_n_m=0.75,
+                            plot_id=row['plot_id'])
+            >>>     fname_out = os.path.join(dir_out, io.name_short + '_plot_' + str(row['plot_id']) + '.bip.hdr')
+            >>>     fname_out_tif = os.path.join(dir_out, io.name_short + '_plot_' + str(row['plot_id']) + '.tif')
             >>>     io.write_cube(fname_out, array_crop, metadata=metadata, force=True)  # force=True to overwrite the plot_1018 image
+            >>>     io.write_tif(fname_out_tif, spyfile=array_crop, metadata=metadata)
             Saving F:\\nigo0024\Documents\hs_process_demo\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1018.bip
             Saving F:\\nigo0024\Documents\hs_process_demo\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_918.bip
             Saving F:\\nigo0024\Documents\hs_process_demo\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_818.bip
@@ -666,6 +686,12 @@ class spatial_mod(object):
             Saving F:\\nigo0024\Documents\hs_process_demo\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_717.bip
             Saving F:\\nigo0024\Documents\hs_process_demo\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_617.bip
             ...
+
+            Open cropped geotiff images in *QGIS* to visualize the extent of
+            the cropped images compared to the original datacube and the plot
+            boundaries
+
+            .. image:: ../img/spatial_mod/crop_many_gdf_qgis.png
         '''
         if spyfile is None:
             spyfile = self.spyfile
@@ -693,7 +719,7 @@ class spatial_mod(object):
         # TODO: add crop_X and buf_X to df_plots
         return df_plots
 
-    def crop_single(self, pix_e_ul, pix_n_ul, crop_e_pix=None,
+    def crop_single(self, pix_e_ul=0, pix_n_ul=0, crop_e_pix=None,
                     crop_n_pix=None, crop_e_m=None, crop_n_m=None,
                     buf_e_pix=None, buf_n_pix=None, buf_e_m=None, buf_n_m=None,
                     spyfile=None, plot_id=None, gdf=None,
@@ -705,27 +731,43 @@ class spatial_mod(object):
         the cropped area within the appropriate plot geometry.
 
         Parameters:
-            pix_e_ul (``int``): upper left column (easting) to begin cropping
-            pix_n_ul (``int``): upper left row (northing) to begin cropping
-            crop_e_pix (``int``, optional): number of pixels in each row in the
-                cropped image
-            crop_n_pix (``int``, optional): number of pixels in each column in
-                the cropped image
+            pix_e_ul (``int``, optional): upper left pixel column (easting) to
+                begin cropping (default: 0).
+            pix_n_ul (``int``, optional): upper left pixel row (northing) to
+                begin cropping (default: 0).
             crop_e_m (``float``, optional): length of each row (easting
-                     direction) in the cropped image (in map units; e.g.,
-                     meters).
+                direction) of the cropped image in map units (e.g., meters;
+                default: ``None``).
             crop_n_m (``float``, optional): length of each column (northing
-                     direction) in the cropped image (in map units; e.g.,
-                     meters).
-            buf_e_pix (``int``, optional): applied/calculated after
-                ``crop_e_pix`` and ``crop_n_pix`` are accounted for
-            buf_n_pix (``int``, optional):
-            buf_e_m (``float``, optional):
-            buf_n_m (``float``, optional):
+                direction) of the cropped image in map units (e.g., meters;
+                default: ``None``)
+            crop_e_pix (``int``, optional): number of pixels in each row in the
+                cropped image (default: ``None``).
+            crop_n_pix (``int``, optional): number of pixels in each column in
+                the cropped image (default: ``None``).
+            buf_e_m (``float``, optional): The buffer distance in the easting
+                direction (in map units; e.g., meters) to be applied after
+                calculating the original crop area; the buffer is considered
+                after ``crop_X_m`` / ``crop_X_pix``. A positive value will
+                reduce the size of ``crop_X_m`` / ``crop_X_pix``, and a
+                negative value will increase it (default: ``None``).
+            buf_n_m (``float``, optional): The buffer distance in the northing
+                direction (in map units; e.g., meters) to be applied after
+                calculating the original crop area; the buffer is considered
+                after ``crop_X_m`` / ``crop_X_pix``. A positive value will
+                reduce the size of ``crop_X_m`` / ``crop_X_pix``, and a
+                negative value will increase it (default: ``None``).
+            buf_e_pix (``int``, optional): The buffer distance in the easting
+                direction (in pixel units) to be applied after calculating the
+                original crop area (default: ``None``).
+            buf_n_pix (``int``, optional): The buffer distance in the northing
+                direction (in pixel units) to be applied after calculating the
+                original crop area (default: ``None``).
             spyfile (``SpyFile`` object or ``numpy.ndarray``): The datacube to
                 crop; if ``numpy.ndarray`` or ``None``, loads band information from
                 ``self.spyfile`` (default: ``None``).
-            plot_id (``int``): the plot ID of the area to be cropped.
+            plot_id (``int``): the plot ID of the area to be cropped (default:
+                ``None``).
             gdf (``geopandas.GeoDataFrame``): the plot names and polygon
                 geometery of each of the plots; 'plot' must be used as a column
                 name to identify each of the plots, and should be an integer.
@@ -741,24 +783,35 @@ class spatial_mod(object):
               hyperspectral datacube (``array_crop``).
 
         Example:
+            Load and initialize the ``hsio`` and ``spatial_mod`` modules
+
             >>> from hs_process import hsio
             >>> from hs_process import spatial_mod
             >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
             >>> my_spatial_mod = spatial_mod(io.spyfile)
-            >>> pix_e_ul = 100
-            >>> pix_n_ul = 50
-            >>> array_crop, metadata = my_spatial_mod.crop_single(pix_e_ul, pix_n_ul, crop_e_pix=200, crop_n_pix=50)
-            >>> io.spyfile
-        	Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
-        	# Rows:            617
-        	# Samples:        1827
-        	# Bands:           240
-        	Interleave:        BIP
-        	Quantization:  32 bits
-        	Data format:   float32
-            >>> array_crop.shape
-            (50, 200, 240)
+
+            Crop an area with a width (easting) *200 pixels* and a height
+            (northing) of *50 pixels*, with a northwest/upper left origin at
+            the *300th column* (easting) and *75th row* (northing).
+
+            >>> pix_e_ul = 300
+            >>> pix_n_ul = 75
+            >>> array_crop, metadata = my_spatial_mod.crop_single(
+                    pix_e_ul, pix_n_ul, crop_e_pix=200, crop_n_pix=50)
+
+            Save as a geotiff using ``io.write_tif``, then load into QGIS to
+            visualize.
+
+            >>> fname_tif = r'F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_single\crop_single.tif'
+            >>> io.write_tif(fname_tif, array_crop, metadata=metadata)
+            Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+            .. image:: ../img/spatial_mod/crop_single_qgis.png
+
+            The cropped image is on top of the original image layer
+            using a brighter rendering to emphasize the extent of the cropped
+            datacube.
         '''
         crop_e_pix, crop_n_pix, crop_e_m, crop_n_m = self._handle_defaults(
                 crop_e_pix, crop_n_pix, crop_e_m, crop_n_m, group='crop')
@@ -835,11 +888,16 @@ class spatial_mod(object):
                 manipulated.
 
         Example:
+            Load and initialize the ``hsio`` and ``spatial_mod`` modules
+
             >>> from hs_process import hsio
             >>> from hs_process import spatial_mod
             >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
             >>> my_spatial_mod = spatial_mod(io.spyfile)
+
+            Load datacube
+
             >>> my_spatial_mod.load_spyfile(io.spyfile)
             >>> my_spatial_mod.spyfile
             Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'

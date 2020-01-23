@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-Copyright &copy; 2019 Tyler J Nigon. All rights reserved.
+``hs_process`` is a Python package for processing and manipulating aerial
+hyperspectral imagery.
 
-The Hyperspectral package uses several classes to abstract some of the
-processing tasks.
+``hs_process`` emphasizes the ability to batch process datacubes, with the
+overall goal of keeping the processing pipeline as "hands-off" as possible.
+There is also a focus of maintaining the ability to record some of the
+subjective aspects of image processing.
 """
 
 __copyright__ = '2019 Tyler J Nigon. All rights reserved.'
@@ -45,6 +48,9 @@ name = 'hs_process'
 __version__ = '0.0.1'
 
 __all__ = ['batch',
+           'defaults',
+           'hsio',
+           'hstools',
            'segment',
            'spatial_mod',
            'spec_mod']

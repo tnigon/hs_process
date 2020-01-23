@@ -1,6 +1,0 @@
-hs\_process.spec\_mod.spec\_mod.load\_spyfile
-=============================================
-
-.. currentmodule:: hs_process.spec_mod
-
-.. automethod:: spec_mod.load_spyfile
