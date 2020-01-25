@@ -31,6 +31,7 @@ class spatial_mod(object):
         self.spy_ul_n_srs = None
         self.tools = None
 
+
         self.defaults = defaults
         self.load_spyfile(spyfile)
 
@@ -80,7 +81,17 @@ class spatial_mod(object):
         the plot ID number, and calculates and records start/end pixels for
         each plot
         '''
-        columns=['plot_id', 'pix_e_ul', 'pix_n_ul', 'crop_e_pix', 'crop_n_pix']
+
+        columns = [self.defaults.spat_crop_cols.directory,
+                   self.defaults.spat_crop_cols.name_short,
+                   self.defaults.spat_crop_cols.name_long,
+                   self.defaults.spat_crop_cols.ext,
+                   self.defaults.spat_crop_cols.plot_id,
+                   self.defaults.spat_crop_cols.pix_e_ul,
+                   self.defaults.spat_crop_cols.pix_n_ul,
+                   self.defaults.spat_crop_cols.crop_e_pix,
+                   self.defaults.spat_crop_cols.crop_n_pix]
+
         df_plots = pd.DataFrame(columns=columns)
         gdf_filter = self._overlay_gdf(spyfile, gdf)
         msg = ('Please be sure the reference plot (`plot_id_ref`) passed and '
@@ -128,9 +139,27 @@ class spatial_mod(object):
             # plot offset from datacube (from NW/upper left corner)
             offset_e = int((plot_srs_w - spy_srs_e_m) / self.spy_ps_e)
             offset_n = int((spy_srs_n_m - plot_srs_n) / self.spy_ps_n)
+            # if default setting (or passed value for crop_e_pix) should
+            # override this value, we should probably change it here
+#            if pd.isnull(crop_e_pix):
+#                gdf_crop_e_pix = int(abs(plot_srs_e - plot_srs_w) / self.spy_ps_e)
+#            elif default_override is True and pd.notnull(self.defaults.crop_defaults.crop_e_pix):
+#                gdf_crop_e_pix = self.defaults.crop_defaults.crop_e_pix
+#            else:
+#                gdf_crop_e_pix = crop_e_pix
+#            if pd.isnull(crop_n_pix):
+#                gdf_crop_n_pix = int(abs(plot_srs_n - plot_srs_s) / self.spy_ps_n)
+#            elif default_override is True and pd.notnull(self.defaults.crop_defaults.crop_n_pix):
+#                gdf_crop_n_pix = self.defaults.crop_defaults.crop_n_pix
+#            else:
+#                gdf_crop_e_pix = crop_e_pix
             gdf_crop_e_pix = int(abs(plot_srs_e - plot_srs_w) / self.spy_ps_e)
             gdf_crop_n_pix = int(abs(plot_srs_n - plot_srs_s) / self.spy_ps_n)
-            data = [plot, offset_e, offset_n, gdf_crop_e_pix, gdf_crop_n_pix]
+            data = [self.tools.base_dir,
+                    self.tools.name_short,
+                    self.tools.name_long,
+                    os.path.splitext(self.spyfile.filename)[-1],
+                    plot, offset_e, offset_n, gdf_crop_e_pix, gdf_crop_n_pix]
             df_plots_temp = pd.DataFrame(columns=columns, data=[data])
 
             # TODO: Check array size and delete if there is no non-nan pixels
@@ -312,18 +341,24 @@ class spatial_mod(object):
         if group == 'crop':
             if pd.isnull(e_pix) and pd.isnull(e_m):
                 e_pix = self.defaults.crop_defaults['crop_e_pix']
+                e_m = self.defaults.crop_defaults['crop_e_m']
             if pd.isnull(n_pix) and pd.isnull(n_m):
                 n_pix = self.defaults.crop_defaults['crop_n_pix']
+                n_m = self.defaults.crop_defaults['crop_n_m']
         elif group == 'alley':
             if pd.isnull(e_pix) and pd.isnull(e_m):
                 e_pix = self.defaults.crop_defaults['alley_size_e_pix']
+                e_m = self.defaults.crop_defaults['alley_size_e_m']
             if pd.isnull(n_pix) and pd.isnull(n_m):
                 n_pix = self.defaults.crop_defaults['alley_size_n_pix']
+                n_m = self.defaults.crop_defaults['alley_size_n_m']
         elif group == 'buffer':
             if pd.isnull(e_pix) and pd.isnull(e_m):
                 e_pix = self.defaults.crop_defaults['buf_e_pix']
+                e_m = self.defaults.crop_defaults['buf_e_m']
             if pd.isnull(n_pix) and pd.isnull(n_m):
                 n_pix = self.defaults.crop_defaults['buf_n_pix']
+                n_m = self.defaults.crop_defaults['buf_n_m']
 
         if pd.isnull(e_pix) and pd.notnull(e_m):
             e_pix = int(round(e_m / self.spy_ps_e))
@@ -519,11 +554,40 @@ class spatial_mod(object):
                                    crop_n_pix, pix_e_ul, pix_n_ul)
         return df_plots
 
+#            crop_e_m (``float``, optional): length of each row (easting
+#                direction) of the cropped image in map units (e.g., meters;
+#                default: ``None``).
+#            crop_n_m (``float``, optional): length of each column (northing
+#                direction) of the cropped image in map units (e.g., meters;
+#                default: ``None``)
+#            crop_e_pix (``int``, optional): number of pixels in each row in the
+#                cropped image (default: ``None``).
+#            crop_n_pix (``int``, optional): number of pixels in each column in
+#                the cropped image (default: ``None``).
+#            buf_e_m (``float``, optional): The buffer distance in the easting
+#                direction (in map units; e.g., meters) to be applied after
+#                calculating the original crop area; the buffer is considered
+#                after ``crop_X_m`` / ``crop_X_pix``. A positive value will
+#                reduce the size of ``crop_X_m`` / ``crop_X_pix``, and a
+#                negative value will increase it (default: ``None``).
+#            buf_n_m (``float``, optional): The buffer distance in the northing
+#                direction (in map units; e.g., meters) to be applied after
+#                calculating the original crop area; the buffer is considered
+#                after ``crop_X_m`` / ``crop_X_pix``. A positive value will
+#                reduce the size of ``crop_X_m`` / ``crop_X_pix``, and a
+#                negative value will increase it (default: ``None``).
+#            buf_e_pix (``int``, optional): The buffer distance in the easting
+#                direction (in pixel units) to be applied after calculating the
+#                original crop area (default: ``None``).
+#            buf_n_pix (``int``, optional): The buffer distance in the northing
+#                direction (in pixel units) to be applied after calculating the
+#                original crop area (default: ``None``).
+
     def crop_many_gdf(self, spyfile=None, gdf=None,
-                      crop_e_m=None, crop_n_m=None,
-                      crop_e_pix=None, crop_n_pix=None,
-                      buf_e_m=None, buf_n_m=None,
-                      buf_e_pix=None, buf_n_pix=None,
+#                      crop_e_m=None, crop_n_m=None,
+#                      crop_e_pix=None, crop_n_pix=None,
+#                      buf_e_m=None, buf_n_m=None,
+#                      buf_e_pix=None, buf_n_pix=None,
                       plot_id_ref=None, pix_e_ul=None, pix_n_ul=None,
                       n_plots=None):
         '''
@@ -532,42 +596,14 @@ class spatial_mod(object):
         and geometry of plot boundaries.
 
         Parameters:
-            spyfile (``SpyFile`` object): The datacube to crop; if ``None``,
-                loads datacube and band information from
+            spyfile (``SpyFile`` object, optional): The datacube to crop; if
+                ``None``, loads datacube and band information from
                 ``spatial_mod.spyfile`` (default: ``None``).
-            gdf (``geopandas.GeoDataFrame``): the plot IDs and polygon
-                geometery of each of the plots; 'plot' must be used as a column
-                name to identify each of the plots, and should be an integer;
-                if ``None``, loads geodataframe from ``spatial_mod.gdf``
-                (default: ``None``).
-            crop_e_m (``float``, optional): length of each row (easting
-                direction) of the cropped image in map units (e.g., meters;
-                default: ``None``).
-            crop_n_m (``float``, optional): length of each column (northing
-                direction) of the cropped image in map units (e.g., meters;
-                default: ``None``)
-            crop_e_pix (``int``, optional): number of pixels in each row in the
-                cropped image (default: ``None``).
-            crop_n_pix (``int``, optional): number of pixels in each column in
-                the cropped image (default: ``None``).
-            buf_e_m (``float``, optional): The buffer distance in the easting
-                direction (in map units; e.g., meters) to be applied after
-                calculating the original crop area; the buffer is considered
-                after ``crop_X_m`` / ``crop_X_pix``. A positive value will
-                reduce the size of ``crop_X_m`` / ``crop_X_pix``, and a
-                negative value will increase it (default: ``None``).
-            buf_n_m (``float``, optional): The buffer distance in the northing
-                direction (in map units; e.g., meters) to be applied after
-                calculating the original crop area; the buffer is considered
-                after ``crop_X_m`` / ``crop_X_pix``. A positive value will
-                reduce the size of ``crop_X_m`` / ``crop_X_pix``, and a
-                negative value will increase it (default: ``None``).
-            buf_e_pix (``int``, optional): The buffer distance in the easting
-                direction (in pixel units) to be applied after calculating the
-                original crop area (default: ``None``).
-            buf_n_pix (``int``, optional): The buffer distance in the northing
-                direction (in pixel units) to be applied after calculating the
-                original crop area (default: ``None``).
+            gdf (``geopandas.GeoDataFrame``, optional): the plot IDs and
+                polygon geometery of each of the plots; 'plot' must be used as
+                a column name to identify each of the plots, and should be an
+                integer; if ``None``, loads geodataframe from
+                ``spatial_mod.gdf`` (default: ``None``).
             plot_id_ref (``int``, optional): the plot ID of the reference plot.
                 ``plot_id_ref`` is required if passing ``pix_e_ul``,
                 ``pix_n_ul``, or ``n_plots`` because it is used as the
@@ -622,11 +658,12 @@ class spatial_mod(object):
             Read datacube and spatial plot boundaries
 
             >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
-            >>> fname_gdf = r'F:\\nigo0024\Documents\hs_process_demo\plot_bounds_small\plot_bounds\plot_bounds.shp'
+            >>> fname_gdf = r'F:\\nigo0024\Documents\hs_process_demo\plot_bounds_small\plot_bounds.shp'
             >>> gdf = gpd.read_file(fname_gdf)
             >>> io = hsio(fname_in)
             >>> my_spatial_mod = spatial_mod(io.spyfile)
             >>> dir_out = os.path.join(io.base_dir, 'spatial_mod', 'crop_many_gdf')
+            >>> name_append = '-crop-many-gdf'
 
             Get instructions on how plots should be cropped via
             ``spatial_mod.crop_many_gdf()``; note that a ``pandas.DataFrame``
@@ -650,8 +687,11 @@ class spatial_mod(object):
 
             Save a single cropped plot to a new directory
 
+
+            >>> name_label = (name_print + name_plot + name_append + '.' +
+                              io.defaults.interleave)
             >>> array_crop, metadata = my_spatial_mod.crop_single(pix_e_ul=478, pix_n_ul=0, crop_e_pix=229, crop_n_pix=76, spyfile=io.spyfile, plot_id=1018)
-            >>> fname_out = os.path.join(dir_out, io.name_short + '_plot_' + str(1018) + '.bip.hdr')
+            >>> fname_out = os.path.join(dir_out, io.name_short + '_plot_' + str(1018) + name_append + '.' + io.defaults.interleave)
             >>> io.write_cube(fname_out, array_crop, metadata=metadata)
             >>> fname_out_tif = os.path.join(dir_out, io.name_short + '_plot_' + str(1018) + '.tif')
             >>> io.write_tif(fname_out_tif, spyfile=array_crop, metadata=metadata)

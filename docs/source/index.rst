@@ -22,7 +22,7 @@ Table of Contents
    :numbered:
    :titlesonly:
 
-   eonr_installation
+   installation
    my_hs_process_api
    license
 
@@ -34,7 +34,7 @@ Please report any issues you encounter through the `Github issue tracker <https:
 
 
 ******************
-Indices and tables
+Indices and Tables
 ******************
 
 * :ref:`genindex`

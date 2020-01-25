@@ -37,8 +37,8 @@ class defaults:
             'alley_size_n_pix': None,  # intentionally
             'alley_size_e_m': None,
             'alley_size_n_m': None,
-            'buf_e_pix': 0,
-            'buf_n_pix': 0,
+            'buf_e_pix': None,
+            'buf_n_pix': None,
             'buf_e_m': None,
             'buf_n_m': None,
             'crop_e_pix': 90,
@@ -433,21 +433,28 @@ class hsio(object):
         set_str = '{' + ', '.join(str(x) for x in metadata_list) + '}'
         return set_str
 
-    def _parse_fname_plot(self, str_plot, base_name):
+    def _parse_fname_plot(self, str_plot):
         '''
         Code for parsing ``name_plot`` (numeric text following ``str_plot``).
         '''
-        s = base_name
-        if str_plot in s:
+        s = self.name_short
+        if str_plot in s and '_pika' in s:
             name_plot = s[s.find(str_plot) + len(str_plot):s.find('_pika')]
+        elif str_plot in s and '_pika' not in s:
+            name_plot = s[s.find(str_plot) + len(str_plot):s.find('-')]
         else:
             name_plot = self.name_short.rsplit('_', 1)[1]
 
         if len(name_plot) > 12:  # then it must have gone wrong
             name_plot = self.name_short.rsplit('_', 1)[1]
+        if len(name_plot) == 0:  # then '_pika' must not
+            name_plot = self.name_short.rsplit('_', 1)[1]
+
         try:
             int(name_plot)
         except ValueError:  # give up..
+            print('Cannot convert ``name_plot`` to and ``int``: {0}'
+                  ''.format(name_plot))
             name_plot = None
         return name_plot
 
@@ -467,7 +474,7 @@ class hsio(object):
                 on ``fname_in`` (default: ``True``).
         '''
         if fname_hdr is None:
-            fname_hdr = self.fname_in + '.hdr'
+            fname_hdr = self.fname_hdr + '.hdr'
         if os.path.splitext(fname_hdr)[1] == '.hdr':  # modify self.fname_in based on new file
             fname_in = os.path.splitext(fname_hdr)[0]
         else:
@@ -477,36 +484,50 @@ class hsio(object):
         self.fname_hdr = fname_hdr
 
         self.base_dir = os.path.dirname(fname_in)
-        base_name = os.path.basename(fname_in)
+#        base_name = os.path.basename(fname_in)
+        base_name = os.path.basename(os.path.splitext(fname_in)[0])
         self.base_name = base_name
 
         if overwrite is True:
-            self.name_long = base_name[base_name.find(
-                    '-', base_name.rfind('_')):]
-            self.name_short = base_name[:base_name.find(
-                    '-', base_name.rfind('_'))]
-            self.name_plot = self._parse_fname_plot(str_plot, base_name)
+            if '-' in base_name:
+                self.name_long = base_name[base_name.find(
+                        '-', base_name.rfind('_')):]
+                self.name_short = base_name[:base_name.find(
+                        '-', base_name.rfind('_'))]
+            else:
+                # if name_long does not have ext, it can be just blank
+                self.name_long = ''
+                # and name_short can be base_name
+                self.name_short = base_name
+            self.name_plot = self._parse_fname_plot(str_plot)
 
         if name_long is not None:
             self.name_long = name_long
         elif overwrite is False and self.name_long is None:
-            self.name_long = base_name[base_name.find(
-                    '-', base_name.rfind('_')):]
+            if '-' in base_name:
+                self.name_long = base_name[base_name.find(
+                        '-', base_name.rfind('_')):]
+            else:
+                # if name_long does not have ext, it can be just blank
+                self.name_long = ''
         else:
             pass
 
         if name_short is not None:
             self.name_short = name_short
         elif overwrite is False and self.name_short is None:
-            self.name_short = base_name[:base_name.find(
-                    '-', base_name.rfind('_'))]
+            if '-' in base_name:
+                self.name_short = base_name[:base_name.find(
+                        '-', base_name.rfind('_'))]
+            else:
+                self.name_short = base_name
         else:
             pass
 
         if name_plot is not None:
             self.name_plot = name_plot
         elif overwrite is False and self.name_plot is None:
-            self.name_plot = self._parse_fname_plot(str_plot, base_name)
+            self.name_plot = self._parse_fname_plot(str_plot)
         else:
             pass
 
@@ -674,11 +695,21 @@ class hsio(object):
                       'to write to file and ``{0}()`` is being '
                       'aborted.\nFilename: {1}\n'.format(func, basename))
                 return False
+            elif np.isnan(spyfile.load()).all():  # CAUTION: May take several seconds to laod spyfile as array
+                print('All pixels in ``spyfile`` are null values (NaN); thus '
+                      '``{0}()`` is being aborted.\nFilename: {1}\n'
+                      ''.format(func, basename))
+                return False
         elif isinstance(spyfile, np.ndarray):
             if spyfile.size == 0:
                 print('The size of ``spyfile`` is zero; thus there is nothing '
                       'to write to file and ``{0}()`` is being '
                       'aborted.\nFilename: {1}\n'.format(func, basename))
+                return False
+            elif np.isnan(spyfile).all():
+                print('All pixels in ``spyfile`` are null values (NaN); thus '
+                      '``{0}()`` is being aborted.\nFilename: {1}\n'
+                      ''.format(func, basename))
                 return False
         else:
             return True
@@ -765,7 +796,8 @@ class hsio(object):
                           name_long=name_long, name_short=name_short,
                           name_plot=name_plot)
 
-    def read_spec(self, fname_hdr_spec):
+    def read_spec(self, fname_hdr_spec, overwrite=True, name_long=None,
+                  name_short=None, name_plot=None):
         '''
         Reads in a hyperspectral spectrum file using the using the `Spectral
         Python`_ package.
@@ -811,10 +843,14 @@ class hsio(object):
         self.fname_hdr_spec = fname_hdr_spec
         self.base_dir_spec = os.path.dirname(fname_hdr_spec)
         self._read_envi(spec=True)
-        basename = os.path.basename(fname_hdr_spec)
-        self.name_short = basename[:basename.find('-', basename.rfind('_'))]
-        self.name_long = basename[basename.find('-', basename.rfind('_')):]
-        self.name_plot = self.name_short.rsplit('_', 1)[1]
+
+        self._parse_fname(fname_hdr_spec, self.str_plot, overwrite=overwrite,
+                          name_long=name_long, name_short=name_short,
+                          name_plot=name_plot)
+#        basename = os.path.basename(fname_hdr_spec)
+#        self.name_short = basename[:basename.find('-', basename.rfind('_'))]
+#        self.name_long = basename[basename.find('-', basename.rfind('_')):]
+#        self.name_plot = self.name_short.rsplit('_', 1)[1]
 
     def set_io_defaults(self, dtype=False, force=None, ext=False,
                         interleave=False, byteorder=False):
@@ -1106,9 +1142,17 @@ class hsio(object):
 
         metadata['interleave'] = interleave
         metadata = self.tools.clean_md_sets(metadata=metadata)
-        envi.save_image(fname_hdr, spyfile, dtype=dtype, force=force, ext=ext,
-                        interleave=interleave, byteorder=byteorder,
-                        metadata=metadata)
+        try:
+            envi.save_image(fname_hdr, spyfile, dtype=dtype, force=force,
+                            ext=ext, interleave=interleave,
+                            byteorder=byteorder, metadata=metadata)
+        except envi.EnviException:
+            msg = ('Header file already exists: {0}\nUse the `force` keyword '
+                   'to force overwrite.\n``hsio.set_io_defaults(force=True)`` '
+                   'will adjust the default setting so existing files are '
+                   'overwritten by default without passing the `force` '
+                   'keyword'.format(fname_hdr))
+            raise envi.EnviException(msg)
 
     def write_spec(self, fname_hdr_spec, df_mean, df_std, metadata=None,
                    dtype=None, force=None, ext=None, interleave=None,
@@ -1235,9 +1279,18 @@ class hsio(object):
         else:
             array_mean = df_mean.to_numpy()
         array = array_mean.reshape(1, 1, len(df_mean))
-        envi.save_image(fname_hdr_spec, array, interleave=interleave, dtype=dtype,
-                        byteorder=byteorder, metadata=metadata, force=force,
-                        ext=ext)
+
+        try:
+            envi.save_image(fname_hdr_spec, array, interleave=interleave,
+                            dtype=dtype, byteorder=byteorder,
+                            metadata=metadata, force=force, ext=ext)
+        except envi.EnviException:
+            msg = ('Header file already exists: {0}\nUse the `force` keyword '
+                   'to force overwrite.\n``hsio.set_io_defaults(force=True)`` '
+                   'will adjust the default setting so existing files are '
+                   'overwritten by default (i.e., without passing the `force` '
+                   'keyword.)'.format(fname_hdr_spec))
+            raise envi.EnviException(msg)
 
     def write_tif(self, fname_tif, spyfile=None, metadata=None, fname_in=None,
                   projection_out=None, geotransform_out=None,
@@ -1423,14 +1476,21 @@ class hstools(object):
         spyfile (``SpyFile`` object): The datacube being accessed and/or
             manipulated.
     '''
-    def __init__(self, spyfile, ):
+    def __init__(self, spyfile):
         msg = ('Pleae load a SpyFile (Spectral Python object)')
         assert spyfile is not None, msg
 
         self.spyfile = spyfile
+
+        self.fname_in = None
+        self.fname_hdr = None
+        self.base_name = None
+        self.name_short = None
+        self.name_long = None
+        self.name_plot = None
         self.meta_bands = None
 
-        self._get_meta_bands(spyfile)
+        self.load_spyfile(spyfile)
 
     def _get_meta_bands(self, spyfile=None, metadata=None):
         '''
@@ -1469,6 +1529,104 @@ class hstools(object):
                 except ValueError:
                     meta_bands[band_names[idx]] = float(wl_names[idx])
         self.meta_bands = meta_bands
+
+    def _parse_fname_plot(self, str_plot):
+        '''
+        Code for parsing ``name_plot`` (numeric text following ``str_plot``).
+        '''
+        s = self.name_short
+        if str_plot in s and '_pika' in s:
+            name_plot = s[s.find(str_plot) + len(str_plot):s.find('_pika')]
+        elif str_plot in s and '_pika' not in s:
+            name_plot = s[s.find(str_plot) + len(str_plot):s.find('-')]
+        else:
+            name_plot = self.name_short.rsplit('_', 1)[1]
+
+        if len(name_plot) > 12:  # then it must have gone wrong
+            name_plot = self.name_short.rsplit('_', 1)[1]
+        if len(name_plot) == 0:  # then '_pika' must not
+            name_plot = self.name_short.rsplit('_', 1)[1]
+
+        try:
+            int(name_plot)
+        except ValueError:  # give up..
+            print('Cannot convert ``name_plot`` to and ``int``: {0}'
+                  ''.format(name_plot))
+            name_plot = None
+        return name_plot
+
+    def _parse_fname(self, fname_hdr=None, str_plot='plot_', overwrite=True,
+                     name_long=None, name_short=None, name_plot=None):
+        '''
+        Parses the filename for ``name_long`` (text after the first dash,
+        inclusive), ``name_short`` (text before the first dash), and
+        ``name_plot`` (numeric text following ``str_plot``).
+
+        Parameters:
+            fname_hdr (``str``): input filename.
+            str_plot (``str``): text to search for that precedes the numeric
+                text that describes the plot number.
+            overwrite (``bool``): whether the class instances of ``name_long``,
+                ``name_short``, and ``name_plot`` should be overwritten based
+                on ``fname_in`` (default: ``True``).
+        '''
+        if fname_hdr is None:
+            fname_hdr = self.spyfile.filename + '.hdr'
+        if os.path.splitext(fname_hdr)[1] == '.hdr':  # modify self.fname_in based on new file
+            fname_in = os.path.splitext(fname_hdr)[0]
+        else:
+            fname_hdr = fname_hdr + '.hdr'
+            fname_in = os.path.splitext(fname_hdr)[0]
+        self.fname_in = fname_in
+        self.fname_hdr = fname_hdr
+
+        self.base_dir = os.path.dirname(fname_in)
+#        base_name = os.path.basename(fname_in)
+        base_name = os.path.basename(os.path.splitext(fname_in)[0])
+        self.base_name = base_name
+
+        if overwrite is True:
+            if '-' in base_name:
+                self.name_long = base_name[base_name.find(
+                        '-', base_name.rfind('_')):]
+                self.name_short = base_name[:base_name.find(
+                        '-', base_name.rfind('_'))]
+            else:
+                # if name_long does not have ext, it can be just blank
+                self.name_long = ''
+                # and name_short can be base_name
+                self.name_short = base_name
+            self.name_plot = self._parse_fname_plot(str_plot)
+
+        if name_long is not None:
+            self.name_long = name_long
+        elif overwrite is False and self.name_long is None:
+            if '-' in base_name:
+                self.name_long = base_name[base_name.find(
+                        '-', base_name.rfind('_')):]
+            else:
+                # if name_long does not have ext, it can be just blank
+                self.name_long = ''
+        else:
+            pass
+
+        if name_short is not None:
+            self.name_short = name_short
+        elif overwrite is False and self.name_short is None:
+            if '-' in base_name:
+                self.name_short = base_name[:base_name.find(
+                        '-', base_name.rfind('_'))]
+            else:
+                self.name_short = base_name
+        else:
+            pass
+
+        if name_plot is not None:
+            self.name_plot = name_plot
+        elif overwrite is False and self.name_plot is None:
+            self.name_plot = self._parse_fname_plot(str_plot)
+        else:
+            pass
 
     def clean_md_sets(self, metadata=None):
         '''
@@ -2056,6 +2214,8 @@ class hstools(object):
         '''
         self.spyfile = spyfile
         self._get_meta_bands(spyfile)
+        self._parse_fname(fname_hdr=None, str_plot='plot_', overwrite=True,
+                          name_long=None, name_short=None, name_plot=None)
 
     def mask_array(self, array, metadata, thresh=None, percentile=None,
                    side='lower'):

@@ -60,7 +60,7 @@
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../eonr_installation.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">1. Installation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../my_hs_process_api.html">2. API</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="hs_process.batch.html">2.1.1. batch</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hs_process.defaults.html">2.1.2. defaults</a></li>
@@ -148,7 +148,7 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.spatial_mod.crop_many_gdf" title="hs_process.spatial_mod.spatial_mod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">crop_many_gdf</span></code></a>([spyfile, gdf, crop_e_m, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.spatial_mod.crop_many_gdf" title="hs_process.spatial_mod.spatial_mod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">crop_many_gdf</span></code></a>([spyfile, gdf, plot_id_ref, ...])</p></td>
 <td><p>Crops many plots from a single image by comparing the image to a polygon file (geopandas.GoeDataFrame) that contains plot information and geometry of plot boundaries.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#hs_process.spatial_mod.crop_single" title="hs_process.spatial_mod.spatial_mod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">crop_single</span></code></a>([pix_e_ul, pix_n_ul, ...])</p></td>
@@ -162,49 +162,21 @@
 <p class="rubric">Methods Documentation</p>
 <dl class="method">
 <dt id="hs_process.spatial_mod.crop_many_gdf">
-<code class="sig-name descname">crop_many_gdf</code><span class="sig-paren">(</span><em class="sig-param">spyfile=None</em>, <em class="sig-param">gdf=None</em>, <em class="sig-param">crop_e_m=None</em>, <em class="sig-param">crop_n_m=None</em>, <em class="sig-param">crop_e_pix=None</em>, <em class="sig-param">crop_n_pix=None</em>, <em class="sig-param">buf_e_m=None</em>, <em class="sig-param">buf_n_m=None</em>, <em class="sig-param">buf_e_pix=None</em>, <em class="sig-param">buf_n_pix=None</em>, <em class="sig-param">plot_id_ref=None</em>, <em class="sig-param">pix_e_ul=None</em>, <em class="sig-param">pix_n_ul=None</em>, <em class="sig-param">n_plots=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/spatial_mod.html#spatial_mod.crop_many_gdf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spatial_mod.crop_many_gdf" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">crop_many_gdf</code><span class="sig-paren">(</span><em class="sig-param">spyfile=None</em>, <em class="sig-param">gdf=None</em>, <em class="sig-param">plot_id_ref=None</em>, <em class="sig-param">pix_e_ul=None</em>, <em class="sig-param">pix_n_ul=None</em>, <em class="sig-param">n_plots=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/spatial_mod.html#spatial_mod.crop_many_gdf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spatial_mod.crop_many_gdf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Crops many plots from a single image by comparing the image to a
 polygon file (geopandas.GoeDataFrame) that contains plot information
 and geometry of plot boundaries.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object) -- The datacube to crop; if <code class="docutils literal notranslate"><span class="pre">None</span></code>,
-loads datacube and band information from
+<li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object, optional) -- The datacube to crop; if
+<code class="docutils literal notranslate"><span class="pre">None</span></code>, loads datacube and band information from
 <code class="docutils literal notranslate"><span class="pre">spatial_mod.spyfile</span></code> (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
-<li><p><strong>gdf</strong> (<code class="docutils literal notranslate"><span class="pre">geopandas.GeoDataFrame</span></code>) -- the plot IDs and polygon
-geometery of each of the plots; 'plot' must be used as a column
-name to identify each of the plots, and should be an integer;
-if <code class="docutils literal notranslate"><span class="pre">None</span></code>, loads geodataframe from <code class="docutils literal notranslate"><span class="pre">spatial_mod.gdf</span></code>
-(default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
-<li><p><strong>crop_e_m</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code>, optional) -- length of each row (easting
-direction) of the cropped image in map units (e.g., meters;
-default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
-<li><p><strong>crop_n_m</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code>, optional) -- length of each column (northing
-direction) of the cropped image in map units (e.g., meters;
-default: <code class="docutils literal notranslate"><span class="pre">None</span></code>)</p></li>
-<li><p><strong>crop_e_pix</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, optional) -- number of pixels in each row in the
-cropped image (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
-<li><p><strong>crop_n_pix</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, optional) -- number of pixels in each column in
-the cropped image (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
-<li><p><strong>buf_e_m</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code>, optional) -- The buffer distance in the easting
-direction (in map units; e.g., meters) to be applied after
-calculating the original crop area; the buffer is considered
-after <code class="docutils literal notranslate"><span class="pre">crop_X_m</span></code> / <code class="docutils literal notranslate"><span class="pre">crop_X_pix</span></code>. A positive value will
-reduce the size of <code class="docutils literal notranslate"><span class="pre">crop_X_m</span></code> / <code class="docutils literal notranslate"><span class="pre">crop_X_pix</span></code>, and a
-negative value will increase it (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
-<li><p><strong>buf_n_m</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code>, optional) -- The buffer distance in the northing
-direction (in map units; e.g., meters) to be applied after
-calculating the original crop area; the buffer is considered
-after <code class="docutils literal notranslate"><span class="pre">crop_X_m</span></code> / <code class="docutils literal notranslate"><span class="pre">crop_X_pix</span></code>. A positive value will
-reduce the size of <code class="docutils literal notranslate"><span class="pre">crop_X_m</span></code> / <code class="docutils literal notranslate"><span class="pre">crop_X_pix</span></code>, and a
-negative value will increase it (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
-<li><p><strong>buf_e_pix</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, optional) -- The buffer distance in the easting
-direction (in pixel units) to be applied after calculating the
-original crop area (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
-<li><p><strong>buf_n_pix</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, optional) -- The buffer distance in the northing
-direction (in pixel units) to be applied after calculating the
-original crop area (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>gdf</strong> (<code class="docutils literal notranslate"><span class="pre">geopandas.GeoDataFrame</span></code>, optional) -- the plot IDs and
+polygon geometery of each of the plots; 'plot' must be used as
+a column name to identify each of the plots, and should be an
+integer; if <code class="docutils literal notranslate"><span class="pre">None</span></code>, loads geodataframe from
+<code class="docutils literal notranslate"><span class="pre">spatial_mod.gdf</span></code> (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
 <li><p><strong>plot_id_ref</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, optional) -- the plot ID of the reference plot.
 <code class="docutils literal notranslate"><span class="pre">plot_id_ref</span></code> is required if passing <code class="docutils literal notranslate"><span class="pre">pix_e_ul</span></code>,
 <code class="docutils literal notranslate"><span class="pre">pix_n_ul</span></code>, or <code class="docutils literal notranslate"><span class="pre">n_plots</span></code> because it is used as the
@@ -267,11 +239,12 @@ easting and northing). Do not pass both.</p>
 </div>
 <p>Read datacube and spatial plot boundaries</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_gdf</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\plot_bounds_small\plot_bounds\plot_bounds.shp&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_gdf</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\plot_bounds_small\plot_bounds.shp&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">fname_gdf</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_spatial_mod</span> <span class="o">=</span> <span class="n">spatial_mod</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dir_out</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;spatial_mod&#39;</span><span class="p">,</span> <span class="s1">&#39;crop_many_gdf&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">name_append</span> <span class="o">=</span> <span class="s1">&#39;-crop-many-gdf&#39;</span>
 </pre></div>
 </div>
 <p>Get instructions on how plots should be cropped via
@@ -295,8 +268,10 @@ cropped.</p>
 </pre></div>
 </div>
 <p>Save a single cropped plot to a new directory</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_spatial_mod</span><span class="o">.</span><span class="n">crop_single</span><span class="p">(</span><span class="n">pix_e_ul</span><span class="o">=</span><span class="mi">478</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">crop_e_pix</span><span class="o">=</span><span class="mi">229</span><span class="p">,</span> <span class="n">crop_n_pix</span><span class="o">=</span><span class="mi">76</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">plot_id</span><span class="o">=</span><span class="mi">1018</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_out</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_out</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">name_short</span> <span class="o">+</span> <span class="s1">&#39;_plot_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">1018</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.bip.hdr&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">name_label</span> <span class="o">=</span> <span class="p">(</span><span class="n">name_print</span> <span class="o">+</span> <span class="n">name_plot</span> <span class="o">+</span> <span class="n">name_append</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span>
+<span class="go">                  io.defaults.interleave)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_spatial_mod</span><span class="o">.</span><span class="n">crop_single</span><span class="p">(</span><span class="n">pix_e_ul</span><span class="o">=</span><span class="mi">478</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">crop_e_pix</span><span class="o">=</span><span class="mi">229</span><span class="p">,</span> <span class="n">crop_n_pix</span><span class="o">=</span><span class="mi">76</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">plot_id</span><span class="o">=</span><span class="mi">1018</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_out</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_out</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">name_short</span> <span class="o">+</span> <span class="s1">&#39;_plot_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">1018</span><span class="p">)</span> <span class="o">+</span> <span class="n">name_append</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">interleave</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">write_cube</span><span class="p">(</span><span class="n">fname_out</span><span class="p">,</span> <span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_out_tif</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_out</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">name_short</span> <span class="o">+</span> <span class="s1">&#39;_plot_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">1018</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.tif&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">write_tif</span><span class="p">(</span><span class="n">fname_out_tif</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>

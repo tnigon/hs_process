@@ -58,7 +58,7 @@
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul>
-<li class="toctree-l1"><a class="reference internal" href="../../eonr_installation.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">1. Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../my_hs_process_api.html">2. API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.batch.html">2.1.1. batch</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.defaults.html">2.1.2. defaults</a></li>
@@ -156,8 +156,8 @@
             <span class="s1">&#39;alley_size_n_pix&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># intentionally</span>
             <span class="s1">&#39;alley_size_e_m&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
             <span class="s1">&#39;alley_size_n_m&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="s1">&#39;buf_e_pix&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s1">&#39;buf_n_pix&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s1">&#39;buf_e_pix&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s1">&#39;buf_n_pix&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
             <span class="s1">&#39;buf_e_m&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
             <span class="s1">&#39;buf_n_m&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
             <span class="s1">&#39;crop_e_pix&#39;</span><span class="p">:</span> <span class="mi">90</span><span class="p">,</span>
@@ -552,21 +552,28 @@
         <span class="n">set_str</span> <span class="o">=</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">metadata_list</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span>
         <span class="k">return</span> <span class="n">set_str</span>
 
-    <span class="k">def</span> <span class="nf">_parse_fname_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">str_plot</span><span class="p">,</span> <span class="n">base_name</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_parse_fname_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">str_plot</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Code for parsing ``name_plot`` (numeric text following ``str_plot``).</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="n">base_name</span>
-        <span class="k">if</span> <span class="n">str_plot</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span>
+        <span class="k">if</span> <span class="n">str_plot</span> <span class="ow">in</span> <span class="n">s</span> <span class="ow">and</span> <span class="s1">&#39;_pika&#39;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
             <span class="n">name_plot</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">str_plot</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">str_plot</span><span class="p">):</span><span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;_pika&#39;</span><span class="p">)]</span>
+        <span class="k">elif</span> <span class="n">str_plot</span> <span class="ow">in</span> <span class="n">s</span> <span class="ow">and</span> <span class="s1">&#39;_pika&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="n">name_plot</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">str_plot</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">str_plot</span><span class="p">):</span><span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">name_plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">name_plot</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">12</span><span class="p">:</span>  <span class="c1"># then it must have gone wrong</span>
             <span class="n">name_plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">name_plot</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># then &#39;_pika&#39; must not</span>
+            <span class="n">name_plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
         <span class="k">try</span><span class="p">:</span>
             <span class="nb">int</span><span class="p">(</span><span class="n">name_plot</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>  <span class="c1"># give up..</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cannot convert ``name_plot`` to and ``int``: </span><span class="si">{0}</span><span class="s1">&#39;</span>
+                  <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name_plot</span><span class="p">))</span>
             <span class="n">name_plot</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">name_plot</span>
 
@@ -586,7 +593,7 @@
 <span class="sd">                on ``fname_in`` (default: ``True``).</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">fname_hdr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">fname_hdr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fname_in</span> <span class="o">+</span> <span class="s1">&#39;.hdr&#39;</span>
+            <span class="n">fname_hdr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fname_hdr</span> <span class="o">+</span> <span class="s1">&#39;.hdr&#39;</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;.hdr&#39;</span><span class="p">:</span>  <span class="c1"># modify self.fname_in based on new file</span>
             <span class="n">fname_in</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
@@ -596,36 +603,50 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="n">fname_hdr</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
-        <span class="n">base_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+<span class="c1">#        base_name = os.path.basename(fname_in)</span>
+        <span class="n">base_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base_name</span> <span class="o">=</span> <span class="n">base_name</span>
 
         <span class="k">if</span> <span class="n">overwrite</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">name_long</span> <span class="o">=</span> <span class="n">base_name</span><span class="p">[</span><span class="n">base_name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
-                    <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">base_name</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)):]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span> <span class="o">=</span> <span class="n">base_name</span><span class="p">[:</span><span class="n">base_name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
-                    <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">base_name</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">))]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">name_plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_fname_plot</span><span class="p">(</span><span class="n">str_plot</span><span class="p">,</span> <span class="n">base_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s1">&#39;-&#39;</span> <span class="ow">in</span> <span class="n">base_name</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name_long</span> <span class="o">=</span> <span class="n">base_name</span><span class="p">[</span><span class="n">base_name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+                        <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">base_name</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)):]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span> <span class="o">=</span> <span class="n">base_name</span><span class="p">[:</span><span class="n">base_name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+                        <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">base_name</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">))]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># if name_long does not have ext, it can be just blank</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name_long</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                <span class="c1"># and name_short can be base_name</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span> <span class="o">=</span> <span class="n">base_name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name_plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_fname_plot</span><span class="p">(</span><span class="n">str_plot</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">name_long</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">name_long</span> <span class="o">=</span> <span class="n">name_long</span>
         <span class="k">elif</span> <span class="n">overwrite</span> <span class="ow">is</span> <span class="kc">False</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_long</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">name_long</span> <span class="o">=</span> <span class="n">base_name</span><span class="p">[</span><span class="n">base_name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
-                    <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">base_name</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)):]</span>
+            <span class="k">if</span> <span class="s1">&#39;-&#39;</span> <span class="ow">in</span> <span class="n">base_name</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name_long</span> <span class="o">=</span> <span class="n">base_name</span><span class="p">[</span><span class="n">base_name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+                        <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">base_name</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)):]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># if name_long does not have ext, it can be just blank</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name_long</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">pass</span>
 
         <span class="k">if</span> <span class="n">name_short</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span> <span class="o">=</span> <span class="n">name_short</span>
         <span class="k">elif</span> <span class="n">overwrite</span> <span class="ow">is</span> <span class="kc">False</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span> <span class="o">=</span> <span class="n">base_name</span><span class="p">[:</span><span class="n">base_name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
-                    <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">base_name</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">))]</span>
+            <span class="k">if</span> <span class="s1">&#39;-&#39;</span> <span class="ow">in</span> <span class="n">base_name</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span> <span class="o">=</span> <span class="n">base_name</span><span class="p">[:</span><span class="n">base_name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+                        <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">base_name</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">))]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span> <span class="o">=</span> <span class="n">base_name</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">pass</span>
 
         <span class="k">if</span> <span class="n">name_plot</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">name_plot</span> <span class="o">=</span> <span class="n">name_plot</span>
         <span class="k">elif</span> <span class="n">overwrite</span> <span class="ow">is</span> <span class="kc">False</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_plot</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">name_plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_fname_plot</span><span class="p">(</span><span class="n">str_plot</span><span class="p">,</span> <span class="n">base_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name_plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_fname_plot</span><span class="p">(</span><span class="n">str_plot</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">pass</span>
 
@@ -793,11 +814,21 @@
                       <span class="s1">&#39;to write to file and ``</span><span class="si">{0}</span><span class="s1">()`` is being &#39;</span>
                       <span class="s1">&#39;aborted.</span><span class="se">\n</span><span class="s1">Filename: </span><span class="si">{1}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">basename</span><span class="p">))</span>
                 <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">())</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>  <span class="c1"># CAUTION: May take several seconds to laod spyfile as array</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;All pixels in ``spyfile`` are null values (NaN); thus &#39;</span>
+                      <span class="s1">&#39;``</span><span class="si">{0}</span><span class="s1">()`` is being aborted.</span><span class="se">\n</span><span class="s1">Filename: </span><span class="si">{1}</span><span class="se">\n</span><span class="s1">&#39;</span>
+                      <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">basename</span><span class="p">))</span>
+                <span class="k">return</span> <span class="kc">False</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The size of ``spyfile`` is zero; thus there is nothing &#39;</span>
                       <span class="s1">&#39;to write to file and ``</span><span class="si">{0}</span><span class="s1">()`` is being &#39;</span>
                       <span class="s1">&#39;aborted.</span><span class="se">\n</span><span class="s1">Filename: </span><span class="si">{1}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">basename</span><span class="p">))</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;All pixels in ``spyfile`` are null values (NaN); thus &#39;</span>
+                      <span class="s1">&#39;``</span><span class="si">{0}</span><span class="s1">()`` is being aborted.</span><span class="se">\n</span><span class="s1">Filename: </span><span class="si">{1}</span><span class="se">\n</span><span class="s1">&#39;</span>
+                      <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">basename</span><span class="p">))</span>
                 <span class="k">return</span> <span class="kc">False</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
@@ -884,7 +915,8 @@
                           <span class="n">name_long</span><span class="o">=</span><span class="n">name_long</span><span class="p">,</span> <span class="n">name_short</span><span class="o">=</span><span class="n">name_short</span><span class="p">,</span>
                           <span class="n">name_plot</span><span class="o">=</span><span class="n">name_plot</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="hsio.read_spec"><a class="viewcode-back" href="../../api/hs_process.hsio.html#hs_process.hsio.read_spec">[docs]</a>    <span class="k">def</span> <span class="nf">read_spec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_hdr_spec</span><span class="p">):</span>
+<div class="viewcode-block" id="hsio.read_spec"><a class="viewcode-back" href="../../api/hs_process.hsio.html#hs_process.hsio.read_spec">[docs]</a>    <span class="k">def</span> <span class="nf">read_spec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_hdr_spec</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name_long</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                  <span class="n">name_short</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name_plot</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Reads in a hyperspectral spectrum file using the using the `Spectral</span>
 <span class="sd">        Python`_ package.</span>
@@ -930,10 +962,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fname_hdr_spec</span> <span class="o">=</span> <span class="n">fname_hdr_spec</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base_dir_spec</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">fname_hdr_spec</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_read_envi</span><span class="p">(</span><span class="n">spec</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">basename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">fname_hdr_spec</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span> <span class="o">=</span> <span class="n">basename</span><span class="p">[:</span><span class="n">basename</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">basename</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">))]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name_long</span> <span class="o">=</span> <span class="n">basename</span><span class="p">[</span><span class="n">basename</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">basename</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)):]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name_plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span></div>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parse_fname</span><span class="p">(</span><span class="n">fname_hdr_spec</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">str_plot</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">,</span>
+                          <span class="n">name_long</span><span class="o">=</span><span class="n">name_long</span><span class="p">,</span> <span class="n">name_short</span><span class="o">=</span><span class="n">name_short</span><span class="p">,</span>
+                          <span class="n">name_plot</span><span class="o">=</span><span class="n">name_plot</span><span class="p">)</span></div>
+<span class="c1">#        basename = os.path.basename(fname_hdr_spec)</span>
+<span class="c1">#        self.name_short = basename[:basename.find(&#39;-&#39;, basename.rfind(&#39;_&#39;))]</span>
+<span class="c1">#        self.name_long = basename[basename.find(&#39;-&#39;, basename.rfind(&#39;_&#39;)):]</span>
+<span class="c1">#        self.name_plot = self.name_short.rsplit(&#39;_&#39;, 1)[1]</span>
 
 <div class="viewcode-block" id="hsio.set_io_defaults"><a class="viewcode-back" href="../../api/hs_process.hsio.html#hs_process.hsio.set_io_defaults">[docs]</a>    <span class="k">def</span> <span class="nf">set_io_defaults</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                         <span class="n">interleave</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">byteorder</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -1225,9 +1261,17 @@
 
         <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;interleave&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">interleave</span>
         <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">clean_md_sets</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
-        <span class="n">envi</span><span class="o">.</span><span class="n">save_image</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="n">ext</span><span class="p">,</span>
-                        <span class="n">interleave</span><span class="o">=</span><span class="n">interleave</span><span class="p">,</span> <span class="n">byteorder</span><span class="o">=</span><span class="n">byteorder</span><span class="p">,</span>
-                        <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span></div>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">envi</span><span class="o">.</span><span class="n">save_image</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span>
+                            <span class="n">ext</span><span class="o">=</span><span class="n">ext</span><span class="p">,</span> <span class="n">interleave</span><span class="o">=</span><span class="n">interleave</span><span class="p">,</span>
+                            <span class="n">byteorder</span><span class="o">=</span><span class="n">byteorder</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">envi</span><span class="o">.</span><span class="n">EnviException</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Header file already exists: </span><span class="si">{0}</span><span class="se">\n</span><span class="s1">Use the `force` keyword &#39;</span>
+                   <span class="s1">&#39;to force overwrite.</span><span class="se">\n</span><span class="s1">``hsio.set_io_defaults(force=True)`` &#39;</span>
+                   <span class="s1">&#39;will adjust the default setting so existing files are &#39;</span>
+                   <span class="s1">&#39;overwritten by default without passing the `force` &#39;</span>
+                   <span class="s1">&#39;keyword&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="n">envi</span><span class="o">.</span><span class="n">EnviException</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="hsio.write_spec"><a class="viewcode-back" href="../../api/hs_process.hsio.html#hs_process.hsio.write_spec">[docs]</a>    <span class="k">def</span> <span class="nf">write_spec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_hdr_spec</span><span class="p">,</span> <span class="n">df_mean</span><span class="p">,</span> <span class="n">df_std</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                    <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">interleave</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1354,9 +1398,18 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">array_mean</span> <span class="o">=</span> <span class="n">df_mean</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
         <span class="n">array</span> <span class="o">=</span> <span class="n">array_mean</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_mean</span><span class="p">))</span>
-        <span class="n">envi</span><span class="o">.</span><span class="n">save_image</span><span class="p">(</span><span class="n">fname_hdr_spec</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span> <span class="n">interleave</span><span class="o">=</span><span class="n">interleave</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
-                        <span class="n">byteorder</span><span class="o">=</span><span class="n">byteorder</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span>
-                        <span class="n">ext</span><span class="o">=</span><span class="n">ext</span><span class="p">)</span></div>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">envi</span><span class="o">.</span><span class="n">save_image</span><span class="p">(</span><span class="n">fname_hdr_spec</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span> <span class="n">interleave</span><span class="o">=</span><span class="n">interleave</span><span class="p">,</span>
+                            <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">byteorder</span><span class="o">=</span><span class="n">byteorder</span><span class="p">,</span>
+                            <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="n">ext</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">envi</span><span class="o">.</span><span class="n">EnviException</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Header file already exists: </span><span class="si">{0}</span><span class="se">\n</span><span class="s1">Use the `force` keyword &#39;</span>
+                   <span class="s1">&#39;to force overwrite.</span><span class="se">\n</span><span class="s1">``hsio.set_io_defaults(force=True)`` &#39;</span>
+                   <span class="s1">&#39;will adjust the default setting so existing files are &#39;</span>
+                   <span class="s1">&#39;overwritten by default (i.e., without passing the `force` &#39;</span>
+                   <span class="s1">&#39;keyword.)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fname_hdr_spec</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="n">envi</span><span class="o">.</span><span class="n">EnviException</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="hsio.write_tif"><a class="viewcode-back" href="../../api/hs_process.hsio.html#hs_process.hsio.write_tif">[docs]</a>    <span class="k">def</span> <span class="nf">write_tif</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_tif</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fname_in</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                   <span class="n">projection_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">geotransform_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1542,14 +1595,21 @@
 <span class="sd">        spyfile (``SpyFile`` object): The datacube being accessed and/or</span>
 <span class="sd">            manipulated.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">,</span> <span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">):</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Pleae load a SpyFile (Spectral Python object)&#39;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">spyfile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">msg</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span> <span class="o">=</span> <span class="n">spyfile</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fname_in</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_name</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name_long</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name_plot</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">meta_bands</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_get_meta_bands</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_meta_bands</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
@@ -1588,6 +1648,104 @@
                 <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
                     <span class="n">meta_bands</span><span class="p">[</span><span class="n">band_names</span><span class="p">[</span><span class="n">idx</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">wl_names</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">meta_bands</span> <span class="o">=</span> <span class="n">meta_bands</span>
+
+    <span class="k">def</span> <span class="nf">_parse_fname_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">str_plot</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Code for parsing ``name_plot`` (numeric text following ``str_plot``).</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span>
+        <span class="k">if</span> <span class="n">str_plot</span> <span class="ow">in</span> <span class="n">s</span> <span class="ow">and</span> <span class="s1">&#39;_pika&#39;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="n">name_plot</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">str_plot</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">str_plot</span><span class="p">):</span><span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;_pika&#39;</span><span class="p">)]</span>
+        <span class="k">elif</span> <span class="n">str_plot</span> <span class="ow">in</span> <span class="n">s</span> <span class="ow">and</span> <span class="s1">&#39;_pika&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="n">name_plot</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">str_plot</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">str_plot</span><span class="p">):</span><span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">name_plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">name_plot</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">12</span><span class="p">:</span>  <span class="c1"># then it must have gone wrong</span>
+            <span class="n">name_plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">name_plot</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># then &#39;_pika&#39; must not</span>
+            <span class="n">name_plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nb">int</span><span class="p">(</span><span class="n">name_plot</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>  <span class="c1"># give up..</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cannot convert ``name_plot`` to and ``int``: </span><span class="si">{0}</span><span class="s1">&#39;</span>
+                  <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name_plot</span><span class="p">))</span>
+            <span class="n">name_plot</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">name_plot</span>
+
+    <span class="k">def</span> <span class="nf">_parse_fname</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_hdr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">str_plot</span><span class="o">=</span><span class="s1">&#39;plot_&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                     <span class="n">name_long</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name_short</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name_plot</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Parses the filename for ``name_long`` (text after the first dash,</span>
+<span class="sd">        inclusive), ``name_short`` (text before the first dash), and</span>
+<span class="sd">        ``name_plot`` (numeric text following ``str_plot``).</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            fname_hdr (``str``): input filename.</span>
+<span class="sd">            str_plot (``str``): text to search for that precedes the numeric</span>
+<span class="sd">                text that describes the plot number.</span>
+<span class="sd">            overwrite (``bool``): whether the class instances of ``name_long``,</span>
+<span class="sd">                ``name_short``, and ``name_plot`` should be overwritten based</span>
+<span class="sd">                on ``fname_in`` (default: ``True``).</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">fname_hdr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">fname_hdr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;.hdr&#39;</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;.hdr&#39;</span><span class="p">:</span>  <span class="c1"># modify self.fname_in based on new file</span>
+            <span class="n">fname_in</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fname_hdr</span> <span class="o">=</span> <span class="n">fname_hdr</span> <span class="o">+</span> <span class="s1">&#39;.hdr&#39;</span>
+            <span class="n">fname_in</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fname_in</span> <span class="o">=</span> <span class="n">fname_in</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="n">fname_hdr</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+<span class="c1">#        base_name = os.path.basename(fname_in)</span>
+        <span class="n">base_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_name</span> <span class="o">=</span> <span class="n">base_name</span>
+
+        <span class="k">if</span> <span class="n">overwrite</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;-&#39;</span> <span class="ow">in</span> <span class="n">base_name</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name_long</span> <span class="o">=</span> <span class="n">base_name</span><span class="p">[</span><span class="n">base_name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+                        <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">base_name</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)):]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span> <span class="o">=</span> <span class="n">base_name</span><span class="p">[:</span><span class="n">base_name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+                        <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">base_name</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">))]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># if name_long does not have ext, it can be just blank</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name_long</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                <span class="c1"># and name_short can be base_name</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span> <span class="o">=</span> <span class="n">base_name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name_plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_fname_plot</span><span class="p">(</span><span class="n">str_plot</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">name_long</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name_long</span> <span class="o">=</span> <span class="n">name_long</span>
+        <span class="k">elif</span> <span class="n">overwrite</span> <span class="ow">is</span> <span class="kc">False</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_long</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;-&#39;</span> <span class="ow">in</span> <span class="n">base_name</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name_long</span> <span class="o">=</span> <span class="n">base_name</span><span class="p">[</span><span class="n">base_name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+                        <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">base_name</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)):]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># if name_long does not have ext, it can be just blank</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name_long</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">if</span> <span class="n">name_short</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span> <span class="o">=</span> <span class="n">name_short</span>
+        <span class="k">elif</span> <span class="n">overwrite</span> <span class="ow">is</span> <span class="kc">False</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;-&#39;</span> <span class="ow">in</span> <span class="n">base_name</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span> <span class="o">=</span> <span class="n">base_name</span><span class="p">[:</span><span class="n">base_name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+                        <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">base_name</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">))]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">name_short</span> <span class="o">=</span> <span class="n">base_name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">if</span> <span class="n">name_plot</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name_plot</span> <span class="o">=</span> <span class="n">name_plot</span>
+        <span class="k">elif</span> <span class="n">overwrite</span> <span class="ow">is</span> <span class="kc">False</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_plot</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name_plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_fname_plot</span><span class="p">(</span><span class="n">str_plot</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
 
 <div class="viewcode-block" id="hstools.clean_md_sets"><a class="viewcode-back" href="../../api/hs_process.hstools.html#hs_process.hstools.clean_md_sets">[docs]</a>    <span class="k">def</span> <span class="nf">clean_md_sets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
@@ -2174,7 +2332,9 @@
 <span class="sd">            Data format:   float32</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span> <span class="o">=</span> <span class="n">spyfile</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_get_meta_bands</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_meta_bands</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parse_fname</span><span class="p">(</span><span class="n">fname_hdr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">str_plot</span><span class="o">=</span><span class="s1">&#39;plot_&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                          <span class="n">name_long</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name_short</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name_plot</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="hstools.mask_array"><a class="viewcode-back" href="../../api/hs_process.hstools.html#hs_process.hstools.mask_array">[docs]</a>    <span class="k">def</span> <span class="nf">mask_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">percentile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                    <span class="n">side</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">):</span>

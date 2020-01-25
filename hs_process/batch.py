@@ -55,19 +55,29 @@ class batch(object):
             self.fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
 
         self.io = hsio()
-        self.defaults = defaults.spat_crop_cols
         self.my_spectral_mod = None
         self.my_spatial_mod = None
         self.my_segment = None
 
-    def _try_dict(self, key, df_row):
-        if key not in self.defaults.keys():
+    def _try_spat_crop_col_key(self, key, df_row):
+        '''
+        Gets value of batch.io.defaults.spat_crop_cols[``key``]; returns
+        ``None`` if there is a KeyError
+
+        Adds ``key`` to batch.io.defaults.spat_crop_cols if it does not yet
+        exist, but then of course the ``value`` that is returned will be
+        ``None``
+        '''
+        if key not in self.io.defaults.spat_crop_cols.keys():
             print(key)
-            self.defaults[key] = key
+            self.io.defaults.spat_crop_cols[key] = key
         try:
-            value = df_row[self.defaults[key]]
-        except KeyError:
-            value = None
+            value = df_row[self.io.defaults.spat_crop_cols[key]]
+        except KeyError:  # try to retrieve a default value
+            try:
+                value = self.io.defaults.crop_defaults[key]
+            except KeyError:
+                value = None
         return value
 
     def _check_processed(self, fname_list, base_dir_out, folder_name,
@@ -92,7 +102,7 @@ class batch(object):
             name_print = self._get_name_print(fname)
 
             name_label = (name_print + name_append + append_extra + '.' +
-                          self.io.defaults.interleave)
+                          self.io.defaults.envi_write.interleave)
             if os.path.isfile(os.path.join(dir_out, name_label)):
                 fname_list_final.remove(fname)
         msg = ('There are no files to process. Please check if files have '
@@ -110,34 +120,35 @@ class batch(object):
         Reads the necessary information from the spreadsheet and saves it
         to a dictionary
 
-        If this function causes an error, try checking ``batch.defaults`` - these
-        should be adjusted according to the default column names of the input
-        (i.e., ``fname_sheet``).
+        If this function causes an error, try checking
+        ``batch.io.defaults.spat_crop_col`` - these should be adjusted
+        according to the default column names of the input (i.e.,
+        ``fname_sheet``).
         '''
         crop_specs = {
-                'directory': self._try_dict('directory', row),
-                'fname': self._try_dict('fname', row),
-                'name_short': self._try_dict('name_short', row),
-                'name_long': self._try_dict('name_long', row),
-                'ext': self._try_dict('ext', row),
-                'pix_e_ul': self._try_dict('pix_e_ul', row),
-                'pix_n_ul': self._try_dict('pix_n_ul', row),
-                'plot_id': self._try_dict('plot_id', row),
-                'alley_size_e_m': self._try_dict('alley_size_e_m', row),
-                'alley_size_n_m': self._try_dict('alley_size_n_m', row),
-                'alley_size_e_pix': self._try_dict('alley_size_e_pix', row),
-                'alley_size_n_pix': self._try_dict('alley_size_n_pix', row),
-                'buf_e_m': self._try_dict('buf_e_m', row),
-                'buf_n_m': self._try_dict('buf_n_m', row),
-                'buf_e_pix': self._try_dict('buf_e_pix', row),
-                'buf_n_pix': self._try_dict('buf_n_pix', row),
-                'crop_e_m': self._try_dict('crop_e_m', row),
-                'crop_n_m': self._try_dict('crop_n_m', row),
-                'crop_e_pix': self._try_dict('crop_e_pix', row),
-                'crop_n_pix': self._try_dict('crop_n_pix', row),
-                'n_plots_x': self._try_dict('n_plots_x', row),
-                'n_plots_y': self._try_dict('n_plots_y', row),
-                'n_plots': self._try_dict('n_plots', row)}
+                'directory': self._try_spat_crop_col_key('directory', row),
+                'fname': self._try_spat_crop_col_key('fname', row),
+                'name_short': self._try_spat_crop_col_key('name_short', row),
+                'name_long': self._try_spat_crop_col_key('name_long', row),
+                'ext': self._try_spat_crop_col_key('ext', row),
+                'pix_e_ul': self._try_spat_crop_col_key('pix_e_ul', row),
+                'pix_n_ul': self._try_spat_crop_col_key('pix_n_ul', row),
+                'plot_id': self._try_spat_crop_col_key('plot_id', row),
+                'alley_size_e_m': self._try_spat_crop_col_key('alley_size_e_m', row),
+                'alley_size_n_m': self._try_spat_crop_col_key('alley_size_n_m', row),
+                'alley_size_e_pix': self._try_spat_crop_col_key('alley_size_e_pix', row),
+                'alley_size_n_pix': self._try_spat_crop_col_key('alley_size_n_pix', row),
+                'buf_e_m': self._try_spat_crop_col_key('buf_e_m', row),
+                'buf_n_m': self._try_spat_crop_col_key('buf_n_m', row),
+                'buf_e_pix': self._try_spat_crop_col_key('buf_e_pix', row),
+                'buf_n_pix': self._try_spat_crop_col_key('buf_n_pix', row),
+                'crop_e_m': self._try_spat_crop_col_key('crop_e_m', row),
+                'crop_n_m': self._try_spat_crop_col_key('crop_n_m', row),
+                'crop_e_pix': self._try_spat_crop_col_key('crop_e_pix', row),
+                'crop_n_pix': self._try_spat_crop_col_key('crop_n_pix', row),
+                'n_plots_x': self._try_spat_crop_col_key('n_plots_x', row),
+                'n_plots_y': self._try_spat_crop_col_key('n_plots_y', row),
+                'n_plots': self._try_spat_crop_col_key('n_plots', row)}
         if crop_specs['fname'] is None:
             try:
                 crop_specs['fname'] = (crop_specs['name_short'] +
@@ -157,7 +168,7 @@ class batch(object):
                 crop_specs['ext'] = os.path.splitext(crop_specs['fname'])[1]
 
         for col_name in row.index:
-            if col_name not in self.defaults.keys():
+            if col_name not in self.io.defaults.spat_crop_cols.keys():
                 crop_specs[col_name] = row[col_name]
         if not pd.notnull(crop_specs['name_long']):
             crop_specs['name_long'] = None
@@ -214,29 +225,6 @@ class batch(object):
             cs['alley_size_n_m'] = cs['alley_size_n_pix'] * spy_ps_n
         self.crop_specs = cs
         return cs
-
-    def _many_grid(self, cs):
-        '''Wrapper to get consice access to ``spatial_mod.crop_many_grid()'''
-        df_plots = self.my_spatial_mod.crop_many_grid(
-            cs['plot_id'], pix_e_ul=cs['pix_e_ul'], pix_n_ul=cs['pix_n_ul'],
-            crop_e_m=cs['crop_e_m'], crop_n_m=cs['crop_n_m'],
-            alley_size_n_m=cs['alley_size_n_m'], buf_e_m=cs['buf_e_m'],
-            buf_n_m=cs['buf_n_m'], n_plots_x=cs['n_plots_x'],
-            n_plots_y=cs['n_plots_y'])
-        return df_plots
-
-    def _many_gdf(self, cs):
-        '''
-        Wrapper to get consice access to ``spatial_mod.crop_many_gdf();
-        ``my_spatial_mod`` already has access to ``spyfile`` and ``gdf``, so no need
-        to pass them here.
-        '''
-        df_plots = self.my_spatial_mod.crop_many_gdf(
-            cs['plot_id'], pix_e_ul=cs['pix_e_ul'], pix_n_ul=cs['pix_n_ul'],
-            crop_e_m=cs['crop_e_m'], crop_n_m=cs['crop_n_m'],
-            buf_e_m=cs['buf_e_m'], buf_n_m=cs['buf_n_m'],
-            n_plots=cs['n_plots'])
-        return df_plots
 
     def _band_math_setup(self, base_dir_out, folder_name, fname, name_append,
                          method):
@@ -321,7 +309,7 @@ class batch(object):
             metadata_geotiff['history'] += hist_str
 
             name_label = (name_print + name_append + '.' +
-                          self.io.defaults.interleave)
+                          self.io.defaults.envi_write.interleave)
             self._write_datacube(dir_out, name_label, datacube_masked,
                                  metadata)
             name_label_spec = (os.path.splitext(name_label)[0] +
@@ -352,7 +340,7 @@ class batch(object):
 #            name_label_bm = (name_print + name_append + '-{0}-{1}-{2}.'
 #                             ''.format(method, int(np.mean(wl1)),
 #                                       int(np.mean(wl2))) +
-#                             self.io.defaults.interleave)
+#                             self.io.defaults.envi_write.interleave)
 #            meta_bm['label'] = name_label_bm
 #
 #            if mask_thresh is not None or mask_percentile is not None:
@@ -362,7 +350,7 @@ class batch(object):
 #                name_lab_dc = (name_print + '-{0}-mask-{1}-{2}.'
 #                               ''.format(method, int(np.mean(wl1)),
 #                                         int(np.mean(wl2))) +
-#                               self.io.defaults.interleave)
+#                               self.io.defaults.envi_write.interleave)
 #            # should we make an option to save a mean spectra as well?
 #            # Yes - we aren't required to save intermediate results and do
 #            # another batch process..? we get everything done in one shot -
@@ -384,11 +372,11 @@ class batch(object):
 #                if save_datacube is True:
 #                    hdr_file = os.path.join(dir_out, name_lab_dc + '.hdr')
 #                    self.io.write_cube(hdr_file, datacube_masked,
-#                                       dtype=self.io.defaults.dtype,
-#                                       force=self.io.defaults.force,
-#                                       ext=self.io.defaults.ext,
-#                                       interleave=self.io.defaults.interleave,
-#                                       byteorder=self.io.defaults.byteorder,
+#                                       dtype=self.io.defaults.envi_write.dtype,
+#                                       force=self.io.defaults.envi_write.force,
+#                                       ext=self.io.defaults.envi_write.ext,
+#                                       interleave=self.io.defaults.envi_write.interleave,
+#                                       byteorder=self.io.defaults.envi_write.byteorder,
 #                                       metadata=datacube_md)
 #                if save_spec is True:
 #                    spec_md = datacube_md.copy()
@@ -397,11 +385,11 @@ class batch(object):
 #                    spec_md['label'] = name_label_spec
 #                    hdr_file = os.path.join(dir_out, name_label_spec + '.hdr')
 #                    self.io.write_spec(hdr_file, spec_mean, spec_std,
-#                                       dtype=self.io.defaults.dtype,
-#                                       force=self.io.defaults.force,
-#                                       ext=self.io.defaults.ext,
-#                                       interleave=self.io.defaults.interleave,
-#                                       byteorder=self.io.defaults.byteorder,
+#                                       dtype=self.io.defaults.envi_write.dtype,
+#                                       force=self.io.defaults.envi_write.force,
+#                                       ext=self.io.defaults.envi_write.ext,
+#                                       interleave=self.io.defaults.envi_write.interleave,
+#                                       byteorder=self.io.defaults.envi_write.byteorder,
 #                                       metadata=spec_md)
 #            self._write_datacube(dir_out, name_label_bm, array_bm, metadata)
 #            if geotiff is True:
@@ -443,7 +431,7 @@ class batch(object):
                 name_label = (name_print + name_append + '-{0}-{1}-{2}.{3}'
                               ''.format(method, int(np.mean(wl1)),
                                         int(np.mean(wl2)),
-                                        self.io.defaults.interleave))
+                                        self.io.defaults.envi_write.interleave))
             elif method == 'ratio':
                 array_bm, metadata = self.my_segment.band_math_ratio(
                         wl1=wl1, wl2=wl2, b1=b1, b2=b2, list_range=list_range,
@@ -451,7 +439,7 @@ class batch(object):
                 name_label = (name_print + name_append + '-{0}-{1}-{2}.{3}'
                               ''.format(method, int(np.mean(wl1)),
                                         int(np.mean(wl2)),
-                                        self.io.defaults.interleave))
+                                        self.io.defaults.envi_write.interleave))
             elif method == 'derivative':
                 array_bm, metadata = self.my_segment.band_math_derivative(
                         wl1=wl1, wl2=wl2, wl3=wl3, b1=b1, b2=b2, b3=b3,
@@ -460,7 +448,7 @@ class batch(object):
                               ''.format(method, int(np.mean(wl1)),
                                         int(np.mean(wl2)),
                                         int(np.mean(wl3)),
-                                        self.io.defaults.interleave))
+                                        self.io.defaults.envi_write.interleave))
             elif method == 'mcari2':
                 array_bm, metadata = self.my_segment.band_math_mcari2(
                         wl1=wl1, wl2=wl2, wl3=wl3, b1=b1, b2=b2, b3=b3,
@@ -469,7 +457,7 @@ class batch(object):
                               ''.format(method, int(np.mean(wl1)),
                                         int(np.mean(wl2)),
                                         int(np.mean(wl3)),
-                                        self.io.defaults.interleave))
+                                        self.io.defaults.envi_write.interleave))
 
             stat_count = np.count_nonzero(~np.isnan(array_bm))
             stat_mean = np.nanmean(array_bm)
@@ -500,7 +488,7 @@ class batch(object):
                                     metadata, self.my_segment.tools)
 
         fname_stats = os.path.join(dir_out, name_append[1:] + '-stats.csv')
-        if os.path.isfile(fname_stats) and self.io.defaults.force is False:
+        if os.path.isfile(fname_stats) and self.io.defaults.envi_write.force is False:
             df_stats_in = pd.read_csv(fname_stats)
             df_stats = df_stats_in.append(df_stats)
         df_stats.to_csv(fname_stats, index=False)
@@ -604,7 +592,7 @@ class batch(object):
             df_stats = df_stats.append(df_stats_temp, ignore_index=True)
 
             name_label = (name_print + name_append + '.' +
-                          self.io.defaults.interleave)
+                          self.io.defaults.envi_write.interleave)
 
             if plot_out is True:
                 df_class_spec['wavelength'] = self.io.tools.meta_bands.values()
@@ -638,28 +626,71 @@ class batch(object):
 #                array_class = np.ma.masked_where(array_class==class_soil,
 #                                                 array_class)
 #                name_label = (name_print + name_append + '-mask-soil' + '.' +
-#                              self.io.defaults.interleave)
+#                              self.io.defaults.envi_write.interleave)
 #                self._write_datacube(dir_out, name_label, array_class,
 #                                     metadata)
 
         fname_stats = os.path.join(dir_out, name_append[1:] + '-stats.csv')
-        if os.path.isfile(fname_stats) and self.io.defaults.force is False:
+        if os.path.isfile(fname_stats) and self.io.defaults.envi_write.force is False:
             df_stats_in = pd.read_csv(fname_stats)
             df_stats = df_stats_in.append(df_stats)
         df_stats.to_csv(fname_stats, index=False)
 
-    def _execute_spat_crop(self, fname_sheet, base_dir_out, folder_name,
-                           name_append, geotiff=True, method='single',
-                           gdf=None):
+    def _crop_check_input(self, fname_sheet, fname_list, method):
         '''
-        Actually executes the spatial crop to keep the main function a bit
-        cleaner
+        Checks that either `fname_sheet` or `fname_list` were passed (and not
+        both)
         '''
-        if isinstance(fname_sheet, pd.DataFrame):
-            df_plots = fname_sheet
-        elif os.path.splitext(fname_sheet)[1] == '.csv':
-            df_plots = pd.read_csv(fname_sheet)
+        if fname_sheet is not None:
+            if isinstance(fname_sheet, pd.DataFrame) and pd.isnull(fname_list):
+                df_plots = fname_sheet
+            elif os.path.splitext(fname_sheet)[-1] == '.csv' and pd.isnull(fname_list):
+                df_plots = pd.read_csv(fname_sheet)
+            elif fname_list is not None:
+                msg2 = ('Both ``fname_sheet`` and ``fname_list`` were passed. '
+                        '``fname_list`` (perhaps from ``base_dir``) will be '
+                        'ignored.\n')
+                print(msg2)
+                if isinstance(fname_sheet, pd.DataFrame):
+                    df_plots = fname_sheet
+                elif os.path.splitext(fname_sheet)[-1] == '.csv':
+                    df_plots = pd.read_csv(fname_sheet)
+            return df_plots
+        elif pd.isnull(fname_sheet) and pd.isnull(fname_list):
+            msg1 = ('Neither ``fname_sheet`` nor ``fname_list`` were passed. '
+                    'Please pass one or the other (not both) and run '
+                    '``batch.spatial_crop`` again.\n')
+            raise TypeError(msg1)
+#        elif fname_sheet is not None and fname_list is not None:
+#            msg2 = ('Both ``fname_sheet`` and ``fname_list`` were passed. '
+#                    '``fname_list`` (perhaps from ``base_dir``) will be '
+#                    'ignored.\n')
+#            print(msg2)
+#            if isinstance(fname_sheet, pd.DataFrame):
+#                df_plots = fname_sheet
+#            elif os.path.splitext(fname_sheet)[-1] == '.csv':
+#                df_plots = pd.read_csv(fname_sheet)
+        else:  # fname_list was passed and df_plots will be figured out later
+            msg3 = ('``method`` is "single", but ``fname_list`` was passed '
+                    'instead of ``fname_sheet``.\n\nIf performing '
+                    '``crop_single``, please pass ``fname_sheet``.\n\nIf '
+                    'performing ``crop_many_gdf``, please pass ``fname_list`` '
+                    '(perhaps via ``base_dir``).\n')
+            assert method in ['many_grid', 'many_gdf'], msg3
+            return
 
+    def _crop_loop(self, df_plots, gdf, base_dir_out, folder_name,
+                   name_append, geotiff):
+        '''
+        ``df_plots`` is assumed to contain all the necessary information to
+        crop *each plot* from an image or from multiple images. In other words,
+        _crop_loop() will perform a single cropping procedure (via
+        ``spatial_mod.crop_single()``) for each row in ``df_plots``. Thus,
+        all the necessary information should be contained in df_plots to run
+        crop_single(). This function is not meant for dataframes containing
+        information to perform crop_many(), so be sure to hone in on that
+        information before passing ``_crop_loop``.
+        '''
         for idx, row in df_plots.iterrows():
             cs = self._crop_read_sheet(row)
             fname = os.path.join(cs['directory'], cs['fname'])
@@ -670,8 +701,8 @@ class batch(object):
             fname_hdr = fname + '.hdr'
             self.io.read_cube(fname_hdr, name_long=name_long,
                               name_plot=plot_id, name_short=name_short)
-            cs = self._pix_to_mapunit(cs)
             self.my_spatial_mod = spatial_mod(self.io.spyfile, gdf)
+            self.my_spatial_mod.defaults = self.io.defaults
             if base_dir_out is None:
                 dir_out, name_append = self._save_file_setup(
                         cs['directory'], folder_name, name_append)
@@ -679,63 +710,209 @@ class batch(object):
                 dir_out, name_append = self._save_file_setup(
                         base_dir_out, folder_name, name_append)
             name_print = self._get_name_print()
-            if method == 'single':
-                array_crop, metadata = self.my_spatial_mod.crop_single(
-                        cs['pix_e_ul'], cs['pix_n_ul'], cs['crop_e_pix'],
-                        cs['crop_n_pix'], buf_e_pix=cs['buf_e_pix'],
-                        buf_n_pix=cs['buf_n_pix'])
-                if row['plot_id'] is not None:
-                    name_plot = '_' + str(row['plot_id'])
-                else:
-                    name_plot = ''
-                name_label = (name_print + name_plot + name_append + '.' +
-                              self.io.defaults.interleave)
-                fname = os.path.join(cs['directory'], cs['fname'])
-                self._write_datacube(dir_out, name_label, array_crop, metadata)
-                if geotiff is True:
-                    self._write_geotiff(array_crop, fname, dir_out, name_label,
-                                        metadata, self.my_spatial_mod.tools)
+            cs = self._pix_to_mapunit(cs)
+#            if method == 'single':
+            array_crop, metadata = self.my_spatial_mod.crop_single(
+                    cs['pix_e_ul'], cs['pix_n_ul'], cs['crop_e_pix'],
+                    cs['crop_n_pix'], buf_e_pix=cs['buf_e_pix'],
+                    buf_n_pix=cs['buf_n_pix'])
+            if row['plot_id'] is not None:
+                name_plot = '_' + str(row['plot_id'])
             else:
-                if method == 'many_grid':
-                    df_plots = self._many_grid(cs)
-                elif method == 'many_gdf':
-                    df_plots = self._many_gdf(cs)
+                name_plot = ''
+            name_label = (name_print + name_plot + name_append + '.' +
+                          self.io.defaults.envi_write.interleave)
+            fname = os.path.join(cs['directory'], cs['fname'])
+            self._write_datacube(dir_out, name_label, array_crop, metadata)
+            if geotiff is True:
+                self._write_geotiff(array_crop, fname, dir_out, name_label,
+                                    metadata, self.my_spatial_mod.tools)
 
-                for idx, row in df_plots.iterrows():  # actually crop the image
-                    # reload spyfile to my_spatial_mod??
-                    self.io.read_cube(fname_hdr, name_long=name_long,
-                                      name_plot=plot_id, name_short=name_short)
-                    self.my_spatial_mod.load_spyfile(self.io.spyfile)
-                    crop_e_pix = cs['crop_e_pix']
-                    crop_n_pix = cs['crop_n_pix']
-                    if pd.isnull(crop_e_pix):
-                        crop_e_pix = row['crop_e_pix']
-                    if pd.isnull(crop_n_pix):
-                        crop_n_pix = row['crop_n_pix']
-                    array_crop, metadata = self.my_spatial_mod.crop_single(
-                        row['pix_e_ul'], row['pix_n_ul'],
-                        crop_e_pix=crop_e_pix,
-                        crop_n_pix=crop_n_pix,
-                        buf_e_pix=cs['buf_e_pix'],
-                        buf_n_pix=cs['buf_n_pix'],
-                        plot_id=row['plot_id'], gdf=gdf)
-#                    metadata = row['metadata']
-#                    array_crop = row['array_crop']
-                    if row['plot_id'] is not None:
-                        name_plot = '_' + str(row['plot_id'])
-                    else:
-                        name_plot = ''
-                    name_label = (name_print + name_plot + name_append + '.' +
-                                  self.io.defaults.interleave)
-                    fname = os.path.join(cs['directory'], cs['fname'])
-                    self._write_datacube(dir_out, name_label, array_crop,
-                                         metadata)
-                    if geotiff is True:
-                        self._write_geotiff(array_crop, fname, dir_out,
-                                            name_label, metadata,
-                                            self.my_spatial_mod.tools)
-                self.metadata = metadata
-                self.df_plots = df_plots
+    def _crop_many_read_row(self, row, gdf, method):
+        '''
+        Helper function for reading a row of a dataframe with information about
+        how to crop an image many times
+        '''
+        cs = self._crop_read_sheet(row)  # this function creates cs['fname']
+        fname_in = os.path.join(cs['directory'], cs['fname'])
+        print('Filename: {0}'.format(fname_in))
+        name_long = cs['name_long']  # ``None`` if it was never set
+        plot_id = cs['plot_id']
+        name_short = cs['name_short']
+        fname_hdr = fname_in + '.hdr'
+        self.io.read_cube(fname_hdr, name_long=name_long,
+                          name_plot=plot_id, name_short=name_short)
+        self.my_spatial_mod = spatial_mod(self.io.spyfile, gdf)
+        self.my_spatial_mod.defaults = self.io.defaults
+        if method == 'many_gdf':
+            df_plots_many = self._many_gdf(cs)
+        elif method == 'many_grid':
+            df_plots_many = self._many_grid(cs)
+        else:
+            msg = ('``method`` must be either "many_gdf" or "many_grid".\n'
+                   'Method: {0}'.format(method))
+            raise ValueError(msg)
+        return df_plots_many
+
+    def _many_grid(self, cs):
+        '''Wrapper to get consice access to ``spatial_mod.crop_many_grid()'''
+        df_plots = self.my_spatial_mod.crop_many_grid(
+            cs['plot_id'], pix_e_ul=cs['pix_e_ul'], pix_n_ul=cs['pix_n_ul'],
+            crop_e_m=cs['crop_e_m'], crop_n_m=cs['crop_n_m'],
+            alley_size_n_m=cs['alley_size_n_m'], buf_e_m=cs['buf_e_m'],
+            buf_n_m=cs['buf_n_m'], n_plots_x=cs['n_plots_x'],
+            n_plots_y=cs['n_plots_y'])
+        return df_plots
+
+    def _many_gdf(self, cs):
+        '''
+        Wrapper to get consice access to ``spatial_mod.crop_many_gdf();
+        ``my_spatial_mod`` already has access to ``spyfile`` and ``gdf``, so no
+        need to pass them here.
+
+        If the buffer settings are None, but there are default settings for
+        them, they are passed here
+        '''
+        if cs['plot_id'] is None:
+            cs['plot_id'] = self.io.defaults.crop_defaults.plot_id
+        if cs['buf_e_m'] is None:
+            cs['buf_e_m'] = self.io.defaults.crop_defaults.buf_e_m
+        if cs['buf_n_m'] is None:
+            cs['buf_n_m'] = self.io.defaults.crop_defaults.buf_n_m
+        if cs['buf_e_pix'] is None:
+            cs['buf_e_pix'] = self.io.defaults.crop_defaults.buf_e_pix
+        if cs['buf_n_pix'] is None:
+            cs['buf_n_pix'] = self.io.defaults.crop_defaults.buf_n_pix
+
+        df_plots = self.my_spatial_mod.crop_many_gdf(
+            cs['plot_id'], pix_e_ul=cs['pix_e_ul'], pix_n_ul=cs['pix_n_ul'],
+            crop_e_m=cs['crop_e_m'], crop_n_m=cs['crop_n_m'],
+            buf_e_m=cs['buf_e_m'], buf_n_m=cs['buf_n_m'],
+            n_plots=cs['n_plots'])
+        return df_plots
+
+    def _crop_execute(self, fname_sheet, fname_list, base_dir_out, folder_name,
+                      name_append, geotiff, method, gdf):
+        '''
+        Actually executes the spatial crop to keep the main function a bit
+        cleaner
+
+        Either `fname_sheet` or `fname_list` should be None
+        '''
+        df_plots = self._crop_check_input(fname_sheet, fname_list, method)
+        if method == 'single':
+            self._crop_loop(df_plots)
+        elif method == 'many_gdf' and isinstance(df_plots, pd.DataFrame):
+            # if user passes a dataframe, just do whatever it says..
+            # loop through each row, doing crop_many_gdf() on each row with
+            # whatever parameters are passed via the columns..
+            # we should assume that each row of df_plots contains an image that
+            # should have crop_many_gdf performed on it to create a new
+            # dataframe that can be passed to _crop_loop()
+            for idx, row in df_plots.iterrows():
+                print('\nComputing information to spatially crop via '
+                      '``spatial_mod.crop_many_gdf``:')
+                df_plots_many = self._crop_many_read_row(row, gdf, method)
+                self._crop_loop(df_plots_many, gdf, base_dir_out, folder_name,
+                                name_append, geotiff)
+        elif method == 'many_gdf' and df_plots is None:
+            for fname_in in fname_list:
+                self.io.read_cube(fname_in)
+                self.my_spatial_mod = spatial_mod(self.io.spyfile, gdf)
+                self.my_spatial_mod.defaults = self.io.defaults
+                df_plots_many = self.my_spatial_mod.crop_many_gdf()
+                self._crop_loop(df_plots_many, gdf, base_dir_out, folder_name,
+                                name_append, geotiff)
+        elif method == 'many_grid' and isinstance(df_plots, pd.DataFrame):
+            for idx, row in df_plots.iterrows():
+                print('\nComputing information to spatially crop via '
+                      '``spatial_mod.crop_many_grid``:')
+                df_plots_many = self._crop_many_read_row(row, gdf, method)
+                self._crop_loop(df_plots_many, gdf, base_dir_out, folder_name,
+                                name_append, geotiff)
+        else:
+            msg = ('Either ``method`` or ``df_plots`` are not defined '
+                   'correctly. If using "many_grid" method, please be sure '
+                   '``df_plots`` is being populated correcty\n\n``method``: '
+                   '{0}'.format(method))
+            raise ValueError(msg)
+
+#        for idx, row in df_plots.iterrows():
+#            cs = self._crop_read_sheet(row)
+#            fname = os.path.join(cs['directory'], cs['fname'])
+#            print('\nSpatially cropping: {0}'.format(fname))
+#            name_long = cs['name_long']  # ``None`` if it was never set
+#            plot_id = cs['plot_id']
+#            name_short = cs['name_short']
+#            fname_hdr = fname + '.hdr'
+#            self.io.read_cube(fname_hdr, name_long=name_long,
+#                              name_plot=plot_id, name_short=name_short)
+#            cs = self._pix_to_mapunit(cs)
+#            self.my_spatial_mod = spatial_mod(self.io.spyfile, gdf)
+#            if base_dir_out is None:
+#                dir_out, name_append = self._save_file_setup(
+#                        cs['directory'], folder_name, name_append)
+#            else:
+#                dir_out, name_append = self._save_file_setup(
+#                        base_dir_out, folder_name, name_append)
+#            name_print = self._get_name_print()
+##            if method == 'single':
+#            array_crop, metadata = self.my_spatial_mod.crop_single(
+#                    cs['pix_e_ul'], cs['pix_n_ul'], cs['crop_e_pix'],
+#                    cs['crop_n_pix'], buf_e_pix=cs['buf_e_pix'],
+#                    buf_n_pix=cs['buf_n_pix'])
+#            if row['plot_id'] is not None:
+#                name_plot = '_' + str(row['plot_id'])
+#            else:
+#                name_plot = ''
+#            name_label = (name_print + name_plot + name_append + '.' +
+#                          self.io.defaults.envi_write.interleave)
+#            fname = os.path.join(cs['directory'], cs['fname'])
+#            self._write_datacube(dir_out, name_label, array_crop, metadata)
+#            if geotiff is True:
+#                self._write_geotiff(array_crop, fname, dir_out, name_label,
+#                                    metadata, self.my_spatial_mod.tools)
+#            else:
+#                if method == 'many_grid':
+#                    df_plots = self._many_grid(cs)
+#                elif method == 'many_gdf':
+#                    df_plots = self._many_gdf(cs)
+#
+#                for idx, row in df_plots.iterrows():  # actually crop the image
+#                    # reload spyfile to my_spatial_mod??
+#                    self.io.read_cube(fname_hdr, name_long=name_long,
+#                                      name_plot=plot_id, name_short=name_short)
+#                    self.my_spatial_mod.load_spyfile(self.io.spyfile)
+#                    crop_e_pix = cs['crop_e_pix']
+#                    crop_n_pix = cs['crop_n_pix']
+#                    if pd.isnull(crop_e_pix):
+#                        crop_e_pix = row['crop_e_pix']
+#                    if pd.isnull(crop_n_pix):
+#                        crop_n_pix = row['crop_n_pix']
+#
+#                    array_crop, metadata = self.my_spatial_mod.crop_single(
+#                        row['pix_e_ul'], row['pix_n_ul'],
+#                        crop_e_pix=crop_e_pix,
+#                        crop_n_pix=crop_n_pix,
+#                        buf_e_pix=cs['buf_e_pix'],
+#                        buf_n_pix=cs['buf_n_pix'],
+#                        plot_id=row['plot_id'], gdf=gdf)
+##                    metadata = row['metadata']
+##                    array_crop = row['array_crop']
+#                    if row['plot_id'] is not None:
+#                        name_plot = '_' + str(row['plot_id'])
+#                    else:
+#                        name_plot = ''
+#                    name_label = (name_print + name_plot + name_append + '.' +
+#                                  self.io.defaults.envi_write.interleave)
+#                    fname = os.path.join(cs['directory'], cs['fname'])
+#                    self._write_datacube(dir_out, name_label, array_crop,
+#                                         metadata)
+#                    if geotiff is True:
+#                        self._write_geotiff(array_crop, fname, dir_out,
+#                                            name_label, metadata,
+#                                            self.my_spatial_mod.tools)
+#                self.metadata = metadata
 
     def _write_datacube(self, dir_out, name_label, array, metadata):
         '''
@@ -744,11 +921,11 @@ class batch(object):
         metadata['label'] = name_label
         hdr_file = os.path.join(dir_out, name_label + '.hdr')
         self.io.write_cube(hdr_file, array, metadata=metadata,
-                           dtype=self.io.defaults.dtype,
-                           force=self.io.defaults.force,
-                           ext=self.io.defaults.ext,
-                           interleave=self.io.defaults.interleave,
-                           byteorder=self.io.defaults.byteorder)
+                           dtype=self.io.defaults.envi_write.dtype,
+                           force=self.io.defaults.envi_write.force,
+                           ext=self.io.defaults.envi_write.ext,
+                           interleave=self.io.defaults.envi_write.interleave,
+                           byteorder=self.io.defaults.envi_write.byteorder)
 
     def _write_geotiff(self, array, fname, dir_out, name_label, metadata,
                        tools):
@@ -776,7 +953,7 @@ class batch(object):
         self.io.write_tif(fname_tif, spyfile=array,
                           projection_out=projection_out,
                           geotransform_out=geotransform_out,
-                          inline=True)
+                          show_img='inline')
 #            if method == 'spatial':
 #                ul_x_utm = self.my_spatial_mod.tools.get_meta_set(map_set, 3)
 #                ul_y_utm = self.my_spatial_mod.tools.get_meta_set(map_set, 4)
@@ -798,11 +975,11 @@ class batch(object):
         metadata['label'] = name_label
         hdr_file = os.path.join(dir_out, name_label + '.hdr')
         self.io.write_spec(hdr_file, spec_mean, spec_std,
-                           dtype=self.io.defaults.dtype,
-                           force=self.io.defaults.force,
-                           ext=self.io.defaults.ext,
-                           interleave=self.io.defaults.interleave,
-                           byteorder=self.io.defaults.byteorder,
+                           dtype=self.io.defaults.envi_write.dtype,
+                           force=self.io.defaults.envi_write.force,
+                           ext=self.io.defaults.envi_write.ext,
+                           interleave=self.io.defaults.envi_write.interleave,
+                           byteorder=self.io.defaults.envi_write.byteorder,
                            metadata=metadata)
 
     def _execute_spec_clip(self, fname_list, base_dir_out, folder_name,
@@ -829,16 +1006,16 @@ class batch(object):
                     wl_bands=wl_bands)
 
             name_label = (name_print + name_append + '.' +
-                          self.io.defaults.interleave)
+                          self.io.defaults.envi_write.interleave)
             metadata['label'] = name_label
 
             hdr_file = os.path.join(dir_out, name_label + '.hdr')
             self.io.write_cube(hdr_file, array_clip,
-                               dtype=self.io.defaults.dtype,
-                               force=self.io.defaults.force,
-                               ext=self.io.defaults.ext,
-                               interleave=self.io.defaults.interleave,
-                               byteorder=self.io.defaults.byteorder,
+                               dtype=self.io.defaults.envi_write.dtype,
+                               force=self.io.defaults.envi_write.force,
+                               ext=self.io.defaults.envi_write.ext,
+                               interleave=self.io.defaults.envi_write.interleave,
+                               byteorder=self.io.defaults.envi_write.byteorder,
                                metadata=metadata)
 
     def _execute_spec_combine(self, fname_list, base_dir_out):
@@ -849,6 +1026,16 @@ class batch(object):
         df_specs = None
         if base_dir_out is None:
             base_dir_out = os.path.dirname(fname_list[0])
+        pix_n = 0
+        for fname in fname_list:
+            self.io.read_spec(fname)
+            spy_mem = self.io.spyfile_spec.open_memmap()
+            pix_n += (np.count_nonzero(~np.isnan(spy_mem)) /
+                      self.io.spyfile_spec.nbands)
+        print('Combining datacubes/spectra into a single mean spectra.\n'
+              'Number of input datacubes/spectra: {0}\nTotal number of '
+              'pixels: {1}'
+              ''.format(len(fname_list), int(pix_n)))
         for fname in fname_list:
             self.io.read_spec(fname)
             array = self.io.spyfile_spec.load()
@@ -873,11 +1060,11 @@ class batch(object):
 
         hdr_file = os.path.join(base_dir_out, 'spec_mean_spy.spec.hdr')
         self.io.write_spec(hdr_file, self.df_mean, self.df_std,
-                           dtype=self.io.defaults.dtype,
-                           force=self.io.defaults.force,
-                           ext=self.io.defaults.ext,
-                           interleave=self.io.defaults.interleave,
-                           byteorder=self.io.defaults.byteorder,
+                           dtype=self.io.defaults.envi_write.dtype,
+                           force=self.io.defaults.envi_write.force,
+                           ext=self.io.defaults.envi_write.ext,
+                           interleave=self.io.defaults.envi_write.interleave,
+                           byteorder=self.io.defaults.envi_write.byteorder,
                            metadata=self.io.spyfile_spec.metadata)
 
     def _execute_spec_smooth(self, fname_list, base_dir_out, folder_name,
@@ -905,16 +1092,16 @@ class batch(object):
                     window_size=window_size, order=order)
 
             name_label = (name_print + name_append + '.' +
-                          self.io.defaults.interleave)
+                          self.io.defaults.envi_write.interleave)
             metadata['label'] = name_label
 
             hdr_file = os.path.join(dir_out, name_label + '.hdr')
             self.io.write_cube(hdr_file, array_smooth,
-                               dtype=self.io.defaults.dtype,
-                               force=self.io.defaults.force,
-                               ext=self.io.defaults.ext,
-                               interleave=self.io.defaults.interleave,
-                               byteorder=self.io.defaults.byteorder,
+                               dtype=self.io.defaults.envi_write.dtype,
+                               force=self.io.defaults.envi_write.force,
+                               ext=self.io.defaults.envi_write.ext,
+                               interleave=self.io.defaults.envi_write.interleave,
+                               byteorder=self.io.defaults.envi_write.byteorder,
                                metadata=metadata)
 
             if stats is True:
@@ -929,7 +1116,7 @@ class batch(object):
 
         if stats is True:
             fname_stats = os.path.join(dir_out, name_append[1:] + '-stats.csv')
-            if os.path.isfile(fname_stats) and self.io.defaults.force is False:
+            if os.path.isfile(fname_stats) and self.io.defaults.envi_write.force is False:
                 df_stats_in = pd.read_csv(fname_stats)
                 df_smooth_stats = df_stats_in.append(df_smooth_stats)
             df_smooth_stats.to_csv(fname_stats)
@@ -970,7 +1157,7 @@ class batch(object):
         assert self.io.spyfile is not None, msg
         fname_kmeans = self._get_fname_similar(
                 self.io.name_short, dir_search,
-                search_ext=self.io.defaults.interleave, level=0)
+                search_ext=self.io.defaults.envi_write.interleave, level=0)
         fpath_kmeans = os.path.join(dir_search, fname_kmeans)
         io_mask = hsio()
         io_mask.read_cube(fpath_kmeans)
@@ -1059,6 +1246,7 @@ class batch(object):
 
     def _get_name_print(self, fname_in=None):
         '''
+
         '''
         name_print = self.io.name_short
         if name_print is None and fname_in is not None:
@@ -1183,30 +1371,46 @@ class batch(object):
             deviation* across all pixels for each of the datacubes in
             ``base_dir``.
 
-            >>> hsbatch.cube_to_spectra(base_dir=base_dir, geotiff=False)
-            Processing 40 files. If this is not what is expected, please check if files have already undergone processing. If existing files should be overwritten, be sure to set the ``out_force`` parameter.
-
+            >>> hsbatch.cube_to_spectra(base_dir=base_dir, geotiff=False, out_force=True)
             Calculating mean spectra: F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011.bip
-            Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011.bip.hd-cube-to-spec-mean.spec
-
+            Saving F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-cube-to-spec-mean.spec
             Calculating mean spectra: F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012.bip
-            Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012.bip.hd-cube-to-spec-mean.spec
-
+            Saving F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012-cube-to-spec-mean.spec
             Calculating mean spectra: F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013.bip
-            Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013.bip.hd-cube-to-spec-mean.spec
+            Saving F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013-cube-to-spec-mean.spec
+            ...
 
-            Visualize the unmasked array using ``hsio.show_img``. Set ``vmin``
-            and ``vmax`` to ensure the same color scale is used in comparing
-            the masked vs. unmasked arrays.
+            Use ``seaborn`` to visualize the spectra of plots 1011, 1012, and
+            1013. Notice how ``hsbatch.io.name_plot`` is utilized to retrieve
+            the plot ID, and how the *"history"* tag is referenced from the
+            metadata to determine the number of pixels whose reflectance was
+            averaged to create the mean spectra. Also remember that pixels
+            across the original input image likely represent a combinatoin of
+            soil, vegeation, and shadow.
 
-            >>> vmin = array.min()
-            >>> vmax = array.max()
-            >>> io.show_img(array, vmin=vmin, vmax=vmax)
+            >>> import seaborn as sns
+            >>> import re
+            >>> fname_list = [r'F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-cube-to-spec-mean.spec',
+                              r'F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012-cube-to-spec-mean.spec',
+                              r'F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013-cube-to-spec-mean.spec']
+            >>> colors = ['red', 'green', 'blue']
+            >>> for fname, color in zip(fname_list, colors):
+            >>>     hsbatch.io.read_spec(fname)
+            >>>     meta_bands = list(hsbatch.io.tools.meta_bands.values())
+            >>>     data = hsbatch.io.spyfile_spec.load().flatten() * 100
+            >>>     hist = hsbatch.io.spyfile_spec.metadata['history']
+            >>>     pix_n = re.search('<pixel number: (.*)>', hist).group(1)
+            >>>     ax = sns.lineplot(x=meta_bands, y=data, color=color, label='Plot '+hsbatch.io.name_plot+' (n='+pix_n+')')
+            >>> ax.set_xlabel('Wavelength (nm)', weight='bold')
+            >>> ax.set_ylabel('Reflectance (%)', weight='bold')
+            >>> ax.set_title(r'API Example: `batch.cube_to_spectra`', weight='bold')
 
-            .. image:: ../img/utilities/mask_array_800nm.png
+            .. image:: ../img/batch/cube_to_spectra.png
 
         .. _spatial_mod.crop_many_gdf: hs_process.spatial_mod.html#hs_process.spatial_mod.crop_many_gdf
         '''
+        self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
+                                out_byteorder)
         if fname_list is None and base_dir is not None:
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
         elif fname_list is None and base_dir is None:
@@ -1217,7 +1421,7 @@ class batch(object):
             assert base_dir is not None, msg
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
 
-        if self.io.defaults.force is False:  # otherwise just overwrites if it exists
+        if self.io.defaults.envi_write.force is False:  # otherwise just overwrites if it exists
             fname_list = self._check_processed(fname_list, base_dir_out,
                                                folder_name, name_append)
 
@@ -1237,10 +1441,12 @@ class batch(object):
 
             name_print = self._get_name_print()
             name_label = (name_print + name_append + '.' +
-                          self.io.defaults.interleave)
+                          self.io.defaults.envi_write.interleave)
             metadata = self.io.spyfile.metadata.copy()
             # because this is specialized, we should make our own history str
-            hist_str = (" -> hs_process.batch.cube_to_spectra[<>]")
+            n_pix = self.io.spyfile.nrows * self.io.spyfile.ncols
+            hist_str = (' -> hs_process.batch.cube_to_spectra[<pixel number: '
+                        '{0}>]'.format(n_pix))
             metadata['history'] += hist_str
             name_label_spec = (os.path.splitext(name_label)[0] +
                                '-mean.spec')
@@ -1261,19 +1467,21 @@ class batch(object):
                           out_interleave=False, out_byteorder=False):
         '''
         Batch processing tool to perform band math on multiple datacubes in the
-        same way.
+        same way. ``batch.segment_band_math`` is typically used prior to
+        ``batch.segment_create_mask`` to generate the images/directory required
+        for the masking process.
 
         Parameters:
-            method (``str``): Must be one of "ndi" (normalized difference index),
-                "ratio" (simple ratio index), "derivative" (deriviative-type
-                index), or "mcari2" (modified chlorophyll absorption index2).
-                Indicates what kind of band
-                math should be performed on the input datacube. The "ndi"
-                method leverages ``segment.band_math_ndi()``, the "ratio"
-                method leverages ``segment.band_math_ratio()``, and the
-                "derivative" method leverages ``segment.band_math_derivative()``.
-                Please see the ``segment`` documentation for more information
-                (default: "ndi").
+            method (``str``): Must be one of "ndi" (normalized difference
+                index), "ratio" (simple ratio index), "derivative"
+                (deriviative-type index), or "mcari2" (modified chlorophyll
+                absorption index2). Indicates what kind of band math should be
+                performed on the input datacube. The "ndi" method leverages
+                ``segment.band_math_ndi()``, the "ratio" method leverages
+                ``segment.band_math_ratio()``, and the "derivative" method
+                leverages ``segment.band_math_derivative()``. Please see the
+                ``segment`` documentation for more information (default:
+                "ndi").
             wl1 (``int``, ``float``, or ``list``): the wavelength (or set of
                 wavelengths) to be used as the first parameter of the
                 band math index; if ``list``, then consolidates all
@@ -1304,6 +1512,82 @@ class batch(object):
                 result (default: ``True``).
             geotiff (``bool``): whether to save the masked RGB image as a geotiff
                 alongside the masked datacube.
+
+        Note:
+            The following ``batch`` example builds on the API example results
+            of the `spatial_mod.crop_many_gdf`_ function. Please complete the
+            `spatial_mod.crop_many_gdf`_ example to be sure your directory
+            (i.e., ``base_dir``) is populated with multiple hyperspectral
+            datacubes. The following example will be using datacubes located in
+            the following directory:
+            ``F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf``
+
+        Example:
+            Load and initialize the ``batch`` module, checking to be sure the
+            directory exists.
+
+            >>> import os
+            >>> from hs_process import batch
+            >>> base_dir = r'F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf'
+            >>> print(os.path.isdir(base_dir))
+            True
+            >>> hsbatch = batch(base_dir, search_ext='.bip')  # searches for all files in ``base_dir`` with a ".bip" file extension
+
+            Use ``batch.segment_band_math`` to compute the MCARI2 (Modified
+            Chlorophyll Absorption Ratio Index Improved; Haboudane et al.,
+            2004) spectral index for each of the datacubes in ``base_dir``. See
+            `Harris Geospatial`_ for more information about the MCARI2 spectral
+            index and references to other spectral indices.
+
+            >>> folder_name = 'band_math_mcari2-800-670-550'  # folder name can be modified to be more descriptive in what type of band math is being performed
+            >>> method = 'mcari2'  # must be one of "ndi", "ratio", "derivative", or "mcari2"
+            >>> wl1 = 800
+            >>> wl2 = 670
+            >>> wl3 = 550
+            >>> hsbatch.segment_band_math(base_dir=base_dir, folder_name=folder_name,
+                                          name_append='band-math', geotiff=True,
+                                          method=method, wl1=wl1, wl2=wl2, wl3=wl3,
+                                          plot_out=True, out_force=True)
+            Bands used (``b1``): [198]
+            Bands used (``b2``): [135]
+            Bands used (``b3``): [77]
+            Wavelengths used (``b1``): [799.0016]
+            Wavelengths used (``b2``): [669.6752]
+            Wavelengths used (``b3``): [550.6128]
+            Saving F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\band_math_mcari2-800-670-550\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-band-math-mcari2-800-670-550.bip
+            ...
+
+            ``batch.segment_band_math`` creates a new folder in ``base_dir``
+            (in this case the new directory is
+            ``F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\band_math_mcari2-800-670-550``)
+            which contains several data products. The **first** is
+            ``band-math-stats.csv``: a spreadsheet containing summary
+            statistics for each of the image cubes that were processed via
+            ``batch.segment_band_math``; stats include *pixel count*,
+            *mean*, *standard deviation*, *median*, and *percentiles* across
+            all image pixels.
+
+            **Second** is a ``geotiff`` file for each of the image cubes after the
+            band math processing. This can be opened in *QGIS* to visualize in
+            a spatial reference system, or can be opened using any software
+            that supports floating point *.tif* files.
+
+            .. image:: ../img/batch/segment_band_math_plot_611-band-math-mcari2-800-670-550_tif.png
+
+            **Third** is the band math raster saved in the *.hdr* file format.
+            Note that the data conained here should be the same as in the
+            *.tif* file, so it's a matter of preference as to what may be more
+            useful. This single band *.hdr* can also be opend in *QGIS*.
+
+            **Fourth** is a histogram of the band math data contained in the
+            image. The histogram illustrates the 90th percentile value, which
+            may be useful for in the segmentation step (e.g., see
+            `batch.segment_create_mask`_).
+
+            .. image:: ../img/batch/segment_band_math_plot_611-band-math-mcari2-800-670-550.png
+
+        .. _Harris Geospatial: https://www.harrisgeospatial.com/docs/NarrowbandGreenness.html#Modified3
+        .. _batch.segment_create_mask: hs_process.batch.html#hs_process.batch.segment_create_mask
         '''
         self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
                                 out_byteorder)
@@ -1338,35 +1622,13 @@ class batch(object):
                                       int(np.mean(wl3))))
 
         # checks filenames
-        if self.io.defaults.force is False:  # otherwise just overwrites if it exists
+        if self.io.defaults.envi_write.force is False:  # otherwise just overwrites if it exists
             fname_list = self._check_processed(fname_list, base_dir_out,
                                                folder_name, name_append,
                                                append_extra)
         self._execute_band_math(fname_list, base_dir_out, folder_name,
                                 name_append, geotiff, method, wl1, wl2,
                                 wl3, b1, b2, b3, list_range, plot_out)
-
-
-
-#        if fname_list is not None:
-#            self._execute_band_math(fname_list, base_dir_out, folder_name,
-#                                    name_append, geotiff, method, wl1, wl2,
-#                                    wl3, b1, b2, b3, list_range, plot_out)
-#        elif base_dir is not None:
-#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-#            self._execute_band_math(fname_list, base_dir_out, folder_name,
-#                                    name_append, geotiff, method, wl1, wl2,
-#                                    wl3, b1, b2, b3, list_range, plot_out)
-#        else:  # fname_list and base_dir are both ``None``
-#            # base_dir may have been stored to the ``batch`` object
-#            base_dir = self.base_dir
-#            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
-#                   'datacubes should be processed.\n')
-#            assert base_dir is not None, msg
-#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-#            self._execute_band_math(fname_list, base_dir_out, folder_name,
-#                                    name_append, geotiff, method, wl1, wl2,
-#                                    wl3, b1, b2, b3, list_range, plot_out)
 
     def segment_create_mask(self, fname_list=None, base_dir=None,
                             search_ext='bip', dir_level=0, mask_dir=None,
@@ -1378,6 +1640,9 @@ class batch(object):
                             out_interleave=False, out_byteorder=False):
         '''
         Batch processing tool to create a masked array on many datacubes.
+        ``batch.segment_create_mask`` is typically used after
+        ``batch.segment_band_math`` to mask all the datacubes in a directory
+        based on the result of the band math process.
 
         Parameters:
             mask_thresh (``float`` or ``int``): The value for which to mask the
@@ -1392,6 +1657,102 @@ class batch(object):
                 masked (default: 'lower').
             geotiff (``bool``): whether to save the masked RGB image as a geotiff
                 alongside the masked datacube.
+
+        Note:
+            The following ``batch`` example builds on the API example results
+            of `spatial_mod.crop_many_gdf`_ and `batch.segment_band_math`_.
+            Please complete each of those API examples to be sure your
+            directories (i.e., ``base_dir``, and ``mask_dir``) are populated
+            with image files. The following example will be masking datacubes
+            located in:
+            ``F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf``
+            based on MCARI2 images located in:
+            ``F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\\band_math_mcari2-800-670-550``
+
+        Example:
+            Load and initialize the ``batch`` module, ensuring ``base_dir`` is
+            a valid directory
+
+            >>> import os
+            >>> from hs_process import batch
+            >>> base_dir = r'F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf'
+            >>> print(os.path.isdir(base_dir))
+            True
+            >>> hsbatch = batch(base_dir, search_ext='.bip')  # searches for all files in ``base_dir`` with a ".bip" file extension
+
+            There must be a single-band image that will be used to determine
+            which datacube pixels are to be masked (determined via the
+            ``mask_dir`` parameter). Point to the directory that contains the
+            MCARI2 images.
+
+            >>> mask_dir = os.path.join(base_dir, 'band_math_mcari2-800-670-550')
+            >>> print(os.path.isdir(mask_dir))
+            True
+
+            Indicate how the MCARI2 images should be used to determine which
+            hyperspectal pixels are to be masked. The available parameters for
+            controlling this are ``mask_thresh``, ``mask_percentile``, and
+            ``mask_side``. We will mask out all pixels that fall below the
+            MCARI2 90th percentile.
+
+            >>> mask_percentile = 90
+            >>> mask_side = 'lower'
+
+            Finally, indicate the folder to save the masked datacubes and
+            perform the batch masking via ``batch.segment_create_mask``
+
+            >>> folder_name = 'mask_mcari2_90th'
+            >>> hsbatch.segment_create_mask(base_dir=base_dir, mask_dir=mask_dir,
+                                            folder_name=folder_name,
+                                            name_append='mask-mcari2-90th', geotiff=True,
+                                            mask_percentile=mask_percentile,
+                                            mask_side=mask_side)
+            Saving F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\mask_mcari2_90th\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-mask-mcari2-90th.bip
+            Saving F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\mask_mcari2_90th\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-mask-mcari2-90th-spec-mean.spec
+            ...
+
+            .. image:: ../img/batch/segment_create_mask_inline.png
+
+            ``batch.segment_create_mask`` creates a new folder in ``base_dir``
+            named according to the ``folder_name`` parameter
+            (in this case the new directory is
+            ``F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\mask_mcari2_90th``)
+            which contains several data products. The **first** is
+            ``mask-stats.csv``: a spreadsheet containing the band math
+            threshold value for each image file. In this example, the MCARI2
+            value corresponding to the 90th percentile is listed.
+
+            +------------+------------+-------------+
+            | fname      | plot_id    |lower-pctl-90|
+            +============+============+=============+
+            | ...        | 1011       | 0.83341     |
+            +------------+------------+-------------+
+            | ...        | 1012       | 0.81117     |
+            +------------+------------+-------------+
+            | ...        | 1013       | 0.75025     |
+            +------------+------------+-------------+
+            ...etc.
+
+            **Second** is a ``geotiff`` file for each of the image cubes after the
+            masking procedure. This can be opened in *QGIS* to visualize in
+            a spatial reference system, or can be opened using any software
+            that supports floating point *.tif* files. The masked pixels are
+            saved as ``null`` values and should render transparently.
+
+            .. image:: ../img/batch/segment_create_mask_geotiff.png
+
+            **Third** is the full hyperspectral datacube, also with the masked
+            pixels saved as ``null`` values. Note that the only pixels
+            remaining are the 10% with the highest MCARI2 values.
+
+            .. image:: ../img/batch/segment_create_mask_datacube.png
+
+            **Fourth** is the mean spectra across the unmasked datacube pixels.
+            This is illustrated above by the green plot (the light green shadow
+            represents the standard deviation for each band).
+
+        .. _Harris Geospatial: https://www.harrisgeospatial.com/docs/NarrowbandGreenness.html#Modified3
+        .. _batch.segment_band_math: hs_process.batch.html#hs_process.batch.segment_band_math
         '''
         self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
                                 out_byteorder)
@@ -1405,34 +1766,15 @@ class batch(object):
             assert base_dir is not None, msg
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
 
-        if self.io.defaults.force is False:  # otherwise just overwrites if it exists
+        if self.io.defaults.envi_write.force is False:  # otherwise just overwrites if it exists
             fname_list = self._check_processed(fname_list, base_dir_out,
                                                folder_name, name_append)
         self._execute_mask(fname_list, mask_dir, base_dir_out, folder_name,
                            name_append, geotiff, mask_thresh,
                            mask_percentile, mask_side)
 
-#        if fname_list is not None:
-#            self._execute_mask(fname_list, base_dir_out, folder_name,
-#                               name_append, geotiff, mask_thresh,
-#                               mask_percentile, mask_side)
-#        elif base_dir is not None:
-#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-#            self._execute_mask(fname_list, base_dir_out, folder_name,
-#                               name_append, geotiff, mask_thresh,
-#                               mask_percentile, mask_side)
-#        else:  # fname_list and base_dir are both ``None``
-#            # base_dir may have been stored to the ``batch`` object
-#            base_dir = self.base_dir
-#            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
-#                   'datacubes should be processed.\n')
-#            assert base_dir is not None, msg
-#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-#            self._execute_mask(fname_list, base_dir_out, folder_name,
-#                               name_append, geotiff, mask_thresh,
-#                               mask_percentile, mask_side)
-
-    def spatial_crop(self, fname_sheet, base_dir_out=None,
+    def spatial_crop(self, fname_sheet=None, base_dir=None, search_ext='bip',
+                     dir_level=0, base_dir_out=None,
                      folder_name='spatial_crop', name_append='spatial-crop',
                      geotiff=True, method='single', gdf=None, out_dtype=False,
                      out_force=None, out_ext=False, out_interleave=False,
@@ -1441,91 +1783,176 @@ class batch(object):
         Iterates through spreadsheet that provides necessary information about
         how each image should be cropped and how it should be saved.
 
-        If ``gdf`` is passed (a geopandas.GoeDataFrame polygon file), the cropped
-        images will be shifted to the center of appropriate "plot" polygon.
+        If ``gdf`` is passed (a geopandas.GoeDataFrame polygon file), the
+        cropped images will be shifted to the center of appropriate "plot"
+        polygon.
 
         Parameters:
-            fname_sheet (``fname`` or ``Pandas.DataFrame): The filename of the
-                spreadsheed that provides the necessary information for batch
-                process cropping. See below for more information about the
-                required and optional contents of ``fname_sheet`` and how to
-                properly format it. Optionally, ``fname_sheet`` can be a
-                ``Pandas.DataFrame``.
-            base_dir_out (``str``): output directory of the cropped image
-                (default: ``None``).
-            folder_name (``str``): folder to add to ``base_dir_out`` to save all
-                the processed datacubes (default: 'spatial_crop').
-            name_append (``str``): name to append to the filename (default:
-                'spatial-crop').
-            geotiff (``bool``): whether to save an RGB image as a geotiff
-                alongside the cropped datacube.
-            method (``str``): Must be one of "single", "many_grid", or
+            fname_sheet (``fname``, ``pandas.DataFrame``, or ``None``, optional):
+                The filename of the spreadsheed that provides the
+                necessary information for fine-tuning the batch process
+                cropping. See below for more information about the required and
+                optional contents of ``fname_sheet`` and how to properly format
+                it. Optionally, ``fname_sheet`` can be a ``Pandas.DataFrame``.
+                If left to ``None``, ``base_dir`` and ``gdf`` must be passed.
+            base_dir (``str``, optional): directory path to search for files to
+                spatially crop; if ``fname_sheet`` is not ``None``,
+                ``base_dir`` will be ignored (default: ``None``).
+            base_dir_out (``str``, optional): output directory of the cropped
+                image (default: ``None``).
+            folder_name (``str``, optional): folder to add to ``base_dir_out``
+                to save all the processed datacubes (default: 'spatial_crop').
+            name_append (``str``, optional): name to append to the filename
+                (default: 'spatial-crop').
+            geotiff (``bool``, optional): whether to save an RGB image as a
+                geotiff alongside the cropped datacube.
+            method (``str``, optional): Must be one of "single" or
                 "many_gdf". Indicates whether a single plot should be cropped
                 from the input datacube or if many/multiple plots should be
                 cropped from the input datacube. The "single" method leverages
                 `spatial_mod.crop_single()`_ and the "many_gdf" method
-                leverages `spatial_mod.crop_many_gdf()`_ (there are two methods
-                available to peform cropping for many/mulitple plots). Please
+                leverages `spatial_mod.crop_many_gdf()`_. Please
                 see the ``spatial_mod`` documentation for more information
                 (default: "single").
-            gdf (``geopandas.GeoDataFrame``): the plot names and polygon
-                geometery of each of the plots; 'plot' must be used as a column
-                name to identify each of the plots, and should be an integer.
+            gdf (``geopandas.GeoDataFrame``, optional): the plot names and
+                polygon geometery of each of the plots; 'plot' must be used as
+                a column name to identify each of the plots, and should be an
+                integer.
             out_XXX: Settings for saving the output files can be adjusted here
                 if desired. They are stored in ``batch.io.defaults``, and are
                 therefore accessible at a high level. See
                 `hsio.set_io_defaults()`_ for more information on each of the
                 settings.
 
-        Note:
-            ``fname_sheet`` may have the following required column headings
-            that correspond to the relevant parameters in
-            `spatial_mod.crop_single()`_ and `spatial_mod.crop_many_gdf()`_:
-                1. "directory"
-                2. "name_short"
-                3. "name_long"
-                4. "ext"
-                5. "pix_e_ul"
-                6. "pix_n_ul".
-            With this minimum input, ``batch.spatial_crop`` will read in each
-            image, crop from the upper left pixel (determined as
-            ``pix_e_ul``/``pix_n_ul``) to the lower right pixel calculated
-            based on ``crop_e_pix``/``crop_n_pix`` (which is the width of the
-            cropped area in units of pixels). ``crop_e_pix`` and ``crop_n_pix``
-            have default values, but they can also be set in ``fname_sheet``,
-            which will take precedence over the defaults.
-            ``fname_sheet`` may also have the following optional column
-            headings:
-                7. "crop_e_pix"
-                8. "crop_n_pix"
-                9. "crop_e_m"
-                10. "crop_n_m"
-                11. "buf_e_pix"
-                12. "buf_n_pix",
-                13. "buf_e_m"
-                14. "buf_n_m"
-                15. "plot_id".
+        **Tips and Tricks for** ``fname_sheet`` **when** ``gdf`` **is not passed**
+
+        If ``gdf`` is not passed, ``fname_sheet`` may have the following
+        required column headings that correspond to the relevant parameters in
+        `spatial_mod.crop_single()`_ and `spatial_mod.crop_many_gdf()`_:
+
+        #. "directory"
+        #. "name_short"
+        #. "name_long"
+        #. "ext"
+        #. "pix_e_ul"
+        #. "pix_n_ul".
+
+        With this minimum input, ``batch.spatial_crop`` will read in each
+        image, crop from the upper left pixel (determined as
+        ``pix_e_ul``/``pix_n_ul``) to the lower right pixel calculated
+        based on ``crop_e_pix``/``crop_n_pix`` (which is the width of the
+        cropped area in units of pixels).
 
         Note:
-            1. These optional inputs passed via ``fname_sheet`` allow more
-            control over exactly how the images are to be cropped. For a more
-            detailed explanation of the information that many of these columns
-            are intended to contain, see the documentation for
-            `spatial_mod.crop_single()`_ and `spatial_mod.crop_many_gdf()`_.
-            Those parameters not referenced should be apparent in the API
-            examples and tutorials.
+            ``crop_e_pix`` and ``crop_n_pix`` have default values (see
+            `defaults.crop_defaults()`_), but they can also be passed
+            specifically for each datacube by including appropriate columns in
+            ``fname_sheet`` (which takes precedence over
+            ``defaults.crop_defaults``).
 
-            2. If the column names are different in ``fname_sheet`` than
-            described here, `defaults.spat_crop_cols()`_ can be modified to
-            indicate which columns correspond to the relevant information.
+        ``fname_sheet`` may also have the following optional column headings:
 
-            3. Any other columns can be added to ``fname_sheet``, but
-            ``batch.spatial_crop()`` does not use them in any way.
+        #. "crop_e_pix"
+        #. "crop_n_pix"
+        #. "crop_e_m"
+        #. "crop_n_m"
+        #. "buf_e_pix"
+        #. "buf_n_pix"
+        #. "buf_e_m"
+        #. "buf_n_m"
+        #. "plot_id"
 
+        **More** ``fname_sheet`` **Tips and Tricks**
+
+        #. These optional inputs passed via ``fname_sheet`` allow more control
+           over exactly how the images are to be cropped. For a more detailed
+           explanation of the information that many of these columns are
+           intended to contain, see the documentation for
+           `spatial_mod.crop_single()`_ and `spatial_mod.crop_many_gdf()`_.
+           Those parameters not referenced should be apparent in the API
+           examples and tutorials.
+
+        #. If the column names are different in ``fname_sheet`` than described
+           here, `defaults.spat_crop_cols()`_ can be modified to indicate which
+           columns correspond to the relevant information.
+
+        #. Any other columns can be added to ``fname_sheet``, but
+           ``batch.spatial_crop()`` does not use them in any way.
+
+        Note:
+            The following ``batch`` example only actually processes *a single*
+            hyperspectral image. If more datacubes were present in
+            ``base_dir``, however, ``batch.spatial_crop`` would process all
+            datacubes that were available.
+
+        Note:
+            This example will uses ``spatial_mod.crop_many_gdf`` to crop many
+            plots from a datacube using a polygon geometry file describing the
+            spatial extent of each plot.
+
+        Example:
+
+            Load and initialize the ``batch`` module, checking to be sure the
+            directory exists.
+
+            >>> import os
+            >>> import geopandas as gpd
+            >>> import pandas as pd
+            >>> from hs_process import batch
+            >>> base_dir = r'F:\\nigo0024\Documents\hs_process_demo'
+            >>> print(os.path.isdir(base_dir))
+            True
+            >>> hsbatch = batch(base_dir, search_ext='.bip', dir_level=0)  # searches for all files in ``base_dir`` with a ".bip" file extension
+
+            Load the plot geometry as a ``geopandas.GeoDataFrame``
+
+            >>> fname_gdf = r'F:\\nigo0024\Documents\hs_process_demo\plot_bounds_small\plot_bounds.shp'
+            >>> gdf = gpd.read_file(fname_gdf)
+
+            Perform the spatial cropping using the *"many_gdf"* ``method``.
+            Note that nothing is being bassed to ``fname_sheet`` here, so
+            ``batch.spatial_crop`` is simply going to attempt to crop all plots
+            contained within ``gdf`` that overlap with any datacubes in
+            ``base_dir``. This option does not allow for any flexibility
+            regarding minor adjustments to the cropping procedure (e.g.,
+            offset to the plot location in the datacube relative to the
+            location in the ``gdf``), but it is the most straightforward way to
+            run ``batch.spatial_crop`` because it does not depend on anything
+            to be passed to ``fname_sheet``. It does, however, allow you to
+            adjust the plot buffer relative to ``gdf`` via
+            ``hsbatch.io.defaults.crop_defaults``
+
+            >>> hsbatch.io.defaults.crop_defaults.buf_e_m = 2
+            >>> hsbatch.io.defaults.crop_defaults.buf_n_m = 0.5
+            >>> hsbatch.io.set_io_defaults(force=True)
+            >>> hsbatch.spatial_crop(base_dir=base_dir, method='many_gdf',
+                                     gdf=gdf)
+            Spatially cropping: F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip
+            Saving F:\\nigo0024\Documents\hs_process_demo\spatial_crop\Wells_rep2_20180628_16h56m_pika_gige_7_1018-spatial-crop.bip
+            Spatially cropping: F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip
+            Saving F:\\nigo0024\Documents\hs_process_demo\spatial_crop\Wells_rep2_20180628_16h56m_pika_gige_7_918-spatial-crop.bip
+
+            .. image:: ../img/batch/spatial_crop_inline.png
+
+            A new folder was created in ``base_dir``
+            - ``F:\\nigo0024\Documents\hs_process_demo\spatial_crop`` - that
+            contains the cropped datacubes and the cropped ``geotiff`` images.
+            The Plot ID from the ``gdf`` is used to name each datacube
+            according to its plot ID. The ``geotiff`` images can be opened in
+            *QGIS* to visualize the images after cropping them.
+
+            .. image:: ../img/batch/spatial_crop_tifs.png
+
+            The cropped images were brightened in *QGIS* to emphasize the
+            cropped boundaries. The plot boundaries are overlaid for reference
+            (notice the 2.0 m buffer on the East/West ends and the 0.5 m buffer
+            on the North/South sides).
+
+        .. _defaults.crop_defaults(): hs_process.defaults.html#hs_process.defaults.crop_defaults
+        .. _defaults.spat_crop_cols(): hs_process.defaults.html#hs_process.defaults.spat_crop_cols
         .. _hsio.set_io_defaults(): hs_process.hsio.html#hs_process.hsio.set_io_defaults
         .. _spatial_mod.crop_single(): hs_process.spatial_mod.html#hs_process.spatial_mod.crop_single
         .. _spatial_mod.crop_many_gdf(): hs_process.spatial_mod.html#hs_process.spatial_mod.crop_many_gdf
-        .. _defaults.spat_crop_cols(): hs_process.defaults.html#hs_process.defaults.spat_crop_cols
         '''
         if method == 'many_gdf':
             msg1 = ('Please pass a valid ``geopandas.GeoDataFrame`` if using '
@@ -1537,8 +1964,317 @@ class batch(object):
             assert 'plot' in gdf.columns, msg2
         self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
                                 out_byteorder)
-        self._execute_spat_crop(fname_sheet, base_dir_out, folder_name,
-                                name_append, geotiff, method, gdf)
+
+        if fname_sheet is None and base_dir is not None:
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+        elif fname_sheet is None and base_dir is None:
+            # base_dir may have been stored to the ``batch`` object
+            base_dir = self.base_dir
+            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
+                   'datacubes should be processed.\n')
+            assert base_dir is not None, msg
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+
+        # Either fname_sheet or fname_list should be None
+        self._crop_execute(fname_sheet, fname_list, base_dir_out,
+                           folder_name, name_append, geotiff, method, gdf)
+
+    def spectra_combine(self, fname_list=None, base_dir=None,
+                        search_ext='bip', dir_level=0, base_dir_out=None,
+                        out_dtype=False, out_force=None, out_ext=False,
+                        out_interleave=False, out_byteorder=False):
+        '''
+        Batch processing tool to gather all pixels from every image in a
+        directory, compute the mean and standard deviation, and save as a
+        single spectra (i.e., a spectra file is equivalent to a single spectral
+        pixel with no spatial information).
+
+        Parameters:
+            fname_list (``list``, optional): list of filenames to process; if
+                left to ``None``, will look at ``base_dir``, ``search_ext``,
+                and ``dir_level`` parameters for files to process (default:
+                ``None``).
+            base_dir (``str``, optional): directory path to search for files to
+                spectrally clip; if ``fname_list`` is not ``None``,
+                ``base_dir`` will be ignored (default: ``None``).
+            search_ext (``str``): file format/extension to search for in all
+                directories and subdirectories to determine which files to
+                process; if ``fname_list`` is not ``None``, ``search_ext`` will
+                be ignored (default: 'bip').
+            dir_level (``int``): The number of directory levels to search; if
+                ``None``, searches all directory levels (default: 0).
+            base_dir_out (``str``): directory path to save all processed
+                datacubes; if set to ``None``, a folder named according to the
+                ``folder_name`` parameter is added to ``base_dir`` (default:
+                ``None``).
+            out_XXX: Settings for saving the output files can be adjusted here
+                if desired. They are stored in ``batch.io.defaults, and are
+                therefore accessible at a high level. See
+                ``hsio.set_io_defaults()`` for more information on each of the
+                settings.
+
+        Note:
+            The following example will load in several small hyperspectral
+            radiance datacubes *(not reflectance)* that were previously cropped
+            manually (via Spectronon software). These datacubes represent the
+            radiance values of grey reference panels that were placed in the
+            field to provide data necessary for converting radiance imagery
+            to reflectance. These particular datacubes were extracted
+            from several different images captured within ~10 minutes of each
+            other.
+
+        Example:
+            Load and initialize the ``batch`` module, checking to be sure the
+            directory exists.
+
+            >>> import os
+            >>> from hs_process import batch
+            >>> base_dir = r'F:\\nigo0024\Documents\hs_process_demo\cube_ref_panels'
+            >>> print(os.path.isdir(base_dir))
+            True
+            >>> hsbatch = batch(base_dir)
+
+            Combine all the *radiance* datacubes in the directory via
+            ``batch.spectra_combine``.
+
+            >>> hsbatch.spectra_combine(base_dir=base_dir, search_ext='bip',
+                                        dir_level=0)
+            Combining datacubes/spectra into a single mean spectra.
+            Number of input datacubes/spectra: 7
+            Total number of pixels: 1516
+            Saving F:\\nigo0024\Documents\hs_process_demo\cube_ref_panels\spec_mean_spy.spec
+
+            Visualize the combined spectra by opening in *Spectronon*. The
+            solid line represents the mean radiance spectra across all pixels
+            and images in ``base_dir``, and the lighter, slightly transparent
+            line represents the standard deviation of the radiance across all
+            pixels and images in ``base_dir``.
+
+            .. image:: ../img/batch/spectra_combine.png
+
+            Notice the lower signal at the oxygen absorption region (near 770
+            nm). After converting datacubes to reflectance, it may be
+            desireable to spectrally clip this region (see
+            `spec_mod.spectral_clip()`_)
+
+        .. _spec_mod.spectral_clip(): hs_process.spec_mod.html#hs_process.spec_mod.spectral_clip
+        '''
+        self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
+                                out_byteorder)
+        if fname_list is None and base_dir is not None:
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+        elif fname_list is None and base_dir is None:
+            # base_dir may have been stored to the ``batch`` object
+            base_dir = self.base_dir
+            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
+                   'datacubes should be processed.\n')
+            assert base_dir is not None, msg
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+
+        self._execute_spec_combine(fname_list, base_dir_out)
+
+    def spectra_to_csv(self, fname_list=None, base_dir=None, search_ext='spec',
+                       dir_level=0, base_dir_out=None):
+        '''
+        Reads all the ``.spec`` files in a direcory and saves their reflectance
+        information to a ``.csv``. ``batch.spectra_to_csv`` is identical to
+        ``batch.spectra_to_df`` except a ``.csv`` file is saved rather than
+        returning a ``pandas.DataFrame``.
+
+        Parameters:
+            fname_list (``list``, optional): list of filenames to process; if
+                left to ``None``, will look at ``base_dir``, ``search_ext``, and
+                ``dir_level`` parameters for files to process (default: ``None``).
+            base_dir (``str``, optional): directory path to search for files to
+                spectrally clip; if ``fname_list`` is not ``None``, ``base_dir`` will
+                be ignored (default: ``None``).
+            search_ext (``str``): file format/extension to search for in all
+                directories and subdirectories to determine which files to
+                process; if ``fname_list`` is not ``None``, ``search_ext`` will
+                be ignored (default: 'bip').
+            dir_level (``int``): The number of directory levels to search; if
+                ``None``, searches all directory levels (default: 0).
+            base_dir_out (``str``): directory path to save all processed
+                datacubes; if set to ``None``, a folder named according to the
+                ``folder_name`` parameter is added to ``base_dir``
+
+        Note:
+            The following example builds on the API example results of
+            `batch.segment_band_math()`_ and `batch.segment_create_mask()_.
+            Please complete each of those API examples to be sure your
+            directory (i.e.,
+            ``F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\mask_mcari2_90th``)
+            is populated with image files.
+
+        Example:
+            Load and initialize the ``batch`` module, checking to be sure the
+            directory exists.
+
+            >>> import os
+            >>> from hs_process import batch
+            >>> base_dir = r'F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\mask_mcari2_90th'
+            >>> print(os.path.isdir(base_dir))
+            True
+            >>> hsbatch = batch(base_dir)
+
+            Read all the ``.spec`` files in ``base_dir`` and save them to a
+            ``.csv`` file.
+
+            >>> hsbatch.spectra_to_csv(base_dir=base_dir, search_ext='spec',
+                                       dir_level=0)
+            Writing mean spectra to a .csv file.
+            Number of input datacubes/spectra: 40
+            Output file location: F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\mask_mcari2_90th\stats-spectra.csv
+
+            When ``stats-spectra.csv`` is opened in Microsoft Excel, we can see
+            that each row is a ``.spec`` file from a different plot, and each
+            column is a particular spectral band/wavelength.
+
+            .. image:: ../img/batch/spectra_to_csv.png
+
+        .. _batch.segment_band_math(): hs_process.batch.html#hs_process.batch.segment_band_math
+        .. _batch.segment_create_mask(): hs_process.batch.html#hs_process.batch.segment_create_mask
+        '''
+        if fname_list is None and base_dir is not None:
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+        elif fname_list is None and base_dir is None:
+            # base_dir may have been stored to the ``batch`` object
+            base_dir = self.base_dir
+            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
+                   'datacubes should be processed.\n')
+            assert base_dir is not None, msg
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+
+        fname_csv = os.path.join(base_dir, 'stats-spectra.csv')
+        print('Writing mean spectra to a .csv file.\n'
+              'Number of input datacubes/spectra: {0}\nOutput file location: '
+              '{1}'.format(len(fname_list), fname_csv))
+
+        # load the data from the Spectral Python (SpyFile) object
+        df_spec = None
+        for fname in fname_list:
+            self.io.read_spec(fname + '.hdr')
+            meta_bands = self.io.tools.meta_bands
+            array = self.io.spyfile_spec.load()
+            data = list(np.reshape(array, (array.shape[2])) * 100)
+            data.insert(0, self.io.name_plot)
+            data.insert(0, os.path.basename(fname))
+            if df_spec is None:
+                columns = list(meta_bands.values())
+                columns.insert(0, 'wavelength')
+                columns.insert(0, np.nan)
+                bands = list(meta_bands.keys())
+                bands.insert(0, 'plot_id')
+                bands.insert(0, 'fname')
+                df_spec = pd.DataFrame(data=[bands], columns=columns)
+            df_spec_temp = pd.DataFrame(data=[data], columns=columns)
+            df_spec = df_spec.append(df_spec_temp)
+        df_spec.to_csv(fname_csv, index=False)
+
+    def spectra_to_df(self, fname_list=None, base_dir=None, search_ext='spec',
+                      dir_level=0):
+        '''
+        Reads all the .spec files in a direcory and returns their data as a
+        ``pandas.DataFrame`` object. ``batch.spectra_to_df`` is identical to
+        ``batch.spectra_to_csv`` except a ``pandas.DataFrame`` is returned
+        rather than saving a ``.csv`` file.
+
+        Parameters:
+            fname_list (``list``, optional): list of filenames to process; if
+                left to ``None``, will look at ``base_dir``, ``search_ext``, and
+                ``dir_level`` parameters for files to process (default: ``None``).
+            base_dir (``str``, optional): directory path to search for files to
+                spectrally clip; if ``fname_list`` is not ``None``, ``base_dir`` will
+                be ignored (default: ``None``).
+            search_ext (``str``): file format/extension to search for in all
+                directories and subdirectories to determine which files to
+                process; if ``fname_list`` is not ``None``, ``search_ext`` will
+                be ignored (default: 'bip').
+            dir_level (``int``): The number of directory levels to search; if
+                ``None``, searches all directory levels (default: 0).
+
+        Note:
+            The following example builds on the API example results of
+            `batch.segment_band_math()`_ and `batch.segment_create_mask()_.
+            Please complete each of those API examples to be sure your
+            directory (i.e.,
+            ``F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\mask_mcari2_90th``)
+            is populated with image files.
+
+        Example:
+            Load and initialize the ``batch`` module, checking to be sure the
+            directory exists.
+
+            >>> import os
+            >>> from hs_process import batch
+            >>> base_dir = r'F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\mask_mcari2_90th'
+            >>> print(os.path.isdir(base_dir))
+            True
+            >>> hsbatch = batch(base_dir)
+
+            Read all the ``.spec`` files in ``base_dir`` and load them to
+            ``df_spec``, a ``pandas.DataFrame``.
+
+            >>> df_spec = hsbatch.spectra_to_df(base_dir=base_dir, search_ext='spec',
+                                                dir_level=0)
+            Writing mean spectra to a ``pandas.DataFrame``.
+            Number of input datacubes/spectra: 40
+
+            When visualizing ``df_spe`` in `Spyder`_, we can see that each row
+            is a ``.spec`` file from a different plot, and each column is a
+            particular spectral band.
+
+            .. image:: ../img/batch/spectra_to_df.png
+
+            It is somewhat confusing to conceptualize spectral data by band
+            number (as opposed to the wavelenth it represents).
+            ``hs_process.hs_tools.get_band`` can be utilized to retrieve
+            spectral data for all plots via indexing by wavelength. Say we need
+            to access reflectance at 710 nm for each plot.
+
+            >>> df_710nm = df_spec[['fname', 'plot_id', hsbatch.io.tools.get_band(710)]]
+
+            .. image:: ../img/batch/spectra_to_df_710nm.png
+
+        .. _batch.segment_band_math(): hs_process.batch.html#hs_process.batch.segment_band_math
+        .. _batch.segment_create_mask(): hs_process.batch.html#hs_process.batch.segment_create_mask
+        .. _Spyder: https://www.spyder-ide.org/
+        '''
+        if fname_list is None and base_dir is not None:
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+        elif fname_list is None and base_dir is None:
+            # base_dir may have been stored to the ``batch`` object
+            base_dir = self.base_dir
+            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
+                   'datacubes should be processed.\n')
+            assert base_dir is not None, msg
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+
+        print('Writing mean spectra to a ``pandas.DataFrame``.\n'
+              'Number of input datacubes/spectra: {0}'
+              ''.format(len(fname_list)))
+
+        # load the data from the Spectral Python (SpyFile) object
+        df_spec = None
+        for fname in fname_list:
+            self.io.read_spec(fname + '.hdr')
+            meta_bands = self.io.tools.meta_bands
+            array = self.io.spyfile_spec.load()
+            data = list(np.reshape(array, (array.shape[2])))
+            data.insert(0, self.io.name_plot)
+            data.insert(0, os.path.basename(fname))
+            if df_spec is None:
+                bands = list(meta_bands.keys())
+                bands.insert(0, 'plot_id')
+                bands.insert(0, 'fname')
+                df_spec = pd.DataFrame(columns=bands)
+            df_spec_temp = pd.DataFrame(data=[data], columns=bands)
+            df_spec = df_spec.append(df_spec_temp)
+        try:
+            df_spec['plot_id'] = pd.to_numeric(df_spec['plot_id'])
+        except ValueError:
+            print('Unable to convert "plot_id" column to numeric type.\n')
+        return df_spec.reset_index(drop=True)
 
     def spectral_clip(self, fname_list=None, base_dir=None, search_ext='bip',
                       dir_level=0, base_dir_out=None, folder_name='spec_clip',
@@ -1584,6 +2320,67 @@ class batch(object):
                 therefore accessible at a high level. See
                 ``hsio.set_io_defaults()`` for more information on each of the
                 settings.
+
+        Note:
+            The following ``batch`` example builds on the API example results
+            of the `batch.spatial_crop`_ function. Please complete the
+            `batch.spatial_crop`_ example to be sure your directory
+            (i.e., ``base_dir``) is populated with multiple hyperspectral
+            datacubes. The following example will be using datacubes located in
+            the following directory:
+            ``F:\\nigo0024\Documents\hs_process_demo\spatial_crop``
+
+        Example:
+            Load and initialize the ``batch`` module, checking to be sure the
+            directory exists.
+
+            >>> import os
+            >>> from hs_process import batch
+            >>> base_dir = r'F:\\nigo0024\Documents\hs_process_demo\spatial_crop'
+            >>> print(os.path.isdir(base_dir))
+            True
+            >>> hsbatch = batch(base_dir, search_ext='.bip')  # searches for all files in ``base_dir`` with a ".bip" file extension
+
+            Use ``batch.spectral_clip`` to clip all spectral bands below
+            *420 nm* and above *880 nm*, as well as the bands near the oxygen
+            absorption (i.e., *760-776 nm*) and water absorption
+            (i.e., *813-827 nm*) regions.
+
+            >>> hsbatch.spectral_clip(base_dir=base_dir, folder_name='spec_clip',
+                                      wl_bands=[[0, 420], [760, 776], [813, 827], [880, 1000]])
+            Processing 40 files. If this is not what is expected, please check if files have already undergone processing. If existing files should be overwritten, be sure to set the ``out_force`` parameter.
+            Spectrally clipping: F:\\nigo0024\Documents\hs_process_demo\spatial_crop\Wells_rep2_20180628_16h56m_pika_gige_7_1011-spatial-crop.bip
+            Saving F:\\nigo0024\Documents\hs_process_demo\spatial_crop\spec_clip\Wells_rep2_20180628_16h56m_pika_gige_7_1011-spec-clip.bip
+            Spectrally clipping: F:\\nigo0024\Documents\hs_process_demo\spatial_crop\Wells_rep2_20180628_16h56m_pika_gige_7_1012-spatial-crop.bip
+            Saving F:\\nigo0024\Documents\hs_process_demo\spatial_crop\spec_clip\Wells_rep2_20180628_16h56m_pika_gige_7_1012-spec-clip.bip
+            ...
+
+            Use ``seaborn`` to visualize the spectra of a single pixel in one
+            of the processed images.
+
+            >>> import seaborn as sns
+            >>> fname = os.path.join(base_dir, 'Wells_rep2_20180628_16h56m_pika_gige_7_1011-spatial-crop.bip')
+            >>> hsbatch.io.read_cube(fname)
+            >>> spy_mem = hsbatch.io.spyfile.open_memmap()  # datacube before clipping
+            >>> meta_bands = list(hsbatch.io.tools.meta_bands.values())
+            >>> fname = os.path.join(base_dir, 'spec_clip', 'Wells_rep2_20180628_16h56m_pika_gige_7_1011-spec-clip.bip')
+            >>> hsbatch.io.read_cube(fname)
+            >>> spy_mem_clip = hsbatch.io.spyfile.open_memmap()  # datacube after clipping
+            >>> meta_bands_clip = list(hsbatch.io.tools.meta_bands.values())
+            >>> ax = sns.lineplot(x=meta_bands, y=spy_mem[26][29], label='Before spectral clipping', linewidth=3)
+            >>> ax = sns.lineplot(x=meta_bands_clip, y=spy_mem_clip[26][29], label='After spectral clipping', ax=ax)
+            >>> ax.set_xlabel('Wavelength (nm)', weight='bold')
+            >>> ax.set_ylabel('Reflectance (%)', weight='bold')
+            >>> ax.set_title(r'API Example: `batch.spectral_clip`', weight='bold')
+
+            .. image:: ../img/batch/spectral_clip_plot.png
+
+            Notice the spectral areas that were clipped, namely the oxygen and
+            water absorption regions (~770 and ~820 nm, respectively). There
+            is perhaps a lower *signal:noise* ratio in these regions, which was
+            the merit for clipping those bands out.
+
+        .. _batch.spatial_crop: hs_process.batch.html#hs_process.batch.spatial_crop
         '''
         self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
                                 out_byteorder)
@@ -1597,28 +2394,11 @@ class batch(object):
             assert base_dir is not None, msg
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
 
-        if self.io.defaults.force is False:  # otherwise just overwrites if it exists
+        if self.io.defaults.envi_write.force is False:  # otherwise just overwrites if it exists
             fname_list = self._check_processed(fname_list, base_dir_out,
                                                folder_name, name_append)
         self._execute_spec_clip(fname_list, base_dir_out, folder_name,
                                     name_append, wl_bands)
-
-#        if fname_list is not None:
-#            self._execute_spec_clip(fname_list, base_dir_out, folder_name,
-#                                    name_append, wl_bands)
-#        elif base_dir is not None:
-#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-#            self._execute_spec_clip(fname_list, base_dir_out, folder_name,
-#                                    name_append, wl_bands)
-#        else:  # fname_list and base_dir are both ``None``
-#            # base_dir may have been stored to the ``batch`` object
-#            base_dir = self.base_dir
-#            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
-#                   'datacubes should be processed.\n')
-#            assert base_dir is not None, msg
-#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-#            self._execute_spec_clip(fname_list, base_dir_out, folder_name,
-#                                    name_append, wl_bands)
 
     def spectral_smooth(self, fname_list=None, base_dir=None, search_ext='bip',
                         dir_level=0, base_dir_out=None,
@@ -1662,6 +2442,70 @@ class batch(object):
                 therefore accessible at a high level. See
                 ``hsio.set_io_defaults()`` for more information on each of the
                 settings.
+
+        Note:
+            The following ``batch`` example builds on the API example results
+            of the `batch.spatial_crop`_ function. Please complete the
+            `batch.spatial_crop`_ example to be sure your directory
+            (i.e., ``base_dir``) is populated with multiple hyperspectral
+            datacubes. The following example will be using datacubes located in
+            the following directory:
+            ``F:\\nigo0024\Documents\hs_process_demo\spatial_crop``
+
+        Example:
+            Load and initialize the ``batch`` module, checking to be sure the
+            directory exists.
+
+            >>> import os
+            >>> from hs_process import batch
+            >>> base_dir = r'F:\\nigo0024\Documents\hs_process_demo\spatial_crop'
+            >>> print(os.path.isdir(base_dir))
+            True
+            >>> hsbatch = batch(base_dir, search_ext='.bip')  # searches for all files in ``base_dir`` with a ".bip" file extension
+
+            Use ``batch.spectral_smooth`` to perform a *Savitzky-Golay*
+            smoothing operation on each image/pixel in ``base_dir``. The
+            ``window_size`` and ``order`` can be adjusted to achieve desired
+            smoothing results.
+
+            >>> hsbatch.spectral_smooth(base_dir=base_dir, folder_name='spec_smooth',
+                                        window_size=11, order=2)
+            Processing 40 files. If this is not what is expected, please check if files have already undergone processing. If existing files should be overwritten, be sure to set the ``out_force`` parameter.
+            Spectrally smoothing: F:\\nigo0024\Documents\hs_process_demo\spatial_crop\Wells_rep2_20180628_16h56m_pika_gige_7_1011-spatial-crop.bip
+            Saving F:\\nigo0024\Documents\hs_process_demo\spatial_crop\spec_smooth\Wells_rep2_20180628_16h56m_pika_gige_7_1011-spec-smooth.bip
+            Spectrally smoothing: F:\\nigo0024\Documents\hs_process_demo\spatial_crop\Wells_rep2_20180628_16h56m_pika_gige_7_1012-spatial-crop.bip
+            Saving F:\\nigo0024\Documents\hs_process_demo\spatial_crop\spec_smooth\Wells_rep2_20180628_16h56m_pika_gige_7_1012-spec-smooth.bip
+            ...
+
+            Use ``seaborn`` to visualize the spectra of a single pixel in one
+            of the processed images.
+
+            >>> import seaborn as sns
+            >>> fname = os.path.join(base_dir, 'Wells_rep2_20180628_16h56m_pika_gige_7_1011-spatial-crop.bip')
+            >>> hsbatch.io.read_cube(fname)
+            >>> spy_mem = hsbatch.io.spyfile.open_memmap()  # datacube before smoothing
+            >>> meta_bands = list(hsbatch.io.tools.meta_bands.values())
+            >>> fname = os.path.join(base_dir, 'spec_smooth', 'Wells_rep2_20180628_16h56m_pika_gige_7_1011-spec-smooth.bip')
+            >>> hsbatch.io.read_cube(fname)
+            >>> spy_mem_clip = hsbatch.io.spyfile.open_memmap()  # datacube after smoothing
+            >>> meta_bands_clip = list(hsbatch.io.tools.meta_bands.values())
+            >>> ax = sns.lineplot(x=meta_bands, y=spy_mem[26][29], label='Before spectral smoothing', linewidth=3)
+            >>> ax = sns.lineplot(x=meta_bands_clip, y=spy_mem_clip[26][29], label='After spectral smoothing', ax=ax)
+            >>> ax.set_xlabel('Wavelength (nm)', weight='bold')
+            >>> ax.set_ylabel('Reflectance (%)', weight='bold')
+            >>> ax.set_title(r'API Example: `batch.spectral_smooth`', weight='bold')
+
+            .. image:: ../img/batch/spectral_smooth_plot.png
+
+            Notice how the *"choppiness"* of the spectral curve is lessened
+            after the smoothing operation. There are spectral regions that
+            perhaps had a lower *signal:noise* ratio and did not do particularlly
+            well at smoothing (i.e., < 410 nm, ~770 nm, and ~820 nm). It may be
+            wise to perform ``batch.spectral_smooth`` *after*
+            `batch.spectral_clip`_.
+
+        .. _batch.spatial_crop: hs_process.batch.html#hs_process.batch.spatial_crop
+        .. _batch.spectral_clip: hs_process.batch.html#hs_process.batch.spectral_clip
         '''
         self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
                                 out_byteorder)
@@ -1675,193 +2519,14 @@ class batch(object):
             assert base_dir is not None, msg
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
 
-        if self.io.defaults.force is False:  # otherwise just overwrites if it exists
+        if self.io.defaults.envi_write.force is False:  # otherwise just overwrites if it exists
             fname_list = self._check_processed(fname_list, base_dir_out,
                                                folder_name, name_append)
         df_stats = self._execute_spec_smooth(
                 fname_list, base_dir_out, folder_name, name_append,
                 window_size, order, stats)
-
-#        if fname_list is not None:
-#            df_stats = self._execute_spec_smooth(
-#                    fname_list, base_dir_out, folder_name, name_append,
-#                    window_size, order, stats)
-#        elif base_dir is not None:
-#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-#            df_stats = self._execute_spec_smooth(
-#                    fname_list, base_dir_out, folder_name, name_append,
-#                    window_size, order, stats)
-#        else:  # fname_list and base_dir are both ``None``
-#            # base_dir may have been stored to the ``batch`` object
-#            base_dir = self.base_dir
-#            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
-#                   'datacubes should be processed.\n')
-#            assert base_dir is not None, msg
-#            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-#            df_stats = self._execute_spec_smooth(
-#                    fname_list, base_dir_out, folder_name, name_append,
-#                    window_size, order, stats)
         if df_stats is not None:
             return df_stats
-
-    def spectra_combine(self, fname_list=None, base_dir=None,
-                        search_ext='bip', dir_level=0, base_dir_out=None,
-                        out_dtype=False, out_force=None, out_ext=False,
-                        out_interleave=False, out_byteorder=False):
-        '''
-        Batch processing tool to gather all pixels from every image in a
-        directory, compute the mean and standard deviation, and save as a
-        single spectra (i.e., equivalent to a single spectral pixel with no
-        spatial information).
-
-        Parameters:
-            fname_list (``list``, optional): list of filenames to process; if
-                left to ``None``, will look at ``base_dir``, ``search_ext``, and
-                ``dir_level`` parameters for files to process (default: ``None``).
-            base_dir (``str``, optional): directory path to search for files to
-                spectrally clip; if ``fname_list`` is not ``None``, ``base_dir`` will
-                be ignored (default: ``None``).
-            search_ext (``str``): file format/extension to search for in all
-                directories and subdirectories to determine which files to
-                process; if ``fname_list`` is not ``None``, ``search_ext`` will
-                be ignored (default: 'bip').
-            dir_level (``int``): The number of directory levels to search; if
-                ``None``, searches all directory levels (default: 0).
-            base_dir_out (``str``): directory path to save all processed
-                datacubes; if set to ``None``, a folder named according to the
-                ``folder_name`` parameter is added to ``base_dir``
-            out_XXX: Settings for saving the output files can be adjusted here
-                if desired. They are stored in ``batch.io.defaults, and are
-                therefore accessible at a high level. See
-                ``hsio.set_io_defaults()`` for more information on each of the
-                settings.
-        '''
-        self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
-                                out_byteorder)
-        if fname_list is None and base_dir is not None:
-            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-        elif fname_list is None and base_dir is None:
-            # base_dir may have been stored to the ``batch`` object
-            base_dir = self.base_dir
-            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
-                   'datacubes should be processed.\n')
-            assert base_dir is not None, msg
-            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-
-        self._execute_spec_combine(fname_list, base_dir_out)
-
-    def spectra_to_csv(self, fname_list=None, base_dir=None, search_ext='spec',
-                       dir_level=0, base_dir_out=None):
-        '''
-        Reads all the .spec files in a direcory and saves their reflectance
-        information to a .csv
-
-        Parameters:
-            fname_list (``list``, optional): list of filenames to process; if
-                left to ``None``, will look at ``base_dir``, ``search_ext``, and
-                ``dir_level`` parameters for files to process (default: ``None``).
-            base_dir (``str``, optional): directory path to search for files to
-                spectrally clip; if ``fname_list`` is not ``None``, ``base_dir`` will
-                be ignored (default: ``None``).
-            search_ext (``str``): file format/extension to search for in all
-                directories and subdirectories to determine which files to
-                process; if ``fname_list`` is not ``None``, ``search_ext`` will
-                be ignored (default: 'bip').
-            dir_level (``int``): The number of directory levels to search; if
-                ``None``, searches all directory levels (default: 0).
-            base_dir_out (``str``): directory path to save all processed
-                datacubes; if set to ``None``, a folder named according to the
-                ``folder_name`` parameter is added to ``base_dir``
-        '''
-        if fname_list is None and base_dir is not None:
-            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-        elif fname_list is None and base_dir is None:
-            # base_dir may have been stored to the ``batch`` object
-            base_dir = self.base_dir
-            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
-                   'datacubes should be processed.\n')
-            assert base_dir is not None, msg
-            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-
-        # load the data from the Spectral Python (SpyFile) object
-        df_spec = None
-        for fname in fname_list:
-            self.io.read_spec(fname + '.hdr')
-            meta_bands = self.io.tools.meta_bands
-            array = self.io.spyfile_spec.load()
-            data = list(np.reshape(array, (array.shape[2])) * 100)
-            data.insert(0, self.io.name_plot)
-            data.insert(0, os.path.basename(fname))
-            if df_spec is None:
-                columns = list(meta_bands.values())
-                columns.insert(0, 'wavelength')
-                columns.insert(0, np.nan)
-                bands = list(meta_bands.keys())
-                bands.insert(0, 'plot_id')
-                bands.insert(0, 'fname')
-                df_spec = pd.DataFrame(data=[bands], columns=columns)
-            df_spec_temp = pd.DataFrame(data=[data], columns=columns)
-            df_spec = df_spec.append(df_spec_temp)
-        fname_csv = os.path.join(base_dir, 'stats-spectra.csv')
-        df_spec.to_csv(fname_csv, index=False)
-
-    def spectra_to_df(self, fname_list=None, base_dir=None, search_ext='spec',
-                      dir_level=0):
-        '''
-        Reads all the .spec files in a direcory and returns their data as a
-        pandas.DataFrame object.
-
-        Parameters:
-            fname_list (``list``, optional): list of filenames to process; if
-                left to ``None``, will look at ``base_dir``, ``search_ext``, and
-                ``dir_level`` parameters for files to process (default: ``None``).
-            base_dir (``str``, optional): directory path to search for files to
-                spectrally clip; if ``fname_list`` is not ``None``, ``base_dir`` will
-                be ignored (default: ``None``).
-            search_ext (``str``): file format/extension to search for in all
-                directories and subdirectories to determine which files to
-                process; if ``fname_list`` is not ``None``, ``search_ext`` will
-                be ignored (default: 'bip').
-            dir_level (``int``): The number of directory levels to search; if
-                ``None``, searches all directory levels (default: 0).
-        '''
-        if fname_list is None and base_dir is not None:
-            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-        elif fname_list is None and base_dir is None:
-            # base_dir may have been stored to the ``batch`` object
-            base_dir = self.base_dir
-            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate which '
-                   'datacubes should be processed.\n')
-            assert base_dir is not None, msg
-            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
-
-        # load the data from the Spectral Python (SpyFile) object
-        df_spec = None
-        for fname in fname_list:
-            self.io.read_spec(fname + '.hdr')
-            meta_bands = self.io.tools.meta_bands
-            array = self.io.spyfile_spec.load()
-            data = list(np.reshape(array, (array.shape[2])))
-            data.insert(0, self.io.name_plot)
-            data.insert(0, os.path.basename(fname))
-            if df_spec is None:
-                bands = list(meta_bands.keys())
-                bands.insert(0, 'plot_id')
-                bands.insert(0, 'fname')
-                df_spec = pd.DataFrame(columns=bands)
-            df_spec_temp = pd.DataFrame(data=[data], columns=bands)
-            df_spec = df_spec.append(df_spec_temp)
-        try:
-            df_spec['plot_id'] = pd.to_numeric(df_spec['plot_id'])
-        except ValueError:
-            print('Unable to convert "plot_id" column to numeric type.\n')
-        return df_spec
-#        if isinstance(df, pd.DataFrame):
-#            df_data = df.copy()
-#        elif isinstance(df, str):
-#            df_data = pd.read_csv(df)
-#        df_join = pd.merge(df_spec, df_data, on=[join_field])
-#        return df_spec
 
 #    def combine_kmeans_bandmath(self, fname_sheet, base_dir_out=None,
 #                                folder_name='mask_combine',
@@ -1925,7 +2590,7 @@ class batch(object):
 #                   bandmath_pctl_str, bandmath_side_str, 'total_nonmasked_pct']
 #        df_stats = pd.DataFrame(columns=columns)
 #
-#        if self.io.defaults.force is False:  # otherwise just overwrites if it exists
+#        if self.io.defaults.envi_write.force is False:  # otherwise just overwrites if it exists
 #            fname_list = df_kmeans['fname'].tolist()
 #            fname_list = self._check_processed(fname_list, base_dir_out,
 #                                               folder_name, name_append)
@@ -1973,7 +2638,7 @@ class batch(object):
 #            df_stats_temp = pd.DataFrame(data=[data], columns=columns)
 #            df_stats = df_stats.append(df_stats_temp)
 #            name_label = (name_print + name_append + '.' +
-#                          self.io.defaults.interleave)
+#                          self.io.defaults.envi_write.interleave)
 #            metadata = self.io.spyfile.metadata.copy()
 #            # because this is specialized, we should make our own history str
 #            hist_str = (" -> hs_process.batch.combine_kmeans_bandmath[<"
@@ -1992,7 +2657,7 @@ class batch(object):
 #            self._write_spec(dir_out, name_label_spec, spec_mean, spec_std,
 #                             metadata)
 #        fname_stats = os.path.join(dir_out, name_append[1:] + '-stats.csv')
-#        if os.path.isfile(fname_stats) and self.io.defaults.force is False:
+#        if os.path.isfile(fname_stats) and self.io.defaults.envi_write.force is False:
 #            df_stats_in = pd.read_csv(fname_stats)
 #            df_stats = df_stats_in.append(df_stats)
 #        df_stats.to_csv(fname_stats, index=False)
@@ -2029,7 +2694,7 @@ class batch(object):
 #            assert base_dir is not None, msg
 #            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
 #
-#        if self.io.defaults.force is False:  # otherwise just overwrites if it exists
+#        if self.io.defaults.envi_write.force is False:  # otherwise just overwrites if it exists
 #            fname_list = self._check_processed(fname_list, base_dir_out,
 #                                               folder_name, name_append)
 #        self._execute_kmeans(fname_list, base_dir_out, folder_name,
