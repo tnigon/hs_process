@@ -3,7 +3,7 @@
 hs_process Documentation
 ########################
 
-*A Python package for processing and manipulating aerial hyperspectral imagery*
+*An open-source Python package for processing and manipulating aerial hyperspectral imagery*
 
 .. |version_current| replace:: 0.0.1
 Current version: |version_current|

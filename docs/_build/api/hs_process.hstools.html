@@ -200,6 +200,9 @@ manipulated.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.hstools.modify_meta_set" title="hs_process.hstools.modify_meta_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">modify_meta_set</span></code></a>(meta_set, idx, value)</p></td>
 <td><p>Modifies metadata &quot;set&quot; (i.e., string representation of a Python set; common in .hdr files) by converting string to list, then adjusts the value of an item by its index.</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.hstools.plot_histogram" title="hs_process.hstools.plot_histogram"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_histogram</span></code></a>(array[, fname_fig, title, ...])</p></td>
+<td><p>Plots a histogram with the percentile value labeled</p></td>
+</tr>
 </tbody>
 </table>
 <p class="rubric">Methods Documentation</p>
@@ -749,9 +752,9 @@ based on the passed threshold and/or percentile value.</p></li>
 </pre></div>
 </div>
 <p>Retrieve the image band at <em>800 nm</em> using <code class="docutils literal notranslate"><span class="pre">hstools.get_band</span></code> and
-<code class="docutils literal notranslate"><span class="pre">hsio.spyfile.load</span></code></p>
+<code class="docutils literal notranslate"><span class="pre">hsio.spyfile.open_memmap</span></code></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">band</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band</span><span class="p">(</span><span class="mi">800</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">array</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">()[:,</span> <span class="p">:,</span> <span class="n">band</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">array</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()[:,</span> <span class="p">:,</span> <span class="n">band</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>Create a masked array of all values below the <em>75th percentile</em>
@@ -820,10 +823,10 @@ is identical to the <code class="docutils literal notranslate"><span class="pre"
 </pre></div>
 </div>
 <p>Retrieve the image band at <em>800 nm</em> using <code class="docutils literal notranslate"><span class="pre">hstools.get_band</span></code> and
-<code class="docutils literal notranslate"><span class="pre">hsio.spyfile.load</span></code>, then mask out all pixels whose value falls
+<code class="docutils literal notranslate"><span class="pre">hsio.spyfile.open_memmap</span></code>, then mask out all pixels whose value falls
 below the <em>75th percentile</em>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">band</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band</span><span class="p">(</span><span class="mi">800</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">array</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">()[:,</span> <span class="p">:,</span> <span class="n">band</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">array</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()[:,</span> <span class="p">:,</span> <span class="n">band</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">array_mask</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">mask_array</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span> <span class="n">percentile</span><span class="o">=</span><span class="mi">75</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -898,6 +901,67 @@ returned (default: <code class="docutils literal notranslate"><span class="pre">
 <span class="go">&#39;{UTM, 1.0, 1.0, 441342.687073, 441300.2, 0.04, 0.04, 15, T, WGS-84, units  meters, rotation  0.000}&#39;</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hs_process.hstools.plot_histogram">
+<code class="sig-name descname">plot_histogram</code><span class="sig-paren">(</span><em class="sig-param">array</em>, <em class="sig-param">fname_fig=None</em>, <em class="sig-param">title=None</em>, <em class="sig-param">xlabel=None</em>, <em class="sig-param">percentile=90</em>, <em class="sig-param">bins=50</em>, <em class="sig-param">fontsize=16</em>, <em class="sig-param">color='#444444'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.plot_histogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hstools.plot_histogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots a histogram with the percentile value labeled</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array</strong> (<code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) -- The data array used to create the
+histogram for; if <code class="docutils literal notranslate"><span class="pre">array</span></code> is masked, the masked pixels are
+excluded from the histogram.</p></li>
+<li><p><strong>fname_fig</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>, optional) -- The filename to save the figure to;
+if <code class="docutils literal notranslate"><span class="pre">None</span></code>, the figure will not be saved (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>title</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>, optional) -- The plot title (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>xlabel</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>, optional) -- The x-axis label of the histogram
+(default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>percentile</strong> (<code class="docutils literal notranslate"><span class="pre">scalar</span></code>, optional) -- The percentile to label and
+illustrate on the histogram; if <code class="docutils literal notranslate"><span class="pre">percentile</span></code> = 90, the
+band/spectral index value at the 90th percentile will be
+labeled on the plot (default: 90; range: 0-100).</p></li>
+<li><p><strong>bins</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, optional) -- Number of histogram bins (default: 50).</p></li>
+<li><p><strong>fontsize</strong> (<code class="docutils literal notranslate"><span class="pre">scalar</span></code>) -- Font size of the axes labels. The title and
+text annotations will be scaled relatively (default: 16).</p></li>
+<li><p><strong>color</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>, optional) -- Color of the histogram columns (default:
+&quot;#444444&quot;)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Figure object showing the histogram.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>fig (<code class="docutils literal notranslate"><span class="pre">matplotlib.figure</span></code>)</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Retrieve the image band at <em>800 nm</em> using <code class="docutils literal notranslate"><span class="pre">hstools.get_band</span></code> and
+<code class="docutils literal notranslate"><span class="pre">hsio.spyfile.open_memmap</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">band</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band</span><span class="p">(</span><span class="mi">800</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">array</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()[:,</span> <span class="p">:,</span> <span class="n">band</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Create a masked array of all values below the <em>5th percentile</em>
+via <code class="docutils literal notranslate"><span class="pre">hstools.mask_array</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_mask</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">mask_array</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span> <span class="n">percentile</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Visualize the histogram of the unmasked pixels (i.e., those greater
+than the 5th percentile) using <code class="docutils literal notranslate"><span class="pre">hstools.plot_histogram</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Reflectance at 800 nm&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Reflectance (%)&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">plot_histogram</span><span class="p">(</span><span class="n">array_mask</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="n">xlabel</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/plot_histogram_800nm.png" src="../_images/plot_histogram_800nm.png" />
 </dd></dl>
 
 </dd></dl>

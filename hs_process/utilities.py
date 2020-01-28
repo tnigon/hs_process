@@ -2257,10 +2257,10 @@ class hstools(object):
             >>> io = hsio(fname_in)
 
             Retrieve the image band at *800 nm* using ``hstools.get_band`` and
-            ``hsio.spyfile.load``
+            ``hsio.spyfile.open_memmap``
 
             >>> band = io.tools.get_band(800)
-            >>> array = io.spyfile.load()[:, :, band]
+            >>> array = io.spyfile.open_memmap()[:, :, band]
 
             Create a masked array of all values below the *75th percentile*
             via ``hstools.mask_array``
@@ -2424,11 +2424,11 @@ class hstools(object):
             >>> io = hsio(fname_in)
 
             Retrieve the image band at *800 nm* using ``hstools.get_band`` and
-            ``hsio.spyfile.load``, then mask out all pixels whose value falls
+            ``hsio.spyfile.open_memmap``, then mask out all pixels whose value falls
             below the *75th percentile*.
 
             >>> band = io.tools.get_band(800)
-            >>> array = io.spyfile.load()[:, :, band]
+            >>> array = io.spyfile.open_memmap()[:, :, band]
             >>> array_mask, metadata = io.tools.mask_array(array, io.spyfile.metadata, percentile=75, side='lower')
 
             Calculate the spectral mean from the remaining *(i.e., unmasked)*
@@ -2564,3 +2564,117 @@ class hstools(object):
         metadata_list[idx] = str(value)
         set_str = '{' + ', '.join(str(x) for x in metadata_list) + '}'
         return set_str
+
+    def plot_histogram(self, array, fname_fig=None, title=None, xlabel=None,
+                        percentile=90, bins=50, fontsize=16, color='#444444'):
+        '''
+        Plots a histogram with the percentile value labeled
+
+        Parameters:
+            array (``numpy.ndarray``): The data array used to create the
+                histogram for; if ``array`` is masked, the masked pixels are
+                excluded from the histogram.
+            fname_fig (``str``, optional): The filename to save the figure to;
+                if ``None``, the figure will not be saved (default: ``None``).
+            title (``str``, optional): The plot title (default: ``None``).
+            xlabel (``str``, optional): The x-axis label of the histogram
+                (default: ``None``).
+            percentile (``scalar``, optional): The percentile to label and
+                illustrate on the histogram; if ``percentile`` = 90, the
+                band/spectral index value at the 90th percentile will be
+                labeled on the plot (default: 90; range: 0-100).
+            bins (``int``, optional): Number of histogram bins (default: 50).
+            fontsize (``scalar``): Font size of the axes labels. The title and
+                text annotations will be scaled relatively (default: 16).
+            color (``str``, optional): Color of the histogram columns (default:
+                "#444444")
+
+        Returns:
+            fig (``matplotlib.figure``): Figure object showing the histogram.
+
+        Example:
+            Load and initialize ``hsio``
+
+            >>> from hs_process import hsio
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> io = hsio(fname_in)
+
+            Retrieve the image band at *800 nm* using ``hstools.get_band`` and
+            ``hsio.spyfile.open_memmap``
+
+            >>> band = io.tools.get_band(800)
+            >>> array = io.spyfile.open_memmap()[:, :, band]
+
+            Create a masked array of all values below the *5th percentile*
+            via ``hstools.mask_array``
+
+            >>> array_mask, metadata = io.tools.mask_array(array, io.spyfile.metadata, percentile=5, side='lower')
+
+            Visualize the histogram of the unmasked pixels (i.e., those greater
+            than the 5th percentile) using ``hstools.plot_histogram``
+
+            >>> title = 'Reflectance at 800 nm'
+            >>> xlabel = 'Reflectance (%)'
+            >>> io.tools.plot_histogram(array_mask, title=title, xlabel=xlabel)
+
+            .. image:: ../img/utilities/plot_histogram_800nm.png
+        '''
+
+        msg = ('Array must be 1-dimensional or 2-dimensional. Please choose '
+               'only a single array band to create a histogram\nArray shape: '
+               '{0}'.format(array.shape))
+        if len(array.shape) == 3:
+            assert array.shape[2] == 1, msg
+        else:
+            assert len(array.shape) <= 2, msg
+
+        if isinstance(array, np.ma.core.MaskedArray):
+            array_m = array.compressed()  # allows for accurate percentile calc
+        else:
+            array_m = np.ma.masked_array(array, mask=False)
+            array_m = array_m.compressed()
+
+#        if percentile is not None:
+        pctl = np.nanpercentile(array_m.flatten(), percentile)
+
+        fig, ax = plt.subplots()
+        ax = sns.distplot(array_m.flatten(), bins=bins, color='grey')
+        data_x, data_y = ax.lines[0].get_data()
+
+        y_lim = ax.get_ylim()
+        yi = np.interp(pctl, data_x, data_y)
+        ymax = yi/y_lim[1]
+        ax.axvline(pctl, ymax=ymax, linestyle='--', color=color, linewidth=0.5)
+        boxstyle_str = 'round, pad=0.5, rounding_size=0.15'
+
+        legend_str = ('Percentile ({0}): {1:.3f}'
+                      ''.format(percentile, pctl))
+        ax.annotate(
+            legend_str,
+            xy=(pctl, yi),
+            xytext=(0.97, 0.94),  # loc to place text
+            textcoords='axes fraction',  # placed relative to axes
+            ha='right',  # alignment of text
+            va='top',
+            fontsize=int(fontsize * 0.9),
+            color=color,
+            bbox=dict(boxstyle=boxstyle_str, pad=0.5, fc=(1, 1, 1),
+                      ec=(0.5, 0.5, 0.5), alpha=0.5),
+            arrowprops=dict(arrowstyle='-|>',
+                            color=color,
+        #                    patchB=el,
+                            shrinkA=0,
+                            shrinkB=0,
+                            connectionstyle='arc3,rad=-0.3',
+                            linestyle='--',
+                            linewidth=0.7))
+        ax.set_title(title, fontweight='bold', fontsize=int(fontsize * 1.1))
+        ax.set_xlabel(xlabel, fontsize=fontsize)
+        ax.set_ylabel('Frequency (%)', fontsize=fontsize)
+        ax.tick_params(labelsize=fontsize)
+        plt.tight_layout()
+        if fname_fig is not None:
+            if not os.path.isdir(os.path.dirname(fname_fig)):
+                os.mkdir(os.path.dirname(fname_fig))
+            fig.savefig(fname=fname_fig, dpi=300)
+        return fig

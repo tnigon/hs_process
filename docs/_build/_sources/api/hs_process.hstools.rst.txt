@@ -25,6 +25,7 @@ hstools
       ~hstools.mask_array
       ~hstools.mean_datacube
       ~hstools.modify_meta_set
+      ~hstools.plot_histogram
 
    .. rubric:: Methods Documentation
 
@@ -43,3 +44,4 @@ hstools
    .. automethod:: mask_array
    .. automethod:: mean_datacube
    .. automethod:: modify_meta_set
+   .. automethod:: plot_histogram

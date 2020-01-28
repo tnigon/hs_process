@@ -7,7 +7,7 @@
     "## Setup and Installation\n",
     "### Overview\n",
     "\n",
-    "`hs_process` is an open-source Python package for processing and manipulating aerial hyperspectral imagery. The purpose of this  tutorial is to demonstrate the proper setup of your Python environment, install required dependencies, and verify that the installation was successful.\n",
+    "The purpose of this  tutorial is to demonstrate the proper setup of your Python environment, install required dependencies, and verify that the installation was successful.\n",
     "\n",
     "***"
    ]
