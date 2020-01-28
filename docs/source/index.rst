@@ -3,7 +3,7 @@
 hs_process Documentation
 ########################
 
-*A Python package for processing and manipulating aerial hyperspectral imagery*
+*An open-source Python package for processing and manipulating aerial hyperspectral imagery*
 
 .. |version_current| replace:: 0.0.1
 Current version: |version_current|
@@ -18,11 +18,12 @@ Table of Contents
 *Navigate the* **hs_process Documentation** *using the* **"Contents"** *dropdown in the Navigation Bar*
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 3
    :numbered:
    :titlesonly:
 
    installation
+   tutorial_hsio.ipynb
    my_hs_process_api
    license
 

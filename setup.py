@@ -10,20 +10,34 @@ def readme():
 #    with open('HISTORY.md') as history_file:
 #        return history_file.read()
 
+#requirements = [
+##    'ast',
+#    'geopandas',
+##    'itertools',
+##    'json',
+##    'matplotlib',
+##    'math',
+##    'numpy',
+##    'osgeo',
+##    'pandas',
+##    'PIL',
+##    're',
+#    'spectral',
+#]
+
 requirements = [
-#    'ast',
-    'geopandas',
-#    'itertools',
-#    'json',
-#    'matplotlib',
-#    'math',
-#    'numpy',
-#    'osgeo',
-#    'pandas',
-#    'PIL',
-#    're',
-    'spectral',
-]
+ 'gdal',
+# 'geopandas',  # must be installed with Anaconda because of shapely dependency
+ 'numpy',
+ 'pandas',
+ 'seaborn',
+ 'matplotlib',
+ 'spectral',  # segment
+# 'shapely',  # must be installed with Anaconda
+ 'spyder',
+ 'jupyter'
+ ]
+
 test_requirements = [
     # TODO: put package test requirements here
 ]

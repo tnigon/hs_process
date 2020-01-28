@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="python">
   <head>
     <meta charset="utf-8" />
-    <title>1. Installation &#8212; hs_process 0.0.1 documentation</title>
+    <title>1. Setup and Installation &#8212; hs_process 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
@@ -17,7 +17,7 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="2. API" href="my_hs_process_api.html" />
+    <link rel="next" title="3. Tutorial: hsio" href="tutorial_hsio.html" />
     <link rel="prev" title="hs_process Documentation" href="index.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -60,18 +60,21 @@
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">1. Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="my_hs_process_api.html">2. API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/hs_process.batch.html">2.1.1. batch</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/hs_process.defaults.html">2.1.2. defaults</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/hs_process.hsio.html">2.1.3. hsio</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/hs_process.hstools.html">2.1.4. hstools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/hs_process.segment.html">2.1.5. segment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/hs_process.spatial_mod.html">2.1.6. spatial_mod</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/hs_process.spec_mod.html">2.1.7. spec_mod</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. Setup and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#Windows-Setup">2. Windows Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_hsio.html">3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_hsio.html#2.-hsio.read_spec">4. 2. <code class="docutils literal notranslate"><span class="pre">hsio.read_spec</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="my_hs_process_api.html">5. API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.batch.html">5.1.1. batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.defaults.html">5.1.2. defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.hsio.html">5.1.3. hsio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.hstools.html">5.1.4. hstools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.segment.html">5.1.5. segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.spatial_mod.html">5.1.6. spatial_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.spec_mod.html">5.1.7. spec_mod</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">3. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">6. License</a></li>
 </ul>
 </ul>
 </li>
@@ -85,7 +88,7 @@
     </a>
   </li>
   <li>
-    <a href="my_hs_process_api.html" title="Next Chapter: 2. API"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">2. API &raquo;</span>
+    <a href="tutorial_hsio.html" title="Next Chapter: 3. Tutorial: hsio"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">3. Tutorial: hsio &raquo;</span>
     </a>
   </li>
               
@@ -119,11 +122,47 @@
   <div class="row">
       <div class="col-md-3">
         <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
-<li><a class="reference internal" href="#">1. Installation</a><ul>
+<li><a class="reference internal" href="#">1. Setup and Installation</a><ul>
 <li><a class="reference internal" href="#Overview">1.1. Overview</a></li>
-<li><a class="reference internal" href="#Install-Python">1.2. Install Python</a></li>
-<li><a class="reference internal" href="#Install-hs_process">1.3. Install hs_process</a></li>
+<li><a class="reference internal" href="#System-Requirements">1.2. System Requirements</a></li>
+<li><a class="reference internal" href="#Software-and-Libraries">1.3. Software and Libraries</a><ul>
+<li><a class="reference internal" href="#Software">1.3.1. Software</a></li>
+<li><a class="reference internal" href="#Libraries">1.3.2. Libraries</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#Dependencies">1.4. Dependencies</a></li>
+<li><a class="reference internal" href="#Install-Python">1.5. Install Python</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Windows-Setup">2. Windows Setup</a><ul>
+<li><a class="reference internal" href="#Install-Python">2.1. Install Python</a></li>
+<li><a class="reference internal" href="#Setting-up-the-Python-environment-(three-options)">2.2. Setting up the Python environment (three options)</a><ul>
+<li><a class="reference internal" href="#[Option-1]-Setting-up-the-Python-environment-using-the-cloned-.yml-file-(recommended)">2.2.1. [Option 1] Setting up the Python environment using the cloned <em>.yml</em> file (recommended)</a><ul>
+<li><a class="reference internal" href="#1.a.-Download-hs_process-environment.yml-from-Github">2.2.1.1. 1.a. Download <em>hs_process-environment.yml</em> from Github</a></li>
+<li><a class="reference internal" href="#1.b.-Create-the-environment">2.2.1.2. 1.b. Create the environment</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#[Option-2]-Setting-up-the-Python-environment-using-requirements.txt-file">2.2.2. [Option 2] Setting up the Python environment using <em>requirements.txt</em> file</a><ul>
+<li><a class="reference internal" href="#2.a.-Download-requirements.txt-from-Github">2.2.2.1. 2.a. Download <em>requirements.txt</em> from Github</a></li>
+<li><a class="reference internal" href="#2.b.-Create-the-environment-(optional)">2.2.2.2. 2.b. Create the environment (optional)</a></li>
+<li><a class="reference internal" href="#2.c.-Install-GeoPandas-and-Fiona-via-Anaconda">2.2.2.3. 2.c. Install GeoPandas and Fiona via Anaconda</a></li>
+<li><a class="reference internal" href="#2.c.-Install-package-dependencies-via-requirements.txt">2.2.2.4. 2.c. Install package dependencies via <em>requirements.txt</em></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#[Option-3]-Installing-hs_process-via-PyPI-(not-generally-recommended)">2.2.3. [Option 3] Installing <code class="docutils literal notranslate"><span class="pre">hs_process</span></code> via PyPI (not generally recommended)</a><ul>
+<li><a class="reference internal" href="#3.a.-Create-the-environment-(optional)">2.2.3.1. 3.a. Create the environment (optional)</a></li>
+<li><a class="reference internal" href="#3.b.-Install-GeoPandas-and-Fiona-via-Anaconda">2.2.3.2. 3.b. Install GeoPandas and Fiona via Anaconda</a></li>
+<li><a class="reference internal" href="#2.c.-Install-package-dependencies-via-requirements.txt">2.2.3.3. 2.c. Install package dependencies via <em>requirements.txt</em></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#[Option-3]-Setting-up-the-Python-environment-manually">2.2.4. [Option 3] Setting up the Python environment manually</a><ul>
+<li><a class="reference internal" href="#3.a.-Create-the-environment-(optional)">2.2.4.1. 3.a. Create the environment (optional)</a></li>
+<li><a class="reference internal" href="#3.b.-Install-package-dependencies">2.2.4.2. 3.b. Install package dependencies</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Install-hs_process">2.3. Install hs_process</a></li>
 </ul>
 </li>
 </ul>
@@ -139,34 +178,42 @@
       </div>
     <div class="body col-md-9 content" role="main">
       
-  <div class="section" id="Installation">
-<h1>1. Installation<a class="headerlink" href="#Installation" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="Setup-and-Installation">
+<h1>1. Setup and Installation<a class="headerlink" href="#Setup-and-Installation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="Overview">
 <h2>1.1. Overview<a class="headerlink" href="#Overview" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">hs_process</span></code> is an open-source package written in Python. It should run on all major platforms (i.e., Windows, Linux, Mac), but it was developed on Windows 10 and limited testing has been performed on Linux and Mac.</p>
+<p><code class="docutils literal notranslate"><span class="pre">hs_process</span></code> is an open-source Python package for processing and manipulating aerial hyperspectral imagery. The purpose of this tutorial is to demonstrate the proper setup of your Python environment, install required dependencies, and verify that the installation was successful.</p>
 </div>
-<div class="section" id="Install-Python">
-<h2>1.2. Install Python<a class="headerlink" href="#Install-Python" title="Permalink to this headline">¶</a></h2>
-<p>There are many ways to download and install Python. As a scientist, my recommendation is definitely through the <a class="reference external" href="https://www.anaconda.com/distribution/#download-section">Anaconda distribution</a>. Anaconda will have the more popular packages already installed in your Python environment, and it comes with <a class="reference external" href="https://www.spyder-ide.org/">Spyder</a> and <a class="reference external" href="https://jupyter.org/">Jupyter notebooks</a>. Spyder and Jupyter make working with Python quite easy.</p>
-<p>Although I hope you’ll find <code class="docutils literal notranslate"><span class="pre">hs_process</span></code> rather straightforward, it will probably be tricky if you have limited coding experience, particularly in the Python language. You may find it to your benefit to have a Python refresher before using <code class="docutils literal notranslate"><span class="pre">hs_proces</span></code>. If you’re a beginner, it will be helpful to read the <a class="reference external" href="https://docs.python.org/3/tutorial/">Python Tutorial</a> and/or get some hands-on practice with <a class="reference external" href="https://www.w3schools.com/python/">this Python Tutorial by w3Schools</a>.</p>
-<p><em>The best way to learn is to do.</em></p>
+<hr class="docutils" />
+<div class="section" id="System-Requirements">
+<h2>1.2. System Requirements<a class="headerlink" href="#System-Requirements" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">hs_process</span></code> was developed using Python 3 (on Windows 10 OS), so it is recommended to install and use Python 3. This tutorial has only been tested on Windows. It will likely work on other major platforms (i.e., Windows, Linux, Mac), but you will have to be sure to get the required dependencies installed and working on your own.</p>
 </div>
-<div class="section" id="Install-hs_process">
-<h2>1.3. Install hs_process<a class="headerlink" href="#Install-hs_process" title="Permalink to this headline">¶</a></h2>
-<p>To install the latest release of <code class="docutils literal notranslate"><span class="pre">hs_process</span></code>, you can use <a class="reference external" href="https://pypi.org/project/pip/">pip</a>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">hs_process</span>
-</pre></div>
+<hr class="docutils" />
+<div class="section" id="Software-and-Libraries">
+<h2>1.3. Software and Libraries<a class="headerlink" href="#Software-and-Libraries" title="Permalink to this headline">¶</a></h2>
+<p>The following software and libraries are required to leverage the full API of <code class="docutils literal notranslate"><span class="pre">hs_process</span></code>:</p>
+<div class="section" id="Software">
+<h3>1.3.1. Software<a class="headerlink" href="#Software" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.python.org/downloads/">Python 3</a></p></li>
+<li><p><a href="#id4"><span class="problematic" id="id5">`GDAL &lt;&gt;`__</span></a></p></li>
+</ul>
 </div>
-<p>Alternatively, you can use <a class="reference external" href="https://pypi.org/project/pip/">pip</a> to install the development version directly from github:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">tnigon</span><span class="o">/</span><span class="n">hs_process</span>
-</pre></div>
+<div class="section" id="Libraries">
+<h3>1.3.2. Libraries<a class="headerlink" href="#Libraries" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="http://www.spectralpython.net/index.html">Spectral Python</a></p></li>
+<li><p><a class="reference external" href="https://pypi.org/project/GDAL/">GDAL</a></p></li>
+<li><p><a class="reference external" href="http://geopandas.org/">Geopandas</a></p></li>
+<li><p><a class="reference external" href="http://matplotlib.org/">*Matplotlib</a></p></li>
+<li><p><a class="reference external" href="http://www.numpy.org/">*NumPy</a></p></li>
+<li><p><a class="reference external" href="http://pandas.pydata.org/">*Pandas</a></p></li>
+<li><p><a class="reference external" href="https://seaborn.pydata.org/">*Seaborn</a> (if only for visualizing data in the API examples)</p></li>
+</ul>
 </div>
-<p>Another option is to clone the github repository and install from your local copy. After navigating to the directory of your local copy:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">.</span>
-</pre></div>
 </div>
-<p>The recommended folder directory for the <code class="docutils literal notranslate"><span class="pre">hs_process</span></code> package is in the site-packages folder in your Python Path (alongside all other Python packages).</p>
-</div>
+<hr class="docutils" />
 <div class="section" id="Dependencies">
 <h2>1.4. Dependencies<a class="headerlink" href="#Dependencies" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">hs_process</span></code> requires the following packages:</p>
@@ -181,6 +228,145 @@
 <li><p><a class="reference external" href="https://seaborn.pydata.org/">*Seaborn</a> (if only for visualizing data in the API examples)</p></li>
 </ul>
 <p>*The denoted dependencies should come pre-installed on <a class="reference external" href="https://www.anaconda.com/">Anaconda</a>. The others (<a class="reference external" href="http://www.spectralpython.net/index.html">Spectral Python</a>, <a class="reference external" href="http://geopandas.org/">Geopandas</a>, and <a class="reference external" href="https://rasterio.readthedocs.io/en/latest/">Rasterio</a>) should install during a <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">hs_process</span></code>.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="Install-Python">
+<h2>2.1. Install Python<a class="headerlink" href="#Install-Python" title="Permalink to this headline">¶</a></h2>
+<p>There are many ways to download and install Python. As a scientist, my recommendation is definitely through the <a class="reference external" href="https://www.anaconda.com/distribution/#download-section">Anaconda distribution</a>. Anaconda will have the more popular packages already installed in your Python environment, and it comes with <a class="reference external" href="https://www.spyder-ide.org/">Spyder</a> and <a class="reference external" href="https://jupyter.org/">Jupyter notebooks</a>. Spyder and Jupyter make working with Python quite easy.</p>
+<p>Although I hope you’ll find <code class="docutils literal notranslate"><span class="pre">hs_process</span></code> rather straightforward, it will probably be tricky if you have limited coding experience, particularly in the Python language. You may find it to your benefit to have a Python refresher before using <code class="docutils literal notranslate"><span class="pre">hs_proces</span></code>. If you’re a beginner, it will be helpful to read the <a class="reference external" href="https://docs.python.org/3/tutorial/">Python Tutorial</a> and/or get some hands-on practice with <a class="reference external" href="https://www.w3schools.com/python/">this Python Tutorial by w3Schools</a>.</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="Windows-Setup">
+<h1>2. Windows Setup<a class="headerlink" href="#Windows-Setup" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Install-Python">
+<h2>2.1. Install Python<a class="headerlink" href="#Install-Python" title="Permalink to this headline">¶</a></h2>
+<p>There are many ways to download and install Python. The <a class="reference external" href="https://www.anaconda.com/distribution/#download-section">Anaconda distribution</a> is recommended becuase it can simplify the installation of package dependencies and streamlines the process of setting up the virtual environment. Anaconda also comes with <a class="reference external" href="https://www.spyder-ide.org/">Spyder</a> and <a class="reference external" href="https://jupyter.org/">Jupyter notebooks</a>, each of which make working with Python quite easy.</p>
+<p>Download and install <strong>Python 3.7</strong> via <a class="reference external" href="https://www.anaconda.com/distribution/#download-section">Anaconda</a>. When installing, choose <strong>install for only me</strong> instead of <em>install for all users</em>, as this simplifies insallation of package dependencies.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="Setting-up-the-Python-environment-(three-options)">
+<h2>2.2. Setting up the Python environment (three options)<a class="headerlink" href="#Setting-up-the-Python-environment-(three-options)" title="Permalink to this headline">¶</a></h2>
+<p>A <em>Python environment</em> refers to the ecosystem consisting of a particular installed version of <a class="reference external" href="https://www.python.org/">Python</a>, as well as any third-party packages it has access to. In Python, every time a package is installed (e.g., <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">some_third_party_package</span></code>, <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">some_third_party_package</span></code>, etc.), your Python environment is gaining functionality that builds upon the <a class="reference external" href="https://docs.python.org/3/library/">Python Standard Library</a>.</p>
+<p>This is great because the possibilities of what can be accomplished using Python is virtually limitless. Ideally, the list of packages in a given environment should only include those required by the package we intend to use (e.g., <code class="docutils literal notranslate"><span class="pre">hs_process</span></code> in this case), and not any package that has ever been installed by the user (this can be dozens or even hundreds of packages). A downside with too many packages is that it is inefficient to share your environment with someone else that would like to use
+the program. As time goes on, there may also be compatibility issues among package dependencies and your code that can be avoided by creating a tidy little Python environment for your project.</p>
+<p>There are a few ways to go about setting up a new environment and getting the dependencies installed. In this tutorial, there are three options provided with instructions. Please choose one of the three options.</p>
+<hr class="docutils" />
+<div class="section" id="[Option-1]-Setting-up-the-Python-environment-using-the-cloned-.yml-file-(recommended)">
+<h3>2.2.1. [Option 1] Setting up the Python environment using the cloned <em>.yml</em> file (recommended)<a class="headerlink" href="#[Option-1]-Setting-up-the-Python-environment-using-the-cloned-.yml-file-(recommended)" title="Permalink to this headline">¶</a></h3>
+<p>With <a class="reference external" href="https://www.anaconda.com/distribution/#download-section">Anaconda</a> installed, the most streamlined approach is to create a new virtual environment via a clone of the complete working environment to run <code class="docutils literal notranslate"><span class="pre">hs_process</span></code>. This requires that you download the .yml file from the <code class="docutils literal notranslate"><span class="pre">`hs_process</span></code> Github repository &lt;<a class="reference external" href="https://github.com/tnigon/hs_process/blob/master/env/spec-environment.yml">https://github.com/tnigon/hs_process/blob/master/env/spec-environment.yml</a>&gt;`__.</p>
+<div class="section" id="1.a.-Download-hs_process-environment.yml-from-Github">
+<h4>2.2.1.1. 1.a. Download <em>hs_process-environment.yml</em> from Github<a class="headerlink" href="#1.a.-Download-hs_process-environment.yml-from-Github" title="Permalink to this headline">¶</a></h4>
+<p>If <a class="reference external" href="https://git-scm.com/downloads">Git</a> is already installed on your system, you can clone the <code class="docutils literal notranslate"><span class="pre">hs_process</span></code> repository into your local directory using the command line: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/tnigon/hs_process.git</span></code></p>
+<p>Otherwise, you can always download the <code class="docutils literal notranslate"><span class="pre">hs_process</span></code> repository as a .zip file and unpack it into your local directory.</p>
+</div>
+<div class="section" id="1.b.-Create-the-environment">
+<h4>2.2.1.2. 1.b. Create the environment<a class="headerlink" href="#1.b.-Create-the-environment" title="Permalink to this headline">¶</a></h4>
+<p>Open an Anaconda console from the start menu as an administrator by clicking <code class="docutils literal notranslate"><span class="pre">Start-&gt;Anaconda</span></code>, right-click <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">Console</span></code>, and choose to <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">as</span> <span class="pre">Administrator</span></code>. In the <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">Console</span></code>, execute the following commands:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cd</span></code> to the local directory that contains the <em>hs_process-environment.yml</em> file (e.g., <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">Documents\Github\hs_process\env</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">env</span> <span class="pre">create</span> <span class="pre">--name</span> <span class="pre">spec</span> <span class="pre">--file</span> <span class="pre">hs_process-environment.yml</span></code>. This will configure an Anaconda environment named <strong>spec</strong> with all of the required tools and libraries. This process will take some time, depending on your computer and internet speeds (5-15 minutes is common).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">spec</span></code> to activate the newly configured environment. <strong>Important</strong>: Anytime you want to use <code class="docutils literal notranslate"><span class="pre">hs_process</span></code>, be sure to run <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">spec</span></code> prior to opening your Python IDE (e.g. <em>Spyder</em>, <em>Jupyter Notebook</em>, etc.).</p></li>
+</ol>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="[Option-2]-Setting-up-the-Python-environment-using-requirements.txt-file">
+<h3>2.2.2. [Option 2] Setting up the Python environment using <em>requirements.txt</em> file<a class="headerlink" href="#[Option-2]-Setting-up-the-Python-environment-using-requirements.txt-file" title="Permalink to this headline">¶</a></h3>
+<p>The required packages can also be installed via the <a class="reference external" href="https://github.com/tnigon/hs_process/blob/master/env/requirements.txt">requirements.txt</a> file. Similar to the <em>.yml approach</em> (<a href="#id4"><span class="problematic" id="id6">`Option 1 &lt;&gt;`__</span></a> above), this approach requires that you download the <a class="reference external" href="https://github.com/tnigon/hs_process/blob/master/env/requirements.txt">requirements.txt</a> file from the <code class="docutils literal notranslate"><span class="pre">`hs_process</span></code> Github repository &lt;<a class="reference external" href="https://github.com/tnigon/hs_process/blob/master/env/spec-environment.yml">https://github.com/tnigon/hs_process/blob/master/env/spec-environment.yml</a>&gt;`__.</p>
+<div class="section" id="2.a.-Download-requirements.txt-from-Github">
+<h4>2.2.2.1. 2.a. Download <em>requirements.txt</em> from Github<a class="headerlink" href="#2.a.-Download-requirements.txt-from-Github" title="Permalink to this headline">¶</a></h4>
+<p>If <a class="reference external" href="https://git-scm.com/downloads">Git</a> is already installed on your system, you can clone the <code class="docutils literal notranslate"><span class="pre">hs_process</span></code> repository into your local directory using the command line: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/tnigon/hs_process.git</span></code></p>
+<p>Otherwise, you can always download the <code class="docutils literal notranslate"><span class="pre">hs_process</span></code> repository as a .zip file and unpack it into your local directory.</p>
+</div>
+<div class="section" id="2.b.-Create-the-environment-(optional)">
+<h4>2.2.2.2. 2.b. Create the environment (optional)<a class="headerlink" href="#2.b.-Create-the-environment-(optional)" title="Permalink to this headline">¶</a></h4>
+<p>With <a class="reference external" href="https://www.anaconda.com/distribution/#download-section">Anaconda</a> installed, it is first recommended (but not required) to create a new <strong>Python 3.7</strong> environment before installing package dependencies. Open an Anaconda console from the start menu as an administrator by clicking <code class="docutils literal notranslate"><span class="pre">Start-&gt;Anaconda</span></code>, right-click <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">Console</span></code>, and choose to <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">as</span> <span class="pre">Administrator</span></code>. In the <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">Console</span></code>, execute the following commands:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cd</span></code> to the local directory that contains the <em>requirements.txt</em> file (e.g., <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">Documents\Github\hs_process\env</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">-n</span> <span class="pre">spec</span> <span class="pre">python=3.7</span></code> to create an Anaconda <strong>Python 3.7</strong> environment named <strong>spec</strong>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">spec</span></code> to activate the newly configured environment. <strong>Important</strong>: Anytime you want to use <code class="docutils literal notranslate"><span class="pre">hs_process</span></code>, be sure to run <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">spec</span></code> prior to opening your Python IDE (e.g. <em>Spyder</em>, <em>Jupyter Notebook</em>, etc.).</p></li>
+</ol>
+</div>
+<div class="section" id="2.c.-Install-GeoPandas-and-Fiona-via-Anaconda">
+<h4>2.2.2.3. 2.c. Install <a class="reference external" href="http://geopandas.org/install.html">GeoPandas</a> and <a class="reference external" href="https://fiona.readthedocs.io/en/latest/index.html">Fiona</a> via Anaconda<a class="headerlink" href="#2.c.-Install-GeoPandas-and-Fiona-via-Anaconda" title="Permalink to this headline">¶</a></h4>
+<p><a class="reference external" href="http://geopandas.org/install.html">GeoPandas</a> has a dependency on <a class="reference external" href="https://fiona.readthedocs.io/en/latest/index.html">Fiona</a>, and because of some nuances with the <a class="reference external" href="https://pypi.org/project/Fiona/">pip version of Fiona*</a>, <a class="reference external" href="https://anaconda.org/conda-forge/geopandas">GeoPandas</a> <strong>MUST</strong> be installed via Anaconda on Windows OS.</p>
+<p>*During installation, the pip version of <a class="reference external" href="https://pypi.org/project/Fiona/">Fiona</a> requires that it is able to discover the locations of header files and libraries needed to compile its C extnesions, and these must be provided by the user when installing on Windows. For more information on this behavior, please refer to the <a class="reference external" href="https://fiona.readthedocs.io/en/latest/README.html#windows">Fiona documentation</a>.</p>
+</div>
+<div class="section" id="2.c.-Install-package-dependencies-via-requirements.txt">
+<h4>2.2.3.3. 2.c. Install package dependencies via <em>requirements.txt</em><a class="headerlink" href="#2.c.-Install-package-dependencies-via-requirements.txt" title="Permalink to this headline">¶</a></h4>
+<p>In the <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">Console</span></code>, execute the following commands:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cd</span></code> to the local directory that contains the <em>hs_process-environment.yml</em> file (e.g., <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">Documents\Github\hs_process\env</span></code>).</p></li>
+</ol>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="[Option-3]-Installing-hs_process-via-PyPI-(not-generally-recommended)">
+<h3>2.2.3. [Option 3] Installing <code class="docutils literal notranslate"><span class="pre">hs_process</span></code> via PyPI (not generally recommended)<a class="headerlink" href="#[Option-3]-Installing-hs_process-via-PyPI-(not-generally-recommended)" title="Permalink to this headline">¶</a></h3>
+<p>One of the dependancies of <code class="docutils literal notranslate"><span class="pre">hs_process</span></code> cannot be easily installed using the <code class="docutils literal notranslate"><span class="pre">pip</span></code> command. If you’d rather not install dependencies via the <em>.yml</em> or <em>requirements.txt</em> approaches (Options 1 and 2 above), then they can be installed while <code class="docutils literal notranslate"><span class="pre">hs_process</span></code> is being installed via the <code class="docutils literal notranslate"><span class="pre">pip</span></code> command. However, Anaconda <strong>MUST</strong> still be used to install the <em>GeoPandas</em> and <em>Fiona</em> dependencies (see below).</p>
+<div class="section" id="3.a.-Create-the-environment-(optional)">
+<h4>2.2.4.1. 3.a. Create the environment (optional)<a class="headerlink" href="#3.a.-Create-the-environment-(optional)" title="Permalink to this headline">¶</a></h4>
+<p>With <a class="reference external" href="https://www.anaconda.com/distribution/#download-section">Anaconda</a> installed, it is first recommended (but not required) to create a new <strong>Python 3.7</strong> environment before installing package dependencies. Open an Anaconda console from the start menu as an administrator by clicking <code class="docutils literal notranslate"><span class="pre">Start-&gt;Anaconda</span></code>, right-click <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">Console</span></code>, and choose to <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">as</span> <span class="pre">Administrator</span></code>. In the <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">Console</span></code>, execute the following commands:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cd</span></code> to the local directory that contains the <em>requirements.txt</em> file (e.g., <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">Documents\Github\hs_process\env</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">-n</span> <span class="pre">spec</span> <span class="pre">python=3.7</span></code> to create an Anaconda <strong>Python 3.7</strong> environment named <strong>spec</strong>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">spec</span></code> to activate the newly configured environment. <strong>Important</strong>: Anytime you want to use <code class="docutils literal notranslate"><span class="pre">hs_process</span></code>, be sure to run <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">spec</span></code> prior to opening your Python IDE (e.g. <em>Spyder</em>, <em>Jupyter Notebook</em>, etc.).</p></li>
+</ol>
+</div>
+<div class="section" id="3.b.-Install-GeoPandas-and-Fiona-via-Anaconda">
+<h4>2.2.3.2. 3.b. Install <a class="reference external" href="http://geopandas.org/install.html">GeoPandas</a> and <a class="reference external" href="https://fiona.readthedocs.io/en/latest/index.html">Fiona</a> via Anaconda<a class="headerlink" href="#3.b.-Install-GeoPandas-and-Fiona-via-Anaconda" title="Permalink to this headline">¶</a></h4>
+<p><a class="reference external" href="http://geopandas.org/install.html">GeoPandas</a> has a dependency on <a class="reference external" href="https://fiona.readthedocs.io/en/latest/index.html">Fiona</a>, and because of some nuances with the <a class="reference external" href="https://pypi.org/project/Fiona/">pip version of Fiona*</a>, <a class="reference external" href="https://anaconda.org/conda-forge/geopandas">GeoPandas</a> <strong>MUST</strong> be installed via Anaconda on Windows OS.</p>
+<ol class="arabic simple" start="4">
+<li><p><code class="docutils literal notranslate"><span class="pre">`conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">geopandas</span></code> &lt;<a class="reference external" href="https://anaconda.org/conda-forge/geopandas">https://anaconda.org/conda-forge/geopandas</a>&gt;`__ can be run to install both <em>GeoPandas</em> and <em>fiona</em>. Because <em>GeoPandas</em> has a <a class="reference external" href="http://geopandas.org/install.html#dependencies">fiona dependency</a>, this command will also install fiona.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">`pip</span> <span class="pre">install</span> <span class="pre">hs_process</span></code> &lt;<a class="reference external" href="https://pypi.org/project/hs_process/">https://pypi.org/project/hs_process/</a>&gt;`__ can be</p></li>
+</ol>
+<p>*During installation, the pip version of <a class="reference external" href="https://pypi.org/project/Fiona/">Fiona</a> requires that it is able to discover the locations of header files and libraries needed to compile its C extnesions, and these must be provided by the user when installing on Windows. For more information on this behavior, please refer to the <a class="reference external" href="https://fiona.readthedocs.io/en/latest/README.html#windows">Fiona documentation</a>.</p>
+</div>
+<div class="section" id="2.c.-Install-package-dependencies-via-requirements.txt">
+<h4>2.2.3.3. 2.c. Install package dependencies via <em>requirements.txt</em><a class="headerlink" href="#2.c.-Install-package-dependencies-via-requirements.txt" title="Permalink to this headline">¶</a></h4>
+<p>In the <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">Console</span></code>, execute the following commands:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cd</span></code> to the local directory that contains the <em>hs_process-environment.yml</em> file (e.g., <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">Documents\Github\hs_process\env</span></code>).</p></li>
+</ol>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="[Option-3]-Setting-up-the-Python-environment-manually">
+<h3>2.2.4. [Option 3] Setting up the Python environment manually<a class="headerlink" href="#[Option-3]-Setting-up-the-Python-environment-manually" title="Permalink to this headline">¶</a></h3>
+<p>The required packages can also be installed on your own. With <a class="reference external" href="https://www.anaconda.com/distribution/#download-section">Anaconda</a> installed, it is first recommended to create a new Python 3.7 environment before installing package dependencies.</p>
+<div class="section" id="3.a.-Create-the-environment-(optional)">
+<h4>2.2.4.1. 3.a. Create the environment (optional)<a class="headerlink" href="#3.a.-Create-the-environment-(optional)" title="Permalink to this headline">¶</a></h4>
+<p>With <a class="reference external" href="https://www.anaconda.com/distribution/#download-section">Anaconda</a> installed, it is first recommended (but not required) to create a new <strong>Python 3.7</strong> environment before installing package dependencies. Open an Anaconda console from the start menu as an administrator by clicking <code class="docutils literal notranslate"><span class="pre">Start-&gt;Anaconda</span></code>, right-click <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">Console</span></code>, and choose to <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">as</span> <span class="pre">Administrator</span></code>. In the <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">Console</span></code>, execute the following commands:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">-n</span> <span class="pre">spec</span> <span class="pre">python=3.7</span></code> to create an Anaconda <strong>Python 3.7</strong> environment named <strong>spec</strong>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">spec</span></code> to activate the newly configured environment. <strong>Important</strong>: Anytime you want to use <code class="docutils literal notranslate"><span class="pre">hs_process</span></code>, be sure to run <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">spec</span></code> prior to opening your Python IDE (e.g. <em>Spyder</em>, <em>Jupyter Notebook</em>, etc.).</p></li>
+</ol>
+</div>
+<div class="section" id="3.b.-Install-package-dependencies">
+<h4>2.2.4.2. 3.b. Install package dependencies<a class="headerlink" href="#3.b.-Install-package-dependencies" title="Permalink to this headline">¶</a></h4>
+<p>Although <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">hs_process</span></code> will install package dependencies available on <a class="reference external" href="https://pypi.org/">PyPI</a>, it is not generally recommended to install a package via <code class="docutils literal notranslate"><span class="pre">pip</span></code> if that package exists in the <a class="reference external" href="https://anaconda.org/anaconda/repo">Anaconda Package Repository</a>. Therefore, all the required dependencies available in the <a class="reference external" href="https://anaconda.org/anaconda/repo">Anaconda Package Repository</a> should be installed via the <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span></code> command. In the <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">Console</span></code>, execute the
+following commands: 3. <code class="docutils literal notranslate"><span class="pre">`conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">gdal</span></code> &lt;<a class="reference external" href="https://anaconda.org/conda-forge/gdal">https://anaconda.org/conda-forge/gdal</a>&gt;`__ 4. <code class="docutils literal notranslate"><span class="pre">`conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">geopandas</span></code> &lt;<a class="reference external" href="https://anaconda.org/conda-forge/geopandas">https://anaconda.org/conda-forge/geopandas</a>&gt;`__ 5. <code class="docutils literal notranslate"><span class="pre">`conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">numpy</span></code> &lt;<a class="reference external" href="https://anaconda.org/conda-forge/numpy">https://anaconda.org/conda-forge/numpy</a>&gt;`__ 6. <code class="docutils literal notranslate"><span class="pre">`conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">pandas</span></code> &lt;<a class="reference external" href="https://anaconda.org/conda-forge/pandas">https://anaconda.org/conda-forge/pandas</a>&gt;`__ 7. <code class="docutils literal notranslate"><span class="pre">`conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">seaborn</span></code> &lt;<a class="reference external" href="https://anaconda.org/conda-forge/seaborn">https://anaconda.org/conda-forge/seaborn</a>&gt;`__ 8.
+<code class="docutils literal notranslate"><span class="pre">`conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">matplotlib</span></code> &lt;<a class="reference external" href="https://anaconda.org/conda-forge/matplotlib">https://anaconda.org/conda-forge/matplotlib</a>&gt;`__ 9. <code class="docutils literal notranslate"><span class="pre">`conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">shapely</span></code> &lt;<a class="reference external" href="https://anaconda.org/conda-forge/shapely">https://anaconda.org/conda-forge/shapely</a>&gt;`__ 10. <code class="docutils literal notranslate"><span class="pre">`conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">spectral</span></code> &lt;<a class="reference external" href="https://anaconda.org/conda-forge/spectral">https://anaconda.org/conda-forge/spectral</a>&gt;`__</p>
+</div>
+</div>
+</div>
+<div class="section" id="Install-hs_process">
+<h2>2.3. Install hs_process<a class="headerlink" href="#Install-hs_process" title="Permalink to this headline">¶</a></h2>
+<p>To install the latest release of <code class="docutils literal notranslate"><span class="pre">hs_process</span></code>, you can use <a class="reference external" href="https://pypi.org/project/pip/">pip</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">hs_process</span>
+</pre></div>
+</div>
+<p>Alternatively, you can use <a class="reference external" href="https://pypi.org/project/pip/">pip</a> to install the development version directly from github:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">tnigon</span><span class="o">/</span><span class="n">hs_process</span>
+</pre></div>
+</div>
+<p>Another option is to clone the github repository and install from your local copy. After navigating to the directory of your local copy:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>The recommended folder directory for the <code class="docutils literal notranslate"><span class="pre">hs_process</span></code> package is in the site-packages folder in your Python Path (alongside all other Python packages).</p>
+<hr class="docutils" />
 </div>
 </div>
 

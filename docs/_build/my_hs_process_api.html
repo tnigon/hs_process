@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="python">
   <head>
     <meta charset="utf-8" />
-    <title>2. API &#8212; hs_process 0.0.1 documentation</title>
+    <title>4. API &#8212; hs_process 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
@@ -17,8 +17,8 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="2.1.1. batch" href="api/hs_process.batch.html" />
-    <link rel="prev" title="1. Installation" href="installation.html" />
+    <link rel="next" title="4.1.1. batch" href="api/hs_process.batch.html" />
+    <link rel="prev" title="3. Tutorial: hsio" href="tutorial_hsio.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -60,18 +60,20 @@
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="installation.html">1. Installation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">2. API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/hs_process.batch.html">2.1.1. batch</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/hs_process.defaults.html">2.1.2. defaults</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/hs_process.hsio.html">2.1.3. hsio</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/hs_process.hstools.html">2.1.4. hstools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/hs_process.segment.html">2.1.5. segment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/hs_process.spatial_mod.html">2.1.6. spatial_mod</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/hs_process.spec_mod.html">2.1.7. spec_mod</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">1. Setup and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html#Windows-Setup">2. Windows Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_hsio.html">3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4. API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.batch.html">4.1.1. batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.defaults.html">4.1.2. defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.hsio.html">4.1.3. hsio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.hstools.html">4.1.4. hstools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.segment.html">4.1.5. segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.spatial_mod.html">4.1.6. spatial_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.spec_mod.html">4.1.7. spec_mod</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">3. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">5. License</a></li>
 </ul>
 </ul>
 </li>
@@ -81,11 +83,11 @@
               
                 
   <li>
-    <a href="installation.html" title="Previous Chapter: 1. Installation"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; 1. Installation</span>
+    <a href="tutorial_hsio.html" title="Previous Chapter: 3. Tutorial: hsio"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; 3. Tutorial: hsio</span>
     </a>
   </li>
   <li>
-    <a href="api/hs_process.batch.html" title="Next Chapter: 2.1.1. batch"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">2.1.1. batch &raquo;</span>
+    <a href="api/hs_process.batch.html" title="Next Chapter: 4.1.1. batch"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">4.1.1. batch &raquo;</span>
     </a>
   </li>
               
@@ -119,8 +121,8 @@
   <div class="row">
       <div class="col-md-3">
         <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
-<li><a class="reference internal" href="#">2. API</a><ul>
-<li><a class="reference internal" href="#classes">2.1. Classes</a></li>
+<li><a class="reference internal" href="#">4. API</a><ul>
+<li><a class="reference internal" href="#classes">4.1. Classes</a></li>
 </ul>
 </li>
 </ul>
@@ -137,7 +139,7 @@
     <div class="body col-md-9 content" role="main">
       
   <div class="section" id="module-hs_process">
-<span id="api"></span><h1>2. API<a class="headerlink" href="#module-hs_process" title="Permalink to this headline">¶</a></h1>
+<span id="api"></span><h1>4. API<a class="headerlink" href="#module-hs_process" title="Permalink to this headline">¶</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">hs_process</span></code> is a Python package for processing and manipulating aerial
 hyperspectral imagery.</p>
 <p><code class="docutils literal notranslate"><span class="pre">hs_process</span></code> emphasizes the ability to batch process datacubes, with the
@@ -145,7 +147,7 @@ overall goal of keeping the processing pipeline as &quot;hands-off&quot; as poss
 There is also a focus of maintaining the ability to record some of the
 subjective aspects of image processing.</p>
 <div class="section" id="classes">
-<h2>2.1. Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<h2>4.1. Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />

@@ -809,7 +809,7 @@ class hsio(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-mean.spec.hdr'
+            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7_plot_611-cube-to-spec-mean.spec.hdr'
             >>> io = hsio()  # initialize an instance of the hsio class (note there are no required parameters)
 
             Load datacube using ``hsio.read_spec``
@@ -857,7 +857,7 @@ class hsio(object):
         '''
         Sets any of the ENVI file writing parameters to ``hsio``; if any
         parameter is left unchanged from its default, it will remain as-is
-        (it will not be set).
+        (i.e., it will not be set).
 
         Parameters:
             dtype (``numpy.dtype`` or ``str``): The data type with which to store
@@ -945,7 +945,7 @@ class hsio(object):
                 else displays in a pop-out window (default: ``True``).
 
         Example:
-            Load packages
+            Load ``hsio`` and ``spatial_mod`` modules
 
             >>> from hs_process import hsio # load hsio
             >>> from hs_process import spatial_mod # load spatial mod
@@ -1011,7 +1011,7 @@ class hsio(object):
 #            plt.imshow(array, vmin=vmin, vmax=vmax)
             fig = ax.imshow(array, vmin=vmin, vmax=vmax)
 
-        if cbar is True:
+        if cbar is True and n_bands ==1:
             my_cbar = plt.colorbar(fig, shrink=0.5, ax=ax)
 #        fig.show()
         print('\n')
@@ -1091,7 +1091,7 @@ class hsio(object):
             the Spectral Python documentation.
 
         Example:
-            Load packages and the datacube
+            Load ``hsio`` and ``spatial_mod`` modules
 
             >>> from hs_process import hsio  # load hsio
             >>> from hs_process import spatial_mod  # load spatial mod
@@ -1099,7 +1099,7 @@ class hsio(object):
             >>> io = hsio()  # initialize the hsio class
             >>> io.read_cube(fname_hdr_in)
 
-            Perform simple spatial cropping via ``spatial_mod.crop_single`` to generate a new datacube
+            Perform simple spatial cropping via ``spatial_mod.crop_single`` to generate a new datacube.
 
             >>> my_spatial_mod = spatial_mod(io.spyfile)  # initialize spatial_mod instance to crop the image
             >>> array_crop, metadata = my_spatial_mod.crop_single(pix_e_ul=250, pix_n_ul=100, crop_e_m=8, crop_n_m=3)
@@ -1205,7 +1205,7 @@ class hsio(object):
                 ``hsio.spyfile.metadata`` (default=None).
 
         Example:
-            Load packages and the datacube
+            Load and initialize ``hsio``
 
             >>> from hs_process import hsio # load hsio
             >>> fname_hdr_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
@@ -1332,7 +1332,7 @@ class hsio(object):
                 pop-out window; default: "inline").
 
         Example:
-            Load packages and the datacube
+            Load and initialize ``hsio``
 
             >>> from hs_process import hsio  # load hsio
             >>> fname_hdr_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
@@ -2344,7 +2344,10 @@ class hstools(object):
                     "label: 'side?' value:{2}; "
                     "label: 'unmasked_pct?' value:{3}>]"
                     "".format(thresh, percentile, side_str, unmasked_pct))
-        metadata['history'] += hist_str
+        try:
+            metadata['history'] += hist_str
+        except KeyError:
+            metadata['history'] = hist_str[4:]
         return array_mask, metadata
 
 #    def mask_datacube(self, spyfile, mask):
