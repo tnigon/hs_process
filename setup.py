@@ -34,8 +34,8 @@ requirements = [
  'matplotlib',
  'spectral',  # segment
 # 'shapely',  # must be installed with Anaconda
- 'spyder',
- 'jupyter'
+# 'spyder',
+# 'jupyter'
  ]
 
 test_requirements = [

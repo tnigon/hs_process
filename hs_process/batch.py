@@ -475,10 +475,14 @@ class batch(object):
                 fname_fig = os.path.join(dir_out,
                                          os.path.splitext(name_label)[0] +
                                          '.png')
-                self._plot_histogram(array_bm, fname_fig, title=name_print,
-                                     xlabel=type_bm.upper(), percentile=90,
-                                     fontsize=14,
-                                     color='#444444')
+                self.io.tools.plot_histogram(
+                        array_bm, fname_fig=fname_fig, title=name_print,
+                        xlabel=type_bm.upper(), percentile=90, bins=50,
+                        fontsize=14, color='#444444')
+#                self._plot_histogram(array_bm, fname_fig, title=name_print,
+#                                     xlabel=type_bm.upper(), percentile=90,
+#                                     fontsize=14,
+#                                     color='#444444')
 
             metadata['label'] = name_label
 
@@ -1255,58 +1259,58 @@ class batch(object):
         msg = ('Could not get a name for input datacube.\n')
         assert name_print is not None, msg
         return name_print
-
-    def _plot_histogram(self, array, fname_fig, title=None, xlabel=None,
-                        percentile=90, fontsize=16, color='#444444'):
-        '''
-        Plots a histogram with the percentile value labeled
-        '''
-        if isinstance(array, np.ma.core.MaskedArray):
-            array_m = array.compressed()  # allows for accurate percentile calc
-        else:
-            array_m = np.ma.masked_array(array, mask=False)
-            array_m = array_m.compressed()
-
-        pctl = np.nanpercentile(array_m.flatten(), percentile)
-
-        fig, ax = plt.subplots()
-        ax = sns.distplot(array_m.flatten(), bins=50, color='grey')
-        data_x, data_y = ax.lines[0].get_data()
-
-        y_lim = ax.get_ylim()
-        yi = np.interp(pctl, data_x, data_y)
-        ymax = yi/y_lim[1]
-        ax.axvline(pctl, ymax=ymax, linestyle='--', color=color, linewidth=0.5)
-        boxstyle_str = 'round, pad=0.5, rounding_size=0.15'
-
-
-        legend_str = ('Percentile ({0}): {1:.3f}'
-                      ''.format(percentile, pctl))
-        ax.annotate(
-            legend_str,
-            xy=(pctl, yi),
-            xytext=(0.97, 0.94),  # loc to place text
-            textcoords='axes fraction',  # placed relative to axes
-            ha='right',  # alignment of text
-            va='top',
-            fontsize=int(fontsize * 0.9),
-            color=color,
-            bbox=dict(boxstyle=boxstyle_str, pad=0.5, fc=(1, 1, 1),
-                      ec=(0.5, 0.5, 0.5), alpha=0.5),
-            arrowprops=dict(arrowstyle='-|>',
-                            color=color,
-        #                    patchB=el,
-                            shrinkA=0,
-                            shrinkB=0,
-                            connectionstyle='arc3,rad=-0.3',
-                            linestyle='--',
-                            linewidth=0.7))
-        ax.set_title(title, fontweight='bold', fontsize=int(fontsize * 1.1))
-        ax.set_xlabel(xlabel, fontsize=fontsize)
-        ax.set_ylabel('Frequency (%)', fontsize=fontsize)
-        ax.tick_params(labelsize=fontsize)
-        plt.tight_layout()
-        fig.savefig(fname_fig, dpi=300)
+#
+#    def _plot_histogram(self, array, fname_fig, title=None, xlabel=None,
+#                        percentile=90, fontsize=16, color='#444444'):
+#        '''
+#        Plots a histogram with the percentile value labeled
+#        '''
+#        if isinstance(array, np.ma.core.MaskedArray):
+#            array_m = array.compressed()  # allows for accurate percentile calc
+#        else:
+#            array_m = np.ma.masked_array(array, mask=False)
+#            array_m = array_m.compressed()
+#
+#        pctl = np.nanpercentile(array_m.flatten(), percentile)
+#
+#        fig, ax = plt.subplots()
+#        ax = sns.distplot(array_m.flatten(), bins=50, color='grey')
+#        data_x, data_y = ax.lines[0].get_data()
+#
+#        y_lim = ax.get_ylim()
+#        yi = np.interp(pctl, data_x, data_y)
+#        ymax = yi/y_lim[1]
+#        ax.axvline(pctl, ymax=ymax, linestyle='--', color=color, linewidth=0.5)
+#        boxstyle_str = 'round, pad=0.5, rounding_size=0.15'
+#
+#
+#        legend_str = ('Percentile ({0}): {1:.3f}'
+#                      ''.format(percentile, pctl))
+#        ax.annotate(
+#            legend_str,
+#            xy=(pctl, yi),
+#            xytext=(0.97, 0.94),  # loc to place text
+#            textcoords='axes fraction',  # placed relative to axes
+#            ha='right',  # alignment of text
+#            va='top',
+#            fontsize=int(fontsize * 0.9),
+#            color=color,
+#            bbox=dict(boxstyle=boxstyle_str, pad=0.5, fc=(1, 1, 1),
+#                      ec=(0.5, 0.5, 0.5), alpha=0.5),
+#            arrowprops=dict(arrowstyle='-|>',
+#                            color=color,
+#        #                    patchB=el,
+#                            shrinkA=0,
+#                            shrinkB=0,
+#                            connectionstyle='arc3,rad=-0.3',
+#                            linestyle='--',
+#                            linewidth=0.7))
+#        ax.set_title(title, fontweight='bold', fontsize=int(fontsize * 1.1))
+#        ax.set_xlabel(xlabel, fontsize=fontsize)
+#        ax.set_ylabel('Frequency (%)', fontsize=fontsize)
+#        ax.tick_params(labelsize=fontsize)
+#        plt.tight_layout()
+#        fig.savefig(fname_fig, dpi=300)
 
     def cube_to_spectra(self, fname_list=None, base_dir=None, search_ext='bip',
                         dir_level=0, base_dir_out=None,

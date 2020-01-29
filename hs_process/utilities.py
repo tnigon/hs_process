@@ -12,6 +12,7 @@ import seaborn as sns
 import spectral.io.envi as envi
 import spectral.io.spyfile as SpyFile
 import sys
+import warnings
 
 
 class _dotdict(dict):
@@ -453,8 +454,11 @@ class hsio(object):
         try:
             int(name_plot)
         except ValueError:  # give up..
-            print('Cannot convert ``name_plot`` to and ``int``: {0}'
-                  ''.format(name_plot))
+            msg = ('Cannot determine the plot name from the image filename. '
+                   'Setting `hsio.name_plot` to `None`. If this image is for '
+                   'a particular plot, please set `hsio.name_plot; otherwise, '
+                   'ignore this warning.\n')
+            warnings.warn(msg, UserWarning)
             name_plot = None
         return name_plot
 
@@ -785,7 +789,8 @@ class hsio(object):
         '''
         if os.path.splitext(fname_hdr)[1] != '.hdr':
             fname_hdr = fname_hdr + '.hdr'
-        assert os.path.isfile(fname_hdr), 'Could not find .hdr file.'
+        msg = ('Could not find .hdr file.\nLocation: {0}'.format(fname_hdr))
+        assert os.path.isfile(fname_hdr), msg
         self.fname_hdr = fname_hdr
         self.base_dir = os.path.dirname(fname_hdr)
 
@@ -1550,8 +1555,12 @@ class hstools(object):
         try:
             int(name_plot)
         except ValueError:  # give up..
-            print('Cannot convert ``name_plot`` to and ``int``: {0}'
-                  ''.format(name_plot))
+            msg = ('Cannot determine the plot name from the image filename. '
+                   'Setting `hsio.name_plot` to `None`. If this image is for '
+                   'a particular plot, please set `hsio.name_plot; otherwise, '
+                   'ignore this warning.\n')
+            warnings.warn(msg, UserWarning)
+
             name_plot = None
         return name_plot
 
@@ -2625,6 +2634,7 @@ class hstools(object):
                '{0}'.format(array.shape))
         if len(array.shape) == 3:
             assert array.shape[2] == 1, msg
+            array = np.squeeze(array)
         else:
             assert len(array.shape) <= 2, msg
 

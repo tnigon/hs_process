@@ -12,12 +12,14 @@ provide a report on how many were returned with errors (coverage).
 Then this file can be run anytime a change is made and changes are pushed to
 see if anything was broken
 '''
-
+import numpy as np
 import os
-import unittest
+import shutil, tempfile
 import spectral.io.spyfile as SpyFile
+import unittest
 
 from hs_process import hsio
+from hs_process import spatial_mod
 
 
 class Test_hsio_read_cube(unittest.TestCase):
@@ -147,7 +149,123 @@ class Test_hsio_set_io_defaults(unittest.TestCase):
         self.io.set_io_defaults(byteorder=1)
         self.assertEqual(self.io.defaults.envi_write.byteorder, 1,
                          'byteorder not properly modified')
+    def test_changeback(self):
+        self.io.set_io_defaults(dtype=np.float32, force=False, ext='',
+                                interleave='bip', byteorder=0)
+        self.assertEqual(self.io.defaults.envi_write.dtype, np.float32,
+                         'dtype not properly modified')
+        self.assertEqual(self.io.defaults.envi_write.force, False,
+                         'force not properly modified')
+        self.assertEqual(self.io.defaults.envi_write.ext, '',
+                         'ext not properly modified')
+        self.assertEqual(self.io.defaults.envi_write.interleave, 'bip',
+                         'interleave not properly modified')
+        self.assertEqual(self.io.defaults.envi_write.byteorder, 0,
+                         'byteorder not properly modified')
 
+
+class Test_hsio_write_cube(unittest.TestCase):
+    def setUp(self):
+        '''
+        This setUp function will be called for every single test that is run
+        '''
+        self.test_dir = tempfile.mkdtemp()
+        self.io = hsio(fname_hdr)
+        self.my_spatial_mod = spatial_mod(self.io.spyfile)
+        self.array_crop, self.metadata = self.my_spatial_mod.crop_single(
+                pix_e_ul=250, pix_n_ul=100, crop_e_m=8, crop_n_m=3)
+
+    def tearDown(self):
+        '''
+        This tearDown function will be called after each test method is run
+        '''
+        self.io = None
+        self.my_spatial_mod = None
+        self.array_crop = None
+        self.metadata = None
+        shutil.rmtree(self.test_dir)
+
+    def test_write_cube(self):
+        fname_hdr_out = os.path.join(self.test_dir, self.io.name_short +
+                                     '.bip.hdr')
+        self.io.write_cube(fname_hdr_out, self.array_crop,
+                           metadata=self.metadata)
+        io2 = hsio(fname_hdr_out)
+        self.assertIsInstance(io2.spyfile, SpyFile.SpyFile,
+                              'Not a SpyFile object')
+
+
+class Test_hsio_write_spec(unittest.TestCase):
+    def setUp(self):
+        '''
+        This setUp function will be called for every single test that is run
+        '''
+        self.test_dir = tempfile.mkdtemp()
+        self.io = hsio(fname_hdr)
+        self.my_spatial_mod = spatial_mod(self.io.spyfile)
+        self.array_crop, self.metadata = self.my_spatial_mod.crop_single(
+                pix_e_ul=250, pix_n_ul=100, crop_e_m=8, crop_n_m=3)
+        self.spec_mean, self.spec_std, _ = self.io.tools.mean_datacube(self.array_crop)
+
+    def tearDown(self):
+        '''
+        This tearDown function will be called after each test method is run
+        '''
+        self.io = None
+        self.my_spatial_mod = None
+        self.array_crop = None
+        self.metadata = None
+        self.spec_mean = None
+        self.spec_std = None
+        shutil.rmtree(self.test_dir)
+
+    def test_write_spec(self):
+        fname_hdr_spec = os.path.join(self.test_dir, self.io.name_short +
+                                      '-mean.spec.hdr')
+        self.io.write_spec(fname_hdr_spec, self.spec_mean,
+                           self.spec_std)
+        io2 = hsio()
+        io2.read_spec(fname_hdr_spec)
+        self.assertIsInstance(io2.spyfile_spec, SpyFile.SpyFile,
+                              'Not a SpyFile object')
+
+class Test_hsio_write_tif(unittest.TestCase):
+    def setUp(self):
+        '''
+        This setUp function will be called for every single test that is run
+        '''
+        self.test_dir = tempfile.mkdtemp()
+        self.io = hsio(fname_hdr)
+        self.my_spatial_mod = spatial_mod(self.io.spyfile)
+        self.array_crop, self.metadata = self.my_spatial_mod.crop_single(
+                pix_e_ul=250, pix_n_ul=100, crop_e_m=8, crop_n_m=3)
+
+    def tearDown(self):
+        '''
+        This tearDown function will be called after each test method is run
+        '''
+        self.io = None
+        self.my_spatial_mod = None
+        self.array_crop = None
+        self.spec_std = None
+        shutil.rmtree(self.test_dir)
+
+    def test_write_tif_multi(self):
+        fname_tif = os.path.join(self.test_dir, self.io.name_short +
+                                 '.tif')
+        self.io.write_tif(fname_tif, self.array_crop,
+                          fname_in=fname_hdr)
+        self.assertGreater(os.path.getsize(fname_tif), 150000,
+                         'Geotiff is not the correct size.')
+
+    def test_write_tif_single(self):
+        fname_tif = os.path.join(self.test_dir, self.io.name_short +
+                                 '.tif')
+        self.io.write_tif(fname_tif, self.array_crop[:,:,0],
+                          fname_in=fname_hdr)
+        print(os.path.getsize(fname_tif))
+        self.assertGreater(os.path.getsize(fname_tif), 50000,
+                          'Geotiff is not the correct size.')
 
 def suite():
     suite = unittest.TestSuite()
@@ -168,6 +286,18 @@ def suite():
     suite.addTest(Test_hsio_set_io_defaults('test_ext'))
     suite.addTest(Test_hsio_set_io_defaults('test_interleave'))
     suite.addTest(Test_hsio_set_io_defaults('test_byteorder'))
+    suite.addTest(Test_hsio_set_io_defaults('test_changeback'))
+
+    # write_cube
+    suite.addTest(Test_hsio_write_cube('test_write_cube'))
+
+    # write_spec
+    suite.addTest(Test_hsio_write_spec('test_write_spec'))
+
+    # write_tif
+    suite.addTest(Test_hsio_write_tif('test_write_tif_multi'))
+    suite.addTest(Test_hsio_write_tif('test_write_tif_single'))
+
     return suite
 
 if __name__ == '__main__':
