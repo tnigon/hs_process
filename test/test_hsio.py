@@ -22,13 +22,23 @@ from hs_process import hsio
 from hs_process import spatial_mod
 
 
+FILENAME_HDR = os.path.join(os.path.dirname(__file__), 'testdata', 'Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr')
+FILENAME_HDR_SPEC = os.path.join(os.path.dirname(__file__), 'testdata', 'Wells_rep2_20180628_16h56m_pika_gige_7_plot_611-cube-to-spec-mean.spec.hdr')
+
+if not os.path.isfile(FILENAME_HDR):
+    FILENAME_HDR = os.path.join(os.getcwd(), 'test', 'testdata', 'Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr')
+if not os.path.isfile(FILENAME_HDR_SPEC):
+    FILENAME_HDR_SPEC = os.path.join(os.getcwd(), 'test', 'testdata', 'Wells_rep2_20180628_16h56m_pika_gige_7_plot_611-cube-to-spec-mean.spec.hdr')
+
+
 class Test_hsio_read_cube(unittest.TestCase):
     def setUp(self):
         '''
         This setUp function will be called for every single test that is run
         '''
-        self.fname_hdr = fname_hdr
-        self.io = hsio(fname_hdr)
+#        self.fname_hdr = fname_hdr
+        self.fname_hdr = FILENAME_HDR
+        self.io = hsio(FILENAME_HDR)
 
     def tearDown(self):
         '''
@@ -47,20 +57,20 @@ class Test_hsio_read_cube(unittest.TestCase):
 
     def test_readability(self):
         io1 = hsio()
-        io1.read_cube(fname_hdr)
+        io1.read_cube(self.fname_hdr)
         self.assertIsInstance(io1.spyfile, SpyFile.SpyFile,
                               'Not a SpyFile object')
 
         io2 = hsio()
-        io2.read_cube(os.path.splitext(fname_hdr)[0])
+        io2.read_cube(os.path.splitext(self.fname_hdr)[0])
         self.assertIsInstance(io2.spyfile, SpyFile.SpyFile,
                               'Not a SpyFile object')
 
-        io3 = hsio(fname_hdr)
+        io3 = hsio(self.fname_hdr)
         self.assertIsInstance(io3.spyfile, SpyFile.SpyFile,
                               'Not a SpyFile object')
 
-        io4 = hsio(os.path.splitext(fname_hdr)[0])
+        io4 = hsio(os.path.splitext(self.fname_hdr)[0])
         self.assertIsInstance(io4.spyfile, SpyFile.SpyFile,
                               'Not a SpyFile object')
 
@@ -87,13 +97,15 @@ class Test_hsio_read_spec(unittest.TestCase):
         '''
         This setUp function will be called for every single test that is run
         '''
+        self.fname_hdr_spec = FILENAME_HDR_SPEC
         self.io = hsio()
-        self.io.read_spec(fname_hdr_spec)
+        self.io.read_spec(FILENAME_HDR_SPEC)
 
     def tearDown(self):
         '''
         This tearDown function will be called after each test method is run
         '''
+        self.fname_hdr_spec = None
         self.io = None
 
     def test_names(self):
@@ -106,12 +118,12 @@ class Test_hsio_read_spec(unittest.TestCase):
 
     def test_readability(self):
         io1 = hsio()
-        io1.read_spec(fname_hdr_spec)
+        io1.read_spec(self.fname_hdr_spec)
         self.assertIsInstance(io1.spyfile_spec, SpyFile.SpyFile,
                               'Not a SpyFile object')
 
         io2 = hsio()
-        io2.read_spec(os.path.splitext(fname_hdr_spec)[0])
+        io2.read_spec(os.path.splitext(self.fname_hdr_spec)[0])
         self.assertIsInstance(io2.spyfile_spec, SpyFile.SpyFile,
                               'Not a SpyFile object')
 
@@ -129,39 +141,47 @@ class Test_hsio_set_io_defaults(unittest.TestCase):
         '''
         self.io = None
 
-    def test_dtype(self):
-        self.io.set_io_defaults(dtype=int)
-        self.assertEqual(self.io.defaults.envi_write.dtype, int,
-                         'dtype not properly modified')
-    def test_force(self):
-        self.io.set_io_defaults(force=True)
-        self.assertEqual(self.io.defaults.envi_write.force, True,
-                         'force not properly modified')
-    def test_ext(self):
-        self.io.set_io_defaults(ext='spec')
-        self.assertEqual(self.io.defaults.envi_write.ext, 'spec',
-                         'ext not properly modified')
-    def test_interleave(self):
-        self.io.set_io_defaults(interleave='bsq')
-        self.assertEqual(self.io.defaults.envi_write.interleave, 'bsq',
-                         'interleave not properly modified')
     def test_byteorder(self):
         self.io.set_io_defaults(byteorder=1)
         self.assertEqual(self.io.defaults.envi_write.byteorder, 1,
                          'byteorder not properly modified')
-    def test_changeback(self):
+    def test_dtype(self):
+        self.io.set_io_defaults(dtype=int)
+        self.assertEqual(self.io.defaults.envi_write.dtype, int,
+                         'dtype not properly modified')
+    def test_ext(self):
+        self.io.set_io_defaults(ext='spec')
+        self.assertEqual(self.io.defaults.envi_write.ext, 'spec',
+                         'ext not properly modified')
+    def test_force(self):
+        self.io.set_io_defaults(force=True)
+        self.assertEqual(self.io.defaults.envi_write.force, True,
+                         'force not properly modified')
+    def test_interleave(self):
+        self.io.set_io_defaults(interleave='bsq')
+        self.assertEqual(self.io.defaults.envi_write.interleave, 'bsq',
+                         'interleave not properly modified')
+    def test_instance_independence(self):
+        self.io.set_io_defaults(dtype=int, force=True, ext='spec',
+                                interleave='bsq', byteorder=1)
+        io2 = hsio()
+        self.assertNotEqual(self.io.defaults.envi_write.ext,
+                            io2.defaults.envi_write.ext,
+                            ('New instance of hsio did not result in a new'
+                             'instance of defaults'))
+    def test_return_values(self):
         self.io.set_io_defaults(dtype=np.float32, force=False, ext='',
                                 interleave='bip', byteorder=0)
         self.assertEqual(self.io.defaults.envi_write.dtype, np.float32,
-                         'dtype not properly modified')
+                         'dtype not properly returned')
         self.assertEqual(self.io.defaults.envi_write.force, False,
-                         'force not properly modified')
+                         'force not properly returned')
         self.assertEqual(self.io.defaults.envi_write.ext, '',
-                         'ext not properly modified')
+                         'ext not properly returned')
         self.assertEqual(self.io.defaults.envi_write.interleave, 'bip',
-                         'interleave not properly modified')
+                         'interleave not properly returned')
         self.assertEqual(self.io.defaults.envi_write.byteorder, 0,
-                         'byteorder not properly modified')
+                         'byteorder not properly returned')
 
 
 class Test_hsio_write_cube(unittest.TestCase):
@@ -169,8 +189,9 @@ class Test_hsio_write_cube(unittest.TestCase):
         '''
         This setUp function will be called for every single test that is run
         '''
+        self.fname_hdr = FILENAME_HDR
         self.test_dir = tempfile.mkdtemp()
-        self.io = hsio(fname_hdr)
+        self.io = hsio(FILENAME_HDR)
         self.my_spatial_mod = spatial_mod(self.io.spyfile)
         self.array_crop, self.metadata = self.my_spatial_mod.crop_single(
                 pix_e_ul=250, pix_n_ul=100, crop_e_m=8, crop_n_m=3)
@@ -179,15 +200,18 @@ class Test_hsio_write_cube(unittest.TestCase):
         '''
         This tearDown function will be called after each test method is run
         '''
+        self.fname_hdr = None
         self.io = None
         self.my_spatial_mod = None
         self.array_crop = None
         self.metadata = None
         shutil.rmtree(self.test_dir)
+        self.test_dir = None
 
     def test_write_cube(self):
         fname_hdr_out = os.path.join(self.test_dir, self.io.name_short +
                                      '.bip.hdr')
+        print(fname_hdr_out)
         self.io.write_cube(fname_hdr_out, self.array_crop,
                            metadata=self.metadata)
         io2 = hsio(fname_hdr_out)
@@ -200,8 +224,9 @@ class Test_hsio_write_spec(unittest.TestCase):
         '''
         This setUp function will be called for every single test that is run
         '''
+        self.fname_hdr = FILENAME_HDR
         self.test_dir = tempfile.mkdtemp()
-        self.io = hsio(fname_hdr)
+        self.io = hsio(FILENAME_HDR)
         self.my_spatial_mod = spatial_mod(self.io.spyfile)
         self.array_crop, self.metadata = self.my_spatial_mod.crop_single(
                 pix_e_ul=250, pix_n_ul=100, crop_e_m=8, crop_n_m=3)
@@ -211,6 +236,7 @@ class Test_hsio_write_spec(unittest.TestCase):
         '''
         This tearDown function will be called after each test method is run
         '''
+        self.fname_hdr = None
         self.io = None
         self.my_spatial_mod = None
         self.array_crop = None
@@ -235,7 +261,8 @@ class Test_hsio_write_tif(unittest.TestCase):
         This setUp function will be called for every single test that is run
         '''
         self.test_dir = tempfile.mkdtemp()
-        self.io = hsio(fname_hdr)
+        self.fname_hdr = FILENAME_HDR
+        self.io = hsio(FILENAME_HDR)
         self.my_spatial_mod = spatial_mod(self.io.spyfile)
         self.array_crop, self.metadata = self.my_spatial_mod.crop_single(
                 pix_e_ul=250, pix_n_ul=100, crop_e_m=8, crop_n_m=3)
@@ -244,6 +271,7 @@ class Test_hsio_write_tif(unittest.TestCase):
         '''
         This tearDown function will be called after each test method is run
         '''
+        self.fname_hdr = None
         self.io = None
         self.my_spatial_mod = None
         self.array_crop = None
@@ -251,19 +279,24 @@ class Test_hsio_write_tif(unittest.TestCase):
         shutil.rmtree(self.test_dir)
 
     def test_write_tif_multi(self):
+        '''
+        `show_img` is only expected to work in an IPython console
+        '''
         fname_tif = os.path.join(self.test_dir, self.io.name_short +
                                  '.tif')
         self.io.write_tif(fname_tif, self.array_crop,
-                          fname_in=fname_hdr)
+                          fname_in=self.fname_hdr, show_img=False)
         self.assertGreater(os.path.getsize(fname_tif), 150000,
                          'Geotiff is not the correct size.')
 
     def test_write_tif_single(self):
+        '''
+        `show_img` is only expected to work in an IPython console
+        '''
         fname_tif = os.path.join(self.test_dir, self.io.name_short +
                                  '.tif')
         self.io.write_tif(fname_tif, self.array_crop[:,:,0],
-                          fname_in=fname_hdr)
-        print(os.path.getsize(fname_tif))
+                          fname_in=self.fname_hdr, show_img=False)
         self.assertGreater(os.path.getsize(fname_tif), 50000,
                           'Geotiff is not the correct size.')
 
@@ -281,12 +314,13 @@ def suite():
     suite.addTest(Test_hsio_read_spec('test_names'))
 
     # set_io_defaults
-    suite.addTest(Test_hsio_set_io_defaults('test_dtype'))
-    suite.addTest(Test_hsio_set_io_defaults('test_force'))
-    suite.addTest(Test_hsio_set_io_defaults('test_ext'))
-    suite.addTest(Test_hsio_set_io_defaults('test_interleave'))
     suite.addTest(Test_hsio_set_io_defaults('test_byteorder'))
-    suite.addTest(Test_hsio_set_io_defaults('test_changeback'))
+    suite.addTest(Test_hsio_set_io_defaults('test_dtype'))
+    suite.addTest(Test_hsio_set_io_defaults('test_ext'))
+    suite.addTest(Test_hsio_set_io_defaults('test_force'))
+    suite.addTest(Test_hsio_set_io_defaults('test_interleave'))
+    suite.addTest(Test_hsio_set_io_defaults('test_instance_independence'))
+    suite.addTest(Test_hsio_set_io_defaults('test_return_values'))
 
     # write_cube
     suite.addTest(Test_hsio_write_cube('test_write_cube'))
@@ -301,8 +335,6 @@ def suite():
     return suite
 
 if __name__ == '__main__':
-    fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
-    fname_hdr_spec = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7_plot_611-cube-to-spec-mean.spec.hdr'
     runner = unittest.TextTestRunner(verbosity=2)
     runner.run(suite())
 

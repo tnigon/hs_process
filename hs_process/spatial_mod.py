@@ -32,7 +32,7 @@ class spatial_mod(object):
         self.tools = None
 
 
-        self.defaults = defaults
+        self.defaults = defaults()
         self.load_spyfile(spyfile)
 
     def _create_spyfile_extent_gdf(self, spyfile, metadata=None, epsg=32615):
@@ -340,25 +340,25 @@ class spatial_mod(object):
 
         if group == 'crop':
             if pd.isnull(e_pix) and pd.isnull(e_m):
-                e_pix = self.defaults.crop_defaults['crop_e_pix']
-                e_m = self.defaults.crop_defaults['crop_e_m']
+                e_pix = self.defaults.crop_defaults.crop_e_pix
+                e_m = self.defaults.crop_defaults.crop_e_m
             if pd.isnull(n_pix) and pd.isnull(n_m):
-                n_pix = self.defaults.crop_defaults['crop_n_pix']
-                n_m = self.defaults.crop_defaults['crop_n_m']
+                n_pix = self.defaults.crop_defaults.crop_n_pix
+                n_m = self.defaults.crop_defaults.crop_n_m
         elif group == 'alley':
             if pd.isnull(e_pix) and pd.isnull(e_m):
-                e_pix = self.defaults.crop_defaults['alley_size_e_pix']
-                e_m = self.defaults.crop_defaults['alley_size_e_m']
+                e_pix = self.defaults.crop_defaults.alley_size_e_pix
+                e_m = self.defaults.crop_defaults.alley_size_e_m
             if pd.isnull(n_pix) and pd.isnull(n_m):
-                n_pix = self.defaults.crop_defaults['alley_size_n_pix']
-                n_m = self.defaults.crop_defaults['alley_size_n_m']
+                n_pix = self.defaults.crop_defaults.alley_size_n_pix
+                n_m = self.defaults.crop_defaults.alley_size_n_m
         elif group == 'buffer':
             if pd.isnull(e_pix) and pd.isnull(e_m):
-                e_pix = self.defaults.crop_defaults['buf_e_pix']
-                e_m = self.defaults.crop_defaults['buf_e_m']
+                e_pix = self.defaults.crop_defaults.buf_e_pix
+                e_m = self.defaults.crop_defaults.buf_e_m
             if pd.isnull(n_pix) and pd.isnull(n_m):
-                n_pix = self.defaults.crop_defaults['buf_n_pix']
-                n_m = self.defaults.crop_defaults['buf_n_m']
+                n_pix = self.defaults.crop_defaults.buf_n_pix
+                n_m = self.defaults.crop_defaults.buf_n_m
 
         if pd.isnull(e_pix) and pd.notnull(e_m):
             e_pix = int(round(e_m / self.spy_ps_e))

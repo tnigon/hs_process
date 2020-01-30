@@ -59,19 +59,18 @@
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">1. Setup and Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation.html#Windows-Setup">2. Windows Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../tutorial_hsio.html">3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../my_hs_process_api.html">4. API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.batch.html">4.1.1. batch</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.defaults.html">4.1.2. defaults</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.hsio.html">4.1.3. hsio</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.hstools.html">4.1.4. hstools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.segment.html">4.1.5. segment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.spatial_mod.html">4.1.6. spatial_mod</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.spec_mod.html">4.1.7. spec_mod</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial_hsio.html">2. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../my_hs_process_api.html">3. API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.batch.html">3.1.1. batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.defaults.html">3.1.2. defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.hsio.html">3.1.3. hsio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.hstools.html">3.1.4. hstools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.segment.html">3.1.5. segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.spatial_mod.html">3.1.6. spatial_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.spec_mod.html">3.1.7. spec_mod</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../license.html">5. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">4. License</a></li>
 </ul>
 </ul>
 </li>
@@ -596,10 +595,14 @@
                 <span class="n">fname_fig</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_out</span><span class="p">,</span>
                                          <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">name_label</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span>
                                          <span class="s1">&#39;.png&#39;</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_plot_histogram</span><span class="p">(</span><span class="n">array_bm</span><span class="p">,</span> <span class="n">fname_fig</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">name_print</span><span class="p">,</span>
-                                     <span class="n">xlabel</span><span class="o">=</span><span class="n">type_bm</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">percentile</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span>
-                                     <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span>
-                                     <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#444444&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">plot_histogram</span><span class="p">(</span>
+                        <span class="n">array_bm</span><span class="p">,</span> <span class="n">fname_fig</span><span class="o">=</span><span class="n">fname_fig</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">name_print</span><span class="p">,</span>
+                        <span class="n">xlabel</span><span class="o">=</span><span class="n">type_bm</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">percentile</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+                        <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#444444&#39;</span><span class="p">)</span>
+<span class="c1">#                self._plot_histogram(array_bm, fname_fig, title=name_print,</span>
+<span class="c1">#                                     xlabel=type_bm.upper(), percentile=90,</span>
+<span class="c1">#                                     fontsize=14,</span>
+<span class="c1">#                                     color=&#39;#444444&#39;)</span>
 
             <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name_label</span>
 
@@ -1376,58 +1379,58 @@
         <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Could not get a name for input datacube.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">name_print</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">msg</span>
         <span class="k">return</span> <span class="n">name_print</span>
-
-    <span class="k">def</span> <span class="nf">_plot_histogram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span> <span class="n">fname_fig</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                        <span class="n">percentile</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#444444&#39;</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        Plots a histogram with the percentile value labeled</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">MaskedArray</span><span class="p">):</span>
-            <span class="n">array_m</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">compressed</span><span class="p">()</span>  <span class="c1"># allows for accurate percentile calc</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">array_m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-            <span class="n">array_m</span> <span class="o">=</span> <span class="n">array_m</span><span class="o">.</span><span class="n">compressed</span><span class="p">()</span>
-
-        <span class="n">pctl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">array_m</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">percentile</span><span class="p">)</span>
-
-        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-        <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">array_m</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">)</span>
-        <span class="n">data_x</span><span class="p">,</span> <span class="n">data_y</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-
-        <span class="n">y_lim</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
-        <span class="n">yi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">pctl</span><span class="p">,</span> <span class="n">data_x</span><span class="p">,</span> <span class="n">data_y</span><span class="p">)</span>
-        <span class="n">ymax</span> <span class="o">=</span> <span class="n">yi</span><span class="o">/</span><span class="n">y_lim</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">pctl</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="n">ymax</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-        <span class="n">boxstyle_str</span> <span class="o">=</span> <span class="s1">&#39;round, pad=0.5, rounding_size=0.15&#39;</span>
-
-
-        <span class="n">legend_str</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Percentile (</span><span class="si">{0}</span><span class="s1">): </span><span class="si">{1:.3f}</span><span class="s1">&#39;</span>
-                      <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">percentile</span><span class="p">,</span> <span class="n">pctl</span><span class="p">))</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
-            <span class="n">legend_str</span><span class="p">,</span>
-            <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">pctl</span><span class="p">,</span> <span class="n">yi</span><span class="p">),</span>
-            <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mf">0.97</span><span class="p">,</span> <span class="mf">0.94</span><span class="p">),</span>  <span class="c1"># loc to place text</span>
-            <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;axes fraction&#39;</span><span class="p">,</span>  <span class="c1"># placed relative to axes</span>
-            <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span>  <span class="c1"># alignment of text</span>
-            <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span>
-            <span class="n">fontsize</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">fontsize</span> <span class="o">*</span> <span class="mf">0.9</span><span class="p">),</span>
-            <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
-            <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="n">boxstyle_str</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-                      <span class="n">ec</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span>
-            <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s1">&#39;-|&gt;&#39;</span><span class="p">,</span>
-                            <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
-        <span class="c1">#                    patchB=el,</span>
-                            <span class="n">shrinkA</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                            <span class="n">shrinkB</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                            <span class="n">connectionstyle</span><span class="o">=</span><span class="s1">&#39;arc3,rad=-0.3&#39;</span><span class="p">,</span>
-                            <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span>
-                            <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.7</span><span class="p">))</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">fontsize</span> <span class="o">*</span> <span class="mf">1.1</span><span class="p">))</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency (%)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">fname_fig</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="c1">#    def _plot_histogram(self, array, fname_fig, title=None, xlabel=None,</span>
+<span class="c1">#                        percentile=90, fontsize=16, color=&#39;#444444&#39;):</span>
+<span class="c1">#        &#39;&#39;&#39;</span>
+<span class="c1">#        Plots a histogram with the percentile value labeled</span>
+<span class="c1">#        &#39;&#39;&#39;</span>
+<span class="c1">#        if isinstance(array, np.ma.core.MaskedArray):</span>
+<span class="c1">#            array_m = array.compressed()  # allows for accurate percentile calc</span>
+<span class="c1">#        else:</span>
+<span class="c1">#            array_m = np.ma.masked_array(array, mask=False)</span>
+<span class="c1">#            array_m = array_m.compressed()</span>
+<span class="c1">#</span>
+<span class="c1">#        pctl = np.nanpercentile(array_m.flatten(), percentile)</span>
+<span class="c1">#</span>
+<span class="c1">#        fig, ax = plt.subplots()</span>
+<span class="c1">#        ax = sns.distplot(array_m.flatten(), bins=50, color=&#39;grey&#39;)</span>
+<span class="c1">#        data_x, data_y = ax.lines[0].get_data()</span>
+<span class="c1">#</span>
+<span class="c1">#        y_lim = ax.get_ylim()</span>
+<span class="c1">#        yi = np.interp(pctl, data_x, data_y)</span>
+<span class="c1">#        ymax = yi/y_lim[1]</span>
+<span class="c1">#        ax.axvline(pctl, ymax=ymax, linestyle=&#39;--&#39;, color=color, linewidth=0.5)</span>
+<span class="c1">#        boxstyle_str = &#39;round, pad=0.5, rounding_size=0.15&#39;</span>
+<span class="c1">#</span>
+<span class="c1">#</span>
+<span class="c1">#        legend_str = (&#39;Percentile ({0}): {1:.3f}&#39;</span>
+<span class="c1">#                      &#39;&#39;.format(percentile, pctl))</span>
+<span class="c1">#        ax.annotate(</span>
+<span class="c1">#            legend_str,</span>
+<span class="c1">#            xy=(pctl, yi),</span>
+<span class="c1">#            xytext=(0.97, 0.94),  # loc to place text</span>
+<span class="c1">#            textcoords=&#39;axes fraction&#39;,  # placed relative to axes</span>
+<span class="c1">#            ha=&#39;right&#39;,  # alignment of text</span>
+<span class="c1">#            va=&#39;top&#39;,</span>
+<span class="c1">#            fontsize=int(fontsize * 0.9),</span>
+<span class="c1">#            color=color,</span>
+<span class="c1">#            bbox=dict(boxstyle=boxstyle_str, pad=0.5, fc=(1, 1, 1),</span>
+<span class="c1">#                      ec=(0.5, 0.5, 0.5), alpha=0.5),</span>
+<span class="c1">#            arrowprops=dict(arrowstyle=&#39;-|&gt;&#39;,</span>
+<span class="c1">#                            color=color,</span>
+<span class="c1">#        #                    patchB=el,</span>
+<span class="c1">#                            shrinkA=0,</span>
+<span class="c1">#                            shrinkB=0,</span>
+<span class="c1">#                            connectionstyle=&#39;arc3,rad=-0.3&#39;,</span>
+<span class="c1">#                            linestyle=&#39;--&#39;,</span>
+<span class="c1">#                            linewidth=0.7))</span>
+<span class="c1">#        ax.set_title(title, fontweight=&#39;bold&#39;, fontsize=int(fontsize * 1.1))</span>
+<span class="c1">#        ax.set_xlabel(xlabel, fontsize=fontsize)</span>
+<span class="c1">#        ax.set_ylabel(&#39;Frequency (%)&#39;, fontsize=fontsize)</span>
+<span class="c1">#        ax.tick_params(labelsize=fontsize)</span>
+<span class="c1">#        plt.tight_layout()</span>
+<span class="c1">#        fig.savefig(fname_fig, dpi=300)</span>
 
 <div class="viewcode-block" id="batch.cube_to_spectra"><a class="viewcode-back" href="../../api/hs_process.batch.html#hs_process.batch.cube_to_spectra">[docs]</a>    <span class="k">def</span> <span class="nf">cube_to_spectra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;bip&#39;</span><span class="p">,</span>
                         <span class="n">dir_level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">base_dir_out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>

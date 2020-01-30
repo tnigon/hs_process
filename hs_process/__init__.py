@@ -9,7 +9,7 @@ There is also a focus of maintaining the ability to record some of the
 subjective aspects of image processing.
 """
 
-__copyright__ = '2019 Tyler J Nigon. All rights reserved.'
+__copyright__ = '2019-2020 Tyler J Nigon. All rights reserved.'
 __author__ = 'Tyler J Nigon'
 __license__ = (
         'The MIT license'

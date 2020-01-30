@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="python">
   <head>
     <meta charset="utf-8" />
-    <title>3. Tutorial: hsio &#8212; hs_process 0.0.1 documentation</title>
+    <title>2. Tutorial: hsio &#8212; hs_process 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
@@ -17,7 +17,7 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="4. API" href="my_hs_process_api.html" />
+    <link rel="next" title="3. API" href="my_hs_process_api.html" />
     <link rel="prev" title="1. Setup and Installation" href="installation.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -61,19 +61,18 @@
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">1. Setup and Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html#Windows-Setup">2. Windows Setup</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="my_hs_process_api.html">4. API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/hs_process.batch.html">4.1.1. batch</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/hs_process.defaults.html">4.1.2. defaults</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/hs_process.hsio.html">4.1.3. hsio</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/hs_process.hstools.html">4.1.4. hstools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/hs_process.segment.html">4.1.5. segment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/hs_process.spatial_mod.html">4.1.6. spatial_mod</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/hs_process.spec_mod.html">4.1.7. spec_mod</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="my_hs_process_api.html">3. API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.batch.html">3.1.1. batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.defaults.html">3.1.2. defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.hsio.html">3.1.3. hsio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.hstools.html">3.1.4. hstools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.segment.html">3.1.5. segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.spatial_mod.html">3.1.6. spatial_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.spec_mod.html">3.1.7. spec_mod</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">5. License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">4. License</a></li>
 </ul>
 </ul>
 </li>
@@ -87,7 +86,7 @@
     </a>
   </li>
   <li>
-    <a href="my_hs_process_api.html" title="Next Chapter: 4. API"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">4. API &raquo;</span>
+    <a href="my_hs_process_api.html" title="Next Chapter: 3. API"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">3. API &raquo;</span>
     </a>
   </li>
               
@@ -121,15 +120,15 @@
   <div class="row">
       <div class="col-md-3">
         <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
-<li><a class="reference internal" href="#">3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a><ul>
-<li><a class="reference internal" href="#Introduction">3.1. Introduction</a></li>
-<li><a class="reference internal" href="#hsio.read_cube">3.2. <code class="docutils literal notranslate"><span class="pre">hsio.read_cube</span></code></a></li>
-<li><a class="reference internal" href="#hsio.read_spec">3.3. <code class="docutils literal notranslate"><span class="pre">hsio.read_spec</span></code></a></li>
-<li><a class="reference internal" href="#hsio.set_io_defaults">3.4. <code class="docutils literal notranslate"><span class="pre">hsio.set_io_defaults</span></code></a></li>
-<li><a class="reference internal" href="#hsio.show_img">3.5. <code class="docutils literal notranslate"><span class="pre">hsio.show_img</span></code></a></li>
-<li><a class="reference internal" href="#hsio.write_cube">3.6. <code class="docutils literal notranslate"><span class="pre">hsio.write_cube</span></code></a></li>
-<li><a class="reference internal" href="#hsio.write_spec">3.7. <code class="docutils literal notranslate"><span class="pre">hsio.write_spec</span></code></a></li>
-<li><a class="reference internal" href="#write_tif">3.8. <code class="docutils literal notranslate"><span class="pre">write_tif</span></code></a></li>
+<li><a class="reference internal" href="#">2. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a><ul>
+<li><a class="reference internal" href="#Introduction">2.1. Introduction</a></li>
+<li><a class="reference internal" href="#hsio.read_cube">2.2. <code class="docutils literal notranslate"><span class="pre">hsio.read_cube</span></code></a></li>
+<li><a class="reference internal" href="#hsio.read_spec">2.3. <code class="docutils literal notranslate"><span class="pre">hsio.read_spec</span></code></a></li>
+<li><a class="reference internal" href="#hsio.set_io_defaults">2.4. <code class="docutils literal notranslate"><span class="pre">hsio.set_io_defaults</span></code></a></li>
+<li><a class="reference internal" href="#hsio.show_img">2.5. <code class="docutils literal notranslate"><span class="pre">hsio.show_img</span></code></a></li>
+<li><a class="reference internal" href="#hsio.write_cube">2.6. <code class="docutils literal notranslate"><span class="pre">hsio.write_cube</span></code></a></li>
+<li><a class="reference internal" href="#hsio.write_spec">2.7. <code class="docutils literal notranslate"><span class="pre">hsio.write_spec</span></code></a></li>
+<li><a class="reference internal" href="#write_tif">2.8. <code class="docutils literal notranslate"><span class="pre">write_tif</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -346,9 +345,9 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <div class="section" id="Tutorial:-hsio">
-<h1>3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code><a class="headerlink" href="#Tutorial:-hsio" title="Permalink to this headline">¶</a></h1>
+<h1>2. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code><a class="headerlink" href="#Tutorial:-hsio" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="Introduction">
-<h2>3.1. Introduction<a class="headerlink" href="#Introduction" title="Permalink to this headline">¶</a></h2>
+<h2>2.1. Introduction<a class="headerlink" href="#Introduction" title="Permalink to this headline">¶</a></h2>
 <p>Before trying the tutorials, be sure <code class="docutils literal notranslate"><span class="pre">hs_process</span></code> and its dependencies are <a class="reference external" href="installation.html#">properly installed</a>. If you installed in a <em>virtual environment</em>, first check we are indeed using the Python instance that was installed with the virtual environment:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -373,7 +372,7 @@ Python install location: c:\users\nigo0024\appdata\local\continuum\anaconda3\env
 </div>
 <hr class="docutils" />
 <div class="section" id="hsio.read_cube">
-<h2>3.2. <code class="docutils literal notranslate"><span class="pre">hsio.read_cube</span></code><a class="headerlink" href="#hsio.read_cube" title="Permalink to this headline">¶</a></h2>
+<h2>2.2. <code class="docutils literal notranslate"><span class="pre">hsio.read_cube</span></code><a class="headerlink" href="#hsio.read_cube" title="Permalink to this headline">¶</a></h2>
 <p>Reads in a hyperspectral datacube using the <a class="reference external" href="http://www.spectralpython.net/">Spectral Python</a> package. <a class="reference external" href="api/hs_process.hsio.html#hs_process.hsio.read_cube">[API]</a></p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
 <div class="nbinput nblast docutils container">
@@ -439,7 +438,7 @@ name_plot: 7
 </div>
 <hr class="docutils" />
 <div class="section" id="hsio.read_spec">
-<h2>3.3. <code class="docutils literal notranslate"><span class="pre">hsio.read_spec</span></code><a class="headerlink" href="#hsio.read_spec" title="Permalink to this headline">¶</a></h2>
+<h2>2.3. <code class="docutils literal notranslate"><span class="pre">hsio.read_spec</span></code><a class="headerlink" href="#hsio.read_spec" title="Permalink to this headline">¶</a></h2>
 <p>Reads in a hyperspectral spectrum file using the using the <a class="reference external" href="http://www.spectralpython.net/">Spectral Python</a> package. <a class="reference external" href="api/hs_process.hsio.html#hs_process.hsio.read_spec">[API]</a></p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
 <div class="nbinput nblast docutils container">
@@ -505,7 +504,7 @@ name_plot: 611
 </div>
 <hr class="docutils" />
 <div class="section" id="hsio.set_io_defaults">
-<h2>3.4. <code class="docutils literal notranslate"><span class="pre">hsio.set_io_defaults</span></code><a class="headerlink" href="#hsio.set_io_defaults" title="Permalink to this headline">¶</a></h2>
+<h2>2.4. <code class="docutils literal notranslate"><span class="pre">hsio.set_io_defaults</span></code><a class="headerlink" href="#hsio.set_io_defaults" title="Permalink to this headline">¶</a></h2>
 <p>Sets any of the ENVI file writing parameters to <code class="docutils literal notranslate"><span class="pre">hsio</span></code>; if any parameter is left unchanged from its default, it will remain as-is (i.e., it will not be set). <a class="reference external" href="api/hs_process.hsio.html#hs_process.hsio.set_io_defaults">[API]</a></p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
 <div class="nbinput nblast docutils container">
@@ -569,7 +568,7 @@ name_plot: 611
 </div>
 <hr class="docutils" />
 <div class="section" id="hsio.show_img">
-<h2>3.5. <code class="docutils literal notranslate"><span class="pre">hsio.show_img</span></code><a class="headerlink" href="#hsio.show_img" title="Permalink to this headline">¶</a></h2>
+<h2>2.5. <code class="docutils literal notranslate"><span class="pre">hsio.show_img</span></code><a class="headerlink" href="#hsio.show_img" title="Permalink to this headline">¶</a></h2>
 <p>Displays a datacube as a 3-band RGB image using <a class="reference external" href="https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.imshow.html#">Matplotlib</a>. <a class="reference external" href="api/hs_process.hsio.html#hs_process.hsio.show_img">[API]</a></p>
 <p>Load <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code> modules</p>
 <div class="nbinput nblast docutils container">
@@ -634,7 +633,7 @@ name_plot: 611
 </div>
 <hr class="docutils" />
 <div class="section" id="hsio.write_cube">
-<h2>3.6. <code class="docutils literal notranslate"><span class="pre">hsio.write_cube</span></code><a class="headerlink" href="#hsio.write_cube" title="Permalink to this headline">¶</a></h2>
+<h2>2.6. <code class="docutils literal notranslate"><span class="pre">hsio.write_cube</span></code><a class="headerlink" href="#hsio.write_cube" title="Permalink to this headline">¶</a></h2>
 <p>Wrapper function that accesses the <a class="reference external" href="http://www.spectralpython.net/">Spectral Python</a> package to save a datacube to file. <a class="reference external" href="api/hs_process.hsio.html#hs_process.hsio.write_cube">[API]</a></p>
 <p>Load <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code> modules</p>
 <div class="nbinput nblast docutils container">
@@ -685,7 +684,7 @@ Saving F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gig
 </div>
 <hr class="docutils" />
 <div class="section" id="hsio.write_spec">
-<h2>3.7. <code class="docutils literal notranslate"><span class="pre">hsio.write_spec</span></code><a class="headerlink" href="#hsio.write_spec" title="Permalink to this headline">¶</a></h2>
+<h2>2.7. <code class="docutils literal notranslate"><span class="pre">hsio.write_spec</span></code><a class="headerlink" href="#hsio.write_spec" title="Permalink to this headline">¶</a></h2>
 <p>Wrapper function that accesses the <a class="reference external" href="http://www.spectralpython.net/">Spectral Python</a> package to save a single spectra to file. <a class="reference external" href="api/hs_process.hsio.html#hs_process.hsio.write_spec">[API]</a></p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
 <div class="nbinput nblast docutils container">
@@ -734,7 +733,7 @@ Saving F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gig
 </div>
 <hr class="docutils" />
 <div class="section" id="write_tif">
-<h2>3.8. <code class="docutils literal notranslate"><span class="pre">write_tif</span></code><a class="headerlink" href="#write_tif" title="Permalink to this headline">¶</a></h2>
+<h2>2.8. <code class="docutils literal notranslate"><span class="pre">write_tif</span></code><a class="headerlink" href="#write_tif" title="Permalink to this headline">¶</a></h2>
 <p>Wrapper function that accesses the <a class="reference external" href="https://pypi.org/project/GDAL/">GDAL Python package</a> to save a small datacube subset (i.e., three bands or less) to file. <a class="reference external" href="api/hs_process.hsio.html#hs_process.hsio.write_tif">[API]</a></p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
 <div class="nbinput nblast docutils container">

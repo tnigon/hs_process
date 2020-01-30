@@ -22,221 +22,222 @@ class _dotdict(dict):
     __delattr__ = dict.__delitem__
 
 
-class defaults:
+class defaults(object):
     '''
     Class containing default values and/or settings for various
     ``hs_process`` tools/functions.
     '''
-    crop_defaults = _dotdict({
-            'directory': None,
-            'name_short': None,
-            'name_long': None,
-            'ext': 'bip',
-            'pix_e_ul': 0,
-            'pix_n_ul': 0,
-            'alley_size_e_pix': None,  # set to `None` because should be set
-            'alley_size_n_pix': None,  # intentionally
-            'alley_size_e_m': None,
-            'alley_size_n_m': None,
-            'buf_e_pix': None,
-            'buf_n_pix': None,
-            'buf_e_m': None,
-            'buf_n_m': None,
-            'crop_e_pix': 90,
-            'crop_n_pix': 120,
-            'crop_e_m': None,
-            'crop_n_m': None,
-            'plot_id': None})
-    '''
-    Default values for performing spatial cropping on images. ``crop_defaults``
-    is referenced by the ``spatial_mod.crop_single()`` function to get default
-    values if various user-parameters are not passed or are left to ``None``.
-    In this way, ``defaults.crop_defaults`` can be modified once by the user to
-    avoid having to pass the same parameter(s) repeatedly if executing
-    ``spatial_mod.crop_single()`` many times, such as in a for loop.
+    def __init__(self):
+        self.crop_defaults = _dotdict({
+                'directory': None,
+                'name_short': None,
+                'name_long': None,
+                'ext': 'bip',
+                'pix_e_ul': 0,
+                'pix_n_ul': 0,
+                'alley_size_e_pix': None,  # set to `None` because should be set
+                'alley_size_n_pix': None,  # intentionally
+                'alley_size_e_m': None,
+                'alley_size_n_m': None,
+                'buf_e_pix': None,
+                'buf_n_pix': None,
+                'buf_e_m': None,
+                'buf_n_m': None,
+                'crop_e_pix': 90,
+                'crop_n_pix': 120,
+                'crop_e_m': None,
+                'crop_n_m': None,
+                'plot_id': None})
+        '''
+        Default values for performing spatial cropping on images. ``crop_defaults``
+        is referenced by the ``spatial_mod.crop_single()`` function to get default
+        values if various user-parameters are not passed or are left to ``None``.
+        In this way, ``defaults.crop_defaults`` can be modified once by the user to
+        avoid having to pass the same parameter(s) repeatedly if executing
+        ``spatial_mod.crop_single()`` many times, such as in a for loop.
 
-    Attributes:
-        crop_defaults.directory (``str``): File directory of the input image
-            to be cropped (default: ``None``).
-        crop_defaults.name_short (``str``): Part of the datacube name that is
-            generally not repeated across many datacubes captured at the
-            same time. In the ``name_long`` example above,
-            ``name_short`` = "plot_101_pika_gige_2". The part of the
-            filename that is ``name_short`` should end with a dash (but
-            should not include that dash as it belongs to ``name_long``;
-            default: ``None``).
-        crop_defaults.name_long (``str``): Part of the datacube name that tends
-            to be long and is repeated across many datacubes captured at
-            the same time. This is an artifact of Resonon/Spectronon
-            software, and may be desireable to shorten and/or make more
-            informative. For example, a datacube may have the following name:
-            *"plot_101_pika_gige_2-Radiance From Raw Data-Georectify Airborne Datacube-Reflectance from Radiance Data and Measured Reference Spectrum.bip"*
-            and another datacube captured in the same campaign may be named:
-            *"plot_102_pika_gige_1-Radiance From Raw Data-Georectify Airborne Datacube-Reflectance from Radiance Data and Measured Reference Spectrum.bip"*
-            ``name_long`` should refer to everything after the first dash
-            (including the first dash) up to the file extension (".bip"):
-            ``name_long`` = *"-Radiance From Raw Data-Georectify Airborne Datacube-Reflectance from Radiance Data and Measured Reference Spectrum"*
-            (default: ``None``).
-        crop_defaults.ext (``str``): File extension to save the cropped image
-            (default: 'bip').
-        crop_defaults.pix_e_ul (``int``): upper left pixel column (easting) to
-            begin cropping (default: 0).
-        crop_defaults.pix_n_ul (``int``): upper left pixel row (northing) to
-            begin cropping (default: 0).
-        crop_defaults.buf_e_pix (``int``): The buffer distance in the easting
-            direction (in pixel units) to be applied after calculating the
-            original crop area (default: 0).
-        crop_defaults.buf_n_pix (``int``): The buffer distance in the northing
-            direction (in pixel units) to be applied after calculating the
-            original crop area (default: 0).
-        crop_defaults.buf_e_m (``float``): The buffer distance in the easting
-            direction (in map units; e.g., meters) to be applied after
-            calculating the original crop area; the buffer is considered
-            after ``crop_X_m``/``crop_X_pix``. A positive value will
-            reduce the size of ``crop_X_m``/``crop_X_pix``, and a
-            negative value will increase it (default: ``None``).
-        crop_defaults.buf_n_m (``float``): The buffer distance in the northing
-            direction (in map units; e.g., meters) to be applied after
-            calculating the original crop area; the buffer is considered
-            after ``crop_X_m``/``crop_X_pix``. A positive value will
-            reduce the size of ``crop_X_m``/``crop_X_pix``, and a
-            negative value will increase it (default: ``None``).
-        crop_defaults.crop_e_pix (``int``): number of pixels in each row in the
-            cropped image (default: 90).
-        crop_defaults.crop_n_pix (``int``): number of pixels in each column in
-            the cropped image (default: 120).
-        crop_defaults.crop_e_m (``float``): length of each row (easting
-            direction) of the cropped image in map units (e.g., meters;
-            default: ``None``).
-        crop_defaults.crop_n_m (``float``): length of each column (northing
-            direction) of the cropped image in map units (e.g., meters;
-            default: ``None``).
-        crop_defaults.plot_id (``int``): the plot ID of the area to be cropped
-            (default: ``None``).
-    '''
+        Attributes:
+            crop_defaults.directory (``str``): File directory of the input image
+                to be cropped (default: ``None``).
+            crop_defaults.name_short (``str``): Part of the datacube name that is
+                generally not repeated across many datacubes captured at the
+                same time. In the ``name_long`` example above,
+                ``name_short`` = "plot_101_pika_gige_2". The part of the
+                filename that is ``name_short`` should end with a dash (but
+                should not include that dash as it belongs to ``name_long``;
+                default: ``None``).
+            crop_defaults.name_long (``str``): Part of the datacube name that tends
+                to be long and is repeated across many datacubes captured at
+                the same time. This is an artifact of Resonon/Spectronon
+                software, and may be desireable to shorten and/or make more
+                informative. For example, a datacube may have the following name:
+                *"plot_101_pika_gige_2-Radiance From Raw Data-Georectify Airborne Datacube-Reflectance from Radiance Data and Measured Reference Spectrum.bip"*
+                and another datacube captured in the same campaign may be named:
+                *"plot_102_pika_gige_1-Radiance From Raw Data-Georectify Airborne Datacube-Reflectance from Radiance Data and Measured Reference Spectrum.bip"*
+                ``name_long`` should refer to everything after the first dash
+                (including the first dash) up to the file extension (".bip"):
+                ``name_long`` = *"-Radiance From Raw Data-Georectify Airborne Datacube-Reflectance from Radiance Data and Measured Reference Spectrum"*
+                (default: ``None``).
+            crop_defaults.ext (``str``): File extension to save the cropped image
+                (default: 'bip').
+            crop_defaults.pix_e_ul (``int``): upper left pixel column (easting) to
+                begin cropping (default: 0).
+            crop_defaults.pix_n_ul (``int``): upper left pixel row (northing) to
+                begin cropping (default: 0).
+            crop_defaults.buf_e_pix (``int``): The buffer distance in the easting
+                direction (in pixel units) to be applied after calculating the
+                original crop area (default: 0).
+            crop_defaults.buf_n_pix (``int``): The buffer distance in the northing
+                direction (in pixel units) to be applied after calculating the
+                original crop area (default: 0).
+            crop_defaults.buf_e_m (``float``): The buffer distance in the easting
+                direction (in map units; e.g., meters) to be applied after
+                calculating the original crop area; the buffer is considered
+                after ``crop_X_m``/``crop_X_pix``. A positive value will
+                reduce the size of ``crop_X_m``/``crop_X_pix``, and a
+                negative value will increase it (default: ``None``).
+            crop_defaults.buf_n_m (``float``): The buffer distance in the northing
+                direction (in map units; e.g., meters) to be applied after
+                calculating the original crop area; the buffer is considered
+                after ``crop_X_m``/``crop_X_pix``. A positive value will
+                reduce the size of ``crop_X_m``/``crop_X_pix``, and a
+                negative value will increase it (default: ``None``).
+            crop_defaults.crop_e_pix (``int``): number of pixels in each row in the
+                cropped image (default: 90).
+            crop_defaults.crop_n_pix (``int``): number of pixels in each column in
+                the cropped image (default: 120).
+            crop_defaults.crop_e_m (``float``): length of each row (easting
+                direction) of the cropped image in map units (e.g., meters;
+                default: ``None``).
+            crop_defaults.crop_n_m (``float``): length of each column (northing
+                direction) of the cropped image in map units (e.g., meters;
+                default: ``None``).
+            crop_defaults.plot_id (``int``): the plot ID of the area to be cropped
+                (default: ``None``).
+        '''
 
-    envi_write = _dotdict({'dtype': np.float32,
-                           'force': False,
-                           'ext': '',
-                           'interleave': 'bip',
-                           'byteorder': 0})
-    '''
-    Attributes for writing ENVI datacubes to file, following the convention of
-    the `Spectral Python`_ `envi.save_image()`_ parameter options for writing
-    an ENVI datacube to file.
+        self.envi_write = _dotdict({'dtype': np.float32,
+                                    'force': False,
+                                    'ext': '',
+                                    'interleave': 'bip',
+                                    'byteorder': 0})
+        '''
+        Attributes for writing ENVI datacubes to file, following the convention of
+        the `Spectral Python`_ `envi.save_image()`_ parameter options for writing
+        an ENVI datacube to file.
 
-    Attributes:
-        envi_write.dtype (``numpy.dtype`` or ``str``): The data type with which
-            to store the image. For example, to store the image in 16-bit
-            unsigned integer format, the argument could be any of
-            ``numpy.uint16``, ``'u2'``, ``'uint16'``, or ``'H'`` (default:
-            ``np.float32``).
-        envi_write.force (``bool``): If ``hdr_file`` or its associated image
-            file exist, ``force=True`` will overwrite the files; otherwise, an
-            exception will be raised if either file exists (default:
-            ``False``).
-        envi_write.ext (``str``): The extension to use for saving the image
-            file; if not specified, a default extension is determined based on
-            the ``interleave``. For example, if ``interleave``='bip', then
-            ``ext`` is set to 'bip' as well. If ``ext`` is an empty string, the
-            image file will have the same name as the .hdr, but without the
-            '.hdr' extension (default: ``None``).
-        envi_write.interleave (``str``): The band interleave format to use for
-            writing the file; ``interleave`` should be one of 'bil', 'bip', or
-            'bsq' (default: 'bip').
-        envi_write.byteorder (``int`` or ``str``): Specifies the byte order
-            (endian-ness) of the data as written to disk. For little endian,
-            this value should be either 0 or 'little'. For big endian, it
-            should be either 1 or 'big'. If not specified, native byte order
-            will be used (default: ``None``).
+        Attributes:
+            envi_write.dtype (``numpy.dtype`` or ``str``): The data type with which
+                to store the image. For example, to store the image in 16-bit
+                unsigned integer format, the argument could be any of
+                ``numpy.uint16``, ``'u2'``, ``'uint16'``, or ``'H'`` (default:
+                ``np.float32``).
+            envi_write.force (``bool``): If ``hdr_file`` or its associated image
+                file exist, ``force=True`` will overwrite the files; otherwise, an
+                exception will be raised if either file exists (default:
+                ``False``).
+            envi_write.ext (``str``): The extension to use for saving the image
+                file; if not specified, a default extension is determined based on
+                the ``interleave``. For example, if ``interleave``='bip', then
+                ``ext`` is set to 'bip' as well. If ``ext`` is an empty string, the
+                image file will have the same name as the .hdr, but without the
+                '.hdr' extension (default: ``None``).
+            envi_write.interleave (``str``): The band interleave format to use for
+                writing the file; ``interleave`` should be one of 'bil', 'bip', or
+                'bsq' (default: 'bip').
+            envi_write.byteorder (``int`` or ``str``): Specifies the byte order
+                (endian-ness) of the data as written to disk. For little endian,
+                this value should be either 0 or 'little'. For big endian, it
+                should be either 1 or 'big'. If not specified, native byte order
+                will be used (default: ``None``).
 
-    .. _Spectral Python: http://www.spectralpython.net/
-    .. _envi.save_image(): http://www.spectralpython.net/class_func_ref.html#spectral.io.envi.save_image
-    '''
+        .. _Spectral Python: http://www.spectralpython.net/
+        .. _envi.save_image(): http://www.spectralpython.net/class_func_ref.html#spectral.io.envi.save_image
+        '''
 
-    spat_crop_cols = _dotdict({
-            'directory': 'directory',
-            'fname': 'fname',
-            'name_short': 'name_short',
-            'name_long': 'name_long',
-            'ext': 'ext',
-            'pix_e_ul': 'pix_e_ul',
-            'pix_n_ul': 'pix_n_ul',
-            'alley_size_e_m': 'alley_size_e_m',
-            'alley_size_n_m': 'alley_size_n_m',
-            'alley_size_e_pix': 'alley_size_e_pix',
-            'alley_size_n_pix': 'alley_size_n_pix',
-            'buf_e_m': 'buf_e_m',
-            'buf_n_m': 'buf_n_m',
-            'buf_e_pix': 'buf_e_pix',
-            'buf_n_pix': 'buf_n_pix',
-            'crop_e_m': 'crop_e_m',
-            'crop_n_m': 'crop_n_m',
-            'crop_e_pix': 'crop_e_pix',
-            'crop_n_pix': 'crop_n_pix',
-            'plot_id': 'plot_id',
-            'n_plots_x': 'n_plots_x',
-            'n_plots_y': 'n_plots_y',
-            'n_plots': 'n_plots'})
-    '''
-    Default column names for performing batch spatial cropping on
-    images. Useful when batch processing images via `batch.spatial_crop()`_.
-    ``batch.spatial_crop()`` takes a parameter ``fname_sheet``, which can be a
-    filename to a spreadsheet or a ``pandas.DataFrame``.
-    ``defaults.spat_crop_cols`` should be modified if the column names in
-    ``fname_sheet`` are different than what is expected (see documentation for
-    `batch.spatial_crop()`_ to know the expected column names).
+        self.spat_crop_cols = _dotdict({
+                'directory': 'directory',
+                'fname': 'fname',
+                'name_short': 'name_short',
+                'name_long': 'name_long',
+                'ext': 'ext',
+                'pix_e_ul': 'pix_e_ul',
+                'pix_n_ul': 'pix_n_ul',
+                'alley_size_e_m': 'alley_size_e_m',
+                'alley_size_n_m': 'alley_size_n_m',
+                'alley_size_e_pix': 'alley_size_e_pix',
+                'alley_size_n_pix': 'alley_size_n_pix',
+                'buf_e_m': 'buf_e_m',
+                'buf_n_m': 'buf_n_m',
+                'buf_e_pix': 'buf_e_pix',
+                'buf_n_pix': 'buf_n_pix',
+                'crop_e_m': 'crop_e_m',
+                'crop_n_m': 'crop_n_m',
+                'crop_e_pix': 'crop_e_pix',
+                'crop_n_pix': 'crop_n_pix',
+                'plot_id': 'plot_id',
+                'n_plots_x': 'n_plots_x',
+                'n_plots_y': 'n_plots_y',
+                'n_plots': 'n_plots'})
+        '''
+        Default column names for performing batch spatial cropping on
+        images. Useful when batch processing images via `batch.spatial_crop()`_.
+        ``batch.spatial_crop()`` takes a parameter ``fname_sheet``, which can be a
+        filename to a spreadsheet or a ``pandas.DataFrame``.
+        ``defaults.spat_crop_cols`` should be modified if the column names in
+        ``fname_sheet`` are different than what is expected (see documentation for
+        `batch.spatial_crop()`_ to know the expected column names).
 
-    Attributes:
-        spat_crop_cols.directory (``str``): column name for input directory
-            (default: 'directory').
-        spat_crop_cols.fname (``str``): column name for input fname
-            (default: 'fname').
-        spat_crop_cols.name_short (``str``): column name for input image's
-            ``name_short`` (default: 'name_short').
-        spat_crop_cols.name_long (``str``): column name for input image's
-            ``name_long`` (default: 'name_long').
-        spat_crop_cols.ext (``str``): column name for file extension of input
-            image (default: 'ext').
-        spat_crop_cols.pix_e_ul (``str``): column name for ``pix_e_ul``
-            (default: 'pix_e_ul').
-        spat_crop_cols.pix_n_ul (``str``): column name for ``pix_n_ul``
-            (default: 'pix_n_ul').
-        spat_crop_cols.alley_size_e_pix (``str``): column name for
-            ``alley_size_e_pix`` (default: 'alley_size_e_pix').
-        spat_crop_cols.alley_size_n_pix (``str``): column name for
-            ``alley_size_n_pix`` (default: 'alley_size_n_pix').
-        spat_crop_cols.alley_size_e_m (``str``): column name for
-            ``alley_size_e_m`` (default: 'alley_size_e_m').
-        spat_crop_cols.alley_size_n_m (``str``): column name for
-            ``alley_size_n_m`` (default: 'alley_size_n_m').
-        spat_crop_cols.buf_e_pix (``str``): column name for ``buf_e_pix``
-            (default: 'buf_e_pix').
-        spat_crop_cols.buf_n_pix (``str``): column name for ``buf_n_pix``
-            (default: 'buf_n_pix').
-        spat_crop_cols.buf_e_m (``str``): column name for ``buf_e_m`` (default:
-            'buf_e_m').
-        spat_crop_cols.buf_n_m (``str``): column name for ``buf_n_m`` (default:
-            'buf_n_m').
-        spat_crop_cols.crop_e_pix (``str``): column name for ``crop_e_pix``
-            (default: 'crop_e_pix').
-        spat_crop_cols.crop_n_pix (``str``): column name for ``crop_n_pix``
-            (default: 'crop_n_pix').
-        spat_crop_cols.crop_e_m (``str``): column name for ``crop_e_m``
-            (default: 'crop_e_m').
-        spat_crop_cols.crop_n_m (``str``): column name for ``crop_n_m``
-            (default: 'crop_n_m').
-        spat_crop_cols.plot_id (``str``): column name for ``plot_id``
-            (default: 'crop_n_pix').
-        spat_crop_cols.plot_id (``str``): column name for ``n_plots_x``
-            (default: 'n_plots_x').
-        spat_crop_cols.n_plots_y (``str``): column name for ``n_plots_y``
-            (default: 'n_plots_y').
-        spat_crop_cols.n_plots (``str``): column name for ``n_plots``
-            (default: 'n_plots').
+        Attributes:
+            spat_crop_cols.directory (``str``): column name for input directory
+                (default: 'directory').
+            spat_crop_cols.fname (``str``): column name for input fname
+                (default: 'fname').
+            spat_crop_cols.name_short (``str``): column name for input image's
+                ``name_short`` (default: 'name_short').
+            spat_crop_cols.name_long (``str``): column name for input image's
+                ``name_long`` (default: 'name_long').
+            spat_crop_cols.ext (``str``): column name for file extension of input
+                image (default: 'ext').
+            spat_crop_cols.pix_e_ul (``str``): column name for ``pix_e_ul``
+                (default: 'pix_e_ul').
+            spat_crop_cols.pix_n_ul (``str``): column name for ``pix_n_ul``
+                (default: 'pix_n_ul').
+            spat_crop_cols.alley_size_e_pix (``str``): column name for
+                ``alley_size_e_pix`` (default: 'alley_size_e_pix').
+            spat_crop_cols.alley_size_n_pix (``str``): column name for
+                ``alley_size_n_pix`` (default: 'alley_size_n_pix').
+            spat_crop_cols.alley_size_e_m (``str``): column name for
+                ``alley_size_e_m`` (default: 'alley_size_e_m').
+            spat_crop_cols.alley_size_n_m (``str``): column name for
+                ``alley_size_n_m`` (default: 'alley_size_n_m').
+            spat_crop_cols.buf_e_pix (``str``): column name for ``buf_e_pix``
+                (default: 'buf_e_pix').
+            spat_crop_cols.buf_n_pix (``str``): column name for ``buf_n_pix``
+                (default: 'buf_n_pix').
+            spat_crop_cols.buf_e_m (``str``): column name for ``buf_e_m`` (default:
+                'buf_e_m').
+            spat_crop_cols.buf_n_m (``str``): column name for ``buf_n_m`` (default:
+                'buf_n_m').
+            spat_crop_cols.crop_e_pix (``str``): column name for ``crop_e_pix``
+                (default: 'crop_e_pix').
+            spat_crop_cols.crop_n_pix (``str``): column name for ``crop_n_pix``
+                (default: 'crop_n_pix').
+            spat_crop_cols.crop_e_m (``str``): column name for ``crop_e_m``
+                (default: 'crop_e_m').
+            spat_crop_cols.crop_n_m (``str``): column name for ``crop_n_m``
+                (default: 'crop_n_m').
+            spat_crop_cols.plot_id (``str``): column name for ``plot_id``
+                (default: 'crop_n_pix').
+            spat_crop_cols.plot_id (``str``): column name for ``n_plots_x``
+                (default: 'n_plots_x').
+            spat_crop_cols.n_plots_y (``str``): column name for ``n_plots_y``
+                (default: 'n_plots_y').
+            spat_crop_cols.n_plots (``str``): column name for ``n_plots``
+                (default: 'n_plots').
 
-    .. _batch.spatial_crop(): hs_process.batch.html#hs_process.batch.spatial_crop
-    '''
+        .. _batch.spatial_crop(): hs_process.batch.html#hs_process.batch.spatial_crop
+        '''
 #    dtype = np.float32
 #    force = False
 #    ext = ''
@@ -333,7 +334,7 @@ class hsio(object):
         if self.fname_hdr_spec is not None:
             self.read_spec(self.fname_hdr_spec)
 
-        self.defaults = defaults
+        self.defaults = defaults()
 
     def _append_hdr_fname(self, fname_hdr, key, value):
         '''
@@ -949,6 +950,11 @@ class hsio(object):
             inline (``bool``): If ``True``, displays in the IPython console;
                 else displays in a pop-out window (default: ``True``).
 
+        Note:
+            The `inline` parameter points to the `hsio.show_img` function, and
+            is only expected to work in an IPython console (not intended to be
+            used in a normal Python console).
+
         Example:
             Load ``hsio`` and ``spatial_mod`` modules
 
@@ -977,7 +983,11 @@ class hsio(object):
         if inline is True:
             get_ipython().run_line_magic('matplotlib', 'inline')
         else:
-            get_ipython().run_line_magic('matplotlib', 'auto')
+            try:
+                get_ipython().run_line_magic('matplotlib', 'auto')
+            except ModuleNotFoundError:
+                pass  # just go with whatever is already set
+
 
         if spyfile is None:
             spyfile = self.spyfile
@@ -1126,15 +1136,20 @@ class hsio(object):
             return
 
         if dtype is None:
-            dtype = self.defaults.envi_write['dtype']
+#            dtype = self.defaults.envi_write['dtype']
+            dtype = self.defaults.envi_write.dtype
         if force is None:
-            force = self.defaults.envi_write['force']
+#            force = self.defaults.envi_write['force']
+            force = self.defaults.envi_write.force
         if ext is None:
-            ext = self.defaults.envi_write['ext']
+#            ext = self.defaults.envi_write['ext']
+            ext = self.defaults.envi_write.ext
         if interleave is None:
-            interleave = self.defaults.envi_write['interleave']
+#            interleave = self.defaults.envi_write['interleave']
+            interleave = self.defaults.envi_write.interleave
         if byteorder is None:
-            byteorder = self.defaults.envi_write['byteorder']
+#            byteorder = self.defaults.envi_write['byteorder']
+            byteorder = self.defaults.envi_write.byteorder
 
         if metadata is None and isinstance(spyfile, SpyFile.SpyFile):
             metadata = spyfile.metadata
@@ -1371,7 +1386,7 @@ class hsio(object):
         assert os.path.isdir(os.path.dirname(fname_tif)) is True, msg1
         msg2 = ('`show_img` must be one of `False`, "inline", or "popout". '
                 'Please modify `show_img` paramater accordingly.\n')
-        assert show_img in [False, 'inline', 'popout'], msg2
+        assert show_img in [False, 'inline', 'popout', None], msg2
 
         if spyfile is None:
             spyfile = self.spyfile
