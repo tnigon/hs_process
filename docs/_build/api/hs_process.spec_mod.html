@@ -13,8 +13,6 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="4. License" href="../license.html" />
@@ -135,7 +133,7 @@
     <div class="body col-md-9 content" role="main">
       
   <div class="section" id="spec-mod">
-<h1>3.1.7. spec_mod<a class="headerlink" href="#spec-mod" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">3.1.7. </span>spec_mod<a class="headerlink" href="#spec-mod" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="hs_process.spec_mod">
 <em class="property">class </em><code class="sig-prename descclassname">hs_process.</code><code class="sig-name descname">spec_mod</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/spec_mod.html#spec_mod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spec_mod" title="Permalink to this definition">¶</a></dt>
@@ -174,15 +172,15 @@ manipulated.</p>
 </dl>
 <p class="rubric">Example</p>
 <p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code> modules</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">spec_mod</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">spec_mod</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_segment</span> <span class="o">=</span> <span class="n">segment</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Load datacube</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_segment</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_segment</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_segment</span><span class="o">.</span><span class="n">spyfile</span>
 <span class="go">Data Source:   &#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip&#39;</span>
 <span class="go"># Rows:            617</span>
@@ -229,8 +227,8 @@ hyperspectral datacube (<code class="docutils literal notranslate"><span class="
 </dl>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">spec_mod</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">spec_mod</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io1</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io1</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">)</span>
@@ -241,18 +239,18 @@ hyperspectral datacube (<code class="docutils literal notranslate"><span class="
 <em>420 nm</em> and above <em>880 nm</em>, as well as the bands near the oxygen
 absorption (i.e., <em>760-776 nm</em>) and water absorption
 (i.e., <em>813-827 nm</em>) regions.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_clip</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_spec_mod</span><span class="o">.</span><span class="n">spectral_clip</span><span class="p">(</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_clip</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_spec_mod</span><span class="o">.</span><span class="n">spectral_clip</span><span class="p">(</span>
 <span class="go">        wl_bands=[[0, 420], [760, 776], [813, 827], [880, 1000]])</span>
 </pre></div>
 </div>
 <p>Save the clipped datacube</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr_clip</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip.hdr&#39;</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr_clip</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io1</span><span class="o">.</span><span class="n">write_cube</span><span class="p">(</span><span class="n">fname_hdr_clip</span><span class="p">,</span> <span class="n">array_clip</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Initialize a second instance of <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and read in the clipped
 cube to compare the clipped cube to the unclipped cube</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io2</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>  <span class="c1"># initialize a second instance to compare cubes</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io2</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>  <span class="c1"># initialize a second instance to compare cubes</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io2</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname_hdr_clip</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io1</span><span class="o">.</span><span class="n">spyfile</span>
 <span class="go">Data Source:   &#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip&#39;</span>
@@ -266,7 +264,7 @@ cube to compare the clipped cube to the unclipped cube</p>
 </div>
 <p>The unclipped cube (above) has 240 spectral bands, while the
 clipped cube (below) has 210.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io2</span><span class="o">.</span><span class="n">spyfile</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io2</span><span class="o">.</span><span class="n">spyfile</span>
 <span class="go">Data Source:   &#39;F:\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip&#39;</span>
 <span class="go">    # Rows:            617</span>
 <span class="go">    # Samples:        1827</span>
@@ -312,8 +310,8 @@ images.</p>
 </div>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">spec_mod</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">spec_mod</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">)</span>
@@ -322,12 +320,12 @@ images.</p>
 </div>
 <p>Use <code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_smooth</span></code> to perform a <em>Savitzky-Golay</em>
 smoothing operation across the hyperspectral spectral signature.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_smooth</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_spec_mod</span><span class="o">.</span><span class="n">spectral_smooth</span><span class="p">(</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_smooth</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_spec_mod</span><span class="o">.</span><span class="n">spectral_smooth</span><span class="p">(</span>
 <span class="go">        window_size=11, order=2)</span>
 </pre></div>
 </div>
 <p>Save the smoothed datacube using <code class="docutils literal notranslate"><span class="pre">hsio.write_cube</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr_smooth</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-smooth.bip.hdr&#39;</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr_smooth</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-smooth.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">write_cube</span><span class="p">(</span><span class="n">fname_hdr_smooth</span><span class="p">,</span> <span class="n">array_smooth</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
 <span class="go">Saving F:\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-smooth.bip</span>
 </pre></div>
@@ -359,7 +357,7 @@ column/sample</em> and <em>200th row/line</em> is plotted)</p>
     </p>
     <p>
         &copy; Copyright 2020, Tyler J. Nigon.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.<br/>
     </p>
   </div>
 </footer>

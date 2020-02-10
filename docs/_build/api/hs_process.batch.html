@@ -13,8 +13,6 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="3.1.2. defaults" href="hs_process.defaults.html" />
@@ -135,7 +133,7 @@
     <div class="body col-md-9 content" role="main">
       
   <div class="section" id="batch">
-<h1>3.1.1. batch<a class="headerlink" href="#batch" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">3.1.1. </span>batch<a class="headerlink" href="#batch" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="hs_process.batch">
 <em class="property">class </em><code class="sig-prename descclassname">hs_process.</code><code class="sig-name descname">batch</code><span class="sig-paren">(</span><em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='.bip'</em>, <em class="sig-param">dir_level=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch" title="Permalink to this definition">¶</a></dt>
@@ -238,8 +236,8 @@ the following directory:
 <p class="rubric">Example</p>
 <p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">batch</span></code> module, checking to be sure the
 directory exists.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">batch</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">batch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">base_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">))</span>
 <span class="go">True</span>
@@ -249,7 +247,7 @@ directory exists.</p>
 <p>Use <code class="docutils literal notranslate"><span class="pre">batch.cube_to_spectra</span></code> to calculate the <em>mean</em> and <em>standard
 deviation</em> across all pixels for each of the datacubes in
 <code class="docutils literal notranslate"><span class="pre">base_dir</span></code>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">cube_to_spectra</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">geotiff</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">out_force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">cube_to_spectra</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">geotiff</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">out_force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="go">Calculating mean spectra: F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011.bip</span>
 <span class="go">Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-cube-to-spec-mean.spec</span>
 <span class="go">Calculating mean spectra: F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012.bip</span>
@@ -266,7 +264,7 @@ metadata to determine the number of pixels whose reflectance was
 averaged to create the mean spectra. Also remember that pixels
 across the original input image likely represent a combinatoin of
 soil, vegeation, and shadow.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">re</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_list</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-cube-to-spec-mean.spec&#39;</span><span class="p">,</span>
 <span class="go">                  r&#39;F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012-cube-to-spec-mean.spec&#39;,</span>
@@ -353,8 +351,8 @@ the following directory:
 <p class="rubric">Example</p>
 <p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">batch</span></code> module, checking to be sure the
 directory exists.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">batch</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">batch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">base_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">))</span>
 <span class="go">True</span>
@@ -366,7 +364,7 @@ Chlorophyll Absorption Ratio Index Improved; Haboudane et al.,
 2004) spectral index for each of the datacubes in <code class="docutils literal notranslate"><span class="pre">base_dir</span></code>. See
 <a class="reference external" href="https://www.harrisgeospatial.com/docs/NarrowbandGreenness.html#Modified3">Harris Geospatial</a> for more information about the MCARI2 spectral
 index and references to other spectral indices.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">folder_name</span> <span class="o">=</span> <span class="s1">&#39;band_math_mcari2-800-670-550&#39;</span>  <span class="c1"># folder name can be modified to be more descriptive in what type of band math is being performed</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">folder_name</span> <span class="o">=</span> <span class="s1">&#39;band_math_mcari2-800-670-550&#39;</span>  <span class="c1"># folder name can be modified to be more descriptive in what type of band math is being performed</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;mcari2&#39;</span>  <span class="c1"># must be one of &quot;ndi&quot;, &quot;ratio&quot;, &quot;derivative&quot;, or &quot;mcari2&quot;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">wl1</span> <span class="o">=</span> <span class="mi">800</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">wl2</span> <span class="o">=</span> <span class="mi">670</span>
@@ -450,8 +448,8 @@ based on MCARI2 images located in:
 <p class="rubric">Example</p>
 <p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">batch</span></code> module, ensuring <code class="docutils literal notranslate"><span class="pre">base_dir</span></code> is
 a valid directory</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">batch</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">batch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">base_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">))</span>
 <span class="go">True</span>
@@ -462,7 +460,7 @@ a valid directory</p>
 which datacube pixels are to be masked (determined via the
 <code class="docutils literal notranslate"><span class="pre">mask_dir</span></code> parameter). Point to the directory that contains the
 MCARI2 images.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mask_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;band_math_mcari2-800-670-550&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mask_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;band_math_mcari2-800-670-550&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">mask_dir</span><span class="p">))</span>
 <span class="go">True</span>
 </pre></div>
@@ -472,13 +470,13 @@ hyperspectal pixels are to be masked. The available parameters for
 controlling this are <code class="docutils literal notranslate"><span class="pre">mask_thresh</span></code>, <code class="docutils literal notranslate"><span class="pre">mask_percentile</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">mask_side</span></code>. We will mask out all pixels that fall below the
 MCARI2 90th percentile.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mask_percentile</span> <span class="o">=</span> <span class="mi">90</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mask_percentile</span> <span class="o">=</span> <span class="mi">90</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">mask_side</span> <span class="o">=</span> <span class="s1">&#39;lower&#39;</span>
 </pre></div>
 </div>
 <p>Finally, indicate the folder to save the masked datacubes and
 perform the batch masking via <code class="docutils literal notranslate"><span class="pre">batch.segment_create_mask</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">folder_name</span> <span class="o">=</span> <span class="s1">&#39;mask_mcari2_90th&#39;</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">folder_name</span> <span class="o">=</span> <span class="s1">&#39;mask_mcari2_90th&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">segment_create_mask</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">mask_dir</span><span class="o">=</span><span class="n">mask_dir</span><span class="p">,</span>
 <span class="go">                                folder_name=folder_name,</span>
 <span class="go">                                name_append=&#39;mask-mcari2-90th&#39;, geotiff=True,</span>
@@ -657,10 +655,10 @@ spatial extent of each plot.</p>
 <p class="rubric">Example</p>
 <p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">batch</span></code> module, checking to be sure the
 directory exists.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">batch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">batch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">base_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">))</span>
 <span class="go">True</span>
@@ -668,7 +666,7 @@ directory exists.</p>
 </pre></div>
 </div>
 <p>Load the plot geometry as a <code class="docutils literal notranslate"><span class="pre">geopandas.GeoDataFrame</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_gdf</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\plot_bounds_small\plot_bounds.shp&#39;</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_gdf</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\plot_bounds_small\plot_bounds.shp&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">fname_gdf</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -684,7 +682,7 @@ run <code class="docutils literal notranslate"><span class="pre">batch.spatial_c
 to be passed to <code class="docutils literal notranslate"><span class="pre">fname_sheet</span></code>. It does, however, allow you to
 adjust the plot buffer relative to <code class="docutils literal notranslate"><span class="pre">gdf</span></code> via
 <code class="docutils literal notranslate"><span class="pre">hsbatch.io.defaults.crop_defaults</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">crop_defaults</span><span class="o">.</span><span class="n">buf_e_m</span> <span class="o">=</span> <span class="mi">2</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">crop_defaults</span><span class="o">.</span><span class="n">buf_e_m</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">crop_defaults</span><span class="o">.</span><span class="n">buf_n_m</span> <span class="o">=</span> <span class="mf">0.5</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">set_io_defaults</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">spatial_crop</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;many_gdf&#39;</span><span class="p">,</span>
@@ -758,8 +756,8 @@ other.</p>
 <p class="rubric">Example</p>
 <p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">batch</span></code> module, checking to be sure the
 directory exists.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">batch</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">batch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">base_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\cube_ref_panels&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">))</span>
 <span class="go">True</span>
@@ -768,7 +766,7 @@ directory exists.</p>
 </div>
 <p>Combine all the <em>radiance</em> datacubes in the directory via
 <code class="docutils literal notranslate"><span class="pre">batch.spectra_combine</span></code>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">spectra_combine</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;bip&#39;</span><span class="p">,</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">spectra_combine</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;bip&#39;</span><span class="p">,</span>
 <span class="go">                            dir_level=0)</span>
 <span class="go">Combining datacubes/spectra into a single mean spectra.</span>
 <span class="go">Number of input datacubes/spectra: 7</span>
@@ -828,8 +826,8 @@ is populated with image files.</p>
 <p class="rubric">Example</p>
 <p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">batch</span></code> module, checking to be sure the
 directory exists.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">batch</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">batch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">base_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\mask_mcari2_90th&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">))</span>
 <span class="go">True</span>
@@ -838,7 +836,7 @@ directory exists.</p>
 </div>
 <p>Read all the <code class="docutils literal notranslate"><span class="pre">.spec</span></code> files in <code class="docutils literal notranslate"><span class="pre">base_dir</span></code> and save them to a
 <code class="docutils literal notranslate"><span class="pre">.csv</span></code> file.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">spectra_to_csv</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;spec&#39;</span><span class="p">,</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">spectra_to_csv</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;spec&#39;</span><span class="p">,</span>
 <span class="go">                           dir_level=0)</span>
 <span class="go">Writing mean spectra to a .csv file.</span>
 <span class="go">Number of input datacubes/spectra: 40</span>
@@ -888,8 +886,8 @@ is populated with image files.</p>
 <p class="rubric">Example</p>
 <p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">batch</span></code> module, checking to be sure the
 directory exists.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">batch</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">batch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">base_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\mask_mcari2_90th&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">))</span>
 <span class="go">True</span>
@@ -898,7 +896,7 @@ directory exists.</p>
 </div>
 <p>Read all the <code class="docutils literal notranslate"><span class="pre">.spec</span></code> files in <code class="docutils literal notranslate"><span class="pre">base_dir</span></code> and load them to
 <code class="docutils literal notranslate"><span class="pre">df_spec</span></code>, a <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">df_spec</span> <span class="o">=</span> <span class="n">hsbatch</span><span class="o">.</span><span class="n">spectra_to_df</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;spec&#39;</span><span class="p">,</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">df_spec</span> <span class="o">=</span> <span class="n">hsbatch</span><span class="o">.</span><span class="n">spectra_to_df</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;spec&#39;</span><span class="p">,</span>
 <span class="go">                                    dir_level=0)</span>
 <span class="go">Writing mean spectra to a ``pandas.DataFrame``.</span>
 <span class="go">Number of input datacubes/spectra: 40</span>
@@ -913,7 +911,7 @@ number (as opposed to the wavelenth it represents).
 <code class="docutils literal notranslate"><span class="pre">hs_process.hs_tools.get_band</span></code> can be utilized to retrieve
 spectral data for all plots via indexing by wavelength. Say we need
 to access reflectance at 710 nm for each plot.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">df_710nm</span> <span class="o">=</span> <span class="n">df_spec</span><span class="p">[[</span><span class="s1">&#39;fname&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_id&#39;</span><span class="p">,</span> <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band</span><span class="p">(</span><span class="mi">710</span><span class="p">)]]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">df_710nm</span> <span class="o">=</span> <span class="n">df_spec</span><span class="p">[[</span><span class="s1">&#39;fname&#39;</span><span class="p">,</span> <span class="s1">&#39;plot_id&#39;</span><span class="p">,</span> <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band</span><span class="p">(</span><span class="mi">710</span><span class="p">)]]</span>
 </pre></div>
 </div>
 <img alt="../_images/spectra_to_df_710nm.png" src="../_images/spectra_to_df_710nm.png" />
@@ -976,8 +974,8 @@ the following directory:
 <p class="rubric">Example</p>
 <p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">batch</span></code> module, checking to be sure the
 directory exists.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">batch</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">batch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">base_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\spatial_crop&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">))</span>
 <span class="go">True</span>
@@ -988,7 +986,7 @@ directory exists.</p>
 <em>420 nm</em> and above <em>880 nm</em>, as well as the bands near the oxygen
 absorption (i.e., <em>760-776 nm</em>) and water absorption
 (i.e., <em>813-827 nm</em>) regions.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">spectral_clip</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">folder_name</span><span class="o">=</span><span class="s1">&#39;spec_clip&#39;</span><span class="p">,</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">spectral_clip</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">folder_name</span><span class="o">=</span><span class="s1">&#39;spec_clip&#39;</span><span class="p">,</span>
 <span class="go">                          wl_bands=[[0, 420], [760, 776], [813, 827], [880, 1000]])</span>
 <span class="go">Processing 40 files. If this is not what is expected, please check if files have already undergone processing. If existing files should be overwritten, be sure to set the ``out_force`` parameter.</span>
 <span class="go">Spectrally clipping: F:\nigo0024\Documents\hs_process_demo\spatial_crop\Wells_rep2_20180628_16h56m_pika_gige_7_1011-spatial-crop.bip</span>
@@ -1000,7 +998,7 @@ absorption (i.e., <em>760-776 nm</em>) and water absorption
 </div>
 <p>Use <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> to visualize the spectra of a single pixel in one
 of the processed images.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_1011-spatial-crop.bip&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">spy_mem</span> <span class="o">=</span> <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>  <span class="c1"># datacube before clipping</span>
@@ -1078,8 +1076,8 @@ the following directory:
 <p class="rubric">Example</p>
 <p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">batch</span></code> module, checking to be sure the
 directory exists.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">batch</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">batch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">base_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\spatial_crop&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">))</span>
 <span class="go">True</span>
@@ -1090,7 +1088,7 @@ directory exists.</p>
 smoothing operation on each image/pixel in <code class="docutils literal notranslate"><span class="pre">base_dir</span></code>. The
 <code class="docutils literal notranslate"><span class="pre">window_size</span></code> and <code class="docutils literal notranslate"><span class="pre">order</span></code> can be adjusted to achieve desired
 smoothing results.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">spectral_smooth</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">folder_name</span><span class="o">=</span><span class="s1">&#39;spec_smooth&#39;</span><span class="p">,</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">spectral_smooth</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">folder_name</span><span class="o">=</span><span class="s1">&#39;spec_smooth&#39;</span><span class="p">,</span>
 <span class="go">                            window_size=11, order=2)</span>
 <span class="go">Processing 40 files. If this is not what is expected, please check if files have already undergone processing. If existing files should be overwritten, be sure to set the ``out_force`` parameter.</span>
 <span class="go">Spectrally smoothing: F:\nigo0024\Documents\hs_process_demo\spatial_crop\Wells_rep2_20180628_16h56m_pika_gige_7_1011-spatial-crop.bip</span>
@@ -1102,7 +1100,7 @@ smoothing results.</p>
 </div>
 <p>Use <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> to visualize the spectra of a single pixel in one
 of the processed images.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_1011-spatial-crop.bip&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">spy_mem</span> <span class="o">=</span> <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>  <span class="c1"># datacube before smoothing</span>
@@ -1144,7 +1142,7 @@ wise to perform <code class="docutils literal notranslate"><span class="pre">bat
     </p>
     <p>
         &copy; Copyright 2020, Tyler J. Nigon.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.<br/>
     </p>
   </div>
 </footer>

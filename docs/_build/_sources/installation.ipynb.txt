@@ -7,11 +7,12 @@
     "# Setup and Installation\n",
     "## Overview\n",
     "\n",
-    "The purpose of this  tutorial is to:\n",
+    "The purpose of this tutorial is to deomonstrate the proper setup of your Python environment so that `hs_process` properly runs. In this tutorial, we will:\n",
     "\n",
-    "1. deomonstrate the proper setup of your Python environment (optional)\n",
-    "2. install required dependencies (several options for doing so)\n",
-    "3. verify that the installation was successful\n",
+    "1. Create a new environment and install the required dependencies (several options for doing so).\n",
+    "2. Verify that the installation was successful.\n",
+    "3. Use [Anaconda Navigator](https://docs.anaconda.com/anaconda/navigator/) to install [Spyder](https://www.spyder-ide.org/) and/or [Jupyter Notebook](https://jupyter.org/) in the new environment.\n",
+    "\n",
     "\n",
     "***"
    ]
@@ -41,15 +42,15 @@
     "\n",
     "**Libraries**\n",
     "\n",
-    "1. [GDAL](https://anaconda.org/conda-forge/gdal)\n",
-    "2. [GeoPandas](https://anaconda.org/conda-forge/geopandas)\n",
-    "3. [Seaborn](https://anaconda.org/conda-forge/seaborn) (if only for visualizing data in the API examples)\n",
-    "4. [Spectral Python](https://anaconda.org/conda-forge/spectral)\n",
+    "1. [GeoPandas](https://anaconda.org/conda-forge/geopandas)\n",
+    "2. [Seaborn](https://anaconda.org/conda-forge/seaborn) (if only for visualizing data in the API examples)\n",
+    "3. [Spectral Python](https://anaconda.org/conda-forge/spectral)\n",
     "\n",
     "The following libraries are also dependencies of `hs_process`, but they are also dependencies of `GDAL`, `GeoPandas`, `Seaborn`, and `Spectral`. Therefore they will be installed during the install procedures of the above libraries.\n",
     "\n",
-    "- [Numpy)](https://anaconda.org/conda-forge/numpy) *`GDAL` has a `numpy` dependency\n",
-    "- [Geopandas](https://anaconda.org/conda-forge/pandas) *`GeoPandas` has a `Pandas` dependency\n",
+    "- [GDAL](https://anaconda.org/conda-forge/gdal) *`GeoPandas` has a `GDAL` dependency\n",
+    "- [Numpy](https://anaconda.org/conda-forge/numpy) *`GDAL` has a `numpy` dependency\n",
+    "- [Pandas](https://anaconda.org/conda-forge/pandas) *`GeoPandas` has a `Pandas` dependency\n",
     "- [Matplotlib](https://anaconda.org/conda-forge/matplotlib) *`Seaborn` has a `Matplotlib` dependency\n",
     "- [Shapely](https://anaconda.org/conda-forge/shapely) *`GeoPandas` has a `Shapely` dependency\n",
     "\n",
@@ -100,7 +101,7 @@
     "\n",
     "With [Anaconda](https://www.anaconda.com/distribution/#download-section) installed, it is first recommended (but not required) to create a new **Python 3.7** environment before installing package dependencies. Open an Anaconda console from the start menu as an administrator by clicking `Start->Anaconda`, right-click `Anaconda Console`, and choose to `Run as Administrator`. In the `Anaconda Console`, execute the following commands:\n",
     "\n",
-    "1. `conda create -n spec python=3.7` to create an Anaconda **Python 3.7** environment named _**spec**_ (you can name this whatever you'd like).\n",
+    "1. `conda create -n spec python=3.7` to create an Anaconda **Python 3.7** environment named **spec** (you can name this whatever you'd like).\n",
     "2. `conda activate spec` to activate the newly configured environment. **IMPORTANT**: Anytime you want to use `hs_process`, be sure to run `conda activate spec` prior to opening your Python IDE (e.g. *Spyder*, *Jupyter Notebook*, etc.).\n",
     "\n",
     "**Install package dependencies**\n",
@@ -121,15 +122,45 @@
     "\n",
     "**Install** `hs_process` **via** `pip`\n",
     "\n",
-    "Now that all of the dependencies are installed via `conda` (note that this is the recommended approach), `hs_process` can finally be installed via `pip`:\n",
+    "Now that all of the dependencies are installed via `conda`, `hs_process` can finally be installed via `pip`:\n",
     "\n",
     "6. `pip install hs_process` [(*link*)](https://pypi.org/project/hs_process/) will install the remaining dependencies via `pip`. Note that `pip` should only be used *after* as many dependencies as possible are installed via `conda install` - [see here for more information](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#using-pip-in-an-environment).\n",
     "\n",
-    "**Run test.py to confirm** `hs_process` **and its dependencies are properly installed**\n",
+    "**Run test.py to verify** `hs_process` **and its dependencies are properly installed**\n",
+    "\n",
+    "__*Note*__: *test.py* will only run without error if the *testdata* are downloaded from the `hs_process` [repository](https://github.com/tnigon/hs_process). There is a hyperspectral datacube that is ~750 MB, and it will only download properly if both [git](https://git-scm.com/downloads) and [git-lfs (Git Large File Storage](https://git-lfs.github.com/) are installed prior to running `git clone https://github.com/tnigon/hs_process.git`.\n",
     "\n",
     "7. `python <path to hs_process\\test\\test.py>` to run through some basic tests to be sure all dependencies are installed properly.\n",
     "\n",
+    "**Install Spyder and/or Jupyter Notebook**\n",
+    "\n",
+    "Open *Anaconda Navigator* from the start menu by clicking `Start -> Anaconda` -> `Anaconda Navigaor`.\n",
+    "\n",
+    "\n",
+    "\n",
     "***"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'F:\\\\nigo0024\\\\Documents\\\\GitHub\\\\hs_process\\\\docs\\\\source'"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import os\n",
+    "os.getcwd()\n",
+    "\n"
    ]
   },
   {
@@ -249,6 +280,34 @@
     "\n",
     "***"
    ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'C:\\\\Users\\\\nigo0024\\\\AppData\\\\Local\\\\Continuum\\\\anaconda3\\\\python.exe'"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import sys\n",
+    "sys.executable"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
   }
  ],
  "metadata": {
@@ -267,7 +326,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.7.3"
+   "version": "3.7.6"
   }
  },
  "nbformat": 4,

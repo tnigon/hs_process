@@ -13,8 +13,6 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="3.1.5. segment" href="hs_process.segment.html" />
@@ -135,7 +133,7 @@
     <div class="body col-md-9 content" role="main">
       
   <div class="section" id="hstools">
-<h1>3.1.4. hstools<a class="headerlink" href="#hstools" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">3.1.4. </span>hstools<a class="headerlink" href="#hstools" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="hs_process.hstools">
 <em class="property">class </em><code class="sig-prename descclassname">hs_process.</code><code class="sig-name descname">hstools</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hstools" title="Permalink to this definition">¶</a></dt>
@@ -223,13 +221,13 @@ a dictionary.</p>
 </dl>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Create sample metadata with &quot;wavelength&quot; expressed as a list of strings</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;samples&#39;</span><span class="p">:</span> <span class="mi">1827</span><span class="p">,</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;samples&#39;</span><span class="p">:</span> <span class="mi">1827</span><span class="p">,</span>
 <span class="go">                &#39;lines&#39;: 617,</span>
 <span class="go">                &#39;bands&#39;: 4,</span>
 <span class="go">                &#39;file type&#39;: &#39;ENVI Standard&#39;,</span>
@@ -241,7 +239,7 @@ a dictionary.</p>
 wavelength is now expressed as a <code class="docutils literal notranslate"><span class="pre">str</span></code> representation of a
 <code class="docutils literal notranslate"><span class="pre">dict</span></code>, which is required for properly writing the metadata to
 the .hdr file via <a class="reference external" href="http://www.spectralpython.net/class_func_ref.html#spectral.io.envi.save_image">save_image()</a> in Spectral Python.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">clean_md_sets</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">clean_md_sets</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
 <span class="go">{&#39;samples&#39;: 1827,</span>
 <span class="go"> &#39;lines&#39;: 617,</span>
 <span class="go"> &#39;bands&#39;: 4,</span>
@@ -272,13 +270,13 @@ metadata.</p>
 </dl>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Create sample metadata</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;samples&#39;</span><span class="p">:</span> <span class="mi">1827</span><span class="p">,</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;samples&#39;</span><span class="p">:</span> <span class="mi">1827</span><span class="p">,</span>
 <span class="go">                &#39;lines&#39;: 617,</span>
 <span class="go">                &#39;bands&#39;: 4,</span>
 <span class="go">                &#39;file type&#39;: &#39;ENVI Standard&#39;,</span>
@@ -288,7 +286,7 @@ metadata.</p>
 </pre></div>
 </div>
 <p>Delete <em>&quot;map info&quot;</em> from <code class="docutils literal notranslate"><span class="pre">metadata</span></code> using <code class="docutils literal notranslate"><span class="pre">hstools.del_met_item</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">del_meta_item</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="s1">&#39;map info&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">del_meta_item</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="s1">&#39;map info&#39;</span><span class="p">)</span>
 <span class="go">{&#39;samples&#39;: 1827,</span>
 <span class="go"> &#39;lines&#39;: 617,</span>
 <span class="go"> &#39;bands&#39;: 4,</span>
@@ -333,13 +331,13 @@ of cropped plot.</p></li>
 </dl>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Retrieve UTM coordinates and pixel sizes from the metadata</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">map_info_set</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">map_info_set</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">utm_x</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_meta_set</span><span class="p">(</span><span class="n">map_info_set</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">utm_y</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_meta_set</span><span class="p">(</span><span class="n">map_info_set</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">spy_ps_e</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">map_info_set</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
@@ -348,7 +346,7 @@ of cropped plot.</p></li>
 </div>
 <p>Calculate the UTM coordinates at the <em>100th easting pixel</em> and
 <em>50th northing pixel</em> using <code class="docutils literal notranslate"><span class="pre">hstools.get_UTM</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ul_x_utm</span><span class="p">,</span> <span class="n">ul_y_utm</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_UTM</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ul_x_utm</span><span class="p">,</span> <span class="n">ul_y_utm</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_UTM</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span>
 <span class="go">                                          utm_x, utm_y,</span>
 <span class="go">                                          spy_ps_e,</span>
 <span class="go">                                          spy_ps_n)</span>
@@ -384,14 +382,14 @@ wavelength (<code class="docutils literal notranslate"><span class="pre">target_
 </dl>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Use <code class="docutils literal notranslate"><span class="pre">hstools.get_band</span></code> to find the band number corresponding to
 <em>703 nm</em></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band</span><span class="p">(</span><span class="mi">703</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band</span><span class="p">(</span><span class="mi">703</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 <span class="go">151</span>
 </pre></div>
 </div>
@@ -418,13 +416,13 @@ wavelength (<code class="docutils literal notranslate"><span class="pre">target_
 </dl>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Using <code class="docutils literal notranslate"><span class="pre">hstools.get_band_index</span></code>, find the band index of the <em>4th</em>, <em>43rd</em>, and <em>111th</em> bands</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_index</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">111</span><span class="p">])</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_index</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">111</span><span class="p">])</span>
 <span class="go">[3, 42, 110]</span>
 </pre></div>
 </div>
@@ -449,13 +447,13 @@ band index (<code class="docutils literal notranslate"><span class="pre">band_id
 </dl>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Using <code class="docutils literal notranslate"><span class="pre">hstools.get_band_num</span></code>, find the band number located at the <em>4th</em>, <em>43rd</em>, and <em>111th</em> index values.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_num</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">111</span><span class="p">])</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_num</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">111</span><span class="p">])</span>
 <span class="go">[5, 44, 112]</span>
 </pre></div>
 </div>
@@ -487,19 +485,19 @@ wavelength values.</p>
 </dl>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Find the band number of all bands between <em>700</em> and <em>710 nm</em></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_range</span><span class="p">([</span><span class="mi">700</span><span class="p">,</span> <span class="mi">710</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_range</span><span class="p">([</span><span class="mi">700</span><span class="p">,</span> <span class="mi">710</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 <span class="go">[150, 151, 152, 153, 154]</span>
 </pre></div>
 </div>
 <p>Find the band index values of all bands between <em>700</em> and <em>710 nm</em>
 via <code class="docutils literal notranslate"><span class="pre">hstools.get_band_range</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_range</span><span class="p">([</span><span class="mi">700</span><span class="p">,</span> <span class="mi">710</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_range</span><span class="p">([</span><span class="mi">700</span><span class="p">,</span> <span class="mi">710</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 <span class="go">[149, 150, 151, 152, 153]</span>
 </pre></div>
 </div>
@@ -535,13 +533,13 @@ to <code class="docutils literal notranslate"><span class="pre">wl_list</span></
 </dl>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Using <code class="docutils literal notranslate"><span class="pre">hstools.get_center_wl</span></code>, find the bands and <em>actual mean wavelength</em> of the bands closest to <em>700</em> and <em>710</em> nm.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">bands</span><span class="p">,</span> <span class="n">wls_mean</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_center_wl</span><span class="p">([</span><span class="mi">700</span><span class="p">,</span> <span class="mi">710</span><span class="p">],</span> <span class="n">wls</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">bands</span><span class="p">,</span> <span class="n">wls_mean</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_center_wl</span><span class="p">([</span><span class="mi">700</span><span class="p">,</span> <span class="mi">710</span><span class="p">],</span> <span class="n">wls</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bands</span>
 <span class="go">[150, 155]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">wls_mean</span>
@@ -575,14 +573,14 @@ position described by <code class="docutils literal notranslate"><span class="pr
 </dl>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Retrieve the <em>&quot;map info&quot; set</em> from the metadata via
 <code class="docutils literal notranslate"><span class="pre">hstools.get_meta_set</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">map_info_set</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">map_info_set</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_meta_set</span><span class="p">(</span><span class="n">map_info_set</span><span class="p">)</span>
 <span class="go">[&#39;UTM&#39;,</span>
 <span class="go"> 1.0,</span>
@@ -624,7 +622,7 @@ mean reflectance from <code class="docutils literal notranslate"><span class="pr
 </dl>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
@@ -632,7 +630,7 @@ mean reflectance from <code class="docutils literal notranslate"><span class="pr
 <p>Calculate the spectral mean of the datacube via
 <code class="docutils literal notranslate"><span class="pre">hstools.get_spectral_mean</span></code> using all bands between <em>800</em> and
 <em>840 nm</em></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">band_list</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_range</span><span class="p">([</span><span class="mi">800</span><span class="p">,</span> <span class="mi">840</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">band_list</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_range</span><span class="p">([</span><span class="mi">800</span><span class="p">,</span> <span class="mi">840</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">array_mean</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_spectral_mean</span><span class="p">(</span><span class="n">band_list</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">show_img</span><span class="p">(</span><span class="n">array_mean</span><span class="p">)</span>
 </pre></div>
@@ -664,13 +662,13 @@ target band (<code class="docutils literal notranslate"><span class="pre">target
 </dl>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Use <code class="docutils literal notranslate"><span class="pre">hstools.get_wavelength</span></code> to find the wavelength value corresponding to the <em>151st band</em></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_wavelength</span><span class="p">(</span><span class="mi">151</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_wavelength</span><span class="p">(</span><span class="mi">151</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 <span class="go">702.52</span>
 </pre></div>
 </div>
@@ -689,7 +687,7 @@ manipulated.</p>
 </dl>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
@@ -745,38 +743,38 @@ based on the passed threshold and/or percentile value.</p></li>
 </dl>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Retrieve the image band at <em>800 nm</em> using <code class="docutils literal notranslate"><span class="pre">hstools.get_band</span></code> and
 <code class="docutils literal notranslate"><span class="pre">hsio.spyfile.open_memmap</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">band</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band</span><span class="p">(</span><span class="mi">800</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">band</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band</span><span class="p">(</span><span class="mi">800</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">array</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()[:,</span> <span class="p">:,</span> <span class="n">band</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>Create a masked array of all values below the <em>75th percentile</em>
 via <code class="docutils literal notranslate"><span class="pre">hstools.mask_array</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_mask</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">mask_array</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span> <span class="n">percentile</span><span class="o">=</span><span class="mi">75</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_mask</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">mask_array</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span> <span class="n">percentile</span><span class="o">=</span><span class="mi">75</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>See that the <em>&quot;history&quot;</em> tage in the <code class="docutils literal notranslate"><span class="pre">metadata</span></code> has been modified</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">159</span><span class="p">:]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">159</span><span class="p">:]</span>
 <span class="go">&quot;hs_process.mask_array[&lt;label: &#39;thresh?&#39; value:None; label: &#39;percentile?&#39; value:75; label: &#39;side?&#39; value:lower; label: &#39;unmasked_pct?&#39; value:24.99514308601661&gt;]&quot;</span>
 </pre></div>
 </div>
 <p>Visualize the unmasked array using <code class="docutils literal notranslate"><span class="pre">hsio.show_img</span></code>. Set <code class="docutils literal notranslate"><span class="pre">vmin</span></code>
 and <code class="docutils literal notranslate"><span class="pre">vmax</span></code> to ensure the same color scale is used in comparing
 the masked vs. unmasked arrays.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vmin</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vmin</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vmax</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">show_img</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../_images/mask_array_800nm.png" src="../_images/mask_array_800nm.png" />
 <p>Visualize the unmasked array using <code class="docutils literal notranslate"><span class="pre">hsio.show_img</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">show_img</span><span class="p">(</span><span class="n">array_mask</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">show_img</span><span class="p">(</span><span class="n">array_mask</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../_images/mask_array_800nm_75th.png" src="../_images/mask_array_800nm_75th.png" />
@@ -816,7 +814,7 @@ is identical to the <code class="docutils literal notranslate"><span class="pre"
 </dl>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
@@ -824,19 +822,19 @@ is identical to the <code class="docutils literal notranslate"><span class="pre"
 <p>Retrieve the image band at <em>800 nm</em> using <code class="docutils literal notranslate"><span class="pre">hstools.get_band</span></code> and
 <code class="docutils literal notranslate"><span class="pre">hsio.spyfile.open_memmap</span></code>, then mask out all pixels whose value falls
 below the <em>75th percentile</em>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">band</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band</span><span class="p">(</span><span class="mi">800</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">band</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band</span><span class="p">(</span><span class="mi">800</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">array</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()[:,</span> <span class="p">:,</span> <span class="n">band</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">array_mask</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">mask_array</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span> <span class="n">percentile</span><span class="o">=</span><span class="mi">75</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Calculate the spectral mean from the remaining <em>(i.e., unmasked)</em>
 pixels using <code class="docutils literal notranslate"><span class="pre">hstools.mean_datacube</span></code>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">spec_mean</span><span class="p">,</span> <span class="n">spec_std</span><span class="p">,</span> <span class="n">datacube_masked</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">mean_datacube</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">array_mask</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">spec_mean</span><span class="p">,</span> <span class="n">spec_std</span><span class="p">,</span> <span class="n">datacube_masked</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">mean_datacube</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">array_mask</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Save using <code class="docutils literal notranslate"><span class="pre">hsio.write_spec</span></code> and <code class="docutils literal notranslate"><span class="pre">hsio.write_cube</span></code>, then load
 into Spectronon software for visualization.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr_spec</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.spec.hdr&#39;</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr_spec</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.spec.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr_cube</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">write_spec</span><span class="p">(</span><span class="n">fname_hdr_spec</span><span class="p">,</span> <span class="n">spec_mean</span><span class="p">,</span> <span class="n">spec_std</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
 <span class="go">Saving F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.spec</span>
@@ -871,14 +869,14 @@ returned (default: <code class="docutils literal notranslate"><span class="pre">
 </dl>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Retrieve the <em>&quot;map info&quot; set</em> from the metadata via
 <code class="docutils literal notranslate"><span class="pre">hstools.get_meta_set</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">map_info_set</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">map_info_set</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">map_info_set</span>
 <span class="go">[&#39;UTM&#39;,</span>
 <span class="go"> &#39;1.000&#39;,</span>
@@ -896,7 +894,7 @@ returned (default: <code class="docutils literal notranslate"><span class="pre">
 </div>
 <p>Modify the value at <em>index position 4</em> from <code class="docutils literal notranslate"><span class="pre">4855944.81177</span></code> to
 <code class="docutils literal notranslate"><span class="pre">441300.2</span></code> using <code class="docutils literal notranslate"><span class="pre">hstools.modify_meta_set</span></code>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">modify_meta_set</span><span class="p">(</span><span class="n">map_info_set</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">441300.2</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">modify_meta_set</span><span class="p">(</span><span class="n">map_info_set</span><span class="p">,</span> <span class="n">idx</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">441300.2</span><span class="p">)</span>
 <span class="go">&#39;{UTM, 1.0, 1.0, 441342.687073, 441300.2, 0.04, 0.04, 15, T, WGS-84, units  meters, rotation  0.000}&#39;</span>
 </pre></div>
 </div>
@@ -937,25 +935,25 @@ text annotations will be scaled relatively (default: 16).</p></li>
 </dl>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Retrieve the image band at <em>800 nm</em> using <code class="docutils literal notranslate"><span class="pre">hstools.get_band</span></code> and
 <code class="docutils literal notranslate"><span class="pre">hsio.spyfile.open_memmap</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">band</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band</span><span class="p">(</span><span class="mi">800</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">band</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band</span><span class="p">(</span><span class="mi">800</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">array</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()[:,</span> <span class="p">:,</span> <span class="n">band</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>Create a masked array of all values below the <em>5th percentile</em>
 via <code class="docutils literal notranslate"><span class="pre">hstools.mask_array</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_mask</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">mask_array</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span> <span class="n">percentile</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_mask</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">mask_array</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span> <span class="n">percentile</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Visualize the histogram of the unmasked pixels (i.e., those greater
 than the 5th percentile) using <code class="docutils literal notranslate"><span class="pre">hstools.plot_histogram</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Reflectance at 800 nm&#39;</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Reflectance at 800 nm&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">xlabel</span> <span class="o">=</span> <span class="s1">&#39;Reflectance (%)&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">plot_histogram</span><span class="p">(</span><span class="n">array_mask</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="n">xlabel</span><span class="p">)</span>
 </pre></div>
@@ -980,7 +978,7 @@ than the 5th percentile) using <code class="docutils literal notranslate"><span 
     </p>
     <p>
         &copy; Copyright 2020, Tyler J. Nigon.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.<br/>
     </p>
   </div>
 </footer>

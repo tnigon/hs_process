@@ -30,7 +30,6 @@ if not os.path.isfile(FILENAME_HDR):
 if not os.path.isfile(FILENAME_HDR_SPEC):
     FILENAME_HDR_SPEC = os.path.join(os.getcwd(), 'test', 'testdata', 'Wells_rep2_20180628_16h56m_pika_gige_7_plot_611-cube-to-spec-mean.spec.hdr')
 
-
 class Test_hsio_read_cube(unittest.TestCase):
     def setUp(self):
         '''

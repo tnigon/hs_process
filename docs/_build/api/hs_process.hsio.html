@@ -13,8 +13,6 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/language_data.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="3.1.4. hstools" href="hs_process.hstools.html" />
@@ -135,7 +133,7 @@
     <div class="body col-md-9 content" role="main">
       
   <div class="section" id="hsio">
-<h1>3.1.3. hsio<a class="headerlink" href="#hsio" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">3.1.3. </span>hsio<a class="headerlink" href="#hsio" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="hs_process.hsio">
 <em class="property">class </em><code class="sig-prename descclassname">hs_process.</code><code class="sig-name descname">hsio</code><span class="sig-paren">(</span><em class="sig-param">fname_in=None</em>, <em class="sig-param">name_long=None</em>, <em class="sig-param">name_plot=None</em>, <em class="sig-param">name_short=None</em>, <em class="sig-param">str_plot='plot_'</em>, <em class="sig-param">individual_plot=False</em>, <em class="sig-param">fname_hdr_spec=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hsio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hsio" title="Permalink to this definition">¶</a></dt>
@@ -220,13 +218,13 @@ typical file nameing behavior&quot;.</p>
 </div>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>  <span class="c1"># initialize an instance of the hsio class (note there are no required parameters)</span>
 </pre></div>
 </div>
 <p>Load datacube using <code class="docutils literal notranslate"><span class="pre">hsio.read_cube</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span>
 <span class="go">Data Source:   &#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip&#39;</span>
 <span class="go">    # Rows:            617</span>
@@ -238,15 +236,15 @@ typical file nameing behavior&quot;.</p>
 </pre></div>
 </div>
 <p>Check <code class="docutils literal notranslate"><span class="pre">name_long</span></code>, <code class="docutils literal notranslate"><span class="pre">name_short</span></code>, and <code class="docutils literal notranslate"><span class="pre">name_plot</span></code> values derived from the filename</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">name_long</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">name_long</span>
 <span class="go">&#39;-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">name_plot</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">name_plot</span>
 <span class="go">&#39;7&#39;</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">name_short</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">name_short</span>
 <span class="go">&#39;Wells_rep2_20180628_16h56m_pika_gige_7&#39;</span>
 </pre></div>
 </div>
@@ -264,13 +262,13 @@ Python</a> package.</p>
 </dl>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7_plot_611-cube-to-spec-mean.spec.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>  <span class="c1"># initialize an instance of the hsio class (note there are no required parameters)</span>
 </pre></div>
 </div>
 <p>Load datacube using <code class="docutils literal notranslate"><span class="pre">hsio.read_spec</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">read_spec</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">read_spec</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">spyfile_spec</span>
 <span class="go">Data Source:   &#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-mean.spec&#39;</span>
 <span class="go">    # Rows:              1</span>
@@ -282,15 +280,15 @@ Python</a> package.</p>
 </pre></div>
 </div>
 <p>Check <code class="docutils literal notranslate"><span class="pre">name_long</span></code>, <code class="docutils literal notranslate"><span class="pre">name_short</span></code>, and <code class="docutils literal notranslate"><span class="pre">name_plot</span></code> values derived from the filename</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">name_long</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">name_long</span>
 <span class="go">&#39;-mean.spec.hdr&#39;</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">name_short</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">name_short</span>
 <span class="go">&#39;Wells_rep2_20180628_16h56m_pika_gige_7&#39;</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">name_plot</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">name_plot</span>
 <span class="go">&#39;7&#39;</span>
 </pre></div>
 </div>
@@ -331,12 +329,12 @@ used (default=``False``).</p></li>
 </dl>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>  <span class="c1"># initialize an instance of the hsio class</span>
 </pre></div>
 </div>
 <p>Check <code class="docutils literal notranslate"><span class="pre">defaults.envi_write</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">envi_write</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">envi_write</span>
 <span class="go">{&#39;dtype&#39;: numpy.float32,</span>
 <span class="go"> &#39;force&#39;: False,</span>
 <span class="go"> &#39;ext&#39;: &#39;&#39;,</span>
@@ -345,7 +343,7 @@ used (default=``False``).</p></li>
 </pre></div>
 </div>
 <p>Modify <code class="docutils literal notranslate"><span class="pre">force</span></code> parameter and recheck <code class="docutils literal notranslate"><span class="pre">defaults.envi_write</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">set_io_defaults</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">set_io_defaults</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">envi_write</span>
 <span class="go">{&#39;dtype&#39;: numpy.float32,</span>
 <span class="go"> &#39;force&#39;: True,</span>
@@ -388,23 +386,23 @@ used in a normal Python console).</p>
 </div>
 <p class="rubric">Example</p>
 <p>Load <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code> modules</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span> <span class="c1"># load hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">spatial_mod</span> <span class="c1"># load spatial mod</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span> <span class="c1"># load hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">spatial_mod</span> <span class="c1"># load spatial mod</span>
 </pre></div>
 </div>
 <p>Load the datacube using <code class="docutils literal notranslate"><span class="pre">hsio.read_cube</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>  <span class="c1"># initialize an instance of the hsio class</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Perform simple spatial cropping via <code class="docutils literal notranslate"><span class="pre">spatial_mod.crop_single</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_spatial_mod</span> <span class="o">=</span> <span class="n">spatial_mod</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>  <span class="c1"># initialize spatial_mod instance to crop the image</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_spatial_mod</span> <span class="o">=</span> <span class="n">spatial_mod</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>  <span class="c1"># initialize spatial_mod instance to crop the image</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_spatial_mod</span><span class="o">.</span><span class="n">crop_single</span><span class="p">(</span><span class="n">pix_e_ul</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">crop_e_m</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">crop_n_m</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Show an RGB render of the cropped image using <code class="docutils literal notranslate"><span class="pre">hsio.show_img</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">show_img</span><span class="p">(</span><span class="n">array_crop</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">show_img</span><span class="p">(</span><span class="n">array_crop</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../_images/show_img.png" src="../_images/show_img.png" />
@@ -473,20 +471,20 @@ the Spectral Python documentation.</p>
 </div>
 <p class="rubric">Example</p>
 <p>Load <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code> modules</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>  <span class="c1"># load hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">spatial_mod</span>  <span class="c1"># load spatial mod</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>  <span class="c1"># load hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">spatial_mod</span>  <span class="c1"># load spatial mod</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>  <span class="c1"># initialize the hsio class</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname_hdr_in</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Perform simple spatial cropping via <code class="docutils literal notranslate"><span class="pre">spatial_mod.crop_single</span></code> to generate a new datacube.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_spatial_mod</span> <span class="o">=</span> <span class="n">spatial_mod</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>  <span class="c1"># initialize spatial_mod instance to crop the image</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_spatial_mod</span> <span class="o">=</span> <span class="n">spatial_mod</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>  <span class="c1"># initialize spatial_mod instance to crop the image</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_spatial_mod</span><span class="o">.</span><span class="n">crop_single</span><span class="p">(</span><span class="n">pix_e_ul</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">crop_e_m</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">crop_n_m</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Save the datacube using <code class="docutils literal notranslate"><span class="pre">hsio.write_cube</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-cropped.bip.hdr&#39;</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-cropped.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">write_cube</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">,</span> <span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
 <span class="go">Saving F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-cropped.bip</span>
 </pre></div>
@@ -549,19 +547,19 @@ pull metadata template from <code class="docutils literal notranslate"><span cla
 </dl>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span> <span class="c1"># load hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span> <span class="c1"># load hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>  <span class="c1"># initialize the hsio class (note there are no required parameters)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname_hdr_in</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Calculate spectral mean via <code class="docutils literal notranslate"><span class="pre">hstools.mean_datacube</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">spec_mean</span><span class="p">,</span> <span class="n">spec_std</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">mean_datacube</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">spec_mean</span><span class="p">,</span> <span class="n">spec_std</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">mean_datacube</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr_spec</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-mean.spec.hdr&#39;</span>
 </pre></div>
 </div>
 <p>Save the new spectra to file via <code class="docutils literal notranslate"><span class="pre">hsio.write_spec</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">write_spec</span><span class="p">(</span><span class="n">fname_hdr_spec</span><span class="p">,</span> <span class="n">spec_mean</span><span class="p">,</span> <span class="n">spec_std</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">write_spec</span><span class="p">(</span><span class="n">fname_hdr_spec</span><span class="p">,</span> <span class="n">spec_mean</span><span class="p">,</span> <span class="n">spec_std</span><span class="p">)</span>
 <span class="go">Saving F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-mean.spec</span>
 </pre></div>
 </div>
@@ -612,14 +610,14 @@ pop-out window; default: &quot;inline&quot;).</p></li>
 </dl>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="k">import</span> <span class="n">hsio</span>  <span class="c1"># load hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>  <span class="c1"># load hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>  <span class="c1"># initialize the hsio class</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname_hdr_in</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Save an RGB render of the datacube to file via <code class="docutils literal notranslate"><span class="pre">hsio.write_tif</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_tif</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7.tif&#39;</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_tif</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7.tif&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">write_tif</span><span class="p">(</span><span class="n">fname_tif</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">fname_in</span><span class="o">=</span><span class="n">fname_hdr_in</span><span class="p">)</span>
 <span class="go">Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.</span>
 <span class="go">Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).</span>
@@ -647,7 +645,7 @@ pop-out window; default: &quot;inline&quot;).</p></li>
     </p>
     <p>
         &copy; Copyright 2020, Tyler J. Nigon.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.1.2.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.<br/>
     </p>
   </div>
 </footer>

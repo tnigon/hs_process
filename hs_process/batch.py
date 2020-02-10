@@ -1735,6 +1735,7 @@ class batch(object):
             +------------+------------+-------------+
             | ...        | 1013       | 0.75025     |
             +------------+------------+-------------+
+
             ...etc.
 
             **Second** is a ``geotiff`` file for each of the image cubes after the
