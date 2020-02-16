@@ -165,9 +165,614 @@
 <dl class="class">
 <dt id="hs_process.defaults">
 <em class="property">class </em><code class="sig-prename descclassname">hs_process.</code><code class="sig-name descname">defaults</code><a class="reference internal" href="../_modules/hs_process/utilities.html#defaults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.defaults" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Class containing default values and/or settings for various
+<dd><p>Class containing default values and/or settings for various
 <code class="docutils literal notranslate"><span class="pre">hs_process</span></code> tools/functions.</p>
+<p class="rubric">Item Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.defaults.crop_defaults" title="hs_process.defaults.crop_defaults"><code class="xref py py-obj docutils literal notranslate"><span class="pre">defaults.crop_defaults</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.defaults.envi_write" title="hs_process.defaults.envi_write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">defaults.envi_write</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.defaults.spat_crop_cols" title="hs_process.defaults.spat_crop_cols"><code class="xref py py-obj docutils literal notranslate"><span class="pre">defaults.spat_crop_cols</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Item Documentation</p>
+<dl class="attribute">
+<dt id="hs_process.defaults.crop_defaults">
+<code class="sig-name descname">crop_defaults</code><em class="property"> = None</em><a class="headerlink" href="#hs_process.defaults.crop_defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default values for performing spatial cropping on images. <code class="docutils literal notranslate"><span class="pre">crop_defaults</span></code>
+is referenced by the <code class="docutils literal notranslate"><span class="pre">spatial_mod.crop_single()</span></code> function to get default
+values if various user-parameters are not passed or are left to <code class="docutils literal notranslate"><span class="pre">None</span></code>.
+In this way, <code class="docutils literal notranslate"><span class="pre">defaults.crop_defaults</span></code> can be modified once by the user to
+avoid having to pass the same parameter(s) repeatedly if executing
+<code class="docutils literal notranslate"><span class="pre">spatial_mod.crop_single()</span></code> many times, such as in a for loop.</p>
+<dl class="attribute">
+<dt id="hs_process.defaults.crop_defaults.directory">
+<code class="sig-prename descclassname">crop_defaults.</code><code class="sig-name descname">directory</code><a class="headerlink" href="#hs_process.defaults.crop_defaults.directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>File directory of the input image
+to be cropped (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.crop_defaults.name_short">
+<code class="sig-prename descclassname">crop_defaults.</code><code class="sig-name descname">name_short</code><a class="headerlink" href="#hs_process.defaults.crop_defaults.name_short" title="Permalink to this definition">¶</a></dt>
+<dd><p>Part of the datacube name that is
+generally not repeated across many datacubes captured at the
+same time. In the <code class="docutils literal notranslate"><span class="pre">name_long</span></code> example above,
+<code class="docutils literal notranslate"><span class="pre">name_short</span></code> = &quot;plot_101_pika_gige_2&quot;. The part of the
+filename that is <code class="docutils literal notranslate"><span class="pre">name_short</span></code> should end with a dash (but
+should not include that dash as it belongs to <code class="docutils literal notranslate"><span class="pre">name_long</span></code>;
+default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.crop_defaults.name_long">
+<code class="sig-prename descclassname">crop_defaults.</code><code class="sig-name descname">name_long</code><a class="headerlink" href="#hs_process.defaults.crop_defaults.name_long" title="Permalink to this definition">¶</a></dt>
+<dd><p>Part of the datacube name that tends
+to be long and is repeated across many datacubes captured at
+the same time. This is an artifact of Resonon/Spectronon
+software, and may be desireable to shorten and/or make more
+informative. For example, a datacube may have the following name:
+<em>&quot;plot_101_pika_gige_2-Radiance From Raw Data-Georectify Airborne Datacube-Reflectance from Radiance Data and Measured Reference Spectrum.bip&quot;</em>
+and another datacube captured in the same campaign may be named:
+<em>&quot;plot_102_pika_gige_1-Radiance From Raw Data-Georectify Airborne Datacube-Reflectance from Radiance Data and Measured Reference Spectrum.bip&quot;</em>
+<code class="docutils literal notranslate"><span class="pre">name_long</span></code> should refer to everything after the first dash
+(including the first dash) up to the file extension (&quot;.bip&quot;):
+<code class="docutils literal notranslate"><span class="pre">name_long</span></code> = <em>&quot;-Radiance From Raw Data-Georectify Airborne Datacube-Reflectance from Radiance Data and Measured Reference Spectrum&quot;</em>
+(default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.crop_defaults.ext">
+<code class="sig-prename descclassname">crop_defaults.</code><code class="sig-name descname">ext</code><a class="headerlink" href="#hs_process.defaults.crop_defaults.ext" title="Permalink to this definition">¶</a></dt>
+<dd><p>File extension to save the cropped image
+(default: 'bip').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.crop_defaults.pix_e_ul">
+<code class="sig-prename descclassname">crop_defaults.</code><code class="sig-name descname">pix_e_ul</code><a class="headerlink" href="#hs_process.defaults.crop_defaults.pix_e_ul" title="Permalink to this definition">¶</a></dt>
+<dd><p>upper left pixel column (easting) to
+begin cropping (default: 0).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.crop_defaults.pix_n_ul">
+<code class="sig-prename descclassname">crop_defaults.</code><code class="sig-name descname">pix_n_ul</code><a class="headerlink" href="#hs_process.defaults.crop_defaults.pix_n_ul" title="Permalink to this definition">¶</a></dt>
+<dd><p>upper left pixel row (northing) to
+begin cropping (default: 0).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.crop_defaults.buf_e_pix">
+<code class="sig-prename descclassname">crop_defaults.</code><code class="sig-name descname">buf_e_pix</code><a class="headerlink" href="#hs_process.defaults.crop_defaults.buf_e_pix" title="Permalink to this definition">¶</a></dt>
+<dd><p>The buffer distance in the easting
+direction (in pixel units) to be applied after calculating the
+original crop area (default: 0).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.crop_defaults.buf_n_pix">
+<code class="sig-prename descclassname">crop_defaults.</code><code class="sig-name descname">buf_n_pix</code><a class="headerlink" href="#hs_process.defaults.crop_defaults.buf_n_pix" title="Permalink to this definition">¶</a></dt>
+<dd><p>The buffer distance in the northing
+direction (in pixel units) to be applied after calculating the
+original crop area (default: 0).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.crop_defaults.buf_e_m">
+<code class="sig-prename descclassname">crop_defaults.</code><code class="sig-name descname">buf_e_m</code><a class="headerlink" href="#hs_process.defaults.crop_defaults.buf_e_m" title="Permalink to this definition">¶</a></dt>
+<dd><p>The buffer distance in the easting
+direction (in map units; e.g., meters) to be applied after
+calculating the original crop area; the buffer is considered
+after <code class="docutils literal notranslate"><span class="pre">crop_X_m</span></code>/<code class="docutils literal notranslate"><span class="pre">crop_X_pix</span></code>. A positive value will
+reduce the size of <code class="docutils literal notranslate"><span class="pre">crop_X_m</span></code>/<code class="docutils literal notranslate"><span class="pre">crop_X_pix</span></code>, and a
+negative value will increase it (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.crop_defaults.buf_n_m">
+<code class="sig-prename descclassname">crop_defaults.</code><code class="sig-name descname">buf_n_m</code><a class="headerlink" href="#hs_process.defaults.crop_defaults.buf_n_m" title="Permalink to this definition">¶</a></dt>
+<dd><p>The buffer distance in the northing
+direction (in map units; e.g., meters) to be applied after
+calculating the original crop area; the buffer is considered
+after <code class="docutils literal notranslate"><span class="pre">crop_X_m</span></code>/<code class="docutils literal notranslate"><span class="pre">crop_X_pix</span></code>. A positive value will
+reduce the size of <code class="docutils literal notranslate"><span class="pre">crop_X_m</span></code>/<code class="docutils literal notranslate"><span class="pre">crop_X_pix</span></code>, and a
+negative value will increase it (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.crop_defaults.crop_e_pix">
+<code class="sig-prename descclassname">crop_defaults.</code><code class="sig-name descname">crop_e_pix</code><a class="headerlink" href="#hs_process.defaults.crop_defaults.crop_e_pix" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of pixels in each row in the
+cropped image (default: 90).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.crop_defaults.crop_n_pix">
+<code class="sig-prename descclassname">crop_defaults.</code><code class="sig-name descname">crop_n_pix</code><a class="headerlink" href="#hs_process.defaults.crop_defaults.crop_n_pix" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of pixels in each column in
+the cropped image (default: 120).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.crop_defaults.crop_e_m">
+<code class="sig-prename descclassname">crop_defaults.</code><code class="sig-name descname">crop_e_m</code><a class="headerlink" href="#hs_process.defaults.crop_defaults.crop_e_m" title="Permalink to this definition">¶</a></dt>
+<dd><p>length of each row (easting
+direction) of the cropped image in map units (e.g., meters;
+default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.crop_defaults.crop_n_m">
+<code class="sig-prename descclassname">crop_defaults.</code><code class="sig-name descname">crop_n_m</code><a class="headerlink" href="#hs_process.defaults.crop_defaults.crop_n_m" title="Permalink to this definition">¶</a></dt>
+<dd><p>length of each column (northing
+direction) of the cropped image in map units (e.g., meters;
+default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.crop_defaults.plot_id">
+<code class="sig-prename descclassname">crop_defaults.</code><code class="sig-name descname">plot_id</code><a class="headerlink" href="#hs_process.defaults.crop_defaults.plot_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>the plot ID of the area to be cropped
+(default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.envi_write">
+<code class="sig-name descname">envi_write</code><em class="property"> = None</em><a class="headerlink" href="#hs_process.defaults.envi_write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attributes for writing ENVI datacubes to file, following the convention of
+the <a class="reference external" href="http://www.spectralpython.net/">Spectral Python</a> <a class="reference external" href="http://www.spectralpython.net/class_func_ref.html#spectral.io.envi.save_image">envi.save_image()</a> parameter options for writing
+an ENVI datacube to file.</p>
+<dl class="attribute">
+<dt id="hs_process.defaults.envi_write.dtype">
+<code class="sig-prename descclassname">envi_write.</code><code class="sig-name descname">dtype</code><a class="headerlink" href="#hs_process.defaults.envi_write.dtype" title="Permalink to this definition">¶</a></dt>
+<dd><p>The data type with which
+to store the image. For example, to store the image in 16-bit
+unsigned integer format, the argument could be any of
+<code class="docutils literal notranslate"><span class="pre">numpy.uint16</span></code>, <code class="docutils literal notranslate"><span class="pre">'u2'</span></code>, <code class="docutils literal notranslate"><span class="pre">'uint16'</span></code>, or <code class="docutils literal notranslate"><span class="pre">'H'</span></code> (default:
+<code class="docutils literal notranslate"><span class="pre">np.float32</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">numpy.dtype</span></code> or <code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.envi_write.force">
+<code class="sig-prename descclassname">envi_write.</code><code class="sig-name descname">force</code><a class="headerlink" href="#hs_process.defaults.envi_write.force" title="Permalink to this definition">¶</a></dt>
+<dd><p>If <code class="docutils literal notranslate"><span class="pre">hdr_file</span></code> or its associated image
+file exist, <code class="docutils literal notranslate"><span class="pre">force=True</span></code> will overwrite the files; otherwise, an
+exception will be raised if either file exists (default:
+<code class="docutils literal notranslate"><span class="pre">False</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.envi_write.ext">
+<code class="sig-prename descclassname">envi_write.</code><code class="sig-name descname">ext</code><a class="headerlink" href="#hs_process.defaults.envi_write.ext" title="Permalink to this definition">¶</a></dt>
+<dd><p>The extension to use for saving the image
+file; if not specified, a default extension is determined based on
+the <code class="docutils literal notranslate"><span class="pre">interleave</span></code>. For example, if <code class="docutils literal notranslate"><span class="pre">interleave``='bip',</span> <span class="pre">then</span>
+<span class="pre">``ext</span></code> is set to 'bip' as well. If <code class="docutils literal notranslate"><span class="pre">ext</span></code> is an empty string, the
+image file will have the same name as the .hdr, but without the
+'.hdr' extension (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.envi_write.interleave">
+<code class="sig-prename descclassname">envi_write.</code><code class="sig-name descname">interleave</code><a class="headerlink" href="#hs_process.defaults.envi_write.interleave" title="Permalink to this definition">¶</a></dt>
+<dd><p>The band interleave format to use for
+writing the file; <code class="docutils literal notranslate"><span class="pre">interleave</span></code> should be one of 'bil', 'bip', or
+'bsq' (default: 'bip').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.envi_write.byteorder">
+<code class="sig-prename descclassname">envi_write.</code><code class="sig-name descname">byteorder</code><a class="headerlink" href="#hs_process.defaults.envi_write.byteorder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the byte order
+(endian-ness) of the data as written to disk. For little endian,
+this value should be either 0 or 'little'. For big endian, it
+should be either 1 or 'big'. If not specified, native byte order
+will be used (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.spat_crop_cols">
+<code class="sig-name descname">spat_crop_cols</code><em class="property"> = None</em><a class="headerlink" href="#hs_process.defaults.spat_crop_cols" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default column names for performing batch spatial cropping on
+images. Useful when batch processing images via <a class="reference external" href="hs_process.batch.html#hs_process.batch.spatial_crop">batch.spatial_crop()</a>.
+<code class="docutils literal notranslate"><span class="pre">batch.spatial_crop()</span></code> takes a parameter <code class="docutils literal notranslate"><span class="pre">fname_sheet</span></code>, which can be a
+filename to a spreadsheet or a <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>.
+<code class="docutils literal notranslate"><span class="pre">defaults.spat_crop_cols</span></code> should be modified if the column names in
+<code class="docutils literal notranslate"><span class="pre">fname_sheet</span></code> are different than what is expected (see documentation for
+<a class="reference external" href="hs_process.batch.html#hs_process.batch.spatial_crop">batch.spatial_crop()</a> to know the expected column names).</p>
+<dl class="attribute">
+<dt id="hs_process.defaults.spat_crop_cols.directory">
+<code class="sig-prename descclassname">spat_crop_cols.</code><code class="sig-name descname">directory</code><a class="headerlink" href="#hs_process.defaults.spat_crop_cols.directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>column name for input directory
+(default: 'directory').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.spat_crop_cols.fname">
+<code class="sig-prename descclassname">spat_crop_cols.</code><code class="sig-name descname">fname</code><a class="headerlink" href="#hs_process.defaults.spat_crop_cols.fname" title="Permalink to this definition">¶</a></dt>
+<dd><p>column name for input fname
+(default: 'fname').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.spat_crop_cols.name_short">
+<code class="sig-prename descclassname">spat_crop_cols.</code><code class="sig-name descname">name_short</code><a class="headerlink" href="#hs_process.defaults.spat_crop_cols.name_short" title="Permalink to this definition">¶</a></dt>
+<dd><p>column name for input image's
+<code class="docutils literal notranslate"><span class="pre">name_short</span></code> (default: 'name_short').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.spat_crop_cols.name_long">
+<code class="sig-prename descclassname">spat_crop_cols.</code><code class="sig-name descname">name_long</code><a class="headerlink" href="#hs_process.defaults.spat_crop_cols.name_long" title="Permalink to this definition">¶</a></dt>
+<dd><p>column name for input image's
+<code class="docutils literal notranslate"><span class="pre">name_long</span></code> (default: 'name_long').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.spat_crop_cols.ext">
+<code class="sig-prename descclassname">spat_crop_cols.</code><code class="sig-name descname">ext</code><a class="headerlink" href="#hs_process.defaults.spat_crop_cols.ext" title="Permalink to this definition">¶</a></dt>
+<dd><p>column name for file extension of input
+image (default: 'ext').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.spat_crop_cols.pix_e_ul">
+<code class="sig-prename descclassname">spat_crop_cols.</code><code class="sig-name descname">pix_e_ul</code><a class="headerlink" href="#hs_process.defaults.spat_crop_cols.pix_e_ul" title="Permalink to this definition">¶</a></dt>
+<dd><p>column name for <code class="docutils literal notranslate"><span class="pre">pix_e_ul</span></code>
+(default: 'pix_e_ul').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.spat_crop_cols.pix_n_ul">
+<code class="sig-prename descclassname">spat_crop_cols.</code><code class="sig-name descname">pix_n_ul</code><a class="headerlink" href="#hs_process.defaults.spat_crop_cols.pix_n_ul" title="Permalink to this definition">¶</a></dt>
+<dd><p>column name for <code class="docutils literal notranslate"><span class="pre">pix_n_ul</span></code>
+(default: 'pix_n_ul').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.spat_crop_cols.alley_size_e_pix">
+<code class="sig-prename descclassname">spat_crop_cols.</code><code class="sig-name descname">alley_size_e_pix</code><a class="headerlink" href="#hs_process.defaults.spat_crop_cols.alley_size_e_pix" title="Permalink to this definition">¶</a></dt>
+<dd><p>column name for
+<code class="docutils literal notranslate"><span class="pre">alley_size_e_pix</span></code> (default: 'alley_size_e_pix').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.spat_crop_cols.alley_size_n_pix">
+<code class="sig-prename descclassname">spat_crop_cols.</code><code class="sig-name descname">alley_size_n_pix</code><a class="headerlink" href="#hs_process.defaults.spat_crop_cols.alley_size_n_pix" title="Permalink to this definition">¶</a></dt>
+<dd><p>column name for
+<code class="docutils literal notranslate"><span class="pre">alley_size_n_pix</span></code> (default: 'alley_size_n_pix').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.spat_crop_cols.alley_size_e_m">
+<code class="sig-prename descclassname">spat_crop_cols.</code><code class="sig-name descname">alley_size_e_m</code><a class="headerlink" href="#hs_process.defaults.spat_crop_cols.alley_size_e_m" title="Permalink to this definition">¶</a></dt>
+<dd><p>column name for
+<code class="docutils literal notranslate"><span class="pre">alley_size_e_m</span></code> (default: 'alley_size_e_m').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.spat_crop_cols.alley_size_n_m">
+<code class="sig-prename descclassname">spat_crop_cols.</code><code class="sig-name descname">alley_size_n_m</code><a class="headerlink" href="#hs_process.defaults.spat_crop_cols.alley_size_n_m" title="Permalink to this definition">¶</a></dt>
+<dd><p>column name for
+<code class="docutils literal notranslate"><span class="pre">alley_size_n_m</span></code> (default: 'alley_size_n_m').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.spat_crop_cols.buf_e_pix">
+<code class="sig-prename descclassname">spat_crop_cols.</code><code class="sig-name descname">buf_e_pix</code><a class="headerlink" href="#hs_process.defaults.spat_crop_cols.buf_e_pix" title="Permalink to this definition">¶</a></dt>
+<dd><p>column name for <code class="docutils literal notranslate"><span class="pre">buf_e_pix</span></code>
+(default: 'buf_e_pix').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.spat_crop_cols.buf_n_pix">
+<code class="sig-prename descclassname">spat_crop_cols.</code><code class="sig-name descname">buf_n_pix</code><a class="headerlink" href="#hs_process.defaults.spat_crop_cols.buf_n_pix" title="Permalink to this definition">¶</a></dt>
+<dd><p>column name for <code class="docutils literal notranslate"><span class="pre">buf_n_pix</span></code>
+(default: 'buf_n_pix').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.spat_crop_cols.buf_e_m">
+<code class="sig-prename descclassname">spat_crop_cols.</code><code class="sig-name descname">buf_e_m</code><a class="headerlink" href="#hs_process.defaults.spat_crop_cols.buf_e_m" title="Permalink to this definition">¶</a></dt>
+<dd><p>column name for <code class="docutils literal notranslate"><span class="pre">buf_e_m</span></code> (default:
+'buf_e_m').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.spat_crop_cols.buf_n_m">
+<code class="sig-prename descclassname">spat_crop_cols.</code><code class="sig-name descname">buf_n_m</code><a class="headerlink" href="#hs_process.defaults.spat_crop_cols.buf_n_m" title="Permalink to this definition">¶</a></dt>
+<dd><p>column name for <code class="docutils literal notranslate"><span class="pre">buf_n_m</span></code> (default:
+'buf_n_m').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.spat_crop_cols.crop_e_pix">
+<code class="sig-prename descclassname">spat_crop_cols.</code><code class="sig-name descname">crop_e_pix</code><a class="headerlink" href="#hs_process.defaults.spat_crop_cols.crop_e_pix" title="Permalink to this definition">¶</a></dt>
+<dd><p>column name for <code class="docutils literal notranslate"><span class="pre">crop_e_pix</span></code>
+(default: 'crop_e_pix').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.spat_crop_cols.crop_n_pix">
+<code class="sig-prename descclassname">spat_crop_cols.</code><code class="sig-name descname">crop_n_pix</code><a class="headerlink" href="#hs_process.defaults.spat_crop_cols.crop_n_pix" title="Permalink to this definition">¶</a></dt>
+<dd><p>column name for <code class="docutils literal notranslate"><span class="pre">crop_n_pix</span></code>
+(default: 'crop_n_pix').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.spat_crop_cols.crop_e_m">
+<code class="sig-prename descclassname">spat_crop_cols.</code><code class="sig-name descname">crop_e_m</code><a class="headerlink" href="#hs_process.defaults.spat_crop_cols.crop_e_m" title="Permalink to this definition">¶</a></dt>
+<dd><p>column name for <code class="docutils literal notranslate"><span class="pre">crop_e_m</span></code>
+(default: 'crop_e_m').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.spat_crop_cols.crop_n_m">
+<code class="sig-prename descclassname">spat_crop_cols.</code><code class="sig-name descname">crop_n_m</code><a class="headerlink" href="#hs_process.defaults.spat_crop_cols.crop_n_m" title="Permalink to this definition">¶</a></dt>
+<dd><p>column name for <code class="docutils literal notranslate"><span class="pre">crop_n_m</span></code>
+(default: 'crop_n_m').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.spat_crop_cols.plot_id">
+<code class="sig-prename descclassname">spat_crop_cols.</code><code class="sig-name descname">plot_id</code><a class="headerlink" href="#hs_process.defaults.spat_crop_cols.plot_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>column name for <code class="docutils literal notranslate"><span class="pre">plot_id</span></code>
+(default: 'crop_n_pix').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="sig-prename descclassname">spat_crop_cols.</code><code class="sig-name descname">plot_id</code></dt>
+<dd><p>column name for <code class="docutils literal notranslate"><span class="pre">n_plots_x</span></code>
+(default: 'n_plots_x').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.spat_crop_cols.n_plots_y">
+<code class="sig-prename descclassname">spat_crop_cols.</code><code class="sig-name descname">n_plots_y</code><a class="headerlink" href="#hs_process.defaults.spat_crop_cols.n_plots_y" title="Permalink to this definition">¶</a></dt>
+<dd><p>column name for <code class="docutils literal notranslate"><span class="pre">n_plots_y</span></code>
+(default: 'n_plots_y').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hs_process.defaults.spat_crop_cols.n_plots">
+<code class="sig-prename descclassname">spat_crop_cols.</code><code class="sig-name descname">n_plots</code><a class="headerlink" href="#hs_process.defaults.spat_crop_cols.n_plots" title="Permalink to this definition">¶</a></dt>
+<dd><p>column name for <code class="docutils literal notranslate"><span class="pre">n_plots</span></code>
+(default: 'n_plots').</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </dd></dl>
 
 </div>

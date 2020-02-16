@@ -1,10 +1,7 @@
-nbsphinx==0.5.1
-
-sphinx==2.3.1
-nbconvert==5.6.1
+autodocsumm==0.1.11
 ipykernel==5.1.4
-numpy
-matplotlib
-pandas
-sphinx-bootstrap-theme==0.7.1
+nbconvert==5.6.1
+nbsphinx==0.5.1
+sphinx==2.3.1
 sphinx-automodapi==0.12
+sphinx-bootstrap-theme==0.7.1
