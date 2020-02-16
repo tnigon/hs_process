@@ -111,19 +111,19 @@ class spec_mod(object):
             >>> from hs_process import spec_mod
             >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
-            >>> my_segment = segment(io.spyfile)
+            >>> my_spec_mod = spec_mod(io.spyfile)
 
             Load datacube
 
-            >>> my_segment.load_spyfile(io.spyfile)
-            >>> my_segment.spyfile
+            >>> my_spec_mod.load_spyfile(io.spyfile)
+            >>> my_spec_mod.spyfile
             Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
-            # Rows:            617
-            # Samples:        1827
-            # Bands:           240
-            Interleave:        BIP
-            Quantization:  32 bits
-            Data format:   float32
+        	# Rows:            617
+        	# Samples:        1300
+        	# Bands:           240
+        	Interleave:        BIP
+        	Quantization:  32 bits
+        	Data format:   float32
         '''
         self.spyfile = spyfile
         self.tools = hstools(spyfile)
@@ -190,6 +190,7 @@ class spec_mod(object):
 
             >>> fname_hdr_clip = r'F:\\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip.hdr'
             >>> io1.write_cube(fname_hdr_clip, array_clip, metadata)
+            Saving F:\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip
 
             Initialize a second instance of ``hsio`` and read in the clipped
             cube to compare the clipped cube to the unclipped cube
@@ -199,7 +200,7 @@ class spec_mod(object):
             >>> io1.spyfile
             Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
         	# Rows:            617
-        	# Samples:        1827
+        	# Samples:        1300
         	# Bands:           240
         	Interleave:        BIP
         	Quantization:  32 bits
@@ -211,7 +212,7 @@ class spec_mod(object):
             >>> io2.spyfile
             Data Source:   'F:\\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip'
         	# Rows:            617
-        	# Samples:        1827
+        	# Samples:        1300
         	# Bands:           210
         	Interleave:        BIP
         	Quantization:  32 bits
@@ -262,7 +263,7 @@ class spec_mod(object):
 
     def spectral_smooth(self, window_size=11, order=2, spyfile=None):
         '''
-        Performs Savitzky-Golay smoothing on the spectral domain
+        Performs Savitzky-Golay smoothing on the spectral domain.
 
         Parameters:
             window_size (``int``): the length of the window; must be an odd

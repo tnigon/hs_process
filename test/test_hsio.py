@@ -30,12 +30,49 @@ if not os.path.isfile(FILENAME_HDR):
 if not os.path.isfile(FILENAME_HDR_SPEC):
     FILENAME_HDR_SPEC = os.path.join(os.getcwd(), 'test', 'testdata', 'Wells_rep2_20180628_16h56m_pika_gige_7_plot_611-cube-to-spec-mean.spec.hdr')
 
+class Test_hsio_get_fname_hdr(unittest.TestCase):
+    def setUp(self):
+        '''
+        This setUp function will be called for every single test that is run
+        '''
+        self.fname_hdr = FILENAME_HDR
+        self.io = hsio(FILENAME_HDR)
+
+    def tearDown(self):
+        '''
+        This tearDown function will be called after each test method is run
+        '''
+        self.fname_hdr = None
+        self.io = None
+
+    def test_bip_extensions(self):
+        fname_bip_hdr = os.path.join(self.io.base_dir, 'image_name_out.bip.hdr')
+        fname_hdr = os.path.join(self.io.base_dir, 'image_name_out.hdr')
+        fname_bip = os.path.join(self.io.base_dir, 'image_name_out.bip')
+        fname_bip_hdr_correct = os.path.join(self.io.base_dir, 'image_name_out.bip.hdr')
+
+        self.assertEqual(fname_bip_hdr_correct, self.io._get_fname_hdr(fname_bip_hdr),
+                         'hsio._get_fname_hdr() ".bip.hdr" is incorrect')
+        self.assertEqual(fname_bip_hdr_correct, self.io._get_fname_hdr(fname_hdr),
+                         'hsio._get_fname_hdr() ".hdr" is incorrect')
+        self.assertEqual(fname_bip_hdr_correct, self.io._get_fname_hdr(fname_bip),
+                         'hsio._get_fname_hdr() ".bip" is incorrect')
+
+    def test_spec_extensions(self):
+        fname_spec_hdr = os.path.join(self.io.base_dir, 'image_name_out.spec.hdr')
+        fname_spec = os.path.join(self.io.base_dir, 'image_name_out.spec')
+        fname_spec_hdr_correct = os.path.join(self.io.base_dir, 'image_name_out.spec.hdr')
+
+        self.assertEqual(fname_spec_hdr_correct, self.io._get_fname_hdr(fname_spec_hdr),
+                         'hsio._get_fname_hdr() ".spec.hdr" is incorrect')
+        self.assertEqual(fname_spec_hdr_correct, self.io._get_fname_hdr(fname_spec),
+                         'hsio._get_fname_hdr() ".spec" is incorrect')
+
 class Test_hsio_read_cube(unittest.TestCase):
     def setUp(self):
         '''
         This setUp function will be called for every single test that is run
         '''
-#        self.fname_hdr = fname_hdr
         self.fname_hdr = FILENAME_HDR
         self.io = hsio(FILENAME_HDR)
 
@@ -301,6 +338,11 @@ class Test_hsio_write_tif(unittest.TestCase):
 
 def suite():
     suite = unittest.TestSuite()
+
+    # _get_fname_hdr
+    suite.addTest(Test_hsio_get_fname_hdr('test_bip_extensions'))
+    suite.addTest(Test_hsio_get_fname_hdr('test_spec_extensions'))
+
 
     # read_cube
     suite.addTest(Test_hsio_read_cube('test_readability'))

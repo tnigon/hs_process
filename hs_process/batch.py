@@ -1321,7 +1321,7 @@ class batch(object):
                         out_byteorder=False):
         '''
         Calculates the mean and standard deviation for each cube in
-        ``fname_list`` and writes the result to a .spec file.
+        ``fname_list`` and writes the result to a ".spec" file.
 
         Parameters:
             fname_list (``list``, optional): list of filenames to process; if
@@ -1346,7 +1346,7 @@ class batch(object):
             geotiff (``bool``): whether to save the masked RGB image as a geotiff
                 alongside the masked datacube.
             out_XXX: Settings for saving the output files can be adjusted here
-                if desired. They are stored in ``batch.io.defaults, and are
+                if desired. They are stored in ``batch.io.defaults``, and are
                 therefore accessible at a high level. See
                 ``hsio.set_io_defaults()`` for more information on each of the
                 settings.
@@ -1389,8 +1389,8 @@ class batch(object):
             the plot ID, and how the *"history"* tag is referenced from the
             metadata to determine the number of pixels whose reflectance was
             averaged to create the mean spectra. Also remember that pixels
-            across the original input image likely represent a combinatoin of
-            soil, vegeation, and shadow.
+            across the original input image likely represent a combination of
+            soil, vegetation, and shadow.
 
             >>> import seaborn as sns
             >>> import re
@@ -1585,7 +1585,7 @@ class batch(object):
 
             **Fourth** is a histogram of the band math data contained in the
             image. The histogram illustrates the 90th percentile value, which
-            may be useful for in the segmentation step (e.g., see
+            may be useful in the segmentation step (e.g., see
             `batch.segment_create_mask`_).
 
             .. image:: ../img/batch/segment_band_math_plot_611-band-math-mcari2-800-670-550.png
@@ -1729,11 +1729,11 @@ class batch(object):
             +------------+------------+-------------+
             | fname      | plot_id    |lower-pctl-90|
             +============+============+=============+
-            | ...        | 1011       | 0.83341     |
+            | ...        | 1011       | 0.83222     |
             +------------+------------+-------------+
-            | ...        | 1012       | 0.81117     |
+            | ...        | 1012       | 0.81112     |
             +------------+------------+-------------+
-            | ...        | 1013       | 0.75025     |
+            | ...        | 1013       | 0.74394     |
             +------------+------------+-------------+
 
             ...etc.
@@ -1753,8 +1753,8 @@ class batch(object):
             .. image:: ../img/batch/segment_create_mask_datacube.png
 
             **Fourth** is the mean spectra across the unmasked datacube pixels.
-            This is illustrated above by the green plot (the light green shadow
-            represents the standard deviation for each band).
+            This is illustrated above by the green line plot (the light green
+            shadow represents the standard deviation for each band).
 
         .. _Harris Geospatial: https://www.harrisgeospatial.com/docs/NarrowbandGreenness.html#Modified3
         .. _batch.segment_band_math: hs_process.batch.html#hs_process.batch.segment_band_math
@@ -1785,8 +1785,8 @@ class batch(object):
                      out_force=None, out_ext=False, out_interleave=False,
                      out_byteorder=False):
         '''
-        Iterates through spreadsheet that provides necessary information about
-        how each image should be cropped and how it should be saved.
+        Iterates through a spreadsheet that provides necessary information
+        about how each image should be cropped and how it should be saved.
 
         If ``gdf`` is passed (a geopandas.GoeDataFrame polygon file), the
         cropped images will be shifted to the center of appropriate "plot"
@@ -1891,7 +1891,7 @@ class batch(object):
             datacubes that were available.
 
         Note:
-            This example will uses ``spatial_mod.crop_many_gdf`` to crop many
+            This example uses ``spatial_mod.crop_many_gdf`` to crop many
             plots from a datacube using a polygon geometry file describing the
             spatial extent of each plot.
 
@@ -2233,7 +2233,7 @@ class batch(object):
 
             It is somewhat confusing to conceptualize spectral data by band
             number (as opposed to the wavelenth it represents).
-            ``hs_process.hs_tools.get_band`` can be utilized to retrieve
+            ``hs_process.hs_tools.get_band`` can be used to retrieve
             spectral data for all plots via indexing by wavelength. Say we need
             to access reflectance at 710 nm for each plot.
 

@@ -204,6 +204,7 @@ class segment(object):
         Example:
             Load ``hsio`` and ``segment`` modules
 
+            >>> import numpy as np
             >>> from hs_process import hsio
             >>> from hs_process import segment
             >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
@@ -287,8 +288,6 @@ class segment(object):
                          b3=None, spyfile=None, list_range=True,
                          print_out=True):
         '''
-        Calculates the MCARI2 spectral index
-
         Calculates the MCARI2 (Modified Chlorophyll Absorption Ratio Index
         Improved; Haboudane et al., 2004) spectral index from three input bands
         and/or wavelengths. Bands/wavelengths can be input as two individual
@@ -371,7 +370,7 @@ class segment(object):
             Wavelengths used (``b2``): [669.6752]
             Wavelengths used (``b3``): [550.6128]
             >>> np.nanmean(array_mcari2)
-            0.5588388
+            0.5737694501876831
 
             Show MCARI2 image via ``hsio.show_img``
 
@@ -504,7 +503,7 @@ class segment(object):
             Wavelengths used (``b1``): [796.9488, 799.0016, 801.0544, 803.1072]
             Wavelengths used (``b2``): [675.8336, 677.8864, 679.9392, 681.992, 684.0448]
             >>> np.nanmean(array_ndvi)
-            0.80558914
+            0.8184887766838074
 
             Show NDVI image via ``hsio.show_img``
 
@@ -628,7 +627,7 @@ class segment(object):
             Wavelengths used (``b2``): [801.0544, 803.1072, 805.16, 807.2128, 809.2656, 811.3184, 813.3712, 815.424, 817.4768, 819.5296, 821.5824, 823.6352, 825.688, 827.7408, 829.7936, 831.8464, 833.8992, 835.952, 838.0048, 840.0576, 842.1104, 844.1632, 846.216, 848.2688, 850.3216, 852.3744, 854.4272, 856.48, 858.5328]
             (659/830)
             >>> np.nanmean(array_ratio)
-            0.11956976
+            0.10981177
 
             Notice that 29 spectral bands were consolidated (i.e., averaged) to
             mimic a single broad band. We can take the mean of two bands by
@@ -643,7 +642,7 @@ class segment(object):
             Wavelengths used (``b2``): [799.0016, 860.5856]
             (660/830)
             >>> np.nanmean(array_ratio)
-            0.123936154
+            0.113607444
 
             Show the red/near-infrared ratio image via ``hsio.show_img``
 
@@ -720,12 +719,12 @@ class segment(object):
             >>> my_segment.load_spyfile(io.spyfile)
             >>> my_segment.spyfile
             Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
-            # Rows:            617
-            # Samples:        1827
-            # Bands:           240
-            Interleave:        BIP
-            Quantization:  32 bits
-            Data format:   float32
+        	# Rows:            617
+        	# Samples:        1300
+        	# Bands:           240
+        	Interleave:        BIP
+        	Quantization:  32 bits
+        	Data format:   float32
         '''
         self.spyfile = spyfile
         self.tools = hstools(spyfile)

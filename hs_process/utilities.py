@@ -14,6 +14,14 @@ import spectral.io.spyfile as SpyFile
 import sys
 import warnings
 
+plt_style = 'seaborn-whitegrid'
+plt.style.use(plt_style)
+plt.rcParams["font.weight"] = "bold"
+plt.rcParams["axes.labelweight"] = "bold"
+plt.rc('text', usetex=True)
+plt.rcParams['text.latex.preamble'] = [r'\boldmath']
+plt.rc('text', usetex=False)
+
 
 class _dotdict(dict):
     '''dot.notation access to dictionary attributes'''
@@ -660,33 +668,52 @@ class hsio(object):
     def _get_fname_hdr(self, fname_hdr, ext=None,
                        interleave=None):
         '''
-        1. If ext is set, be sure fname follows
-        2. If ext is not set, use fname
-        3. If fname does not include ext, get from interleave
+        Checks to be sure .hdr filename follows that of the extension. There
+        is an exception for .spec files because they are treated differently
+        in Spectronon software.
+
+        Order of operations:
+
+        1. If ext is not set and filename doesn't appear to have an extension,
+            use the interleave as the ext
+        2. If ext is not set and filename has an extension, use the filename as
+            the ext
+        3. If ext is set, be sure fname follows; if so, no issues.
+        4. Otherwise, if fname does not follow, use ext
+        5. Else, use ".bip.hdr"
         '''
         if ext is None:
-            ext = self.defaults.ext
+            ext = self.defaults.envi_write.ext
         if interleave is None:
-            interleave = self.defaults.interleave
+            interleave = self.defaults.envi_write.interleave
+
         if os.path.splitext(fname_hdr)[1] == '.hdr':
             file_wo_hdr = os.path.splitext(fname_hdr)[0]
             file_wo_ext = os.path.splitext(file_wo_hdr)[0]
         else:
             file_wo_hdr = fname_hdr
-            file_wo_ext = os.path.splitext(fname_hdr)[0]
+            file_wo_ext = os.path.splitext(file_wo_hdr)[0]
 
-        if ext is None or ext == '':
-            if os.path.splitext(file_wo_hdr)[1] == '':  # must use interleave
-                fname_hdr = file_wo_ext + '.' +\
-                        interleave + '.hdr'
-        else:
+        if (ext is None or ext == '') and os.path.splitext(file_wo_hdr)[1] == '':  # must use interleave
+            fname_hdr = file_wo_ext + '.' + interleave + '.hdr'
+        elif (ext is None or ext == '') and os.path.splitext(file_wo_hdr)[1] != '':  # use filename
+            fname_hdr = file_wo_hdr + '.hdr'
+        elif os.path.splitext(file_wo_hdr)[1] == ext:  # both ext and file_wo_hdr are good
+            fname_hdr = file_wo_hdr + '.hdr'
+        elif os.path.splitext(file_wo_hdr)[1] != ext:  # must use ext unless
             if ext[0] != '.':
                 ext = '.' + ext
-            if os.path.splitext(file_wo_hdr)[1] != ext:  # must use ext
-                fname_hdr = file_wo_ext + ext + '.hdr'
-            else:
-                fname_hdr = file_wo_hdr + '.hdr'  # we know it includes ext
+            fname_hdr = file_wo_ext + ext + '.hdr'
+        else:
+            fname_hdr = file_wo_ext + '.bip.hdr'
+            # if os.path.splitext(fname_hdr)[1] != '.hdr':
+            #     fname_hdr = file_wo_hdr + '.hdr'  # we know it includes ext
         return fname_hdr
+        # if ext is None or ext == '':
+        #     if os.path.splitext(file_wo_ext)[1] == '':  # must use interleave
+        #         fname_hdr = file_wo_ext + '.' +\
+        #                 interleave + '.hdr'
+
 
     def _check_data_size(self, spyfile, func='write_cube', fname_out=None):
         '''
@@ -769,7 +796,7 @@ class hsio(object):
             >>> io.spyfile
             Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
         	# Rows:            617
-        	# Samples:        1827
+        	# Samples:        1300
         	# Bands:           240
         	Interleave:        BIP
         	Quantization:  32 bits
@@ -778,7 +805,7 @@ class hsio(object):
             Check ``name_long``, ``name_short``, and ``name_plot`` values derived from the filename
 
             >>> io.name_long
-            '-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            '-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum'
 
             >>> io.name_plot
             '7'
@@ -822,7 +849,7 @@ class hsio(object):
 
             >>> io.read_spec(fname_hdr)
             >>> io.spyfile_spec
-            Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-mean.spec'
+            Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7_plot_611-cube-to-spec-mean.spec'
         	# Rows:              1
         	# Samples:           1
         	# Bands:           240
@@ -833,13 +860,13 @@ class hsio(object):
             Check ``name_long``, ``name_short``, and ``name_plot`` values derived from the filename
 
             >>> io.name_long
-            '-mean.spec.hdr'
+            '-cube-to-spec-mean'
 
             >>> io.name_short
-            'Wells_rep2_20180628_16h56m_pika_gige_7'
+            'Wells_rep2_20180628_16h56m_pika_gige_7_plot_611'
 
             >>> io.name_plot
-            '7'
+            '611'
 
         .. _Spectral Python: http://www.spectralpython.net/
         '''
@@ -930,7 +957,8 @@ class hsio(object):
             self.defaults.byteorder = byteorder
 
     def show_img(self, spyfile=None, band_r=120, band_g=76, band_b=32,
-                 vmin=None, vmax=None, cbar=True, inline=True):
+                 vmin=None, vmax=None, cmap='viridis', cbar=True,
+                 inline=True):
         '''
         Displays a datacube as a 3-band RGB image using `Matplotlib`_.
 
@@ -945,6 +973,9 @@ class hsio(object):
             vmin/vmax (``scalar``, optional): The data range that the colormap
                 covers. By default, the colormap covers the complete value
                 range of the supplied data (default: ``None``).
+            cmap (``str``): The Colormap instance or registered colormap name
+                used to map scalar data to colors. This parameter is ignored
+                for RGB(A) data (default: "viridis").
             cbar (``bool``): Whether to include a colorbar in the image
                 (default: ``True``).
             inline (``bool``): If ``True``, displays in the IPython console;
@@ -980,14 +1011,15 @@ class hsio(object):
 
         .. _Matplotlib: https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.imshow.html#
         '''
-        if inline is True:
-            get_ipython().run_line_magic('matplotlib', 'inline')
-        else:
-            try:
-                get_ipython().run_line_magic('matplotlib', 'auto')
-            except ModuleNotFoundError:
-                pass  # just go with whatever is already set
+        # if inline is True:
+        #     get_ipython().run_line_magic('matplotlib', 'inline')
+        # else:
+        #     try:
+        #         get_ipython().run_line_magic('matplotlib', 'auto')
+        #     except ModuleNotFoundError:
+        #         pass  # just go with whatever is already set
 
+        plt.style.use('default')
 
         if spyfile is None:
             spyfile = self.spyfile
@@ -1021,10 +1053,10 @@ class hsio(object):
         elif n_bands == 1:
             array = np.squeeze(array)
 #            ax.imshow(array, vmin=vmin, vmax=vmax)
-            fig = ax.imshow(array, vmin=vmin, vmax=vmax)
+            fig = ax.imshow(array, vmin=vmin, vmax=vmax, cmap=cmap)
         else:
 #            plt.imshow(array, vmin=vmin, vmax=vmax)
-            fig = ax.imshow(array, vmin=vmin, vmax=vmax)
+            fig = ax.imshow(array, vmin=vmin, vmax=vmax, cmap=cmap)
 
         if cbar is True and n_bands ==1:
             my_cbar = plt.colorbar(fig, shrink=0.5, ax=ax)
@@ -1108,6 +1140,7 @@ class hsio(object):
         Example:
             Load ``hsio`` and ``spatial_mod`` modules
 
+            >>> import os
             >>> from hs_process import hsio  # load hsio
             >>> from hs_process import spatial_mod  # load spatial mod
             >>> fname_hdr_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
@@ -1121,9 +1154,10 @@ class hsio(object):
 
             Save the datacube using ``hsio.write_cube``
 
-            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-cropped.bip.hdr'
+            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\hsio\Wells_rep2_20180628_16h56m_pika_gige_7-hsio-write-cube-cropped.bip.hdr'
+            >>> os.mkdir(os.path.dirname(fname_hdr))
             >>> io.write_cube(fname_hdr, array_crop, metadata=metadata)
-            Saving F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-cropped.bip
+            Saving F:\nigo0024\Documents\hs_process_demo\hsio\Wells_rep2_20180628_16h56m_pika_gige_7-hsio-write-cube-cropped.bip
 
             Load the datacube into Spectronon for visualization
 
@@ -1161,6 +1195,8 @@ class hsio(object):
                 fname_hdr, ext=ext, interleave=interleave)
 
         metadata['interleave'] = interleave
+        metadata['label'] = os.path.basename(
+                os.path.splitext(fname_hdr)[0])
         metadata = self.tools.clean_md_sets(metadata=metadata)
         try:
             envi.save_image(fname_hdr, spyfile, dtype=dtype, force=force,
@@ -1235,12 +1271,12 @@ class hsio(object):
             Calculate spectral mean via ``hstools.mean_datacube``
 
             >>> spec_mean, spec_std, _ = io.tools.mean_datacube(io.spyfile)
-            >>> fname_hdr_spec = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-mean.spec.hdr'
+            >>> fname_hdr_spec = r'F:\\nigo0024\Documents\hs_process_demo\hsio\Wells_rep2_20180628_16h56m_pika_gige_7-mean.spec.hdr'
 
             Save the new spectra to file via ``hsio.write_spec``
 
             >>> io.write_spec(fname_hdr_spec, spec_mean, spec_std)
-            Saving F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-mean.spec
+            Saving F:\nigo0024\Documents\hs_process_demo\hsio\Wells_rep2_20180628_16h56m_pika_gige_7-mean.spec
 
             Open *Wells_rep2_20180628_16h56m_pika_gige_7-mean.spec* in *Spectronon* for visualization
 
@@ -1361,7 +1397,7 @@ class hsio(object):
 
             Save an RGB render of the datacube to file via ``hsio.write_tif``
 
-            >>> fname_tif = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7.tif'
+            >>> fname_tif = r'F:\\nigo0024\Documents\hs_process_demo\hsio\Wells_rep2_20180628_16h56m_pika_gige_7.tif'
             >>> io.write_tif(fname_tif, spyfile=io.spyfile, fname_in=fname_hdr_in)
             Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
             Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
@@ -1673,7 +1709,7 @@ class hstools(object):
 
             Create sample metadata with "wavelength" expressed as a list of strings
 
-            >>> metadata = {'samples': 1827,
+            >>> metadata = {'samples': 1300,
                             'lines': 617,
                             'bands': 4,
                             'file type': 'ENVI Standard',
@@ -1686,7 +1722,7 @@ class hstools(object):
             the .hdr file via `save_image()`_ in Spectral Python.
 
             >>> io.tools.clean_md_sets(metadata=metadata)
-            {'samples': 1827,
+            {'samples': 1300,
              'lines': 617,
              'bands': 4,
              'file type': 'ENVI Standard',
@@ -1725,7 +1761,7 @@ class hstools(object):
 
             Create sample metadata
 
-            >>> metadata = {'samples': 1827,
+            >>> metadata = {'samples': 1300,
                             'lines': 617,
                             'bands': 4,
                             'file type': 'ENVI Standard',
@@ -1931,7 +1967,7 @@ class hstools(object):
 
     def get_spectral_mean(self, band_list, spyfile=None):
         '''
-        Gets the spectral mean of a datacube from a list of bands
+        Gets the spectral mean of a datacube from a list of bands.
 
         Parameters:
             band_list (``list``): the list of bands to calculate the spectral
@@ -2110,15 +2146,14 @@ class hstools(object):
             ``hstools.get_meta_set``
 
             >>> map_info_set = io.spyfile.metadata['map info']
-            >>> io.tools.get_meta_set(map_info_set)
             ['UTM',
-             1.0,
-             1.0,
-             441356.76707299997,
-             4855936.7317699995,
-             0.04,
-             0.04,
-             15,
+             '1.0',
+             '1.0',
+             '441357.287073',
+             '4855944.7717699995',
+             '0.04',
+             '0.04',
+             '15',
              'T',
              'WGS-84',
              'units  meters',
@@ -2226,15 +2261,16 @@ class hstools(object):
             >>> io = hsio(fname_in)
 
             Load a new datacube using ``hstools.load_spyfile``
+
             >>> io.tools.load_spyfile(io.spyfile)
             >>> io.tools.spyfile
             Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
-            # Rows:            617
-            # Samples:        1827
-            # Bands:           240
-            Interleave:        BIP
-            Quantization:  32 bits
-            Data format:   float32
+        	# Rows:            617
+        	# Samples:        1300
+        	# Bands:           240
+        	Interleave:        BIP
+        	Quantization:  32 bits
+        	Data format:   float32
         '''
         self.spyfile = spyfile
         self._get_meta_bands(spyfile)
@@ -2293,8 +2329,8 @@ class hstools(object):
 
             See that the *"history"* tage in the ``metadata`` has been modified
 
-            >>> metadata['history'][-159:]
-            "hs_process.mask_array[<label: 'thresh?' value:None; label: 'percentile?' value:75; label: 'side?' value:lower; label: 'unmasked_pct?' value:24.99514308601661>]"
+            >>> metadata['history'][-158:]
+            "hs_process.mask_array[<label: 'thresh?' value:None; label: 'percentile?' value:75; label: 'side?' value:lower; label: 'unmasked_pct?' value:24.9935170178282>]"
 
             Visualize the unmasked array using ``hsio.show_img``. Set ``vmin``
             and ``vmax`` to ensure the same color scale is used in comparing
@@ -2463,12 +2499,12 @@ class hstools(object):
             Save using ``hsio.write_spec`` and ``hsio.write_cube``, then load
             into Spectronon software for visualization.
 
-            >>> fname_hdr_spec = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.spec.hdr'
-            >>> fname_hdr_cube = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.bip.hdr'
+            >>> fname_hdr_spec = r'F:\\nigo0024\Documents\hs_process_demo\hstools\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.spec.hdr'
+            >>> fname_hdr_cube = r'F:\\nigo0024\Documents\hs_process_demo\hstools\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.bip.hdr'
             >>> io.write_spec(fname_hdr_spec, spec_mean, spec_std, metadata=metadata)
-            Saving F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.spec
+            Saving F:\nigo0024\Documents\hs_process_demo\hstools\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.spec
             >>> io.write_cube(fname_hdr_cube, datacube_masked, metadata=metadata)
-            Saving F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.bip
+            Saving F:\nigo0024\Documents\hs_process_demo\hstools\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.bip
 
             .. image:: ../img/utilities/mean_datacube.png
         '''
@@ -2566,10 +2602,10 @@ class hstools(object):
             >>> map_info_set = io.spyfile.metadata['map info']
             >>> map_info_set
             ['UTM',
-             '1.000',
-             '1.000',
-             '441342.687073',
-             '4855944.81177',
+             '1.0',
+             '1.0',
+             '441357.287073',
+             '4855944.7717699995',
              '0.04',
              '0.04',
              '15',
@@ -2578,11 +2614,11 @@ class hstools(object):
              'units  meters',
              'rotation  0.000']
 
-            Modify the value at *index position 4* from ``4855944.81177`` to
-            ``441300.2`` using ``hstools.modify_meta_set``.
+            Modify the value at *index position 4* from ``4855944.7717699995``
+            to ``441300.2`` using ``hstools.modify_meta_set``.
 
             >>> io.tools.modify_meta_set(map_info_set, idx=4, value=441300.2)
-            '{UTM, 1.0, 1.0, 441342.687073, 441300.2, 0.04, 0.04, 15, T, WGS-84, units  meters, rotation  0.000}'
+            '{UTM, 1.0, 1.0, 441357.287073, 441300.2, 0.04, 0.04, 15, T, WGS-84, units  meters, rotation  0.000}'
         '''
         metadata_list = self.get_meta_set(meta_set, idx=None)
         metadata_list[idx] = str(value)
@@ -2592,7 +2628,7 @@ class hstools(object):
     def plot_histogram(self, array, fname_fig=None, title=None, xlabel=None,
                         percentile=90, bins=50, fontsize=16, color='#444444'):
         '''
-        Plots a histogram with the percentile value labeled
+        Plots a histogram with the percentile value labeled.
 
         Parameters:
             array (``numpy.ndarray``): The data array used to create the
@@ -2639,10 +2675,11 @@ class hstools(object):
 
             >>> title = 'Reflectance at 800 nm'
             >>> xlabel = 'Reflectance (%)'
-            >>> io.tools.plot_histogram(array_mask, title=title, xlabel=xlabel)
+            >>> fig = io.tools.plot_histogram(array_mask, title=title, xlabel=xlabel)
 
             .. image:: ../img/utilities/plot_histogram_800nm.png
         '''
+        plt.style.use(plt_style)
 
         msg = ('Array must be 1-dimensional or 2-dimensional. Please choose '
                'only a single array band to create a histogram\nArray shape: '
