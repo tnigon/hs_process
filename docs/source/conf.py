@@ -18,7 +18,6 @@ sys.path.insert(0, os.path.abspath('../../'))
 autodoc_mock_imports = [
     'geopandas',
     'gdal',
-    'osgeo',
     'seaborn']
 
 import sphinx_bootstrap_theme
