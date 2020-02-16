@@ -1,7 +1,7 @@
 autodocsumm==0.1.11
 ipykernel==5.1.4
-gdal==2.3.3
 geopandas==0.6.2
+gdal==2.3.3
 nbconvert==5.6.1
 nbsphinx==0.5.1
 seaborn==0.10.0
