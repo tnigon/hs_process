@@ -6,4 +6,4 @@ sphinx==2.3.1
 sphinx-automodapi==0.12
 sphinx-bootstrap-theme==0.7.1
 
-gdal
+gdal<=2.3
