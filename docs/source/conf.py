@@ -20,6 +20,7 @@ autodoc_mock_imports = ['gdal']
 import sphinx_bootstrap_theme
 import recommonmark
 from recommonmark.transform import AutoStructify
+import gdal
 
 # autodoc_default_options = {
 #     'members': None
