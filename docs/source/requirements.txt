@@ -1,5 +1,6 @@
 autodocsumm==0.1.11
 ipykernel==5.1.4
+geopandas==0.6.2
 nbconvert==5.6.1
 nbsphinx==0.5.1
 sphinx==2.3.1
