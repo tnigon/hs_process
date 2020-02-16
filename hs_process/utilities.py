@@ -5,8 +5,7 @@ import numpy as np
 import os
 # from osgeo import gdal
 # from osgeo import gdalconst
-import gdal
-import gdalconst
+
 #from osgeo import ogr
 import pandas as pd
 import re

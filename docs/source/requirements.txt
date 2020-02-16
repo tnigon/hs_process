@@ -7,5 +7,3 @@ seaborn==0.10.0
 sphinx==2.3.1
 sphinx-automodapi==0.12
 sphinx-bootstrap-theme==0.7.1
-
-GDAL==2.3.3
