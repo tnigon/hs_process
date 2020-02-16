@@ -43,7 +43,7 @@ About
 3. Provide a framework for post-processing an entire aerial hyperspectral dataset that, when repeated, does not require any user intervention.
 4. Enable users to more easily document the complex processes and inherently subjective parameters used for post-processing aerial hyperspectral imagery (e.g., segmentation thresholds, spatial plot buffers, etc.).
 
-In addressing these motivations, it was important to keep each post-processing step as flexible as possible so the specific requirements of individual research objectives can be met.
+In addressing these motivations, it was important to keep each post-processing steps as flexible as possible so the specific requirements of individual research objectives can be met.
 
 .. image:: img/flow_chart.png
    :width: 1000
@@ -62,7 +62,7 @@ Sample data
 
 Intended audience
 ==================
-The intended audiences for this package are anybody looking for a clean, streamlined solution for post-processing aerial hyperspectral imagery. This package is especially well-suited for R&D departments looking for a straightforward way to achieve repeatable post-processing results so data analysis can proceed more quickly and systematically.
+This package was built for those looking for a clean, streamlined solution for post-processing aerial hyperspectral imagery. This package is especially well-suited for R&D departments looking for a straightforward way to achieve repeatable post-processing results so data analysis can proceed more quickly and systematically.
 
 ******************
 Troubleshooting

@@ -62,7 +62,7 @@ Sample data
 
 Intended audience
 ==================
-The intended audiences for this package are anybody looking for a clean, streamlined solution for post-processing aerial hyperspectral imagery. This package is especially well-suited for R&D departments looking for a straightforward way to achieve repeatable post-processing results so data analysis can proceed more quickly and systematically.
+This package was built for those looking for a clean, streamlined solution for post-processing aerial hyperspectral imagery. This package is especially well-suited for R&D departments looking for a straightforward way to achieve repeatable post-processing results so data analysis can proceed more quickly and systematically.
 
 ******************
 Troubleshooting

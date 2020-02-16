@@ -3,7 +3,7 @@ defaults
 
 .. currentmodule:: hs_process
 
-.. autoclass::  defaults
+.. autoclass:: defaults
    :members:
 
    .. rubric:: Item Summary
