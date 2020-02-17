@@ -207,7 +207,7 @@ class segment(object):
             >>> import numpy as np
             >>> from hs_process import hsio
             >>> from hs_process import segment
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
             >>> my_segment = segment(io.spyfile)
 
@@ -359,7 +359,7 @@ class segment(object):
 
             >>> from hs_process import hsio
             >>> from hs_process import segment
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
             >>> my_segment = segment(io.spyfile)
 
@@ -499,7 +499,7 @@ class segment(object):
 
             >>> from hs_process import hsio
             >>> from hs_process import segment
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
             >>> my_segment = segment(io.spyfile)
 
@@ -625,7 +625,7 @@ class segment(object):
 
             >>> from hs_process import hsio
             >>> from hs_process import segment
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
             >>> my_segment = segment(io.spyfile)
 
@@ -731,7 +731,7 @@ class segment(object):
 
             >>> from hs_process import hsio
             >>> from hs_process import segment
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
             >>> my_segment = segment(io.spyfile)
 
@@ -739,7 +739,7 @@ class segment(object):
 
             >>> my_segment.load_spyfile(io.spyfile)
             >>> my_segment.spyfile
-            Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
+            Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
         	# Rows:            617
         	# Samples:        1300
         	# Bands:           240

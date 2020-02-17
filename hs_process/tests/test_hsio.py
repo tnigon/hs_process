@@ -24,14 +24,15 @@ import unittest
 from hs_process import hsio
 from hs_process import spatial_mod
 
-NAME_CUBE = 'Wells_rep2_20180628_16h56m_test_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+NAME_CUBE = 'Wells_rep2_20180628_16h56m_test_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
 NAME_SPEC = 'Wells_rep2_20180628_16h56m_pika_gige_7_plot_611-cube-to-spec-mean.spec.hdr'
-FILENAME_HDR = os.path.join(os.path.dirname(__file__), 'testdata', NAME_CUBE)
-FILENAME_HDR_SPEC = os.path.join(os.path.dirname(__file__), 'testdata', NAME_SPEC)
+FILENAME_HDR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data', NAME_CUBE)
+FILENAME_HDR_SPEC = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data', NAME_SPEC)
+# print(FILENAME_HDR)
 if not os.path.isfile(FILENAME_HDR):
-    FILENAME_HDR = os.path.join(os.getcwd(), 'test', 'testdata', NAME_CUBE)
+    FILENAME_HDR = os.path.join(os.path.dirname(os.getcwd()), 'data', NAME_CUBE)
 if not os.path.isfile(FILENAME_HDR_SPEC):
-    FILENAME_HDR_SPEC = os.path.join(os.getcwd(), 'test', 'testdata', NAME_SPEC)
+    FILENAME_HDR_SPEC = os.path.join(os.path.dirname(os.getcwd()), 'data', NAME_SPEC)
 
 class Test_hsio_get_fname_hdr(unittest.TestCase):
     def setUp(self):
@@ -87,7 +88,7 @@ class Test_hsio_read_cube(unittest.TestCase):
         self.io = None
 
     def test_names(self):
-        self.assertEqual(self.io.name_long, '-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum',
+        self.assertEqual(self.io.name_long, '-Convert Radiance Cube to Reflectance from Measured Reference Spectrum',
                          'Incorrect long name determination')
         self.assertEqual(self.io.name_short, 'Wells_rep2_20180628_16h56m_test_pika_gige_7',
                          'Incorrect short name determination')

@@ -109,7 +109,7 @@ class spec_mod(object):
 
             >>> from hs_process import hsio
             >>> from hs_process import spec_mod
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
             >>> my_spec_mod = spec_mod(io.spyfile)
 
@@ -117,7 +117,7 @@ class spec_mod(object):
 
             >>> my_spec_mod.load_spyfile(io.spyfile)
             >>> my_spec_mod.spyfile
-            Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
+            Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
         	# Rows:            617
         	# Samples:        1300
         	# Bands:           240
@@ -173,7 +173,7 @@ class spec_mod(object):
 
             >>> from hs_process import hsio
             >>> from hs_process import spec_mod
-            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io1 = hsio()
             >>> io1.read_cube(fname_hdr)
             >>> my_spec_mod = spec_mod(io1.spyfile)
@@ -198,7 +198,7 @@ class spec_mod(object):
             >>> io2 = hsio()  # initialize a second instance to compare cubes
             >>> io2.read_cube(fname_hdr_clip)
             >>> io1.spyfile
-            Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
+            Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
         	# Rows:            617
         	# Samples:        1300
         	# Bands:           240
@@ -291,7 +291,7 @@ class spec_mod(object):
 
             >>> from hs_process import hsio
             >>> from hs_process import spec_mod
-            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio()
             >>> io.read_cube(fname_hdr)
             >>> my_spec_mod = spec_mod(io.spyfile)

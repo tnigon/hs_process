@@ -1,3 +1,13 @@
+Release: 0.0.3
+***************
+**Date**: 2020 February 17
+
+**Description**: Trying to build so hs_process works with Anaconda builds.
+
+* Adjusted the requirements to be only geopandas, seaborn, and spectral (others are dependencies of these three).
+* data, tests, and example folders added to installation
+* shortened name of sample datacube because pip won't copy it with such a long filename
+
 Release: 0.0.2
 ***************
 **Date**: 2020 February 17
