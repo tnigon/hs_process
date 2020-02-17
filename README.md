@@ -31,3 +31,6 @@ This package was built for those looking for a clean, streamlined solution for p
 
 ## Troubleshooting
 Please report any issues you encounter through the [Github issue tracker](https://github.com/tnigon/hs_process/issues).
+
+## Code of Conduct
+Everyone interacting in the packaging project's codebases, issue trackers, chat rooms, and mailing lists is expected to follow the [PyPA Code of Conduct](https://www.pypa.io/en/latest/code-of-conduct/).

@@ -70,6 +70,11 @@ Troubleshooting
 Please report any issues you encounter through the `Github issue tracker <https://github.com/tnigon/hs_process/issues>`_.
 
 ******************
+Code of Conduct
+******************
+Everyone interacting in the packaging project's codebases, issue trackers, chat rooms, and mailing lists is expected to follow the `PyPA Code of Conduct <https://www.pypa.io/en/latest/code-of-conduct/>`_.
+
+******************
 Indices and Tables
 ******************
 

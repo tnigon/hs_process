@@ -7,14 +7,13 @@ def readme():
         return readme_file.read()
 
 requirements = [
- 'gdal',
-# 'geopandas',  # must be installed with Anaconda because of shapely dependency
- 'numpy',
- 'pandas',
+# 'gdal',
+ 'geopandas',  # must be installed with Anaconda because of shapely dependency
+# 'numpy',
+# 'pandas',
  'seaborn',
- 'matplotlib',
+# 'matplotlib',
  'spectral',  # segment
-# 'shapely',  # must be installed with Anaconda
  ]
 
 test_requirements = [
@@ -39,9 +38,9 @@ setuptools.setup(name='hs_process',
                          'Operating System :: Microsoft :: Windows',
                          'Programming Language :: Python :: 3',
                          ],
-#                package_data={'hs_process': ['examples/*', 'examples/data/*']},
-#                include_package_data=True,
+                package_data={'hs_process': ['test/*', 'test/testdata/*']},
+                include_package_data=True,
                 install_requires=requirements,
-#                test_suite='test',
-#                tests_require=test_requirements,
+                test_suite='test',
+                tests_require=test_requirements,
                 zip_safe=False)
