@@ -214,22 +214,27 @@ class segment(object):
             Calculate the MERIS Terrestrial Chlorophyll Index (MTCI; Dash and
             Curran, 2004) via ``segment.band_math_derivative``
 
-            >>> array_mtci, metadata = my_segment.band_math_derivative(
-                    wl1=754, wl2=709, wl3=681, spyfile=io.spyfile)
+            >>> array_mtci, metadata = my_segment.band_math_derivative(wl1=754, wl2=709, wl3=681, spyfile=io.spyfile)
+            <BLANKLINE>
             Bands used (``b1``): [176]
             Bands used (``b2``): [154]
             Bands used (``b3``): [141]
+            <BLANKLINE>
             Wavelengths used (``b1``): [753.84]
             Wavelengths used (``b2``): [708.6784]
             Wavelengths used (``b3``): [681.992]
+            <BLANKLINE>
+
             >>> array_mtci.shape
-            (617, 1827)
+            (617, 1300)
             >>> np.nanmean(array_mtci)
-            8.58501
+            9.401104
 
             Show MTCI image via ``hsio.show_img``
 
             >>> io.show_img(array_mtci, vmin=-2, vmax=15)
+            <BLANKLINE>
+            <BLANKLINE>
 
             .. image:: ../img/segment/mtci.png
         '''
@@ -361,20 +366,25 @@ class segment(object):
             Calculate the MCARI2 spectral index (Haboudane et al., 2004) via
             ``segment.band_math_mcari2``
 
-            >>> array_mcari2, metadata = my_segment.band_math_mcari2(
-                    wl1=800, wl2=670, wl3=550, spyfile=io.spyfile)
+            >>> array_mcari2, metadata = my_segment.band_math_mcari2(wl1=800, wl2=670, wl3=550, spyfile=io.spyfile)
+            <BLANKLINE>
             Bands used (``b1``): [198]
             Bands used (``b2``): [135]
             Bands used (``b3``): [77]
+            <BLANKLINE>
             Wavelengths used (``b1``): [799.0016]
             Wavelengths used (``b2``): [669.6752]
             Wavelengths used (``b3``): [550.6128]
+            <BLANKLINE>
+
             >>> np.nanmean(array_mcari2)
-            0.5737694501876831
+            0.57376945
 
             Show MCARI2 image via ``hsio.show_img``
 
             >>> io.show_img(array_mcari2)
+            <BLANKLINE>
+            <BLANKLINE>
 
             .. image:: ../img/segment/mcari2.png
         '''
@@ -496,18 +506,22 @@ class segment(object):
             Calculate the Normalized difference vegetation index using 10 nm
             bands centered at 800 nm and 680 nm via ``segment.band_math_ndi``
 
-            >>> array_ndvi, metadata = my_segment.band_math_ndi(
-                    wl1=[795, 805], wl2=[675, 685], spyfile=io.spyfile)
+            >>> array_ndvi, metadata = my_segment.band_math_ndi(wl1=[795, 805], wl2=[675, 685], spyfile=io.spyfile)
+            <BLANKLINE>
             Bands used (``b1``): [197, 198, 199, 200]
             Bands used (``b2``): [138, 139, 140, 141, 142]
+            <BLANKLINE>
             Wavelengths used (``b1``): [796.9488, 799.0016, 801.0544, 803.1072]
             Wavelengths used (``b2``): [675.8336, 677.8864, 679.9392, 681.992, 684.0448]
+            <BLANKLINE>
             >>> np.nanmean(array_ndvi)
-            0.8184887766838074
+            0.8184888
 
             Show NDVI image via ``hsio.show_img``
 
             >>> io.show_img(array_ndvi)
+            <BLANKLINE>
+            <BLANKLINE>
 
             .. image:: ../img/segment/ndvi.png
         '''
@@ -619,13 +633,16 @@ class segment(object):
             (i.e., mimicking a broadband sensor) via
             ``segment.band_math_ratio``
 
-            >>> array_ratio, metadata = my_segment.band_math_ratio(
-                    wl1=[630, 690], wl2=[800, 860], list_range=True)
+            >>> array_ratio, metadata = my_segment.band_math_ratio(wl1=[630, 690], wl2=[800, 860], list_range=True)
+            <BLANKLINE>
             Bands used (``b1``): [116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144]
             Bands used (``b2``): [199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227]
+            <BLANKLINE>
             Wavelengths used (``b1``): [630.672, 632.7248, 634.7776, 636.8304, 638.8832, 640.936, 642.9888, 645.0416, 647.0944, 649.1472, 651.2, 653.2528, 655.3056, 657.3584, 659.4112, 661.464, 663.5168, 665.5696, 667.6224, 669.6752, 671.728, 673.7808, 675.8336, 677.8864, 679.9392, 681.992, 684.0448, 686.0976, 688.1504]
             Wavelengths used (``b2``): [801.0544, 803.1072, 805.16, 807.2128, 809.2656, 811.3184, 813.3712, 815.424, 817.4768, 819.5296, 821.5824, 823.6352, 825.688, 827.7408, 829.7936, 831.8464, 833.8992, 835.952, 838.0048, 840.0576, 842.1104, 844.1632, 846.216, 848.2688, 850.3216, 852.3744, 854.4272, 856.48, 858.5328]
+            <BLANKLINE>
             (659/830)
+
             >>> np.nanmean(array_ratio)
             0.10981177
 
@@ -634,12 +651,14 @@ class segment(object):
             changing ``list_range`` to ``False``, and this slightly changes the
             result.
 
-            >>> array_ratio, metadata = my_segment.band_math_ratio(
-                    wl1=[630, 690], wl2=[800, 860], list_range=False)
+            >>> array_ratio, metadata = my_segment.band_math_ratio(wl1=[630, 690], wl2=[800, 860], list_range=False)
+            <BLANKLINE>
             Bands used (``b1``): [116, 145]
             Bands used (``b2``): [198, 228]
+            <BLANKLINE>
             Wavelengths used (``b1``): [630.672, 690.2032]
             Wavelengths used (``b2``): [799.0016, 860.5856]
+            <BLANKLINE>
             (660/830)
             >>> np.nanmean(array_ratio)
             0.113607444
@@ -647,6 +666,8 @@ class segment(object):
             Show the red/near-infrared ratio image via ``hsio.show_img``
 
             >>> io.show_img(array_ratio, vmax=0.3)
+            <BLANKLINE>
+            <BLANKLINE>
 
             .. image:: ../img/segment/ratio_r_nir.png
         '''
@@ -829,3 +850,7 @@ class segment(object):
 #        spec_mean = pd.Series(spec_mean)
 #        spec_std = pd.Series(spec_std)
 #        return spec_mean, spec_std, datacube_masked
+
+# if __name__ == '__main__':
+#     import doctest
+#     doctest.testmod()

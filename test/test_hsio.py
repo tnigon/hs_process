@@ -21,6 +21,21 @@ import unittest
 from hs_process import hsio
 from hs_process import spatial_mod
 
+# import zipfile
+# from urllib.request import urlretrieve
+
+# TEST_DATA_URL = 'https://drive.google.com/open?id=1gEHKP3VO-G7HsZfPrf01cCAeQ60pbz-0'
+# TEST_DATA_FOLDER = os.path.join(os.path.dirname(__file__), 'testdata')
+# TEST_DATA_FOLDER = r'F:\nigo0024\Documents\GitHub\hs_process\test\testdata'
+
+# def get_testcases():
+#     zip_file = os.path.join(TEST_DATA_FOLDER, 'datacube_and_spec.zip')
+#     if not os.path.isfile(zip_file):
+#         urlretrieve(TEST_DATA_URL, zip_file)
+
+#     with zipfile.ZipFile(zip_file, 'r') as zip_ref:
+#         zip_ref.extractall(TEST_DATA_FOLDER)
+# get_testcases()
 
 FILENAME_HDR = os.path.join(os.path.dirname(__file__), 'testdata', 'Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr')
 FILENAME_HDR_SPEC = os.path.join(os.path.dirname(__file__), 'testdata', 'Wells_rep2_20180628_16h56m_pika_gige_7_plot_611-cube-to-spec-mean.spec.hdr')
