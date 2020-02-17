@@ -5,7 +5,7 @@ hs_process Documentation
 
 *An open-source Python package for geospatial processing of aerial hyperspectral imagery*
 
-.. |version_current| replace:: 0.0.1
+.. |version_current| replace:: 0.0.2
 Current version: |version_current|
 
 ``hs_process`` emphasizes the ability to batch process datacubes, with the overall goal of keeping the processing pipeline as "hands-off" as possible. There is also a focus on maintaining the ability to have control over the subjective aspects of image processing (e.g., segmentation thresholds) and achieving repeatability in image post-processing.
