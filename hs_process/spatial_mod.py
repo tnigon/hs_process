@@ -847,8 +847,7 @@ class spatial_mod(object):
 
             >>> pix_e_ul = 342
             >>> pix_n_ul = 75
-            >>> array_crop, metadata = my_spatial_mod.crop_single(
-                    pix_e_ul, pix_n_ul, crop_e_pix=200, crop_n_pix=50)
+            >>> array_crop, metadata = my_spatial_mod.crop_single(pix_e_ul, pix_n_ul, crop_e_pix=200, crop_n_pix=50)
 
             Save as a geotiff using ``io.write_tif``, then load into QGIS to
             visualize.

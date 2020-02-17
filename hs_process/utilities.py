@@ -3,8 +3,8 @@ import ast
 from matplotlib import pyplot as plt
 import numpy as np
 import os
-# from osgeo import gdal
-# from osgeo import gdalconst
+from osgeo import gdal
+from osgeo import gdalconst
 import pandas as pd
 import re
 import seaborn as sns

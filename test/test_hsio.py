@@ -11,6 +11,9 @@ provide a report on how many were returned with errors (coverage).
 
 Then this file can be run anytime a change is made and changes are pushed to
 see if anything was broken
+
+The following test uses a very small "test" datacube that is only 3x3x240
+(8,640 bytes)
 '''
 import numpy as np
 import os
@@ -21,29 +24,14 @@ import unittest
 from hs_process import hsio
 from hs_process import spatial_mod
 
-# import zipfile
-# from urllib.request import urlretrieve
-
-# TEST_DATA_URL = 'https://drive.google.com/open?id=1gEHKP3VO-G7HsZfPrf01cCAeQ60pbz-0'
-# TEST_DATA_FOLDER = os.path.join(os.path.dirname(__file__), 'testdata')
-# TEST_DATA_FOLDER = r'F:\nigo0024\Documents\GitHub\hs_process\test\testdata'
-
-# def get_testcases():
-#     zip_file = os.path.join(TEST_DATA_FOLDER, 'datacube_and_spec.zip')
-#     if not os.path.isfile(zip_file):
-#         urlretrieve(TEST_DATA_URL, zip_file)
-
-#     with zipfile.ZipFile(zip_file, 'r') as zip_ref:
-#         zip_ref.extractall(TEST_DATA_FOLDER)
-# get_testcases()
-
-FILENAME_HDR = os.path.join(os.path.dirname(__file__), 'testdata', 'Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr')
-FILENAME_HDR_SPEC = os.path.join(os.path.dirname(__file__), 'testdata', 'Wells_rep2_20180628_16h56m_pika_gige_7_plot_611-cube-to-spec-mean.spec.hdr')
-
+NAME_CUBE = 'Wells_rep2_20180628_16h56m_test_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+NAME_SPEC = 'Wells_rep2_20180628_16h56m_pika_gige_7_plot_611-cube-to-spec-mean.spec.hdr'
+FILENAME_HDR = os.path.join(os.path.dirname(__file__), 'testdata', NAME_CUBE)
+FILENAME_HDR_SPEC = os.path.join(os.path.dirname(__file__), 'testdata', NAME_SPEC)
 if not os.path.isfile(FILENAME_HDR):
-    FILENAME_HDR = os.path.join(os.getcwd(), 'test', 'testdata', 'Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr')
+    FILENAME_HDR = os.path.join(os.getcwd(), 'test', 'testdata', NAME_CUBE)
 if not os.path.isfile(FILENAME_HDR_SPEC):
-    FILENAME_HDR_SPEC = os.path.join(os.getcwd(), 'test', 'testdata', 'Wells_rep2_20180628_16h56m_pika_gige_7_plot_611-cube-to-spec-mean.spec.hdr')
+    FILENAME_HDR_SPEC = os.path.join(os.getcwd(), 'test', 'testdata', NAME_SPEC)
 
 class Test_hsio_get_fname_hdr(unittest.TestCase):
     def setUp(self):
@@ -101,7 +89,7 @@ class Test_hsio_read_cube(unittest.TestCase):
     def test_names(self):
         self.assertEqual(self.io.name_long, '-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum',
                          'Incorrect long name determination')
-        self.assertEqual(self.io.name_short, 'Wells_rep2_20180628_16h56m_pika_gige_7',
+        self.assertEqual(self.io.name_short, 'Wells_rep2_20180628_16h56m_test_pika_gige_7',
                          'Incorrect short name determination')
         self.assertEqual(self.io.name_plot, '7',
                          'Incorrect plot name determination')
@@ -244,8 +232,6 @@ class Test_hsio_write_cube(unittest.TestCase):
         self.test_dir = tempfile.mkdtemp()
         self.io = hsio(FILENAME_HDR)
         self.my_spatial_mod = spatial_mod(self.io.spyfile)
-        self.array_crop, self.metadata = self.my_spatial_mod.crop_single(
-                pix_e_ul=250, pix_n_ul=100, crop_e_m=8, crop_n_m=3)
 
     def tearDown(self):
         '''
@@ -254,7 +240,6 @@ class Test_hsio_write_cube(unittest.TestCase):
         self.fname_hdr = None
         self.io = None
         self.my_spatial_mod = None
-        self.array_crop = None
         self.metadata = None
         shutil.rmtree(self.test_dir)
         self.test_dir = None
@@ -262,9 +247,8 @@ class Test_hsio_write_cube(unittest.TestCase):
     def test_write_cube(self):
         fname_hdr_out = os.path.join(self.test_dir, self.io.name_short +
                                      '.bip.hdr')
-        print(fname_hdr_out)
-        self.io.write_cube(fname_hdr_out, self.array_crop,
-                           metadata=self.metadata)
+        self.io.write_cube(fname_hdr_out, self.io.spyfile.open_memmap(),
+                           metadata=self.io.spyfile.metadata)
         io2 = hsio(fname_hdr_out)
         self.assertIsInstance(io2.spyfile, SpyFile.SpyFile,
                               'Not a SpyFile object')
@@ -278,10 +262,7 @@ class Test_hsio_write_spec(unittest.TestCase):
         self.fname_hdr = FILENAME_HDR
         self.test_dir = tempfile.mkdtemp()
         self.io = hsio(FILENAME_HDR)
-        self.my_spatial_mod = spatial_mod(self.io.spyfile)
-        self.array_crop, self.metadata = self.my_spatial_mod.crop_single(
-                pix_e_ul=250, pix_n_ul=100, crop_e_m=8, crop_n_m=3)
-        self.spec_mean, self.spec_std, _ = self.io.tools.mean_datacube(self.array_crop)
+        self.spec_mean, self.spec_std, _ = self.io.tools.mean_datacube(self.io.spyfile.open_memmap())
 
     def tearDown(self):
         '''
@@ -289,9 +270,6 @@ class Test_hsio_write_spec(unittest.TestCase):
         '''
         self.fname_hdr = None
         self.io = None
-        self.my_spatial_mod = None
-        self.array_crop = None
-        self.metadata = None
         self.spec_mean = None
         self.spec_std = None
         shutil.rmtree(self.test_dir)
@@ -299,8 +277,7 @@ class Test_hsio_write_spec(unittest.TestCase):
     def test_write_spec(self):
         fname_hdr_spec = os.path.join(self.test_dir, self.io.name_short +
                                       '-mean.spec.hdr')
-        self.io.write_spec(fname_hdr_spec, self.spec_mean,
-                           self.spec_std)
+        self.io.write_spec(fname_hdr_spec, self.spec_mean, self.spec_std)
         io2 = hsio()
         io2.read_spec(fname_hdr_spec)
         self.assertIsInstance(io2.spyfile_spec, SpyFile.SpyFile,
@@ -315,8 +292,6 @@ class Test_hsio_write_tif(unittest.TestCase):
         self.fname_hdr = FILENAME_HDR
         self.io = hsio(FILENAME_HDR)
         self.my_spatial_mod = spatial_mod(self.io.spyfile)
-        self.array_crop, self.metadata = self.my_spatial_mod.crop_single(
-                pix_e_ul=250, pix_n_ul=100, crop_e_m=8, crop_n_m=3)
 
     def tearDown(self):
         '''
@@ -325,7 +300,6 @@ class Test_hsio_write_tif(unittest.TestCase):
         self.fname_hdr = None
         self.io = None
         self.my_spatial_mod = None
-        self.array_crop = None
         self.spec_std = None
         shutil.rmtree(self.test_dir)
 
@@ -335,9 +309,10 @@ class Test_hsio_write_tif(unittest.TestCase):
         '''
         fname_tif = os.path.join(self.test_dir, self.io.name_short +
                                  '.tif')
-        self.io.write_tif(fname_tif, self.array_crop,
+        self.io.write_tif(fname_tif, self.io.spyfile.open_memmap(),
                           fname_in=self.fname_hdr, show_img=False)
-        self.assertGreater(os.path.getsize(fname_tif), 150000,
+        # print(os.path.getsize(fname_tif))
+        self.assertGreater(os.path.getsize(fname_tif), 470,  # size should be 478
                          'Geotiff is not the correct size.')
 
     def test_write_tif_single(self):
@@ -346,9 +321,10 @@ class Test_hsio_write_tif(unittest.TestCase):
         '''
         fname_tif = os.path.join(self.test_dir, self.io.name_short +
                                  '.tif')
-        self.io.write_tif(fname_tif, self.array_crop[:,:,0],
+        self.io.write_tif(fname_tif, self.io.spyfile.open_memmap()[:,:,0],
                           fname_in=self.fname_hdr, show_img=False)
-        self.assertGreater(os.path.getsize(fname_tif), 50000,
+        # print(os.path.getsize(fname_tif))
+        self.assertGreater(os.path.getsize(fname_tif), 380,  # size should be 382
                           'Geotiff is not the correct size.')
 
 def suite():
