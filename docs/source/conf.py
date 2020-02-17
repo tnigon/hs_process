@@ -15,7 +15,7 @@ import sys
 # sys.path.insert(0, os.path.abspath('../'))
 sys.path.insert(0, os.path.abspath('../../'))
 
-# autodoc_mock_imports = ['gdal']
+autodoc_mock_imports = ['spectral']
 
 import sphinx_bootstrap_theme
 import recommonmark
@@ -109,6 +109,7 @@ html_theme_options = {
     'navbar_title': "hs_process",
     'navbar_links': [
         ('Github', "https://github.com/tnigon/hs_process", True),
+        ('PyPI', "https://pypi.org/project/hs-process/", True),
         ('Spectral Python', "http://www.spectralpython.net/", True)
     ],
     'navbar_site_name': "Contents",
