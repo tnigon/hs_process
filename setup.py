@@ -6,25 +6,6 @@ def readme():
     with open('README.md') as readme_file:
         return readme_file.read()
 
-#def history():
-#    with open('HISTORY.md') as history_file:
-#        return history_file.read()
-
-#requirements = [
-##    'ast',
-#    'geopandas',
-##    'itertools',
-##    'json',
-##    'matplotlib',
-##    'math',
-##    'numpy',
-##    'osgeo',
-##    'pandas',
-##    'PIL',
-##    're',
-#    'spectral',
-#]
-
 requirements = [
  'gdal',
 # 'geopandas',  # must be installed with Anaconda because of shapely dependency
@@ -34,8 +15,6 @@ requirements = [
  'matplotlib',
  'spectral',  # segment
 # 'shapely',  # must be installed with Anaconda
-# 'spyder',
-# 'jupyter'
  ]
 
 test_requirements = [
@@ -44,8 +23,8 @@ test_requirements = [
 
 setuptools.setup(name='hs_process',
                  version='0.0.1',
-                 description=('Tools for processing, manipulating, and '
-                              'analyzing aerial hyperspectral imagery'),
+                 description=('An open-source Python package for geospatial '
+                              'processing of aerial hyperspectral imagery'),
                  long_description=readme(),
                  long_description_content_type="text/markdown",
                  url='https://github.com/tnigon/hyperspectral',

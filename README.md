@@ -18,7 +18,7 @@ For more information and tutorials, check out the [hs_process documentation](htt
 ## Data requirements
 The minimum data requirement to utilize this package is a pre-processed hyperspectral datacube (i.e., radiometric calibration, georectification, and reflectance conversion should have already been completed). Sample imagery captured from a [Resonon](https://resonon.com/) Pika II VIS-NIR line scanning imager can be downloaded from this [link](https://drive.google.com/drive/folders/1KpOBB4-qghedVFd8ukQngXNwUit8PFy_?usp=sharing>).
 
-To perform spatial cropping, a polygon boundary file is required with "plot" column indicating the plot number of each boundary feature (an example geojson can be downloaded from this [link](https://drive.google.com/open?id=1fb1i46g88BcrTau0bwnWMrnDXo7FPH0p).
+To perform spatial cropping, a polygon boundary file is required with "plot" column indicating the plot number of each boundary feature (an example geojson can be downloaded from this [link](https://drive.google.com/open?id=1fb1i46g88BcrTau0bwnWMrnDXo7FPH0p)).
 
 ## Sample data
 [Download from this link](https://drive.google.com/drive/folders/1KpOBB4-qghedVFd8ukQngXNwUit8PFy_?usp=sharing)
