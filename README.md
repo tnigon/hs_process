@@ -3,9 +3,12 @@
 
 ``hs_process`` **emphasizes the ability to batch process datacubes**, with the overall goal of keeping the processing pipeline as "hands-off" as possible. There is also a focus on maintaining the ability to have control over the subjective aspects of image processing (e.g., segmentation thresholds) and achieving repeatability in image post-processing.
 
+[![conda](https://anaconda.org/anaconda/anaconda-navigator/badges/version.svg)](https://anaconda.org/conda-forge/hs-process)]
+[![Install with](https://anaconda.org/anaconda/anaconda-navigator/badges/installer/conda.svg)](https://anaconda.org/conda-forge/hs-process)]
+[![Downloads](https://anaconda.org/anaconda/anaconda-navigator/badges/downloads.svg)](https://anaconda.org/conda-forge/hs-process)
+[![License](https://img.shields.io/pypi/l/hs-process.svg)](https://github.com/tnigon/hs_process/blob/master/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/tnigon/hs_process.svg)](https://github.com/tnigon/hs_process/issues)
 [![PyPI](https://img.shields.io/pypi/v/hs-process.svg)](https://pypi.python.org/pypi/hs-process)
-[![License](https://img.shields.io/pypi/l/hs-process.svg)](https://github.com/tnigon/hs_process/blob/master/LICENSE)
 
 ## About
 ``hs_process`` is a Python package for geospatial post-processing of aerial hyperspectral imagery. The principle motivation for developing ``hs_process`` was to streamline the post-processing steps required prior to hyperspectral data analysis. Although commercial software perhaps exists for such needs, open source software that is both flexible and streamlined did not previously exist. The specific motivations were:
