@@ -4,7 +4,7 @@
 ``hs_process`` **emphasizes the ability to batch process datacubes**, with the overall goal of keeping the processing pipeline as "hands-off" as possible. There is also a focus on maintaining the ability to have control over the subjective aspects of image processing (e.g., segmentation thresholds) and achieving repeatability in image post-processing.
 
 [![Anaconda-Cloud](https://anaconda.org/conda-forge/hs-process/badges/version.svg)](https://anaconda.org/conda-forge/hs-process)
-[![Install with](https://anaconda.org/anaconda/hs-process/badges/installer/conda.svg)](https://anaconda.org/conda-forge/hs-process)
+[![Install with](https://anaconda.org/conda-forge/hs-process/badges/installer/conda.svg)](https://anaconda.org/conda-forge/hs-process)
 [![Downloads](https://anaconda.org/conda-forge/hs-process/badges/downloads.svg)](https://anaconda.org/conda-forge/hs-process)
 [![License](https://img.shields.io/pypi/l/hs-process.svg)](https://github.com/tnigon/hs_process/blob/master/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/tnigon/hs_process.svg)](https://github.com/tnigon/hs_process/issues)
