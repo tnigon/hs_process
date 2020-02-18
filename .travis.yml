@@ -3,7 +3,8 @@ python:
   - "3.6"
   - "3.7"
 # command to install dependencies
-script: python tests/test.py
+
+script: python hs_process/tests/test.py
 branches:
   only:
     - master
