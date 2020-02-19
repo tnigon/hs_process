@@ -5,7 +5,7 @@ hs_process Documentation
 
 *An open-source Python package for geospatial processing of aerial hyperspectral imagery*
 
-.. |version_current| replace:: 0.0.1
+.. |version_current| replace:: 0.0.3
 Current version: |version_current|
 
 ``hs_process`` emphasizes the ability to batch process datacubes, with the overall goal of keeping the processing pipeline as "hands-off" as possible. There is also a focus on maintaining the ability to have control over the subjective aspects of image processing (e.g., segmentation thresholds) and achieving repeatability in image post-processing.
@@ -54,7 +54,7 @@ Data requirements
 ==================
 The minimum data requirement to utilize this package is a pre-processed hyperspectral datacube (i.e., radiometric calibration, georectification, and reflectance conversion should have already been completed). Sample imagery captured from a `Resonon <https://resonon.com/>`_ Pika II VIS-NIR line scanning imager can be downloaded from this `link <https://drive.google.com/drive/folders/1KpOBB4-qghedVFd8ukQngXNwUit8PFy_?usp=sharing>`_.
 
-To perform spatial cropping, a polygon boundary file is required with "plot" column indicating the plot number of each boundary feature (an example geojson can be downloaded from this `link <https://drive.google.com/open?id=1fb1i46g88BcrTau0bwnWMrnDXo7FPH0p>`_.
+To perform spatial cropping, a polygon boundary file is required with "plot" column indicating the plot number of each boundary feature (an example geojson can be downloaded from this `link <https://drive.google.com/open?id=1fb1i46g88BcrTau0bwnWMrnDXo7FPH0p>`_).
 
 Sample data
 ============
@@ -68,6 +68,11 @@ This package was built for those looking for a clean, streamlined solution for p
 Troubleshooting
 ******************
 Please report any issues you encounter through the `Github issue tracker <https://github.com/tnigon/hs_process/issues>`_.
+
+******************
+Code of Conduct
+******************
+Everyone interacting in the packaging project's codebases, issue trackers, chat rooms, and mailing lists is expected to follow the `PyPA Code of Conduct <https://www.pypa.io/en/latest/code-of-conduct/>`_.
 
 ******************
 Indices and Tables

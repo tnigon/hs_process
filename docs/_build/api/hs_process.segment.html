@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="python">
   <head>
     <meta charset="utf-8" />
-    <title>8.1.5. segment &#8212; hs_process 0.0.1 documentation</title>
+    <title>8.1.5. segment &#8212; hs_process 0.0.3 documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -46,6 +46,7 @@
           <ul class="nav navbar-nav">
             
                 <li><a href="https://github.com/tnigon/hs_process">Github</a></li>
+                <li><a href="https://pypi.org/project/hs-process/">PyPI</a></li>
                 <li><a href="http://www.spectralpython.net/">Spectral Python</a></li>
             
             
@@ -58,28 +59,7 @@
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Home</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../installation.html">1. Setup and Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial_hsio.html">2. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial_hstools.html">3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hstools</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial_segment.html">4. Tutorial: <code class="docutils literal notranslate"><span class="pre">segment</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial_spec_mod.html">5. Tutorial: <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial_spatial_mod.html">6. Tutorial: <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial_batch.html">7. Tutorial: <code class="docutils literal notranslate"><span class="pre">batch</span></code></a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../my_hs_process_api.html">8. API</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="hs_process.batch.html">8.1.1. batch</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hs_process.defaults.html">8.1.2. defaults</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hs_process.hsio.html">8.1.3. hsio</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hs_process.hstools.html">8.1.4. hstools</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">8.1.5. segment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hs_process.spatial_mod.html">8.1.6. spatial_mod</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hs_process.spec_mod.html">8.1.7. spec_mod</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../license.html">9. License</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html">10. Change Log</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Home</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">1. Setup and Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_hsio.html">2. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_hstools.html">3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hstools</span></code></a></li>
@@ -87,16 +67,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_spec_mod.html">5. Tutorial: <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_spatial_mod.html">6. Tutorial: <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_batch.html">7. Tutorial: <code class="docutils literal notranslate"><span class="pre">batch</span></code></a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../my_hs_process_api.html">8. API</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="hs_process.batch.html">8.1.1. batch</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hs_process.defaults.html">8.1.2. defaults</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hs_process.hsio.html">8.1.3. hsio</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hs_process.hstools.html">8.1.4. hstools</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">8.1.5. segment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hs_process.spatial_mod.html">8.1.6. spatial_mod</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hs_process.spec_mod.html">8.1.7. spec_mod</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../my_hs_process_api.html">8. API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">9. License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">10. Change Log</a></li>
 </ul>
@@ -266,29 +237,33 @@ derivative array (<code class="docutils literal notranslate"><span class="pre">a
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">segment</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_segment</span> <span class="o">=</span> <span class="n">segment</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Calculate the MERIS Terrestrial Chlorophyll Index (MTCI; Dash and
 Curran, 2004) via <code class="docutils literal notranslate"><span class="pre">segment.band_math_derivative</span></code></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_mtci</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_segment</span><span class="o">.</span><span class="n">band_math_derivative</span><span class="p">(</span>
-<span class="go">        wl1=754, wl2=709, wl3=681, spyfile=io.spyfile)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_mtci</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_segment</span><span class="o">.</span><span class="n">band_math_derivative</span><span class="p">(</span><span class="n">wl1</span><span class="o">=</span><span class="mi">754</span><span class="p">,</span> <span class="n">wl2</span><span class="o">=</span><span class="mi">709</span><span class="p">,</span> <span class="n">wl3</span><span class="o">=</span><span class="mi">681</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+
 <span class="go">Bands used (``b1``): [176]</span>
 <span class="go">Bands used (``b2``): [154]</span>
 <span class="go">Bands used (``b3``): [141]</span>
+
 <span class="go">Wavelengths used (``b1``): [753.84]</span>
 <span class="go">Wavelengths used (``b2``): [708.6784]</span>
 <span class="go">Wavelengths used (``b3``): [681.992]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">array_mtci</span><span class="o">.</span><span class="n">shape</span>
-<span class="go">(617, 1827)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_mtci</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(617, 1300)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">array_mtci</span><span class="p">)</span>
-<span class="go">8.58501</span>
+<span class="go">9.401104</span>
 </pre></div>
 </div>
 <p>Show MTCI image via <code class="docutils literal notranslate"><span class="pre">hsio.show_img</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">show_img</span><span class="p">(</span><span class="n">array_mtci</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">2</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+
 </pre></div>
 </div>
 <img alt="../_images/mtci.png" src="../_images/mtci.png" />
@@ -368,27 +343,31 @@ MCARI2 index array (<code class="docutils literal notranslate"><span class="pre"
 <p>Load <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">segment</span></code> modules</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">segment</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_segment</span> <span class="o">=</span> <span class="n">segment</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Calculate the MCARI2 spectral index (Haboudane et al., 2004) via
 <code class="docutils literal notranslate"><span class="pre">segment.band_math_mcari2</span></code></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_mcari2</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_segment</span><span class="o">.</span><span class="n">band_math_mcari2</span><span class="p">(</span>
-<span class="go">        wl1=800, wl2=670, wl3=550, spyfile=io.spyfile)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_mcari2</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_segment</span><span class="o">.</span><span class="n">band_math_mcari2</span><span class="p">(</span><span class="n">wl1</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">wl2</span><span class="o">=</span><span class="mi">670</span><span class="p">,</span> <span class="n">wl3</span><span class="o">=</span><span class="mi">550</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+
 <span class="go">Bands used (``b1``): [198]</span>
 <span class="go">Bands used (``b2``): [135]</span>
 <span class="go">Bands used (``b3``): [77]</span>
+
 <span class="go">Wavelengths used (``b1``): [799.0016]</span>
 <span class="go">Wavelengths used (``b2``): [669.6752]</span>
 <span class="go">Wavelengths used (``b3``): [550.6128]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">array_mcari2</span><span class="p">)</span>
-<span class="go">0.5737694501876831</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">array_mcari2</span><span class="p">)</span>
+<span class="go">0.57376945</span>
 </pre></div>
 </div>
 <p>Show MCARI2 image via <code class="docutils literal notranslate"><span class="pre">hsio.show_img</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">show_img</span><span class="p">(</span><span class="n">array_mcari2</span><span class="p">)</span>
+
 </pre></div>
 </div>
 <img alt="../_images/mcari2.png" src="../_images/mcari2.png" />
@@ -457,25 +436,28 @@ normalized difference array (<code class="docutils literal notranslate"><span cl
 <p>Load <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">segment</span></code> modules</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">segment</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_segment</span> <span class="o">=</span> <span class="n">segment</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Calculate the Normalized difference vegetation index using 10 nm
 bands centered at 800 nm and 680 nm via <code class="docutils literal notranslate"><span class="pre">segment.band_math_ndi</span></code></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_ndvi</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_segment</span><span class="o">.</span><span class="n">band_math_ndi</span><span class="p">(</span>
-<span class="go">        wl1=[795, 805], wl2=[675, 685], spyfile=io.spyfile)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_ndvi</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_segment</span><span class="o">.</span><span class="n">band_math_ndi</span><span class="p">(</span><span class="n">wl1</span><span class="o">=</span><span class="p">[</span><span class="mi">795</span><span class="p">,</span> <span class="mi">805</span><span class="p">],</span> <span class="n">wl2</span><span class="o">=</span><span class="p">[</span><span class="mi">675</span><span class="p">,</span> <span class="mi">685</span><span class="p">],</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+
 <span class="go">Bands used (``b1``): [197, 198, 199, 200]</span>
 <span class="go">Bands used (``b2``): [138, 139, 140, 141, 142]</span>
+
 <span class="go">Wavelengths used (``b1``): [796.9488, 799.0016, 801.0544, 803.1072]</span>
 <span class="go">Wavelengths used (``b2``): [675.8336, 677.8864, 679.9392, 681.992, 684.0448]</span>
+
 <span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">array_ndvi</span><span class="p">)</span>
-<span class="go">0.8184887766838074</span>
+<span class="go">0.8184888</span>
 </pre></div>
 </div>
 <p>Show NDVI image via <code class="docutils literal notranslate"><span class="pre">hsio.show_img</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">show_img</span><span class="p">(</span><span class="n">array_ndvi</span><span class="p">)</span>
+
 </pre></div>
 </div>
 <img alt="../_images/ndvi.png" src="../_images/ndvi.png" />
@@ -543,7 +525,7 @@ ratio array (<code class="docutils literal notranslate"><span class="pre">array_
 <p>Load <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">segment</span></code> modules</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">segment</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_segment</span> <span class="o">=</span> <span class="n">segment</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 </pre></div>
@@ -551,14 +533,18 @@ ratio array (<code class="docutils literal notranslate"><span class="pre">array_
 <p>Calculate a red/near-infrared band ratio using a range of bands
 (i.e., mimicking a broadband sensor) via
 <code class="docutils literal notranslate"><span class="pre">segment.band_math_ratio</span></code></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_ratio</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_segment</span><span class="o">.</span><span class="n">band_math_ratio</span><span class="p">(</span>
-<span class="go">        wl1=[630, 690], wl2=[800, 860], list_range=True)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_ratio</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_segment</span><span class="o">.</span><span class="n">band_math_ratio</span><span class="p">(</span><span class="n">wl1</span><span class="o">=</span><span class="p">[</span><span class="mi">630</span><span class="p">,</span> <span class="mi">690</span><span class="p">],</span> <span class="n">wl2</span><span class="o">=</span><span class="p">[</span><span class="mi">800</span><span class="p">,</span> <span class="mi">860</span><span class="p">],</span> <span class="n">list_range</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
 <span class="go">Bands used (``b1``): [116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144]</span>
 <span class="go">Bands used (``b2``): [199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227]</span>
+
 <span class="go">Wavelengths used (``b1``): [630.672, 632.7248, 634.7776, 636.8304, 638.8832, 640.936, 642.9888, 645.0416, 647.0944, 649.1472, 651.2, 653.2528, 655.3056, 657.3584, 659.4112, 661.464, 663.5168, 665.5696, 667.6224, 669.6752, 671.728, 673.7808, 675.8336, 677.8864, 679.9392, 681.992, 684.0448, 686.0976, 688.1504]</span>
 <span class="go">Wavelengths used (``b2``): [801.0544, 803.1072, 805.16, 807.2128, 809.2656, 811.3184, 813.3712, 815.424, 817.4768, 819.5296, 821.5824, 823.6352, 825.688, 827.7408, 829.7936, 831.8464, 833.8992, 835.952, 838.0048, 840.0576, 842.1104, 844.1632, 846.216, 848.2688, 850.3216, 852.3744, 854.4272, 856.48, 858.5328]</span>
+
 <span class="go">(659/830)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">array_ratio</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">array_ratio</span><span class="p">)</span>
 <span class="go">0.10981177</span>
 </pre></div>
 </div>
@@ -566,12 +552,14 @@ ratio array (<code class="docutils literal notranslate"><span class="pre">array_
 mimic a single broad band. We can take the mean of two bands by
 changing <code class="docutils literal notranslate"><span class="pre">list_range</span></code> to <code class="docutils literal notranslate"><span class="pre">False</span></code>, and this slightly changes the
 result.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_ratio</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_segment</span><span class="o">.</span><span class="n">band_math_ratio</span><span class="p">(</span>
-<span class="go">        wl1=[630, 690], wl2=[800, 860], list_range=False)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_ratio</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_segment</span><span class="o">.</span><span class="n">band_math_ratio</span><span class="p">(</span><span class="n">wl1</span><span class="o">=</span><span class="p">[</span><span class="mi">630</span><span class="p">,</span> <span class="mi">690</span><span class="p">],</span> <span class="n">wl2</span><span class="o">=</span><span class="p">[</span><span class="mi">800</span><span class="p">,</span> <span class="mi">860</span><span class="p">],</span> <span class="n">list_range</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
 <span class="go">Bands used (``b1``): [116, 145]</span>
 <span class="go">Bands used (``b2``): [198, 228]</span>
+
 <span class="go">Wavelengths used (``b1``): [630.672, 690.2032]</span>
 <span class="go">Wavelengths used (``b2``): [799.0016, 860.5856]</span>
+
 <span class="go">(660/830)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">array_ratio</span><span class="p">)</span>
 <span class="go">0.113607444</span>
@@ -579,6 +567,7 @@ result.</p>
 </div>
 <p>Show the red/near-infrared ratio image via <code class="docutils literal notranslate"><span class="pre">hsio.show_img</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">show_img</span><span class="p">(</span><span class="n">array_ratio</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
 </pre></div>
 </div>
 <img alt="../_images/ratio_r_nir.png" src="../_images/ratio_r_nir.png" />
@@ -599,7 +588,7 @@ manipulated.</p>
 <p>Load <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">segment</span></code> modules</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">segment</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_segment</span> <span class="o">=</span> <span class="n">segment</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 </pre></div>
@@ -607,7 +596,7 @@ manipulated.</p>
 <p>Load datacube  via <code class="docutils literal notranslate"><span class="pre">segment.load_spyfile</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_segment</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_segment</span><span class="o">.</span><span class="n">spyfile</span>
-<span class="go">Data Source:   &#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip&#39;</span>
+<span class="go">Data Source:   &#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip&#39;</span>
 <span class="go">    # Rows:            617</span>
 <span class="go">    # Samples:        1300</span>
 <span class="go">    # Bands:           240</span>
