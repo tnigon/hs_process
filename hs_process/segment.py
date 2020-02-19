@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 import pandas as pd
-import spectral.io.spyfile as SpyFile
+# import spectral.io.spyfile as SpyFile
 import seaborn as sns
 from matplotlib import pyplot as plt
 

@@ -5,7 +5,7 @@ import numpy as np
 import os
 import pandas as pd
 from shapely.geometry import Polygon
-import spectral.io.spyfile as SpyFile
+# import spectral.io.spyfile as SpyFile
 
 from hs_process.utilities import defaults
 from hs_process.utilities import hstools
