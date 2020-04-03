@@ -3,8 +3,8 @@ from math import factorial
 import itertools
 import numpy as np
 import os
-# import spectral.io.envi as envi
-# import spectral.io.spyfile as SpyFile
+import spectral.io.envi as envi
+import spectral.io.spyfile as SpyFile
 
 from hs_process.utilities import hstools
 

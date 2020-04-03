@@ -3,13 +3,13 @@ import ast
 from matplotlib import pyplot as plt
 import numpy as np
 import os
-# from osgeo import gdal
-# from osgeo import gdalconst
+from osgeo import gdal
+from osgeo import gdalconst
 import pandas as pd
 import re
 import seaborn as sns
-# import spectral.io.envi as envi
-# import spectral.io.spyfile as SpyFile
+import spectral.io.envi as envi
+import spectral.io.spyfile as SpyFile
 import sys
 import warnings
 
@@ -54,6 +54,8 @@ class defaults(object):
                 'crop_n_pix': 120,
                 'crop_e_m': None,
                 'crop_n_m': None,
+                'gdf_shft_e_m': 0.0,
+                'gdf_shft_n_m': 0.0,
                 'plot_id': None})
         '''
         Default values for performing spatial cropping on images. ``crop_defaults``
@@ -185,6 +187,8 @@ class defaults(object):
                 'plot_id': 'plot_id',
                 'n_plots_x': 'n_plots_x',
                 'n_plots_y': 'n_plots_y',
+                'gdf_shft_e_m': 'gdf_shft_e_m',
+                'gdf_shft_n_m': 'gdf_shft_n_m',
                 'n_plots': 'n_plots'})
         '''
         Default column names for performing batch spatial cropping on
@@ -450,7 +454,10 @@ class hsio(object):
         if str_plot in s and '_pika' in s:
             name_plot = s[s.find(str_plot) + len(str_plot):s.find('_pika')]
         elif str_plot in s and '_pika' not in s:
-            name_plot = s[s.find(str_plot) + len(str_plot):s.find('-')]
+            if s.find('_', s.find(str_plot) + len(str_plot)) == -1:
+                name_plot = s[s.find(str_plot) + len(str_plot):]
+            else:  # there is an underscore after plot_id, so cut off name_plot there
+                name_plot = s[s.find(str_plot) + len(str_plot):s.find('_')]
         else:
             name_plot = self.name_short.rsplit('_', 1)[1]
 
@@ -1334,7 +1341,6 @@ class hsio(object):
         else:
             array_mean = df_mean.to_numpy()
         array = array_mean.reshape(1, 1, len(df_mean))
-
         try:
             envi.save_image(fname_hdr_spec, array, interleave=interleave,
                             dtype=dtype, byteorder=byteorder,
@@ -1349,7 +1355,7 @@ class hsio(object):
 
     def write_tif(self, fname_tif, spyfile=None, metadata=None, fname_in=None,
                   projection_out=None, geotransform_out=None,
-                  show_img='inline'):
+                  show_img=False):
         '''
         Wrapper function that accesses the `GDAL Python package`_ to save a
         small datacube subset (i.e., three bands or less) to file.
@@ -2296,10 +2302,13 @@ class hstools(object):
                 pixels will be masked prior to calculating the mean spectra
                 across pixels (default: ``None``; range: 0-100).
             side (``str``): The side of the threshold for which to apply the
-                mask. Must be either 'lower', 'upper', or ``None``; if 'lower',
-                everything below the threshold will be masked; if ``None``,
-                only the values that exactly match the threshol will be masked
-                (default: 'lower').
+                mask. Must be either 'lower', 'upper', 'outside', or ``None``;
+                if 'lower', everything below the threshold will be masked; if
+                'outside', the ``thresh`` / ``percentile`` parameter must be
+                list-like with two values indicating the lower and upper bounds
+                - anything outside of these values will be masked out; if
+                ``None``, only the values that exactly match the threshold will
+                be masked (default: 'lower').
 
         Returns:
             2-element ``tuple`` containing
@@ -2347,6 +2356,13 @@ class hstools(object):
 
             .. image:: ../img/utilities/mask_array_800nm_75th.png
         '''
+        msg1 = ('``side`` must be one of the following: "lower", "upper", '
+                '"outside", or "equal".')
+        msg2 = ('``side`` is {0}, so either ``percentile`` or ``thresh`` must '
+                'be list-type with length of two (the lower and upper bounds)')
+        assert side in ['lower', 'upper', 'outside', 'equal'], msg1
+        if side == 'outside':
+            assert isinstance(percentile, list), msg2
         if isinstance(array, np.ma.core.MaskedArray):
             array_m = array.compressed()  # allows for accurate percentile calc
         else:
@@ -2366,6 +2382,18 @@ class hstools(object):
                 mask_array_p = np.ma.masked_less_equal(array, array_pctl)
             elif side == 'upper':
                 mask_array_p = np.ma.masked_greater(array, array_pctl)
+            elif side == 'outside':
+                if len(array_pctl) > 2:
+                    print('WARNING: There were more than two percentile '
+                          'values passed to ``hstools.mask_array``. Using '
+                          'only the first two values (after sorting).')
+                msg = ('Two percentile values must be passed to '
+                       '``hstools.mask_array``. ``percentile``: {0}'
+                       ''.format(percentile))
+                assert isinstance(array_pctl, np.ndarray), msg
+                array_pctl.sort()
+                mask_array_p = np.ma.masked_less_equal(array, array_pctl[0])
+                mask_array_p = np.ma.masked_greater(mask_array_p, array_pctl[1])
             elif side is None:
                 mask_array_p = np.ma.masked_equal(array, array_pctl)
         else:
@@ -2375,6 +2403,18 @@ class hstools(object):
                 mask_array_t = np.ma.masked_less_equal(array, thresh)
             elif side == 'upper':
                 mask_array_t = np.ma.masked_greater(array, thresh)
+            elif side == 'outside':
+                msg = ('Two threshold values must be passed to '
+                       '``hstools.mask_array`` in a list-like object. '
+                       '``thresh``: {0}'.format(thresh))
+                assert isinstance(thresh, list) or isinstance(thresh, tuple), msg
+                if len(thresh) > 2:
+                    print('WARNING: There were more than two threshold '
+                          'values passed to ``hstools.mask_array``. Using '
+                          'only the first two values (after sorting).')
+                thresh.sort()
+                mask_array_t = np.ma.masked_less_equal(array, thresh[0])
+                mask_array_t = np.ma.masked_greater(mask_array_t, thresh[1])
             elif side is None and isinstance(thresh, list):
                 mask_array_t = np.ma.MaskedArray(array, np.in1d(array, thresh))
             else:  # side is None; thresh is float or int
@@ -2388,7 +2428,7 @@ class hstools(object):
         except AttributeError as err:
             pass  # array_m does not have a mask
         array = np.ma.masked_invalid(array)  # masks out invalid data (e.g., NaN, inf)
-        array_mask = np.ma.array(array, mask=mask_combine)
+        array_mask = np.ma.array(array, mask=mask_combine)  # combines aray (and its mask) with mask_combine (masks all cells with a mask in either)
         unmasked_pct = 100 * (array_mask.count() /
                               (array.shape[0]*array.shape[1]))
 #        print('Proportion unmasked pixels: {0:.2f}%'.format(unmasked_pct))
@@ -2509,27 +2549,54 @@ class hstools(object):
         '''
         if isinstance(spyfile, SpyFile.SpyFile):
             self.load_spyfile(spyfile)
-            array = self.spyfile.load()
+            # array = self.spyfile.load()
+            array = self.spyfile.open_memmap()
+            nbands = spyfile.nbands
+            shape = spyfile.shape
         elif isinstance(spyfile, np.ndarray):
             array = spyfile.copy()
+            if len(array.shape) == 3:
+                nbands = array.shape[2]
+            else:
+                nbands = 1
+            shape = array.shape
 
+        if mask is None:  # find all invalid values and mask them
+            if nbands == 1:
+                mask = np.ma.masked_greater(array[:, :], 1e10).mask
+            else:
+                mask = np.ma.masked_greater(array[:, :, 0], 1e10).mask
         if isinstance(mask, np.ma.masked_array):
             mask = mask.mask
+
         if mask is not None:
-            if mask.shape != spyfile.shape:
+            if mask.shape != shape:
                 if len(mask.shape) == 3:
                     mask_2d = np.reshape(mask, mask.shape[:2])
                 else:
                     mask_2d = mask.copy()
-                mask = np.empty(spyfile.shape)
-                for band in range(spyfile.nbands):
+                mask = np.empty(shape)
+                for band in range(nbands):
                     mask[:, :, band] = mask_2d
 
         datacube_masked = np.ma.masked_array(array, mask=mask)
-        spec_mean = np.nanmean(datacube_masked, axis=(0, 1))
-        spec_std = np.nanstd(datacube_masked, axis=(0, 1))
+        spec_mean = np.mean(datacube_masked, axis=(0, 1))
+        spec_std = np.std(datacube_masked, axis=(0, 1))
+        # spec_mean = np.nanmean(datacube_masked, axis=(0, 1))
+        # spec_std = np.nanstd(datacube_masked, axis=(0, 1))
         spec_mean = pd.Series(spec_mean)
         spec_std = pd.Series(spec_std)
+
+        # adjust any values that are nan or inf
+        # spec_mean[0]
+        # try:
+        #     i = np.where(spec_mean == -np.inf)[0]
+        #     i = np.where(spec_mean == None)[0]
+        # except ValueError:
+        #     pass
+
+        # i = np.where(spec_mean > 100)[0]
+
         return spec_mean, spec_std, datacube_masked
 
 #    def mask_shadow(self, shadow_pctl=20, show_histogram=False,
@@ -2678,6 +2745,8 @@ class hstools(object):
 
             .. image:: ../img/utilities/plot_histogram_800nm.png
         '''
+        plt.close('all')  # close all other plots before create a new one
+        # this is useful when this function is accesed by the batch module
         plt.style.use(plt_style)
 
         msg = ('Array must be 1-dimensional or 2-dimensional. Please choose '

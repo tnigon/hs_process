@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 import pandas as pd
-# import spectral.io.spyfile as SpyFile
+import spectral.io.spyfile as SpyFile
 import seaborn as sns
 from matplotlib import pyplot as plt
 
@@ -29,7 +29,7 @@ class segment(object):
         self.defaults = defaults
         self.load_spyfile(spyfile)
 
-    def _check_bands_wls(self, wl, b, n):
+    def _check_bands_wls(self, wl, b, n=''):
         '''
         Checks to be sure there is a valid wavelength or band to be used
         '''
@@ -65,20 +65,27 @@ class segment(object):
     def _get_band_list(self, wl_list, list_range):
         '''
         Determines how a list of wavelengths should be consolidated, if at all.
+
+        If wl_list is a list with only a single band, ``list_range`` will be
+        ignored and that single band will be used.
         '''
         if isinstance(wl_list, list) and list_range is True:
             msg = ('When using a ``list_range``, please be sure each passed '
                    '"band" is a list of exactly two wavelength values.\n')
-            assert len(wl_list) == 2, msg
-            band_list = self.tools.get_band_range(wl_list, index=False)
+            # assert len(wl_list) <= 2, msg
+            if len(wl_list) == 1:
+                band_list = [self.tools.get_band(wl_list[0])]
+            elif len(wl_list) == 2:
+                band_list = self.tools.get_band_range(wl_list, index=False)
+            else:
+                raise ValueError(msg)
         elif isinstance(wl_list, list) and list_range is False:
             band_list = []
             for b_i in wl_list:
                 b = self.tools.get_band(b_i)
                 band_list.append(b)
         else:  # just a single band; disregards ``list_range``
-            b = self.tools.get_band(wl_list)
-            band_list = [b]
+            band_list = [self.tools.get_band(wl_list)]
         return band_list
 
     def _get_wavelength_list(self, band_list_in, list_range):
@@ -182,7 +189,7 @@ class segment(object):
                 by calculating the mean pixel value across all bands in that
                 range (default: ``None``).
             spyfile (``SpyFile`` object or ``numpy.ndarray``): The datacube to
-                crop; if ``numpy.ndarray`` or ``None``, loads band information
+                process; if ``numpy.ndarray`` or ``None``, loads band information
                 from ``self.spyfile`` (default: ``None``).
             list_range (``bool``): Whether bands/wavelengths passed as a list
                 is interpreted as a range of bands (``True``) or for each
@@ -257,11 +264,10 @@ class segment(object):
         band1_list = self._get_band_list(wl1, list_range)
         band2_list = self._get_band_list(wl2, list_range)
         band3_list = self._get_band_list(wl3, list_range)
-
+        wl1_list = self._get_wavelength_list(band1_list, list_range=False)
+        wl2_list = self._get_wavelength_list(band2_list, list_range=False)
+        wl3_list = self._get_wavelength_list(band3_list, list_range=False)
         if print_out is True:
-            wl1_list = self._get_wavelength_list(band1_list, list_range=False)
-            wl2_list = self._get_wavelength_list(band2_list, list_range=False)
-            wl3_list = self._get_wavelength_list(band3_list, list_range=False)
             print('\nBands used (``b1``): {0}'.format(band1_list))
             print('Bands used (``b2``): {0}'.format(band2_list))
             print('Bands used (``b3``): {0}'.format(band3_list))
@@ -334,7 +340,7 @@ class segment(object):
                 by calculating the mean pixel value across all bands in that
                 range (default: ``None``).
             spyfile (``SpyFile`` object or ``numpy.ndarray``): The datacube to
-                crop; if ``numpy.ndarray`` or ``None``, loads band information
+                process; if ``numpy.ndarray`` or ``None``, loads band information
                 from ``self.spyfile`` (default: ``None``).
             list_range (``bool``): Whether bands/wavelengths passed as a list
                 is interpreted as a range of bands (``True``) or for each
@@ -407,11 +413,10 @@ class segment(object):
         band1_list = self._get_band_list(wl1, list_range)
         band2_list = self._get_band_list(wl2, list_range)
         band3_list = self._get_band_list(wl3, list_range)
-
+        wl1_list = self._get_wavelength_list(band1_list, list_range=False)
+        wl2_list = self._get_wavelength_list(band2_list, list_range=False)
+        wl3_list = self._get_wavelength_list(band3_list, list_range=False)
         if print_out is True:
-            wl1_list = self._get_wavelength_list(band1_list, list_range=False)
-            wl2_list = self._get_wavelength_list(band2_list, list_range=False)
-            wl3_list = self._get_wavelength_list(band3_list, list_range=False)
             print('\nBands used (``b1``): {0}'.format(band1_list))
             print('Bands used (``b2``): {0}'.format(band2_list))
             print('Bands used (``b3``): {0}'.format(band3_list))
@@ -474,7 +479,7 @@ class segment(object):
                 values by calculating the mean pixel value across all bands in
                 that range (default: ``None``).
             spyfile (``SpyFile`` object or ``numpy.ndarray``): The datacube to
-                crop; if ``numpy.ndarray`` or ``None``, loads band information from
+                process; if ``numpy.ndarray`` or ``None``, loads band information from
                 ``self.spyfile`` (default: ``None``).
             list_range (``bool``): Whether bands/wavelengths passed as a list is
                 interpreted as a range of bands (``True``) or for each individual
@@ -542,9 +547,9 @@ class segment(object):
 
         band1_list = self._get_band_list(wl1, list_range)
         band2_list = self._get_band_list(wl2, list_range)
+        wl1_list = self._get_wavelength_list(band1_list, list_range=False)
+        wl2_list = self._get_wavelength_list(band2_list, list_range=False)
         if print_out is True:
-            wl1_list = self._get_wavelength_list(band1_list, list_range=False)
-            wl2_list = self._get_wavelength_list(band2_list, list_range=False)
             print('\nBands used (``b1``): {0}'.format(band1_list))
             print('Bands used (``b2``): {0}'.format(band2_list))
             print('\nWavelengths used (``b1``): {0}'.format(wl1_list))
@@ -582,12 +587,12 @@ class segment(object):
         Parameters:
             wl1 (``int``, ``float``, or ``list``): the wavelength (or set of
                 wavelengths) to be used as the first parameter of the
-                normalized difference index; if ``list``, then consolidates all
+                ratio index; if ``list``, then consolidates all
                 bands between two wavelength values by calculating the mean
                 pixel value across all bands in that range (default: ``None``).
             wl2 (``int``, ``float``, or ``list``): the wavelength (or set of
                 wavelengths) to be used as the second parameter of the
-                normalized difference index; if ``list``, then consolidates all
+                ratio index; if ``list``, then consolidates all
                 bands between two wavelength values by calculating the mean
                 pixel value across all bands in that range (default: ``None``).
             b1 (``int``, ``float``, or ``list``): the band (or set of bands) to
@@ -601,7 +606,7 @@ class segment(object):
                 bands values by calculating the mean pixel value across all
                 bands in that range (default: ``None``).
             spyfile (``SpyFile`` object or ``numpy.ndarray``): The datacube to
-                crop; if ``numpy.ndarray`` or ``None``, loads band information
+                process; if ``numpy.ndarray`` or ``None``, loads band information
                 from ``self.spyfile`` (default: ``None``).
             list_range (``bool``): Whether a band passed as a list is
                 interpreted as a range of bands (``True``) or for each
@@ -688,10 +693,9 @@ class segment(object):
 
         band1_list = self._get_band_list(wl1, list_range)
         band2_list = self._get_band_list(wl2, list_range)
-
+        wl1_list = self._get_wavelength_list(band1_list, list_range=False)
+        wl2_list = self._get_wavelength_list(band2_list, list_range=False)
         if print_out is True:
-            wl1_list = self._get_wavelength_list(band1_list, list_range=False)
-            wl2_list = self._get_wavelength_list(band2_list, list_range=False)
             print('\nBands used (``b1``): {0}'.format(band1_list))
             print('Bands used (``b2``): {0}'.format(band2_list))
             print('\nWavelengths used (``b1``): {0}'.format(wl1_list))
@@ -716,6 +720,83 @@ class segment(object):
         metadata['samples'] = array_ratio.shape[1]
         metadata['lines'] = array_ratio.shape[0]
         return array_ratio, metadata
+
+    def composite_band(self, wl1=None, b1=None, spyfile=None, list_range=True,
+                       print_out=True):
+        '''
+        Calculates a composite band from a range of bands or wavelengths.
+        Bands/wavelengths can be input as individual bands, a set of bands
+        (i.e., list of bands), or a range of bands (i.e., list of two bands
+        indicating the lower and upper range).
+
+        Parameters:
+            wl1 (``int``, ``float``, or ``list``): the wavelength (or set of
+                wavelengths) to consolidate; if ``list``, then all wavelengths
+                between two wavelength values are consolidated by calculating
+                the mean pixel value across all wavelengths in that range
+                (default: ``None``).
+            b1 (``int``, ``float``, or ``list``): the band (or set of
+                bands) to consolidate; if ``list``, then all bands
+                between two band values are consolidated by calculating
+                the mean pixel value across all bands in that range (default:
+                ``None``).
+            spyfile (``SpyFile`` object or ``numpy.ndarray``): The datacube to
+                process; if ``numpy.ndarray`` or ``None``, loads band information
+                from ``self.spyfile`` (default: ``None``).
+            list_range (``bool``): Whether a band passed as a list is
+                interpreted as a range of bands (``True``) or for each
+                individual band in the list (``False``). If ``list_range`` is
+                ``True``, ``b1``/``wl1`` and ``b2``/``wl2`` should be lists
+                with two items, and all bands/wavelegths between the two values
+                will be used (default: ``True``).
+            print_out (``bool``): Whether to print out the actual bands and
+                wavelengths being used in the NDI calculation (default:
+                ``True``).
+
+        Returns:
+            2-element ``tuple`` containing
+
+            - **array_b1** (``numpy.ndarray``): Consolidated array.
+            - **metadata** (``dict``): Modified metadata describing the
+              consolidated array (``array_b1``).
+        '''
+        wl1 = self._check_bands_wls(wl1, b1, 1)
+        # Now, band input is converted to wavelength input and this can be used
+
+        if spyfile is None:
+            spyfile = self.spyfile
+            array = spyfile.load()
+        elif isinstance(spyfile, SpyFile.SpyFile):
+            self.load_spyfile(spyfile)
+            array = spyfile.load()
+        elif isinstance(spyfile, np.ndarray):
+            array = spyfile.copy()
+            spyfile = self.spyfile
+        metadata = self.tools.spyfile.metadata
+
+        band1_list = self._get_band_list(wl1, list_range)
+        wl1_list = self._get_wavelength_list(band1_list, list_range=False)
+        if print_out is True:
+            print('\nBands used (``b1``): {0}'.format(band1_list))
+            print('Wavelengths used (``b1``): {0}'.format(wl1_list))
+
+        array_b1 = self.tools.get_spectral_mean(band1_list, array)
+        array_b1[array_b1 == 0] = np.nan
+
+        _, wls_mean = self.tools.get_center_wl(band1_list, spyfile=spyfile,
+                                               wls=False)
+        metadata['bands'] = 1
+        metadata['wavelength'] = [wls_mean]
+        metadata['band names'] = [1]
+        # self.tools.del_meta_item(metadata, 'band names')
+        hist_str = (" -> hs_process.composite_band[<"
+                    "label: 'wl1?' value:{0}; "
+                    "label: 'list_range?' value:{1}>]"
+                    "".format(wl1_list, list_range))
+        metadata['history'] += hist_str
+        metadata['samples'] = array_b1.shape[1]
+        metadata['lines'] = array_b1.shape[0]
+        return array_b1, metadata
 
     def load_spyfile(self, spyfile):
         '''

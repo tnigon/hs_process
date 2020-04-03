@@ -32,7 +32,7 @@ copyright = '2020, Tyler J. Nigon'
 author = 'Tyler J. Nigon'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.3'
+release = '0.0.4'
 
 
 # -- General configuration ---------------------------------------------------
@@ -107,7 +107,7 @@ html_theme_options = {
     'navbar_title': "hs_process",
     'navbar_links': [
         ('Github', "https://github.com/tnigon/hs_process", True),
-        ('PyPI', "https://pypi.org/project/hs-process/", True),
+        ('Download', "https://anaconda.org/conda-forge/hs-process", True),
         ('Spectral Python', "http://www.spectralpython.net/", True)
     ],
     'navbar_site_name': "Contents",
