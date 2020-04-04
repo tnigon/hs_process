@@ -15,6 +15,9 @@ from hs_process.segment import segment
 from hs_process.spec_mod import spec_mod
 from hs_process.spatial_mod import spatial_mod
 
+from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import as_completed
+
 
 class batch(object):
     '''
@@ -1335,8 +1338,6 @@ class batch(object):
         Actually executes the spectral clip to keep the main function a bit
         cleaner
         '''
-        results = pool.starmap_async(howmany_within_range2, [(i, row, 4, 8) for i, row in enumerate(data)]).get()
-
         for fname in fname_list:
             print('\nSpectrally clipping: {0}'.format(fname))
             # options for io.read_cube():
@@ -1367,12 +1368,13 @@ class batch(object):
                                byteorder=self.io.defaults.envi_write.byteorder,
                                metadata=metadata)
 
-    def _execute_spec_clip_pp(self, fname, base_dir_out, folder_name,
-                              name_append, wl_bands):
+    def _execute_spec_clip_pp(self, fname, base_dir_out, folder_name, name_append, wl_bands):
         '''
         Actually executes the spectral clip to keep the main function a bit
         cleaner
         '''
+        # print('Arglist: {0}'.format(arg_list))
+        # fname, base_dir_out, folder_name, name_append, wl_bands = arg_list
         print('\nSpectrally clipping: {0}'.format(fname))
         # options for io.read_cube():
         # name_long, name_plot, name_short, individual_plot, overwrite
@@ -1401,7 +1403,7 @@ class batch(object):
                            interleave=self.io.defaults.envi_write.interleave,
                            byteorder=self.io.defaults.envi_write.byteorder,
                            metadata=metadata)
-        return fname
+        # return hdr_file
 
     def _execute_spec_combine(self, fname_list, base_dir_out):
         '''
@@ -1505,6 +1507,54 @@ class batch(object):
                 df_stats_in = pd.read_csv(fname_stats)
                 df_smooth_stats = df_stats_in.append(df_smooth_stats)
             df_smooth_stats.to_csv(fname_stats)
+            return df_smooth_stats
+
+    def _execute_spec_smooth_pp(self, fname, base_dir_out, folder_name,
+                                name_append, window_size, order, stats):
+        '''
+        Actually executes the spectral smooth to keep the main function a bit
+        cleaner
+        '''
+        print('\nSpectrally smoothing: {0}'.format(fname))
+        if stats is True:
+            df_smooth_stats = pd.DataFrame(
+                    columns=['fname', 'mean', 'std', 'cv'])
+
+        self.io.read_cube(fname)
+        self.my_spectral_mod = spec_mod(self.io.spyfile)
+        base_dir = os.path.dirname(fname)
+        if base_dir_out is None:
+            dir_out, name_append = self._save_file_setup(
+                    base_dir, folder_name, name_append)
+        else:
+            dir_out, name_append = self._save_file_setup(
+                    base_dir_out, folder_name, name_append)
+        name_print = self._get_name_print()
+        array_smooth, metadata = self.my_spectral_mod.spectral_smooth(
+                window_size=window_size, order=order)
+
+        name_label = (name_print + name_append + '.' +
+                      self.io.defaults.envi_write.interleave)
+        metadata['label'] = name_label
+
+        hdr_file = os.path.join(dir_out, name_label + '.hdr')
+        self.io.write_cube(hdr_file, array_smooth,
+                           dtype=self.io.defaults.envi_write.dtype,
+                           force=self.io.defaults.envi_write.force,
+                           ext=self.io.defaults.envi_write.ext,
+                           interleave=self.io.defaults.envi_write.interleave,
+                           byteorder=self.io.defaults.envi_write.byteorder,
+                           metadata=metadata)
+
+        if stats is True:
+            mean = np.nanmean(array_smooth)
+            std = np.nanstd(array_smooth)
+            cv = std/mean
+            df_smooth_temp = pd.DataFrame([[fname, mean, std, cv]],
+                                          columns=['fname', 'mean', 'std',
+                                                   'cv'])
+            df_smooth_stats = df_smooth_stats.append(df_smooth_temp,
+                                                     ignore_index=True)
             return df_smooth_stats
 
     def _get_fname_similar(self, name_to_match, base_dir, search_ext='bip',
@@ -2909,42 +2959,30 @@ class batch(object):
             fname_list = self._check_processed(fname_list, base_dir_out,
                                                folder_name, name_append)
 
-        self._execute_spec_clip(fname_list, base_dir_out, folder_name,
-                                name_append, wl_bands)
-
-        # self._execute_spec_clip_pp(fname, base_dir_out, folder_name,
-        #                             name_append, wl_bands)
-        # for fname in fname_list:
+        # self._execute_spec_clip(fname_list, base_dir_out, folder_name,
+        #                         name_append, wl_bands)
 
 
-        # pool = mp.Pool(mp.cpu_count())
-        # print('Number of CPUs: {0}'.format(mp.cpu_count()))
-        # my_args = [base_dir_out, folder_name, name_append, wl_bands]
-        # # results = [pool.apply_async(
-        # #     hsbatch._execute_spec_clip_pp,
-        # #     [fname] + my_args) for fname in fname_list]
-        # # list_of_results = [x.get() for x in results]
 
-        # pool.starmap_async(
-        #     self._execute_spec_clip_pp,
-        #     [(fname, base_dir_out, folder_name, name_append, wl_bands) for fname in fname_list])
-        # pool.close()
+        # data_list = []
 
-
-        # from multiprocessing import Process
-        # # instantiating process with arguments
-        # procs = []
-        # for fname in fname_list:
-        #     # print(name)
-        #     # proc = Process(target=print_func, args=(name,))
-        #     args = (fname, base_dir_out, folder_name, name_append, wl_bands)
-        #     proc = Process(target=self._execute_spec_clip_pp, args=args)
-        #     procs.append(proc)
-        #     proc.start()
-
-        # # complete the processes
-        # for proc in procs:
-            # proc.join()
+        with ThreadPoolExecutor(max_workers=None) as executor:  # defaults to min(32, os.cpu_count() + 4)
+            future_to_clip = {
+                executor.submit(self._execute_spec_clip_pp,
+                                fname,
+                                base_dir_out, folder_name, name_append, wl_bands): fname for fname in fname_list}
+            # for _ in as_completed(future_to_clip):
+            #     pass
+                # print(future)
+                # clip = future_to_clip[future]
+                # print(clip)
+                # try:
+                #     data = future.result()
+                #     data_list.append(data)
+                # except Exception as exc:
+                #     print('%r generated an exception: %s' % (clip, exc))
+                # else:
+                #     print('%r page is %d bytes' % (clip, len(data)))
 
     def spectral_smooth(self, fname_list=None, base_dir=None, search_ext='bip',
                         dir_level=0, base_dir_out=None,
@@ -3068,8 +3106,47 @@ class batch(object):
         if self.io.defaults.envi_write.force is False:  # otherwise just overwrites if it exists
             fname_list = self._check_processed(fname_list, base_dir_out,
                                                folder_name, name_append)
-        df_stats = self._execute_spec_smooth(
-                fname_list, base_dir_out, folder_name, name_append,
-                window_size, order, stats)
-        if df_stats is not None:
-            return df_stats
+        # df_stats = self._execute_spec_smooth(
+        #         fname_list, base_dir_out, folder_name, name_append,
+        #         window_size, order, stats)
+        # if df_stats is not None:
+        #     return df_stats
+
+
+        # Parallel threading
+        with ThreadPoolExecutor(max_workers=None) as executor:  # defaults to min(32, os.cpu_count() + 4)
+            future_to_clip = {
+                executor.submit(self._execute_spec_smooth_pp,
+                                fname,
+                                base_dir_out, folder_name, name_append,
+                                window_size, order, stats): fname for fname in fname_list}
+
+            df_stats = None
+            if stats == True:
+                for future in as_completed(future_to_clip):
+                    smooth = future_to_clip[future]
+                    try:
+                        df_smooth_temp = future.result()
+                        if df_stats is None:
+                            df_stats = df_smooth_temp.copy()
+                        else:
+                            df_stats = df_stats.append(df_smooth_temp, ignore_index=True)
+                    except Exception as exc:
+                        print('%r generated an exception: %s' % (smooth, exc))
+                    else:
+                        print('%r page is %d bytes' % (smooth, len(data)))
+
+                base_dir = os.path.dirname(fname_list[0])
+                if base_dir_out is None:
+                    dir_out, name_append = self._save_file_setup(
+                            base_dir, folder_name, name_append)
+                else:
+                    dir_out, name_append = self._save_file_setup(
+                            base_dir_out, folder_name, name_append)
+
+                fname_stats = os.path.join(dir_out, name_append[1:] + '-stats.csv')
+                if os.path.isfile(fname_stats) and self.io.defaults.envi_write.force is False:
+                    df_stats_in = pd.read_csv(fname_stats)
+                    df_smooth_stats = df_stats_in.append(df_stats)
+                df_smooth_stats.to_csv(fname_stats)
+                return df_smooth_stats
