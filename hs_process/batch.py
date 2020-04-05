@@ -2959,30 +2959,14 @@ class batch(object):
             fname_list = self._check_processed(fname_list, base_dir_out,
                                                folder_name, name_append)
 
-        # self._execute_spec_clip(fname_list, base_dir_out, folder_name,
-        #                         name_append, wl_bands)
+        self._execute_spec_clip(fname_list, base_dir_out, folder_name,
+                                name_append, wl_bands)
 
-
-
-        # data_list = []
-
-        with ThreadPoolExecutor(max_workers=None) as executor:  # defaults to min(32, os.cpu_count() + 4)
-            future_to_clip = {
-                executor.submit(self._execute_spec_clip_pp,
-                                fname,
-                                base_dir_out, folder_name, name_append, wl_bands): fname for fname in fname_list}
-            # for _ in as_completed(future_to_clip):
-            #     pass
-                # print(future)
-                # clip = future_to_clip[future]
-                # print(clip)
-                # try:
-                #     data = future.result()
-                #     data_list.append(data)
-                # except Exception as exc:
-                #     print('%r generated an exception: %s' % (clip, exc))
-                # else:
-                #     print('%r page is %d bytes' % (clip, len(data)))
+        # with ThreadPoolExecutor(max_workers=None) as executor:  # defaults to min(32, os.cpu_count() + 4)
+        #     future_to_clip = {
+        #         executor.submit(self._execute_spec_clip_pp,
+        #                         fname,
+        #                         base_dir_out, folder_name, name_append, wl_bands): fname for fname in fname_list}
 
     def spectral_smooth(self, fname_list=None, base_dir=None, search_ext='bip',
                         dir_level=0, base_dir_out=None,
@@ -3106,47 +3090,47 @@ class batch(object):
         if self.io.defaults.envi_write.force is False:  # otherwise just overwrites if it exists
             fname_list = self._check_processed(fname_list, base_dir_out,
                                                folder_name, name_append)
-        # df_stats = self._execute_spec_smooth(
-        #         fname_list, base_dir_out, folder_name, name_append,
-        #         window_size, order, stats)
-        # if df_stats is not None:
-        #     return df_stats
+        df_stats = self._execute_spec_smooth(
+                fname_list, base_dir_out, folder_name, name_append,
+                window_size, order, stats)
+        if df_stats is not None:
+            return df_stats
 
 
-        # Parallel threading
-        with ThreadPoolExecutor(max_workers=None) as executor:  # defaults to min(32, os.cpu_count() + 4)
-            future_to_clip = {
-                executor.submit(self._execute_spec_smooth_pp,
-                                fname,
-                                base_dir_out, folder_name, name_append,
-                                window_size, order, stats): fname for fname in fname_list}
+        # # Parallel threading
+        # with ThreadPoolExecutor(max_workers=None) as executor:  # defaults to min(32, os.cpu_count() + 4)
+        #     future_to_clip = {
+        #         executor.submit(self._execute_spec_smooth_pp,
+        #                         fname,
+        #                         base_dir_out, folder_name, name_append,
+        #                         window_size, order, stats): fname for fname in fname_list}
 
-            df_stats = None
-            if stats == True:
-                for future in as_completed(future_to_clip):
-                    smooth = future_to_clip[future]
-                    try:
-                        df_smooth_temp = future.result()
-                        if df_stats is None:
-                            df_stats = df_smooth_temp.copy()
-                        else:
-                            df_stats = df_stats.append(df_smooth_temp, ignore_index=True)
-                    except Exception as exc:
-                        print('%r generated an exception: %s' % (smooth, exc))
-                    else:
-                        print('%r page is %d bytes' % (smooth, len(data)))
+        #     df_stats = None
+        #     if stats == True:
+        #         for future in as_completed(future_to_clip):
+        #             smooth = future_to_clip[future]
+        #             try:
+        #                 df_smooth_temp = future.result()
+        #                 if df_stats is None:
+        #                     df_stats = df_smooth_temp.copy()
+        #                 else:
+        #                     df_stats = df_stats.append(df_smooth_temp, ignore_index=True)
+        #             except Exception as exc:
+        #                 print('%r generated an exception: %s' % (smooth, exc))
+        #             else:
+        #                 print('%r page is %d bytes' % (smooth, len(data)))
 
-                base_dir = os.path.dirname(fname_list[0])
-                if base_dir_out is None:
-                    dir_out, name_append = self._save_file_setup(
-                            base_dir, folder_name, name_append)
-                else:
-                    dir_out, name_append = self._save_file_setup(
-                            base_dir_out, folder_name, name_append)
+        #         base_dir = os.path.dirname(fname_list[0])
+        #         if base_dir_out is None:
+        #             dir_out, name_append = self._save_file_setup(
+        #                     base_dir, folder_name, name_append)
+        #         else:
+        #             dir_out, name_append = self._save_file_setup(
+        #                     base_dir_out, folder_name, name_append)
 
-                fname_stats = os.path.join(dir_out, name_append[1:] + '-stats.csv')
-                if os.path.isfile(fname_stats) and self.io.defaults.envi_write.force is False:
-                    df_stats_in = pd.read_csv(fname_stats)
-                    df_smooth_stats = df_stats_in.append(df_stats)
-                df_smooth_stats.to_csv(fname_stats)
-                return df_smooth_stats
+        #         fname_stats = os.path.join(dir_out, name_append[1:] + '-stats.csv')
+        #         if os.path.isfile(fname_stats) and self.io.defaults.envi_write.force is False:
+        #             df_stats_in = pd.read_csv(fname_stats)
+        #             df_smooth_stats = df_stats_in.append(df_stats)
+        #         df_smooth_stats.to_csv(fname_stats)
+        #         return df_smooth_stats
