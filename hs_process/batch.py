@@ -2633,7 +2633,8 @@ class batch(object):
         self._execute_spec_combine(fname_list, base_dir_out)
 
     def spectra_to_csv(self, fname_list=None, base_dir=None, search_ext='spec',
-                       dir_level=0, base_dir_out=None, name='stats-spectra'):
+                       dir_level=0, base_dir_out=None, name='stats-spectra',
+                       multithread=False):
         '''
         Reads all the ``.spec`` files in a direcory and saves their reflectance
         information to a ``.csv``. ``batch.spectra_to_csv`` is identical to
@@ -2656,6 +2657,9 @@ class batch(object):
             base_dir_out (``str``): directory path to save all processed
                 datacubes; if set to ``None``, file is saved to ``base_dir``
             name (``str``): The output filename (default: "stats-spectra").
+            multithread (``bool``): Whether to leverage multi-thread processing
+                when reading the .spec files. Setting to ``True`` should speed
+                up the time it takes to read all .spec files.
 
         Note:
             The following example builds on the API example results of
@@ -2710,30 +2714,70 @@ class batch(object):
         print('Writing mean spectra to a .csv file.\n'
               'Number of input datacubes/spectra: {0}\nOutput file location: '
               '{1}'.format(len(fname_list), fname_csv))
+        # df_spec = None
+        # for fname in fname_list:
+        #     self.io.read_spec(fname + '.hdr')
+        #     meta_bands = self.io.tools.meta_bands
+        #     array = self.io.spyfile_spec.load()
+        #     data = list(np.reshape(array, (array.shape[2])) * 100)
+        #     data.insert(0, self.io.name_plot)
+        #     data.insert(0, os.path.basename(fname))
+        #     if df_spec is None:
+        #         columns = list(meta_bands.values())
+        #         columns.insert(0, 'wavelength')
+        #         columns.insert(0, np.nan)
+        #         bands = list(meta_bands.keys())
+        #         bands.insert(0, 'plot_id')
+        #         bands.insert(0, 'fname')
+        #         df_spec = pd.DataFrame(data=[bands], columns=columns)
+        #     df_spec_temp = pd.DataFrame(data=[data], columns=columns)
+        #     df_spec = df_spec.append(df_spec_temp)
 
         # load the data from the Spectral Python (SpyFile) object
-        df_spec = None
-        for fname in fname_list:
-            self.io.read_spec(fname + '.hdr')
-            meta_bands = self.io.tools.meta_bands
-            array = self.io.spyfile_spec.load()
-            data = list(np.reshape(array, (array.shape[2])) * 100)
-            data.insert(0, self.io.name_plot)
-            data.insert(0, os.path.basename(fname))
-            if df_spec is None:
-                columns = list(meta_bands.values())
-                columns.insert(0, 'wavelength')
-                columns.insert(0, np.nan)
-                bands = list(meta_bands.keys())
-                bands.insert(0, 'plot_id')
-                bands.insert(0, 'fname')
-                df_spec = pd.DataFrame(data=[bands], columns=columns)
-            df_spec_temp = pd.DataFrame(data=[data], columns=columns)
-            df_spec = df_spec.append(df_spec_temp)
+        self.io.read_spec(fname_list[0] + '.hdr')  # read first file to build df_spec column headings
+        meta_bands = self.io.tools.meta_bands
+        columns = list(meta_bands.values())
+        columns.insert(0, 'wavelength')
+        columns.insert(0, np.nan)
+        bands = list(meta_bands.keys())
+        bands.insert(0, 'plot_id')
+        bands.insert(0, 'fname')
+        df_spec = pd.DataFrame(data=[bands], columns=columns)
+
+        if multithread is True:
+            with ThreadPoolExecutor() as executor:  # defaults to min(32, os.cpu_count() + 4)
+                future_df_spec = {
+                    executor.submit(self._read_spectra_from_file,
+                                    fname,
+                                    df_spec.columns): fname for fname in fname_list}
+                for future in as_completed(future_df_spec):
+                    data = future_df_spec[future]
+                    try:
+                        df_spec_file = future.result()
+                        df_spec = df_spec.append(df_spec_file)
+                    except Exception as exc:
+                        print('%r generated an exception: %s' % (data, exc))
+        else:
+            for fname in fname_list:
+                df_spec_file = self._read_spectra_from_file(fname, df_spec.columns)
+                df_spec = df_spec.append(df_spec_file)
         df_spec.to_csv(fname_csv, index=False)
 
+    def _read_spectra_from_file(self, fname, columns):
+        '''
+        Reads a single spectra from file
+        '''
+        self.io.read_spec(fname + '.hdr')
+        meta_bands = self.io.tools.meta_bands
+        array = self.io.spyfile_spec.load()
+        data = list(np.reshape(array, (array.shape[2])) * 100)
+        data.insert(0, self.io.name_plot)
+        data.insert(0, os.path.basename(fname))
+        df_spec_file = pd.DataFrame(data=[data], columns=columns)
+        return df_spec_file
+
     def spectra_to_df(self, fname_list=None, base_dir=None, search_ext='spec',
-                      dir_level=0):
+                      dir_level=0, multithread=False):
         '''
         Reads all the .spec files in a direcory and returns their data as a
         ``pandas.DataFrame`` object. ``batch.spectra_to_df`` is identical to
@@ -2753,6 +2797,9 @@ class batch(object):
                 be ignored (default: 'bip').
             dir_level (``int``): The number of directory levels to search; if
                 ``None``, searches all directory levels (default: 0).
+            multithread (``bool``): Whether to leverage multi-thread processing
+                when reading the .spec files. Setting to ``True`` should speed
+                up the time it takes to read all .spec files.
 
         Note:
             The following example builds on the API example results of
@@ -2816,21 +2863,48 @@ class batch(object):
               ''.format(len(fname_list)))
 
         # load the data from the Spectral Python (SpyFile) object
-        df_spec = None
-        for fname in fname_list:
-            self.io.read_spec(fname + '.hdr')
-            meta_bands = self.io.tools.meta_bands
-            array = self.io.spyfile_spec.load()
-            data = list(np.reshape(array, (array.shape[2])))
-            data.insert(0, self.io.name_plot)
-            data.insert(0, os.path.basename(fname))
-            if df_spec is None:
-                bands = list(meta_bands.keys())
-                bands.insert(0, 'plot_id')
-                bands.insert(0, 'fname')
-                df_spec = pd.DataFrame(columns=bands)
-            df_spec_temp = pd.DataFrame(data=[data], columns=bands)
-            df_spec = df_spec.append(df_spec_temp)
+        # df_spec = None
+        # for fname in fname_list:
+        #     self.io.read_spec(fname + '.hdr')
+        #     meta_bands = self.io.tools.meta_bands
+        #     array = self.io.spyfile_spec.load()
+        #     data = list(np.reshape(array, (array.shape[2])))
+        #     data.insert(0, self.io.name_plot)
+        #     data.insert(0, os.path.basename(fname))
+        #     if df_spec is None:
+        #         bands = list(meta_bands.keys())
+        #         bands.insert(0, 'plot_id')
+        #         bands.insert(0, 'fname')
+        #         df_spec = pd.DataFrame(columns=bands)
+        #     df_spec_temp = pd.DataFrame(data=[data], columns=bands)
+        #     df_spec = df_spec.append(df_spec_temp)
+
+
+        # read first file to build df_spec column headings
+        self.io.read_spec(fname_list[0] + '.hdr')
+        meta_bands = self.io.tools.meta_bands
+        bands = list(meta_bands.keys())
+        bands.insert(0, 'plot_id')
+        bands.insert(0, 'fname')
+        df_spec = pd.DataFrame(columns=bands)
+        if multithread is True:
+            with ThreadPoolExecutor() as executor:  # defaults to min(32, os.cpu_count() + 4)
+                future_df_spec = {
+                    executor.submit(self._read_spectra_from_file,
+                                    fname,
+                                    df_spec.columns): fname for fname in fname_list}
+                for future in as_completed(future_df_spec):
+                    data = future_df_spec[future]
+                    try:
+                        df_spec_file = future.result()
+                        df_spec = df_spec.append(df_spec_file)
+                    except Exception as exc:
+                        print('%r generated an exception: %s' % (data, exc))
+        else:
+            for fname in fname_list:
+                df_spec_file = self._read_spectra_from_file(fname, df_spec.columns)
+                df_spec = df_spec.append(df_spec_file)
+
         try:
             df_spec['plot_id'] = pd.to_numeric(df_spec['plot_id'])
         except ValueError:

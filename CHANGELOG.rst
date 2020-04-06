@@ -9,7 +9,8 @@ Release: 0.0.4
 * During batch processing, if out_force is ``False`` and files exist in output directory, hs_process will skip over files instead of raising an error that the file already exists. This is useful if many files have already been processed and you'd like to process the remaining files without reprocessing all those that are completed.
 * Added an option to create a mask between two thresholds or percentiles (applies to ``hstools.mask_array`` and ``batch.segment_create_mask``).
 * Added options to ``batch.segment_create_mask`` to provide a choice whether the datacube and .spec files are saved to file. This potentially saves disk space if the datacube isn't needed in subsequent analyses.
-* User can optionally pass a lists for ``mask_dir``, ````, and ``mask_thresh``/``mask_percentile`` to ``batch.segment_create_mask``
+* User can optionally pass a lists for ``mask_dir``, ``mask_side``, and ``mask_thresh``/``mask_percentile`` to ``batch.segment_create_mask``
+* Added an option to use multi-threading in ``batch.spectra_to_csv`` and ``batch.spectra_to_df`` to load .spec files (set ``multithread=True`` to take advantage of this)
 
 Release: 0.0.3
 ***************
