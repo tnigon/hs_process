@@ -1729,58 +1729,19 @@ class batch(object):
         msg = ('Could not get a name for input datacube.\n')
         assert name_print is not None, msg
         return name_print
-#
-#    def _plot_histogram(self, array, fname_fig, title=None, xlabel=None,
-#                        percentile=90, fontsize=16, color='#444444'):
-#        '''
-#        Plots a histogram with the percentile value labeled
-#        '''
-#        if isinstance(array, np.ma.core.MaskedArray):
-#            array_m = array.compressed()  # allows for accurate percentile calc
-#        else:
-#            array_m = np.ma.masked_array(array, mask=False)
-#            array_m = array_m.compressed()
-#
-#        pctl = np.nanpercentile(array_m.flatten(), percentile)
-#
-#        fig, ax = plt.subplots()
-#        ax = sns.distplot(array_m.flatten(), bins=50, color='grey')
-#        data_x, data_y = ax.lines[0].get_data()
-#
-#        y_lim = ax.get_ylim()
-#        yi = np.interp(pctl, data_x, data_y)
-#        ymax = yi/y_lim[1]
-#        ax.axvline(pctl, ymax=ymax, linestyle='--', color=color, linewidth=0.5)
-#        boxstyle_str = 'round, pad=0.5, rounding_size=0.15'
-#
-#
-#        legend_str = ('Percentile ({0}): {1:.3f}'
-#                      ''.format(percentile, pctl))
-#        ax.annotate(
-#            legend_str,
-#            xy=(pctl, yi),
-#            xytext=(0.97, 0.94),  # loc to place text
-#            textcoords='axes fraction',  # placed relative to axes
-#            ha='right',  # alignment of text
-#            va='top',
-#            fontsize=int(fontsize * 0.9),
-#            color=color,
-#            bbox=dict(boxstyle=boxstyle_str, pad=0.5, fc=(1, 1, 1),
-#                      ec=(0.5, 0.5, 0.5), alpha=0.5),
-#            arrowprops=dict(arrowstyle='-|>',
-#                            color=color,
-#        #                    patchB=el,
-#                            shrinkA=0,
-#                            shrinkB=0,
-#                            connectionstyle='arc3,rad=-0.3',
-#                            linestyle='--',
-#                            linewidth=0.7))
-#        ax.set_title(title, fontweight='bold', fontsize=int(fontsize * 1.1))
-#        ax.set_xlabel(xlabel, fontsize=fontsize)
-#        ax.set_ylabel('Frequency (%)', fontsize=fontsize)
-#        ax.tick_params(labelsize=fontsize)
-#        plt.tight_layout()
-#        fig.savefig(fname_fig, dpi=300)
+
+    def _read_spectra_from_file(self, fname, columns):
+        '''
+        Reads a single spectra from file
+        '''
+        self.io.read_spec(fname + '.hdr')
+        meta_bands = self.io.tools.meta_bands
+        array = self.io.spyfile_spec.load()
+        data = list(np.reshape(array, (array.shape[2])) * 100)
+        data.insert(0, self.io.name_plot)
+        data.insert(0, os.path.basename(fname))
+        df_spec_file = pd.DataFrame(data=[data], columns=columns)
+        return df_spec_file
 
     def cube_to_spectra(self, fname_list=None, base_dir=None, search_ext='bip',
                         dir_level=0, base_dir_out=None,
@@ -2744,37 +2705,24 @@ class batch(object):
         bands.insert(0, 'fname')
         df_spec = pd.DataFrame(data=[bands], columns=columns)
 
-        if multithread is True:
-            with ThreadPoolExecutor() as executor:  # defaults to min(32, os.cpu_count() + 4)
-                future_df_spec = {
-                    executor.submit(self._read_spectra_from_file,
-                                    fname,
-                                    df_spec.columns): fname for fname in fname_list}
-                for future in as_completed(future_df_spec):
-                    data = future_df_spec[future]
-                    try:
-                        df_spec_file = future.result()
-                        df_spec = df_spec.append(df_spec_file)
-                    except Exception as exc:
-                        print('%r generated an exception: %s' % (data, exc))
-        else:
-            for fname in fname_list:
-                df_spec_file = self._read_spectra_from_file(fname, df_spec.columns)
-                df_spec = df_spec.append(df_spec_file)
+        # if multithread is True:
+        #     with ThreadPoolExecutor() as executor:  # defaults to min(32, os.cpu_count() + 4)
+        #         future_df_spec = {
+        #             executor.submit(self._read_spectra_from_file,
+        #                             fname,
+        #                             df_spec.columns): fname for fname in fname_list}
+        #         for future in as_completed(future_df_spec):
+        #             data = future_df_spec[future]
+        #             try:
+        #                 df_spec_file = future.result()
+        #                 df_spec = df_spec.append(df_spec_file)
+        #             except Exception as exc:
+        #                 print('%r generated an exception: %s' % (data, exc))
+        # else:
+        for fname in fname_list:
+            df_spec_file = self._read_spectra_from_file(fname, df_spec.columns)
+            df_spec = df_spec.append(df_spec_file)
         df_spec.to_csv(fname_csv, index=False)
-
-    def _read_spectra_from_file(self, fname, columns):
-        '''
-        Reads a single spectra from file
-        '''
-        self.io.read_spec(fname + '.hdr')
-        meta_bands = self.io.tools.meta_bands
-        array = self.io.spyfile_spec.load()
-        data = list(np.reshape(array, (array.shape[2])) * 100)
-        data.insert(0, self.io.name_plot)
-        data.insert(0, os.path.basename(fname))
-        df_spec_file = pd.DataFrame(data=[data], columns=columns)
-        return df_spec_file
 
     def spectra_to_df(self, fname_list=None, base_dir=None, search_ext='spec',
                       dir_level=0, multithread=False):
@@ -2887,23 +2835,23 @@ class batch(object):
         bands.insert(0, 'plot_id')
         bands.insert(0, 'fname')
         df_spec = pd.DataFrame(columns=bands)
-        if multithread is True:
-            with ThreadPoolExecutor() as executor:  # defaults to min(32, os.cpu_count() + 4)
-                future_df_spec = {
-                    executor.submit(self._read_spectra_from_file,
-                                    fname,
-                                    df_spec.columns): fname for fname in fname_list}
-                for future in as_completed(future_df_spec):
-                    data = future_df_spec[future]
-                    try:
-                        df_spec_file = future.result()
-                        df_spec = df_spec.append(df_spec_file)
-                    except Exception as exc:
-                        print('%r generated an exception: %s' % (data, exc))
-        else:
-            for fname in fname_list:
-                df_spec_file = self._read_spectra_from_file(fname, df_spec.columns)
-                df_spec = df_spec.append(df_spec_file)
+        # if multithread is True:
+        #     with ThreadPoolExecutor() as executor:  # defaults to min(32, os.cpu_count() + 4)
+        #         future_df_spec = {
+        #             executor.submit(self._read_spectra_from_file,
+        #                             fname,
+        #                             df_spec.columns): fname for fname in fname_list}
+        #         for future in as_completed(future_df_spec):
+        #             data = future_df_spec[future]
+        #             try:
+        #                 df_spec_file = future.result()
+        #                 df_spec = df_spec.append(df_spec_file)
+        #             except Exception as exc:
+        #                 print('%r generated an exception: %s' % (data, exc))
+        # else:
+        for fname in fname_list:
+            df_spec_file = self._read_spectra_from_file(fname, df_spec.columns)
+            df_spec = df_spec.append(df_spec_file)
 
         try:
             df_spec['plot_id'] = pd.to_numeric(df_spec['plot_id'])
