@@ -39,7 +39,7 @@ class batch(object):
     .. _spatial_mod: hs_process.spatial_mod.html
     .. _spec_mod: hs_process.spec_mod.html
     '''
-    def __init__(self, base_dir=None, search_ext='.bip', dir_level=0):
+    def __init__(self, base_dir=None, search_ext='.bip', dir_level=0, lock=None):
         '''
         Parameters:
             base_dir (``str``, optional): directory path to search for files to
@@ -51,10 +51,14 @@ class batch(object):
                 be ignored (default: 'bip').
             dir_level (``int``): The number of directory levels to search; if
                 ``None``, searches all directory levels (default: 0).
+            lock (``multiprocessing.Lock``): Can be passed to ensure lock is in
+                place when writing to a file during multiprocessing.
         '''
         self.base_dir = base_dir
         self.search_ext = search_ext
         self.dir_level = dir_level
+        self.lock = lock
+
         self.fname_list = None
         if base_dir is not None:
             self.fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
@@ -772,7 +776,11 @@ class batch(object):
             if os.path.isfile(fname_stats) and self.io.defaults.envi_write.force is False:
                 df_stats_in = pd.read_csv(fname_stats)
                 df_stats = df_stats_in.append(df_stats)
-            df_stats.to_csv(fname_stats, index=False)
+            if self.lock is not None:
+                with self.lock:
+                    df_stats.to_csv(fname_stats, index=False)
+            else:
+                df_stats.to_csv(fname_stats, index=False)
 
         def _get_ndvi_simple(self, df_class_spec, n_classes, plot_out=True):
             '''
