@@ -773,41 +773,59 @@ class batch(object):
                                     metadata, self.my_segment.tools)
         if len(df_stats) > 0:
             fname_stats = os.path.join(dir_out, name_append[1:] + '-stats.csv')
-            if os.path.isfile(fname_stats) and self.io.defaults.envi_write.force is False:
-                df_stats_in = pd.read_csv(fname_stats)
-                df_stats = df_stats_in.append(df_stats)
+
             if self.lock is not None:
                 with self.lock:
-                    df_stats.to_csv(fname_stats, index=False)
+                    print('writing stats with Lock...')
+                    if os.path.isfile(fname_stats):
+                        df_stats_in = pd.read_csv(fname_stats)
+                        df_stats = df_stats_in.append(df_stats)
+                        df_stats.to_csv(fname_stats, index=False)
+                    else:
+                        df_stats.to_csv(fname_stats, index=False)
             else:
-                df_stats.to_csv(fname_stats, index=False)
+                print('writing stats WITHOUT Lock...')
+                if os.path.isfile(fname_stats):
+                    df_stats_in = pd.read_csv(fname_stats)
+                    df_stats = df_stats_in.append(df_stats)
+                    df_stats.to_csv(fname_stats, index=False)
+                else:
+                    df_stats.to_csv(fname_stats, index=False)
 
-        def _get_ndvi_simple(self, df_class_spec, n_classes, plot_out=True):
-            '''
-            Find kmeans class with lowest NDVI, which represents the soil class
-            '''
-            nir_b = self.io.tools.get_band(760)
-            re_b = self.io.tools.get_band(715)
-            red_b = self.io.tools.get_band(681)
-            green_b = self.io.tools.get_band(555)
+            # if os.path.isfile(fname_stats) and self.io.defaults.envi_write.force is False:
+            # if os.path.isfile(fname_stats):
+            #     df_stats_in = pd.read_csv(fname_stats)
+            #     df_stats = df_stats_in.append(df_stats)
+            #     df_stats.to_csv(fname_stats, index=False)
+            # else:
+            #     df_stats.to_csv(fname_stats, index=False)
 
-            nir = df_class_spec.iloc[nir_b]
-            re = df_class_spec.iloc[re_b]
-            red = df_class_spec.iloc[red_b]
-            green = df_class_spec.iloc[green_b]
+    def _get_ndvi_simple(self, df_class_spec, n_classes, plot_out=True):
+        '''
+        Find kmeans class with lowest NDVI, which represents the soil class
+        '''
+        nir_b = self.io.tools.get_band(760)
+        re_b = self.io.tools.get_band(715)
+        red_b = self.io.tools.get_band(681)
+        green_b = self.io.tools.get_band(555)
 
-            df_ndvi = (nir-red)/(nir+red)
-            class_soil = df_ndvi[df_ndvi == df_ndvi.min()].index[0]
-            class_veg = df_ndvi[df_ndvi == df_ndvi.max()].index[0]
-            if plot_out is True:
-                df_class_spec['wavelength'] = self.io.tools.meta_bands.values()
-                fig, ax = plt.subplots()
-                sns.lineplot(data=df_class_spec, ax=ax)
-                legend = ax.legend()
-                legend.set_title('K-means classes')
-                legend.texts[class_soil].set_text('Soil')
-                legend.texts[class_veg].set_text('Vegetation')
-            return class_soil, class_veg
+        nir = df_class_spec.iloc[nir_b]
+        re = df_class_spec.iloc[re_b]
+        red = df_class_spec.iloc[red_b]
+        green = df_class_spec.iloc[green_b]
+
+        df_ndvi = (nir-red)/(nir+red)
+        class_soil = df_ndvi[df_ndvi == df_ndvi.min()].index[0]
+        class_veg = df_ndvi[df_ndvi == df_ndvi.max()].index[0]
+        if plot_out is True:
+            df_class_spec['wavelength'] = self.io.tools.meta_bands.values()
+            fig, ax = plt.subplots()
+            sns.lineplot(data=df_class_spec, ax=ax)
+            legend = ax.legend()
+            legend.set_title('K-means classes')
+            legend.texts[class_soil].set_text('Soil')
+            legend.texts[class_veg].set_text('Vegetation')
+        return class_soil, class_veg
 
     def _execute_kmeans(self, fname_list, base_dir_out, folder_name,
                         name_append, geotiff, n_classes, max_iter,
