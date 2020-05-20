@@ -780,17 +780,13 @@ class batch(object):
                     if os.path.isfile(fname_stats):
                         df_stats_in = pd.read_csv(fname_stats)
                         df_stats = df_stats_in.append(df_stats)
-                        df_stats.to_csv(fname_stats, index=False)
-                    else:
-                        df_stats.to_csv(fname_stats, index=False)
+                    df_stats.to_csv(fname_stats, index=False)
             else:
                 print('writing stats WITHOUT Lock...')
                 if os.path.isfile(fname_stats):
                     df_stats_in = pd.read_csv(fname_stats)
                     df_stats = df_stats_in.append(df_stats)
-                    df_stats.to_csv(fname_stats, index=False)
-                else:
-                    df_stats.to_csv(fname_stats, index=False)
+                df_stats.to_csv(fname_stats, index=False)
 
             # if os.path.isfile(fname_stats) and self.io.defaults.envi_write.force is False:
             # if os.path.isfile(fname_stats):
@@ -1529,11 +1525,19 @@ class batch(object):
 
         if stats is True:
             fname_stats = os.path.join(dir_out, name_append[1:] + '-stats.csv')
-            if os.path.isfile(fname_stats) and self.io.defaults.envi_write.force is False:
-                df_stats_in = pd.read_csv(fname_stats)
-                df_smooth_stats = df_stats_in.append(df_smooth_stats)
-            df_smooth_stats.to_csv(fname_stats)
+            if self.lock is not None:
+                with self.lock:
+                    if os.path.isfile(fname_stats):
+                        df_stats_in = pd.read_csv(fname_stats)
+                        df_smooth_stats = df_stats_in.append(df_smooth_stats)
+                    df_smooth_stats.to_csv(fname_stats, index=False)
+            else:
+                if os.path.isfile(fname_stats):
+                    df_stats_in = pd.read_csv(fname_stats)
+                    df_smooth_stats = df_stats_in.append(df_smooth_stats)
+                df_smooth_stats.to_csv(fname_stats, index=False)
             return df_smooth_stats
+
 
     def _execute_spec_smooth_pp(self, fname, base_dir_out, folder_name,
                                 name_append, window_size, order, stats):
