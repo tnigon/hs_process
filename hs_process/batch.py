@@ -776,13 +776,11 @@ class batch(object):
 
             if self.lock is not None:
                 with self.lock:
-                    print('writing stats with Lock...')
                     if os.path.isfile(fname_stats):
                         df_stats_in = pd.read_csv(fname_stats)
                         df_stats = df_stats_in.append(df_stats)
                     df_stats.to_csv(fname_stats, index=False)
             else:
-                print('writing stats WITHOUT Lock...')
                 if os.path.isfile(fname_stats):
                     df_stats_in = pd.read_csv(fname_stats)
                     df_stats = df_stats_in.append(df_stats)
