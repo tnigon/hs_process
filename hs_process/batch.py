@@ -597,6 +597,24 @@ class batch(object):
 #            if geotiff is True:
 #                self._write_geotiff(array_bm, fname, dir_out, name_label_bm,
 #                                    meta_bm, self.my_segment.tools)
+    def _write_stats(self, dir_out, df_stats, fname_csv='stats.csv'):
+        '''
+        Writes df_stats to <dir_out>, ensuring lock is in place if it exists to
+        work as expected with parallel processing.
+        '''
+        fname_stats = os.path.join(dir_out, name_append[1:] + '-stats.csv')
+
+        if self.lock is not None:
+            with self.lock:
+                if os.path.isfile(fname_stats):
+                    df_stats_in = pd.read_csv(fname_stats)
+                    df_stats = df_stats_in.append(df_stats)
+                df_stats.to_csv(fname_stats, index=False)
+        else:
+            if os.path.isfile(fname_stats):
+                df_stats_in = pd.read_csv(fname_stats)
+                df_stats = df_stats_in.append(df_stats)
+            df_stats.to_csv(fname_stats, index=False)
 
     def _execute_composite_band(self, fname_list, base_dir_out, folder_name,
                                 name_append, write_geotiff, wl1, b1,
@@ -651,11 +669,7 @@ class batch(object):
                 self._write_geotiff(array_b1, fname, dir_out, name_label,
                                     metadata, self.my_segment.tools)
         if len(df_stats) > 0:
-            fname_stats = os.path.join(dir_out, name_append[1:] + '-stats.csv')
-            if os.path.isfile(fname_stats) and self.io.defaults.envi_write.force is False:
-                df_stats_in = pd.read_csv(fname_stats)
-                df_stats = df_stats_in.append(df_stats)
-            df_stats.to_csv(fname_stats, index=False)
+            self._write_stats(dir_out, df_stats, fname_csv=name_append[1:] + '-stats.csv')
 
     def _execute_band_math(self, fname_list, base_dir_out, folder_name,
                            name_append, write_geotiff, method, wl1, wl2, wl3, b1, b2,
@@ -772,27 +786,8 @@ class batch(object):
                 self._write_geotiff(array_bm, fname, dir_out, name_label,
                                     metadata, self.my_segment.tools)
         if len(df_stats) > 0:
-            fname_stats = os.path.join(dir_out, name_append[1:] + '-stats.csv')
+            self._write_stats(dir_out, df_stats, fname_csv=name_append[1:] + '-stats.csv')
 
-            if self.lock is not None:
-                with self.lock:
-                    if os.path.isfile(fname_stats):
-                        df_stats_in = pd.read_csv(fname_stats)
-                        df_stats = df_stats_in.append(df_stats)
-                    df_stats.to_csv(fname_stats, index=False)
-            else:
-                if os.path.isfile(fname_stats):
-                    df_stats_in = pd.read_csv(fname_stats)
-                    df_stats = df_stats_in.append(df_stats)
-                df_stats.to_csv(fname_stats, index=False)
-
-            # if os.path.isfile(fname_stats) and self.io.defaults.envi_write.force is False:
-            # if os.path.isfile(fname_stats):
-            #     df_stats_in = pd.read_csv(fname_stats)
-            #     df_stats = df_stats_in.append(df_stats)
-            #     df_stats.to_csv(fname_stats, index=False)
-            # else:
-            #     df_stats.to_csv(fname_stats, index=False)
 
     def _get_ndvi_simple(self, df_class_spec, n_classes, plot_out=True):
         '''
@@ -1522,20 +1517,8 @@ class batch(object):
                                                          ignore_index=True)
 
         if stats is True:
-            fname_stats = os.path.join(dir_out, name_append[1:] + '-stats.csv')
-            if self.lock is not None:
-                with self.lock:
-                    if os.path.isfile(fname_stats):
-                        df_stats_in = pd.read_csv(fname_stats)
-                        df_smooth_stats = df_stats_in.append(df_smooth_stats)
-                    df_smooth_stats.to_csv(fname_stats, index=False)
-            else:
-                if os.path.isfile(fname_stats):
-                    df_stats_in = pd.read_csv(fname_stats)
-                    df_smooth_stats = df_stats_in.append(df_smooth_stats)
-                df_smooth_stats.to_csv(fname_stats, index=False)
-            return df_smooth_stats
-
+            self._write_stats(dir_out, df_smooth_stats, fname_csv=name_append[1:] + '-stats.csv')
+            # return df_smooth_stats
 
     def _execute_spec_smooth_pp(self, fname, base_dir_out, folder_name,
                                 name_append, window_size, order, stats):
@@ -3140,11 +3123,11 @@ class batch(object):
         if self.io.defaults.envi_write.force is False:  # otherwise just overwrites if it exists
             fname_list = self._check_processed(fname_list, base_dir_out,
                                                folder_name, name_append)
-        df_stats = self._execute_spec_smooth(
+        self._execute_spec_smooth(
                 fname_list, base_dir_out, folder_name, name_append,
                 window_size, order, stats)
-        if df_stats is not None:
-            return df_stats
+        # if df_stats is not None:
+        #     return df_stats
 
 
         # # Parallel threading
