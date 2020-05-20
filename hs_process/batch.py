@@ -6,6 +6,9 @@ import os
 import pandas as pd
 import re
 import seaborn as sns
+import sys
+from tqdm import tqdm
+
 from matplotlib import pyplot as plt
 import warnings
 
@@ -452,7 +455,9 @@ class batch(object):
             df_stats2 = None
             type_mask2 = None
 
-        for fname in fname_list:
+        pbar = tqdm(fname_list)
+        for idx, fname in enumerate(pbar):
+            pbar.set_description('Processing file {0}/{1}'.format(idx, len(fname_list)))
             self.io.read_cube(fname)
             metadata = self.io.spyfile.metadata.copy()
             metadata_geotiff = self.io.spyfile.metadata.copy()
@@ -602,7 +607,7 @@ class batch(object):
         Writes df_stats to <dir_out>, ensuring lock is in place if it exists to
         work as expected with parallel processing.
         '''
-        fname_stats = os.path.join(dir_out, name_append[1:] + '-stats.csv')
+        fname_stats = os.path.join(dir_out, fname_csv)
 
         if self.lock is not None:
             with self.lock:
@@ -628,7 +633,10 @@ class batch(object):
                    'pctl_10th', 'pctl_25th', 'pctl_50th', 'pctl_75th',
                    'pctl_90th', 'pctl_95th']
         df_stats = pd.DataFrame(columns=columns)
-        for fname in fname_list:
+
+        pbar = tqdm(fname_list)
+        for idx, fname in enumerate(pbar):
+            pbar.set_description('Processing file {0}/{1}'.format(idx, len(fname_list)))
             self.io.read_cube(fname)
             dir_out, name_print, name_append = self._composite_band_setup(
                     base_dir_out, fname, folder_name, name_append)
@@ -693,7 +701,10 @@ class batch(object):
                    'pctl_10th', 'pctl_25th', 'pctl_50th', 'pctl_75th',
                    'pctl_90th', 'pctl_95th']
         df_stats = pd.DataFrame(columns=columns)
-        for fname in fname_list:
+
+        pbar = tqdm(fname_list)
+        for idx, fname in enumerate(pbar):
+            pbar.set_description('Processing file {0}/{1}'.format(idx, len(fname_list)))
             self.io.read_cube(fname)
             dir_out, name_print, name_append = self._band_math_setup(
                     base_dir_out, folder_name, fname, name_append, method)
@@ -785,6 +796,7 @@ class batch(object):
             if write_geotiff is True:
                 self._write_geotiff(array_bm, fname, dir_out, name_label,
                                     metadata, self.my_segment.tools)
+
         if len(df_stats) > 0:
             self._write_stats(dir_out, df_stats, fname_csv=name_append[1:] + '-stats.csv')
 
@@ -1353,8 +1365,10 @@ class batch(object):
         Actually executes the spectral clip to keep the main function a bit
         cleaner
         '''
-        for fname in fname_list:
-            print('\nSpectrally clipping: {0}'.format(fname))
+        pbar = tqdm(fname_list)
+        for idx, fname in enumerate(pbar):
+            pbar.set_description('Processing file {0}/{1}'.format(idx, len(fname_list)))
+            # print('\nSpectrally clipping: {0}'.format(fname))
             # options for io.read_cube():
             # name_long, name_plot, name_short, individual_plot, overwrite
             self.io.read_cube(fname)
@@ -1478,8 +1492,11 @@ class batch(object):
         if stats is True:
             df_smooth_stats = pd.DataFrame(
                     columns=['fname', 'mean', 'std', 'cv'])
-        for fname in fname_list:
-            print('\nSpectrally smoothing: {0}'.format(fname))
+
+        pbar = tqdm(fname_list)
+        for idx, fname in enumerate(pbar):
+            pbar.set_description('Processing file {0}/{1}'.format(idx, len(fname_list)))
+            # print('\nSpectrally smoothing: {0}'.format(fname))
             self.io.read_cube(fname)
             self.my_spectral_mod = spec_mod(self.io.spyfile)
             base_dir = os.path.dirname(fname)
@@ -1754,6 +1771,28 @@ class batch(object):
         df_spec_file = pd.DataFrame(data=[data], columns=columns)
         return df_spec_file
 
+    def _print_progress(self, iteration, total, prefix='', suffix='',
+                       decimals=1, bar_length=100):
+        """
+        Call in a loop to create terminal progress bar
+        @params:
+            iteration   - Required  : current iteration (Int)
+            total       - Required  : total iterations (Int)
+            prefix      - Optional  : prefix string (Str)
+            suffix      - Optional  : suffix string (Str)
+            decimals    - Optional  : positive number of decimals in percent complete (Int)
+            bar_length  - Optional  : character length of bar (Int)
+        """
+        str_format = "{0:." + str(decimals) + "f}"
+        percents = str_format.format(100 * (iteration / float(total)))
+        filled_length = int(round(bar_length * iteration / float(total)))
+        bar = f'{"█" * filled_length}{"-" * (bar_length - filled_length)}'
+        sys.stdout.write(f'\r{prefix} |{bar}| {percents}% {suffix}'),
+        # sys.stdout.write('%s |%s| %s%s %s\r' % (prefix, bar, percents, '%', suffix))
+        if iteration == total:
+            sys.stdout.write('\n')
+        sys.stdout.flush()
+
     def cube_to_spectra(self, fname_list=None, base_dir=None, search_ext='bip',
                         dir_level=0, base_dir_out=None,
                         folder_name='cube_to_spec',
@@ -1873,7 +1912,15 @@ class batch(object):
                                                folder_name, name_append,
                                                append_extra, ext='.spec')
 
-        for fname in fname_list:
+        pb_i = 0
+        pb_len = len(fname_list)
+        pb_prefix = 'cube_to_spectra:'
+        self._print_progress(pb_i, pb_len, prefix=pb_prefix)
+
+        pbar = tqdm(fname_list)
+        # for idx, fname in enumerate(fname_list):
+        for idx, fname in enumerate(pbar):
+            pbar.set_description('Processing file {0}/{1}'.format(idx, len(fname_list)))
             self.io.read_cube(fname)
             base_dir = os.path.dirname(fname)
             if base_dir_out is None:
@@ -1888,9 +1935,10 @@ class batch(object):
             if self._file_exists_check(
                     dir_out, name_label, write_geotiff=geotiff,
                     write_spec=True) is True:
+                self.print_progress(idx+1, pb_len, prefix=pb_prefix)
                 continue
 
-            print('\nCalculating mean spectra: {0}'.format(fname))
+            # print('Calculating mean spectra: {0}'.format(fname))
             spec_mean, spec_std, array = self.io.tools.mean_datacube(
                     self.io.spyfile)
             metadata = self.io.spyfile.metadata.copy()
@@ -1907,6 +1955,7 @@ class batch(object):
             # Now write spec (will change map info on metadata)
             self._write_spec(dir_out, name_label_spec, spec_mean, spec_std,
                              metadata)
+            # self._print_progress(idx+1, pb_len, prefix=pb_prefix)
 
     def segment_composite_band(self, fname_list=None, base_dir=None,
                                search_ext='bip', dir_level=0, base_dir_out=None,
