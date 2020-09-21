@@ -11,6 +11,7 @@ import seaborn as sns
 import spectral.io.envi as envi
 import spectral.io.spyfile as SpyFile
 import sys
+import sysconfig
 import warnings
 
 plt_style = 'seaborn-whitegrid'
@@ -54,9 +55,11 @@ class defaults(object):
                 'crop_n_pix': 120,
                 'crop_e_m': None,
                 'crop_n_m': None,
-                'gdf_shft_e_m': 0.0,
-                'gdf_shft_n_m': 0.0,
-                'plot_id': None})
+                'gdf_shft_e_pix': None,
+                'gdf_shft_n_pix': None,
+                'gdf_shft_e_m': None,
+                'gdf_shft_n_m': None,
+                'plot_id_ref': None})
         '''
         Default values for performing spatial cropping on images. ``crop_defaults``
         is referenced by the ``spatial_mod.crop_single()`` function to get default
@@ -121,7 +124,7 @@ class defaults(object):
             crop_defaults.crop_n_m (``float``): length of each column (northing
                 direction) of the cropped image in map units (e.g., meters;
                 default: ``None``).
-            crop_defaults.plot_id (``int``): the plot ID of the area to be cropped
+            crop_defaults.plot_id_ref (``int``): the plot ID of the area to be cropped
                 (default: ``None``).
         '''
 
@@ -184,11 +187,13 @@ class defaults(object):
                 'crop_n_m': 'crop_n_m',
                 'crop_e_pix': 'crop_e_pix',
                 'crop_n_pix': 'crop_n_pix',
-                'plot_id': 'plot_id',
+                'plot_id_ref': 'plot_id_ref',
                 'n_plots_x': 'n_plots_x',
                 'n_plots_y': 'n_plots_y',
                 'gdf_shft_e_m': 'gdf_shft_e_m',
                 'gdf_shft_n_m': 'gdf_shft_n_m',
+                'gdf_shft_e_pix': 'gdf_shft_e_pix',
+                'gdf_shft_n_pix': 'gdf_shft_n_pix',
                 'n_plots': 'n_plots'})
         '''
         Default column names for performing batch spatial cropping on
@@ -238,9 +243,9 @@ class defaults(object):
                 (default: 'crop_e_m').
             spat_crop_cols.crop_n_m (``str``): column name for ``crop_n_m``
                 (default: 'crop_n_m').
-            spat_crop_cols.plot_id (``str``): column name for ``plot_id``
+            spat_crop_cols.plot_id_ref (``str``): column name for ``plot_id``
                 (default: 'crop_n_pix').
-            spat_crop_cols.plot_id (``str``): column name for ``n_plots_x``
+            spat_crop_cols.n_plots_x (``str``): column name for ``n_plots_x``
                 (default: 'n_plots_x').
             spat_crop_cols.n_plots_y (``str``): column name for ``n_plots_y``
                 (default: 'n_plots_y').
@@ -1793,6 +1798,11 @@ class hstools(object):
             print('{0} not a valid key in input dictionary.'.format(key))
         return metadata
 
+    def dir_data(self,):
+        '''Retrieves the data directory from "site packages".'''
+        dir_data = os.path.join(sysconfig.get_paths()['purelib'], 'hs_process', 'data')
+        return dir_data
+
     def get_band(self, target_wl, spyfile=None):
         '''
         Finds the band number of the closest target wavelength.
@@ -1873,6 +1883,65 @@ class hstools(object):
                 self.meta_bands.keys())).index(val_target)]
 #        key_wavelength = sorted(list(self.meta_bands.values()))[key_band-1]
         return key_wavelength
+
+    def get_wavelength_range(self, range_bands, index=True, spyfile=None):
+        '''
+        Retrieves the wavelengths for all bands within a band range.
+
+        Parameters:
+            range_bands (``list``): the minimum and maximum band number to
+                consider; values should be ``int``.
+            index (bool): Indicates whether the bands in ``range_bands`` denote
+                the band number (``False``; min=1) or the index number
+                (``True``; min=0) (default: ``True``).
+
+        Returns:
+            ``list``:
+                **wavelength_list** (``list``): A list of all wavelengths
+                between a range in band numbers or index values (depending how
+                ``index`` is set).
+
+        Example:
+            Load and initialize ``hsio``
+
+            >>> from hs_process import hsio
+            >>> fname_hdr = r'F:\nigo0024\Documents\GitHub\hs_process\hs_process\data\Wells_rep2_20180628_16h56m_test_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> io = hsio(fname_hdr)
+
+            Find the wavelengths from the *16th* to *21st bands*
+
+            >>> io.tools.get_wavelength_range([16, 21], index=False, spyfile=io.spyfile)
+            [425.392, 427.4448, 429.4976, 431.5504, 433.6032, 435.656]
+
+            Find the wavelengths from the *16th* to the *21st index*
+
+            >>> io.tools.get_wavelength_range([16, 21], index=True, spyfile=io.spyfile)
+            [427.4448, 429.4976, 431.5504, 433.6032, 435.656, 437.7088]
+        '''
+        msg = ('"range_bands" must be a `list` or `tuple`.')
+        assert isinstance(range_bands, list) or isinstance(range_bands, tuple), msg
+        # could also just take the min and max as long as it has at least 2..
+        msg = ('"range_bands" must have exactly two items.')
+        assert len(range_bands) == 2, msg
+
+        range_bands = sorted(range_bands)
+        if index is True:
+            range_bands[0] += 1
+            range_bands[1] += 1
+
+        wl_min = self.get_wavelength(min(range_bands))  # gets closest wavelength
+        wl_max = self.get_wavelength(max(range_bands))
+        band_min = self.get_band(wl_min)
+        band_max = self.get_band(wl_max)
+
+        if band_min < min(range_bands):  # ensures its actually within the range
+            band_min += 1
+            wl_min = self.get_wavelength(band_min)
+        if band_max > max(range_bands):
+            band_max -= 1
+            wl_max = self.get_wavelength(band_max)
+        wl_list = [self.get_wavelength(x) for x in range(band_min, band_max+1)]
+        return wl_list
 
     def get_center_wl(self, wl_list, spyfile=None, wls=True):
         '''

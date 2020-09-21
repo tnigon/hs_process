@@ -89,7 +89,8 @@ class batch(object):
         ``None``
         '''
         if key not in self.io.defaults.spat_crop_cols.keys():
-            print(key)
+            print('Adding key "{0}" to defaults.spat_crop_cols dictionary'
+                  ''.format(key))
             self.io.defaults.spat_crop_cols[key] = key
 
         try:
@@ -187,7 +188,7 @@ class batch(object):
                 'ext': self._try_spat_crop_col_key('ext', row),
                 'pix_e_ul': self._try_spat_crop_col_key('pix_e_ul', row),
                 'pix_n_ul': self._try_spat_crop_col_key('pix_n_ul', row),
-                'plot_id': self._try_spat_crop_col_key('plot_id', row),
+                'plot_id_ref': self._try_spat_crop_col_key('plot_id_ref', row),
                 'alley_size_e_m': self._try_spat_crop_col_key('alley_size_e_m', row),
                 'alley_size_n_m': self._try_spat_crop_col_key('alley_size_n_m', row),
                 'alley_size_e_pix': self._try_spat_crop_col_key('alley_size_e_pix', row),
@@ -200,11 +201,13 @@ class batch(object):
                 'crop_n_m': self._try_spat_crop_col_key('crop_n_m', row),
                 'crop_e_pix': self._try_spat_crop_col_key('crop_e_pix', row),
                 'crop_n_pix': self._try_spat_crop_col_key('crop_n_pix', row),
+                'gdf_shft_e_pix': self._try_spat_crop_col_key('gdf_shft_e_pix', row),
+                'gdf_shft_n_pix': self._try_spat_crop_col_key('gdf_shft_n_pix', row),
+                'gdf_shft_e_m': self._try_spat_crop_col_key('gdf_shft_e_m', row),
+                'gdf_shft_n_m': self._try_spat_crop_col_key('gdf_shft_n_m', row),
                 'n_plots_x': self._try_spat_crop_col_key('n_plots_x', row),
                 'n_plots_y': self._try_spat_crop_col_key('n_plots_y', row),
-                'n_plots': self._try_spat_crop_col_key('n_plots', row),
-                'gdf_shft_e_m': self._try_spat_crop_col_key('gdf_shft_e_m', row),
-                'gdf_shft_n_m': self._try_spat_crop_col_key('gdf_shft_n_m', row)}
+                'n_plots': self._try_spat_crop_col_key('n_plots', row)}
         if crop_specs['fname'] is None:
             try:
                 crop_specs['fname'] = (crop_specs['name_short'] +
@@ -228,8 +231,8 @@ class batch(object):
                 crop_specs[col_name] = row[col_name]
         if not pd.notnull(crop_specs['name_long']):
             crop_specs['name_long'] = None
-        if not pd.notnull(crop_specs['plot_id']):
-            crop_specs['plot_id'] = None
+        if not pd.notnull(crop_specs['plot_id_ref']):
+            crop_specs['plot_id_ref'] = None
         if not pd.notnull(crop_specs['name_short']):
             crop_specs['name_short'] = None
 
@@ -266,6 +269,15 @@ class batch(object):
             cs['buf_n_pix'] = int(cs['buf_n_m'] / spy_ps_e)
         elif pd.notnull(cs['buf_n_pix']) and pd.isnull(cs['buf_n_m']):
             cs['buf_n_m'] = cs['buf_n_pix'] * spy_ps_e
+        # Shift
+        if pd.isnull(cs['gdf_shft_e_pix']) and pd.notnull(cs['gdf_shft_e_m']):
+            cs['gdf_shft_e_pix'] = int(cs['gdf_shft_e_m'] / spy_ps_e)
+        elif pd.notnull(cs['gdf_shft_e_pix']) and pd.isnull(cs['gdf_shft_e_m']):
+            cs['gdf_shft_e_m'] = cs['gdf_shft_e_pix'] * spy_ps_e
+        if pd.isnull(cs['gdf_shft_n_pix']) and pd.notnull(cs['gdf_shft_n_m']):
+            cs['gdf_shft_n_pix'] = int(cs['gdf_shft_n_m'] / spy_ps_e)
+        elif pd.notnull(cs['gdf_shft_n_pix']) and pd.isnull(cs['gdf_shft_n_m']):
+            cs['gdf_shft_n_m'] = cs['gdf_shft_n_pix'] * spy_ps_e
         # Alley size
         if (pd.isnull(cs['alley_size_e_pix']) and
                 pd.notnull(cs['alley_size_e_m'])):
@@ -1090,11 +1102,11 @@ class batch(object):
             fname = os.path.join(cs['directory'], cs['fname'])
             print('\nSpatially cropping: {0}'.format(fname))
             name_long = cs['name_long']  # ``None`` if it was never set
-            plot_id = cs['plot_id']
+            plot_id_ref = cs['plot_id_ref']
             name_short = cs['name_short']
             fname_hdr = fname + '.hdr'
             self.io.read_cube(fname_hdr, name_long=name_long,
-                              name_plot=plot_id, name_short=name_short)
+                              name_plot=plot_id_ref, name_short=name_short)
             self.my_spatial_mod = spatial_mod(self.io.spyfile, gdf)
             self.my_spatial_mod.defaults = self.io.defaults
             if base_dir_out is None:
@@ -1111,14 +1123,15 @@ class batch(object):
                 continue
 
             cs = self._pix_to_mapunit(cs)
+            self.cs = cs
 #            if method == 'single':
             # print(cs)
             array_crop, metadata = self.my_spatial_mod.crop_single(
                     pix_e_ul=cs['pix_e_ul'], pix_n_ul=cs['pix_n_ul'],
                     crop_e_pix=cs['crop_e_pix'], crop_n_pix=cs['crop_n_pix'],
                     buf_e_pix=cs['buf_e_pix'], buf_n_pix=cs['buf_n_pix'],
-                    gdf_shft_e_m=cs['gdf_shft_e_m'], gdf_shft_n_m=cs['gdf_shft_n_m'],
-                    plot_id=plot_id, gdf=gdf)
+                    gdf_shft_e_pix=cs['gdf_shft_e_pix'], gdf_shft_n_pix=cs['gdf_shft_n_pix'],
+                    plot_id_ref=plot_id_ref, gdf=gdf)
 
             fname = os.path.join(cs['directory'], cs['fname'])
             self._write_datacube(dir_out, name_label, array_crop, metadata)
@@ -1162,11 +1175,11 @@ class batch(object):
         fname_in = os.path.join(cs['directory'], cs['fname'])
         print('Filename: {0}'.format(fname_in))
         name_long = cs['name_long']  # ``None`` if it was never set
-        plot_id = cs['plot_id']
+        plot_id_ref = cs['plot_id_ref']
         name_short = cs['name_short']
         fname_hdr = fname_in + '.hdr'
         self.io.read_cube(fname_hdr, name_long=name_long,
-                          name_plot=plot_id, name_short=name_short)
+                          name_plot=plot_id_ref, name_short=name_short)
         self.my_spatial_mod = spatial_mod(self.io.spyfile, gdf)
         self.my_spatial_mod.defaults = self.io.defaults
         if method == 'many_gdf':
@@ -1183,7 +1196,7 @@ class batch(object):
     def _many_grid(self, cs):
         '''Wrapper to get consice access to ``spatial_mod.crop_many_grid()'''
         df_plots = self.my_spatial_mod.crop_many_grid(
-            cs['plot_id'], pix_e_ul=cs['pix_e_ul'], pix_n_ul=cs['pix_n_ul'],
+            cs['plot_id_ref'], pix_e_ul=cs['pix_e_ul'], pix_n_ul=cs['pix_n_ul'],
             crop_e_m=cs['crop_e_m'], crop_n_m=cs['crop_n_m'],
             alley_size_n_m=cs['alley_size_n_m'], buf_e_m=cs['buf_e_m'],
             buf_n_m=cs['buf_n_m'], n_plots_x=cs['n_plots_x'],
@@ -1199,8 +1212,8 @@ class batch(object):
         If the buffer settings are None, but there are default settings for
         them, they are passed here
         '''
-        if cs['plot_id'] is None:
-            cs['plot_id'] = self.io.defaults.crop_defaults.plot_id
+        if cs['plot_id_ref'] is None:
+            cs['plot_id_ref'] = self.io.defaults.crop_defaults.plot_id_ref
         # if cs['buf_e_m'] is None:
         #     cs['buf_e_m'] = self.io.defaults.crop_defaults.buf_e_m
         # if cs['buf_n_m'] is None:
@@ -1213,15 +1226,17 @@ class batch(object):
         # or buf_X
 
         # df_plots = self.my_spatial_mod.crop_many_gdf(
-        #     plot_id_ref=cs['plot_id'], pix_e_ul=cs['pix_e_ul'],
+        #     plot_id_ref=cs['plot_id_ref'], pix_e_ul=cs['pix_e_ul'],
         #     pix_n_ul=cs['pix_n_ul'], n_plots=cs['n_plots'])
         df_plots = self.my_spatial_mod.crop_many_gdf(
-            plot_id_ref=cs['plot_id'], pix_e_ul=cs['pix_e_ul'],
+            plot_id_ref=cs['plot_id_ref'], pix_e_ul=cs['pix_e_ul'],
             pix_n_ul=cs['pix_n_ul'], n_plots=cs['n_plots'],
             crop_e_m=cs['crop_e_m'], crop_n_m=cs['crop_n_m'],
             crop_e_pix=cs['crop_e_pix'], crop_n_pix=cs['crop_n_pix'],
             buf_e_m=cs['buf_e_m'], buf_n_m=cs['buf_n_m'],
-            buf_e_pix=cs['buf_e_pix'], buf_n_pix=cs['buf_n_pix'])
+            buf_e_pix=cs['buf_e_pix'], buf_n_pix=cs['buf_n_pix'],
+            gdf_shft_e_m=cs['gdf_shft_e_m'], gdf_shft_n_m=cs['gdf_shft_n_m'],
+            gdf_shft_e_pix=cs['gdf_shft_e_pix'], gdf_shft_n_pix=cs['gdf_shft_n_pix'])
         return df_plots
 
     def _crop_check_files(self, df_plots):
@@ -1239,7 +1254,7 @@ class batch(object):
         df_plots_out.reset_index(inplace=True)
         return df_plots_out
 
-    def _crop_execute(self, fname_sheet, fname_list, base_dir_out, folder_name,
+    def _execute_crop(self, fname_sheet, fname_list, base_dir_out, folder_name,
                       name_append, geotiff, method, gdf):
         '''
         Actually executes the spatial crop to keep the main function a bit
@@ -1248,6 +1263,9 @@ class batch(object):
         Either `fname_sheet` or `fname_list` should be None
         '''
         df_plots = self._crop_check_input(fname_sheet, fname_list, method)
+        if 'date' in df_plots.columns:
+            if isinstance(df_plots['date'], str):
+                df_plots['date'] = pd.to_datetime(df_plots['date'])
         if method == 'single':
             # self._crop_loop(df_plots)
             self._crop_loop(df_plots, gdf, base_dir_out, folder_name,
@@ -1260,13 +1278,10 @@ class batch(object):
             # should have crop_many_gdf performed on it to create a new
             # dataframe that can be passed to _crop_loop()
             for idx, row in df_plots.iterrows():
-                print('\nComputing information to spatially crop via '
+                print('Computing information to spatially crop via '
                       '``spatial_mod.crop_many_gdf``:')
-                # print('row')
-                # print(row)
                 df_plots_many = self._crop_many_read_row(row, gdf, method)
-                # print('DATAFRAME')
-                # print(df_plots_many.iloc[0])
+                self.df_plots_many = df_plots_many
                 self._crop_loop(df_plots_many, gdf, base_dir_out, folder_name,
                                 name_append, geotiff)
         elif method == 'many_gdf' and df_plots is None:
@@ -1727,13 +1742,15 @@ class batch(object):
         else:
             name_study = ''
         if row['date'] is not None:
+            if isinstance(row['date'], str):
+                row['date'] = pd.to_datetime(row['date'])
             name_date = ('_date_' + str(row['date'].year).zfill(4) +
                          str(row['date'].month).zfill(2) +
                          str(row['date'].day).zfill(2))
         else:
             name_date = ''
-        if row['plot_id'] is not None:
-            name_plot = '_plot_' + str(row['plot_id'])
+        if row['plot_id_ref'] is not None:
+            name_plot = '_plot_' + str(row['plot_id_ref'])
         else:
             name_plot = ''
         if ((len(name_study) >= 1) and (len(name_date) >= 1) and
@@ -2348,7 +2365,7 @@ class batch(object):
         about how each image should be cropped and how it should be saved.
 
         If ``gdf`` is passed (a geopandas.GoeDataFrame polygon file), the
-        cropped images will be shifted to the center of appropriate "plot"
+        cropped images will be shifted to the center of appropriate 'plot_id'
         polygon.
 
         Parameters:
@@ -2379,7 +2396,7 @@ class batch(object):
                 see the ``spatial_mod`` documentation for more information
                 (default: "single").
             gdf (``geopandas.GeoDataFrame``, optional): the plot names and
-                polygon geometery of each of the plots; 'plot' must be used as
+                polygon geometery of each of the plots; 'plot_id' must be used as
                 a column name to identify each of the plots, and should be an
                 integer.
             out_XXX: Settings for saving the output files can be adjusted here
@@ -2424,7 +2441,9 @@ class batch(object):
         #. "buf_n_pix"
         #. "buf_e_m"
         #. "buf_n_m"
-        #. "plot_id"
+        #. "gdf_shft_e_m"
+        #. "gdf_shft_n_m"
+        #. "plot_id_ref"
         #. "study"
         #. "date"
 
@@ -2533,11 +2552,12 @@ class batch(object):
         if method == 'many_gdf':
             msg1 = ('Please pass a valid ``geopandas.GeoDataFrame`` if using '
                     'the "many_gdf" method.\n')
-            msg2 = ('Please be sure the passed ``geopandas.GeoDataFrame`` has a '
-                    'column by the name of "plot", indicating the plot ID for '
-                    'each polygon geometry if using the "many_gdf" method.\n')
+            msg2 = ('Please be sure the passed ``geopandas.GeoDataFrame`` has '
+                    'a column by the name of "plotid", indicating the plot ID '
+                    'for each polygon geometry if using the "many_gdf" '
+                    'method.\n')
             assert isinstance(gdf, gpd.GeoDataFrame), msg1
-            assert 'plot' in gdf.columns, msg2
+            assert 'plot_id' in gdf.columns, msg2
         self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
                                 out_byteorder)
 
@@ -2553,7 +2573,7 @@ class batch(object):
         else:  # fname_list comes from fname_sheet
             fname_list = None
         # Either fname_sheet or fname_list should be None
-        self._crop_execute(fname_sheet, fname_list, base_dir_out,
+        self._execute_crop(fname_sheet, fname_list, base_dir_out,
                            folder_name, name_append, geotiff, method, gdf)
 
     def spectra_combine(self, fname_list=None, base_dir=None,

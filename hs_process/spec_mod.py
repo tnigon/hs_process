@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
+from copy import deepcopy
 from math import factorial
 import itertools
 import numpy as np
 import os
+import pandas as pd
+from scipy import interpolate
 import spectral.io.envi as envi
 import spectral.io.spyfile as SpyFile
 
@@ -17,6 +20,91 @@ class spec_mod(object):
     def __init__(self, spyfile):
         self.spyfile = spyfile
         self.tools = hstools(spyfile)
+
+    def _metadata_clip(self, wl_bands, meta_bands):
+        '''Modifies metadata for spectral_clip() function.'''
+        metadata = deepcopy(self.tools.spyfile.metadata)
+        hist_str = (" -> hs_process.spectral_clip[<SpecPyFloatText label: "
+                    "'wl_bands?' value:{0}>]".format(wl_bands))
+        metadata['history'] += hist_str
+        metadata['bands'] = len(meta_bands)
+
+        band = []
+        wavelength = []
+        for idx, (key, val) in enumerate(meta_bands.items()):
+            band.append(idx + 1)
+            wavelength.append(val)
+        band_str = '{' + ', '.join(str(b) for b in band) + '}'
+        wavelength.sort()
+        wavelength_str = '{' + ', '.join(str(wl) for wl in wavelength) + '}'
+        metadata['band names'] = band_str
+        metadata['wavelength'] = wavelength_str
+        # self.tools.spyfile.metadata = metadata
+        return metadata
+
+    def _metadata_spectral_mimic(self, sensor, meta_bands_sensor):
+        '''Modifies metadata for spectral_bin() function.'''
+        metadata = deepcopy(self.tools.spyfile.metadata.copy())
+        band_names = list(meta_bands_sensor.keys())
+        hist_str = (" -> hs_process.spectral_mimic[<"
+                    "SpecPyFloatText label: 'sensor?' value:{0}; "
+                    "SpecPyFloatText label: 'band_names?' value:{1}>]"
+                    "".format(sensor, band_names))
+        metadata['history'] += hist_str
+        metadata['bands'] = len(band_names)
+        wavelength = list(meta_bands_sensor.values())
+        band_str = '{' + ', '.join(str(b) for b in band_names) + '}'
+        wavelength_str = '{' + ', '.join(str(wl) for wl in wavelength) + '}'
+        metadata['band names'] = band_str
+        metadata['wavelength'] = wavelength_str
+        # self.tools.spyfile.metadata = metadata
+        return metadata
+
+    def _metadata_smooth(self, window_size, order):
+        '''Modifies metadata for spectral_smooth() function.'''
+        metadata = deepcopy(self.tools.spyfile.metadata.copy())
+        hist_str = (" -> hs_process.spectral_smooth[<"
+                    "SpecPyFloatText label: 'window_size?' value:{0}; "
+                    "SpecPyFloatText label: 'polynomial_order?' value:{1}>"
+                    "]".format(window_size, order))
+        metadata['history'] += hist_str
+        metadata['bands'] = self.spyfile.nbands
+        # self.tools.spyfile.metadata = metadata
+        return metadata
+
+    def _mimic_center_wl(self, center_wl, wl_hs, spec_response):
+        '''Finds the center wavelength based on the method of ``center_wl``.'''
+        if center_wl == 'weighted':
+            wl = np.average(wl_hs, weights=spec_response)
+        elif center_wl == 'peak':
+            wl = wl_hs[np.argmax(spec_response)]
+        return wl
+
+    def _mimic_get_response(self, sensor, df_band_response, col_wl):
+        '''Gets ``df_band_response`` based on the ``sensor`` passed.'''
+        if sensor == 'custom':
+            msg = ('``col_wl`` ({0}) must be a column in ``df_band_response``.'
+                   ''.format(col_wl))
+            assert col_wl in df_band_response.columns, msg
+        else:
+            dir_data = self.tools.dir_data()
+            name_response = sensor + '_band_response.csv'
+            fname_response = os.path.join(dir_data, name_response)
+            df_band_response = pd.read_csv(fname_response)
+            col_wl = 'wl_nm'
+
+        df = df_band_response.rename(columns = {col_wl:'wl_nm'})
+
+        wl_min = min(self.tools.meta_bands.values())-100
+        wl_max = max(self.tools.meta_bands.values())+100  # adding because interp needs some room
+        df = df[df['wl_nm'] >= wl_min]
+        df = df[df['wl_nm'] <= wl_max]
+        s = (df==0).all(0)  # Checks if columns are all zero or not
+        df = df.drop(columns=s[s].index)  # Removes all zero cols
+
+        band_names = list(df.columns)
+        band_names.remove('wl_nm')
+        return df, band_names
 
     def _savitzky_golay(self, y, window_size=5, order=2, deriv=0, rate=1):
         '''
@@ -85,7 +173,7 @@ class spec_mod(object):
         domain of each image pixel
         '''
         if array is None:
-            array = self.img_sp.asarray()
+            array = self.spyfile.open_memmap()
         array_2d = array.reshape(array.shape[0]*array.shape[1], array.shape[2])
         array_2d_temp = array_2d.copy()
         for idx, row in enumerate(array_2d):
@@ -220,10 +308,10 @@ class spec_mod(object):
         '''
         if spyfile is None:
             spyfile = self.spyfile
-            array = self.spyfile.load()
+            array = self.spyfile.open_memmap()
         elif isinstance(spyfile, SpyFile.SpyFile):
             self.load_spyfile(spyfile)
-            array = self.spyfile.load()
+            array = self.spyfile.open_memmap()
         elif isinstance(spyfile, np.ndarray):
             array = spyfile.copy()
             spyfile = self.spyfile
@@ -240,26 +328,126 @@ class spec_mod(object):
             meta_bands.pop(k, None)
 #        tools.meta_bands = meta_bands
         array_clip = np.delete(array, spec_clip, axis=2)
-
-        metadata = self.tools.spyfile.metadata
-        hist_str = (" -> hs_process.spectral_clip[<SpecPyFloatText label: "
-                    "'wl_bands?' value:{0}>]".format(wl_bands))
-        metadata['history'] += hist_str
-        metadata['bands'] = len(meta_bands)
-
-        band = []
-        wavelength = []
-        for idx, (key, val) in enumerate(meta_bands.items()):
-            band.append(idx + 1)
-            wavelength.append(val)
-        band_str = '{' + ', '.join(str(b) for b in band) + '}'
-        wavelength.sort()
-        wavelength_str = '{' + ', '.join(str(wl) for wl in wavelength) + '}'
-        metadata['band names'] = band_str
-        metadata['wavelength'] = wavelength_str
-        self.tools.spyfile.metadata = metadata
-
+        metadata = self._metadata_clip(wl_bands, meta_bands)
         return array_clip, metadata
+
+    def spectral_mimic(self, sensor='sentera_6x', df_band_response=None,
+                       col_wl='wl_nm', center_wl='peak', spyfile=None):
+        '''
+        Mimics the response of a multispectral sensor based on transmissivity
+        of sensor bands across a range of wavelength values by calculating its
+        weighted average response and interpolating the hyperspectral response.
+
+        Parameters:
+            sensor (``str``): Should be one of
+                ["sentera_6x", "micasense_rededge_3", "sentinel-2a",
+                "sentinel-2b", "custom"]; if "custom", ``df_band_response``
+                and ``col_wl`` must be passed.
+            df_band_response (``pd.DataFrame``): A DataFrame that contains the
+                transmissivity (%) for each sensor band (as columns) mapped to
+                the continuous wavelength values (as rows). Required if
+                ``sensor`` is  "custom", ignored otherwise.
+            col_wl (``str``): The column of ``df_band_response`` denoting the
+                wavlengths (default: 'wl_nm').
+            center_wl (``str``): Indicates how the center wavelength of each
+                band is determined. If ``center_wl`` is "peak", the point at
+                which transmissivity is at its maximum is used as the center
+                wavelength. If ``center_wl`` is "weighted", the weighted
+                average is used to compute the center wavelength. Must be one
+                of ["peak", "weighted"] (``default: "peak"``).
+            spyfile (``SpyFile`` object): The datacube being accessed and/or
+                manipulated.
+
+        Returns:
+            2-element ``tuple`` containing
+
+            - **array_multi** (``numpy.ndarray``): Mimicked datacube.
+            - **metadata** (``dict``): Modified metadata describing the
+              mimicked spectral array (``array_multi``).
+
+        Example:
+            Load and initialize ``hsio`` and ``spec_mod``
+
+            >>> from hs_process import hsio
+            >>> from hs_process import spec_mod
+            >>> fname_hdr = r'F:\nigo0024\Documents\GitHub\hs_process\hs_process\data\Wells_rep2_20180628_16h56m_test_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_hdr = r'F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> io = hsio()
+            >>> io.read_cube(fname_hdr)
+            >>> my_spec_mod = spec_mod(io.spyfile)
+
+            Use spec_mod.spectral_mimic to mimic the Sentinel-2A spectral
+            response function.
+
+            >>> array_s2a, metadata_s2a = my_spec_mod.spectral_mimic(sensor='sentinel-2a', center_wl='weighted')
+
+            Plot the mean spectral response of the hyperspectral image to that
+            of the mimicked Sentinel-2A image bands (mean calculated across the
+            entire image).
+
+            >>> import seaborn as sns
+            >>> from ast import literal_eval
+            >>> array_hs = my_spec_mod.spyfile.open_memmap()
+            >>> mean_hs = array_hs.mean(axis=(0,1))*100
+            >>> mean_s2a = array_s2a.mean(axis=(0,1))*100
+            >>> x1 = my_spec_mod.tools.get_wavelength_range([0,239])  # list of wavelength values
+            >>> x2 = sorted(list(literal_eval(metadata_s2a['wavelength'])))  # list of Sentinel-2A bands
+            >>> ax = sns.lineplot(x=x1, y=mean_hs, label='Hyperspectral')
+            >>> ax = sns.lineplot(x=x2, y=mean_s2a, ax=ax, label='Sentinel-2A', marker='o', ms=6)
+            >>> _ = ax.set(xlabel='Wavelength (nm)', ylabel='Reflectance (%)')
+
+            .. image:: ../img/spec_mod/spectral_mimic_hs_vs_sentinel-2a.png
+        '''
+        if spyfile is None:
+            spyfile = self.spyfile
+            array = self.spyfile.open_memmap()
+        elif isinstance(spyfile, SpyFile.SpyFile):
+            self.load_spyfile(spyfile)
+            array = self.spyfile.open_memmap()
+        elif isinstance(spyfile, np.ndarray):
+            array = spyfile.copy()
+            spyfile = self.spyfile
+
+        msg1 = ('``sensor`` ({0}) must be one of ["sentera_6x", "custom"].'
+                ''.format(sensor))
+        msg2 = ('``center_wl`` ({0}) must be one of ["peak", "weighted"].'
+                ''.format(center_wl))
+        assert sensor in ['sentera_6x', 'micasense_rededge_3', 'sentinel-2a',
+                          'sentinel-2b', 'custom'], msg1
+        assert center_wl in ['peak', 'weighted'], msg2
+
+        df, band_names = self._mimic_get_response(sensor, df_band_response,
+                                                  col_wl)
+        # Normalizes cells along columns so column sum equals 1.0
+        df_norm = df.loc[:,:].div(df.sum(axis=0).drop('wl_nm'))
+        df_norm['wl_nm'] = df['wl_nm']
+
+
+        # df_temp = df_norm.cumsum(axis=0)
+        # df_temp['wl_nm'] = df['wl_nm']
+
+        array_multi = np.empty((self.spyfile.nrows,
+                                self.spyfile.ncols,
+                                len(band_names)))
+        # interpolate and sum each pixel to get mimicked value
+        meta_bands = self.tools.meta_bands.copy()
+        meta_bands_sensor = {}
+        wl_sensor = df_norm['wl_nm'].values
+        wl_hs = list(meta_bands.values())
+        bands_remove = {}
+        for idx, band_name in enumerate(band_names):
+            y_sensor = df_norm[band_name].values
+            f = interpolate.interp1d(wl_sensor, y_sensor)
+            spec_response = f(wl_hs)  # this is the response that can be multiplied by every pixel
+            if np.count_nonzero(spec_response) > 0:
+                array_multi[:,:,idx] = np.average(array, weights=spec_response, axis=2)
+                meta_bands_sensor[band_name] = self._mimic_center_wl(center_wl, wl_hs, spec_response)
+            else:
+                bands_remove[idx] = band_name
+        for idx, band_name in bands_remove.items():
+            array_multi = np.delete(array_multi, idx, axis=2)
+        metadata = self._metadata_spectral_mimic(sensor, meta_bands_sensor)
+        return array_multi, metadata
 
     def spectral_smooth(self, window_size=11, order=2, spyfile=None):
         '''
@@ -323,26 +511,18 @@ class spec_mod(object):
         '''
         if spyfile is None:
             spyfile = self.spyfile
-            array = self.spyfile.load()
+            array = self.spyfile.open_memmap()
         elif isinstance(spyfile, SpyFile.SpyFile):
             self.load_spyfile(spyfile)
-            array = self.spyfile.load()
+            array = self.spyfile.open_memmap()
         elif isinstance(spyfile, np.ndarray):
             array = spyfile.copy()
             spyfile = self.spyfile
 
         array_smooth = self._smooth_image(array, window_size, order)
-
-        metadata = self.tools.spyfile.metadata
-        hist_str = (" -> hs_process.spectral_smooth[<"
-                    "SpecPyFloatText label: 'window_size?' value:{0}; "
-                    "SpecPyFloatText label: 'polynomial_order?' value:{1}>"
-                    "]".format(window_size, order))
-        metadata['history'] += hist_str
-        metadata['bands'] = self.spyfile.nbands
-        self.tools.spyfile.metadata = metadata
-
+        metadata = self._metadata_smooth(window_size, order)
         return array_smooth, metadata
+
 
 # TODO: Add normalization function for light scattering
 # https://link.springer.com/chapter/10.1007/978-1-4939-2836-1_4#Sec12

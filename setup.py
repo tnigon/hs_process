@@ -14,6 +14,7 @@ requirements = [
  'seaborn',
 # 'matplotlib',
  'spectral',  # segment
+ 'tqdm'  # for progress bars
  ]
 
 test_requirements = [
