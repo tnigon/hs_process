@@ -42,7 +42,8 @@ class batch(object):
     .. _spatial_mod: hs_process.spatial_mod.html
     .. _spec_mod: hs_process.spec_mod.html
     '''
-    def __init__(self, base_dir=None, search_ext='.bip', dir_level=0, lock=None):
+    def __init__(self, base_dir=None, search_ext='.bip', dir_level=0,
+                 lock=None, progress_bar=False):
         '''
         Parameters:
             base_dir (``str``, optional): directory path to search for files to
@@ -61,6 +62,7 @@ class batch(object):
         self.search_ext = search_ext
         self.dir_level = dir_level
         self.lock = lock
+        self.progress_bar = False
 
         self.fname_list = None
         if base_dir is not None:
@@ -467,9 +469,10 @@ class batch(object):
             df_stats2 = None
             type_mask2 = None
 
-        pbar = tqdm(fname_list)
-        for idx, fname in enumerate(pbar):
-            pbar.set_description('Processing file {0}/{1}'.format(idx, len(fname_list)))
+        fname_list_p = tqdm(fname_list) if self.progress_bar is True else fname_list
+        for idx, fname in enumerate(fname_list_p):
+            if self.progress_bar is True:
+                fname_list_p.set_description('Processing file {0}/{1}'.format(idx, len(fname_list)))
             self.io.read_cube(fname)
             metadata = self.io.spyfile.metadata.copy()
             metadata_geotiff = self.io.spyfile.metadata.copy()
@@ -646,9 +649,10 @@ class batch(object):
                    'pctl_90th', 'pctl_95th']
         df_stats = pd.DataFrame(columns=columns)
 
-        pbar = tqdm(fname_list)
-        for idx, fname in enumerate(pbar):
-            pbar.set_description('Processing file {0}/{1}'.format(idx, len(fname_list)))
+        fname_list_p = tqdm(fname_list) if self.progress_bar is True else fname_list
+        for idx, fname in enumerate(fname_list_p):
+            if self.progress_bar is True:
+                fname_list_p.set_description('Processing file {0}/{1}'.format(idx, len(fname_list)))
             self.io.read_cube(fname)
             dir_out, name_print, name_append = self._composite_band_setup(
                     base_dir_out, fname, folder_name, name_append)
@@ -714,9 +718,10 @@ class batch(object):
                    'pctl_90th', 'pctl_95th']
         df_stats = pd.DataFrame(columns=columns)
 
-        pbar = tqdm(fname_list)
-        for idx, fname in enumerate(pbar):
-            pbar.set_description('Processing file {0}/{1}'.format(idx, len(fname_list)))
+        fname_list_p = tqdm(fname_list) if self.progress_bar is True else fname_list
+        for idx, fname in enumerate(fname_list_p):
+            if self.progress_bar is True:
+                fname_list_p.set_description('Processing file {0}/{1}'.format(idx, len(fname_list)))
             self.io.read_cube(fname)
             dir_out, name_print, name_append = self._band_math_setup(
                     base_dir_out, folder_name, fname, name_append, method)
@@ -1380,9 +1385,10 @@ class batch(object):
         Actually executes the spectral clip to keep the main function a bit
         cleaner
         '''
-        pbar = tqdm(fname_list)
-        for idx, fname in enumerate(pbar):
-            pbar.set_description('Processing file {0}/{1}'.format(idx, len(fname_list)))
+        fname_list_p = tqdm(fname_list) if self.progress_bar is True else fname_list
+        for idx, fname in enumerate(fname_list_p):
+            if self.progress_bar is True:
+                fname_list_p.set_description('Processing file {0}/{1}'.format(idx, len(fname_list)))
             # print('\nSpectrally clipping: {0}'.format(fname))
             # options for io.read_cube():
             # name_long, name_plot, name_short, individual_plot, overwrite
@@ -1508,9 +1514,10 @@ class batch(object):
             df_smooth_stats = pd.DataFrame(
                     columns=['fname', 'mean', 'std', 'cv'])
 
-        pbar = tqdm(fname_list)
-        for idx, fname in enumerate(pbar):
-            pbar.set_description('Processing file {0}/{1}'.format(idx, len(fname_list)))
+        fname_list_p = tqdm(fname_list) if self.progress_bar is True else fname_list
+        for idx, fname in enumerate(fname_list_p):
+            if self.progress_bar is True:
+                fname_list_p.set_description('Processing file {0}/{1}'.format(idx, len(fname_list)))
             # print('\nSpectrally smoothing: {0}'.format(fname))
             self.io.read_cube(fname)
             self.my_spectral_mod = spec_mod(self.io.spyfile)
@@ -1934,10 +1941,10 @@ class batch(object):
         pb_prefix = 'cube_to_spectra:'
         self._print_progress(pb_i, pb_len, prefix=pb_prefix)
 
-        pbar = tqdm(fname_list)
-        # for idx, fname in enumerate(fname_list):
-        for idx, fname in enumerate(pbar):
-            pbar.set_description('Processing file {0}/{1}'.format(idx, len(fname_list)))
+        fname_list_p = tqdm(fname_list) if self.progress_bar is True else fname_list
+        for idx, fname in enumerate(fname_list_p):
+            if self.progress_bar is True:
+                fname_list_p.set_description('Processing file {0}/{1}'.format(idx, len(fname_list)))
             self.io.read_cube(fname)
             base_dir = os.path.dirname(fname)
             if base_dir_out is None:
