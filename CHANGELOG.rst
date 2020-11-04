@@ -15,6 +15,7 @@ Release: 0.0.4
 * User can optionally pass a lists for ``mask_dir``, ``mask_side``, and ``mask_thresh``/``mask_percentile`` to ``batch.segment_create_mask``
 * Added a progress bar the following batch functions: ``cube_to_spectra``, ``segment_composite_band``, ``segment_band_math``, ``segment_create_mask``, ``spectral_clip``, and ``spectral_smooth``.
 * Added ``get_wavelength_range`` to ``utilities`` class.
+* Added ``spec_mod.spectral_mimic`` and ``spec_mod.spectral_resample`` functions.
 
 Release: 0.0.3
 ***************

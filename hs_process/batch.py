@@ -7,6 +7,7 @@ import pandas as pd
 import re
 import seaborn as sns
 import sys
+import time
 from tqdm import tqdm
 
 from matplotlib import pyplot as plt
@@ -62,7 +63,7 @@ class batch(object):
         self.search_ext = search_ext
         self.dir_level = dir_level
         self.lock = lock
-        self.progress_bar = False
+        self.progress_bar = progress_bar
 
         self.fname_list = None
         if base_dir is not None:
@@ -170,6 +171,7 @@ class batch(object):
             warnings.warn(msg1, UserWarning, stacklevel=0)
         else:
             print(msg2)
+        time.sleep(0.2)  # when using progress bar, this keeps from splitting lines
         return fname_list_final
 
     def _crop_read_sheet(self, row):
@@ -986,15 +988,6 @@ class batch(object):
                     'Please pass one or the other (not both) and run '
                     '``batch.spatial_crop`` again.\n')
             raise TypeError(msg1)
-#        elif fname_sheet is not None and fname_list is not None:
-#            msg2 = ('Both ``fname_sheet`` and ``fname_list`` were passed. '
-#                    '``fname_list`` (perhaps from ``base_dir``) will be '
-#                    'ignored.\n')
-#            print(msg2)
-#            if isinstance(fname_sheet, pd.DataFrame):
-#                df_plots = fname_sheet
-#            elif os.path.splitext(fname_sheet)[-1] == '.csv':
-#                df_plots = pd.read_csv(fname_sheet)
         else:  # fname_list was passed and df_plots will be figured out later
             msg3 = ('``method`` is "single", but ``fname_list`` was passed '
                     'instead of ``fname_sheet``.\n\nIf performing '
@@ -1102,10 +1095,13 @@ class batch(object):
         information to perform crop_many(), so be sure to hone in on that
         information before passing ``_crop_loop``.
         '''
-        for idx, row in df_plots.iterrows():
+        df_iter = tqdm(df_plots.iterrows(), total=df_plots.shape[0]) if self.progress_bar is True else df_plots.iterrows()
+        for idx, row in df_iter:
+            if self.progress_bar is True:
+                df_iter.set_description('Processing file {0}/{1}'.format(idx, len(df_plots)))
             cs = self._crop_read_sheet(row)
             fname = os.path.join(cs['directory'], cs['fname'])
-            print('\nSpatially cropping: {0}'.format(fname))
+            # print('\nSpatially cropping: {0}'.format(fname))
             name_long = cs['name_long']  # ``None`` if it was never set
             plot_id_ref = cs['plot_id_ref']
             name_short = cs['name_short']
@@ -1260,7 +1256,7 @@ class batch(object):
         return df_plots_out
 
     def _execute_crop(self, fname_sheet, fname_list, base_dir_out, folder_name,
-                      name_append, geotiff, method, gdf):
+                      name_append, write_geotiff, method, gdf):
         '''
         Actually executes the spatial crop to keep the main function a bit
         cleaner
@@ -1268,13 +1264,13 @@ class batch(object):
         Either `fname_sheet` or `fname_list` should be None
         '''
         df_plots = self._crop_check_input(fname_sheet, fname_list, method)
-        if 'date' in df_plots.columns:
-            if isinstance(df_plots['date'], str):
+        if not pd.isnull(df_plots):
+            if 'date' in df_plots.columns and isinstance(df_plots['date'], str):
                 df_plots['date'] = pd.to_datetime(df_plots['date'])
         if method == 'single':
             # self._crop_loop(df_plots)
             self._crop_loop(df_plots, gdf, base_dir_out, folder_name,
-                   name_append, geotiff)
+                   name_append, write_geotiff)
         elif method == 'many_gdf' and isinstance(df_plots, pd.DataFrame):
             # if user passes a dataframe, just do whatever it says..
             # loop through each row, doing crop_many_gdf() on each row with
@@ -1288,22 +1284,28 @@ class batch(object):
                 df_plots_many = self._crop_many_read_row(row, gdf, method)
                 self.df_plots_many = df_plots_many
                 self._crop_loop(df_plots_many, gdf, base_dir_out, folder_name,
-                                name_append, geotiff)
+                                name_append, write_geotiff)
         elif method == 'many_gdf' and df_plots is None:
+            print('Because ``fname_list`` was passed instead of '
+                  '``fname_sheet``, there is not a way to infer the study '
+                  'name and date. Therefore, "study" and "date" will be '
+                  'omitted from the output file name. If you would like '
+                  'output file names to include "study" and "date", please '
+                  'pass ``fname_sheet`` with "study" and "date" columns.\n')
             for fname_in in fname_list:
                 self.io.read_cube(fname_in)
                 self.my_spatial_mod = spatial_mod(self.io.spyfile, gdf)
                 self.my_spatial_mod.defaults = self.io.defaults
                 df_plots_many = self.my_spatial_mod.crop_many_gdf()
                 self._crop_loop(df_plots_many, gdf, base_dir_out, folder_name,
-                                name_append, geotiff)
+                                name_append, write_geotiff)
         elif method == 'many_grid' and isinstance(df_plots, pd.DataFrame):
             for idx, row in df_plots.iterrows():
                 print('\nComputing information to spatially crop via '
                       '``spatial_mod.crop_many_grid``:')
                 df_plots_many = self._crop_many_read_row(row, gdf, method)
                 self._crop_loop(df_plots_many, gdf, base_dir_out, folder_name,
-                                name_append, geotiff)
+                                name_append, write_geotiff)
         else:
             msg = ('Either ``method`` or ``df_plots`` are not defined '
                    'correctly. If using "many_grid" method, please be sure '
@@ -1503,6 +1505,82 @@ class batch(object):
                            interleave=self.io.defaults.envi_write.interleave,
                            byteorder=self.io.defaults.envi_write.byteorder,
                            metadata=self.io.spyfile_spec.metadata)
+
+    def _execute_spec_mimic(self, fname_list, base_dir_out, folder_name,
+                            name_append, sensor, df_band_response, col_wl,
+                            center_wl):
+        '''
+        Actually executes the spectral resample to keep the main function a bit
+        cleaner.
+        '''
+        fname_list_p = tqdm(fname_list) if self.progress_bar is True else fname_list
+        for idx, fname in enumerate(fname_list_p):
+            if self.progress_bar is True:
+                fname_list_p.set_description('Processing file {0}/{1}'
+                                             ''.format(idx, len(fname_list)))
+            self.io.read_cube(fname)
+            self.my_spectral_mod = spec_mod(self.io.spyfile)
+            base_dir = os.path.dirname(fname)
+            if base_dir_out is None:
+                dir_out, name_append = self._save_file_setup(
+                        base_dir, folder_name, name_append)
+            else:
+                dir_out, name_append = self._save_file_setup(
+                        base_dir_out, folder_name, name_append)
+            name_print = self._get_name_print()
+            array_mimic, metadata = self.my_spectral_mod.spectral_mimic(
+                    sensor=sensor, df_band_response=df_band_response,
+                    col_wl=col_wl, center_wl=center_wl)
+
+            name_label = (name_print + name_append + '.' +
+                          self.io.defaults.envi_write.interleave)
+            metadata['label'] = name_label
+
+            hdr_file = os.path.join(dir_out, name_label + '.hdr')
+            self.io.write_cube(hdr_file, array_mimic,
+                               dtype=self.io.defaults.envi_write.dtype,
+                               force=self.io.defaults.envi_write.force,
+                               ext=self.io.defaults.envi_write.ext,
+                               interleave=self.io.defaults.envi_write.interleave,
+                               byteorder=self.io.defaults.envi_write.byteorder,
+                               metadata=metadata)
+
+    def _execute_spec_resample(self, fname_list, base_dir_out, folder_name,
+                               name_append, bandwidth, bins_n):
+        '''
+        Actually executes the spectral resample to keep the main function a bit
+        cleaner.
+        '''
+        fname_list_p = tqdm(fname_list) if self.progress_bar is True else fname_list
+        for idx, fname in enumerate(fname_list_p):
+            if self.progress_bar is True:
+                fname_list_p.set_description('Processing file {0}/{1}'
+                                             ''.format(idx, len(fname_list)))
+            self.io.read_cube(fname)
+            self.my_spectral_mod = spec_mod(self.io.spyfile)
+            base_dir = os.path.dirname(fname)
+            if base_dir_out is None:
+                dir_out, name_append = self._save_file_setup(
+                        base_dir, folder_name, name_append)
+            else:
+                dir_out, name_append = self._save_file_setup(
+                        base_dir_out, folder_name, name_append)
+            name_print = self._get_name_print()
+            array_bin, metadata = self.my_spectral_mod.spectral_resample(
+                    bandwidth=bandwidth, bins_n=bins_n)
+
+            name_label = (name_print + name_append + '.' +
+                          self.io.defaults.envi_write.interleave)
+            metadata['label'] = name_label
+
+            hdr_file = os.path.join(dir_out, name_label + '.hdr')
+            self.io.write_cube(hdr_file, array_bin,
+                               dtype=self.io.defaults.envi_write.dtype,
+                               force=self.io.defaults.envi_write.force,
+                               ext=self.io.defaults.envi_write.ext,
+                               interleave=self.io.defaults.envi_write.interleave,
+                               byteorder=self.io.defaults.envi_write.byteorder,
+                               metadata=metadata)
 
     def _execute_spec_smooth(self, fname_list, base_dir_out, folder_name,
                              name_append, window_size, order, stats):
@@ -1744,20 +1822,22 @@ class batch(object):
         processing operation, we can check to see if the datacube has
         already been processed and pass over if desired.
         '''
-        if row['study'] is not None:
-            name_study = 'study_' + str(row['study'])
+        if 'study' in row.index:
+            if row['study'] is not None:
+                name_study = 'study_' + str(row['study'] + '_')
         else:
             name_study = ''
-        if row['date'] is not None:
-            if isinstance(row['date'], str):
-                row['date'] = pd.to_datetime(row['date'])
-            name_date = ('_date_' + str(row['date'].year).zfill(4) +
-                         str(row['date'].month).zfill(2) +
-                         str(row['date'].day).zfill(2))
+        if 'date' in row.index:
+            if row['date'] is not None:
+                if isinstance(row['date'], str):
+                    row['date'] = pd.to_datetime(row['date'])
+                name_date = ('date_' + str(row['date'].year).zfill(4) +
+                             str(row['date'].month).zfill(2) +
+                             str(row['date'].day).zfill(2) + '_')
         else:
             name_date = ''
         if row['plot_id_ref'] is not None:
-            name_plot = '_plot_' + str(row['plot_id_ref'])
+            name_plot = 'plot_' + str(row['plot_id_ref'])
         else:
             name_plot = ''
         if ((len(name_study) >= 1) and (len(name_date) >= 1) and
@@ -1765,8 +1845,11 @@ class batch(object):
             name_label = (name_study + name_date + name_plot + name_append +
                           '.' + self.io.defaults.envi_write.interleave)
         else:
-            name_label = (name_print + '_' + name_study + name_date +
-                          name_plot + name_append + '.' +
+            name_label1 = (name_print + '_' + name_study + name_date +
+                           name_plot)
+            if name_label1[-1] == '_':
+                name_label1 = name_label1[:-1]
+            name_label = (name_label1 + name_append + '.' +
                           self.io.defaults.envi_write.interleave)
         return name_label
 
@@ -1821,7 +1904,7 @@ class batch(object):
                         dir_level=0, base_dir_out=None,
                         folder_name='cube_to_spec',
                         name_append='cube-to-spec',
-                        geotiff=True, out_dtype=False, out_force=None,
+                        write_geotiff=True, out_dtype=False, out_force=None,
                         out_ext=False, out_interleave=False,
                         out_byteorder=False):
         '''
@@ -1848,8 +1931,8 @@ class batch(object):
                 the processed datacubes (default: 'cube_to_spec').
             name_append (``str``): name to append to the filename (default:
                 'cube-to-spec').
-            geotiff (``bool``): whether to save the masked RGB image as a geotiff
-                alongside the masked datacube.
+            write_geotiff (``bool``): whether to save the masked RGB image as a
+                geotiff alongside the masked datacube.
             out_XXX: Settings for saving the output files can be adjusted here
                 if desired. They are stored in ``batch.io.defaults``, and are
                 therefore accessible at a high level. See
@@ -1880,7 +1963,7 @@ class batch(object):
             deviation* across all pixels for each of the datacubes in
             ``base_dir``.
 
-            >>> hsbatch.cube_to_spectra(base_dir=base_dir, geotiff=False, out_force=True)
+            >>> hsbatch.cube_to_spectra(base_dir=base_dir, write_geotiff=False, out_force=True)
             Calculating mean spectra: F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011.bip
             Saving F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-cube-to-spec-mean.spec
             Calculating mean spectra: F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012.bip
@@ -1957,7 +2040,7 @@ class batch(object):
             name_label = (name_print + name_append + append_extra + '.' +
                           self.io.defaults.envi_write.interleave)
             if self._file_exists_check(
-                    dir_out, name_label, write_geotiff=geotiff,
+                    dir_out, name_label, write_geotiff=write_geotiff,
                     write_spec=True) is True:
                 self.print_progress(idx+1, pb_len, prefix=pb_prefix)
                 continue
@@ -1973,7 +2056,7 @@ class batch(object):
             metadata['history'] += hist_str
             name_label_spec = (os.path.splitext(name_label)[0] +
                                '.spec')
-            if geotiff is True:
+            if write_geotiff is True:
                 self._write_geotiff(array, fname, dir_out, name_label,
                                     metadata, self.io.tools)
             # Now write spec (will change map info on metadata)
@@ -2042,7 +2125,7 @@ class batch(object):
     def segment_band_math(self, fname_list=None, base_dir=None,
                           search_ext='bip', dir_level=0, base_dir_out=None,
                           folder_name='band_math', name_append='band-math',
-                          geotiff=True, method='ndi', wl1=None, wl2=None,
+                          write_geotiff=True, method='ndi', wl1=None, wl2=None,
                           wl3=None, b1=None, b2=None, b3=None,
                           list_range=True, plot_out=True,
                           out_dtype=False, out_force=None, out_ext=False,
@@ -2092,8 +2175,8 @@ class batch(object):
                 (default: ``True``).
             plot_out (``bool``): whether to save a histogram of the band math
                 result (default: ``True``).
-            geotiff (``bool``): whether to save the masked RGB image as a geotiff
-                alongside the masked datacube.
+            write_geotiff (``bool``): whether to save the masked RGB image as a
+                geotiff alongside the masked datacube.
 
         Note:
             The following ``batch`` example builds on the API example results
@@ -2127,7 +2210,7 @@ class batch(object):
             >>> wl2 = 670
             >>> wl3 = 550
             >>> hsbatch.segment_band_math(base_dir=base_dir, folder_name=folder_name,
-                                          name_append='band-math', geotiff=True,
+                                          name_append='band-math', write_geotiff=True,
                                           method=method, wl1=wl1, wl2=wl2, wl3=wl3,
                                           plot_out=True, out_force=True)
             Bands used (``b1``): [198]
@@ -2208,7 +2291,7 @@ class batch(object):
             fname_list = self._check_processed(
                 fname_list, base_dir_out, folder_name, name_append, append_extra)
         self._execute_band_math(fname_list, base_dir_out, folder_name,
-                                name_append, geotiff, method, wl1, wl2,
+                                name_append, write_geotiff, method, wl1, wl2,
                                 wl3, b1, b2, b3, list_range, plot_out)
 
     def segment_create_mask(self, fname_list=None, base_dir=None,
@@ -2364,7 +2447,7 @@ class batch(object):
     def spatial_crop(self, fname_sheet=None, base_dir=None, search_ext='bip',
                      dir_level=0, base_dir_out=None,
                      folder_name='spatial_crop', name_append='spatial-crop',
-                     geotiff=True, method='single', gdf=None, out_dtype=False,
+                     write_geotiff=True, method='single', gdf=None, out_dtype=False,
                      out_force=None, out_ext=False, out_interleave=False,
                      out_byteorder=False):
         '''
@@ -2392,8 +2475,8 @@ class batch(object):
                 to save all the processed datacubes (default: 'spatial_crop').
             name_append (``str``, optional): name to append to the filename
                 (default: 'spatial-crop').
-            geotiff (``bool``, optional): whether to save an RGB image as a
-                geotiff alongside the cropped datacube.
+            write_geotiff (``bool``, optional): whether to save an RGB image as
+                a geotiff alongside the cropped datacube.
             method (``str``, optional): Must be one of "single" or
                 "many_gdf". Indicates whether a single plot should be cropped
                 from the input datacube or if many/multiple plots should be
@@ -2504,11 +2587,12 @@ class batch(object):
             >>> base_dir = r'F:\\nigo0024\Documents\hs_process_demo'
             >>> print(os.path.isdir(base_dir))
             True
-            >>> hsbatch = batch(base_dir, search_ext='.bip', dir_level=0)  # searches for all files in ``base_dir`` with a ".bip" file extension
+            >>> hsbatch = batch(base_dir, search_ext='.bip', dir_level=0,
+                                progress_bar=True)  # searches for all files in ``base_dir`` with a ".bip" file extension
 
             Load the plot geometry as a ``geopandas.GeoDataFrame``
 
-            >>> fname_gdf = r'F:\\nigo0024\Documents\hs_process_demo\plot_bounds_small\plot_bounds.shp'
+            >>> fname_gdf = r'F:\\nigo0024\Documents\hs_process_demo\plot_bounds.geojson'
             >>> gdf = gpd.read_file(fname_gdf)
 
             Perform the spatial cropping using the *"many_gdf"* ``method``.
@@ -2560,8 +2644,8 @@ class batch(object):
             msg1 = ('Please pass a valid ``geopandas.GeoDataFrame`` if using '
                     'the "many_gdf" method.\n')
             msg2 = ('Please be sure the passed ``geopandas.GeoDataFrame`` has '
-                    'a column by the name of "plotid", indicating the plot ID '
-                    'for each polygon geometry if using the "many_gdf" '
+                    'a column by the name of "plot_id", indicating the plot '
+                    'ID for each polygon geometry if using the "many_gdf" '
                     'method.\n')
             assert isinstance(gdf, gpd.GeoDataFrame), msg1
             assert 'plot_id' in gdf.columns, msg2
@@ -2581,7 +2665,7 @@ class batch(object):
             fname_list = None
         # Either fname_sheet or fname_list should be None
         self._execute_crop(fname_sheet, fname_list, base_dir_out,
-                           folder_name, name_append, geotiff, method, gdf)
+                           folder_name, name_append, write_geotiff, method, gdf)
 
     def spectra_combine(self, fname_list=None, base_dir=None,
                         search_ext='bip', dir_level=0, base_dir_out=None,
@@ -3076,6 +3160,250 @@ class batch(object):
         #         executor.submit(self._execute_spec_clip_pp,
         #                         fname,
         #                         base_dir_out, folder_name, name_append, wl_bands): fname for fname in fname_list}
+
+
+    def spectral_mimic(
+            self, fname_list=None, base_dir=None, search_ext='bip',
+            dir_level=0, base_dir_out=None, folder_name='spec_mimic',
+            name_append='spec-mimic', sensor='sentinel-2a',
+            df_band_response=None, col_wl='wl_nm', center_wl='peak',
+            out_dtype=False, out_force=None, out_ext=False,
+            out_interleave=False, out_byteorder=False):
+        '''
+        Batch processing tool to spectrally mimic a multispectral sensor for
+        multiple datacubes in the same way.
+
+        Parameters:
+            fname_list (``list``, optional): list of filenames to process; if
+                left to ``None``, will look at ``base_dir``, ``search_ext``,
+                and ``dir_level`` parameters for files to process (default:
+                ``None``).
+            base_dir (``str``, optional): directory path to search for files to
+                spectrally resample; if ``fname_list`` is not ``None``,
+                ``base_dir`` will be ignored (default: ``None``).
+            search_ext (``str``): file format/extension to search for in all
+                directories and subdirectories to determine which files to
+                process; if ``fname_list`` is not ``None``, ``search_ext`` will
+                be ignored (default: 'bip').
+            dir_level (``int``): The number of directory levels to search; if
+                ``None``, searches all directory levels (default: 0).
+            base_dir_out (``str``): directory path to save all processed
+                datacubes; if set to ``None``, a folder named according to the
+                ``folder_name`` parameter is added to ``base_dir``
+            folder_name (``str``): folder to add to ``base_dir_out`` to save
+                all the processed datacubes (default: 'spec_bin').
+            name_append (``str``): name to append to the filename (default:
+                'spec-bin').
+            sensor (``str``): Should be one of
+                ["sentera_6x", "micasense_rededge_3", "sentinel-2a",
+                "sentinel-2b", "custom"]; if "custom", ``df_band_response``
+                and ``col_wl`` must be passed.
+            df_band_response (``pd.DataFrame``): A DataFrame that contains the
+                transmissivity (%) for each sensor band (as columns) mapped to
+                the continuous wavelength values (as rows). Required if
+                ``sensor`` is  "custom", ignored otherwise.
+            col_wl (``str``): The column of ``df_band_response`` denoting the
+                wavlengths (default: 'wl_nm').
+            center_wl (``str``): Indicates how the center wavelength of each
+                band is determined. If ``center_wl`` is "peak", the point at
+                which transmissivity is at its maximum is used as the center
+                wavelength. If ``center_wl`` is "weighted", the weighted
+                average is used to compute the center wavelength. Must be one
+                of ["peak", "weighted"] (``default: "peak"``).
+            out_XXX: Settings for saving the output files can be adjusted here
+                if desired. They are stored in ``batch.io.defaults, and are
+                therefore accessible at a high level. See
+                ``hsio.set_io_defaults()`` for more information on each of the
+                settings.
+
+        Note:
+            The following ``batch`` example builds on the API example results
+            of the `batch.spatial_crop`_ function. Please complete the
+            `batch.spatial_crop`_ example to be sure your directory
+            (i.e., ``base_dir``) is populated with multiple hyperspectral
+            datacubes. The following example will be using datacubes located in
+            the following directory:
+            ``F:\\nigo0024\Documents\hs_process_demo\spatial_crop``
+
+        Example:
+            Load and initialize the ``batch`` module, checking to be sure the
+            directory exists.
+
+            >>> import os
+            >>> from hs_process import batch
+            >>> base_dir = r'F:\\nigo0024\Documents\hs_process_demo\spatial_crop'
+            >>> print(os.path.isdir(base_dir))
+            True
+            >>> hsbatch = batch(base_dir, search_ext='.bip', progress_bar=True)  # searches for all files in ``base_dir`` with a ".bip" file extension
+
+            Use ``batch.spectral_mimic`` to spectrally mimic the Sentinel-2A
+            multispectral satellite sensor.
+
+            >>> hsbatch.spectral_mimic(
+                base_dir=base_dir, folder_name='spec_mimic',
+                name_append='sentinel-2a',
+                sensor='sentinel-2a', center_wl='weighted')
+            Processing 40 files. If existing files should be overwritten, be sure to set the ``out_force`` parameter.
+            Processing file 39/40: 100%|██████████| 40/40 [00:04<00:00,  8.85it/s]
+
+            Use ``seaborn`` to visualize the spectra of a single pixel in one
+            of the processed images.
+
+            >>> import seaborn as sns
+            >>> fname = os.path.join(base_dir, 'Wells_rep2_20180628_16h56m_pika_gige_7_1011-spatial-crop.bip')
+            >>> hsbatch.io.read_cube(fname)
+            >>> spy_mem = hsbatch.io.spyfile.open_memmap()  # datacube before mimicking
+            >>> meta_bands = list(hsbatch.io.tools.meta_bands.values())
+            >>> fname = os.path.join(base_dir, 'spec_mimic', 'Wells_rep2_20180628_16h56m_pika_gige_7_1011-sentinel-2a.bip')
+            >>> hsbatch.io.read_cube(fname)
+            >>> spy_mem_sen2a = hsbatch.io.spyfile.open_memmap()  # datacube after mimicking
+            >>> meta_bands_sen2a = list(hsbatch.io.tools.meta_bands.values())
+            >>> ax = sns.lineplot(x=meta_bands, y=spy_mem[26][29], label='Hyperspectral (Pika II)', linewidth=3)
+            >>> ax = sns.lineplot(x=meta_bands_sen2a, y=spy_mem_sen2a[26][29], label='Sentinel-2A "mimic"', marker='o', ms=6, ax=ax)
+            >>> ax.set_xlabel('Wavelength (nm)', weight='bold')
+            >>> ax.set_ylabel('Reflectance (%)', weight='bold')
+            >>> ax.set_title(r'API Example: `batch.spectral_mimic`', weight='bold')
+
+            .. image:: ../img/batch/spectral_mimic_sentinel-2a_plot.png
+
+        .. _batch.spatial_crop: hs_process.batch.html#hs_process.batch.spatial_crop
+        '''
+        self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
+                                out_byteorder)
+        if fname_list is None and base_dir is not None:
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+        elif fname_list is None and base_dir is None:
+            # base_dir may have been stored to the ``batch`` object
+            base_dir = self.base_dir
+            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate '
+                   'which datacubes should be processed.\n')
+            assert base_dir is not None, msg
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+
+        if self.io.defaults.envi_write.force is False:  # otherwise just overwrites if it exists
+            fname_list = self._check_processed(fname_list, base_dir_out,
+                                               folder_name, name_append)
+
+        self._execute_spec_mimic(fname_list, base_dir_out, folder_name,
+                                 name_append, sensor, df_band_response,
+                                 col_wl, center_wl)
+
+    def spectral_resample(
+            self, fname_list=None, base_dir=None, search_ext='bip',
+            dir_level=0, base_dir_out=None, folder_name='spec_bin',
+            name_append='spec-bin', bandwidth=None, bins_n=None,
+            out_dtype=False, out_force=None, out_ext=False,
+            out_interleave=False, out_byteorder=False):
+        '''
+        Batch processing tool to spectrally resample (a.k.a. "bin") multiple
+        datacubes in the same way.
+
+        Parameters:
+            fname_list (``list``, optional): list of filenames to process; if
+                left to ``None``, will look at ``base_dir``, ``search_ext``,
+                and ``dir_level`` parameters for files to process (default:
+                ``None``).
+            base_dir (``str``, optional): directory path to search for files to
+                spectrally resample; if ``fname_list`` is not ``None``,
+                ``base_dir`` will be ignored (default: ``None``).
+            search_ext (``str``): file format/extension to search for in all
+                directories and subdirectories to determine which files to
+                process; if ``fname_list`` is not ``None``, ``search_ext`` will
+                be ignored (default: 'bip').
+            dir_level (``int``): The number of directory levels to search; if
+                ``None``, searches all directory levels (default: 0).
+            base_dir_out (``str``): directory path to save all processed
+                datacubes; if set to ``None``, a folder named according to the
+                ``folder_name`` parameter is added to ``base_dir``
+            folder_name (``str``): folder to add to ``base_dir_out`` to save
+                all the processed datacubes (default: 'spec_bin').
+            name_append (``str``): name to append to the filename (default:
+                'spec-bin').
+            bandwidth (``float`` or ``int``): The bandwidth of the bands
+                after spectral resampling is complete (units should be
+                consistent with that of the .hdr file). Setting ``bandwidth``
+                to 10 will consolidate bands that fall within every 10 nm
+                interval.
+            bins_n (``int``): The number of bins (i.e., "bands") to achieve
+                after spectral resampling is complete. Ignored if ``bandwidth``
+                is not ``None``.
+            out_XXX: Settings for saving the output files can be adjusted here
+                if desired. They are stored in ``batch.io.defaults, and are
+                therefore accessible at a high level. See
+                ``hsio.set_io_defaults()`` for more information on each of the
+                settings.
+
+        Note:
+            The following ``batch`` example builds on the API example results
+            of the `batch.spatial_crop`_ function. Please complete the
+            `batch.spatial_crop`_ example to be sure your directory
+            (i.e., ``base_dir``) is populated with multiple hyperspectral
+            datacubes. The following example will be using datacubes located in
+            the following directory:
+            ``F:\\nigo0024\Documents\hs_process_demo\spatial_crop``
+
+        Example:
+            Load and initialize the ``batch`` module, checking to be sure the
+            directory exists.
+
+            >>> import os
+            >>> from hs_process import batch
+            >>> base_dir = r'F:\\nigo0024\Documents\hs_process_demo\spatial_crop'
+            >>> print(os.path.isdir(base_dir))
+            True
+            >>> hsbatch = batch(base_dir, search_ext='.bip', progress_bar=True)  # searches for all files in ``base_dir`` with a ".bip" file extension
+
+            Use ``batch.spectral_resample`` to bin ("group") all spectral bands
+            into 20 nm bandwidth bands (from ~2.3 nm bandwidth originally) on
+            a per-pixel basis.
+
+            >>> hsbatch.spectral_resample(
+                base_dir=base_dir, folder_name='spec_bin',
+                name_append='spec-bin-20', bandwidth=20)
+            Processing 40 files. If existing files should be overwritten, be sure to set the ``out_force`` parameter.
+            Processing file 39/40: 100%|██████████| 40/40 [00:00<00:00, 48.31it/s]
+            ...
+
+            Use ``seaborn`` to visualize the spectra of a single pixel in one
+            of the processed images.
+
+            >>> import seaborn as sns
+            >>> fname = os.path.join(base_dir, 'Wells_rep2_20180628_16h56m_pika_gige_7_1011-spatial-crop.bip')
+            >>> hsbatch.io.read_cube(fname)
+            >>> spy_mem = hsbatch.io.spyfile.open_memmap()  # datacube before resampling
+            >>> meta_bands = list(hsbatch.io.tools.meta_bands.values())
+            >>> fname = os.path.join(base_dir, 'spec_bin', 'Wells_rep2_20180628_16h56m_pika_gige_7_1011-spec-bin-20.bip')
+            >>> hsbatch.io.read_cube(fname)
+            >>> spy_mem_bin = hsbatch.io.spyfile.open_memmap()  # datacube after resampling
+            >>> meta_bands_bin = list(hsbatch.io.tools.meta_bands.values())
+            >>> ax = sns.lineplot(x=meta_bands, y=spy_mem[26][29], label='Hyperspectral (Pika II)', linewidth=3)
+            >>> ax = sns.lineplot(x=meta_bands_bin, y=spy_mem_bin[26][29], label='Spectral resample (20 nm)', marker='o', ms=6, ax=ax)
+            >>> ax.set_xlabel('Wavelength (nm)', weight='bold')
+            >>> ax.set_ylabel('Reflectance (%)', weight='bold')
+            >>> ax.set_title(r'API Example: `batch.spectral_resample`', weight='bold')
+
+            .. image:: ../img/batch/spectral_resample-20nm_plot.png
+
+        .. _batch.spatial_crop: hs_process.batch.html#hs_process.batch.spatial_crop
+        '''
+        self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
+                                out_byteorder)
+        if fname_list is None and base_dir is not None:
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+        elif fname_list is None and base_dir is None:
+            # base_dir may have been stored to the ``batch`` object
+            base_dir = self.base_dir
+            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate '
+                   'which datacubes should be processed.\n')
+            assert base_dir is not None, msg
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+
+        if self.io.defaults.envi_write.force is False:  # otherwise just overwrites if it exists
+            fname_list = self._check_processed(fname_list, base_dir_out,
+                                               folder_name, name_append)
+
+        self._execute_spec_resample(fname_list, base_dir_out, folder_name,
+                                    name_append, bandwidth, bins_n)
 
     def spectral_smooth(self, fname_list=None, base_dir=None, search_ext='bip',
                         dir_level=0, base_dir_out=None,

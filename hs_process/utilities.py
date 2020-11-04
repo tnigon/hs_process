@@ -2558,7 +2558,7 @@ class hstools(object):
 #        spec_std = pd.Series(spec_std)
 #        return spec_mean, spec_std, datacube_masked
 
-    def mean_datacube(self, spyfile, mask=None):
+    def mean_datacube(self, spyfile, mask=None, nodata=0):
         '''
         Calculates the mean spectra for a datcube; if ``mask`` is passed (as a
         ``numpy.ndarray``), then the mask is applied to ``spyfile`` prior to
@@ -2572,6 +2572,10 @@ class hstools(object):
                 first band (i.e., first two dimensions) of ``mask`` will be
                 repeated *n* times to match the number of bands of ``spyfile``
                 (default: ``None``).
+            nodata (``float`` or ``None``): If ``None``, treats all pixels
+                cells as they are repressented in the ``numpy.ndarray``.
+                Otherwise, replaces ``nodata`` with ``np.nan`` and these cells
+                will not be considered when calculating the mean spectra.
 
         Returns:
             3-element ``tuple`` containing
@@ -2618,8 +2622,8 @@ class hstools(object):
         '''
         if isinstance(spyfile, SpyFile.SpyFile):
             self.load_spyfile(spyfile)
-            # array = self.spyfile.load()
-            array = self.spyfile.open_memmap()
+            array = self.spyfile.load()
+            # array = self.spyfile.open_memmap().copy()
             nbands = spyfile.nbands
             shape = spyfile.shape
         elif isinstance(spyfile, np.ndarray):
@@ -2629,6 +2633,7 @@ class hstools(object):
             else:
                 nbands = 1
             shape = array.shape
+        array[array==nodata] = np.nan
 
         if mask is None:  # find all invalid values and mask them
             if nbands == 1:
@@ -2649,12 +2654,13 @@ class hstools(object):
                     mask[:, :, band] = mask_2d
 
         datacube_masked = np.ma.masked_array(array, mask=mask)
-        spec_mean = np.mean(datacube_masked, axis=(0, 1))
-        spec_std = np.std(datacube_masked, axis=(0, 1))
-        # spec_mean = np.nanmean(datacube_masked, axis=(0, 1))
-        # spec_std = np.nanstd(datacube_masked, axis=(0, 1))
+        # spec_mean = np.mean(datacube_masked, axis=(0, 1))
+        # spec_std = np.std(datacube_masked, axis=(0, 1))
+        spec_mean = np.nanmean(datacube_masked, axis=(0, 1))
+        spec_std = np.nanstd(datacube_masked, axis=(0, 1))
         spec_mean = pd.Series(spec_mean)
         spec_std = pd.Series(spec_std)
+        return spec_mean, spec_std, datacube_masked
 
         # adjust any values that are nan or inf
         # spec_mean[0]
@@ -2666,7 +2672,6 @@ class hstools(object):
 
         # i = np.where(spec_mean > 100)[0]
 
-        return spec_mean, spec_std, datacube_masked
 
 #    def mask_shadow(self, shadow_pctl=20, show_histogram=False,
 #                    spyfile=None):

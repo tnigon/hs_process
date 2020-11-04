@@ -2,6 +2,7 @@
 from copy import deepcopy
 from math import factorial
 import itertools
+import math
 import numpy as np
 import os
 import pandas as pd
@@ -42,8 +43,8 @@ class spec_mod(object):
         # self.tools.spyfile.metadata = metadata
         return metadata
 
-    def _metadata_spectral_mimic(self, sensor, meta_bands_sensor):
-        '''Modifies metadata for spectral_bin() function.'''
+    def _metadata_mimic(self, sensor, meta_bands_sensor):
+        '''Modifies metadata for spectral_mimic() function.'''
         metadata = deepcopy(self.tools.spyfile.metadata.copy())
         band_names = list(meta_bands_sensor.keys())
         hist_str = (" -> hs_process.spectral_mimic[<"
@@ -58,6 +59,30 @@ class spec_mod(object):
         metadata['band names'] = band_str
         metadata['wavelength'] = wavelength_str
         # self.tools.spyfile.metadata = metadata
+        return metadata
+
+    def _metadata_resample(self, bandwidth, meta_bands):
+        '''Modifies metadata for spectral_resample() function.'''
+        metadata = deepcopy(self.tools.spyfile.metadata)
+        hist_str = (" -> hs_process.spectral_resample[<SpecPyFloatText label: "
+                    "'bandwidth?' value:{0}>]".format(bandwidth))
+        metadata['history'] += hist_str
+        metadata['bands'] = len(meta_bands)
+
+        band = []
+        wavelength = []
+        fwhm = []
+        for idx, (key, val) in enumerate(meta_bands.items()):
+            band.append(idx + 1)
+            wavelength.append(val)
+            fwhm.append(bandwidth)
+        band_str = '{' + ', '.join(str(b) for b in band) + '}'
+        wavelength.sort()
+        wavelength_str = '{' + ', '.join('{0:.2f}'.format(wl) for wl in wavelength) + '}'
+        fwhm_str = '{' + ', '.join(str(fw) for fw in fwhm) + '}'
+        metadata['band names'] = band_str
+        metadata['wavelength'] = wavelength_str
+        metadata['fwhm'] = fwhm_str
         return metadata
 
     def _metadata_smooth(self, window_size, order):
@@ -105,6 +130,29 @@ class spec_mod(object):
         band_names = list(df.columns)
         band_names.remove('wl_nm')
         return df, band_names
+
+    def _resample_get_bin_indices(self, bandwidth, bins_n):
+        '''
+        Gets an array of indices that indicate which bands should be averaged/
+        binned.
+
+        Returns:
+            inds (``numpy.array``): The band number (or index) that each
+                original (non-binned) band should be consolidated into.
+        '''
+        # get wavelength as list of float values
+        wl_array = np.array(
+            [float(i) for i in self.spyfile.metadata['wavelength']])
+        if bandwidth is None:
+            _, bandwidth = np.linspace(
+                int(wl_array.min()), int(math.ceil(wl_array.max())),
+                num=bins_n, retstep=True, dtype=int)
+        bandwidth = int(np.round(bandwidth))
+        bins = np.array(range(int(wl_array.min()),
+                              int(math.ceil(wl_array.max())+bandwidth),
+                              bandwidth))
+        inds = np.digitize(wl_array, bins)  # assign an idx to each bin group
+        return wl_array, bandwidth, inds  # now, inds means band name (group_id)
 
     def _savitzky_golay(self, y, window_size=5, order=2, deriv=0, rate=1):
         '''
@@ -331,7 +379,7 @@ class spec_mod(object):
         metadata = self._metadata_clip(wl_bands, meta_bands)
         return array_clip, metadata
 
-    def spectral_mimic(self, sensor='sentera_6x', df_band_response=None,
+    def spectral_mimic(self, sensor='sentinel-2a', df_band_response=None,
                        col_wl='wl_nm', center_wl='peak', spyfile=None):
         '''
         Mimics the response of a multispectral sensor based on transmissivity
@@ -408,8 +456,9 @@ class spec_mod(object):
             array = spyfile.copy()
             spyfile = self.spyfile
 
-        msg1 = ('``sensor`` ({0}) must be one of ["sentera_6x", "custom"].'
-                ''.format(sensor))
+        msg1 = ('`sensor`` ({0}) must be one of ["sentera_6x", '
+                '"micasense_rededge_3", "sentinel-2a", "sentinel-2b", '
+                '"custom"].'.format(sensor))
         msg2 = ('``center_wl`` ({0}) must be one of ["peak", "weighted"].'
                 ''.format(center_wl))
         assert sensor in ['sentera_6x', 'micasense_rededge_3', 'sentinel-2a',
@@ -446,8 +495,103 @@ class spec_mod(object):
                 bands_remove[idx] = band_name
         for idx, band_name in bands_remove.items():
             array_multi = np.delete(array_multi, idx, axis=2)
-        metadata = self._metadata_spectral_mimic(sensor, meta_bands_sensor)
+        metadata = self._metadata_mimic(sensor, meta_bands_sensor)
         return array_multi, metadata
+
+    def spectral_resample(self, bandwidth=None, bins_n=None, spyfile=None):
+        '''
+        Performs pixel-wise resampling of spectral bands via binning
+            (calculates the mean across all bands within each ``bandwidth``
+             region for each image pixel).
+
+        Parameters:
+            bandwidth (``float`` or ``int``): The bandwidth of the bands
+                after spectral resampling is complete (units should be
+                consistent with that of the .hdr file). Setting ``bandwidth``
+                to 10 will consolidate bands that fall within every 10 nm
+                interval.
+            bins_n (``int``): The number of bins (i.e., "bands") to achieve
+                after spectral resampling is complete. Ignored if ``bandwidth``
+                is not ``None``.
+            spyfile (``SpyFile`` object): The datacube being accessed and/or
+                manipulated.
+
+        Returns:
+            2-element ``tuple`` containing
+
+            - **array_bin** (``numpy.ndarray``): Binned datacube.
+            - **metadata** (``dict``): Modified metadata describing the
+              binned spectral array (``array_bin``).
+
+        Example:
+            Load and initialize ``hsio`` and ``spec_mod``
+
+            >>> from hs_process import hsio
+            >>> from hs_process import spec_mod
+            >>> fname_hdr = r'F:\nigo0024\Documents\GitHub\hs_process\hs_process\data\Wells_rep2_20180628_16h56m_test_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_hdr = r'F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> io = hsio()
+            >>> io.read_cube(fname_hdr)
+            >>> my_spec_mod = spec_mod(io.spyfile)
+
+            Use spec_mod.spectral_resample to "bin" the datacube to bands with
+            20 nm bandwidths.
+
+            >>> array_bin, metadata_bin = my_spec_mod.spectral_resample(bandwidth=20)
+
+            Plot the mean spectral response of the hyperspectral image to that
+            of the binned image bands (mean calculated across the entire image).
+
+            >>> import seaborn as sns
+            >>> from ast import literal_eval
+            >>> array_hs = my_spec_mod.spyfile.open_memmap()
+            >>> mean_hs = array_hs.mean(axis=(0,1))*100
+            >>> mean_bin = array_bin.mean(axis=(0,1))*100
+            >>> x1 = my_spec_mod.tools.get_wavelength_range([0,239])  # list of wavelength values
+            >>> x2 = sorted(list(literal_eval(metadata_bin['wavelength'])))  # list of binned bands
+            >>> ax = sns.lineplot(x=x1, y=mean_hs, label='Hyperspectral')
+            >>> ax = sns.lineplot(x=x2, y=mean_bin, ax=ax, label='Binned', marker='o', ms=6)
+            >>> _ = ax.set(xlabel='Wavelength (nm)', ylabel='Reflectance (%)')
+
+            .. image:: ../img/spec_mod/spectral_bin_hs_vs_binned.png
+        '''
+        if spyfile is None:
+            spyfile = self.spyfile
+            array = self.spyfile.open_memmap()
+        elif isinstance(spyfile, SpyFile.SpyFile):
+            self.load_spyfile(spyfile)
+            array = self.spyfile.open_memmap()
+        elif isinstance(spyfile, np.ndarray):
+            array = spyfile.copy()
+            spyfile = self.spyfile
+
+        msg = ('Either ``bandwidth`` or ``bins_n`` must be set and be greater '
+               'than zero.')
+        if bandwidth is None:
+            assert bins_n > 0, msg
+            bins_n = int(bins_n)
+        else:
+            assert bandwidth > 1, msg
+            bins_n = None
+
+        wl_array, bandwidth, inds = self._resample_get_bin_indices(
+            bandwidth, bins_n)
+        # get empty array with
+        array_bin = np.empty((self.spyfile.nrows,
+                              self.spyfile.ncols,
+                              len(np.unique(inds))))
+        # find the first and last index for each group
+        meta_bands = {}
+        for uid in np.unique(inds):
+            i_low = np.argmax(inds == uid)
+            i_high = np.argmax(inds > uid) - 1
+            if i_high == -1:
+                i_high = i_low + 1
+            array_bin[:,:,uid-1] = np.average(array[:,:,i_low:i_high], axis=2)
+            meta_bands[int(uid)] = wl_array[i_low:i_high].mean()
+        # get band_names and center wavelengths
+        metadata = self._metadata_resample(bandwidth, meta_bands)
+        return array_bin, metadata
 
     def spectral_smooth(self, window_size=11, order=2, spyfile=None):
         '''
