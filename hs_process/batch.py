@@ -190,9 +190,9 @@ class batch(object):
                 'name_short': self._try_spat_crop_col_key('name_short', row),
                 'name_long': self._try_spat_crop_col_key('name_long', row),
                 'ext': self._try_spat_crop_col_key('ext', row),
+                'plot_id_ref': self._try_spat_crop_col_key('plot_id_ref', row),
                 'pix_e_ul': self._try_spat_crop_col_key('pix_e_ul', row),
                 'pix_n_ul': self._try_spat_crop_col_key('pix_n_ul', row),
-                'plot_id_ref': self._try_spat_crop_col_key('plot_id_ref', row),
                 'alley_size_e_m': self._try_spat_crop_col_key('alley_size_e_m', row),
                 'alley_size_n_m': self._try_spat_crop_col_key('alley_size_n_m', row),
                 'alley_size_e_pix': self._try_spat_crop_col_key('alley_size_e_pix', row),
@@ -1215,29 +1215,17 @@ class batch(object):
         '''
         if cs['plot_id_ref'] is None:
             cs['plot_id_ref'] = self.io.defaults.crop_defaults.plot_id_ref
-        # if cs['buf_e_m'] is None:
-        #     cs['buf_e_m'] = self.io.defaults.crop_defaults.buf_e_m
-        # if cs['buf_n_m'] is None:
-        #     cs['buf_n_m'] = self.io.defaults.crop_defaults.buf_n_m
-        # if cs['buf_e_pix'] is None:
-        #     cs['buf_e_pix'] = self.io.defaults.crop_defaults.buf_e_pix
-        # if cs['buf_n_pix'] is None:
-        #     cs['buf_n_pix'] = self.io.defaults.crop_defaults.buf_n_pix
-        # Note: batch.spatial_crop does not consider crop_defaults for crop_X
-        # or buf_X
-
-        # df_plots = self.my_spatial_mod.crop_many_gdf(
-        #     plot_id_ref=cs['plot_id_ref'], pix_e_ul=cs['pix_e_ul'],
-        #     pix_n_ul=cs['pix_n_ul'], n_plots=cs['n_plots'])
         df_plots = self.my_spatial_mod.crop_many_gdf(
             plot_id_ref=cs['plot_id_ref'], pix_e_ul=cs['pix_e_ul'],
-            pix_n_ul=cs['pix_n_ul'], n_plots=cs['n_plots'],
+            pix_n_ul=cs['pix_n_ul'],
             crop_e_m=cs['crop_e_m'], crop_n_m=cs['crop_n_m'],
             crop_e_pix=cs['crop_e_pix'], crop_n_pix=cs['crop_n_pix'],
             buf_e_m=cs['buf_e_m'], buf_n_m=cs['buf_n_m'],
             buf_e_pix=cs['buf_e_pix'], buf_n_pix=cs['buf_n_pix'],
             gdf_shft_e_m=cs['gdf_shft_e_m'], gdf_shft_n_m=cs['gdf_shft_n_m'],
-            gdf_shft_e_pix=cs['gdf_shft_e_pix'], gdf_shft_n_pix=cs['gdf_shft_n_pix'])
+            gdf_shft_e_pix=cs['gdf_shft_e_pix'],
+            gdf_shft_n_pix=cs['gdf_shft_n_pix'],
+            n_plots=cs['n_plots'])
         return df_plots
 
     def _crop_check_files(self, df_plots):
@@ -1293,10 +1281,12 @@ class batch(object):
                   'output file names to include "study" and "date", please '
                   'pass ``fname_sheet`` with "study" and "date" columns.\n')
             for fname_in in fname_list:
-                self.io.read_cube(fname_in)
-                self.my_spatial_mod = spatial_mod(self.io.spyfile, gdf)
-                self.my_spatial_mod.defaults = self.io.defaults
-                df_plots_many = self.my_spatial_mod.crop_many_gdf()
+                hsbatch.io.read_cube(fname_in)
+                hsbatch.my_spatial_mod = spatial_mod(hsbatch.io.spyfile, gdf)
+                # as long as defaults are set ahead of time, they should carry through
+                # e.g., batch.io.defaults.crop_defaults.n_plots = 40 to limit to 40 plots
+                hsbatch.my_spatial_mod.defaults = hsbatch.io.defaults
+                df_plots_many = hsbatch.my_spatial_mod.crop_many_gdf()
                 self._crop_loop(df_plots_many, gdf, base_dir_out, folder_name,
                                 name_append, write_geotiff)
         elif method == 'many_grid' and isinstance(df_plots, pd.DataFrame):
@@ -2557,9 +2547,12 @@ class batch(object):
            datacube. This can be used to avoid overwriting datacubes with
            similar names, and is especially useful when processing imagery from
            many dates and/or studies/locations and saving them in the same
-           directory. This information is appended to the end of the
-           ``hsio.name_short`` string. An example filename is
-           *plot_9_3_pika_gige_1_study_wells_date_20180628_plot_527-spatial-crop.bip*.
+           directory. If "study", "date", and "plot_id" are all passed, this
+           information is used to formulate the output file name; e.g.,
+           *study_wells_date_20180628_plot_527-spatial-crop.bip*. If either
+           "study" or "date" is missing, the populated variables wil be
+           appended to the end of the ``hsio.name_short`` string; e.g.,
+           *plot_9_3_pika_gige_1_plot_527-spatial-crop.bip*.
 
         #. Any other columns can be added to ``fname_sheet``, but
            ``batch.spatial_crop()`` does not use them in any way.
@@ -2586,37 +2579,39 @@ class batch(object):
             >>> from hs_process import batch
             >>> base_dir = r'F:\\nigo0024\Documents\hs_process_demo'
             >>> print(os.path.isdir(base_dir))
-            True
             >>> hsbatch = batch(base_dir, search_ext='.bip', dir_level=0,
                                 progress_bar=True)  # searches for all files in ``base_dir`` with a ".bip" file extension
+            True
 
             Load the plot geometry as a ``geopandas.GeoDataFrame``
 
             >>> fname_gdf = r'F:\\nigo0024\Documents\hs_process_demo\plot_bounds.geojson'
             >>> gdf = gpd.read_file(fname_gdf)
 
-            Perform the spatial cropping using the *"many_gdf"* ``method``.
-            Note that nothing is being bassed to ``fname_sheet`` here, so
+            Perform the spatial cropping using the *"many_gdf"* `method`. Note
+            that nothing is being passed to `fname_sheet` here, so
             ``batch.spatial_crop`` is simply going to attempt to crop all plots
-            contained within ``gdf`` that overlap with any datacubes in
-            ``base_dir``. This option does not allow for any flexibility
-            regarding minor adjustments to the cropping procedure (e.g.,
-            offset to the plot location in the datacube relative to the
-            location in the ``gdf``), but it is the most straightforward way to
-            run ``batch.spatial_crop`` because it does not depend on anything
-            to be passed to ``fname_sheet``. It does, however, allow you to
-            adjust the plot buffer relative to ``gdf`` via
-            ``hsbatch.io.defaults.crop_defaults``
+            contained within `gdf` that overlap with any datacubes in
+            ``base_dir``.
 
-            >>> hsbatch.io.defaults.crop_defaults.buf_e_m = 2
+            Passing ``fname_sheet`` directly is definitely more flexible for
+            customization. However, some customization is possible while not
+            passing ``fname_sheet``. In the example below, we set an easting
+            and northing buffer, as well as limit the number of plots to crop
+            to 40. These defaults trickle through to
+            ``spatial_mod.crop_many_gdf()``, so by setting them on the
+            ``batch`` object, they will be recognized when calculating crop
+            boundaries from ``gdf``.
+
+            >>> hsbatch.io.defaults.crop_defaults.buf_e_m = 2  # Sets buffer in the easting direction (units of meters)
             >>> hsbatch.io.defaults.crop_defaults.buf_n_m = 0.5
-            >>> hsbatch.io.set_io_defaults(force=True)
+            >>> hsbatch.io.defaults.crop_defaults.n_plots = 40  # We can limit the number of plots to process from gdf
             >>> hsbatch.spatial_crop(base_dir=base_dir, method='many_gdf',
-                                     gdf=gdf)
-            Spatially cropping: F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip
-            Saving F:\\nigo0024\Documents\hs_process_demo\spatial_crop\Wells_rep2_20180628_16h56m_pika_gige_7_1018-spatial-crop.bip
-            Spatially cropping: F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip
-            Saving F:\\nigo0024\Documents\hs_process_demo\spatial_crop\Wells_rep2_20180628_16h56m_pika_gige_7_918-spatial-crop.bip
+                                     gdf=gdf, out_force=True)
+
+            Because ``fname_list`` was passed instead of ``fname_sheet``, there is not a way to infer the study name and date. Therefore, "study" and "date" will be omitted from the output file name. If you would like output file names to include "study" and "date", please pass ``fname_sheet`` with "study" and "date" columns.
+
+            Processing file 39/40: 100%|██████████| 40/40 [00:02<00:00, 17.47it/s]
 
             .. image:: ../img/batch/spatial_crop_inline.png
 

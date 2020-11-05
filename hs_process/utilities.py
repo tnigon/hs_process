@@ -41,25 +41,26 @@ class defaults(object):
                 'name_short': None,
                 'name_long': None,
                 'ext': 'bip',
+                'plot_id_ref': None,
                 'pix_e_ul': 0,
                 'pix_n_ul': 0,
-                'alley_size_e_pix': None,  # set to `None` because should be set
-                'alley_size_n_pix': None,  # intentionally
                 'alley_size_e_m': None,
                 'alley_size_n_m': None,
-                'buf_e_pix': None,
-                'buf_n_pix': None,
+                'alley_size_e_pix': None,  # set to `None` because should be set
+                'alley_size_n_pix': None,  # intentionally
                 'buf_e_m': None,
                 'buf_n_m': None,
-                'crop_e_pix': 90,
-                'crop_n_pix': 120,
+                'buf_e_pix': None,
+                'buf_n_pix': None,
                 'crop_e_m': None,
                 'crop_n_m': None,
-                'gdf_shft_e_pix': None,
-                'gdf_shft_n_pix': None,
+                'crop_e_pix': None,
+                'crop_n_pix': None,
                 'gdf_shft_e_m': None,
                 'gdf_shft_n_m': None,
-                'plot_id_ref': None})
+                'gdf_shft_e_pix': None,
+                'gdf_shft_n_pix': None,
+                'n_plots': None})
         '''
         Default values for performing spatial cropping on images. ``crop_defaults``
         is referenced by the ``spatial_mod.crop_single()`` function to get default
@@ -173,6 +174,7 @@ class defaults(object):
                 'name_short': 'name_short',
                 'name_long': 'name_long',
                 'ext': 'ext',
+                'plot_id_ref': 'plot_id_ref',
                 'pix_e_ul': 'pix_e_ul',
                 'pix_n_ul': 'pix_n_ul',
                 'alley_size_e_m': 'alley_size_e_m',
@@ -187,13 +189,12 @@ class defaults(object):
                 'crop_n_m': 'crop_n_m',
                 'crop_e_pix': 'crop_e_pix',
                 'crop_n_pix': 'crop_n_pix',
-                'plot_id_ref': 'plot_id_ref',
-                'n_plots_x': 'n_plots_x',
-                'n_plots_y': 'n_plots_y',
                 'gdf_shft_e_m': 'gdf_shft_e_m',
                 'gdf_shft_n_m': 'gdf_shft_n_m',
                 'gdf_shft_e_pix': 'gdf_shft_e_pix',
                 'gdf_shft_n_pix': 'gdf_shft_n_pix',
+                'n_plots_x': 'n_plots_x',
+                'n_plots_y': 'n_plots_y',
                 'n_plots': 'n_plots'})
         '''
         Default column names for performing batch spatial cropping on

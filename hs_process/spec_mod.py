@@ -623,7 +623,7 @@ class spec_mod(object):
 
             >>> from hs_process import hsio
             >>> from hs_process import spec_mod
-            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio()
             >>> io.read_cube(fname_hdr)
             >>> my_spec_mod = spec_mod(io.spyfile)

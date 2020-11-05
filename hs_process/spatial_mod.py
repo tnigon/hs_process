@@ -86,14 +86,14 @@ class spatial_mod(object):
                    self.defaults.spat_crop_cols.plot_id_ref,
                    self.defaults.spat_crop_cols.pix_e_ul,
                    self.defaults.spat_crop_cols.pix_n_ul,
-                   self.defaults.spat_crop_cols.crop_e_m,
-                   self.defaults.spat_crop_cols.crop_n_m,
-                   self.defaults.spat_crop_cols.crop_e_pix,
-                   self.defaults.spat_crop_cols.crop_n_pix,
                    self.defaults.spat_crop_cols.buf_e_m,
                    self.defaults.spat_crop_cols.buf_n_m,
                    self.defaults.spat_crop_cols.buf_e_pix,
                    self.defaults.spat_crop_cols.buf_n_pix,
+                   self.defaults.spat_crop_cols.crop_e_m,
+                   self.defaults.spat_crop_cols.crop_n_m,
+                   self.defaults.spat_crop_cols.crop_e_pix,
+                   self.defaults.spat_crop_cols.crop_n_pix,
                    self.defaults.spat_crop_cols.gdf_shft_e_m,
                    self.defaults.spat_crop_cols.gdf_shft_n_m,
                    self.defaults.spat_crop_cols.gdf_shft_e_pix,
@@ -102,18 +102,22 @@ class spatial_mod(object):
 
         df_plots = pd.DataFrame(columns=columns)
         gdf_filter = self._overlay_gdf(gdf, crop=False)
-        msg = ('Please be sure the reference plot (`plot_id_ref`) passed and '
-               'is within the spatial extent of the datacube (`spyfile`). If '
-               'you do not intend to pass `plot_id_ref`, then each of '
-               '`n_plots`, `pix_e_ul`, and `pix_n_ul` should be left to '
-               '`None`.\nCurrent value of `plot_id_ref`: {0}\nDatacube '
-               'filename:  {1}\n'.format(plot_id_ref, self.spyfile.filename))
+        msg = ('Please be sure the reference plot (`plot_id_ref`) is within '
+               'the spatial extent of the datacube (`spyfile`).\nCurrent '
+               'value of `plot_id_ref`: {0}\nDatacube filename: {1}\n'
+               ''.format(plot_id_ref, self.spyfile.filename))
         if pix_e_ul == 0:
             pix_e_ul = None
         if pix_n_ul == 0:
             pix_n_ul = None
-        if pd.notnull(n_plots) or pd.notnull(pix_e_ul) or pd.notnull(pix_n_ul):
-            assert plot_id_ref in gdf_filter['plot_id'].tolist(), msg
+        # if pd.notnull(n_plots) or pd.notnull(pix_e_ul) or pd.notnull(pix_n_ul):
+        if pd.notnull(pix_e_ul) or pd.notnull(pix_n_ul):
+            if pd.notnull(plot_id_ref):
+                assert plot_id_ref in gdf_filter['plot_id'].tolist(), msg
+            else:
+                raise ValueError(
+                    '``plot_id_ref`` was not passsed, and is required if '
+                    'are ``pix_e_ul`` or ``pix_n_ul`` are passed.')
         # TODO: option to designate any column as the "plot_id" column.
 
         if metadata is None:
@@ -136,6 +140,8 @@ class spatial_mod(object):
         gdf_sort = gdf_temp.sort_values(by=['y', 'x'], ascending=[False, True])
         gdf_sort = gdf_sort.reset_index(drop=True)  # reset the index
 
+        if pd.notnull(n_plots) and pd.isnull(plot_id_ref):
+            plot_id_ref = gdf_sort.loc[0,'plot_id']  # Get NW-most plot_id as plot_id_ref
         if pd.notnull(n_plots):
             idx = gdf_sort[gdf_sort['plot_id'] == plot_id_ref].index[0]
             gdf_sort = gdf_sort.iloc[idx:idx + int(n_plots)]
@@ -158,9 +164,9 @@ class spatial_mod(object):
                     self.tools.name_long,
                     os.path.splitext(self.spyfile.filename)[-1],
                     plot_id, offset_e, offset_n,
-                    np.nan, np.nan, gdf_crop_e_pix, gdf_crop_n_pix,  # crop_X
                     np.nan, np.nan, np.nan, np.nan,  # buf_X
-                    np.nan, np.nan, np.nan, np.nan]  # gdf_shft
+                    np.nan, np.nan, gdf_crop_e_pix, gdf_crop_n_pix,  # crop
+                    np.nan, np.nan, np.nan, np.nan]  # gdf_shft]
             df_plots_temp = pd.DataFrame(columns=columns, data=[data])
             # TODO: Check array size and delete if there is no non-nan pixels
             df_plots = df_plots.append(df_plots_temp, ignore_index=True)
@@ -439,16 +445,6 @@ class spatial_mod(object):
             n_m = n_pix * ps_n
         return e_m, n_m, e_pix, n_pix
 
-        # if e_pix is None and e_m is not None:
-        #     e_pix = int(e_m / ps_e)
-        # elif e_pix is not None and e_m is None:
-        #     e_m = e_pix * ps_e
-        # if n_pix is None and n_m is not None:
-        #     n_pix = int(n_m / ps_n)
-        # elif n_pix is not None and n_m is None:
-        #     n_m = n_pix * ps_n
-        return e_m, n_m, e_pix, n_pix
-
     def _shift_by_gdf(self, gdf, plot_id_ref, buf_e_m, buf_n_m,
                       gdf_shft_e_m, gdf_shft_n_m):
         '''
@@ -628,14 +624,40 @@ class spatial_mod(object):
     # to be sure that things like buf aren't passed twice (once in crop_many, then
     # again in crop_single), where the buffer might be applied twice.
 
-    def crop_many_gdf(
-            self, spyfile=None, gdf=None,
-            plot_id_ref=None, pix_e_ul=None, pix_n_ul=None,
-            n_plots=None, crop_e_m=None, crop_n_m=None,
-            crop_e_pix=None, crop_n_pix=None,
-            buf_e_m=None, buf_n_m=None, buf_e_pix=None, buf_n_pix=None,
-            gdf_shft_e_m=None, gdf_shft_n_m=None,
-            gdf_shft_e_pix=None, gdf_shft_n_pix=None):
+    def _check_crop_defaults(self, **kwargs):
+        '''
+        Checks passed parameters against self.defaults.crop_defaults. The
+        passed parameters takes precedence. If ``None`` is passed for a kwarg,
+        defaults.crop_defaults is checked and the variable is populated from
+        there.
+
+        Parameters:
+            **kwargs: A dict of keyword arguments to be checked against
+                self.defaults.crop_defaults.
+        '''
+        for k in self.defaults.crop_defaults:  # all the allowed params
+            # if k not in kwargs and self.defaults.crop_defaults[k] is not None:
+            if k not in kwargs:
+                # set to that of defaults, even if it is null so it is guarenteed to exist
+                kwargs[k] = self.defaults.crop_defaults[k]
+            elif kwargs[k] is None:  #  and self.defaults.crop_defaults[k] is not None:
+                # set to that of defaults if passed as None
+                kwargs[k] = self.defaults.crop_defaults[k]
+        return kwargs
+
+        # kwargs_null = {k:v for k,v in kwargs.items() if v is None}
+        # for k in kwargs_null:
+        #     if k in self.defaults.crop_defaults and self.defaults.crop_defaults[k] is not None:
+        #         kwargs_null[k] = self.defaults.crop_defaults[k]
+        # return kwargs_null
+
+    def crop_many_gdf(self, spyfile=None, gdf=None, **kwargs):
+            # plot_id_ref=None,
+            # pix_e_ul=None, pix_n_ul=None,
+            # crop_e_m=None, crop_n_m=None, crop_e_pix=None, crop_n_pix=None,
+            # buf_e_m=None, buf_n_m=None, buf_e_pix=None, buf_n_pix=None,
+            # gdf_shft_e_m=None, gdf_shft_n_m=None,
+            # gdf_shft_e_pix=None, gdf_shft_n_pix=None, n_plots=None):
         '''
         Crops many plots from a single image by comparing the image to a
         polygon file (``geopandas.GoeDataFrame``) that contains plot
@@ -650,73 +672,74 @@ class spatial_mod(object):
                 a column name to identify each of the plots, and should be an
                 integer; if ``None``, loads geodataframe from
                 ``spatial_mod.gdf`` (default: ``None``).
-            plot_id_ref (``int``, optional): the plot ID of the reference plot.
-                ``plot_id_ref`` is required if passing ``pix_e_ul``,
-                ``pix_n_ul``, or ``n_plots`` because it is used as the
-                reference point for any of the adjustments/modifications
-                dictated by said parameters. ``plot_id_ref`` must be present in
-                the ``gdf``, and the extent of ``plot_id_ref`` must intersect
-                the extent of the datacube (default: ``None``).
-            pix_e_ul (``int``, optional): upper left pixel column (easting) of
-                ``plot_id_ref``; this is used to calculate the offset between
-                the GeoDataFrame geometry and the approximate image
-                georeference error (default: ``None``).
-            pix_n_ul (``int``, optional): upper left pixel row (northing) of
-                ``plot_id_ref``; this is used to calculate the offset between
-                the GeoDataFrame geometry and the approximate image
-                georeference error (default: ``None``).
-            n_plots (``int``, optional): number of plots to crop, starting with
-                ``plot_id_ref`` and moving from West to East and North to
-                South. This can be used to limit the number of cropped plots
-                (default; ``None``).
-            crop_e_m (``float``, optional): length of each row (easting
-                direction) of the cropped image in map units (e.g., meters;
-                default: ``None``).
-            crop_n_m (``float``, optional): length of each column (northing
-                direction) of the cropped image in map units (e.g., meters;
-                default: ``None``)
-            crop_e_pix (``int``, optional): number of pixels in each row in the
-                cropped image (default: ``None``).
-            crop_n_pix (``int``, optional): number of pixels in each column in
-                the cropped image (default: ``None``).
-            buf_e_m (``float``, optional): The buffer distance in the easting
-                direction (in map units; e.g., meters) to be applied after
-                calculating the original crop area; the buffer is considered
-                after ``crop_X_m`` / ``crop_X_pix``. A positive value will
-                reduce the size of ``crop_X_m`` / ``crop_X_pix``, and a
-                negative value will increase it (default: ``None``).
-            buf_n_m (``float``, optional): The buffer distance in the northing
-                direction (in map units; e.g., meters) to be applied after
-                calculating the original crop area; the buffer is considered
-                after ``crop_X_m`` / ``crop_X_pix``. A positive value will
-                reduce the size of ``crop_X_m`` / ``crop_X_pix``, and a
-                negative value will increase it (default: ``None``).
-            buf_e_pix (``int``, optional): The buffer distance in the easting
-                direction (in pixel units) to be applied after calculating the
-                original crop area (default: ``None``).
-            buf_n_pix (``int``, optional): The buffer distance in the northing
-                direction (in pixel units) to be applied after calculating the
-                original crop area (default: ``None``).
-            gdf_shft_e_m (``float``): The distance to shift the cropped
-                datacube from the upper left/NW plot corner in the east
-                direction (negative value will shift to the west). Only
-                relevent when ``gdf`` is passed. This shift is applied after
-                the offset is applied from buf_X (default: 0.0).
-            gdf_shft_n_m (``float``): The distance to shift the cropped
-                datacube from the upper left/NW plot corner in the north
-                direction (negative value will shift to the south). Only
-                relevent when ``gdf`` is passed. This shift is applied after
-                the offset is applied from buf_X (default: 0.0).
-            gdf_shft_e_pix (``int``): The pixel units to shift the cropped
-                datacube from the upper left/NW plot corner in the east
-                direction (negative value will shift to the west). Only
-                relevent when ``gdf`` is passed. This shift is applied after
-                the offset is applied from buf_X (default: 0.0).
-            gdf_shft_n_pix (``int``): The pixel units to shift the cropped
-                datacube from the upper left/NW plot corner in the north
-                direction (negative value will shift to the south). Only
-                relevent when ``gdf`` is passed. This shift is applied after
-                the offset is applied from buf_X (default: 0.0).
+            **kwargs: Can be any of the keys in self.defaults.crop_defaults:
+                plot_id_ref (``int``, optional): the plot ID of the reference plot.
+                    ``plot_id_ref`` is required if passing ``pix_e_ul``,
+                    ``pix_n_ul``, or ``n_plots`` because it is used as the
+                    reference point for any of the adjustments/modifications
+                    dictated by said parameters. ``plot_id_ref`` must be present in
+                    the ``gdf``, and the extent of ``plot_id_ref`` must intersect
+                    the extent of the datacube (default: ``None``).
+                pix_e_ul (``int``, optional): upper left pixel column (easting) of
+                    ``plot_id_ref``; this is used to calculate the offset between
+                    the GeoDataFrame geometry and the approximate image
+                    georeference error (default: ``None``).
+                pix_n_ul (``int``, optional): upper left pixel row (northing) of
+                    ``plot_id_ref``; this is used to calculate the offset between
+                    the GeoDataFrame geometry and the approximate image
+                    georeference error (default: ``None``).
+                crop_e_m (``float``, optional): length of each row (easting
+                    direction) of the cropped image in map units (e.g., meters;
+                    default: ``None``).
+                crop_n_m (``float``, optional): length of each column (northing
+                    direction) of the cropped image in map units (e.g., meters;
+                    default: ``None``)
+                crop_e_pix (``int``, optional): number of pixels in each row in the
+                    cropped image (default: ``None``).
+                crop_n_pix (``int``, optional): number of pixels in each column in
+                    the cropped image (default: ``None``).
+                buf_e_m (``float``, optional): The buffer distance in the easting
+                    direction (in map units; e.g., meters) to be applied after
+                    calculating the original crop area; the buffer is considered
+                    after ``crop_X_m`` / ``crop_X_pix``. A positive value will
+                    reduce the size of ``crop_X_m`` / ``crop_X_pix``, and a
+                    negative value will increase it (default: ``None``).
+                buf_n_m (``float``, optional): The buffer distance in the northing
+                    direction (in map units; e.g., meters) to be applied after
+                    calculating the original crop area; the buffer is considered
+                    after ``crop_X_m`` / ``crop_X_pix``. A positive value will
+                    reduce the size of ``crop_X_m`` / ``crop_X_pix``, and a
+                    negative value will increase it (default: ``None``).
+                buf_e_pix (``int``, optional): The buffer distance in the easting
+                    direction (in pixel units) to be applied after calculating the
+                    original crop area (default: ``None``).
+                buf_n_pix (``int``, optional): The buffer distance in the northing
+                    direction (in pixel units) to be applied after calculating the
+                    original crop area (default: ``None``).
+                gdf_shft_e_m (``float``): The distance to shift the cropped
+                    datacube from the upper left/NW plot corner in the east
+                    direction (negative value will shift to the west). Only
+                    relevent when ``gdf`` is passed. This shift is applied after
+                    the offset is applied from buf_X (default: 0.0).
+                gdf_shft_n_m (``float``): The distance to shift the cropped
+                    datacube from the upper left/NW plot corner in the north
+                    direction (negative value will shift to the south). Only
+                    relevent when ``gdf`` is passed. This shift is applied after
+                    the offset is applied from buf_X (default: 0.0).
+                gdf_shft_e_pix (``int``): The pixel units to shift the cropped
+                    datacube from the upper left/NW plot corner in the east
+                    direction (negative value will shift to the west). Only
+                    relevent when ``gdf`` is passed. This shift is applied after
+                    the offset is applied from buf_X (default: 0.0).
+                gdf_shft_n_pix (``int``): The pixel units to shift the cropped
+                    datacube from the upper left/NW plot corner in the north
+                    direction (negative value will shift to the south). Only
+                    relevent when ``gdf`` is passed. This shift is applied after
+                    the offset is applied from buf_X (default: 0.0).
+                n_plots (``int``, optional): number of plots to crop, starting with
+                    ``plot_id_ref`` and moving from West to East and North to
+                    South. This can be used to limit the number of cropped plots
+                    (default; ``None``).
 
         Returns:
             ``pandas.DataFrame``:
@@ -837,12 +860,14 @@ class spatial_mod(object):
 
             .. image:: ../img/spatial_mod/crop_many_gdf_qgis.png
         '''
+        kwargs_d = self._check_crop_defaults(**kwargs)
+
         if isinstance(spyfile, SpyFile.SpyFile):
             self.load_spyfile(spyfile)
         metadata = self.spyfile.metadata
         if gdf is None:
             gdf = self.gdf
-
+        plot_id_ref = kwargs_d['plot_id_ref']
         msg1 = ('Please load a GeoDataFrame (geopandas library).\n')
         msg2 = ('Be sure "plot_id" is used as the column heading to identify '
                 'plots in the GeodataFrame (`gdf`).\nGeoDataFrame (`gdf`) '
@@ -861,15 +886,19 @@ class spatial_mod(object):
             else:
                 assert plot_id_ref in gdf['plot_id'].tolist(), msg3
         df_plots = self._find_plots_gdf(gdf, plot_id_ref,
-                                        pix_e_ul, pix_n_ul, n_plots, metadata)
+                                        kwargs_d['pix_e_ul'], kwargs_d['pix_n_ul'],
+                                        kwargs_d['n_plots'], metadata)
 
         # if crop_X or buf_X were passed, overwrite them now
         crop_e_m, crop_n_m, crop_e_pix, crop_n_pix = self._pix_to_mapunit(
-                crop_e_m, crop_n_m, crop_e_pix, crop_n_pix)
+                kwargs_d['crop_e_m'], kwargs_d['crop_n_m'],
+                kwargs_d['crop_e_pix'], kwargs_d['crop_n_pix'])
         buf_e_m, buf_n_m, buf_e_pix, buf_n_pix = self._pix_to_mapunit(
-                buf_e_m, buf_n_m, buf_e_pix, buf_n_pix)
+                kwargs_d['buf_e_m'], kwargs_d['buf_n_m'],
+                kwargs_d['buf_e_pix'], kwargs_d['buf_n_pix'])
         gdf_shft_e_m, gdf_shft_n_m, gdf_shft_e_pix, gdf_shft_n_pix = self._pix_to_mapunit(
-                gdf_shft_e_m, gdf_shft_n_m, gdf_shft_e_pix, gdf_shft_n_pix)
+                kwargs_d['gdf_shft_e_m'], kwargs_d['gdf_shft_n_m'],
+                kwargs_d['gdf_shft_e_pix'], kwargs_d['gdf_shft_n_pix'])
         if pd.notnull(crop_e_pix):
             df_plots['crop_e_pix'] = crop_e_pix
         if pd.notnull(crop_n_pix):
@@ -882,7 +911,6 @@ class spatial_mod(object):
             df_plots['gdf_shft_e_pix'] = gdf_shft_e_pix
         if pd.notnull(gdf_shft_n_pix):
             df_plots['gdf_shft_n_pix'] = gdf_shft_n_pix
-
         return df_plots
 
     def crop_single(self, pix_e_ul=0, pix_n_ul=0, crop_e_pix=None,
