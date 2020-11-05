@@ -43,6 +43,18 @@ class spec_mod(object):
         # self.tools.spyfile.metadata = metadata
         return metadata
 
+    def _metadata_derivative(self, metadata, stdev_dydx=None):
+        '''Modifies metadata for spec_derivative() function.'''
+        metadata_dydx = deepcopy(metadata)
+        hist_str = (" -> hs_process.spec_derivative[<>]")
+        metadata_dydx['history'] += hist_str
+        if stdev_dydx is None:
+            if 'stdev' in metadata_dydx:
+                metadata_dydx.pop('stdev', None)
+        else:
+            metadata_dydx['stdev'] = stdev_dydx
+        return metadata_dydx
+
     def _metadata_mimic(self, sensor, meta_bands_sensor):
         '''Modifies metadata for spectral_mimic() function.'''
         metadata = deepcopy(self.tools.spyfile.metadata.copy())
@@ -277,6 +289,80 @@ class spec_mod(object):
             self.spy_ps_e = None
             self.spy_ps_n = None
 
+    def spec_derivative(self, spyfile_spec=None):
+        '''
+        Calculates the numeric derivative spectra from spyfile_spec.
+
+        The derivavative spectra is calculated as the slope (rise over run) of
+        the input spectra, and is normalized by the wavelength unit.
+
+        Example:
+            Load and initialize ``hsio``
+
+            >>> import os
+            >>> from hs_process import hsio
+            >>> from hs_process import spec_mod
+            >>> data_dir = r'F:\\nigo0024\Documents\hs_process_demo'
+            >>> fname_hdr_spec = os.path.join(data_dir, 'Wells_rep2_20180628_16h56m_pika_gige_7_plot_611-cube-to-spec-mean.spec.hdr')
+            >>> io = hsio()
+            >>> io.read_spec(fname_hdr_spec)
+            >>> my_spec_mod = spec_mod(io.spyfile_spec)
+
+            Calculate the numeric derivative.
+
+            >>> spec_dydx, metadata_dydx = my_spec_mod.spec_derivative()
+
+            >>> io.write_spec('spec_derivative.spec.hdr', spec_dydx, df_std=None, metadata=metadata_dydx)
+
+            Plot the numeric derivative spectra and compare against the original spectra.
+
+            >>> import numpy as np
+            >>> import seaborn as sns
+            >>> sns.set_style("ticks")
+            >>> wl_x = np.array([float(i) for i in metadata_dydx['wavelength']])
+            >>> y_ref = io.spyfile_spec.open_memmap()[0,0,:]*100
+            >>> ax1 = sns.lineplot(wl_x, y_ref)
+            >>> ax2 = ax1.twinx()
+            >>> ax2 = sns.lineplot(wl_x, 0, ax=ax2, color='gray')
+            >>> ax2 = sns.lineplot(wl_x, spec_dydx[0,0,:]*100, ax=ax2, color=sns.color_palette()[1])
+            >>> ax2.set(ylim=(-0.8, 1.5))
+            >>> ax1.set_xlabel('Wavelength (nm)', weight='bold')
+            >>> ax1.set_ylabel('Reflectance (%)', weight='bold')
+            >>> ax2.set_ylabel('Reflectance derivative (%)', weight='bold')
+            >>> ax1.set_title(r'API Example: `hstools.spec_derivative`', weight='bold')
+        '''
+        msg0 = ('A numpy array was passed under the ``spyfile`` parameter, '
+                'so therefore metadata must be retrieved from '
+                '``spec_mod.spyfile.metadata``. However, ``spec_mod.spyfile`` '
+                'is not set. Please set via ``spec_mod.load_spyfile()``.')
+        msg1 = ('``spyfile_spec`` was not passed and is not set; please set '
+                'via ``spec_mod.load_spyfile()``.')
+        msg2 = ('The passed ``Spyfile`` is not a valid "spec" file. A valid '
+                '"spec" file must have 3 dimensions with each of the first '
+                'two dimensions (x and y) equal to 1 (e.g., shape = '
+                '(1, 1, n_bands)). Please set ``spyfile`` to a valid "spec" '
+                'or pass a valid "spec" ``spyfile`` to ``spec_derivative()``.')
+        if isinstance(spyfile_spec, SpyFile.SpyFile):
+            spec = spyfile_spec.open_memmap()
+            metadata = spyfile_spec.metadata
+        elif isinstance(spyfile_spec, np.ndarray):
+            assert self.spyfile is not None, msg0
+            spec = spyfile_spec.copy()
+            metadata = self.spyfile.metadata
+        else:
+            assert self.spyfile is not None, msg1
+            spec = self.spyfile.open_memmap()
+            metadata = self.spyfile.metadata
+        assert spec.shape[:2] == (1, 1), msg2  # First two dimensions must be 1
+        wl_x = np.array([float(i) for i in metadata['wavelength']])
+        spec_dydx = np.empty_like(spec)
+        spec_dydx[0,0,:] = np.gradient(spec[0,0,:], wl_x)
+        # if 'stdev' in metadata:
+        #     stdev = np.array([float(i) for i in metadata['stdev']])
+        #     stdev_dydx = np.gradient(stdev, wl_x)
+        metadata_dydx = self._metadata_derivative(metadata)
+        return spec_dydx, metadata_dydx
+
     def spectral_clip(self, wl_bands=[[0, 420], [760, 776], [813, 827],
                                       [880, 1000]], spyfile=None):
         '''
@@ -307,52 +393,37 @@ class spec_mod(object):
         Example:
             Load and initialize ``hsio`` and ``spec_mod``
 
+            >>> import os
             >>> from hs_process import hsio
             >>> from hs_process import spec_mod
-            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
-            >>> io1 = hsio()
-            >>> io1.read_cube(fname_hdr)
-            >>> my_spec_mod = spec_mod(io1.spyfile)
+            >>> data_dir = r'F:\\nigo0024\Documents\hs_process_demo'
+            >>> fname_hdr = os.path.join(data_dir, 'Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr')
+            >>> io = hsio()
+            >>> io.read_cube(fname_hdr)
+            >>> my_spec_mod = spec_mod(io.spyfile)
 
             Using ``spec_mod.spectral_clip``, clip all spectral bands below
             *420 nm* and above *880 nm*, as well as the bands near the oxygen
             absorption (i.e., *760-776 nm*) and water absorption
             (i.e., *813-827 nm*) regions.
 
-            >>> array_clip, metadata = my_spec_mod.spectral_clip(
+            >>> array_clip, metadata_clip = my_spec_mod.spectral_clip(
                     wl_bands=[[0, 420], [760, 776], [813, 827], [880, 1000]])
 
-            Save the clipped datacube
+            Plot the spectra of the unclippe hyperspectral image and compare to that of the clipped image for a single pixel.
 
-            >>> fname_hdr_clip = r'F:\\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip.hdr'
-            >>> io1.write_cube(fname_hdr_clip, array_clip, metadata)
-            Saving F:\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip
+            >>> import seaborn as sns
+            >>> from ast import literal_eval
+            >>> spy_hs = my_spec_mod.spyfile.open_memmap()  # datacube before smoothing
+            >>> meta_bands = list(io.tools.meta_bands.values())
+            >>> meta_bands_clip = sorted([float(i) for i in literal_eval(metadata_clip['wavelength'])])
+            >>> ax = sns.lineplot(x=meta_bands, y=spy_hs[200][800]*100, label='Before spectral clipping', linewidth=3)
+            >>> ax = sns.lineplot(x=meta_bands_clip, y=array_clip[200][800]*100, label='After spectral clipping', ax=ax)
+            >>> ax.set_xlabel('Wavelength (nm)', weight='bold')
+            >>> ax.set_ylabel('Reflectance (%)', weight='bold')
+            >>> ax.set_title(r'API Example: `spec_mod.spectral_clip`', weight='bold')
 
-            Initialize a second instance of ``hsio`` and read in the clipped
-            cube to compare the clipped cube to the unclipped cube
-
-            >>> io2 = hsio()  # initialize a second instance to compare cubes
-            >>> io2.read_cube(fname_hdr_clip)
-            >>> io1.spyfile
-            Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
-        	# Rows:            617
-        	# Samples:        1300
-        	# Bands:           240
-        	Interleave:        BIP
-        	Quantization:  32 bits
-        	Data format:   float32
-
-            The unclipped cube (above) has 240 spectral bands, while the
-            clipped cube (below) has 210.
-
-            >>> io2.spyfile
-            Data Source:   'F:\\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip'
-        	# Rows:            617
-        	# Samples:        1300
-        	# Bands:           210
-        	Interleave:        BIP
-        	Quantization:  32 bits
-        	Data format:   float32
+            .. image:: ../img/spec_mod/spectral_clip.png
         '''
         if spyfile is None:
             spyfile = self.spyfile
@@ -416,10 +487,11 @@ class spec_mod(object):
         Example:
             Load and initialize ``hsio`` and ``spec_mod``
 
+            >>> import os
             >>> from hs_process import hsio
             >>> from hs_process import spec_mod
-            >>> fname_hdr = r'F:\nigo0024\Documents\GitHub\hs_process\hs_process\data\Wells_rep2_20180628_16h56m_test_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
-            >>> fname_hdr = r'F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> data_dir = r'F:\\nigo0024\Documents\hs_process_demo'
+            >>> fname_hdr = os.path.join(data_dir, 'Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr')
             >>> io = hsio()
             >>> io.read_cube(fname_hdr)
             >>> my_spec_mod = spec_mod(io.spyfile)
@@ -434,17 +506,44 @@ class spec_mod(object):
             entire image).
 
             >>> import seaborn as sns
-            >>> from ast import literal_eval
-            >>> array_hs = my_spec_mod.spyfile.open_memmap()
-            >>> mean_hs = array_hs.mean(axis=(0,1))*100
-            >>> mean_s2a = array_s2a.mean(axis=(0,1))*100
-            >>> x1 = my_spec_mod.tools.get_wavelength_range([0,239])  # list of wavelength values
-            >>> x2 = sorted(list(literal_eval(metadata_s2a['wavelength'])))  # list of Sentinel-2A bands
-            >>> ax = sns.lineplot(x=x1, y=mean_hs, label='Hyperspectral')
-            >>> ax = sns.lineplot(x=x2, y=mean_s2a, ax=ax, label='Sentinel-2A', marker='o', ms=6)
-            >>> _ = ax.set(xlabel='Wavelength (nm)', ylabel='Reflectance (%)')
+            >>> spy_hs = my_spec_mod.spyfile.open_memmap()  # datacube before smoothing
+            >>> meta_bands = list(io.tools.meta_bands.values())
+            >>> meta_bands_s2a = sorted([float(i) for i in literal_eval(metadata_s2a['wavelength'])])
 
-            .. image:: ../img/spec_mod/spectral_mimic_hs_vs_sentinel-2a.png
+            >>> ax = sns.lineplot(x=meta_bands, y=spy_hs[200][800]*100, label='Hyperspectral (Pika II)', linewidth=3)
+            >>> ax = sns.lineplot(x=meta_bands_s2a, y=array_s2a[200][800]*100, label='Sentinel-2A "mimic"', marker='o', ms=6, ax=ax)
+            >>> ax.set_xlabel('Wavelength (nm)', weight='bold')
+            >>> ax.set_ylabel('Reflectance (%)', weight='bold')
+            >>> ax.set_title(r'API Example: `spec_mod.spectral_mimic`', weight='bold')
+
+            .. image:: ../img/spec_mod/spectral_mimic_sentinel-2a.png
+
+            Use spec_mod.spectral_mimic to mimic the Sentera 6x spectral configuration and compare to both hyperspectral and Sentinel-2A.
+
+            >>> array_6x, metadata_6x = my_spec_mod.spectral_mimic(sensor='sentera_6x', center_wl='peak')
+            >>> meta_bands_6x = sorted([float(i) for i in literal_eval(metadata_6x['wavelength'])])
+            >>> ax = sns.lineplot(x=meta_bands, y=spy_hs[200][800]*100, label='Hyperspectral (Pika II)', linewidth=3)
+            >>> ax = sns.lineplot(x=meta_bands_s2a, y=array_s2a[200][800]*100, label='Sentinel-2A "mimic"', marker='o', ms=6, ax=ax)
+            >>> ax = sns.lineplot(x=meta_bands_6x, y=array_6x[200][800]*100, label='Sentera 6X "mimic"', marker='o', ms=8, ax=ax)
+            >>> ax.set_xlabel('Wavelength (nm)', weight='bold')
+            >>> ax.set_ylabel('Reflectance (%)', weight='bold')
+            >>> ax.set_title(r'API Example: `spec_mod.spectral_mimic`', weight='bold')
+
+            .. image:: ../img/spec_mod/spectral_mimic_6x.png
+
+            And finally, mimic the Micasense RedEdge-MX and compare to hyperspectral, Sentinel-2A, and Sentera 6X.
+
+            >>> array_re3, metadata_re3 = my_spec_mod.spectral_mimic(sensor='micasense_rededge_3', center_wl='peak')
+            >>> meta_bands_re3 = sorted([float(i) for i in literal_eval(metadata_re3['wavelength'])])
+            >>> ax = sns.lineplot(x=meta_bands, y=spy_hs[200][800]*100, label='Hyperspectral (Pika II)', linewidth=3)
+            >>> ax = sns.lineplot(x=meta_bands_s2a, y=array_s2a[200][800]*100, label='Sentinel-2A "mimic"', marker='o', ms=6, ax=ax)
+            >>> ax = sns.lineplot(x=meta_bands_6x, y=array_6x[200][800]*100, label='Sentera 6X "mimic"', marker='o', ms=8, ax=ax)
+            >>> ax = sns.lineplot(x=meta_bands_re3, y=array_re3[200][800]*100, label='Micasense RedEdge 3 "mimic"', marker='o', ms=8, ax=ax)
+            >>> ax.set_xlabel('Wavelength (nm)', weight='bold')
+            >>> ax.set_ylabel('Reflectance (%)', weight='bold')
+            >>> ax.set_title(r'API Example: `spec_mod.spectral_mimic`', weight='bold')
+
+            .. image:: ../img/spec_mod/spectral_mimic_re.png
         '''
         if spyfile is None:
             spyfile = self.spyfile
@@ -526,10 +625,11 @@ class spec_mod(object):
         Example:
             Load and initialize ``hsio`` and ``spec_mod``
 
+            >>> import os
             >>> from hs_process import hsio
             >>> from hs_process import spec_mod
-            >>> fname_hdr = r'F:\nigo0024\Documents\GitHub\hs_process\hs_process\data\Wells_rep2_20180628_16h56m_test_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
-            >>> fname_hdr = r'F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> data_dir = r'F:\\nigo0024\Documents\hs_process_demo'
+            >>> fname_hdr = os.path.join(data_dir, 'Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr')
             >>> io = hsio()
             >>> io.read_cube(fname_hdr)
             >>> my_spec_mod = spec_mod(io.spyfile)
@@ -544,16 +644,17 @@ class spec_mod(object):
 
             >>> import seaborn as sns
             >>> from ast import literal_eval
-            >>> array_hs = my_spec_mod.spyfile.open_memmap()
-            >>> mean_hs = array_hs.mean(axis=(0,1))*100
-            >>> mean_bin = array_bin.mean(axis=(0,1))*100
-            >>> x1 = my_spec_mod.tools.get_wavelength_range([0,239])  # list of wavelength values
-            >>> x2 = sorted(list(literal_eval(metadata_bin['wavelength'])))  # list of binned bands
-            >>> ax = sns.lineplot(x=x1, y=mean_hs, label='Hyperspectral')
-            >>> ax = sns.lineplot(x=x2, y=mean_bin, ax=ax, label='Binned', marker='o', ms=6)
-            >>> _ = ax.set(xlabel='Wavelength (nm)', ylabel='Reflectance (%)')
+            >>> spy_hs = my_spec_mod.spyfile.open_memmap()  # datacube before smoothing
+            >>> meta_bands = list(io.tools.meta_bands.values())
+            >>> meta_bands_bin = sorted([float(i) for i in literal_eval(metadata_bin['wavelength'])])
 
-            .. image:: ../img/spec_mod/spectral_bin_hs_vs_binned.png
+            >>> ax = sns.lineplot(x=meta_bands, y=spy_hs[200][800]*100, label='Hyperspectral (Pika II)', linewidth=3)
+            >>> ax = sns.lineplot(x=meta_bands_bin, y=array_bin[200][800]*100, label='Spectral resample (20 nm)', marker='o', ms=6, ax=ax)
+            >>> ax.set_xlabel('Wavelength (nm)', weight='bold')
+            >>> ax.set_ylabel('Reflectance (%)', weight='bold')
+            >>> ax.set_title(r'API Example: `spec_mod.spectral_resample`', weight='bold')
+
+            .. image:: ../img/spec_mod/spectral_resample.png
         '''
         if spyfile is None:
             spyfile = self.spyfile
@@ -621,9 +722,11 @@ class spec_mod(object):
         Example:
             Load and initialize ``hsio`` and ``spec_mod``
 
+            >>> import os
             >>> from hs_process import hsio
             >>> from hs_process import spec_mod
-            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> data_dir = r'F:\\nigo0024\Documents\hs_process_demo'
+            >>> fname_hdr = os.path.join(data_dir, 'Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr')
             >>> io = hsio()
             >>> io.read_cube(fname_hdr)
             >>> my_spec_mod = spec_mod(io.spyfile)
@@ -631,27 +734,22 @@ class spec_mod(object):
             Use ``spec_mod.spectral_smooth`` to perform a *Savitzky-Golay*
             smoothing operation across the hyperspectral spectral signature.
 
-            >>> array_smooth, metadata = my_spec_mod.spectral_smooth(
+            >>> array_smooth, metadata_smooth = my_spec_mod.spectral_smooth(
                     window_size=11, order=2)
 
-            Save the smoothed datacube using ``hsio.write_cube``
+            Plot the spectra of an individual pixel to visualize the result of the smoothing procedure.
 
-            >>> fname_hdr_smooth = r'F:\\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-smooth.bip.hdr'
-            >>> io.write_cube(fname_hdr_smooth, array_smooth, metadata)
-            Saving F:\\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-smooth.bip
+            >>> import seaborn as sns
+            >>> spy_hs = my_spec_mod.spyfile.open_memmap()  # datacube before smoothing
+            >>> meta_bands = list(io.tools.meta_bands.values())
+            >>> meta_bands_smooth = sorted([float(i) for i in metadata_smooth['wavelength']])
+            >>> ax = sns.lineplot(x=meta_bands, y=spy_hs[200][800]*100, label='Before spectral smoothing', linewidth=3)
+            >>> ax = sns.lineplot(x=meta_bands_smooth, y=array_smooth[200][800]*100, label='After spectral smoothing', ax=ax)
+            >>> ax.set_xlabel('Wavelength (nm)', weight='bold')
+            >>> ax.set_ylabel('Reflectance (%)', weight='bold')
+            >>> ax.set_title(r'API Example: `spec_mod.spectral_smooth`', weight='bold')
 
-            Open smoothed datacube in Spectronon software to visualize the
-            result of the smoothing for a specific pixel.
-
-            .. image:: ../img/spec_mod/spectral_smooth_before.png
-
-            Before smoothing (the spectral curve of the pixel at the *800th
-            column/sample* and *200th row/line* is plotted)
-
-            .. image:: ../img/spec_mod/spectral_smooth_after.png
-
-            And after smoothing (the spectral curve of the pixel at the *800th
-            column/sample* and *200th row/line* is plotted)
+            .. image:: ../img/spec_mod/spectral_smooth.png
         '''
         if spyfile is None:
             spyfile = self.spyfile

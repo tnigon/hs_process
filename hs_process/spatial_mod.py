@@ -788,18 +788,13 @@ class spatial_mod(object):
             cropped.
 
             >>> df_plots = my_spatial_mod.crop_many_gdf(spyfile=io.spyfile, gdf=gdf)
-            >>> df_plots
+            >>> df_plots.head(5)
                 plot_id_ref  pix_e_ul  pix_n_ul  crop_e_pix  crop_n_pix
             0          1018       478         0         229          76
             1           918       707         0         229          76
             2           818       936         0         229          76
             3           718      1165         0         229          76
             4           618      1394         0         229          76
-            5          1017       478        76         229          76
-            6           917       707        76         229          76
-            7           817       936        76         229          76
-            8           717      1165        76         229          76
-            9           617      1394        76         229          76
             ...
 
             Use the data from the first row of df_plots to crop a single plot
@@ -818,7 +813,7 @@ class spatial_mod(object):
 
             >>> fname_out = os.path.join(dir_out, io.name_short + '_plot_' + str(1018) + name_append + '.' + io.defaults.envi_write.interleave)
             >>> fname_out_tif = os.path.join(dir_out, io.name_short + '_plot_' + str(1018) + '.tif')
-            >>> io.write_cube(fname_out, array_crop, metadata=metadata)
+            >>> io.write_cube(fname_out, array_crop, metadata=metadata, force=True)
             >>> io.write_tif(fname_out_tif, spyfile=array_crop, metadata=metadata)
             Saving F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1018-crop-many-gdf.bip
             Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.

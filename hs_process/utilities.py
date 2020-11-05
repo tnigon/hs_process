@@ -1168,7 +1168,7 @@ class hsio(object):
 
             >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\hsio\Wells_rep2_20180628_16h56m_pika_gige_7-hsio-write-cube-cropped.bip.hdr'
             >>> os.mkdir(os.path.dirname(fname_hdr))
-            >>> io.write_cube(fname_hdr, array_crop, metadata=metadata)
+            >>> io.write_cube(fname_hdr, array_crop, metadata=metadata, force=True)
             Saving F:\nigo0024\Documents\hs_process_demo\hsio\Wells_rep2_20180628_16h56m_pika_gige_7-hsio-write-cube-cropped.bip
 
             Load the datacube into Spectronon for visualization
@@ -1222,7 +1222,7 @@ class hsio(object):
                    'keyword'.format(fname_hdr))
             raise envi.EnviException(msg)
 
-    def write_spec(self, fname_hdr_spec, df_mean, df_std, metadata=None,
+    def write_spec(self, fname_hdr_spec, df_mean, df_std=None, metadata=None,
                    dtype=None, force=None, ext=None, interleave=None,
                    byteorder=None):
         '''
@@ -1237,9 +1237,9 @@ class hsio(object):
                 set using the ``ext`` parameter.
             df_mean (``pandas.Series`` or ``numpy.ndarray``): Mean spectra,
                 stored as a df row, where columns are the bands.
-            df_std (``pandas.Series`` or ``numpy.ndarray``): Standard deviation
-                of each spectra, stored as a df row, where columns are the
-                bands. This will be saved to the .hdr file.
+            df_std (``pandas.Series`` or ``numpy.ndarray``, optional): Standard
+                deviation of each spectra, stored as a df row, where columns
+                are the bands. This will be saved to the .hdr file.
             dtype (``numpy.dtype`` or ``str``): The data type with which to
                 store the image. For example, to store the image in 16-bit
                 unsigned integer format, the argument could be any of
@@ -1318,9 +1318,6 @@ class hsio(object):
 
         metadata = self._del_meta_item(metadata, 'map info')
         metadata = self._del_meta_item(metadata, 'coordinate system string')
-#        metadata = self._del_meta_item(metadata, 'history')
-#        metadata = self._del_meta_item(metadata, 'original cube file')
-#        metadata = self._del_meta_item(metadata, 'pointlist')
         metadata = self._del_meta_item(metadata, 'boundary')
         metadata = self._del_meta_item(metadata, 'label')
 
@@ -1330,11 +1327,11 @@ class hsio(object):
         if 'wavelength' not in metadata.keys():
             metadata['wavelength'] = '{' + ', '.join(str(e) for e in list(
                     self.tools.meta_bands.values())) + '}'
-        if isinstance(df_std, np.ndarray):
+        if df_std is not None and isinstance(df_std, np.ndarray):
             df_std = pd.Series(df_std)
-        std = df_std.to_dict()
-        metadata['stdev'] = '{' + ', '.join(str(e) for e in list(
-                std.values())) + '}'
+            std = df_std.to_dict()
+            metadata['stdev'] = '{' + ', '.join(str(e) for e in list(
+                    std.values())) + '}'
         metadata['label'] = os.path.basename(
                 os.path.splitext(fname_hdr_spec)[0])
         metadata = self.tools.clean_md_sets(metadata=metadata)
@@ -1346,9 +1343,11 @@ class hsio(object):
             array_mean = df_mean.copy()
         else:
             array_mean = df_mean.to_numpy()
-        array = array_mean.reshape(1, 1, len(df_mean))
+        if len(array_mean.shape) != 3:  # it may have been passed as a 3d numpy array already
+            array_single = array_mean.copy()
+            array_mean = array_single.reshape(1, 1, len(df_mean))
         try:
-            envi.save_image(fname_hdr_spec, array, interleave=interleave,
+            envi.save_image(fname_hdr_spec, array_mean, interleave=interleave,
                             dtype=dtype, byteorder=byteorder,
                             metadata=metadata, force=force, ext=ext)
         except envi.EnviException:
@@ -2614,9 +2613,9 @@ class hstools(object):
 
             >>> fname_hdr_spec = r'F:\\nigo0024\Documents\hs_process_demo\hstools\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.spec.hdr'
             >>> fname_hdr_cube = r'F:\\nigo0024\Documents\hs_process_demo\hstools\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.bip.hdr'
-            >>> io.write_spec(fname_hdr_spec, spec_mean, spec_std, metadata=metadata)
+            >>> io.write_spec(fname_hdr_spec, spec_mean, spec_std, metadata=metadata, force=True)
             Saving F:\nigo0024\Documents\hs_process_demo\hstools\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.spec
-            >>> io.write_cube(fname_hdr_cube, datacube_masked, metadata=metadata)
+            >>> io.write_cube(fname_hdr_cube, datacube_masked, metadata=metadata, force=True)
             Saving F:\nigo0024\Documents\hs_process_demo\hstools\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.bip
 
             .. image:: ../img/utilities/mean_datacube.png
@@ -2662,57 +2661,6 @@ class hstools(object):
         spec_mean = pd.Series(spec_mean)
         spec_std = pd.Series(spec_std)
         return spec_mean, spec_std, datacube_masked
-
-        # adjust any values that are nan or inf
-        # spec_mean[0]
-        # try:
-        #     i = np.where(spec_mean == -np.inf)[0]
-        #     i = np.where(spec_mean == None)[0]
-        # except ValueError:
-        #     pass
-
-        # i = np.where(spec_mean > 100)[0]
-
-
-#    def mask_shadow(self, shadow_pctl=20, show_histogram=False,
-#                    spyfile=None):
-#        '''
-#        Creates a ``numpy.mask`` of all pixels that are likely shadow pixels.
-#
-#        Parameters:
-#            shadow_pctl (``int``): the percentile of pixels in the image to mask
-#                (default: 20).
-#            show_histogram (``bool``):
-#            spyfile (``SpyFile.SpyFile`` object):
-#
-#        Returns:
-#            2-element ``tuple`` containing
-#
-#            - **array_noshadow.mask** (``numpy.mask``): The mask indicating all
-#              pixels that are likely shadow pixels.
-#            - **metadata** (``dict``): The modified metadata.
-#
-#        Example:
-#            >>> from hs_process import hsio
-#            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
-#            >>> io = hsio(fname_in)
-#            >>> io.tools.mask_shadow(shadow_pctl=20, show_histogram=False,
-#                    spyfile=None)
-#        '''
-#        if spyfile is None:
-#            spyfile = self.spyfile
-#            array = self.spyfile.load()
-#        elif isinstance(spyfile, SpyFile.SpyFile):
-#            self.load_spyfile(spyfile)
-#            array = self.spyfile.load()
-#        elif isinstance(spyfile, np.ndarray):
-#            array = spyfile.copy()
-#
-#        array_energy = np.mean(array, axis=2)
-#        array_noshadow, metadata = self.mask_array(
-#                array_energy, self.spyfile.metadata, percentile=shadow_pctl,
-#                side='lower', show_histogram=show_histogram)
-#        return array_noshadow.mask, metadata
 
     def modify_meta_set(self, meta_set, idx, value):
         '''

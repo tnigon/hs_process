@@ -1281,12 +1281,12 @@ class batch(object):
                   'output file names to include "study" and "date", please '
                   'pass ``fname_sheet`` with "study" and "date" columns.\n')
             for fname_in in fname_list:
-                hsbatch.io.read_cube(fname_in)
-                hsbatch.my_spatial_mod = spatial_mod(hsbatch.io.spyfile, gdf)
+                self.io.read_cube(fname_in)
+                self.my_spatial_mod = spatial_mod(self.io.spyfile, gdf)
                 # as long as defaults are set ahead of time, they should carry through
                 # e.g., batch.io.defaults.crop_defaults.n_plots = 40 to limit to 40 plots
-                hsbatch.my_spatial_mod.defaults = hsbatch.io.defaults
-                df_plots_many = hsbatch.my_spatial_mod.crop_many_gdf()
+                self.my_spatial_mod.defaults = self.io.defaults
+                df_plots_many = self.my_spatial_mod.crop_many_gdf()
                 self._crop_loop(df_plots_many, gdf, base_dir_out, folder_name,
                                 name_append, write_geotiff)
         elif method == 'many_grid' and isinstance(df_plots, pd.DataFrame):
@@ -1944,23 +1944,19 @@ class batch(object):
 
             >>> import os
             >>> from hs_process import batch
-            >>> base_dir = r'F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf'
+            >>> data_dir = r'F:\\nigo0024\Documents\hs_process_demo'
+            >>> base_dir = os.path.join(data_dir, 'spatial_mod', 'crop_many_gdf')
             >>> print(os.path.isdir(base_dir))
+            >>> hsbatch = batch(base_dir, search_ext='.bip', progress_bar=True)  # searches for all files in ``base_dir`` with a ".bip" file extension
             True
-            >>> hsbatch = batch(base_dir, search_ext='.bip')  # searches for all files in ``base_dir`` with a ".bip" file extension
 
             Use ``batch.cube_to_spectra`` to calculate the *mean* and *standard
             deviation* across all pixels for each of the datacubes in
             ``base_dir``.
 
             >>> hsbatch.cube_to_spectra(base_dir=base_dir, write_geotiff=False, out_force=True)
-            Calculating mean spectra: F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011.bip
-            Saving F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-cube-to-spec-mean.spec
-            Calculating mean spectra: F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012.bip
-            Saving F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012-cube-to-spec-mean.spec
-            Calculating mean spectra: F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013.bip
-            Saving F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013-cube-to-spec-mean.spec
-            ...
+            Processing file 39/40: 100%|██████████| 40/40 [00:03<00:00, 13.28it/s]------------------------------------------------| 0.0%
+
 
             Use ``seaborn`` to visualize the spectra of plots 1011, 1012, and
             1013. Notice how ``hsbatch.io.name_plot`` is utilized to retrieve
@@ -1972,17 +1968,20 @@ class batch(object):
 
             >>> import seaborn as sns
             >>> import re
-            >>> fname_list = [r'F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-cube-to-spec-mean.spec',
-                              r'F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012-cube-to-spec-mean.spec',
-                              r'F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013-cube-to-spec-mean.spec']
-            >>> colors = ['red', 'green', 'blue']
-            >>> for fname, color in zip(fname_list, colors):
+            >>> fname_list = [os.path.join(base_dir, 'cube_to_spec', 'Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-cube-to-spec-mean.spec'),
+                              os.path.join(base_dir, 'cube_to_spec', 'Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012-cube-to-spec-mean.spec'),
+                              os.path.join(base_dir, 'cube_to_spec', 'Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013-cube-to-spec-mean.spec')]
+            >>> ax = None
+            >>> for fname in fname_list:
             >>>     hsbatch.io.read_spec(fname)
             >>>     meta_bands = list(hsbatch.io.tools.meta_bands.values())
             >>>     data = hsbatch.io.spyfile_spec.load().flatten() * 100
             >>>     hist = hsbatch.io.spyfile_spec.metadata['history']
             >>>     pix_n = re.search('<pixel number: (.*)>', hist).group(1)
-            >>>     ax = sns.lineplot(x=meta_bands, y=data, color=color, label='Plot '+hsbatch.io.name_plot+' (n='+pix_n+')')
+            >>>     if ax is None:
+            >>>         ax = sns.lineplot(x=meta_bands, y=data, label='Plot '+hsbatch.io.name_plot+' (n='+pix_n+')')
+            >>>     else:
+            >>>         ax = sns.lineplot(x=meta_bands, y=data, label='Plot '+hsbatch.io.name_plot+' (n='+pix_n+')', ax=ax)
             >>> ax.set_xlabel('Wavelength (nm)', weight='bold')
             >>> ax.set_ylabel('Reflectance (%)', weight='bold')
             >>> ax.set_title(r'API Example: `batch.cube_to_spectra`', weight='bold')
@@ -2758,6 +2757,141 @@ class batch(object):
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
 
         self._execute_spec_combine(fname_list, base_dir_out)
+
+    def spectra_derivative(
+            self, fname_list=None, base_dir=None, search_ext='spec',
+            dir_level=0, base_dir_out=None, folder_name='spec_derivative',
+            name_append='spec-derivative',
+            out_dtype=False, out_force=None, out_ext=False,
+            out_interleave=False, out_byteorder=False):
+        '''
+        Batch processing tool to calculate the numeric spectral derivative for
+        multiple spectra.
+
+        Parameters:
+            fname_list (``list``, optional): list of filenames to process; if
+                left to ``None``, will look at ``base_dir``, ``search_ext``,
+                and ``dir_level`` parameters for files to process (default:
+                ``None``).
+            base_dir (``str``, optional): directory path to search for files to
+                process; if ``fname_list`` is not ``None``, ``base_dir`` will
+                be ignored (default: ``None``).
+            search_ext (``str``): file format/extension to search for in all
+                directories and subdirectories to determine which files to
+                process; if ``fname_list`` is not ``None``, ``search_ext`` will
+                be ignored (default: 'bip').
+            dir_level (``int``): The number of directory levels to search; if
+                ``None``, searches all directory levels (default: 0).
+            base_dir_out (``str``): directory path to save all processed
+                spectra; if set to ``None``, a folder named according to the
+                ``folder_name`` parameter is added to ``base_dir``
+            folder_name (``str``): folder to add to ``base_dir_out`` to save
+                all the processed datacubes (default: 'spec_derivative').
+            name_append (``str``): name to append to the filename (default:
+                'spec-derivative').
+            out_XXX: Settings for saving the output files can be adjusted here
+                if desired. They are stored in ``batch.io.defaults, and are
+                therefore accessible at a high level. See
+                ``hsio.set_io_defaults()`` for more information on each of the
+                settings.
+
+
+        Note:
+            The following `batch` example builds on the API example results
+            of the `batch.cube_to_spectra`_ function. Please complete
+            both the `spatial_mod.crop_many_gdf`_ and
+            `batch.cube_to_spectra`_ examples to be sure your directory
+            (i.e., `base_dir`) is populated with multiple hyperspectral
+            spectra. The following example will be using spectra located in the
+            following directory:
+            ``F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec`
+
+        Example:
+            Load and initialize the ``batch`` module, checking to be sure the
+            directory exists.
+
+            >>> import os
+            >>> from hs_process import batch
+            >>> data_dir = r'F:\\nigo0024\Documents\hs_process_demo'
+            >>> base_dir = os.path.join(data_dir, 'spatial_mod', 'crop_many_gdf', 'cube_to_spec')
+            >>> print(os.path.isdir(base_dir))
+            >>> hsbatch = batch(base_dir, search_ext='.spec', progress_bar=True)
+
+            Use ``batch.spectra_derivative`` to calculate the numeric spectral
+            derivative for each of the .spec files in ``base_dir``.
+
+            >>> hsbatch.spectra_derivative(base_dir=base_dir, out_force=True)
+
+            Use seaborn to visualize the derivative spectra of plots 1011,
+            1012, and 1013.
+
+            >>> import seaborn as sns
+            >>> import re
+            >>> fname_list = [os.path.join(base_dir, 'spec_derivative', 'Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-spec-derivative.spec'),
+                              os.path.join(base_dir, 'spec_derivative', 'Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012-spec-derivative.spec'),
+                              os.path.join(base_dir, 'spec_derivative', 'Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013-spec-derivative.spec')]
+            >>> ax = None
+            >>> for fname in fname_list:
+            >>>     hsbatch.io.read_spec(fname)
+            >>>     meta_bands = list(hsbatch.io.tools.meta_bands.values())
+            >>>     data = hsbatch.io.spyfile_spec.open_memmap().flatten() * 100
+            >>>     hist = hsbatch.io.spyfile_spec.metadata['history']
+            >>>     pix_n = re.search('<pixel number: (?s)(.*)>] ->', hist).group(1)
+            >>>     if ax is None:
+            >>>         ax = sns.lineplot(x=meta_bands, y=data, label='Plot '+hsbatch.io.name_plot+' (n='+pix_n+')')
+            >>>     else:
+            >>>         ax = sns.lineplot(x=meta_bands, y=data, label='Plot '+hsbatch.io.name_plot+' (n='+pix_n+')', ax=ax)
+            >>> ax.set(ylim=(-1.5, 1.5))
+            >>> ax.set_xlabel('Wavelength (nm)', weight='bold')
+            >>> ax.set_ylabel('Derivative reflectance (%)', weight='bold')
+            >>> ax.set_title(r'API Example: `batch.spectra_derivative`', weight='bold')
+
+            .. image:: ../img/batch/spectra_derivative.png
+
+        .. _spatial_mod.crop_many_gdf: hs_process.spatial_mod.html#hs_process.spatial_mod.crop_many_gdf
+        .. _batch.cube_to_spectra: hs_process.batch.html#hs_process.batch.cube_to_spectra
+        '''
+        self.io.set_io_defaults(out_dtype, out_force, out_ext, out_interleave,
+                                out_byteorder)
+        if fname_list is None and base_dir is not None:
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+        elif fname_list is None and base_dir is None:
+            # base_dir may have been stored to the ``batch`` object
+            base_dir = self.base_dir
+            msg = ('Please set ``fname_list`` or ``base_dir`` to indicate '
+                   'which spectra should be processed.\n')
+            assert base_dir is not None, msg
+            fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+
+        if self.io.defaults.envi_write.force is False:  # otherwise just overwrites if it exists
+            fname_list = self._check_processed(fname_list, base_dir_out,
+                                               folder_name, name_append,
+                                               ext='.spec')
+
+        fname_list_p = tqdm(fname_list) if self.progress_bar is True else fname_list
+        for idx, fname in enumerate(fname_list_p):
+            if self.progress_bar is True:
+                fname_list_p.set_description('Processing file {0}/{1}'.format(idx, len(fname_list)))
+            self.io.read_spec(fname)
+            base_dir = os.path.dirname(fname)
+            if base_dir_out is None:
+                dir_out, name_append = self._save_file_setup(
+                        base_dir, folder_name, name_append)
+            else:
+                dir_out, name_append = self._save_file_setup(
+                        base_dir_out, folder_name, name_append)
+            name_print = self._get_name_print()
+            name_label = (name_print + name_append + '.' +
+                          self.io.defaults.envi_write.interleave)
+            if self._file_exists_check(dir_out, name_label,
+                                       write_spec=True) is True:
+                continue
+            self.my_spectral_mod = spec_mod(self.io.spyfile_spec)
+            spec_dydx, metadata_dydx = self.my_spectral_mod.spec_derivative(
+                spyfile_spec=self.my_spectral_mod.spyfile)
+            name_label_spec = (os.path.splitext(name_label)[0] + '.spec')
+            self._write_spec(dir_out, name_label_spec, spec_dydx,
+                             spec_std=None, metadata=metadata_dydx)
 
     def spectra_to_csv(self, fname_list=None, base_dir=None, search_ext='spec',
                        dir_level=0, base_dir_out=None, name='stats-spectra',

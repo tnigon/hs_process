@@ -107,44 +107,6 @@ class segment(object):
             wl_list = [wl]
         return wl_list
 
-#    def _kmeans(self, n_classes=3, max_iter=100, spyfile=None):
-#        '''
-#        Development version -- do not use..
-#
-#        If there are more soil pixels than vegetation pixels, will vegetation be
-#        class 0 instead of class 2?
-#
-#        Parameters:
-#            n_classes (``int``): number of classes (default: 3).
-#            max_iter (``int``): maximum iterations before terminating process
-#                (default: 100).
-#            spyfile (``SpyFile`` object or ``numpy.ndarray``): The datacube to
-#                crop; if ``numpy.ndarray`` or ``None``, loads band information from
-#                ``self.spyfile`` (default: ``None``).
-#        '''
-#        if spyfile is None:
-#            spyfile = self.spyfile
-#        elif isinstance(spyfile, SpyFile.SpyFile):
-#            self.load_spyfile(spyfile)
-#        elif isinstance(spyfile, np.ndarray):
-#            spyfile = self.spyfile
-#        metadata = self.tools.spyfile.metadata
-#        array_class, c = kmeans(spyfile, n_classes, max_iter)
-#        unique_classes, counts = self._check_classes(array_class, n_pix=5)
-#        df_class_spec = pd.DataFrame(c.transpose())
-#
-#        metadata['bands'] = 1
-#        self.tools.del_meta_item(metadata, 'wavelength')
-#        self.tools.del_meta_item(metadata, 'band names')
-#        hist_str = (" -> hs_process.segment.kmeans[<"
-#                    "label: 'n_classes?' value:{0}; "
-#                    "label: 'max_iter?' value:{1}>]"
-#                    "".format(n_classes, max_iter))
-#        metadata['history'] += hist_str
-#        metadata['samples'] = array_class.shape[1]
-#        metadata['lines'] = array_class.shape[0]
-#        return array_class, df_class_spec, metadata
-
     def band_math_derivative(self, wl1=None, wl2=None, wl3=None,
                              b1=None, b2=None, b3=None,
                              spyfile=None, list_range=True, print_out=True):
@@ -212,9 +174,11 @@ class segment(object):
             Load ``hsio`` and ``segment`` modules
 
             >>> import numpy as np
+            >>> import os
             >>> from hs_process import hsio
             >>> from hs_process import segment
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> data_dir = r'F:\\nigo0024\Documents\hs_process_demo'
+            >>> fname_in = os.path.join(data_dir, 'Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr')
             >>> io = hsio(fname_in)
             >>> my_segment = segment(io.spyfile)
 
@@ -222,15 +186,8 @@ class segment(object):
             Curran, 2004) via ``segment.band_math_derivative``
 
             >>> array_mtci, metadata = my_segment.band_math_derivative(wl1=754, wl2=709, wl3=681, spyfile=io.spyfile)
-            <BLANKLINE>
-            Bands used (``b1``): [176]
-            Bands used (``b2``): [154]
-            Bands used (``b3``): [141]
-            <BLANKLINE>
-            Wavelengths used (``b1``): [753.84]
-            Wavelengths used (``b2``): [708.6784]
-            Wavelengths used (``b3``): [681.992]
-            <BLANKLINE>
+            Band 1: [176]  Band 2: [154]  Band 3: [141]
+            Wavelength 1: [753.84]  Wavelength 2: [708.6784]  Wavelength 3: [681.992]
 
             >>> array_mtci.shape
             (617, 1300)
@@ -240,8 +197,6 @@ class segment(object):
             Show MTCI image via ``hsio.show_img``
 
             >>> io.show_img(array_mtci, vmin=-2, vmax=15)
-            <BLANKLINE>
-            <BLANKLINE>
 
             .. image:: ../img/segment/mtci.png
         '''
@@ -268,17 +223,16 @@ class segment(object):
         wl2_list = self._get_wavelength_list(band2_list, list_range=False)
         wl3_list = self._get_wavelength_list(band3_list, list_range=False)
         if print_out is True:
-            print('\nBands used (``b1``): {0}'.format(band1_list))
-            print('Bands used (``b2``): {0}'.format(band2_list))
-            print('Bands used (``b3``): {0}'.format(band3_list))
-            print('\nWavelengths used (``b1``): {0}'.format(wl1_list))
-            print('Wavelengths used (``b2``): {0}'.format(wl2_list))
-            print('Wavelengths used (``b3``): {0}\n'.format(wl3_list))
+            print('Band 1: {0}  Band 2: {1}  Band 3: {2}'
+                  ''.format(band1_list, band2_list, band3_list))
+            print('Wavelength 1: {0}  Wavelength 2: {1}  Wavelength 3: {2}'
+                  ''.format(wl1_list, wl2_list, wl3_list))
 
         array_b1 = self.tools.get_spectral_mean(band1_list, array)
         array_b2 = self.tools.get_spectral_mean(band2_list, array)
         array_b3 = self.tools.get_spectral_mean(band3_list, array)
-        array_der = (array_b1-array_b2)/(array_b2-array_b3)
+        with np.errstate(invalid='ignore', divide='ignore'):
+            array_der = (array_b1-array_b2)/(array_b2-array_b3)
         array_der[array_der == 0] = np.nan
 
         metadata['bands'] = 1
@@ -363,9 +317,12 @@ class segment(object):
         Example:
             Load ``hsio`` and ``segment`` modules
 
+            >>> import numpy as np
+            >>> import os
             >>> from hs_process import hsio
             >>> from hs_process import segment
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> data_dir = r'F:\\nigo0024\Documents\hs_process_demo'
+            >>> fname_in = os.path.join(data_dir, 'Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr')
             >>> io = hsio(fname_in)
             >>> my_segment = segment(io.spyfile)
 
@@ -373,15 +330,8 @@ class segment(object):
             ``segment.band_math_mcari2``
 
             >>> array_mcari2, metadata = my_segment.band_math_mcari2(wl1=800, wl2=670, wl3=550, spyfile=io.spyfile)
-            <BLANKLINE>
-            Bands used (``b1``): [198]
-            Bands used (``b2``): [135]
-            Bands used (``b3``): [77]
-            <BLANKLINE>
-            Wavelengths used (``b1``): [799.0016]
-            Wavelengths used (``b2``): [669.6752]
-            Wavelengths used (``b3``): [550.6128]
-            <BLANKLINE>
+            Band 1: [198]  Band 2: [135]  Band 3: [77]
+            Wavelength 1: [799.0016]  Wavelength 2: [669.6752]  Wavelength 3: [550.6128]
 
             >>> np.nanmean(array_mcari2)
             0.57376945
@@ -389,8 +339,6 @@ class segment(object):
             Show MCARI2 image via ``hsio.show_img``
 
             >>> io.show_img(array_mcari2)
-            <BLANKLINE>
-            <BLANKLINE>
 
             .. image:: ../img/segment/mcari2.png
         '''
@@ -417,19 +365,18 @@ class segment(object):
         wl2_list = self._get_wavelength_list(band2_list, list_range=False)
         wl3_list = self._get_wavelength_list(band3_list, list_range=False)
         if print_out is True:
-            print('\nBands used (``b1``): {0}'.format(band1_list))
-            print('Bands used (``b2``): {0}'.format(band2_list))
-            print('Bands used (``b3``): {0}'.format(band3_list))
-            print('\nWavelengths used (``b1``): {0}'.format(wl1_list))
-            print('Wavelengths used (``b2``): {0}'.format(wl2_list))
-            print('Wavelengths used (``b3``): {0}\n'.format(wl3_list))
+            print('Band 1: {0}  Band 2: {1}  Band 3: {2}'
+                  ''.format(band1_list, band2_list, band3_list))
+            print('Wavelength 1: {0}  Wavelength 2: {1}  Wavelength 3: {2}'
+                  ''.format(wl1_list, wl2_list, wl3_list))
 
         array_b1 = self.tools.get_spectral_mean(band1_list, array)
         array_b2 = self.tools.get_spectral_mean(band2_list, array)
         array_b3 = self.tools.get_spectral_mean(band3_list, array)
 #        array_der = (array_b1-array_b2)/(array_b2-array_b3)
-        array_mcari2 = ((1.5 * (2.5 * (array_b1 - array_b2) - 1.3 * (array_b1 - array_b3))) /
-                        np.sqrt((2 * array_b1 + 1)**2 - (6 * array_b1 - 5 * np.sqrt(array_b2)) - 0.5))
+        with np.errstate(invalid='ignore', divide='ignore'):
+            array_mcari2 = ((1.5 * (2.5 * (array_b1 - array_b2) - 1.3 * (array_b1 - array_b3))) /
+                            np.sqrt((2 * array_b1 + 1)**2 - (6 * array_b1 - 5 * np.sqrt(array_b2)) - 0.5))
         array_mcari2[array_mcari2 == 0] = np.nan
 
         metadata['bands'] = 1
@@ -502,9 +449,12 @@ class segment(object):
         Example:
             Load ``hsio`` and ``segment`` modules
 
+            >>> import numpy as np
+            >>> import os
             >>> from hs_process import hsio
             >>> from hs_process import segment
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> data_dir = r'F:\\nigo0024\Documents\hs_process_demo'
+            >>> fname_in = os.path.join(data_dir, 'Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr')
             >>> io = hsio(fname_in)
             >>> my_segment = segment(io.spyfile)
 
@@ -512,21 +462,14 @@ class segment(object):
             bands centered at 800 nm and 680 nm via ``segment.band_math_ndi``
 
             >>> array_ndvi, metadata = my_segment.band_math_ndi(wl1=[795, 805], wl2=[675, 685], spyfile=io.spyfile)
-            <BLANKLINE>
-            Bands used (``b1``): [197, 198, 199, 200]
-            Bands used (``b2``): [138, 139, 140, 141, 142]
-            <BLANKLINE>
-            Wavelengths used (``b1``): [796.9488, 799.0016, 801.0544, 803.1072]
-            Wavelengths used (``b2``): [675.8336, 677.8864, 679.9392, 681.992, 684.0448]
-            <BLANKLINE>
+            Effective NDI: (800 - 680) / 800 + 680)
+
             >>> np.nanmean(array_ndvi)
             0.8184888
 
             Show NDVI image via ``hsio.show_img``
 
             >>> io.show_img(array_ndvi)
-            <BLANKLINE>
-            <BLANKLINE>
 
             .. image:: ../img/segment/ndvi.png
         '''
@@ -550,14 +493,13 @@ class segment(object):
         wl1_list = self._get_wavelength_list(band1_list, list_range=False)
         wl2_list = self._get_wavelength_list(band2_list, list_range=False)
         if print_out is True:
-            print('\nBands used (``b1``): {0}'.format(band1_list))
-            print('Bands used (``b2``): {0}'.format(band2_list))
-            print('\nWavelengths used (``b1``): {0}'.format(wl1_list))
-            print('Wavelengths used (``b2``): {0}\n'.format(wl2_list))
+            print('Effective NDI: ({0:.0f} - {1:.0f}) / {0:.0f} + {1:.0f})'
+                  ''.format(np.mean(wl1_list), np.mean(wl2_list)))
 
         array_b1 = self.tools.get_spectral_mean(band1_list, array)
         array_b2 = self.tools.get_spectral_mean(band2_list, array)
-        array_ndi = (array_b1-array_b2)/(array_b1+array_b2)
+        with np.errstate(invalid='ignore', divide='ignore'):
+            array_ndi = (array_b1-array_b2)/(array_b1+array_b2)
         array_ndi[array_ndi == 0] = np.nan
 
         metadata['bands'] = 1
@@ -628,9 +570,12 @@ class segment(object):
         Example:
             Load ``hsio`` and ``segment`` modules
 
+            >>> import numpy as np
+            >>> import os
             >>> from hs_process import hsio
             >>> from hs_process import segment
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> data_dir = r'F:\\nigo0024\Documents\hs_process_demo'
+            >>> fname_in = os.path.join(data_dir, 'Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr')
             >>> io = hsio(fname_in)
             >>> my_segment = segment(io.spyfile)
 
@@ -639,14 +584,7 @@ class segment(object):
             ``segment.band_math_ratio``
 
             >>> array_ratio, metadata = my_segment.band_math_ratio(wl1=[630, 690], wl2=[800, 860], list_range=True)
-            <BLANKLINE>
-            Bands used (``b1``): [116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144]
-            Bands used (``b2``): [199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227]
-            <BLANKLINE>
-            Wavelengths used (``b1``): [630.672, 632.7248, 634.7776, 636.8304, 638.8832, 640.936, 642.9888, 645.0416, 647.0944, 649.1472, 651.2, 653.2528, 655.3056, 657.3584, 659.4112, 661.464, 663.5168, 665.5696, 667.6224, 669.6752, 671.728, 673.7808, 675.8336, 677.8864, 679.9392, 681.992, 684.0448, 686.0976, 688.1504]
-            Wavelengths used (``b2``): [801.0544, 803.1072, 805.16, 807.2128, 809.2656, 811.3184, 813.3712, 815.424, 817.4768, 819.5296, 821.5824, 823.6352, 825.688, 827.7408, 829.7936, 831.8464, 833.8992, 835.952, 838.0048, 840.0576, 842.1104, 844.1632, 846.216, 848.2688, 850.3216, 852.3744, 854.4272, 856.48, 858.5328]
-            <BLANKLINE>
-            (659/830)
+            Effective band ratio: (659/830)
 
             >>> np.nanmean(array_ratio)
             0.10981177
@@ -657,22 +595,14 @@ class segment(object):
             result.
 
             >>> array_ratio, metadata = my_segment.band_math_ratio(wl1=[630, 690], wl2=[800, 860], list_range=False)
-            <BLANKLINE>
-            Bands used (``b1``): [116, 145]
-            Bands used (``b2``): [198, 228]
-            <BLANKLINE>
-            Wavelengths used (``b1``): [630.672, 690.2032]
-            Wavelengths used (``b2``): [799.0016, 860.5856]
-            <BLANKLINE>
-            (660/830)
+            Effective band ratio: (660/830)
+
             >>> np.nanmean(array_ratio)
             0.113607444
 
             Show the red/near-infrared ratio image via ``hsio.show_img``
 
             >>> io.show_img(array_ratio, vmax=0.3)
-            <BLANKLINE>
-            <BLANKLINE>
 
             .. image:: ../img/segment/ratio_r_nir.png
         '''
@@ -696,16 +626,13 @@ class segment(object):
         wl1_list = self._get_wavelength_list(band1_list, list_range=False)
         wl2_list = self._get_wavelength_list(band2_list, list_range=False)
         if print_out is True:
-            print('\nBands used (``b1``): {0}'.format(band1_list))
-            print('Bands used (``b2``): {0}'.format(band2_list))
-            print('\nWavelengths used (``b1``): {0}'.format(wl1_list))
-            print('Wavelengths used (``b2``): {0}\n'.format(wl2_list))
-            print('({0:.0f}/{1:.0f})'.format(np.mean(wl1_list),
-                                             np.mean(wl2_list)))
+            print('Effective band ratio: ({0:.0f}/{1:.0f})'
+                  ''.format(np.mean(wl1_list), np.mean(wl2_list)))
 
         array_b1 = self.tools.get_spectral_mean(band1_list, array)
         array_b2 = self.tools.get_spectral_mean(band2_list, array)
-        array_ratio = (array_b1/array_b2)
+        with np.errstate(invalid='ignore', divide='ignore'):
+            array_ratio = (array_b1/array_b2)
         array_ratio[array_ratio == 0] = np.nan
 
         metadata['bands'] = 1
@@ -777,8 +704,8 @@ class segment(object):
         band1_list = self._get_band_list(wl1, list_range)
         wl1_list = self._get_wavelength_list(band1_list, list_range=False)
         if print_out is True:
-            print('\nBands used (``b1``): {0}'.format(band1_list))
-            print('Wavelengths used (``b1``): {0}'.format(wl1_list))
+            print('Band 1: {0}'.format(band1_list))
+            print('Wavelength 1: {0}'.format(wl1_list))
 
         array_b1 = self.tools.get_spectral_mean(band1_list, array)
         array_b1[array_b1 == 0] = np.nan
