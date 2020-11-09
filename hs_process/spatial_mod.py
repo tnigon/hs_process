@@ -651,6 +651,36 @@ class spatial_mod(object):
         #         kwargs_null[k] = self.defaults.crop_defaults[k]
         # return kwargs_null
 
+    def _append_null_rows_cols(self, array_crop, pix_e_ul_correct,
+                               pix_n_ul_correct):
+        '''
+        Appends null rows or columns to the left or top of array_crop.
+
+        This function is necessary when gdf spans to the west or south(?) of
+        the image extend. In this case, spyfile.read_subregion() returns an
+        invalid array.
+        '''
+        if pix_e_ul_correct is not None:
+            # add abs(pix_e_ul_correct) nan columns to left of array_crop
+            a = array_crop.copy()
+            array_crop = np.zeros((
+                a.shape[0],
+                a.shape[1]+np.abs(pix_e_ul_correct),
+                a.shape[2]), dtype=a.dtype)
+            # array_crop[:] = np.nan
+            array_crop[:,np.abs(pix_e_ul_correct):,:] = a
+
+        if pix_n_ul_correct is not None:
+            # add abs(pix_n_ul_correct) nan columns to top of array_crop
+            a = array_crop.copy()
+            array_crop = np.zeros((
+                a.shape[0]+np.abs(pix_n_ul_correct),
+                a.shape[1],
+                a.shape[2]), dtype=a.dtype)
+            # array_crop[:] = np.nan
+            array_crop[np.abs(pix_n_ul_correct):,:,:] = a
+        return array_crop
+
     def crop_many_gdf(self, spyfile=None, gdf=None, **kwargs):
             # plot_id_ref=None,
             # pix_e_ul=None, pix_n_ul=None,
@@ -1034,6 +1064,18 @@ class spatial_mod(object):
         pix_n_ul, pix_n_lr = self._get_corners(pix_n_ul, crop_n_pix,
                                                buf_n_pix)
 
+        # read_subregion may return invalid array if gdf is of image
+        # extent, so we have to have another way to get the cropped array.
+        pix_e_ul_correct = None
+        pix_n_ul_correct = None
+        if pix_e_ul < 0:
+            pix_e_ul_correct = pix_e_ul
+            pix_e_ul = 0
+        if pix_n_ul < 0:
+            pix_n_ul_correct = pix_n_ul
+            pix_n_ul = 0
+
+
         if spyfile is None:
             spyfile = self.spyfile
             array_crop = spyfile.read_subregion((pix_n_ul, pix_n_lr),
@@ -1046,6 +1088,10 @@ class spatial_mod(object):
             array = spyfile.copy()
             spyfile = self.spyfile
             array_crop = array[pix_n_ul:pix_n_lr, pix_e_ul:pix_e_lr, :]
+
+        array_crop = self._append_null_rows_cols(
+            array_crop, pix_e_ul_correct, pix_n_ul_correct)
+
         metadata = self.tools.spyfile.metadata
         map_info_set = metadata['map info']
         if isinstance(gdf, gpd.GeoDataFrame) and plot_id_ref is not None:

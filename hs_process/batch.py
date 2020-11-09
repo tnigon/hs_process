@@ -1252,7 +1252,8 @@ class batch(object):
         Either `fname_sheet` or `fname_list` should be None
         '''
         df_plots = self._crop_check_input(fname_sheet, fname_list, method)
-        if not pd.isnull(df_plots):
+        # if not pd.isnull(df_plots):
+        if df_plots is not None and not df_plots.empty:
             if 'date' in df_plots.columns and isinstance(df_plots['date'], str):
                 df_plots['date'] = pd.to_datetime(df_plots['date'])
         if method == 'single':
@@ -2008,10 +2009,10 @@ class batch(object):
                                                folder_name, name_append,
                                                append_extra, ext='.spec')
 
-        pb_i = 0
-        pb_len = len(fname_list)
-        pb_prefix = 'cube_to_spectra:'
-        self._print_progress(pb_i, pb_len, prefix=pb_prefix)
+        # pb_i = 0
+        # pb_len = len(fname_list)
+        # pb_prefix = 'cube_to_spectra:'
+        # self._print_progress(pb_i, pb_len, prefix=pb_prefix)
 
         fname_list_p = tqdm(fname_list) if self.progress_bar is True else fname_list
         for idx, fname in enumerate(fname_list_p):
@@ -2889,7 +2890,8 @@ class batch(object):
             self.my_spectral_mod = spec_mod(self.io.spyfile_spec)
             spec_dydx, metadata_dydx = self.my_spectral_mod.spec_derivative(
                 spyfile_spec=self.my_spectral_mod.spyfile)
-            name_label_spec = (os.path.splitext(name_label)[0] + '.spec')
+            name_label_spec = (os.path.splitext(name_label)[0] +
+                               '-derivative.spec')
             self._write_spec(dir_out, name_label_spec, spec_dydx,
                              spec_std=None, metadata=metadata_dydx)
 
