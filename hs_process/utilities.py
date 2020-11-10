@@ -19,7 +19,7 @@ plt.style.use(plt_style)
 plt.rcParams["font.weight"] = "bold"
 plt.rcParams["axes.labelweight"] = "bold"
 plt.rc('text', usetex=True)
-plt.rcParams['text.latex.preamble'] = [r'\boldmath']
+plt.rcParams['text.latex.preamble'] = r'\boldmath'
 plt.rc('text', usetex=False)
 
 
@@ -1347,6 +1347,7 @@ class hsio(object):
             array_single = array_mean.copy()
             array_mean = array_single.reshape(1, 1, len(df_mean))
         try:
+            print(fname_hdr_spec)
             envi.save_image(fname_hdr_spec, array_mean, interleave=interleave,
                             dtype=dtype, byteorder=byteorder,
                             metadata=metadata, force=force, ext=ext)
