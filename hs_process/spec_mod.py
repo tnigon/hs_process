@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from copy import deepcopy
-from math import factorial
+from findiff import FinDiff
 import itertools
 import math
+from math import factorial
 import numpy as np
 import os
 import pandas as pd
@@ -43,16 +44,18 @@ class spec_mod(object):
         # self.tools.spyfile.metadata = metadata
         return metadata
 
-    def _metadata_derivative(self, metadata, stdev_dydx=None):
+    def _metadata_derivative(self, metadata, order=1):
         '''Modifies metadata for spec_derivative() function.'''
         metadata_dydx = deepcopy(metadata)
-        hist_str = (" -> hs_process.spec_derivative[<>]")
+        hist_str = (" -> hs_process.spec_derivative[<"
+                    "SpecPyFloatText label: 'order?' value:{0}>]"
+                    "".format(order))
         metadata_dydx['history'] += hist_str
-        if stdev_dydx is None:
-            if 'stdev' in metadata_dydx:
-                metadata_dydx.pop('stdev', None)
-        else:
-            metadata_dydx['stdev'] = stdev_dydx
+        # if stdev_dydx is None:
+        #     if 'stdev' in metadata_dydx:
+        #         metadata_dydx.pop('stdev', None)
+        # else:
+        #     metadata_dydx['stdev'] = stdev_dydx
         return metadata_dydx
 
     def _metadata_mimic(self, sensor, meta_bands_sensor):
@@ -289,12 +292,17 @@ class spec_mod(object):
             self.spy_ps_e = None
             self.spy_ps_n = None
 
-    def spec_derivative(self, spyfile_spec=None):
+    def spec_derivative(self, spyfile_spec=None, order=1):
         '''
         Calculates the numeric derivative spectra from spyfile_spec.
 
         The derivavative spectra is calculated as the slope (rise over run) of
         the input spectra, and is normalized by the wavelength unit.
+
+        Parameters:
+            spyfile_spec: The spectral spyfile object to calculate the
+                derivative for.
+            order (``int``): The order of the derivative (default: 1).
 
         Example:
             Load and initialize ``hsio``
@@ -310,9 +318,9 @@ class spec_mod(object):
 
             Calculate the numeric derivative.
 
-            >>> spec_dydx, metadata_dydx = my_spec_mod.spec_derivative()
+            >>> spec_dydx, metadata_dydx = my_spec_mod.spec_derivative(order=1)
 
-            >>> io.write_spec('spec_derivative.spec.hdr', spec_dydx, df_std=None, metadata=metadata_dydx)
+            >>> io.write_spec('spec_derivative_order-1.spec.hdr', spec_dydx, df_std=None, metadata=metadata_dydx)
 
             Plot the numeric derivative spectra and compare against the original spectra.
 
@@ -355,12 +363,17 @@ class spec_mod(object):
             metadata = self.spyfile.metadata
         assert spec.shape[:2] == (1, 1), msg2  # First two dimensions must be 1
         wl_x = np.array([float(i) for i in metadata['wavelength']])
-        spec_dydx = np.empty_like(spec)
-        spec_dydx[0,0,:] = np.gradient(spec[0,0,:], wl_x)
+        dydx = FinDiff(0, wl_x, order)
+        # spec_dydx = np.empty_like(spec)
+        # spec_dydx = np.empty(spec.shape)
+        # spec_dydx[0,0,:] = np.gradient(spec[0,0,:], wl_x)
+        spec_dydx = np.empty(spec.shape)
+        spec_dydx[0,0,:] = dydx(spec[0,0,:])
+
         # if 'stdev' in metadata:
         #     stdev = np.array([float(i) for i in metadata['stdev']])
         #     stdev_dydx = np.gradient(stdev, wl_x)
-        metadata_dydx = self._metadata_derivative(metadata)
+        metadata_dydx = self._metadata_derivative(metadata, order)
         return spec_dydx, metadata_dydx
 
     def spectral_clip(self, wl_bands=[[0, 420], [760, 776], [813, 827],

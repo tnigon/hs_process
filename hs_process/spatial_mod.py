@@ -1066,15 +1066,27 @@ class spatial_mod(object):
 
         # read_subregion may return invalid array if gdf is of image
         # extent, so we have to have another way to get the cropped array.
-        pix_e_ul_correct = None
-        pix_n_ul_correct = None
+        # pix_e_ul_correct = None
+        # pix_n_ul_correct = None
+        # if pix_e_ul < 0:
+        #     pix_e_ul_correct = pix_e_ul
+        #     pix_e_ul = 0
+        # if pix_n_ul < 0:
+        #     pix_n_ul_correct = pix_n_ul
+        #     pix_n_ul = 0
+
+        # read_subregion may return invalid array if gdf is outside image
+        # extent, so we have to crop at zero and shift geotransform accordingly.
         if pix_e_ul < 0:
-            pix_e_ul_correct = pix_e_ul
+            if pd.isnull(gdf_shft_e_m):
+                gdf_shft_e_m = 0
+            gdf_shft_e_m += np.abs(pix_e_ul) * self.spy_ps_e
             pix_e_ul = 0
         if pix_n_ul < 0:
-            pix_n_ul_correct = pix_n_ul
-            pix_n_ul = 0
-
+            if pd.isnull(gdf_shft_n_m):
+                gdf_shft_n_m = 0
+            gdf_shft_n_m += np.abs(pix_n_ul) * self.spy_ps_n
+            pix_e_ul = 0
 
         if spyfile is None:
             spyfile = self.spyfile
@@ -1089,8 +1101,8 @@ class spatial_mod(object):
             spyfile = self.spyfile
             array_crop = array[pix_n_ul:pix_n_lr, pix_e_ul:pix_e_lr, :]
 
-        array_crop = self._append_null_rows_cols(
-            array_crop, pix_e_ul_correct, pix_n_ul_correct)
+        # array_crop = self._append_null_rows_cols(
+        #     array_crop, pix_e_ul_correct, pix_n_ul_correct)
 
         metadata = self.tools.spyfile.metadata
         map_info_set = metadata['map info']

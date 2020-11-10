@@ -2032,7 +2032,7 @@ class batch(object):
             if self._file_exists_check(
                     dir_out, name_label, write_geotiff=write_geotiff,
                     write_spec=True) is True:
-                self.print_progress(idx+1, pb_len, prefix=pb_prefix)
+                # self.print_progress(idx+1, pb_len, prefix=pb_prefix)
                 continue
 
             # print('Calculating mean spectra: {0}'.format(fname))
@@ -2762,7 +2762,7 @@ class batch(object):
     def spectra_derivative(
             self, fname_list=None, base_dir=None, search_ext='spec',
             dir_level=0, base_dir_out=None, folder_name='spec_derivative',
-            name_append='spec-derivative',
+            name_append='spec-derivative', order=1,
             out_dtype=False, out_force=None, out_ext=False,
             out_interleave=False, out_byteorder=False):
         '''
@@ -2790,6 +2790,7 @@ class batch(object):
                 all the processed datacubes (default: 'spec_derivative').
             name_append (``str``): name to append to the filename (default:
                 'spec-derivative').
+            order (``int``): The order of the derivative (default: 1).
             out_XXX: Settings for saving the output files can be adjusted here
                 if desired. They are stored in ``batch.io.defaults, and are
                 therefore accessible at a high level. See
@@ -2821,16 +2822,16 @@ class batch(object):
             Use ``batch.spectra_derivative`` to calculate the numeric spectral
             derivative for each of the .spec files in ``base_dir``.
 
-            >>> hsbatch.spectra_derivative(base_dir=base_dir, out_force=True)
+            >>> hsbatch.spectra_derivative(base_dir=base_dir, order=1, out_force=True)
 
             Use seaborn to visualize the derivative spectra of plots 1011,
             1012, and 1013.
 
             >>> import seaborn as sns
             >>> import re
-            >>> fname_list = [os.path.join(base_dir, 'spec_derivative', 'Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-spec-derivative.spec'),
-                              os.path.join(base_dir, 'spec_derivative', 'Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012-spec-derivative.spec'),
-                              os.path.join(base_dir, 'spec_derivative', 'Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013-spec-derivative.spec')]
+            >>> fname_list = [os.path.join(base_dir, 'spec_derivative', 'Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-spec-derivative-order-1.spec'),
+                              os.path.join(base_dir, 'spec_derivative', 'Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012-spec-derivative-order-1.spec'),
+                              os.path.join(base_dir, 'spec_derivative', 'Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013-spec-derivative-order-1.spec')]
             >>> ax = None
             >>> for fname in fname_list:
             >>>     hsbatch.io.read_spec(fname)
@@ -2839,10 +2840,11 @@ class batch(object):
             >>>     hist = hsbatch.io.spyfile_spec.metadata['history']
             >>>     pix_n = re.search('<pixel number: (?s)(.*)>] ->', hist).group(1)
             >>>     if ax is None:
+            >>>         ax = sns.lineplot(meta_bands, 0, color='gray')
             >>>         ax = sns.lineplot(x=meta_bands, y=data, label='Plot '+hsbatch.io.name_plot+' (n='+pix_n+')')
             >>>     else:
             >>>         ax = sns.lineplot(x=meta_bands, y=data, label='Plot '+hsbatch.io.name_plot+' (n='+pix_n+')', ax=ax)
-            >>> ax.set(ylim=(-1.5, 1.5))
+            >>> ax.set(ylim=(-1, 1))
             >>> ax.set_xlabel('Wavelength (nm)', weight='bold')
             >>> ax.set_ylabel('Derivative reflectance (%)', weight='bold')
             >>> ax.set_title(r'API Example: `batch.spectra_derivative`', weight='bold')
@@ -2863,6 +2865,8 @@ class batch(object):
                    'which spectra should be processed.\n')
             assert base_dir is not None, msg
             fname_list = self._recurs_dir(base_dir, search_ext, dir_level)
+        if name_append:
+             name_append = '{0}-order-{1}'.format(name_append, order)
 
         if self.io.defaults.envi_write.force is False:  # otherwise just overwrites if it exists
             fname_list = self._check_processed(fname_list, base_dir_out,
@@ -2882,17 +2886,16 @@ class batch(object):
                 dir_out, name_append = self._save_file_setup(
                         base_dir_out, folder_name, name_append)
             name_print = self._get_name_print()
-            name_label = (name_print + name_append + '.' +
-                          self.io.defaults.envi_write.interleave)
+            name_label = (name_print + name_append + '.spec')
             if self._file_exists_check(dir_out, name_label,
                                        write_spec=True) is True:
                 continue
             self.my_spectral_mod = spec_mod(self.io.spyfile_spec)
             spec_dydx, metadata_dydx = self.my_spectral_mod.spec_derivative(
-                spyfile_spec=self.my_spectral_mod.spyfile)
-            name_label_spec = (os.path.splitext(name_label)[0] +
-                               '-derivative.spec')
-            self._write_spec(dir_out, name_label_spec, spec_dydx,
+                spyfile_spec=self.my_spectral_mod.spyfile, order=order)
+            # name_label_spec = (os.path.splitext(name_label)[0] +
+            #                    '-derivative-{0}.spec'.format(order))
+            self._write_spec(dir_out, name_label, spec_dydx,
                              spec_std=None, metadata=metadata_dydx)
 
     def spectra_to_csv(self, fname_list=None, base_dir=None, search_ext='spec',

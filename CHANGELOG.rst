@@ -6,7 +6,7 @@ Release: 0.0.4
 
 * Added ``gdf_shft_e_m`` and ``gdf_shft_n_m`` to ``spatial_mod.crop_single`` function. This adds flexibility for shifting a crop plot in some direction so it is better centered within the ``gdf`` plot boundary.
 * Changed column name requirement from "plot" to "plot_id" to indicate plot ID in ``gdf`` (relevant for ``spatial_mod.crop_single`` and ``spatial_mod.crop_many_gdf`` functions).
-* When cropping by ``gdf`` bounds in ``spatial_mod``, if ``gdf`` bounds are outside image extent, the cropped image had an extra "buffer" equal to the length between the ``gdf`` bound and corresponding extent of the image. Fixed this unintended behavior so the cropped image has the expected extent based on crop_XXX, buf_XXX, etc.
+* When cropping by ``gdf`` bounds in ``spatial_mod``, if ``gdf`` bounds are outside image extent, the cropped image had an extra "buffer" equal to the length between the ``gdf`` bound and corresponding extent of the image. The new behavior is such that the image is croped at the edge of the image and geogransform is shifted according to distance gdf is outside of image extent.
 * Renamed ``spatial_mod.crop_single`` ``plot_id`` parameter to ``plot_id_ref`` to be consistent with ``spatial_mod.crop_many_gdf``.
 * Many bug fixes making the spatial_crop function more robust to various scenarios and to perform quality control checks on input geodataframe of plot boundaries for spatial cropping.
 * During batch processing, if out_force is ``False`` and files exist in output directory, hs_process will skip over files instead of raising an error that the file already exists. This is useful if many files have already been processed and you'd like to process the remaining files without reprocessing all those that are completed.
