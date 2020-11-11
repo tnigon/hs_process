@@ -799,14 +799,14 @@ class hsio(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio()  # initialize an instance of the hsio class (note there are no required parameters)
 
             Load datacube using ``hsio.read_cube``
 
             >>> io.read_cube(fname_hdr)
             >>> io.spyfile
-            Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
+            Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
         	# Rows:            617
         	# Samples:        1300
         	# Bands:           240
@@ -1006,7 +1006,7 @@ class hsio(object):
 
             Load the datacube using ``hsio.read_cube``
 
-            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio()  # initialize an instance of the hsio class
             >>> io.read_cube(fname_hdr)
 
@@ -1153,9 +1153,11 @@ class hsio(object):
             Load ``hsio`` and ``spatial_mod`` modules
 
             >>> import os
+            >>> import pathlib
             >>> from hs_process import hsio  # load hsio
             >>> from hs_process import spatial_mod  # load spatial mod
-            >>> fname_hdr_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> data_dir = r'F:\\nigo0024\Documents\hs_process_demo'
+            >>> fname_hdr_in = os.path.join(data_dir, 'Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr')
             >>> io = hsio()  # initialize the hsio class
             >>> io.read_cube(fname_hdr_in)
 
@@ -1166,10 +1168,9 @@ class hsio(object):
 
             Save the datacube using ``hsio.write_cube``
 
-            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\hsio\Wells_rep2_20180628_16h56m_pika_gige_7-hsio-write-cube-cropped.bip.hdr'
-            >>> os.mkdir(os.path.dirname(fname_hdr))
+            >>> fname_hdr = os.path.join(data_dir, 'hsio', 'Wells_rep2_20180628_16h56m_pika_gige_7-hsio-write-cube-cropped.bip.hdr')
+            >>> pathlib.Path(os.path.dirname(fname_hdr)).mkdir(parents=True, exist_ok=True)
             >>> io.write_cube(fname_hdr, array_crop, metadata=metadata, force=True)
-            Saving F:\nigo0024\Documents\hs_process_demo\hsio\Wells_rep2_20180628_16h56m_pika_gige_7-hsio-write-cube-cropped.bip
 
             Load the datacube into Spectronon for visualization
 
@@ -1276,7 +1277,7 @@ class hsio(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio # load hsio
-            >>> fname_hdr_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_hdr_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio()  # initialize the hsio class (note there are no required parameters)
             >>> io.read_cube(fname_hdr_in)
 
@@ -1347,7 +1348,7 @@ class hsio(object):
             array_single = array_mean.copy()
             array_mean = array_single.reshape(1, 1, len(df_mean))
         try:
-            print(fname_hdr_spec)
+            # print(fname_hdr_spec)
             envi.save_image(fname_hdr_spec, array_mean, interleave=interleave,
                             dtype=dtype, byteorder=byteorder,
                             metadata=metadata, force=force, ext=ext)
@@ -1402,7 +1403,7 @@ class hsio(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio  # load hsio
-            >>> fname_hdr_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_hdr_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio()  # initialize the hsio class
             >>> io.read_cube(fname_hdr_in)
 
@@ -1715,7 +1716,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Create sample metadata with "wavelength" expressed as a list of strings
@@ -1767,7 +1768,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Create sample metadata
@@ -1824,7 +1825,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Use ``hstools.get_band`` to find the band number corresponding to
@@ -1865,7 +1866,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Use ``hstools.get_wavelength`` to find the wavelength value corresponding to the *151st band*
@@ -1972,7 +1973,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Using ``hstools.get_center_wl``, find the bands and *actual mean wavelength* of the bands closest to *700* and *710* nm.
@@ -2027,7 +2028,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Using ``hstools.get_band_index``, find the band index of bands *4*, *43*, and *111*.
@@ -2066,7 +2067,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Calculate the spectral mean of the datacube via
@@ -2126,7 +2127,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Using ``hstools.get_band_num``, find the band number located at the *4th*, *43rd*, and *111th* index values.
@@ -2256,7 +2257,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Retrieve the *"map info" set* from the metadata via
@@ -2334,7 +2335,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Retrieve UTM coordinates and pixel sizes from the metadata
@@ -2374,14 +2375,14 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Load a new datacube using ``hstools.load_spyfile``
 
             >>> io.tools.load_spyfile(io.spyfile)
             >>> io.tools.spyfile
-            Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
+            Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
         	# Rows:            617
         	# Samples:        1300
         	# Bands:           240
@@ -2433,7 +2434,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Retrieve the image band at *800 nm* using ``hstools.get_band`` and
@@ -2635,7 +2636,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Retrieve the image band at *800 nm* using ``hstools.get_band`` and
@@ -2725,7 +2726,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Retrieve the *"map info" set* from the metadata via
@@ -2788,7 +2789,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Retrieve the image band at *800 nm* using ``hstools.get_band`` and

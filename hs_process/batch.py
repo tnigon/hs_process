@@ -327,13 +327,18 @@ class batch(object):
             dir_out, name_append = self._save_file_setup(
                     base_dir_out, folder_name, name_append)
         name_print = self._get_name_print()
-        if method == 'ndi':
-            print('\nCalculating normalized difference index for: {0}'
-                  ''.format(name_print))
-        elif method == 'ratio':
-            print('\nCalculating simple ratio index for: {0}'
-                  ''.format(name_print))
         return dir_out, name_print, name_append
+
+        # if method == 'ndi':
+        #     print('Calculating normalized difference index for: {0}'
+        #           ''.format(name_print))
+        # elif method == 'ratio':
+        #     print('Calculating simple ratio index for: {0}'
+        #           ''.format(name_print))
+        # elif method == 'mcari2':
+        #     print('Calculating MCARI2 index for: {0}'
+        #           ''.format(name_print))
+
 
     def _mask_stats_setup(self, mask_thresh, mask_percentile, mask_side):
         '''
@@ -2970,7 +2975,7 @@ class batch(object):
             >>> base_dir = r'F:\\nigo0024\Documents\hs_process_demo\spatial_crop'
             >>> print(os.path.isdir(base_dir))
             True
-            >>> hsbatch = batch(base_dir, search_ext='.bip')  # searches for all files in ``base_dir`` with a ".bip" file extension
+            >>> hsbatch = batch(base_dir, search_ext='.bip', progress_bar=True)  # searches for all files in ``base_dir`` with a ".bip" file extension
 
             Use ``batch.spectral_clip`` to clip all spectral bands below
             *420 nm* and above *880 nm*, as well as the bands near the oxygen
@@ -2978,13 +2983,10 @@ class batch(object):
             (i.e., *813-827 nm*) regions.
 
             >>> hsbatch.spectral_clip(base_dir=base_dir, folder_name='spec_clip',
-                                      wl_bands=[[0, 420], [760, 776], [813, 827], [880, 1000]])
+                                      wl_bands=[[0, 420], [760, 776], [813, 827], [880, 1000]],
+                                      out_force=True)
             Processing 40 files. If this is not what is expected, please check if files have already undergone processing. If existing files should be overwritten, be sure to set the ``out_force`` parameter.
-            Spectrally clipping: F:\\nigo0024\Documents\hs_process_demo\spatial_crop\Wells_rep2_20180628_16h56m_pika_gige_7_1011-spatial-crop.bip
-            Saving F:\\nigo0024\Documents\hs_process_demo\spatial_crop\spec_clip\Wells_rep2_20180628_16h56m_pika_gige_7_1011-spec-clip.bip
-            Spectrally clipping: F:\\nigo0024\Documents\hs_process_demo\spatial_crop\Wells_rep2_20180628_16h56m_pika_gige_7_1012-spatial-crop.bip
-            Saving F:\\nigo0024\Documents\hs_process_demo\spatial_crop\spec_clip\Wells_rep2_20180628_16h56m_pika_gige_7_1012-spec-clip.bip
-            ...
+            Processing file 39/40: 100%|██████████| 40/40 [00:01<00:00, 26.68it/s]
 
             Use ``seaborn`` to visualize the spectra of a single pixel in one
             of the processed images.
