@@ -2043,7 +2043,7 @@ class hstools(object):
             band_idx = [meta_band_list.index(i) for i in band_name]
         else:
             # band_idx = band_name - 1
-            band_idx = meta_band_list.index(i)
+            band_idx = meta_band_list.index(band_name)
         return band_idx
 
     def get_spectral_mean(self, band_list, spyfile=None):
@@ -2143,7 +2143,7 @@ class hstools(object):
 
     def get_band_range(self, range_wl, index=True, spyfile=None):
         '''
-        Retrieves the band index or band number for all bands within a
+        Retrieves the band index or band name for all bands within a
         wavelength range.
 
         Parameters:
@@ -2163,10 +2163,11 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> data_dir = r'F:\\nigo0024\Documents\hs_process_demo'
+            >>> fname_in = os.path.join(data_dir, 'Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr')
             >>> io = hsio(fname_in)
 
-            Find the band number of all bands between *700* and *710 nm*
+            Find the band name of all bands between *700* and *710 nm*
 
             >>> io.tools.get_band_range([700, 710], index=False, spyfile=io.spyfile)
             [150, 151, 152, 153, 154]
@@ -2176,6 +2177,25 @@ class hstools(object):
 
             >>> io.tools.get_band_range([700, 710], index=True, spyfile=io.spyfile)
             [149, 150, 151, 152, 153]
+
+            Sometimes "band names" are not integers in sequential order. To
+            demonstrate the utility of the ``index`` parameter, let's take a
+            look at Sentinel 2A mimicked imagery.
+
+            >>> data_dir = r'F:\nigo0024\Documents\hs_process_demo\spec_mod'
+            >>> fname_in = os.path.join(data_dir, 'Wells_rep2_20180628_16h56m_pika_gige_7-mimic-s2a.bip.hdr')
+            >>> io = hsio(fname_in)
+
+            Find the band name of all bands between *760* and *840 nm*
+
+            >>> io.tools.get_band_range([760, 840], index=False, spyfile=io.spyfile)
+            ['S2A_SR_AV_B7', 'S2A_SR_AV_B8']
+
+            Find the band index values of all bands between *760* and *840 nm*
+            via ``hstools.get_band_range``
+
+            >>> io.tools.get_band_range([760, 840], index=True, spyfile=io.spyfile)
+            [6, 7]
         '''
         msg = ('"range_wl" must be a `list` or `tuple`.')
         assert isinstance(range_wl, list) or isinstance(range_wl, tuple), msg
@@ -2196,15 +2216,24 @@ class hstools(object):
             # band_max -= 1
             band_max = meta_band_list[meta_band_list.index(band_max) - 1]
             wl_max = self.get_wavelength(band_max)
-        if index is True:
-            band_min = self.get_band_index(band_min)
-            band_max = self.get_band_index(band_max)
 
-        # band_list = [x for x in range(band_min, band_max+1)]
-        idx1 = meta_band_list.index(band_min)
-        band_list = meta_band_list[meta_band_list.index(band_min):
-                                   meta_band_list.index(band_max)+1]  # inclusive
+        if index is True:
+            band_list = list(range(meta_band_list.index(band_min),
+                                   meta_band_list.index(band_max)+1))    # inclusive
+        else:
+            band_list = meta_band_list[meta_band_list.index(band_min):
+                                       meta_band_list.index(band_max)+1]
         return band_list
+
+        # if index is True:
+        #     band_min = hsbatch.my_spectral_mod.tools.get_band_index(band_min)
+        #     band_max = hsbatch.my_spectral_mod.tools.get_band_index(band_max)
+
+        # # band_list = [x for x in range(band_min, band_max+1)]
+        # idx1 = meta_band_list.index(band_min)
+        # band_list = meta_band_list[meta_band_list.index(band_min):
+        #                            meta_band_list.index(band_max)+1]  # inclusive
+        # return band_list
 
     def get_meta_set(self, meta_set, idx=None):
         '''
