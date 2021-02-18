@@ -169,8 +169,8 @@ class batch(object):
                 ''.format(len(fname_list_final)))
         if not len(fname_list_final) > 0:
             warnings.warn(msg1, UserWarning, stacklevel=0)
-        else:
-            print(msg2)
+        # else:
+        #     print(msg2)
         time.sleep(0.2)  # when using progress bar, this keeps from splitting lines
         return fname_list_final
 

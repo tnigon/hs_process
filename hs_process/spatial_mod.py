@@ -804,8 +804,10 @@ class spatial_mod(object):
 
             Read datacube and spatial plot boundaries
 
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
-            >>> fname_gdf = r'F:\\nigo0024\Documents\hs_process_demo\plot_bounds_small\plot_bounds.shp'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7_nohist-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+
+            >>> fname_gdf = r'F:\\nigo0024\Documents\hs_process_demo\plot_bounds.geojson'
             >>> gdf = gpd.read_file(fname_gdf)
             >>> io = hsio(fname_in)
             >>> my_spatial_mod = spatial_mod(io.spyfile)
@@ -1128,12 +1130,16 @@ class spatial_mod(object):
         map_info_set = self.tools.modify_meta_set(map_info_set, 4, ul_y_utm)
         metadata['map info'] = map_info_set
 
+        if 'history' not in metadata:  # add history tag to metadata
+            metadata['history'] = '[no prior history]'
+
         hist_str = (" -> hs_process.crop_single[<"
                     "SpecPyFloatText label: 'pix_e_ul?' value:{0}; "
                     "SpecPyFloatText label: 'pix_n_ul?' value:{1}; "
                     "SpecPyFloatText label: 'pix_e_lr?' value:{2}; "
                     "SpecPyFloatText label: 'pix_n_lr?' value:{3}>]"
                     "".format(pix_e_ul, pix_n_ul, pix_e_lr, pix_n_lr))
+
         # If "..crop_single" is already included in the history, remove it
         idx_remove = metadata['history'].find(
                 ' -> hs_process.crop_single[<')
