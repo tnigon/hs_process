@@ -58,7 +58,7 @@ class spec_mod(object):
         #     metadata_dydx['stdev'] = stdev_dydx
         return metadata_dydx
 
-    def _metadata_mimic(self, sensor, meta_bands_sensor):
+    def _metadata_mimic(self, sensor, meta_bands_sensor, fwhm_dict):
         '''Modifies metadata for spectral_mimic() function.'''
         metadata = deepcopy(self.tools.spyfile.metadata.copy())
         band_names = list(meta_bands_sensor.keys())
@@ -71,8 +71,10 @@ class spec_mod(object):
         wavelength = list(meta_bands_sensor.values())
         band_str = '{' + ', '.join(str(b) for b in band_names) + '}'
         wavelength_str = '{' + ', '.join(str(wl) for wl in wavelength) + '}'
+        fwhm_str = '{' + ', '.join(str(fwhm_dict[b]) for b in band_names) + '}'
         metadata['band names'] = band_str
         metadata['wavelength'] = wavelength_str
+        metadata['fwhm'] = fwhm_str
         # self.tools.spyfile.metadata = metadata
         return metadata
 
@@ -145,6 +147,22 @@ class spec_mod(object):
         band_names = list(df.columns)
         band_names.remove('wl_nm')
         return df, band_names
+
+    def _mimic_get_fwhm(self, df):
+        '''
+        Gets the FWHM off the band responses in ``df``.
+
+        Parameters:
+            df: The band response dataframe (first column should be "wl_nm"
+                indicating the wavelength).
+        '''
+        fwhm_dict = {}
+        for c in df.columns:
+            if c == 'wl_nm':
+                continue
+            df_half_max = df[df[c] >= 0.5]
+            fwhm_dict[c] = df_half_max['wl_nm'].max() - df_half_max['wl_nm'].min()
+        return fwhm_dict
 
     def _resample_get_bin_indices(self, bandwidth, bins_n):
         '''
@@ -524,6 +542,7 @@ class spec_mod(object):
             entire image).
 
             >>> import seaborn as sns
+            >>> from ast import literal_eval
             >>> spy_hs = my_spec_mod.spyfile.open_memmap()  # datacube before smoothing
             >>> meta_bands = list(io.tools.meta_bands.values())
             >>> meta_bands_s2a = sorted([float(i) for i in literal_eval(metadata_s2a['wavelength'])])
@@ -612,7 +631,8 @@ class spec_mod(object):
                 bands_remove[idx] = band_name
         for idx, band_name in bands_remove.items():
             array_multi = np.delete(array_multi, idx, axis=2)
-        metadata = self._metadata_mimic(sensor, meta_bands_sensor)
+        fwhm_dict = self._mimic_get_fwhm(df)
+        metadata = self._metadata_mimic(sensor, meta_bands_sensor, fwhm_dict)
         return array_multi, metadata
 
     def spectral_resample(self, bandwidth=None, bins_n=None, spyfile=None):

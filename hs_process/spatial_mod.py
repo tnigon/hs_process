@@ -4,6 +4,7 @@ import json
 import numpy as np
 import os
 import pandas as pd
+from pyproj import CRS
 from shapely.geometry import Polygon
 import spectral.io.spyfile as SpyFile
 
@@ -16,30 +17,93 @@ class spatial_mod(object):
     Class for manipulating data within the spatial domain
     (e.g., cropping a datacube by a geographical boundary).
     '''
-    def __init__(self, spyfile, gdf=None):
+    def __init__(self, spyfile, gdf=None, **kwargs):
         '''
         spyfile (``SpyFile`` object): The Spectral Python datacube to manipulate.
         gdf (``geopandas.DataFrame``): Polygon data that includes the plot_id and
             its geometry.
+        base_dir (``str``): to be used by the plot gdf attribute data.
+        name_short (``str``): to be used by the plot gdf attribute data.
+        name_long (``str``): to be used by the plot gdf attribute data.
         '''
         self.spyfile = spyfile
         self.gdf = gdf
+        self.base_dir = None
+        self.name_long = None
+        self.name_short = None
+        for k, v in kwargs.items():
+            if k in ['base_dir', 'name_long', 'name_short']:
+                setattr(self, k, v)
 
         self.spy_ps_e = None
         self.spy_ps_n = None
+        self.spy_srid = None
         self.spy_ul_e_srs = None
         self.spy_ul_n_srs = None
         self.tools = None
 
-
         self.defaults = defaults()
-        self.load_spyfile(spyfile)
+        self.load_spyfile(
+            spyfile, base_dir=self.base_dir, name_long=self.name_long,
+            name_short=self.name_short)
 
-    def _create_spyfile_extent_gdf(self, epsg=32615):
+    def _get_srid_from_map_info(self, map_info_set):
         '''
+        Parses the "map info" set of metadata to determine the SRID/EPSG code.
+
+        Images may be in either a geographic or projected coordinate reference
+        system. This function tries to handle any UTM projection, as well as
+        the WGS-84 geographic coordinate system (i.e., latitude/longitude in
+        in units of degrees), however, the projected UTM coordinate reference
+        system is recommended.
+
+        Note:
+            The "map info" tag of the ENVI header file lists geographic
+            information in the following order:
+                1. Projection name
+                2. Reference (tie point) pixel x location (in file coordinates)
+                3. Reference (tie point) pixel y location (in file coordinates)
+                4. Pixel easting
+                5. Pixel northing
+                6. x pixel size
+                7. y pixel size
+                8. Projection zone (UTM only)
+                9. North or South (UTM only)
+                10. Datum
+                11. Units
+        '''
+        proj_name_list = ['utm', 'geographic', 'wgs']
+        units_list = ['meter', 'feet', 'degree']
+
+        proj_name = [proj_name for proj_name in proj_name_list if proj_name in map_info_set[0].lower()][0]
+        units_set = map_info_set[[i for i, j in enumerate(map_info_set) if 'units' in str(j)][0]]
+        unit = [unit for unit in units_list if unit in units_set.lower()][0]
+
+        if proj_name == 'utm' and unit == 'meter':
+            # Note: EPSG code is retrieved from <map_info_set> index 7 and 8
+            north = True if map_info_set[8] == 'N' or map_info_set[8] == 'T' else False
+            crs_dict = {'proj': proj_name,
+                        'zone': map_info_set[7],
+                        'north': north}
+            crs = CRS.from_dict(crs_dict)
+            srid = int(crs.to_authority()[-1])
+        elif proj_name == 'geographic' and unit == 'degree':
+            srid = 4326
+        else:
+            srid = None
+            print('SRID could not be determined from the "map info" tag. '
+                  'Please make sure the "map info" tag in your .hdr file follows '
+                  'the convention of the ENVI header file format:\n'
+                  'https://www.l3harrisgeospatial.com/docs/enviheaderfiles.html')
+        return srid
+
+    def _create_spyfile_extent_gdf(self, srid=32615):
+        '''
+        Creates a geodataframe with a single polygon equal to the extent of the
+        spyfile.
         '''
         metadata = self.spyfile.metadata
-        crs = 'epsg:{0}'.format(epsg)
+        crs = 'epsg:{0}'.format(srid)
         size_x = self.spyfile.shape[1]  # number of pixels
         size_y = self.spyfile.shape[0]
 
@@ -58,7 +122,25 @@ class spatial_mod(object):
         gdf_sp = gpd.GeoDataFrame(index=[0], crs=crs, geometry=[polygon_geom])
         return gdf_sp
 
-    def _overlay_gdf(self, gdf, epsg_sp=32615, how='intersection', crop=True):
+    def _check_crs(self, gdf, srid):
+        '''
+        If geopandas CRS is different, reproject.
+
+        NOTE: If CRS is not set but there is also no geometry available, then
+            there won't be changes made.
+        '''
+        if gdf.crs is None and gdf.geometry.isnull().all():
+            return gdf
+        try:
+            if int(gdf.crs.srs.split(':')[-1]) != srid:
+                gdf = gdf.to_crs(epsg=srid)
+        except AttributeError:  # SRS is likely None
+            assert pd.isnull(gdf.crs), 'CRS is not null, yet cannot be determined (?)'
+            gdf.crs = "EPSG:{0}".format(srid)
+            gdf = gdf.to_crs(epsg=srid)
+        return gdf
+
+    def _overlay_gdf(self, gdf, how='intersection', crop=True):
         '''
         Performs a geopandas overlay between the input geodatafram (``gdf``) and
         the extent of ``spyfile``.
@@ -66,7 +148,8 @@ class spatial_mod(object):
         If crop is ``True``, then the polygon bounds will be cropped to the
         extent of the overlay based on the ``how`` parameter.
         '''
-        gdf_sp = self._create_spyfile_extent_gdf(epsg=epsg_sp)
+        gdf_sp = self._create_spyfile_extent_gdf(srid=self.spy_srid)
+        gdf = self._check_crs(gdf, self.spy_srid)
         gdf_filter = gpd.overlay(gdf, gdf_sp, how=how)
         if crop is not True:  # simply return the original plot bounds that intersect
             gdf_filter = gdf[gdf['plot_id'].isin(gdf_filter['plot_id'])].reset_index(drop=True)
@@ -159,9 +242,9 @@ class spatial_mod(object):
 
             gdf_crop_e_pix = int(abs(plot_srs_e - plot_srs_w) / self.spy_ps_e)
             gdf_crop_n_pix = int(abs(plot_srs_n - plot_srs_s) / self.spy_ps_n)
-            data = [self.tools.base_dir,
-                    self.tools.name_short,
-                    self.tools.name_long,
+            data = [self.base_dir,
+                    self.name_short,
+                    self.name_long,
                     os.path.splitext(self.spyfile.filename)[-1],
                     plot_id, offset_e, offset_n,
                     np.nan, np.nan, np.nan, np.nan,  # buf_X
@@ -352,7 +435,9 @@ class spatial_mod(object):
         if not isinstance(spyfile, SpyFile.SpyFile):
             spyfile = self.spyfile
         else:
-            self.load_spyfile(spyfile)
+            self.load_spyfile(
+                spyfile, base_dir=self.base_dir, name_long=self.name_long,
+                name_short=self.name_short)
 
         if group == 'crop':
             if pd.isnull(e_pix) and pd.isnull(e_m):
@@ -555,7 +640,9 @@ class spatial_mod(object):
         if spyfile is None:
             spyfile = self.spyfile
         elif isinstance(spyfile, SpyFile.SpyFile):
-            self.load_spyfile(spyfile)
+            self.load_spyfile(
+                spyfile, base_dir=self.base_dir, name_long=self.name_long,
+                name_short=self.name_short)
 
         msg1 = ('Either crop_size_XX_m or crop_size_XX_pix should be passed. '
                 'Please pass one or the other.')
@@ -804,11 +891,15 @@ class spatial_mod(object):
 
             Read datacube and spatial plot boundaries
 
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
-            >>> fname_gdf = r'F:\\nigo0024\Documents\hs_process_demo\plot_bounds_small\plot_bounds.shp'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7_nohist-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+
+            >>> fname_gdf = r'F:\\nigo0024\Documents\hs_process_demo\plot_bounds.geojson'
             >>> gdf = gpd.read_file(fname_gdf)
             >>> io = hsio(fname_in)
-            >>> my_spatial_mod = spatial_mod(io.spyfile)
+            >>> my_spatial_mod = spatial_mod(
+                    io.spyfile, base_dir=io.base_dir, name_short=io.name_short,
+                    name_long=io.name_long)
             >>> dir_out = os.path.join(io.base_dir, 'spatial_mod', 'crop_many_gdf')
             >>> name_append = '-crop-many-gdf'
 
@@ -888,7 +979,9 @@ class spatial_mod(object):
         kwargs_d = self._check_crop_defaults(**kwargs)
 
         if isinstance(spyfile, SpyFile.SpyFile):
-            self.load_spyfile(spyfile)
+            self.load_spyfile(
+                spyfile, base_dir=self.base_dir, name_long=self.name_long,
+                name_short=self.name_short)
         metadata = self.spyfile.metadata
         if gdf is None:
             gdf = self.gdf
@@ -1029,7 +1122,9 @@ class spatial_mod(object):
             >>> from hs_process import spatial_mod
             >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
-            >>> my_spatial_mod = spatial_mod(io.spyfile)
+            >>> my_spatial_mod = spatial_mod(
+                    io.spyfile, base_dir=io.base_dir, name_short=io.name_short,
+                    name_long=io.name_long)
 
             Crop an area with a width (easting) *200 pixels* and a height
             (northing) of *50 pixels*, with a northwest/upper left origin at
@@ -1093,7 +1188,9 @@ class spatial_mod(object):
             array_crop = spyfile.read_subregion((pix_n_ul, pix_n_lr),
                                                 (pix_e_ul, pix_e_lr))
         elif isinstance(spyfile, SpyFile.SpyFile):
-            self.load_spyfile(spyfile)
+            self.load_spyfile(
+                spyfile, base_dir=self.base_dir, name_long=self.name_long,
+                name_short=self.name_short)
             array_crop = spyfile.read_subregion((pix_n_ul, pix_n_lr),
                                                 (pix_e_ul, pix_e_lr))
         elif isinstance(spyfile, np.ndarray):
@@ -1128,12 +1225,16 @@ class spatial_mod(object):
         map_info_set = self.tools.modify_meta_set(map_info_set, 4, ul_y_utm)
         metadata['map info'] = map_info_set
 
+        if 'history' not in metadata:  # add history tag to metadata
+            metadata['history'] = '[no prior history]'
+
         hist_str = (" -> hs_process.crop_single[<"
                     "SpecPyFloatText label: 'pix_e_ul?' value:{0}; "
                     "SpecPyFloatText label: 'pix_n_ul?' value:{1}; "
                     "SpecPyFloatText label: 'pix_e_lr?' value:{2}; "
                     "SpecPyFloatText label: 'pix_n_lr?' value:{3}>]"
                     "".format(pix_e_ul, pix_n_ul, pix_e_lr, pix_n_lr))
+
         # If "..crop_single" is already included in the history, remove it
         idx_remove = metadata['history'].find(
                 ' -> hs_process.crop_single[<')
@@ -1155,7 +1256,7 @@ class spatial_mod(object):
 
         return array_crop, metadata
 
-    def load_spyfile(self, spyfile):
+    def load_spyfile(self, spyfile, **kwargs):
         '''
         Loads a ``SpyFile`` (Spectral Python object) for data access and/or
         manipulation by the ``hstools`` class.
@@ -1163,6 +1264,9 @@ class spatial_mod(object):
         Parameters:
             spyfile (``SpyFile`` object): The datacube being accessed and/or
                 manipulated.
+            base_dir (``str``): to be used by the plot gdf attribute data.
+            name_short (``str``): to be used by the plot gdf attribute data.
+            name_long (``str``): to be used by the plot gdf attribute data.
 
         Example:
             Load and initialize the ``hsio`` and ``spatial_mod`` modules
@@ -1171,11 +1275,15 @@ class spatial_mod(object):
             >>> from hs_process import spatial_mod
             >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
-            >>> my_spatial_mod = spatial_mod(io.spyfile)
+            >>> my_spatial_mod = spatial_mod(
+                    io.spyfile, base_dir=io.base_dir, name_short=io.name_short,
+                    name_long=io.name_long)
 
             Load datacube using ``spatial_mod.load_spyfile``
 
-            >>> my_spatial_mod.load_spyfile(io.spyfile)
+            >>> my_spatial_mod.load_spyfile(
+                    io.spyfile, base_dir=io.base_dir, name_short=io.name_short,
+                    name_long=io.name_long)
             >>> my_spatial_mod.spyfile
             Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
         	# Rows:            617
@@ -1185,10 +1293,15 @@ class spatial_mod(object):
         	Quantization:  32 bits
         	Data format:   float32
         '''
+        for k, v in kwargs.items():
+            if k in ['base_dir', 'name_long', 'name_short']:
+                setattr(self, k, v)
+
         self.spyfile = spyfile
         self.tools = hstools(spyfile)
         try:
             map_info_set = self.tools.get_meta_set(self.spyfile.metadata['map info'])
+            self.spy_srid = self._get_srid_from_map_info(map_info_set)
             self.spy_ul_e_srs = float(map_info_set[3])
             self.spy_ul_n_srs = float(map_info_set[4])
             self.spy_ps_e = float(map_info_set[5])
@@ -1197,6 +1310,7 @@ class spatial_mod(object):
             print('Map information was not able to be loaded from the '
                   '`SpyFile`. Please be sure the metadata contains the "map '
                   'info" tag with accurate geometric information.\n')
+            self.spy_srid = None
             self.spy_ul_e_srs = None
             self.spy_ul_n_srs = None
             self.spy_ps_e = None
