@@ -877,7 +877,9 @@ class batch(object):
             fname_hdr = fname + '.hdr'
             self.io.read_cube(fname_hdr, name_long=name_long,
                               name_plot=plot_id_ref, name_short=name_short)
-            self.my_spatial_mod = spatial_mod(self.io.spyfile, gdf)
+            self.my_spatial_mod = spatial_mod(
+                self.io.spyfile, gdf, self.io.base_dir, self.io.name_long,
+                self.io.name_short)
             self.my_spatial_mod.defaults = self.io.defaults
             if base_dir_out is None:
                 dir_out, name_append = self._save_file_setup(
@@ -933,7 +935,9 @@ class batch(object):
         fname_hdr = fname_in + '.hdr'
         self.io.read_cube(fname_hdr, name_long=name_long,
                           name_plot=plot_id_ref, name_short=name_short)
-        self.my_spatial_mod = spatial_mod(self.io.spyfile, gdf)
+        self.my_spatial_mod = spatial_mod(
+            self.io.spyfile, gdf, self.io.base_dir, self.io.name_long,
+            self.io.name_short)
         self.my_spatial_mod.defaults = self.io.defaults
         if method == 'many_gdf':
             df_plots_many = self._many_gdf(cs)
@@ -1035,7 +1039,9 @@ class batch(object):
                   'pass ``fname_sheet`` with "study" and "date" columns.\n')
             for fname_in in fname_list:
                 self.io.read_cube(fname_in)
-                self.my_spatial_mod = spatial_mod(self.io.spyfile, gdf)
+                self.my_spatial_mod = spatial_mod(
+                    self.io.spyfile, gdf, self.io.base_dir, self.io.name_long,
+                    self.io.name_short))
                 # as long as defaults are set ahead of time, they should carry through
                 # e.g., batch.io.defaults.crop_defaults.n_plots = 40 to limit to 40 plots
                 self.my_spatial_mod.defaults = self.io.defaults
