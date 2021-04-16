@@ -198,7 +198,7 @@ class segment(object):
 
             >>> io.show_img(array_mtci, vmin=-2, vmax=15)
 
-            .. image:: ../img/segment/mtci.png
+            .. image:: img/segment/mtci.png
         '''
         wl1 = self._check_bands_wls(wl1, b1, 1)
         wl2 = self._check_bands_wls(wl2, b2, 2)
@@ -340,7 +340,7 @@ class segment(object):
 
             >>> io.show_img(array_mcari2)
 
-            .. image:: ../img/segment/mcari2.png
+            .. image:: img/segment/mcari2.png
         '''
         wl1 = self._check_bands_wls(wl1, b1, 1)
         wl2 = self._check_bands_wls(wl2, b2, 2)
@@ -471,7 +471,7 @@ class segment(object):
 
             >>> io.show_img(array_ndvi)
 
-            .. image:: ../img/segment/ndvi.png
+            .. image:: img/segment/ndvi.png
         '''
         wl1 = self._check_bands_wls(wl1, b1, 1)
         wl2 = self._check_bands_wls(wl2, b2, 2)
@@ -604,7 +604,7 @@ class segment(object):
 
             >>> io.show_img(array_ratio, vmax=0.3)
 
-            .. image:: ../img/segment/ratio_r_nir.png
+            .. image:: img/segment/ratio_r_nir.png
         '''
         wl1 = self._check_bands_wls(wl1, b1, 1)
         wl2 = self._check_bands_wls(wl2, b2, 2)

@@ -789,7 +789,7 @@ class spatial_mod(object):
                 a column name to identify each of the plots, and should be an
                 integer; if ``None``, loads geodataframe from
                 ``spatial_mod.gdf`` (default: ``None``).
-            **kwargs: Can be any of the keys in self.defaults.crop_defaults:
+            kwargs: Can be any of the keys in self.defaults.crop_defaults:
                 plot_id_ref (``int``, optional): the plot ID of the reference plot.
                     ``plot_id_ref`` is required if passing ``pix_e_ul``,
                     ``pix_n_ul``, or ``n_plots`` because it is used as the
@@ -974,7 +974,7 @@ class spatial_mod(object):
             boundaries (the full extent image is darkened and displayed in the
             background:
 
-            .. image:: ../img/spatial_mod/crop_many_gdf_qgis.png
+            .. image:: img/spatial_mod/crop_many_gdf_qgis.png
         '''
         kwargs_d = self._check_crop_defaults(**kwargs)
 
@@ -1146,7 +1146,7 @@ class spatial_mod(object):
             boundaries (the full extent image is darkened and displayed in the
             background):
 
-            .. image:: ../img/spatial_mod/crop_single_qgis.png
+            .. image:: img/spatial_mod/crop_single_qgis.png
         '''
         crop_e_pix, crop_n_pix, crop_e_m, crop_n_m = self._handle_defaults(
                 crop_e_pix, crop_n_pix, crop_e_m, crop_n_m, group='crop')

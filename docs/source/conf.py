@@ -107,8 +107,7 @@ html_theme_options = {
     'navbar_title': "hs_process",
     'navbar_links': [
         ('Github', "https://github.com/tnigon/hs_process", True),
-        ('Download', "https://anaconda.org/conda-forge/hs-process", True),
-        ('Spectral Python', "http://www.spectralpython.net/", True)
+        ('Download', "https://anaconda.org/conda-forge/hs-process", True)
     ],
     'navbar_site_name': "Contents",
     'globaltoc_depth': 3,

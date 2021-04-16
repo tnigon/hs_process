@@ -1019,7 +1019,7 @@ class hsio(object):
 
             >>> io.show_img(array_crop)
 
-            .. image:: ../img/utilities/show_img.png
+            .. image:: img/utilities/show_img.png
 
         .. _Matplotlib: https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.imshow.html#
         '''
@@ -1174,7 +1174,7 @@ class hsio(object):
 
             Load the datacube into Spectronon for visualization
 
-            .. image:: ../img/utilities/write_cube.png
+            .. image:: img/utilities/write_cube.png
 
         .. _Spectral Python: http://www.spectralpython.net/
         '''
@@ -1293,7 +1293,7 @@ class hsio(object):
 
             Open *Wells_rep2_20180628_16h56m_pika_gige_7-mean.spec* in *Spectronon* for visualization
 
-            .. image:: ../img/utilities/write_spec.png
+            .. image:: img/utilities/write_spec.png
 
         .. _Spectral Python: http://www.spectralpython.net/
         '''
@@ -1414,11 +1414,11 @@ class hsio(object):
             Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
             Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
 
-            .. image:: ../img/utilities/write_tif.png
+            .. image:: img/utilities/write_tif.png
 
             Open *Wells_rep2_20180628_16h56m_pika_gige_7.tif* in *QGIS* with the plot boundaries overlaid
 
-            .. image:: ../img/utilities/write_tif_qgis.png
+            .. image:: img/utilities/write_tif_qgis.png
 
         .. _GDAL Python package: https://pypi.org/project/GDAL/
         '''
@@ -2080,7 +2080,7 @@ class hstools(object):
             >>> array_mean = io.tools.get_spectral_mean(band_list, spyfile=io.spyfile)
             >>> io.show_img(array_mean)
 
-            .. image:: ../img/utilities/get_spectral_mean.png
+            .. image:: img/utilities/get_spectral_mean.png
 
         '''
         msg = ('"band_list" must be a list.')
@@ -2464,13 +2464,13 @@ class hstools(object):
             >>> vmax = array.max()
             >>> io.show_img(array, vmin=vmin, vmax=vmax)
 
-            .. image:: ../img/utilities/mask_array_800nm.png
+            .. image:: img/utilities/mask_array_800nm.png
 
             Visualize the unmasked array using ``hsio.show_img``
 
             >>> io.show_img(array_mask, vmin=vmin, vmax=vmax)
 
-            .. image:: ../img/utilities/mask_array_800nm_75th.png
+            .. image:: img/utilities/mask_array_800nm_75th.png
         '''
         msg1 = ('``side`` must be one of the following: "lower", "upper", '
                 '"outside", or "equal".')
@@ -2665,7 +2665,7 @@ class hstools(object):
             >>> io.write_cube(fname_hdr_cube, datacube_masked, metadata=metadata, force=True)
             Saving F:\nigo0024\Documents\hs_process_demo\hstools\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.bip
 
-            .. image:: ../img/utilities/mean_datacube.png
+            .. image:: img/utilities/mean_datacube.png
         '''
         if isinstance(spyfile, SpyFile.SpyFile):
             self.load_spyfile(spyfile)
@@ -2813,7 +2813,7 @@ class hstools(object):
             >>> xlabel = 'Reflectance (%)'
             >>> fig = io.tools.plot_histogram(array_mask, title=title, xlabel=xlabel)
 
-            .. image:: ../img/utilities/plot_histogram_800nm.png
+            .. image:: img/utilities/plot_histogram_800nm.png
         '''
         plt.close('all')  # close all other plots before create a new one
         # this is useful when this function is accesed by the batch module

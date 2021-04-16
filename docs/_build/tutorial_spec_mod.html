@@ -151,10 +151,11 @@
 <li><a class="reference internal" href="#Sample-data">5.1. Sample data</a></li>
 <li><a class="reference internal" href="#Confirm-your-environment">5.2. Confirm your environment</a></li>
 <li><a class="reference internal" href="#spec_mod.load_spyfile">5.3. <code class="docutils literal notranslate"><span class="pre">spec_mod.load_spyfile</span></code></a></li>
-<li><a class="reference internal" href="#spec_mod.spectral_clip">5.4. <code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_clip</span></code></a></li>
-<li><a class="reference internal" href="#spec_mod.spectral_mimic">5.5. <code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_mimic</span></code></a></li>
-<li><a class="reference internal" href="#spec_mod.spectral_resample">5.6. <code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_resample</span></code></a></li>
-<li><a class="reference internal" href="#spec_mod.spectral_smooth">5.7. <code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_smooth</span></code></a></li>
+<li><a class="reference internal" href="#spec_mod.spec_derivative">5.4. <code class="docutils literal notranslate"><span class="pre">spec_mod.spec_derivative</span></code></a></li>
+<li><a class="reference internal" href="#spec_mod.spectral_clip">5.5. <code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_clip</span></code></a></li>
+<li><a class="reference internal" href="#spec_mod.spectral_mimic">5.6. <code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_mimic</span></code></a></li>
+<li><a class="reference internal" href="#spec_mod.spectral_resample">5.7. <code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_resample</span></code></a></li>
+<li><a class="reference internal" href="#spec_mod.spectral_smooth">5.8. <code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_smooth</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -438,16 +439,26 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="Confirm-your-environment">
 <h2><span class="section-number">5.2. </span>Confirm your environment<a class="headerlink" href="#Confirm-your-environment" title="Permalink to this headline">¶</a></h2>
 <p>Before trying the tutorials, be sure <code class="docutils literal notranslate"><span class="pre">hs_process</span></code> and its dependencies are <a class="reference external" href="installation.html#">properly installed</a>. If you installed in a <em>virtual environment</em>, first check we are indeed using the Python instance that was installed with the virtual environment:</p>
-<div class="nbinput nblast docutils container">
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">sys</span>
-
+<span class="kn">import</span> <span class="nn">hs_process</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Python install location: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Version: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hs_process</span><span class="o">.</span><span class="n">__version__</span><span class="p">))</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Python install location: C:\Users\nigo0024\Anaconda3\envs\hs_process\python.exe
+Version: 0.0.4
+</pre></div></div>
 </div>
 <p>The <em>spec</em> folder that contains <code class="docutils literal notranslate"><span class="pre">python.exe</span></code> tells me that the activated Python instance is indeed in the <code class="docutils literal notranslate"><span class="pre">spec</span></code> environment, just as I intend. If you created a virtual environment, but your <code class="docutils literal notranslate"><span class="pre">python.exe</span></code> is not in the <code class="docutils literal notranslate"><span class="pre">envs\spec</span></code> directory, you either did not properly create your virtual environment or you are not pointing to the correct Python installation in your IDE (e.g., Spyder, Jupyter notebook, etc.).</p>
 </div>
@@ -499,12 +510,93 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <hr class="docutils" />
+<div class="section" id="spec_mod.spec_derivative">
+<h2><span class="section-number">5.4. </span><code class="docutils literal notranslate"><span class="pre">spec_mod.spec_derivative</span></code><a class="headerlink" href="#spec_mod.spec_derivative" title="Permalink to this headline">¶</a></h2>
+<p>Calculates the numeric derivative spectra from spyfile_spec. <a class="reference external" href="api/hs_process.hstools.html#hs_process.spec_mod.spec_derivative">[API]</a></p>
+<p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
+<span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">spec_mod</span>
+<span class="n">fname_hdr_spec</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_plot_611-cube-to-spec-mean.spec.hdr&#39;</span><span class="p">)</span>
+<span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>
+<span class="n">io</span><span class="o">.</span><span class="n">read_spec</span><span class="p">(</span><span class="n">fname_hdr_spec</span><span class="p">)</span>
+<span class="n">my_spec_mod</span> <span class="o">=</span> <span class="n">spec_mod</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile_spec</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Calculate the numeric derivative.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">spec_dydx</span><span class="p">,</span> <span class="n">metadata_dydx</span> <span class="o">=</span> <span class="n">my_spec_mod</span><span class="o">.</span><span class="n">spec_derivative</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile_spec</span><span class="p">)</span>  <span class="c1"># Be sure this is the spec spyfile and not a full array</span>
+</pre></div>
+</div>
+</div>
+<p>Plot the numeric derivative spectra and compare against the original spectra.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s2">&quot;ticks&quot;</span><span class="p">)</span>
+<span class="n">wl_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">metadata_dydx</span><span class="p">[</span><span class="s1">&#39;wavelength&#39;</span><span class="p">]])</span>
+<span class="n">y_ref</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile_spec</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,:]</span><span class="o">*</span><span class="mi">100</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">wl_x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y_ref</span><span class="p">)</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">wl_x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">wl_x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">spec_dydx</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,:]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">))</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectance (%)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectance derivative (%)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;API Example: `spec_mod.spec_derivative`&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Text(0.5, 1.0, &#39;API Example: `spec_mod.spec_derivative`&#39;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial_spec_mod_13_1.png" src="_images/tutorial_spec_mod_13_1.png" />
+</div>
+</div>
+<p>Save the derivative spectra to file.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fname_spec_der</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;spec_mod&#39;</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_plot_611-spec-derivative.spec.hdr&#39;</span><span class="p">)</span>
+<span class="n">io</span><span class="o">.</span><span class="n">write_spec</span><span class="p">(</span><span class="n">fname_spec_der</span><span class="p">,</span> <span class="n">spec_dydx</span><span class="p">,</span> <span class="n">df_std</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata_dydx</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
 <div class="section" id="spec_mod.spectral_clip">
-<h2><span class="section-number">5.4. </span><code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_clip</span></code><a class="headerlink" href="#spec_mod.spectral_clip" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.5. </span><code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_clip</span></code><a class="headerlink" href="#spec_mod.spectral_clip" title="Permalink to this headline">¶</a></h2>
 <p>Removes/clips designated wavelength bands from the hyperspectral datacube. <a class="reference external" href="api/hs_process.spec_mod.html#hs_process.spec_mod.spectral_clip">[API]</a></p>
 <p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code> modules</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -521,7 +613,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>Using <code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_clip</span></code>, clip all spectral bands below <em>420 nm</em> and above <em>880 nm</em>, as well as the bands near the oxygen absorption (i.e., <em>760-776 nm</em>) and water absorption (i.e., <em>813-827 nm</em>) regions.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -531,7 +623,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>Plot the spectra of the unclippe hyperspectral image and compare to that of the clipped image for a single pixel.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -551,7 +643,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -563,12 +655,12 @@ Text(0.5, 1.0, &#39;API Example: `spec_mod.spectral_clip`&#39;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/tutorial_spec_mod_13_1.png" src="_images/tutorial_spec_mod_13_1.png" />
+<img alt="_images/tutorial_spec_mod_21_1.png" src="_images/tutorial_spec_mod_21_1.png" />
 </div>
 </div>
 <p>Save the clipped datacube</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -583,11 +675,11 @@ Text(0.5, 1.0, &#39;API Example: `spec_mod.spectral_clip`&#39;)
 </div>
 <hr class="docutils" />
 <div class="section" id="spec_mod.spectral_mimic">
-<h2><span class="section-number">5.5. </span><code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_mimic</span></code><a class="headerlink" href="#spec_mod.spectral_mimic" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.6. </span><code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_mimic</span></code><a class="headerlink" href="#spec_mod.spectral_mimic" title="Permalink to this headline">¶</a></h2>
 <p>Mimics the response of a multispectral sensor based on transmissivity of sensor bands across a range of wavelength values by calculating its weighted average response and interpolating the hyperspectral response. <a class="reference external" href="api/hs_process.spec_mod.html#hs_process.spec_mod.spectral_mimic">[API]</a></p>
 <p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code> modules</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -605,7 +697,7 @@ Text(0.5, 1.0, &#39;API Example: `spec_mod.spectral_clip`&#39;)
 </div>
 <p>Use <code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_mimic</span></code> to mimic the <a class="reference external" href="https://sentinel.esa.int/web/sentinel/document-library/content/-/article/sentinel-2a-spectral-responses">Sentinel-2A spectral response function</a>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -615,12 +707,11 @@ Text(0.5, 1.0, &#39;API Example: `spec_mod.spectral_clip`&#39;)
 </div>
 <p>Plot the spectra of the hyperspectral image and compare to that of the mimicked Sentinel-2A for a single pixel.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">from</span> <span class="nn">ast</span> <span class="kn">import</span> <span class="n">literal_eval</span>
 
 <span class="n">spy_hs</span> <span class="o">=</span> <span class="n">my_spec_mod</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>  <span class="c1"># datacube before smoothing</span>
 <span class="n">meta_bands</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
@@ -635,7 +726,7 @@ Text(0.5, 1.0, &#39;API Example: `spec_mod.spectral_clip`&#39;)
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -647,12 +738,12 @@ Text(0.5, 1.0, &#39;API Example: `spec_mod.spectral_mimic`&#39;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/tutorial_spec_mod_21_1.png" src="_images/tutorial_spec_mod_21_1.png" />
+<img alt="_images/tutorial_spec_mod_29_1.png" src="_images/tutorial_spec_mod_29_1.png" />
 </div>
 </div>
 <p>Use <code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_mimic</span></code> to mimic the <a class="reference external" href="https://sentera.com/6x/">Sentera 6x spectral configuration</a> and compare to both hyperspectral and Sentinel-2A.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -669,7 +760,7 @@ Text(0.5, 1.0, &#39;API Example: `spec_mod.spectral_mimic`&#39;)
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -681,12 +772,12 @@ Text(0.5, 1.0, &#39;API Example: `spec_mod.spectral_mimic`&#39;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/tutorial_spec_mod_23_1.png" src="_images/tutorial_spec_mod_23_1.png" />
+<img alt="_images/tutorial_spec_mod_31_1.png" src="_images/tutorial_spec_mod_31_1.png" />
 </div>
 </div>
 <p>And finally, mimic the <a class="reference external" href="https://micasense.com/rededge-mx/">Micasense RedEdge-MX</a> and compare to hyperspectral, Sentinel-2A, and Sentera 6X.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -704,7 +795,7 @@ Text(0.5, 1.0, &#39;API Example: `spec_mod.spectral_mimic`&#39;)
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -716,12 +807,12 @@ Text(0.5, 1.0, &#39;API Example: `spec_mod.spectral_mimic`&#39;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/tutorial_spec_mod_25_1.png" src="_images/tutorial_spec_mod_25_1.png" />
+<img alt="_images/tutorial_spec_mod_33_1.png" src="_images/tutorial_spec_mod_33_1.png" />
 </div>
 </div>
 <p>Save the mimicked datacubes using <code class="docutils literal notranslate"><span class="pre">hsio.write_cube</span></code></p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -737,11 +828,11 @@ Text(0.5, 1.0, &#39;API Example: `spec_mod.spectral_mimic`&#39;)
 </div>
 <hr class="docutils" />
 <div class="section" id="spec_mod.spectral_resample">
-<h2><span class="section-number">5.6. </span><code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_resample</span></code><a class="headerlink" href="#spec_mod.spectral_resample" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.7. </span><code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_resample</span></code><a class="headerlink" href="#spec_mod.spectral_resample" title="Permalink to this headline">¶</a></h2>
 <p>Performs pixel-wise resampling of spectral bands via binning (calculates the mean across all bands within each <code class="docutils literal notranslate"><span class="pre">bandwidth</span></code> region for each image pixel). <a class="reference external" href="api/hs_process.spec_mod.html#hs_process.spec_mod.spectral_resample">[API]</a></p>
 <p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code> modules</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -759,7 +850,7 @@ Text(0.5, 1.0, &#39;API Example: `spec_mod.spectral_mimic`&#39;)
 </div>
 <p>Use <code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_resample</span></code> to “bin” the datacube to bands with <em>20 nm</em> bandwidths.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -769,7 +860,7 @@ Text(0.5, 1.0, &#39;API Example: `spec_mod.spectral_mimic`&#39;)
 </div>
 <p>Plot the spectra for both the hyperspectral image and that of the binned image bands (for a single “vegetation” pixel).</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -790,7 +881,7 @@ Text(0.5, 1.0, &#39;API Example: `spec_mod.spectral_mimic`&#39;)
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -802,12 +893,12 @@ Text(0.5, 1.0, &#39;API Example: `spec_mod.spectral_resample`&#39;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/tutorial_spec_mod_33_1.png" src="_images/tutorial_spec_mod_33_1.png" />
+<img alt="_images/tutorial_spec_mod_41_1.png" src="_images/tutorial_spec_mod_41_1.png" />
 </div>
 </div>
 <p>Save the spectrally resampled datacube using <code class="docutils literal notranslate"><span class="pre">hsio.write_cube</span></code></p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -819,11 +910,11 @@ Text(0.5, 1.0, &#39;API Example: `spec_mod.spectral_resample`&#39;)
 </div>
 <hr class="docutils" />
 <div class="section" id="spec_mod.spectral_smooth">
-<h2><span class="section-number">5.7. </span><code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_smooth</span></code><a class="headerlink" href="#spec_mod.spectral_smooth" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.8. </span><code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_smooth</span></code><a class="headerlink" href="#spec_mod.spectral_smooth" title="Permalink to this headline">¶</a></h2>
 <p>Performs Savitzky-Golay smoothing on the spectral domain. <a class="reference external" href="api/hs_process.spec_mod.html#hs_process.spec_mod.spectral_smooth">[API]</a></p>
 <p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code> modules</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -840,7 +931,7 @@ Text(0.5, 1.0, &#39;API Example: `spec_mod.spectral_resample`&#39;)
 </div>
 <p>Use <code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_smooth</span></code> to perform a <em>Savitzky-Golay</em> smoothing operation across the hyperspectral spectral signature.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -850,7 +941,7 @@ Text(0.5, 1.0, &#39;API Example: `spec_mod.spectral_resample`&#39;)
 </div>
 <p>Plot the spectra of an <em>individual pixel</em> to visualize the result of the smoothing procedure.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -870,7 +961,7 @@ Text(0.5, 1.0, &#39;API Example: `spec_mod.spectral_resample`&#39;)
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -882,12 +973,12 @@ Text(0.5, 1.0, &#39;API Example: `spec_mod.spectral_smooth`&#39;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/tutorial_spec_mod_41_1.png" src="_images/tutorial_spec_mod_41_1.png" />
+<img alt="_images/tutorial_spec_mod_49_1.png" src="_images/tutorial_spec_mod_49_1.png" />
 </div>
 </div>
 <p>Save the smoothed datacube using <code class="docutils literal notranslate"><span class="pre">hsio.write_cube</span></code></p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>

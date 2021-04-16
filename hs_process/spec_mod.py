@@ -454,7 +454,7 @@ class spec_mod(object):
             >>> ax.set_ylabel('Reflectance (%)', weight='bold')
             >>> ax.set_title(r'API Example: `spec_mod.spectral_clip`', weight='bold')
 
-            .. image:: ../img/spec_mod/spectral_clip.png
+            .. image:: img/spec_mod/spectral_clip.png
         '''
         if spyfile is None:
             spyfile = self.spyfile
@@ -524,9 +524,9 @@ class spec_mod(object):
             >>> data_dir = r'F:\\nigo0024\Documents\hs_process_demo'
             >>> fname_hdr = os.path.join(data_dir, 'Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr')
 
-            data_dir2 = r'G:\BBE\AGROBOT\Shared Work\hs_process_results\data\ref_closest_panel\crop_plot'
-            fname_hdr = os.path.join(data_dir2, 'study_aerffield_date_20190708_plot_5110-crop-plot.bip.hdr')
-            array = io.spyfile.open_memmap()
+            >>> data_dir2 = r'G:\BBE\AGROBOT\Shared Work\hs_process_results\data\ref_closest_panel\crop_plot'
+            >>> fname_hdr = os.path.join(data_dir2, 'study_aerffield_date_20190708_plot_5110-crop-plot.bip.hdr')
+            >>> array = io.spyfile.open_memmap()
 
             >>> io = hsio()
             >>> io.read_cube(fname_hdr)
@@ -553,7 +553,7 @@ class spec_mod(object):
             >>> ax.set_ylabel('Reflectance (%)', weight='bold')
             >>> ax.set_title(r'API Example: `spec_mod.spectral_mimic`', weight='bold')
 
-            .. image:: ../img/spec_mod/spectral_mimic_sentinel-2a.png
+            .. image:: img/spec_mod/spectral_mimic_sentinel-2a.png
 
             Use spec_mod.spectral_mimic to mimic the Sentera 6x spectral configuration and compare to both hyperspectral and Sentinel-2A.
 
@@ -566,7 +566,7 @@ class spec_mod(object):
             >>> ax.set_ylabel('Reflectance (%)', weight='bold')
             >>> ax.set_title(r'API Example: `spec_mod.spectral_mimic`', weight='bold')
 
-            .. image:: ../img/spec_mod/spectral_mimic_6x.png
+            .. image:: img/spec_mod/spectral_mimic_6x.png
 
             And finally, mimic the Micasense RedEdge-MX and compare to hyperspectral, Sentinel-2A, and Sentera 6X.
 
@@ -580,7 +580,7 @@ class spec_mod(object):
             >>> ax.set_ylabel('Reflectance (%)', weight='bold')
             >>> ax.set_title(r'API Example: `spec_mod.spectral_mimic`', weight='bold')
 
-            .. image:: ../img/spec_mod/spectral_mimic_re.png
+            .. image:: img/spec_mod/spectral_mimic_re.png
         '''
         if spyfile is None:
             spyfile = self.spyfile
@@ -692,7 +692,7 @@ class spec_mod(object):
             >>> ax.set_ylabel('Reflectance (%)', weight='bold')
             >>> ax.set_title(r'API Example: `spec_mod.spectral_resample`', weight='bold')
 
-            .. image:: ../img/spec_mod/spectral_resample.png
+            .. image:: img/spec_mod/spectral_resample.png
         '''
         if spyfile is None:
             spyfile = self.spyfile
@@ -787,7 +787,7 @@ class spec_mod(object):
             >>> ax.set_ylabel('Reflectance (%)', weight='bold')
             >>> ax.set_title(r'API Example: `spec_mod.spectral_smooth`', weight='bold')
 
-            .. image:: ../img/spec_mod/spectral_smooth.png
+            .. image:: img/spec_mod/spectral_smooth.png
         '''
         if spyfile is None:
             spyfile = self.spyfile

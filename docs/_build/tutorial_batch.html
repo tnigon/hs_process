@@ -154,13 +154,14 @@
 <li><a class="reference internal" href="#batch.segment_band_math">7.4. <code class="docutils literal notranslate"><span class="pre">batch.segment_band_math</span></code></a></li>
 <li><a class="reference internal" href="#batch.segment_create_mask">7.5. <code class="docutils literal notranslate"><span class="pre">batch.segment_create_mask</span></code></a></li>
 <li><a class="reference internal" href="#batch.spatial_crop">7.6. <code class="docutils literal notranslate"><span class="pre">batch.spatial_crop</span></code></a></li>
-<li><a class="reference internal" href="#batch.spectra_combine">7.7. <code class="docutils literal notranslate"><span class="pre">batch.spectra_combine</span></code></a></li>
-<li><a class="reference internal" href="#batch.spectra_to_csv">7.8. <code class="docutils literal notranslate"><span class="pre">batch.spectra_to_csv</span></code></a></li>
-<li><a class="reference internal" href="#batch.spectra_to_df">7.9. <code class="docutils literal notranslate"><span class="pre">batch.spectra_to_df</span></code></a></li>
-<li><a class="reference internal" href="#batch.spectral_clip">7.10. <code class="docutils literal notranslate"><span class="pre">batch.spectral_clip</span></code></a></li>
-<li><a class="reference internal" href="#batch.spectral_mimic">7.11. <code class="docutils literal notranslate"><span class="pre">batch.spectral_mimic</span></code></a></li>
-<li><a class="reference internal" href="#batch.spectral_resample">7.12. <code class="docutils literal notranslate"><span class="pre">batch.spectral_resample</span></code></a></li>
-<li><a class="reference internal" href="#batch.spectral_smooth">7.13. <code class="docutils literal notranslate"><span class="pre">batch.spectral_smooth</span></code></a></li>
+<li><a class="reference internal" href="#batch.spectra_derivative">7.7. <code class="docutils literal notranslate"><span class="pre">batch.spectra_derivative</span></code></a></li>
+<li><a class="reference internal" href="#batch.spectra_combine">7.8. <code class="docutils literal notranslate"><span class="pre">batch.spectra_combine</span></code></a></li>
+<li><a class="reference internal" href="#batch.spectra_to_csv">7.9. <code class="docutils literal notranslate"><span class="pre">batch.spectra_to_csv</span></code></a></li>
+<li><a class="reference internal" href="#batch.spectra_to_df">7.10. <code class="docutils literal notranslate"><span class="pre">batch.spectra_to_df</span></code></a></li>
+<li><a class="reference internal" href="#batch.spectral_clip">7.11. <code class="docutils literal notranslate"><span class="pre">batch.spectral_clip</span></code></a></li>
+<li><a class="reference internal" href="#batch.spectral_mimic">7.12. <code class="docutils literal notranslate"><span class="pre">batch.spectral_mimic</span></code></a></li>
+<li><a class="reference internal" href="#batch.spectral_resample">7.13. <code class="docutils literal notranslate"><span class="pre">batch.spectral_resample</span></code></a></li>
+<li><a class="reference internal" href="#batch.spectral_smooth">7.14. <code class="docutils literal notranslate"><span class="pre">batch.spectral_smooth</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -453,7 +454,9 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">hs_process</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Python install location: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Version: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hs_process</span><span class="o">.</span><span class="n">__version__</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -462,7 +465,8 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Python install location: C:\Users\nigo0024\Anaconda3\envs\msi_sip\python.exe
+Python install location: C:\Users\nigo0024\Anaconda3\envs\hs_process\python.exe
+Version: 0.0.4
 </pre></div></div>
 </div>
 <p>The <em>spec</em> folder that contains <code class="docutils literal notranslate"><span class="pre">python.exe</span></code> tells me that the activated Python instance is indeed in the <code class="docutils literal notranslate"><span class="pre">spec</span></code> environment, just as I intend. If you created a virtual environment, but your <code class="docutils literal notranslate"><span class="pre">python.exe</span></code> is not in the <code class="docutils literal notranslate"><span class="pre">envs\spec</span></code> directory, you either did not properly create your virtual environment or you are not pointing to the correct Python installation in your IDE (e.g., Spyder, Jupyter notebook, etc.).</p>
@@ -507,20 +511,12 @@ True
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-cube_to_spectra: |----------------------------------------------------------------------------------------------------| 0.0%
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-Processing file 39/40: 100%|████████████████████████████████████████████████████████████████████| 40/40 [00:02&lt;00:00, 16.13it/s]
+Processing file 39/40: 100%|████████████████████████████████████████████████████████████████████| 40/40 [00:02&lt;00:00, 17.64it/s]
 </pre></div></div>
 </div>
 <p>Use <code class="docutils literal notranslate"><span class="pre">`seaborn</span></code> &lt;<a class="reference external" href="https://seaborn.pydata.org/index.html">https://seaborn.pydata.org/index.html</a>&gt;`__ to visualize the spectra of plots 1011, 1012, and 1013. Notice how <code class="docutils literal notranslate"><span class="pre">hsbatch.io.name_plot</span></code> is utilized to retrieve the plot ID, and how the <em>“history”</em> tag is referenced from the metadata to determine the number of pixels whose reflectance was averaged to create the mean spectra. Also remember that pixels across the original input image likely represent a combination of soil, vegetation, and shadow.</p>
@@ -531,21 +527,20 @@ Processing file 39/40: 100%|█████████████████�
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">import</span> <span class="nn">re</span>
-
-<span class="n">fname_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;spatial_mod&#39;</span><span class="p">,</span> <span class="s1">&#39;crop_many_gdf&#39;</span><span class="p">,</span> <span class="s1">&#39;cube_to_spec&#39;</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-cube-to-spec-mean.spec&#39;</span><span class="p">),</span>
-              <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;spatial_mod&#39;</span><span class="p">,</span> <span class="s1">&#39;crop_many_gdf&#39;</span><span class="p">,</span> <span class="s1">&#39;cube_to_spec&#39;</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012-cube-to-spec-mean.spec&#39;</span><span class="p">),</span>
-              <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;spatial_mod&#39;</span><span class="p">,</span> <span class="s1">&#39;crop_many_gdf&#39;</span><span class="p">,</span> <span class="s1">&#39;cube_to_spec&#39;</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013-cube-to-spec-mean.spec&#39;</span><span class="p">)]</span>
-
-<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">]</span>
-
-<span class="k">for</span> <span class="n">fname</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">fname_list</span><span class="p">,</span> <span class="n">colors</span><span class="p">):</span>
+<span class="n">fname_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;cube_to_spec&#39;</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-cube-to-spec-mean.spec&#39;</span><span class="p">),</span>
+              <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;cube_to_spec&#39;</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012-cube-to-spec-mean.spec&#39;</span><span class="p">),</span>
+              <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;cube_to_spec&#39;</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013-cube-to-spec-mean.spec&#39;</span><span class="p">)]</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">for</span> <span class="n">fname</span> <span class="ow">in</span> <span class="n">fname_list</span><span class="p">:</span>
     <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_spec</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
     <span class="n">meta_bands</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile_spec</span><span class="o">.</span><span class="n">load</span><span class="p">()</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span>
     <span class="n">hist</span> <span class="o">=</span> <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile_spec</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span>
     <span class="n">pix_n</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;&lt;pixel number: (.*)&gt;&#39;</span><span class="p">,</span> <span class="n">hist</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Plot &#39;</span><span class="o">+</span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">name_plot</span><span class="o">+</span><span class="s1">&#39; (n=&#39;</span><span class="o">+</span><span class="n">pix_n</span><span class="o">+</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
-
+    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Plot &#39;</span><span class="o">+</span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">name_plot</span><span class="o">+</span><span class="s1">&#39; (n=&#39;</span><span class="o">+</span><span class="n">pix_n</span><span class="o">+</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Plot &#39;</span><span class="o">+</span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">name_plot</span><span class="o">+</span><span class="s1">&#39; (n=&#39;</span><span class="o">+</span><span class="n">pix_n</span><span class="o">+</span><span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectance (%)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;API Example: `batch.cube_to_spectra`&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
@@ -622,7 +617,7 @@ True
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-Processing file 39/40: 100%|████████████████████████████████████████████████████████████████████| 40/40 [00:13&lt;00:00,  2.89it/s]
+Processing file 39/40: 100%|████████████████████████████████████████████████████████████████████| 40/40 [00:15&lt;00:00,  2.63it/s]
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -848,9 +843,9 @@ True
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-Processing file 0/40:   0%|                                                                              | 0/40 [00:00&lt;?, ?it/s]C:\Users\nigo0024\Anaconda3\envs\msi_sip\lib\site-packages\spectral\io\spyfile.py:218: NaNValueWarning: Image data contains NaN values.
+Processing file 0/40:   0%|                                                                              | 0/40 [00:00&lt;?, ?it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\spectral\io\spyfile.py:218: NaNValueWarning: Image data contains NaN values.
   warnings.warn(&#39;Image data contains NaN values.&#39;, NaNValueWarning)
-Processing file 39/40: 100%|████████████████████████████████████████████████████████████████████| 40/40 [00:04&lt;00:00,  8.13it/s]
+Processing file 39/40: 100%|████████████████████████████████████████████████████████████████████| 40/40 [00:04&lt;00:00,  8.64it/s]
 </pre></div></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">batch.segment_create_mask</span></code> creates a new folder in <code class="docutils literal notranslate"><span class="pre">base_dir</span></code> named according to the <code class="docutils literal notranslate"><span class="pre">folder_name</span></code> parameter (in this case the new directory is <code class="docutils literal notranslate"><span class="pre">F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\mask_mcari2_90th</span></code>) which contains several data products.</p>
@@ -860,7 +855,8 @@ Processing file 39/40: 100%|█████████████████�
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;mask_mcari2_90th&#39;</span><span class="p">,</span> <span class="s1">&#39;mask-stats.csv&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span></span><span class="n">stats_fname</span> <span class="o">=</span> <span class="s1">&#39;mask-</span><span class="si">{0}</span><span class="s1">-pctl-</span><span class="si">{1}</span><span class="s1">.csv&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mask_side</span><span class="p">,</span> <span class="n">mask_percentile</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;mask_mcari2_90th&#39;</span><span class="p">,</span> <span class="n">stats_fname</span><span class="p">))</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -889,7 +885,10 @@ Processing file 39/40: 100%|█████████████████�
       <th></th>
       <th>fname</th>
       <th>plot_id</th>
-      <th>lower-pctl-90</th>
+      <th>mask-lower-pctl-90-count</th>
+      <th>mask-lower-pctl-90-mean</th>
+      <th>mask-lower-pctl-90-stdev</th>
+      <th>mask-lower-pctl-90-median</th>
     </tr>
   </thead>
   <tbody>
@@ -897,31 +896,46 @@ Processing file 39/40: 100%|█████████████████�
       <th>0</th>
       <td>F:\\nigo0024\Documents\hs_process_demo\spatial...</td>
       <td>1011</td>
+      <td>339</td>
       <td>0.832222</td>
+      <td>0.023752</td>
+      <td>0.826148</td>
     </tr>
     <tr>
       <th>1</th>
       <td>F:\\nigo0024\Documents\hs_process_demo\spatial...</td>
       <td>1012</td>
+      <td>491</td>
       <td>0.811119</td>
+      <td>0.021560</td>
+      <td>0.806518</td>
     </tr>
     <tr>
       <th>2</th>
       <td>F:\\nigo0024\Documents\hs_process_demo\spatial...</td>
       <td>1013</td>
+      <td>491</td>
       <td>0.743942</td>
+      <td>0.032975</td>
+      <td>0.737507</td>
     </tr>
     <tr>
       <th>3</th>
       <td>F:\\nigo0024\Documents\hs_process_demo\spatial...</td>
       <td>1014</td>
-      <td>0.809496</td>
+      <td>491</td>
+      <td>0.809495</td>
+      <td>0.022680</td>
+      <td>0.804289</td>
     </tr>
     <tr>
       <th>4</th>
       <td>F:\\nigo0024\Documents\hs_process_demo\spatial...</td>
       <td>1015</td>
+      <td>491</td>
       <td>0.813714</td>
+      <td>0.024030</td>
+      <td>0.809144</td>
     </tr>
   </tbody>
 </table>
@@ -1037,16 +1051,232 @@ Because ``fname_list`` was passed instead of ``fname_sheet``, there is not a way
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-Processing file 39/40: 100%|████████████████████████████████████████████████████████████████████| 40/40 [00:02&lt;00:00, 17.54it/s]
+Processing file 39/40: 100%|████████████████████████████████████████████████████████████████████| 40/40 [00:03&lt;00:00, 10.94it/s]
+C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 0/40:   0%|                                                                              | 0/40 [00:00&lt;?, ?it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 1/40:   2%|█▊                                                                    | 1/40 [00:00&lt;00:04,  9.18it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 2/40:   2%|█▊                                                                    | 1/40 [00:00&lt;00:04,  9.18it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 3/40:   8%|█████▎                                                                | 3/40 [00:00&lt;00:03,  9.87it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 4/40:   8%|█████▎                                                                | 3/40 [00:00&lt;00:03,  9.87it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 5/40:  12%|████████▊                                                             | 5/40 [00:00&lt;00:03, 10.23it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 6/40:  12%|████████▊                                                             | 5/40 [00:00&lt;00:03, 10.23it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 7/40:  18%|████████████▎                                                         | 7/40 [00:00&lt;00:03, 10.06it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 8/40:  18%|████████████▎                                                         | 7/40 [00:00&lt;00:03, 10.06it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 9/40:  22%|███████████████▊                                                      | 9/40 [00:00&lt;00:03, 10.23it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 10/40:  22%|███████████████▌                                                     | 9/40 [00:00&lt;00:03, 10.23it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 11/40:  28%|██████████████████▋                                                 | 11/40 [00:01&lt;00:02, 10.26it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 12/40:  28%|██████████████████▋                                                 | 11/40 [00:01&lt;00:02, 10.26it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 13/40:  32%|██████████████████████                                              | 13/40 [00:01&lt;00:02, 10.25it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 14/40:  32%|██████████████████████                                              | 13/40 [00:01&lt;00:02, 10.25it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 15/40:  38%|█████████████████████████▌                                          | 15/40 [00:01&lt;00:02, 10.35it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 16/40:  38%|█████████████████████████▌                                          | 15/40 [00:01&lt;00:02, 10.35it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 17/40:  42%|████████████████████████████▉                                       | 17/40 [00:01&lt;00:02, 10.19it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 18/40:  42%|████████████████████████████▉                                       | 17/40 [00:01&lt;00:02, 10.19it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 19/40:  48%|████████████████████████████████▎                                   | 19/40 [00:01&lt;00:02, 10.33it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 20/40:  48%|████████████████████████████████▎                                   | 19/40 [00:01&lt;00:02, 10.33it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 21/40:  52%|███████████████████████████████████▋                                | 21/40 [00:02&lt;00:01, 10.48it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 22/40:  52%|███████████████████████████████████▋                                | 21/40 [00:02&lt;00:01, 10.48it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 23/40:  57%|███████████████████████████████████████                             | 23/40 [00:02&lt;00:01, 10.47it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 24/40:  57%|███████████████████████████████████████                             | 23/40 [00:02&lt;00:01, 10.47it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 25/40:  62%|██████████████████████████████████████████▌                         | 25/40 [00:02&lt;00:01, 10.60it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 26/40:  62%|██████████████████████████████████████████▌                         | 25/40 [00:02&lt;00:01, 10.60it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 27/40:  68%|█████████████████████████████████████████████▉                      | 27/40 [00:02&lt;00:01, 10.61it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 28/40:  68%|█████████████████████████████████████████████▉                      | 27/40 [00:02&lt;00:01, 10.61it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 29/40:  72%|█████████████████████████████████████████████████▎                  | 29/40 [00:02&lt;00:01, 10.09it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 30/40:  72%|█████████████████████████████████████████████████▎                  | 29/40 [00:02&lt;00:01, 10.09it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 31/40:  78%|████████████████████████████████████████████████████▋               | 31/40 [00:03&lt;00:00,  9.36it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 32/40:  80%|██████████████████████████████████████████████████████▍             | 32/40 [00:03&lt;00:00,  8.55it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 33/40:  82%|████████████████████████████████████████████████████████            | 33/40 [00:03&lt;00:00,  8.10it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 34/40:  85%|█████████████████████████████████████████████████████████▊          | 34/40 [00:03&lt;00:00,  7.18it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 35/40:  85%|█████████████████████████████████████████████████████████▊          | 34/40 [00:03&lt;00:00,  7.18it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 36/40:  90%|█████████████████████████████████████████████████████████████▏      | 36/40 [00:03&lt;00:00,  8.32it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 37/40:  92%|██████████████████████████████████████████████████████████████▉     | 37/40 [00:03&lt;00:00,  8.63it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 38/40:  95%|████████████████████████████████████████████████████████████████▌   | 38/40 [00:03&lt;00:00,  8.82it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 39/40:  98%|██████████████████████████████████████████████████████████████████▎ | 39/40 [00:04&lt;00:00,  9.06it/s]C:\Users\nigo0024\Anaconda3\envs\hs_process\lib\site-packages\hs_process\utilities.py:482: UserWarning: Cannot determine the plot name from the image filename. Setting `hsio.name_plot` to `None`. If this image is for a particular plot, please set `hsio.name_plot; otherwise, ignore this warning.
+
+  warnings.warn(msg, UserWarning)
+Processing file 39/40: 100%|████████████████████████████████████████████████████████████████████| 40/40 [00:04&lt;00:00,  9.57it/s]
 </pre></div></div>
 </div>
 <p>A new folder was created in <code class="docutils literal notranslate"><span class="pre">base_dir</span></code> - <code class="docutils literal notranslate"><span class="pre">F:\\nigo0024\Documents\hs_process_demo\spatial_crop</span></code> - that contains the cropped datacubes and the cropped <code class="docutils literal notranslate"><span class="pre">geotiff</span></code> images. The Plot ID from the <code class="docutils literal notranslate"><span class="pre">gdf</span></code> is used to name each datacube according to its plot ID. The <code class="docutils literal notranslate"><span class="pre">geotiff</span></code> images can be opened in <em>QGIS</em> to visualize the images after cropping them.</p>
 <img alt="spatial-crop-tifs" src="_images/spatial_crop_tifs1.png" />
 <p>The cropped images were brightened in <em>QGIS</em> to emphasize the cropped boundaries. The plot boundaries are overlaid for reference (notice the 2.0 m buffer on the East/West ends and the 0.5 m buffer on the North/South sides).</p>
 </div>
+<div class="section" id="batch.spectra_derivative">
+<h2><span class="section-number">7.7. </span><code class="docutils literal notranslate"><span class="pre">batch.spectra_derivative</span></code><a class="headerlink" href="#batch.spectra_derivative" title="Permalink to this headline">¶</a></h2>
+<p>Calculates the numeric spectral derivative for each spectra in <code class="docutils literal notranslate"><span class="pre">fname_list</span></code> and writes the result as a “.spec” file. <a class="reference external" href="api/hs_process.batch.html#hs_process.batch.spectra_derivative">[API]</a></p>
+<p><strong>Note:</strong> The following <code class="docutils literal notranslate"><span class="pre">batch</span></code> example builds on the results of the <code class="docutils literal notranslate"><span class="pre">`spatial_mod.cube_to_spectra</span></code> tutorial &lt;tutorial_batch.html#batch.cube_to_spectra&gt;`__. Please complete both the <code class="docutils literal notranslate"><span class="pre">`spatial_mod.crop_many_gdf</span></code> &lt;tutorial_spatial_mod.html#spatial_mod.crop_many_gdf&gt;`__ and <code class="docutils literal notranslate"><span class="pre">`spatial_mod.cube_to_spectra</span></code> tutorial &lt;tutorial_batch.html#batch.cube_to_spectra&gt;`__ examples to be sure your directory (i.e., <code class="docutils literal notranslate"><span class="pre">base_dir</span></code>) is populated with multiple hyperspectral spectra. The following example will
+be using spectra located in the following directory: <code class="docutils literal notranslate"><span class="pre">F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec</span></code></p>
+<p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">batch</span></code> module, checking to be sure the directory exists.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">batch</span>
+
+<span class="n">base_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;spatial_mod&#39;</span><span class="p">,</span> <span class="s1">&#39;crop_many_gdf&#39;</span><span class="p">,</span> <span class="s1">&#39;cube_to_spec&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">))</span>
+<span class="n">hsbatch</span> <span class="o">=</span> <span class="n">batch</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;.spec&#39;</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">batch.spectra_derivative</span></code> to calculate the numeric spectral derivative for each of the .spec files in <code class="docutils literal notranslate"><span class="pre">base_dir</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">hsbatch</span><span class="o">.</span><span class="n">spectra_derivative</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">out_force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Processing file 39/40: 100%|████████████████████████████████████████████████████████████████████| 40/40 [00:01&lt;00:00, 35.53it/s]
+</pre></div></div>
+</div>
+<p>Use seaborn to visualize the derivative spectra of plots 1011, 1012, and 1013.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="n">fname_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;spec_derivative&#39;</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-spec-derivative-order-1.spec&#39;</span><span class="p">),</span>
+              <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;spec_derivative&#39;</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012-spec-derivative-order-1.spec&#39;</span><span class="p">),</span>
+              <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;spec_derivative&#39;</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013-spec-derivative-order-1.spec&#39;</span><span class="p">)]</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">for</span> <span class="n">fname</span> <span class="ow">in</span> <span class="n">fname_list</span><span class="p">:</span>
+    <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_spec</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+    <span class="n">meta_bands</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile_spec</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="n">hist</span> <span class="o">=</span> <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile_spec</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span>
+    <span class="n">pix_n</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;&lt;pixel number: (?s)(.*)&gt;] -&gt;&#39;</span><span class="p">,</span> <span class="n">hist</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Plot &#39;</span><span class="o">+</span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">name_plot</span><span class="o">+</span><span class="s1">&#39; (n=&#39;</span><span class="o">+</span><span class="n">pix_n</span><span class="o">+</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Plot &#39;</span><span class="o">+</span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">name_plot</span><span class="o">+</span><span class="s1">&#39; (n=&#39;</span><span class="o">+</span><span class="n">pix_n</span><span class="o">+</span><span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Derivative reflectance (%)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;API Example: `batch.spectra_derivative`&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+&lt;ipython-input-19-e064d3b7b4d3&gt;:12: DeprecationWarning: Flags not at the start of the expression &#39;&lt;pixel number: (?s)(&#39; (truncated)
+  pix_n = re.search(&#39;&lt;pixel number: (?s)(.*)&gt;] -&gt;&#39;, hist).group(1)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial_batch_40_1.png" src="_images/tutorial_batch_40_1.png" />
+</div>
+</div>
+</div>
 <hr class="docutils" />
 <div class="section" id="batch.spectra_combine">
-<h2><span class="section-number">7.7. </span><code class="docutils literal notranslate"><span class="pre">batch.spectra_combine</span></code><a class="headerlink" href="#batch.spectra_combine" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">7.8. </span><code class="docutils literal notranslate"><span class="pre">batch.spectra_combine</span></code><a class="headerlink" href="#batch.spectra_combine" title="Permalink to this headline">¶</a></h2>
 <p>Batch processing tool to gather all pixels from every image in a directory, compute the mean and standard deviation, and save as a single spectra (i.e., a spectra file is equivalent to a single spectral pixel with no spatial information). <a class="reference external" href="api/hs_process.batch.html#hs_process.batch.spectra_combine">[API]</a></p>
 <p>Visualize the individual spectra by opening in <em>Spectronon</em>.</p>
 <img alt="spectra-combine-initial" src="_images/spectra_combine_initial.png" />
@@ -1054,7 +1284,7 @@ Processing file 39/40: 100%|█████████████████�
 <p><strong>Note:</strong> The following example will load in several small hyperspectral radiance datacubes <em>(not reflectance)</em> that were previously cropped manually (via Spectronon software). These datacubes represent the radiance values of grey reference panels that were placed in the field to provide data necessary for converting radiance imagery to reflectance. These particular datacubes were extracted from several different images captured within ~10 minutes of each other.</p>
 <p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">batch</span></code> module, checking to be sure the directory exists.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1077,7 +1307,7 @@ True
 </div>
 <p>Combine all the <em>radiance</em> datacubes in the directory via <code class="docutils literal notranslate"><span class="pre">batch.spectra_combine</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1101,12 +1331,12 @@ Total number of pixels: 1516
 </div>
 <hr class="docutils" />
 <div class="section" id="batch.spectra_to_csv">
-<h2><span class="section-number">7.8. </span><code class="docutils literal notranslate"><span class="pre">batch.spectra_to_csv</span></code><a class="headerlink" href="#batch.spectra_to_csv" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">7.9. </span><code class="docutils literal notranslate"><span class="pre">batch.spectra_to_csv</span></code><a class="headerlink" href="#batch.spectra_to_csv" title="Permalink to this headline">¶</a></h2>
 <p>Reads all the <code class="docutils literal notranslate"><span class="pre">.spec</span></code> files in a direcory and saves their reflectance information to a <code class="docutils literal notranslate"><span class="pre">.csv</span></code>. <code class="docutils literal notranslate"><span class="pre">batch.spectra_to_csv</span></code> is identical to <code class="docutils literal notranslate"><span class="pre">batch.spectra_to_df</span></code> except a <code class="docutils literal notranslate"><span class="pre">.csv</span></code> file is saved rather than returning a <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>. <a class="reference external" href="api/hs_process.batch.html#hs_process.batch.spectra_to_csv">[API]</a></p>
 <p><strong>Note:</strong> The following example builds on the results of the <code class="docutils literal notranslate"><span class="pre">`batch.segment_band_math</span></code> tutorial &lt;tutorial_batch.html#batch.segment_band_math&gt;`__ and <code class="docutils literal notranslate"><span class="pre">`batch.segment_create_mask</span></code> &lt;tutorial_batch.html#batch.segment_create_mask&gt;`__. Please complete each of those tutorial examples to be sure your directory (i.e., <code class="docutils literal notranslate"><span class="pre">F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\mask_mcari2_90th</span></code>) is populated with image files.</p>
 <p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">batch</span></code> module, checking to be sure the directory exists.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1129,7 +1359,7 @@ True
 </div>
 <p>Read all the <code class="docutils literal notranslate"><span class="pre">.spec</span></code> files in <code class="docutils literal notranslate"><span class="pre">base_dir</span></code> and save them to a <code class="docutils literal notranslate"><span class="pre">.csv</span></code> file.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1143,13 +1373,13 @@ True
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Writing mean spectra to a .csv file.
-Number of input datacubes/spectra: 80
+Number of input datacubes/spectra: 40
 Output file location: F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\mask_mcari2_90th\stats-spectra.csv
 </pre></div></div>
 </div>
 <p>When <code class="docutils literal notranslate"><span class="pre">stats-spectra.csv</span></code> is opened, we can see that each row is a <code class="docutils literal notranslate"><span class="pre">.spec</span></code> file from a different plot, and each column is a particular spectral band/wavelength.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1159,7 +1389,7 @@ Output file location: F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_ma
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1221,7 +1451,7 @@ Output file location: F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_ma
       <td>231.000000</td>
       <td>232.000000</td>
       <td>233.000000</td>
-      <td>234.00000</td>
+      <td>234.000000</td>
       <td>235.000000</td>
       <td>236.000000</td>
       <td>237.000000</td>
@@ -1245,7 +1475,7 @@ Output file location: F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_ma
       <td>45.952736</td>
       <td>45.177956</td>
       <td>44.178223</td>
-      <td>45.59573</td>
+      <td>45.595730</td>
       <td>44.237053</td>
       <td>45.192883</td>
       <td>44.707069</td>
@@ -1255,30 +1485,6 @@ Output file location: F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_ma
     </tr>
     <tr>
       <th>2</th>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7_plot_10...</td>
-      <td>1011</td>
-      <td>6.422696</td>
-      <td>11.165407</td>
-      <td>5.400625</td>
-      <td>4.512296</td>
-      <td>3.475373</td>
-      <td>2.522064</td>
-      <td>2.044144</td>
-      <td>1.697843</td>
-      <td>...</td>
-      <td>45.952736</td>
-      <td>45.177956</td>
-      <td>44.178223</td>
-      <td>45.59573</td>
-      <td>44.237053</td>
-      <td>45.192883</td>
-      <td>44.707069</td>
-      <td>44.317673</td>
-      <td>44.977257</td>
-      <td>44.885410</td>
-    </tr>
-    <tr>
-      <th>3</th>
       <td>Wells_rep2_20180628_16h56m_pika_gige_7_plot_10...</td>
       <td>1012</td>
       <td>14.328226</td>
@@ -1293,7 +1499,7 @@ Output file location: F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_ma
       <td>44.907276</td>
       <td>44.544106</td>
       <td>43.384926</td>
-      <td>44.67561</td>
+      <td>44.675610</td>
       <td>43.880154</td>
       <td>44.394325</td>
       <td>43.728794</td>
@@ -1302,28 +1508,52 @@ Output file location: F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_ma
       <td>44.192337</td>
     </tr>
     <tr>
+      <th>3</th>
+      <td>Wells_rep2_20180628_16h56m_pika_gige_7_plot_10...</td>
+      <td>1013</td>
+      <td>13.280209</td>
+      <td>18.991058</td>
+      <td>9.806862</td>
+      <td>7.041559</td>
+      <td>5.084080</td>
+      <td>4.054595</td>
+      <td>2.607378</td>
+      <td>2.187212</td>
+      <td>...</td>
+      <td>40.590130</td>
+      <td>40.234657</td>
+      <td>39.194435</td>
+      <td>40.260246</td>
+      <td>39.648201</td>
+      <td>40.096077</td>
+      <td>39.318855</td>
+      <td>39.217598</td>
+      <td>39.904327</td>
+      <td>39.873375</td>
+    </tr>
+    <tr>
       <th>4</th>
       <td>Wells_rep2_20180628_16h56m_pika_gige_7_plot_10...</td>
-      <td>1012</td>
-      <td>8.112519</td>
-      <td>10.618262</td>
-      <td>5.917343</td>
-      <td>4.360370</td>
-      <td>3.632289</td>
-      <td>3.072112</td>
-      <td>2.277318</td>
-      <td>1.906745</td>
+      <td>1014</td>
+      <td>12.916803</td>
+      <td>18.932661</td>
+      <td>9.879722</td>
+      <td>6.712576</td>
+      <td>4.815042</td>
+      <td>3.865411</td>
+      <td>2.757464</td>
+      <td>2.130761</td>
       <td>...</td>
-      <td>44.907276</td>
-      <td>44.544106</td>
-      <td>43.384926</td>
-      <td>44.67561</td>
-      <td>43.880154</td>
-      <td>44.394325</td>
-      <td>43.728794</td>
-      <td>43.444515</td>
-      <td>44.277538</td>
-      <td>44.192337</td>
+      <td>46.262978</td>
+      <td>45.802395</td>
+      <td>44.400795</td>
+      <td>45.824875</td>
+      <td>45.436096</td>
+      <td>45.664883</td>
+      <td>44.691391</td>
+      <td>44.591335</td>
+      <td>45.321087</td>
+      <td>45.260036</td>
     </tr>
   </tbody>
 </table>
@@ -1333,12 +1563,12 @@ Output file location: F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_ma
 </div>
 <hr class="docutils" />
 <div class="section" id="batch.spectra_to_df">
-<h2><span class="section-number">7.9. </span><code class="docutils literal notranslate"><span class="pre">batch.spectra_to_df</span></code><a class="headerlink" href="#batch.spectra_to_df" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">7.10. </span><code class="docutils literal notranslate"><span class="pre">batch.spectra_to_df</span></code><a class="headerlink" href="#batch.spectra_to_df" title="Permalink to this headline">¶</a></h2>
 <p>Reads all the .spec files in a direcory and returns their data as a <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> object. <code class="docutils literal notranslate"><span class="pre">batch.spectra_to_df</span></code> is identical to <code class="docutils literal notranslate"><span class="pre">batch.spectra_to_csv</span></code> except a <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> is returned rather than saving a <code class="docutils literal notranslate"><span class="pre">.csv</span></code> file. <a class="reference external" href="api/hs_process.batch.html#hs_process.batch.spectra_to_df">[API]</a></p>
 <p><strong>Note:</strong> The following example builds on the results of the <code class="docutils literal notranslate"><span class="pre">`batch.segment_band_math</span></code> tutorial &lt;tutorial_batch.html#batch.segment_band_math&gt;`__ and <code class="docutils literal notranslate"><span class="pre">`batch.segment_create_mask</span></code> &lt;tutorial_batch.html#batch.segment_create_mask&gt;`__. Please complete each of those tutorial examples to be sure your directory (i.e., <code class="docutils literal notranslate"><span class="pre">F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\mask_mcari2_90th</span></code>) is populated with image files.</p>
 <p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">batch</span></code> module, checking to be sure the directory exists.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1361,7 +1591,7 @@ True
 </div>
 <p>Read all the <code class="docutils literal notranslate"><span class="pre">.spec</span></code> files in <code class="docutils literal notranslate"><span class="pre">base_dir</span></code> and load them to <code class="docutils literal notranslate"><span class="pre">df_spec</span></code>, a <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1376,11 +1606,11 @@ True
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Writing mean spectra to a ``pandas.DataFrame``.
-Number of input datacubes/spectra: 80
+Number of input datacubes/spectra: 40
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1453,30 +1683,6 @@ Number of input datacubes/spectra: 80
     <tr>
       <th>1</th>
       <td>Wells_rep2_20180628_16h56m_pika_gige_7_plot_10...</td>
-      <td>1011</td>
-      <td>6.422696</td>
-      <td>11.165407</td>
-      <td>5.400625</td>
-      <td>4.512296</td>
-      <td>3.475373</td>
-      <td>2.522064</td>
-      <td>2.044144</td>
-      <td>1.697843</td>
-      <td>...</td>
-      <td>45.952736</td>
-      <td>45.177956</td>
-      <td>44.178223</td>
-      <td>45.595730</td>
-      <td>44.237053</td>
-      <td>45.192883</td>
-      <td>44.707069</td>
-      <td>44.317673</td>
-      <td>44.977257</td>
-      <td>44.885410</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7_plot_10...</td>
       <td>1012</td>
       <td>14.328226</td>
       <td>17.673107</td>
@@ -1499,31 +1705,7 @@ Number of input datacubes/spectra: 80
       <td>44.192337</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7_plot_10...</td>
-      <td>1012</td>
-      <td>8.112519</td>
-      <td>10.618262</td>
-      <td>5.917343</td>
-      <td>4.360370</td>
-      <td>3.632289</td>
-      <td>3.072112</td>
-      <td>2.277318</td>
-      <td>1.906745</td>
-      <td>...</td>
-      <td>44.907276</td>
-      <td>44.544106</td>
-      <td>43.384926</td>
-      <td>44.675610</td>
-      <td>43.880154</td>
-      <td>44.394325</td>
-      <td>43.728794</td>
-      <td>43.444515</td>
-      <td>44.277538</td>
-      <td>44.192337</td>
-    </tr>
-    <tr>
-      <th>4</th>
+      <th>2</th>
       <td>Wells_rep2_20180628_16h56m_pika_gige_7_plot_10...</td>
       <td>1013</td>
       <td>13.280209</td>
@@ -1546,6 +1728,54 @@ Number of input datacubes/spectra: 80
       <td>39.904327</td>
       <td>39.873375</td>
     </tr>
+    <tr>
+      <th>3</th>
+      <td>Wells_rep2_20180628_16h56m_pika_gige_7_plot_10...</td>
+      <td>1014</td>
+      <td>12.916803</td>
+      <td>18.932661</td>
+      <td>9.879722</td>
+      <td>6.712576</td>
+      <td>4.815042</td>
+      <td>3.865411</td>
+      <td>2.757464</td>
+      <td>2.130761</td>
+      <td>...</td>
+      <td>46.262978</td>
+      <td>45.802395</td>
+      <td>44.400795</td>
+      <td>45.824875</td>
+      <td>45.436096</td>
+      <td>45.664883</td>
+      <td>44.691391</td>
+      <td>44.591335</td>
+      <td>45.321087</td>
+      <td>45.260036</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Wells_rep2_20180628_16h56m_pika_gige_7_plot_10...</td>
+      <td>1015</td>
+      <td>12.629728</td>
+      <td>20.137224</td>
+      <td>9.565381</td>
+      <td>6.610282</td>
+      <td>5.238615</td>
+      <td>4.095292</td>
+      <td>2.672005</td>
+      <td>2.190024</td>
+      <td>...</td>
+      <td>46.753952</td>
+      <td>46.385578</td>
+      <td>44.936142</td>
+      <td>46.200020</td>
+      <td>45.938831</td>
+      <td>46.119297</td>
+      <td>45.290573</td>
+      <td>45.130165</td>
+      <td>45.812798</td>
+      <td>45.785793</td>
+    </tr>
   </tbody>
 </table>
 <p>5 rows × 242 columns</p>
@@ -1554,7 +1784,7 @@ Number of input datacubes/spectra: 80
 <p>Each row is a <code class="docutils literal notranslate"><span class="pre">.spec</span></code> file from a different plot, and each column is a particular spectral band.</p>
 <p>It is somewhat confusing to conceptualize spectral data by band number (as opposed to the wavelenth it represents). <code class="docutils literal notranslate"><span class="pre">hs_process.hs_tools.get_band</span></code> can be used to retrieve spectral data for all plots via indexing by wavelength. Say we need to access reflectance at 710 nm for each plot (in this case, the 710 nm band is band number 155).</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1564,7 +1794,7 @@ Number of input datacubes/spectra: 80
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1601,26 +1831,26 @@ Number of input datacubes/spectra: 80
     <tr>
       <th>1</th>
       <td>Wells_rep2_20180628_16h56m_pika_gige_7_plot_10...</td>
-      <td>1011</td>
-      <td>5.769057</td>
+      <td>1012</td>
+      <td>6.112481</td>
     </tr>
     <tr>
       <th>2</th>
       <td>Wells_rep2_20180628_16h56m_pika_gige_7_plot_10...</td>
-      <td>1012</td>
-      <td>6.112481</td>
+      <td>1013</td>
+      <td>6.855353</td>
     </tr>
     <tr>
       <th>3</th>
       <td>Wells_rep2_20180628_16h56m_pika_gige_7_plot_10...</td>
-      <td>1012</td>
-      <td>6.112481</td>
+      <td>1014</td>
+      <td>6.578203</td>
     </tr>
     <tr>
       <th>4</th>
       <td>Wells_rep2_20180628_16h56m_pika_gige_7_plot_10...</td>
-      <td>1013</td>
-      <td>6.855353</td>
+      <td>1015</td>
+      <td>6.886356</td>
     </tr>
   </tbody>
 </table>
@@ -1629,12 +1859,12 @@ Number of input datacubes/spectra: 80
 </div>
 <hr class="docutils" />
 <div class="section" id="batch.spectral_clip">
-<h2><span class="section-number">7.10. </span><code class="docutils literal notranslate"><span class="pre">batch.spectral_clip</span></code><a class="headerlink" href="#batch.spectral_clip" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">7.11. </span><code class="docutils literal notranslate"><span class="pre">batch.spectral_clip</span></code><a class="headerlink" href="#batch.spectral_clip" title="Permalink to this headline">¶</a></h2>
 <p>Batch processing tool to spectrally clip multiple datacubes in the same way. <a class="reference external" href="api/hs_process.batch.html#hs_process.batch.spectral_clip">[API]</a></p>
 <p><strong>Note:</strong> The following example builds on the results of the <code class="docutils literal notranslate"><span class="pre">`batch.spatial_crop</span></code> tutorial &lt;tutorial_batch.html#batch.spatial_crop&gt;`__. Please complete the <code class="docutils literal notranslate"><span class="pre">batch.spatial_crop</span></code> tutorial example to be sure your directory (i.e., <code class="docutils literal notranslate"><span class="pre">base_dir</span></code>) is populated with multiple hyperspectral datacubes. The following example will be using datacubes located in teh following directory: <code class="docutils literal notranslate"><span class="pre">F:\\nigo0024\Documents\hs_process_demo\spatial_crop</span></code></p>
 <p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">batch</span></code> module, checking to be sure the directory exists.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1658,7 +1888,7 @@ True
 </div>
 <p>Use <code class="docutils literal notranslate"><span class="pre">batch.spectral_clip</span></code> to clip all spectral bands below <em>420 nm</em> and above <em>880 nm</em>, as well as the bands near the oxygen absorption (i.e., <em>760-776 nm</em>) and water absorption (i.e., <em>813-827 nm</em>) regions.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1673,12 +1903,12 @@ True
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-Processing file 39/40: 100%|████████████████████████████████████████████████████████████████████| 40/40 [00:01&lt;00:00, 20.24it/s]
+Processing file 79/80: 100%|████████████████████████████████████████████████████████████████████| 80/80 [00:04&lt;00:00, 19.72it/s]
 </pre></div></div>
 </div>
 <p>Use <a class="reference external" href="https://seaborn.pydata.org/index.html">Seaborn</a> to visualize the spectra of a single pixel in one of the processed images.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1701,7 +1931,7 @@ Processing file 39/40: 100%|█████████████████�
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1713,18 +1943,18 @@ Text(0.5, 1.0, &#39;API Example: `batch.spectral_clip`&#39;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/tutorial_batch_57_1.png" src="_images/tutorial_batch_57_1.png" />
+<img alt="_images/tutorial_batch_63_1.png" src="_images/tutorial_batch_63_1.png" />
 </div>
 </div>
 </div>
 <hr class="docutils" />
 <div class="section" id="batch.spectral_mimic">
-<h2><span class="section-number">7.11. </span><code class="docutils literal notranslate"><span class="pre">batch.spectral_mimic</span></code><a class="headerlink" href="#batch.spectral_mimic" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">7.12. </span><code class="docutils literal notranslate"><span class="pre">batch.spectral_mimic</span></code><a class="headerlink" href="#batch.spectral_mimic" title="Permalink to this headline">¶</a></h2>
 <p>Batch processing tool to spectrally mimic a multispectral sensor for multiple datacubes in the same way. <a class="reference external" href="api/hs_process.batch.html#hs_process.batch.spectral_mimic">[API]</a></p>
 <p><strong>Note:</strong> The following example builds on the results of the <a class="reference external" href="tutorial_batch.html#batch.spatial_crop">batch.spatial_crop tutorial</a>. Please complete the <code class="docutils literal notranslate"><span class="pre">batch.spatial_crop</span></code> tutorial example to be sure your directory (i.e., <code class="docutils literal notranslate"><span class="pre">base_dir</span></code>) is populated with multiple hyperspectral datacubes. The following example will be using datacubes located in the following directory: <code class="docutils literal notranslate"><span class="pre">F:\\nigo0024\Documents\hs_process_demo\spatial_crop</span></code></p>
 <p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">batch</span></code> module, checking to be sure the directory exists.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1747,7 +1977,7 @@ True
 </div>
 <p>Use <code class="docutils literal notranslate"><span class="pre">batch.spectral_mimic</span></code> to spectrally mimic the Sentinel-2A multispectral satellite sensor.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1763,12 +1993,12 @@ True
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-Processing file 39/40: 100%|████████████████████████████████████████████████████████████████████| 40/40 [00:04&lt;00:00,  8.36it/s]
+Processing file 79/80: 100%|████████████████████████████████████████████████████████████████████| 80/80 [00:08&lt;00:00,  9.21it/s]
 </pre></div></div>
 </div>
 <p>Use <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> to visualize the spectra of a single pixel in one of the processed images.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1790,7 +2020,7 @@ Processing file 39/40: 100%|█████████████████�
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1802,12 +2032,12 @@ Text(0.5, 1.0, &#39;API Example: `batch.spectral_mimic`&#39;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/tutorial_batch_63_1.png" src="_images/tutorial_batch_63_1.png" />
+<img alt="_images/tutorial_batch_69_1.png" src="_images/tutorial_batch_69_1.png" />
 </div>
 </div>
 <p>Use <code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_mimic</span></code> to mimic the <a class="reference external" href="https://sentera.com/6x/">Sentera 6x spectral configuration</a> and compare to both hyperspectral and Sentinel-2A.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1834,11 +2064,11 @@ Text(0.5, 1.0, &#39;API Example: `batch.spectral_mimic`&#39;)
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-Processing file 39/40: 100%|████████████████████████████████████████████████████████████████████| 40/40 [00:02&lt;00:00, 14.18it/s]
+Processing file 79/80: 100%|████████████████████████████████████████████████████████████████████| 80/80 [00:05&lt;00:00, 15.05it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1850,12 +2080,12 @@ Text(0.5, 1.0, &#39;API Example: `batch.spectral_mimic`&#39;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/tutorial_batch_65_2.png" src="_images/tutorial_batch_65_2.png" />
+<img alt="_images/tutorial_batch_71_2.png" src="_images/tutorial_batch_71_2.png" />
 </div>
 </div>
 <p>And finally, mimic the <a class="reference external" href="https://micasense.com/rededge-mx/">Micasense RedEdge-MX</a> and compare to hyperspectral, Sentinel-2A, and Sentera 6X.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1883,11 +2113,11 @@ Text(0.5, 1.0, &#39;API Example: `batch.spectral_mimic`&#39;)
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-Processing file 39/40: 100%|████████████████████████████████████████████████████████████████████| 40/40 [00:02&lt;00:00, 14.13it/s]
+Processing file 79/80: 100%|████████████████████████████████████████████████████████████████████| 80/80 [00:05&lt;00:00, 14.53it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1899,102 +2129,14 @@ Text(0.5, 1.0, &#39;API Example: `batch.spectral_mimic`&#39;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/tutorial_batch_67_2.png" src="_images/tutorial_batch_67_2.png" />
+<img alt="_images/tutorial_batch_73_2.png" src="_images/tutorial_batch_73_2.png" />
 </div>
 </div>
 </div>
 <hr class="docutils" />
 <div class="section" id="batch.spectral_resample">
-<h2><span class="section-number">7.12. </span><code class="docutils literal notranslate"><span class="pre">batch.spectral_resample</span></code><a class="headerlink" href="#batch.spectral_resample" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">7.13. </span><code class="docutils literal notranslate"><span class="pre">batch.spectral_resample</span></code><a class="headerlink" href="#batch.spectral_resample" title="Permalink to this headline">¶</a></h2>
 <p>Batch processing tool to spectrally resample (a.k.a. “bin”) multiple datacubes in the same way. <a class="reference external" href="api/hs_process.batch.html#hs_process.batch.spectral_resample">[API]</a></p>
-<p><strong>Note:</strong> The following example builds on the results of the <a class="reference external" href="tutorial_batch.html#batch.spatial_crop">batch.spatial_crop tutorial</a>. Please complete the <code class="docutils literal notranslate"><span class="pre">batch.spatial_crop</span></code> tutorial example to be sure your directory (i.e., <code class="docutils literal notranslate"><span class="pre">base_dir</span></code>) is populated with multiple hyperspectral datacubes. The following example will be using datacubes located in the following directory: <code class="docutils literal notranslate"><span class="pre">F:\\nigo0024\Documents\hs_process_demo\spatial_crop</span></code></p>
-<p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">batch</span></code> module, checking to be sure the directory exists.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">batch</span>
-
-<span class="n">base_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;spatial_crop&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">))</span>
-<span class="n">hsbatch</span> <span class="o">=</span> <span class="n">batch</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;.bip&#39;</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># searches for all files in ``base_dir`` with a &quot;.bip&quot; file extension</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-True
-</pre></div></div>
-</div>
-<p>Use <code class="docutils literal notranslate"><span class="pre">batch.spectral_resample</span></code> to bin (a.k.a., “group”) all spectral bands into 20 nm bandwidth bands (from ~2.3 nm bandwidth originally) on a per-pixel basis.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">hsbatch</span><span class="o">.</span><span class="n">spectral_resample</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">folder_name</span><span class="o">=</span><span class="s1">&#39;spec_bin&#39;</span><span class="p">,</span>
-                          <span class="n">name_append</span><span class="o">=</span><span class="s1">&#39;spec-bin-20&#39;</span><span class="p">,</span>
-                          <span class="n">bandwidth</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">out_force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-Processing file 39/40: 100%|████████████████████████████████████████████████████████████████████| 40/40 [00:00&lt;00:00, 55.20it/s]
-</pre></div></div>
-</div>
-<p>Use <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> to visualize the spectra of a single pixel in one of the processed images.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-spatial-crop.bip&#39;</span><span class="p">)</span>
-<span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
-<span class="n">spy_mem</span> <span class="o">=</span> <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>  <span class="c1"># datacube before resampling</span>
-<span class="n">meta_bands</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-<span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;spec_bin&#39;</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-spec-bin-20.bip&#39;</span><span class="p">)</span>
-<span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
-<span class="n">spy_mem_bin</span> <span class="o">=</span> <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>  <span class="c1"># datacube after resampling</span>
-<span class="n">meta_bands_bin</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">spy_mem</span><span class="p">[</span><span class="mi">26</span><span class="p">][</span><span class="mi">29</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Hyperspectral (Pika II)&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands_bin</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">spy_mem_bin</span><span class="p">[</span><span class="mi">26</span><span class="p">][</span><span class="mi">29</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Spectral resample (20 nm)&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectance (%)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;API Example: `batch.spectral_resample`&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Text(0.5, 1.0, &#39;API Example: `batch.spectral_resample`&#39;)
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="_images/tutorial_batch_73_1.png" src="_images/tutorial_batch_73_1.png" />
-</div>
-</div>
-</div>
-<hr class="docutils" />
-<div class="section" id="batch.spectral_smooth">
-<h2><span class="section-number">7.13. </span><code class="docutils literal notranslate"><span class="pre">batch.spectral_smooth</span></code><a class="headerlink" href="#batch.spectral_smooth" title="Permalink to this headline">¶</a></h2>
-<p>Batch processing tool to spectrally smooth multiple datacubes in the same way. <a class="reference external" href="api/hs_process.batch.html#hs_process.batch.spectral_smooth">[API]</a></p>
 <p><strong>Note:</strong> The following example builds on the results of the <a class="reference external" href="tutorial_batch.html#batch.spatial_crop">batch.spatial_crop tutorial</a>. Please complete the <code class="docutils literal notranslate"><span class="pre">batch.spatial_crop</span></code> tutorial example to be sure your directory (i.e., <code class="docutils literal notranslate"><span class="pre">base_dir</span></code>) is populated with multiple hyperspectral datacubes. The following example will be using datacubes located in the following directory: <code class="docutils literal notranslate"><span class="pre">F:\\nigo0024\Documents\hs_process_demo\spatial_crop</span></code></p>
 <p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">batch</span></code> module, checking to be sure the directory exists.</p>
 <div class="nbinput docutils container">
@@ -2019,9 +2161,97 @@ Text(0.5, 1.0, &#39;API Example: `batch.spectral_resample`&#39;)
 True
 </pre></div></div>
 </div>
-<p>Use <code class="docutils literal notranslate"><span class="pre">batch.spectral_smooth</span></code> to perform a <em>Savitzky-Golay</em> smoothing operation on each image/pixel in <code class="docutils literal notranslate"><span class="pre">base_dir</span></code>. The <code class="docutils literal notranslate"><span class="pre">window_size</span></code> and <code class="docutils literal notranslate"><span class="pre">order</span></code> can be adjusted to achieve desired smoothing results.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">batch.spectral_resample</span></code> to bin (a.k.a., “group”) all spectral bands into 20 nm bandwidth bands (from ~2.3 nm bandwidth originally) on a per-pixel basis.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">hsbatch</span><span class="o">.</span><span class="n">spectral_resample</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">folder_name</span><span class="o">=</span><span class="s1">&#39;spec_bin&#39;</span><span class="p">,</span>
+                          <span class="n">name_append</span><span class="o">=</span><span class="s1">&#39;spec-bin-20&#39;</span><span class="p">,</span>
+                          <span class="n">bandwidth</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">out_force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Processing file 79/80: 100%|████████████████████████████████████████████████████████████████████| 80/80 [00:01&lt;00:00, 53.70it/s]
+</pre></div></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> to visualize the spectra of a single pixel in one of the processed images.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-spatial-crop.bip&#39;</span><span class="p">)</span>
+<span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+<span class="n">spy_mem</span> <span class="o">=</span> <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>  <span class="c1"># datacube before resampling</span>
+<span class="n">meta_bands</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;spec_bin&#39;</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-spec-bin-20.bip&#39;</span><span class="p">)</span>
+<span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+<span class="n">spy_mem_bin</span> <span class="o">=</span> <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>  <span class="c1"># datacube after resampling</span>
+<span class="n">meta_bands_bin</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">spy_mem</span><span class="p">[</span><span class="mi">26</span><span class="p">][</span><span class="mi">29</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Hyperspectral (Pika II)&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands_bin</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">spy_mem_bin</span><span class="p">[</span><span class="mi">26</span><span class="p">][</span><span class="mi">29</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Spectral resample (20 nm)&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectance (%)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;API Example: `batch.spectral_resample`&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Text(0.5, 1.0, &#39;API Example: `batch.spectral_resample`&#39;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial_batch_79_1.png" src="_images/tutorial_batch_79_1.png" />
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="batch.spectral_smooth">
+<h2><span class="section-number">7.14. </span><code class="docutils literal notranslate"><span class="pre">batch.spectral_smooth</span></code><a class="headerlink" href="#batch.spectral_smooth" title="Permalink to this headline">¶</a></h2>
+<p>Batch processing tool to spectrally smooth multiple datacubes in the same way. <a class="reference external" href="api/hs_process.batch.html#hs_process.batch.spectral_smooth">[API]</a></p>
+<p><strong>Note:</strong> The following example builds on the results of the <a class="reference external" href="tutorial_batch.html#batch.spatial_crop">batch.spatial_crop tutorial</a>. Please complete the <code class="docutils literal notranslate"><span class="pre">batch.spatial_crop</span></code> tutorial example to be sure your directory (i.e., <code class="docutils literal notranslate"><span class="pre">base_dir</span></code>) is populated with multiple hyperspectral datacubes. The following example will be using datacubes located in the following directory: <code class="docutils literal notranslate"><span class="pre">F:\\nigo0024\Documents\hs_process_demo\spatial_crop</span></code></p>
+<p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">batch</span></code> module, checking to be sure the directory exists.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">batch</span>
+
+<span class="n">base_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;spatial_crop&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">))</span>
+<span class="n">hsbatch</span> <span class="o">=</span> <span class="n">batch</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;.bip&#39;</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># searches for all files in ``base_dir`` with a &quot;.bip&quot; file extension</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">batch.spectral_smooth</span></code> to perform a <em>Savitzky-Golay</em> smoothing operation on each image/pixel in <code class="docutils literal notranslate"><span class="pre">base_dir</span></code>. The <code class="docutils literal notranslate"><span class="pre">window_size</span></code> and <code class="docutils literal notranslate"><span class="pre">order</span></code> can be adjusted to achieve desired smoothing results.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -2035,12 +2265,12 @@ True
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-Processing file 39/40: 100%|████████████████████████████████████████████████████████████████████| 40/40 [01:00&lt;00:00,  1.52s/it]
+Processing file 79/80: 100%|████████████████████████████████████████████████████████████████████| 80/80 [02:01&lt;00:00,  1.52s/it]
 </pre></div></div>
 </div>
 <p>Use <a class="reference external" href="https://seaborn.pydata.org/index.html">Seaborn</a> to visualize the spectra of a single pixel in one of the processed images.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -2063,7 +2293,7 @@ Processing file 39/40: 100%|█████████████████�
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -2075,7 +2305,7 @@ Text(0.5, 1.0, &#39;API Example: `batch.spectral_smooth`&#39;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/tutorial_batch_79_1.png" src="_images/tutorial_batch_79_1.png" />
+<img alt="_images/tutorial_batch_85_1.png" src="_images/tutorial_batch_85_1.png" />
 </div>
 </div>
 </div>

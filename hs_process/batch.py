@@ -1738,7 +1738,7 @@ class batch(object):
             >>> ax.set_ylabel('Reflectance (%)', weight='bold')
             >>> ax.set_title(r'API Example: `batch.cube_to_spectra`', weight='bold')
 
-            .. image:: ../img/batch/cube_to_spectra.png
+            .. image:: img/batch/cube_to_spectra.png
 
         .. _spatial_mod.crop_many_gdf: hs_process.spatial_mod.html#hs_process.spatial_mod.crop_many_gdf
         '''
@@ -1978,7 +1978,7 @@ class batch(object):
             a spatial reference system, or can be opened using any software
             that supports floating point *.tif* files.
 
-            .. image:: ../img/batch/segment_band_math_plot_611-band-math-mcari2-800-670-550_tif.png
+            .. image:: img/batch/segment_band_math_plot_611-band-math-mcari2-800-670-550_tif.png
 
             **Third** is the band math raster saved in the *.hdr* file format.
             Note that the data conained here should be the same as in the
@@ -1990,7 +1990,7 @@ class batch(object):
             may be useful in the segmentation step (e.g., see
             `batch.segment_create_mask`_).
 
-            .. image:: ../img/batch/segment_band_math_plot_611-band-math-mcari2-800-670-550.png
+            .. image:: img/batch/segment_band_math_plot_611-band-math-mcari2-800-670-550.png
 
         .. _Harris Geospatial: https://www.harrisgeospatial.com/docs/NarrowbandGreenness.html#Modified3
         .. _batch.segment_create_mask: hs_process.batch.html#hs_process.batch.segment_create_mask
@@ -2121,7 +2121,7 @@ class batch(object):
             Saving F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\mask_mcari2_90th\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-mask-mcari2-90th-spec-mean.spec
             ...
 
-            .. image:: ../img/batch/segment_create_mask_inline.png
+            .. image:: img/batch/segment_create_mask_inline.png
 
             ``batch.segment_create_mask`` creates a new folder in ``base_dir``
             named according to the ``folder_name`` parameter
@@ -2150,13 +2150,13 @@ class batch(object):
             that supports floating point *.tif* files. The masked pixels are
             saved as ``null`` values and should render transparently.
 
-            .. image:: ../img/batch/segment_create_mask_geotiff.png
+            .. image:: img/batch/segment_create_mask_geotiff.png
 
             **Third** is the full hyperspectral datacube, also with the masked
             pixels saved as ``null`` values. Note that the only pixels
             remaining are the 10% with the highest MCARI2 values.
 
-            .. image:: ../img/batch/segment_create_mask_datacube.png
+            .. image:: img/batch/segment_create_mask_datacube.png
 
             **Fourth** is the mean spectra across the unmasked datacube pixels.
             This is illustrated above by the green line plot (the light green
@@ -2373,7 +2373,7 @@ class batch(object):
             according to its plot ID. The ``geotiff`` images can be opened in
             *QGIS* to visualize the images after cropping them.
 
-            .. image:: ../img/batch/spatial_crop_tifs.png
+            .. image:: img/batch/spatial_crop_tifs.png
 
             The cropped images were brightened in *QGIS* to emphasize the
             cropped boundaries. The plot boundaries are overlaid for reference
@@ -2484,7 +2484,7 @@ class batch(object):
             line represents the standard deviation of the radiance across all
             pixels and images in ``base_dir``.
 
-            .. image:: ../img/batch/spectra_combine.png
+            .. image:: img/batch/spectra_combine.png
 
             Notice the lower signal at the oxygen absorption region (near 770
             nm). After converting datacubes to reflectance, it may be
@@ -2557,7 +2557,7 @@ class batch(object):
             (i.e., `base_dir`) is populated with multiple hyperspectral
             spectra. The following example will be using spectra located in the
             following directory:
-            ``F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec`
+            ``F:\\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec``
 
         Example:
             Load and initialize the ``batch`` module, checking to be sure the
@@ -2602,7 +2602,7 @@ class batch(object):
             >>> ax.set_ylabel('Derivative reflectance (%)', weight='bold')
             >>> ax.set_title(r'API Example: `batch.spectra_derivative`', weight='bold')
 
-            .. image:: ../img/batch/spectra_derivative.png
+            .. image:: img/batch/spectra_derivative.png
 
         .. _spatial_mod.crop_many_gdf: hs_process.spatial_mod.html#hs_process.spatial_mod.crop_many_gdf
         .. _batch.cube_to_spectra: hs_process.batch.html#hs_process.batch.cube_to_spectra
@@ -2714,7 +2714,7 @@ class batch(object):
             that each row is a ``.spec`` file from a different plot, and each
             column is a particular spectral band/wavelength.
 
-            .. image:: ../img/batch/spectra_to_csv.png
+            .. image:: img/batch/spectra_to_csv.png
 
         .. _batch.segment_band_math(): hs_process.batch.html#hs_process.batch.segment_band_math
         .. _batch.segment_create_mask(): hs_process.batch.html#hs_process.batch.segment_create_mask
@@ -2840,7 +2840,7 @@ class batch(object):
             is a ``.spec`` file from a different plot, and each column is a
             particular spectral band.
 
-            .. image:: ../img/batch/spectra_to_df.png
+            .. image:: img/batch/spectra_to_df.png
 
             It is somewhat confusing to conceptualize spectral data by band
             number (as opposed to the wavelenth it represents).
@@ -2850,7 +2850,7 @@ class batch(object):
 
             >>> df_710nm = df_spec[['fname', 'plot_id', hsbatch.io.tools.get_band(710)]]
 
-            .. image:: ../img/batch/spectra_to_df_710nm.png
+            .. image:: img/batch/spectra_to_df_710nm.png
 
         .. _batch.segment_band_math(): hs_process.batch.html#hs_process.batch.segment_band_math
         .. _batch.segment_create_mask(): hs_process.batch.html#hs_process.batch.segment_create_mask
@@ -3013,7 +3013,7 @@ class batch(object):
             >>> ax.set_ylabel('Reflectance (%)', weight='bold')
             >>> ax.set_title(r'API Example: `batch.spectral_clip`', weight='bold')
 
-            .. image:: ../img/batch/spectral_clip_plot.png
+            .. image:: img/batch/spectral_clip_plot.png
 
             Notice the spectral areas that were clipped, namely the oxygen and
             water absorption regions (~770 and ~820 nm, respectively). There
@@ -3150,7 +3150,7 @@ class batch(object):
             >>> ax.set_ylabel('Reflectance (%)', weight='bold')
             >>> ax.set_title(r'API Example: `batch.spectral_mimic`', weight='bold')
 
-            .. image:: ../img/batch/spectral_mimic_sentinel-2a_plot.png
+            .. image:: img/batch/spectral_mimic_sentinel-2a_plot.png
 
         .. _batch.spatial_crop: hs_process.batch.html#hs_process.batch.spatial_crop
         '''
@@ -3268,7 +3268,7 @@ class batch(object):
             >>> ax.set_ylabel('Reflectance (%)', weight='bold')
             >>> ax.set_title(r'API Example: `batch.spectral_resample`', weight='bold')
 
-            .. image:: ../img/batch/spectral_resample-20nm_plot.png
+            .. image:: img/batch/spectral_resample-20nm_plot.png
 
         .. _batch.spatial_crop: hs_process.batch.html#hs_process.batch.spatial_crop
         '''
@@ -3386,7 +3386,7 @@ class batch(object):
             >>> ax.set_ylabel('Reflectance (%)', weight='bold')
             >>> ax.set_title(r'API Example: `batch.spectral_smooth`', weight='bold')
 
-            .. image:: ../img/batch/spectral_smooth_plot.png
+            .. image:: img/batch/spectral_smooth_plot.png
 
             Notice how the *"choppiness"* of the spectral curve is lessened
             after the smoothing operation. There are spectral regions that

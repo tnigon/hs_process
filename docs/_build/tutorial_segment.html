@@ -444,8 +444,9 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">sys</span>
-
+<span class="kn">import</span> <span class="nn">hs_process</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Python install location: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Version: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hs_process</span><span class="o">.</span><span class="n">__version__</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -454,7 +455,8 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Python install location: C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\python.exe
+Python install location: C:\Users\nigo0024\Anaconda3\envs\hs_process\python.exe
+Version: 0.0.4
 </pre></div></div>
 </div>
 <p>The <em>spec</em> folder that contains <code class="docutils literal notranslate"><span class="pre">python.exe</span></code> tells me that the activated Python instance is indeed in the <code class="docutils literal notranslate"><span class="pre">spec</span></code> environment, just as I intend. If you created a virtual environment, but your <code class="docutils literal notranslate"><span class="pre">python.exe</span></code> is not in the <code class="docutils literal notranslate"><span class="pre">envs\spec</span></code> directory, you either did not properly create your virtual environment or you are not pointing to the correct Python installation in your IDE (e.g., Spyder, Jupyter notebook, etc.).</p>
@@ -488,35 +490,19 @@ Python install location: C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\env
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">array_mtci</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_segment</span><span class="o">.</span><span class="n">band_math_derivative</span><span class="p">(</span><span class="n">wl1</span><span class="o">=</span><span class="mi">754</span><span class="p">,</span> <span class="n">wl2</span><span class="o">=</span><span class="mi">709</span><span class="p">,</span> <span class="n">wl3</span><span class="o">=</span><span class="mi">681</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Array shape: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">array_mtci</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Array mean value: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">array_mtci</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Array mean value: </span><span class="si">{0:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">array_mtci</span><span class="p">)))</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-
-Bands used (``b1``): [176]
-Bands used (``b2``): [154]
-Bands used (``b3``): [141]
-
-Wavelengths used (``b1``): [753.84]
-Wavelengths used (``b2``): [708.6784]
-Wavelengths used (``b3``): [681.992]
-
-Array shape: (617, 1300)
-Array mean value: 9.401103973388672
-</pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
+<div class="output_area docutils container">
 <div class="highlight"><pre>
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\segment.py:270: RuntimeWarning: invalid value encountered in true_divide
-  array_der = (array_b1-array_b2)/(array_b2-array_b3)
+Band 1: [176]  Band 2: [154]  Band 3: [141]
+Wavelength 1: [753.84]  Wavelength 2: [708.6784]  Wavelength 3: [681.992]
+Array shape: (617, 1300)
+Array mean value: 9.40
 </pre></div></div>
 </div>
 <p>Show MTCI image via <code class="docutils literal notranslate"><span class="pre">hsio.show_img</span></code></p>
@@ -573,7 +559,7 @@ C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">array_mcari2</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_segment</span><span class="o">.</span><span class="n">band_math_mcari2</span><span class="p">(</span><span class="n">wl1</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">wl2</span><span class="o">=</span><span class="mi">670</span><span class="p">,</span> <span class="n">wl3</span><span class="o">=</span><span class="mi">550</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Array shape: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">array_mcari2</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Array mean value: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">array_mcari2</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Array mean value: </span><span class="si">{0:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">array_mcari2</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
@@ -582,17 +568,10 @@ C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-
-Bands used (``b1``): [198]
-Bands used (``b2``): [135]
-Bands used (``b3``): [77]
-
-Wavelengths used (``b1``): [799.0016]
-Wavelengths used (``b2``): [669.6752]
-Wavelengths used (``b3``): [550.6128]
-
+Band 1: [198]  Band 2: [135]  Band 3: [77]
+Wavelength 1: [799.0016]  Wavelength 2: [669.6752]  Wavelength 3: [550.6128]
 Array shape: (617, 1300)
-Array mean value: 0.5737694501876831
+Array mean value: 0.57
 </pre></div></div>
 </div>
 <p>Show MCARI2 image via <code class="docutils literal notranslate"><span class="pre">hsio.show_img</span></code></p>
@@ -649,33 +628,18 @@ Array mean value: 0.5737694501876831
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">array_ndvi</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_segment</span><span class="o">.</span><span class="n">band_math_ndi</span><span class="p">(</span><span class="n">wl1</span><span class="o">=</span><span class="p">[</span><span class="mi">795</span><span class="p">,</span> <span class="mi">805</span><span class="p">],</span> <span class="n">wl2</span><span class="o">=</span><span class="p">[</span><span class="mi">675</span><span class="p">,</span> <span class="mi">685</span><span class="p">],</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Array shape: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">array_ndvi</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Array mean value: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">array_ndvi</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Array mean value: </span><span class="si">{0:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">array_ndvi</span><span class="p">)))</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-
-Bands used (``b1``): [197, 198, 199, 200]
-Bands used (``b2``): [138, 139, 140, 141, 142]
-
-Wavelengths used (``b1``): [796.9488, 799.0016, 801.0544, 803.1072]
-Wavelengths used (``b2``): [675.8336, 677.8864, 679.9392, 681.992, 684.0448]
-
-Array shape: (617, 1300)
-Array mean value: 0.8184887766838074
-</pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
+<div class="output_area docutils container">
 <div class="highlight"><pre>
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\segment.py:541: RuntimeWarning: invalid value encountered in true_divide
-  array_ndi = (array_b1-array_b2)/(array_b1+array_b2)
+Effective NDI: (800 - 680) / 800 + 680)
+Array shape: (617, 1300)
+Array mean value: 0.82
 </pre></div></div>
 </div>
 <p>Show NDVI image via <code class="docutils literal notranslate"><span class="pre">hsio.show_img</span></code></p>
@@ -732,34 +696,18 @@ C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">array_ratio</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_segment</span><span class="o">.</span><span class="n">band_math_ratio</span><span class="p">(</span><span class="n">wl1</span><span class="o">=</span><span class="p">[</span><span class="mi">630</span><span class="p">,</span> <span class="mi">690</span><span class="p">],</span> <span class="n">wl2</span><span class="o">=</span><span class="p">[</span><span class="mi">800</span><span class="p">,</span> <span class="mi">860</span><span class="p">],</span> <span class="n">list_range</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Array shape: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">array_ratio</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Array mean value: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">array_ratio</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Array mean value: </span><span class="si">{0:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">array_ratio</span><span class="p">)))</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-
-Bands used (``b1``): [116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144]
-Bands used (``b2``): [199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227]
-
-Wavelengths used (``b1``): [630.672, 632.7248, 634.7776, 636.8304, 638.8832, 640.936, 642.9888, 645.0416, 647.0944, 649.1472, 651.2, 653.2528, 655.3056, 657.3584, 659.4112, 661.464, 663.5168, 665.5696, 667.6224, 669.6752, 671.728, 673.7808, 675.8336, 677.8864, 679.9392, 681.992, 684.0448, 686.0976, 688.1504]
-Wavelengths used (``b2``): [801.0544, 803.1072, 805.16, 807.2128, 809.2656, 811.3184, 813.3712, 815.424, 817.4768, 819.5296, 821.5824, 823.6352, 825.688, 827.7408, 829.7936, 831.8464, 833.8992, 835.952, 838.0048, 840.0576, 842.1104, 844.1632, 846.216, 848.2688, 850.3216, 852.3744, 854.4272, 856.48, 858.5328]
-
-(659/830)
-Array shape: (617, 1300)
-Array mean value: 0.10981176793575287
-</pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
+<div class="output_area docutils container">
 <div class="highlight"><pre>
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\segment.py:683: RuntimeWarning: invalid value encountered in true_divide
-  array_ratio = (array_b1/array_b2)
+Effective band ratio: (659/830)
+Array shape: (617, 1300)
+Array mean value: 0.11
 </pre></div></div>
 </div>
 <p>Notice that 29 spectral bands were consolidated (i.e., averaged) to mimic a single broad band. We can take the mean of two bands by changing <code class="docutils literal notranslate"><span class="pre">list_range</span></code> to <code class="docutils literal notranslate"><span class="pre">False</span></code>, and this slightly changes the result.</p>
@@ -770,7 +718,7 @@ C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">array_ratio</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_segment</span><span class="o">.</span><span class="n">band_math_ratio</span><span class="p">(</span><span class="n">wl1</span><span class="o">=</span><span class="p">[</span><span class="mi">630</span><span class="p">,</span> <span class="mi">690</span><span class="p">],</span> <span class="n">wl2</span><span class="o">=</span><span class="p">[</span><span class="mi">800</span><span class="p">,</span> <span class="mi">860</span><span class="p">],</span> <span class="n">list_range</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Array shape: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">array_ratio</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Array mean value: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">array_ratio</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Array mean value: </span><span class="si">{0:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">array_ratio</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
@@ -779,16 +727,9 @@ C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-
-Bands used (``b1``): [116, 145]
-Bands used (``b2``): [198, 228]
-
-Wavelengths used (``b1``): [630.672, 690.2032]
-Wavelengths used (``b2``): [799.0016, 860.5856]
-
-(660/830)
+Effective band ratio: (660/830)
 Array shape: (617, 1300)
-Array mean value: 0.11360744386911392
+Array mean value: 0.11
 </pre></div></div>
 </div>
 <p>Show the red/near-infrared ratio image via <code class="docutils literal notranslate"><span class="pre">hsio.show_img</span></code></p>

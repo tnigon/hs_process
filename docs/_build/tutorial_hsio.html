@@ -446,8 +446,9 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">sys</span>
-
+<span class="kn">import</span> <span class="nn">hs_process</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Python install location: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Version: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hs_process</span><span class="o">.</span><span class="n">__version__</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -456,7 +457,8 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Python install location: C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\python.exe
+Python install location: C:\Users\nigo0024\Anaconda3\envs\hs_process\python.exe
+Version: 0.0.4
 </pre></div></div>
 </div>
 <p>The <em>spec</em> folder that contains <code class="docutils literal notranslate"><span class="pre">python.exe</span></code> tells me that the activated Python instance is indeed in the <code class="docutils literal notranslate"><span class="pre">spec</span></code> environment, just as I intend. If you created a virtual environment, but your <code class="docutils literal notranslate"><span class="pre">python.exe</span></code> is not in the <code class="docutils literal notranslate"><span class="pre">envs\spec</span></code> directory, you either did not properly create your virtual environment or you are not pointing to the correct Python installation in your IDE (e.g., Spyder, Jupyter notebook, etc.).</p>
@@ -754,7 +756,7 @@ name_plot: 611
 </div>
 </div>
 <p>Save the datacube using <code class="docutils literal notranslate"><span class="pre">hsio.write_cube</span></code>.</p>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
@@ -762,17 +764,9 @@ name_plot: 611
 <span></span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;hsio&#39;</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7-hsio-write-cube-cropped.bip.hdr&#39;</span><span class="p">)</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">)):</span>  <span class="c1"># create a new folder named &quot;hsio&quot; if it does not exist</span>
     <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">))</span>
-<span class="n">io</span><span class="o">.</span><span class="n">write_cube</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">,</span> <span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
+<span class="n">io</span><span class="o">.</span><span class="n">write_cube</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">,</span> <span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Saving F:\nigo0024\Documents\hs_process_demo\hsio\Wells_rep2_20180628_16h56m_pika_gige_7-hsio-write-cube-cropped.bip
-</pre></div></div>
 </div>
 <p>Load the datacube into Spectronon for visualization: <img alt="write_cube" src="_images/write_cube1.png" /></p>
 </div>
@@ -806,22 +800,14 @@ Saving F:\nigo0024\Documents\hs_process_demo\hsio\Wells_rep2_20180628_16h56m_pik
 </div>
 </div>
 <p>Save the new spectra to file via <code class="docutils literal notranslate"><span class="pre">hsio.write_spec</span></code></p>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">io</span><span class="o">.</span><span class="n">write_spec</span><span class="p">(</span><span class="n">fname_hdr_spec</span><span class="p">,</span> <span class="n">spec_mean</span><span class="p">,</span> <span class="n">spec_std</span><span class="p">)</span>
+<span></span><span class="n">io</span><span class="o">.</span><span class="n">write_spec</span><span class="p">(</span><span class="n">fname_hdr_spec</span><span class="p">,</span> <span class="n">spec_mean</span><span class="p">,</span> <span class="n">spec_std</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Saving F:\nigo0024\Documents\hs_process_demo\hsio\Wells_rep2_20180628_16h56m_pika_gige_7-mean.spec
-</pre></div></div>
 </div>
 <p>Open <em>Wells_rep2_20180628_16h56m_pika_gige_7-mean.spec</em> in <em>Spectronon</em> for visualization: <img alt="write_spec" src="_images/write_spec1.png" /></p>
 </div>
@@ -854,23 +840,14 @@ Saving F:\nigo0024\Documents\hs_process_demo\hsio\Wells_rep2_20180628_16h56m_pik
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
+<div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
 
-
-
 </pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="_images/tutorial_hsio_47_1.png" src="_images/tutorial_hsio_47_1.png" />
-</div>
 </div>
 <p>Open <em>Wells_rep2_20180628_16h56m_pika_gige_7.tif</em> in <em>QGIS</em> with the plot boundaries overlaid: <img alt="write_tif" src="_images/write_tif_qgis1.png" /></p>
 </div>

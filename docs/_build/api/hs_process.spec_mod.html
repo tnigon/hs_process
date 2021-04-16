@@ -396,13 +396,17 @@ mimicked spectral array (<code class="docutils literal notranslate"><span class=
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>data_dir2 = r'G:BBEAGROBOTShared Workhs_process_resultsdata</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data_dir2</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;G:\BBE\AGROBOT\Shared Work\hs_process_results\data</span>
+</pre></div>
+</div>
 </dd>
 </dl>
 </div></blockquote>
 <dl>
-<dt>ef_closest_panelcrop_plot'</dt><dd><p>fname_hdr = os.path.join(data_dir2, 'study_aerffield_date_20190708_plot_5110-crop-plot.bip.hdr')
-array = io.spyfile.open_memmap()</p>
+<dt>ef_closest_panelcrop_plot'</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir2</span><span class="p">,</span> <span class="s1">&#39;study_aerffield_date_20190708_plot_5110-crop-plot.bip.hdr&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">array</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>
+</pre></div>
+</div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_spec_mod</span> <span class="o">=</span> <span class="n">spec_mod</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
