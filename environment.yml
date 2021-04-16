@@ -6,7 +6,7 @@ dependencies:
     - rasterstats=0.14.*
     - seaborn=0.11.*
     - spectral=0.22.*
-    - spyder=5.*
+    - tqdm=4.60.*
     - pip=21.*
     - pip:
         - -r file:requirements/dev_pip.txt
