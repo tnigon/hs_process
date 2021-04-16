@@ -10,8 +10,8 @@ dependencies:
     - sphinx=3.5.*
     - sphinx-automodapi=0.13.*
     - spectral=0.22.*
-    - spyder=5.*
-    - jupyter=1.*
+    - tqdm=4.60.*
     - pip=21.*
     - pip:
         - sphinx-bootstrap-theme==0.7.1
+        - findiff==0.8.*
