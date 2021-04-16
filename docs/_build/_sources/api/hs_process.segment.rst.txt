@@ -14,6 +14,7 @@ segment
       ~segment.band_math_mcari2
       ~segment.band_math_ndi
       ~segment.band_math_ratio
+      ~segment.composite_band
       ~segment.load_spyfile
 
    .. rubric:: Methods Documentation
@@ -22,4 +23,5 @@ segment
    .. automethod:: band_math_mcari2
    .. automethod:: band_math_ndi
    .. automethod:: band_math_ratio
+   .. automethod:: composite_band
    .. automethod:: load_spyfile

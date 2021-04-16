@@ -232,8 +232,10 @@ class Test_hsio_write_cube(unittest.TestCase):
         self.fname_hdr = FILENAME_HDR
         self.test_dir = tempfile.mkdtemp()
         self.io = hsio(FILENAME_HDR)
-        self.my_spatial_mod = spatial_mod(self.io.spyfile)
-
+        self.my_spatial_mod = spatial_mod(
+            self.io.spyfile, base_dir=self.io.base_dir,
+            name_short=self.io.name_short,
+            name_long=self.io.name_long)
     def tearDown(self):
         '''
         This tearDown function will be called after each test method is run
@@ -292,7 +294,10 @@ class Test_hsio_write_tif(unittest.TestCase):
         self.test_dir = tempfile.mkdtemp()
         self.fname_hdr = FILENAME_HDR
         self.io = hsio(FILENAME_HDR)
-        self.my_spatial_mod = spatial_mod(self.io.spyfile)
+        self.my_spatial_mod = spatial_mod(
+            self.io.spyfile, base_dir=self.io.base_dir,
+            name_short=self.io.name_short,
+            name_long=self.io.name_long)
 
     def tearDown(self):
         '''

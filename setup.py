@@ -7,13 +7,10 @@ def readme():
         return readme_file.read()
 
 requirements = [
-# 'gdal',
  'geopandas',  # must be installed with Anaconda because of shapely dependency
-# 'numpy',
-# 'pandas',
  'seaborn',
-# 'matplotlib',
  'spectral',  # segment
+ 'tqdm'  # for progress bars
  ]
 
 test_requirements = [
@@ -21,12 +18,12 @@ test_requirements = [
 ]
 
 setuptools.setup(name='hs_process',
-                 version='0.0.3',
+                 version='0.0.4',
                  description=('An open-source Python package for geospatial '
                               'processing of aerial hyperspectral imagery'),
                  long_description=readme(),
                  long_description_content_type="text/markdown",
-                 url='https://github.com/tnigon/hyperspectral',
+                 url='https://github.com/tnigon/hs_process',
                  author='Tyler J. Nigon',
                  author_email='nigo0024@umn.edu',
                  license='MIT',

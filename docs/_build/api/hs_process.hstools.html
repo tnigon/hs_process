@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="python">
+<html lang="python">
   <head>
     <meta charset="utf-8" />
-    <title>8.1.4. hstools &#8212; hs_process 0.0.3 documentation</title>
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>8.1.4. hstools &#8212; hs_process 0.0.4 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="8.1.5. segment" href="hs_process.segment.html" />
@@ -46,7 +46,7 @@
           <ul class="nav navbar-nav">
             
                 <li><a href="https://github.com/tnigon/hs_process">Github</a></li>
-                <li><a href="https://pypi.org/project/hs-process/">PyPI</a></li>
+                <li><a href="https://anaconda.org/conda-forge/hs-process">Download</a></li>
                 <li><a href="http://www.spectralpython.net/">Spectral Python</a></li>
             
             
@@ -59,7 +59,28 @@
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Home</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../installation.html">1. Setup and Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_hsio.html">2. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_hstools.html">3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hstools</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_segment.html">4. Tutorial: <code class="docutils literal notranslate"><span class="pre">segment</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_spec_mod.html">5. Tutorial: <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_spatial_mod.html">6. Tutorial: <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_batch.html">7. Tutorial: <code class="docutils literal notranslate"><span class="pre">batch</span></code></a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../my_hs_process_api.html">8. API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="hs_process.batch.html">8.1.1. batch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.defaults.html">8.1.2. defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.hsio.html">8.1.3. hsio</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">8.1.4. hstools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.segment.html">8.1.5. segment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.spatial_mod.html">8.1.6. spatial_mod</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.spec_mod.html">8.1.7. spec_mod</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">9. License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html">10. Change Log</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">1. Setup and Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_hsio.html">2. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_hstools.html">3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hstools</span></code></a></li>
@@ -67,7 +88,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_spec_mod.html">5. Tutorial: <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_spatial_mod.html">6. Tutorial: <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_batch.html">7. Tutorial: <code class="docutils literal notranslate"><span class="pre">batch</span></code></a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../my_hs_process_api.html">8. API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../my_hs_process_api.html">8. API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="hs_process.batch.html">8.1.1. batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.defaults.html">8.1.2. defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.hsio.html">8.1.3. hsio</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">8.1.4. hstools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.segment.html">8.1.5. segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spatial_mod.html">8.1.6. spatial_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spec_mod.html">8.1.7. spec_mod</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">9. License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">10. Change Log</a></li>
 </ul>
@@ -133,9 +163,9 @@
       
   <div class="section" id="hstools">
 <h1><span class="section-number">8.1.4. </span>hstools<a class="headerlink" href="#hstools" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
+<dl class="py class">
 <dt id="hs_process.hstools">
-<em class="property">class </em><code class="sig-prename descclassname">hs_process.</code><code class="sig-name descname">hstools</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hstools" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">hs_process.</span></code><code class="sig-name descname"><span class="pre">hstools</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spyfile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hstools" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Basic tools for manipulating Spyfiles and accessing their metadata.</p>
 <dl class="field-list simple">
@@ -151,60 +181,64 @@ manipulated.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.hstools.clean_md_sets" title="hs_process.hstools.clean_md_sets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_md_sets</span></code></a>([metadata])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hstools.clean_md_sets" title="hs_process.hstools.clean_md_sets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_md_sets</span></code></a>([metadata])</p></td>
 <td><p>Converts metadata items that are expressed as a list to be expressed as a dictionary.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.hstools.del_meta_item" title="hs_process.hstools.del_meta_item"><code class="xref py py-obj docutils literal notranslate"><span class="pre">del_meta_item</span></code></a>(metadata, key)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hstools.del_meta_item" title="hs_process.hstools.del_meta_item"><code class="xref py py-obj docutils literal notranslate"><span class="pre">del_meta_item</span></code></a>(metadata, key)</p></td>
 <td><p>Deletes metadata item from SpyFile object.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.hstools.get_UTM" title="hs_process.hstools.get_UTM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_UTM</span></code></a>(pix_e_ul, pix_n_ul, utm_x, utm_y, ...)</p></td>
-<td><p>Calculates the new UTM coordinate of cropped plot to modify the &quot;map info&quot; tag of the .hdr file.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.hstools.get_band" title="hs_process.hstools.get_band"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_band</span></code></a>(target_wl[, spyfile])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hstools.get_band" title="hs_process.hstools.get_band"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_band</span></code></a>(target_wl[, spyfile])</p></td>
 <td><p>Finds the band number of the closest target wavelength.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.hstools.get_band_index" title="hs_process.hstools.get_band_index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_band_index</span></code></a>(band_num)</p></td>
-<td><p>Subtracts 1 from <code class="docutils literal notranslate"><span class="pre">band_num</span></code> and returns the band index(es).</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.hstools.get_band_num" title="hs_process.hstools.get_band_num"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_band_num</span></code></a>(band_idx)</p></td>
-<td><p>Adds 1 to <code class="docutils literal notranslate"><span class="pre">band_idx</span></code> and returns the band number(s).</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.hstools.get_band_range" title="hs_process.hstools.get_band_range"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_band_range</span></code></a>(range_wl[, index, spyfile])</p></td>
-<td><p>Retrieves the band index or band number for all bands within a wavelength range.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.hstools.get_center_wl" title="hs_process.hstools.get_center_wl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_center_wl</span></code></a>(wl_list[, spyfile, wls])</p></td>
-<td><p>Gets band numbers and mean wavelength from all wavelengths (or bands) in <code class="docutils literal notranslate"><span class="pre">wl_list</span></code>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.hstools.get_meta_set" title="hs_process.hstools.get_meta_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_meta_set</span></code></a>(meta_set[, idx])</p></td>
-<td><p>Reads metadata &quot;set&quot; (i.e., string representation of a Python set; common in .hdr files), taking care to remove leading and trailing spaces.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.hstools.get_spectral_mean" title="hs_process.hstools.get_spectral_mean"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_spectral_mean</span></code></a>(band_list[, spyfile])</p></td>
-<td><p>Gets the spectral mean of a datacube from a list of bands.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.hstools.get_wavelength" title="hs_process.hstools.get_wavelength"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_wavelength</span></code></a>(target_band[, spyfile])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hstools.get_wavelength" title="hs_process.hstools.get_wavelength"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_wavelength</span></code></a>(target_band[, spyfile])</p></td>
 <td><p>Returns actual wavelength of the closest target band.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.hstools.load_spyfile" title="hs_process.hstools.load_spyfile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_spyfile</span></code></a>(spyfile)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hstools.get_wavelength_range" title="hs_process.hstools.get_wavelength_range"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_wavelength_range</span></code></a>(range_bands[, index, ...])</p></td>
+<td><p>Retrieves the wavelengths for all bands within a band range.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hstools.get_center_wl" title="hs_process.hstools.get_center_wl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_center_wl</span></code></a>(wl_list[, spyfile, wls])</p></td>
+<td><p>Gets band numbers and mean wavelength from all wavelengths (or bands) in <code class="docutils literal notranslate"><span class="pre">wl_list</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hstools.get_band_index" title="hs_process.hstools.get_band_index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_band_index</span></code></a>(band_name)</p></td>
+<td><p><p>.</p>
+</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hstools.get_spectral_mean" title="hs_process.hstools.get_spectral_mean"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_spectral_mean</span></code></a>(band_list[, spyfile])</p></td>
+<td><p>Gets the spectral mean of a datacube from a list of bands.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hstools.get_band_num" title="hs_process.hstools.get_band_num"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_band_num</span></code></a>(band_idx)</p></td>
+<td><p>Adds 1 to <code class="docutils literal notranslate"><span class="pre">band_idx</span></code> and returns the band number(s).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hstools.get_band_range" title="hs_process.hstools.get_band_range"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_band_range</span></code></a>(range_wl[, index, spyfile])</p></td>
+<td><p>Retrieves the band index or band name for all bands within a</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hstools.get_meta_set" title="hs_process.hstools.get_meta_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_meta_set</span></code></a>(meta_set[, idx])</p></td>
+<td><p>Reads metadata &quot;set&quot; (i.e., string representation of a Python set; common in .hdr files), taking care to remove leading and trailing spaces.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hstools.get_UTM" title="hs_process.hstools.get_UTM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_UTM</span></code></a>(pix_e_ul, pix_n_ul, utm_x, utm_y, ...)</p></td>
+<td><p>Calculates the new UTM coordinate of cropped plot to modify the &quot;map info&quot; tag of the .hdr file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hstools.load_spyfile" title="hs_process.hstools.load_spyfile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_spyfile</span></code></a>(spyfile)</p></td>
 <td><p>Loads a <code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> (Spectral Python object) for data access and/or manipulation by the <code class="docutils literal notranslate"><span class="pre">hstools</span></code> class.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.hstools.mask_array" title="hs_process.hstools.mask_array"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mask_array</span></code></a>(array, metadata[, thresh, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hstools.mask_array" title="hs_process.hstools.mask_array"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mask_array</span></code></a>(array, metadata[, thresh, ...])</p></td>
 <td><p>Creates a masked numpy array based on a threshold value.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.hstools.mean_datacube" title="hs_process.hstools.mean_datacube"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mean_datacube</span></code></a>(spyfile[, mask])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hstools.mean_datacube" title="hs_process.hstools.mean_datacube"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mean_datacube</span></code></a>(spyfile[, mask, nodata])</p></td>
 <td><p>Calculates the mean spectra for a datcube; if <code class="docutils literal notranslate"><span class="pre">mask</span></code> is passed (as a</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.hstools.modify_meta_set" title="hs_process.hstools.modify_meta_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">modify_meta_set</span></code></a>(meta_set, idx, value)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hstools.modify_meta_set" title="hs_process.hstools.modify_meta_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">modify_meta_set</span></code></a>(meta_set, idx, value)</p></td>
 <td><p>Modifies metadata &quot;set&quot; (i.e., string representation of a Python set; common in .hdr files) by converting string to list, then adjusts the value of an item by its index.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.hstools.plot_histogram" title="hs_process.hstools.plot_histogram"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_histogram</span></code></a>(array[, fname_fig, title, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hstools.plot_histogram" title="hs_process.hstools.plot_histogram"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_histogram</span></code></a>(array[, fname_fig, title, ...])</p></td>
 <td><p>Plots a histogram with the percentile value labeled.</p></td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Methods Documentation</p>
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.hstools.clean_md_sets">
-<code class="sig-name descname">clean_md_sets</code><span class="sig-paren">(</span><em class="sig-param">metadata=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.clean_md_sets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hstools.clean_md_sets" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">clean_md_sets</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.clean_md_sets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hstools.clean_md_sets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts metadata items that are expressed as a list to be expressed as
 a dictionary.</p>
 <dl class="field-list simple">
@@ -221,7 +255,7 @@ a dictionary.</p>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -248,9 +282,9 @@ the .hdr file via <a class="reference external" href="http://www.spectralpython.
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.hstools.del_meta_item">
-<code class="sig-name descname">del_meta_item</code><span class="sig-paren">(</span><em class="sig-param">metadata</em>, <em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.del_meta_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hstools.del_meta_item" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">del_meta_item</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.del_meta_item"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hstools.del_meta_item" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes metadata item from SpyFile object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -270,7 +304,7 @@ metadata.</p>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -295,9 +329,395 @@ metadata.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="hs_process.hstools.get_band">
+<code class="sig-name descname"><span class="pre">get_band</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_wl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spyfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_band"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hstools.get_band" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the band number of the closest target wavelength.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target_wl</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">float</span></code>) -- the target wavelength to retrieve
+the band number for (required).</p></li>
+<li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object, optional) -- The datacube being accessed
+and/or manipulated; if <code class="docutils literal notranslate"><span class="pre">None</span></code>, uses <code class="docutils literal notranslate"><span class="pre">hstools.spyfile</span></code>
+(default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>key_band</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) -- band number of the closest target
+wavelength (<code class="docutils literal notranslate"><span class="pre">target_wl</span></code>).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">hstools.get_band</span></code> to find the band number corresponding to
+<em>703 nm</em></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band</span><span class="p">(</span><span class="mi">703</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+<span class="go">151</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hs_process.hstools.get_wavelength">
+<code class="sig-name descname"><span class="pre">get_wavelength</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_band</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spyfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_wavelength"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hstools.get_wavelength" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns actual wavelength of the closest target band.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target_band</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">float</span></code>) -- the target band to retrieve
+wavelength number for (required).</p></li>
+<li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object, optional) -- The datacube being accessed and/or
+manipulated; if <code class="docutils literal notranslate"><span class="pre">None</span></code>, uses <code class="docutils literal notranslate"><span class="pre">hstools.spyfile</span></code> (default:
+<code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>key_wavelength</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code>) -- wavelength of the closest
+target band (<code class="docutils literal notranslate"><span class="pre">target_band</span></code>).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">hstools.get_wavelength</span></code> to find the wavelength value corresponding to the <em>151st band</em></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_wavelength</span><span class="p">(</span><span class="mi">151</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+<span class="go">702.52</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hs_process.hstools.get_wavelength_range">
+<code class="sig-name descname"><span class="pre">get_wavelength_range</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">range_bands</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spyfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_wavelength_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hstools.get_wavelength_range" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Retrieves the wavelengths for all bands within a band range.</p>
+<dl>
+<dt>Parameters:</dt><dd><dl class="simple">
+<dt>range_bands (<code class="docutils literal notranslate"><span class="pre">list</span></code>): the minimum and maximum band number to</dt><dd><p>consider; values should be <code class="docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+<dt>index (bool): Indicates whether the bands in <code class="docutils literal notranslate"><span class="pre">range_bands</span></code> denote</dt><dd><p>the band number (<code class="docutils literal notranslate"><span class="pre">False</span></code>; min=1) or the index number
+(<code class="docutils literal notranslate"><span class="pre">True</span></code>; min=0) (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>).</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">list</span></code>:</dt><dd><p><strong>wavelength_list</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code>): A list of all wavelengths
+between a range in band numbers or index values (depending how
+<code class="docutils literal notranslate"><span class="pre">index</span></code> is set).</p>
+</dd>
+</dl>
+</dd>
+<dt>Example:</dt><dd><p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</div></blockquote>
+<dl>
+<dt>igo0024DocumentsGitHubhs_processhs_processdataWells_rep2_20180628_16h56m_test_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Find the wavelengths from the <em>16th</em> to <em>21st bands</em></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_wavelength_range</span><span class="p">([</span><span class="mi">16</span><span class="p">,</span> <span class="mi">21</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+<span class="go">[425.392, 427.4448, 429.4976, 431.5504, 433.6032, 435.656]</span>
+</pre></div>
+</div>
+<p>Find the wavelengths from the <em>16th</em> to the <em>21st index</em></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_wavelength_range</span><span class="p">([</span><span class="mi">16</span><span class="p">,</span> <span class="mi">21</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+<span class="go">[427.4448, 429.4976, 431.5504, 433.6032, 435.656, 437.7088]</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hs_process.hstools.get_center_wl">
+<code class="sig-name descname"><span class="pre">get_center_wl</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wl_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spyfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_center_wl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hstools.get_center_wl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets band numbers and mean wavelength from all wavelengths (or bands)
+in <code class="docutils literal notranslate"><span class="pre">wl_list</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wl_list</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code>) -- the list of bands to get information for
+(required).</p></li>
+<li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object) -- The datacube being accessed and/or
+manipulated; if <code class="docutils literal notranslate"><span class="pre">None</span></code>, uses <code class="docutils literal notranslate"><span class="pre">hstools.spyfile</span></code> (default:
+<code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>wls</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) -- whether wavelengths are passed in <code class="docutils literal notranslate"><span class="pre">wl_list</span></code> or if
+bands are passed in <code class="docutils literal notranslate"><span class="pre">wl_list</span></code> (default: <code class="docutils literal notranslate"><span class="pre">True</span></code> - wavelenghts
+passed).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>2-element <code class="docutils literal notranslate"><span class="pre">tuple</span></code> containing</p>
+<ul class="simple">
+<li><p><strong>bands</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code>): the list of bands (band number) corresponding
+to <code class="docutils literal notranslate"><span class="pre">wl_list</span></code>.</p></li>
+<li><p><strong>wls_mean</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): the mean wavelength from <code class="docutils literal notranslate"><span class="pre">wl_list</span></code>.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Using <code class="docutils literal notranslate"><span class="pre">hstools.get_center_wl</span></code>, find the bands and <em>actual mean wavelength</em> of the bands closest to <em>700</em> and <em>710</em> nm.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">bands</span><span class="p">,</span> <span class="n">wls_mean</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_center_wl</span><span class="p">([</span><span class="mi">700</span><span class="p">,</span> <span class="mi">710</span><span class="p">],</span> <span class="n">wls</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bands</span>
+<span class="go">[150, 155]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wls_mean</span>
+<span class="go">705.5992</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hs_process.hstools.get_band_index">
+<code class="sig-name descname"><span class="pre">get_band_index</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">band_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_band_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hstools.get_band_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>.
+Returns the index of <code class="docutils literal notranslate"><span class="pre">band</span></code> from &quot;band names&quot;.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>band_name</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">list</span></code>) -- the target band to retrieve the
+band index for (required).</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>band_idx</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) -- band index of the passed band name
+(<code class="docutils literal notranslate"><span class="pre">band_name</span></code>).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">list</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Using <code class="docutils literal notranslate"><span class="pre">hstools.get_band_index</span></code>, find the band index of bands <em>4</em>, <em>43</em>, and <em>111</em>.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_index</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">111</span><span class="p">])</span>
+<span class="go">[3, 42, 110]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hs_process.hstools.get_spectral_mean">
+<code class="sig-name descname"><span class="pre">get_spectral_mean</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">band_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spyfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_spectral_mean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hstools.get_spectral_mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the spectral mean of a datacube from a list of bands.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>band_list</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code>) -- the list of bands to calculate the spectral
+mean for on the datacube (required).</p></li>
+<li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object or <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) -- The datacube being
+accessed and/or manipulated; if <code class="docutils literal notranslate"><span class="pre">None</span></code>, uses <code class="docutils literal notranslate"><span class="pre">hstools.spyfile</span></code>
+(default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>array_mean</strong> (<code class="docutils literal notranslate"><span class="pre">numpy.array</span></code> or <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>): The
+mean reflectance from <code class="docutils literal notranslate"><span class="pre">spyfile</span></code> for the bands in <code class="docutils literal notranslate"><span class="pre">band_list</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">numpy.array</span></code> or <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Calculate the spectral mean of the datacube via
+<code class="docutils literal notranslate"><span class="pre">hstools.get_spectral_mean</span></code> using all bands between <em>800</em> and
+<em>840 nm</em></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">band_list</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_range</span><span class="p">([</span><span class="mi">800</span><span class="p">,</span> <span class="mi">840</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">array_mean</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_spectral_mean</span><span class="p">(</span><span class="n">band_list</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">show_img</span><span class="p">(</span><span class="n">array_mean</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/get_spectral_mean.png" src="../_images/get_spectral_mean.png" />
+</dd></dl>
+
+<dl class="py method">
+<dt id="hs_process.hstools.get_band_num">
+<code class="sig-name descname"><span class="pre">get_band_num</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">band_idx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_band_num"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hstools.get_band_num" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds 1 to <code class="docutils literal notranslate"><span class="pre">band_idx</span></code> and returns the band number(s).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>band_idx</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">list</span></code>) -- the target band index(es) to
+retrive the band number for (required).</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>band_num</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">list</span></code>): band number of the passed
+band index (<code class="docutils literal notranslate"><span class="pre">band_idx</span></code>).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">list</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Using <code class="docutils literal notranslate"><span class="pre">hstools.get_band_num</span></code>, find the band number located at the <em>4th</em>, <em>43rd</em>, and <em>111th</em> index values.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_num</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">111</span><span class="p">])</span>
+<span class="go">[5, 44, 112]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hs_process.hstools.get_band_range">
+<code class="sig-name descname"><span class="pre">get_band_range</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">range_wl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spyfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_band_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hstools.get_band_range" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Retrieves the band index or band name for all bands within a
+wavelength range.</p>
+<dl>
+<dt>Parameters:</dt><dd><dl class="simple">
+<dt>range_wl (<code class="docutils literal notranslate"><span class="pre">list</span></code>): the minimum and maximum wavelength to consider;</dt><dd><p>values should be <code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">float</span></code>.</p>
+</dd>
+<dt>index (bool): Indicates whether to return the band number</dt><dd><p>(<code class="docutils literal notranslate"><span class="pre">False</span></code>; min=1) or to return index number (<code class="docutils literal notranslate"><span class="pre">True</span></code>; min=0)
+(default: <code class="docutils literal notranslate"><span class="pre">True</span></code>).</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">list</span></code>:</dt><dd><p><strong>band_list</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code>): A list of all bands (either index or
+number, depending on how <code class="docutils literal notranslate"><span class="pre">index</span></code> is set) between a range in
+wavelength values.</p>
+</dd>
+</dl>
+</dd>
+<dt>Example:</dt><dd><p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Find the band name of all bands between <em>700</em> and <em>710 nm</em></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_range</span><span class="p">([</span><span class="mi">700</span><span class="p">,</span> <span class="mi">710</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+<span class="go">[150, 151, 152, 153, 154]</span>
+</pre></div>
+</div>
+<p>Find the band index values of all bands between <em>700</em> and <em>710 nm</em>
+via <code class="docutils literal notranslate"><span class="pre">hstools.get_band_range</span></code></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_range</span><span class="p">([</span><span class="mi">700</span><span class="p">,</span> <span class="mi">710</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+<span class="go">[149, 150, 151, 152, 153]</span>
+</pre></div>
+</div>
+<p>Sometimes &quot;band names&quot; are not integers in sequential order. To
+demonstrate the utility of the <code class="docutils literal notranslate"><span class="pre">index</span></code> parameter, let's take a
+look at Sentinel 2A mimicked imagery.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</div></blockquote>
+<dl>
+<dt>igo0024Documentshs_process_demospec_mod'</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7-mimic-s2a.bip.hdr&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Find the band name of all bands between <em>760</em> and <em>840 nm</em></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_range</span><span class="p">([</span><span class="mi">760</span><span class="p">,</span> <span class="mi">840</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+<span class="go">[&#39;S2A_SR_AV_B7&#39;, &#39;S2A_SR_AV_B8&#39;]</span>
+</pre></div>
+</div>
+<p>Find the band index values of all bands between <em>760</em> and <em>840 nm</em>
+via <code class="docutils literal notranslate"><span class="pre">hstools.get_band_range</span></code></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_range</span><span class="p">([</span><span class="mi">760</span><span class="p">,</span> <span class="mi">840</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+<span class="go">[6, 7]</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="hs_process.hstools.get_meta_set">
+<code class="sig-name descname"><span class="pre">get_meta_set</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">meta_set</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_meta_set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hstools.get_meta_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads metadata &quot;set&quot; (i.e., string representation of a Python set;
+common in .hdr files), taking care to remove leading and trailing
+spaces.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>meta_set</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- the string representation of the metadata set</p></li>
+<li><p><strong>idx</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) -- index to be read; if <code class="docutils literal notranslate"><span class="pre">None</span></code>, the whole list is
+returned (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>metadata_list</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code> or <code class="docutils literal notranslate"><span class="pre">str</span></code>): List of metadata set
+items (as <code class="docutils literal notranslate"><span class="pre">str</span></code>), or if idx is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, the item in the
+position described by <code class="docutils literal notranslate"><span class="pre">idx</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">list</span></code> or <code class="docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Retrieve the <em>&quot;map info&quot; set</em> from the metadata via
+<code class="docutils literal notranslate"><span class="pre">hstools.get_meta_set</span></code></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">map_info_set</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">]</span>
+<span class="go">[&#39;UTM&#39;,</span>
+<span class="go"> &#39;1.0&#39;,</span>
+<span class="go"> &#39;1.0&#39;,</span>
+<span class="go"> &#39;441357.287073&#39;,</span>
+<span class="go"> &#39;4855944.7717699995&#39;,</span>
+<span class="go"> &#39;0.04&#39;,</span>
+<span class="go"> &#39;0.04&#39;,</span>
+<span class="go"> &#39;15&#39;,</span>
+<span class="go"> &#39;T&#39;,</span>
+<span class="go"> &#39;WGS-84&#39;,</span>
+<span class="go"> &#39;units  meters&#39;,</span>
+<span class="go"> &#39;rotation  0.000&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt id="hs_process.hstools.get_UTM">
-<code class="sig-name descname">get_UTM</code><span class="sig-paren">(</span><em class="sig-param">pix_e_ul</em>, <em class="sig-param">pix_n_ul</em>, <em class="sig-param">utm_x</em>, <em class="sig-param">utm_y</em>, <em class="sig-param">size_x</em>, <em class="sig-param">size_y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_UTM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hstools.get_UTM" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_UTM</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pix_e_ul</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pix_n_ul</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">utm_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">utm_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_UTM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hstools.get_UTM" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the new UTM coordinate of cropped plot to modify the
 &quot;map info&quot; tag of the .hdr file.</p>
 <dl class="field-list simple">
@@ -331,7 +751,7 @@ of cropped plot.</p></li>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -357,324 +777,9 @@ of cropped plot.</p></li>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="hs_process.hstools.get_band">
-<code class="sig-name descname">get_band</code><span class="sig-paren">(</span><em class="sig-param">target_wl</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_band"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hstools.get_band" title="Permalink to this definition">¶</a></dt>
-<dd><p>Finds the band number of the closest target wavelength.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>target_wl</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">float</span></code>) -- the target wavelength to retrieve
-the band number for (required).</p></li>
-<li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object, optional) -- The datacube being accessed
-and/or manipulated; if <code class="docutils literal notranslate"><span class="pre">None</span></code>, uses <code class="docutils literal notranslate"><span class="pre">hstools.spyfile</span></code>
-(default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>key_band</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) -- band number of the closest target
-wavelength (<code class="docutils literal notranslate"><span class="pre">target_wl</span></code>).</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Use <code class="docutils literal notranslate"><span class="pre">hstools.get_band</span></code> to find the band number corresponding to
-<em>703 nm</em></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band</span><span class="p">(</span><span class="mi">703</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
-<span class="go">151</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt id="hs_process.hstools.get_band_index">
-<code class="sig-name descname">get_band_index</code><span class="sig-paren">(</span><em class="sig-param">band_num</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_band_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hstools.get_band_index" title="Permalink to this definition">¶</a></dt>
-<dd><p>Subtracts 1 from <code class="docutils literal notranslate"><span class="pre">band_num</span></code> and returns the band index(es).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>band_num</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">list</span></code>) -- the target band number(s) to retrieve</p></li>
-<li><p><strong>band index for</strong> (<em>the</em>) -- </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>band_idx</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) -- band index of the passed band number
-(<code class="docutils literal notranslate"><span class="pre">band_num</span></code>).</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">list</span></code></p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Using <code class="docutils literal notranslate"><span class="pre">hstools.get_band_index</span></code>, find the band index of the <em>4th</em>, <em>43rd</em>, and <em>111th</em> bands</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_index</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">111</span><span class="p">])</span>
-<span class="go">[3, 42, 110]</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt id="hs_process.hstools.get_band_num">
-<code class="sig-name descname">get_band_num</code><span class="sig-paren">(</span><em class="sig-param">band_idx</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_band_num"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hstools.get_band_num" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds 1 to <code class="docutils literal notranslate"><span class="pre">band_idx</span></code> and returns the band number(s).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>band_idx</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">list</span></code>) -- the target band index(es) to
-retrive the band number for (required).</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>band_num</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">list</span></code>): band number of the passed
-band index (<code class="docutils literal notranslate"><span class="pre">band_idx</span></code>).</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">list</span></code></p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Using <code class="docutils literal notranslate"><span class="pre">hstools.get_band_num</span></code>, find the band number located at the <em>4th</em>, <em>43rd</em>, and <em>111th</em> index values.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_num</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">111</span><span class="p">])</span>
-<span class="go">[5, 44, 112]</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt id="hs_process.hstools.get_band_range">
-<code class="sig-name descname">get_band_range</code><span class="sig-paren">(</span><em class="sig-param">range_wl</em>, <em class="sig-param">index=True</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_band_range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hstools.get_band_range" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieves the band index or band number for all bands within a
-wavelength range.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>range_wl</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code>) -- the minimum and maximum wavelength to consider;
-values should be <code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">float</span></code>.</p></li>
-<li><p><strong>index</strong> (<em>bool</em>) -- Indicates whether to return the band number
-(<code class="docutils literal notranslate"><span class="pre">False</span></code>; min=1) or to return index number (<code class="docutils literal notranslate"><span class="pre">True</span></code>; min=0)
-(default: <code class="docutils literal notranslate"><span class="pre">True</span></code>).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>band_list</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code>): A list of all bands (either index or
-number, depending on how <code class="docutils literal notranslate"><span class="pre">index</span></code> is set) between a range in
-wavelength values.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">list</span></code></p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Find the band number of all bands between <em>700</em> and <em>710 nm</em></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_range</span><span class="p">([</span><span class="mi">700</span><span class="p">,</span> <span class="mi">710</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
-<span class="go">[150, 151, 152, 153, 154]</span>
-</pre></div>
-</div>
-<p>Find the band index values of all bands between <em>700</em> and <em>710 nm</em>
-via <code class="docutils literal notranslate"><span class="pre">hstools.get_band_range</span></code></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_range</span><span class="p">([</span><span class="mi">700</span><span class="p">,</span> <span class="mi">710</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
-<span class="go">[149, 150, 151, 152, 153]</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt id="hs_process.hstools.get_center_wl">
-<code class="sig-name descname">get_center_wl</code><span class="sig-paren">(</span><em class="sig-param">wl_list</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">wls=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_center_wl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hstools.get_center_wl" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets band numbers and mean wavelength from all wavelengths (or bands)
-in <code class="docutils literal notranslate"><span class="pre">wl_list</span></code>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>wl_list</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code>) -- the list of bands to get information for
-(required).</p></li>
-<li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object) -- The datacube being accessed and/or
-manipulated; if <code class="docutils literal notranslate"><span class="pre">None</span></code>, uses <code class="docutils literal notranslate"><span class="pre">hstools.spyfile</span></code> (default:
-<code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
-<li><p><strong>wls</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) -- whether wavelengths are passed in <code class="docutils literal notranslate"><span class="pre">wl_list</span></code> or if
-bands are passed in <code class="docutils literal notranslate"><span class="pre">wl_list</span></code> (default: <code class="docutils literal notranslate"><span class="pre">True</span></code> - wavelenghts
-passed).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p>2-element <code class="docutils literal notranslate"><span class="pre">tuple</span></code> containing</p>
-<ul class="simple">
-<li><p><strong>bands</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code>): the list of bands (band number) corresponding
-to <code class="docutils literal notranslate"><span class="pre">wl_list</span></code>.</p></li>
-<li><p><strong>wls_mean</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code>): the mean wavelength from <code class="docutils literal notranslate"><span class="pre">wl_list</span></code>.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Using <code class="docutils literal notranslate"><span class="pre">hstools.get_center_wl</span></code>, find the bands and <em>actual mean wavelength</em> of the bands closest to <em>700</em> and <em>710</em> nm.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">bands</span><span class="p">,</span> <span class="n">wls_mean</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_center_wl</span><span class="p">([</span><span class="mi">700</span><span class="p">,</span> <span class="mi">710</span><span class="p">],</span> <span class="n">wls</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">bands</span>
-<span class="go">[150, 155]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">wls_mean</span>
-<span class="go">705.5992</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt id="hs_process.hstools.get_meta_set">
-<code class="sig-name descname">get_meta_set</code><span class="sig-paren">(</span><em class="sig-param">meta_set</em>, <em class="sig-param">idx=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_meta_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hstools.get_meta_set" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reads metadata &quot;set&quot; (i.e., string representation of a Python set;
-common in .hdr files), taking care to remove leading and trailing
-spaces.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>meta_set</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- the string representation of the metadata set</p></li>
-<li><p><strong>idx</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) -- index to be read; if <code class="docutils literal notranslate"><span class="pre">None</span></code>, the whole list is
-returned (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>metadata_list</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code> or <code class="docutils literal notranslate"><span class="pre">str</span></code>): List of metadata set
-items (as <code class="docutils literal notranslate"><span class="pre">str</span></code>), or if idx is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, the item in the
-position described by <code class="docutils literal notranslate"><span class="pre">idx</span></code>.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">list</span></code> or <code class="docutils literal notranslate"><span class="pre">str</span></code></p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Retrieve the <em>&quot;map info&quot; set</em> from the metadata via
-<code class="docutils literal notranslate"><span class="pre">hstools.get_meta_set</span></code></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">map_info_set</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;map info&#39;</span><span class="p">]</span>
-<span class="go">[&#39;UTM&#39;,</span>
-<span class="go"> &#39;1.0&#39;,</span>
-<span class="go"> &#39;1.0&#39;,</span>
-<span class="go"> &#39;441357.287073&#39;,</span>
-<span class="go"> &#39;4855944.7717699995&#39;,</span>
-<span class="go"> &#39;0.04&#39;,</span>
-<span class="go"> &#39;0.04&#39;,</span>
-<span class="go"> &#39;15&#39;,</span>
-<span class="go"> &#39;T&#39;,</span>
-<span class="go"> &#39;WGS-84&#39;,</span>
-<span class="go"> &#39;units  meters&#39;,</span>
-<span class="go"> &#39;rotation  0.000&#39;]</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt id="hs_process.hstools.get_spectral_mean">
-<code class="sig-name descname">get_spectral_mean</code><span class="sig-paren">(</span><em class="sig-param">band_list</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_spectral_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hstools.get_spectral_mean" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the spectral mean of a datacube from a list of bands.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>band_list</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code>) -- the list of bands to calculate the spectral
-mean for on the datacube (required).</p></li>
-<li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object or <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) -- The datacube being
-accessed and/or manipulated; if <code class="docutils literal notranslate"><span class="pre">None</span></code>, uses <code class="docutils literal notranslate"><span class="pre">hstools.spyfile</span></code>
-(default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>array_mean</strong> (<code class="docutils literal notranslate"><span class="pre">numpy.array</span></code> or <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>): The
-mean reflectance from <code class="docutils literal notranslate"><span class="pre">spyfile</span></code> for the bands in <code class="docutils literal notranslate"><span class="pre">band_list</span></code>.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">numpy.array</span></code> or <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Calculate the spectral mean of the datacube via
-<code class="docutils literal notranslate"><span class="pre">hstools.get_spectral_mean</span></code> using all bands between <em>800</em> and
-<em>840 nm</em></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">band_list</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_band_range</span><span class="p">([</span><span class="mi">800</span><span class="p">,</span> <span class="mi">840</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">array_mean</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_spectral_mean</span><span class="p">(</span><span class="n">band_list</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">show_img</span><span class="p">(</span><span class="n">array_mean</span><span class="p">)</span>
-</pre></div>
-</div>
-<img alt="../_images/get_spectral_mean.png" src="../_images/get_spectral_mean.png" />
-</dd></dl>
-
-<dl class="method">
-<dt id="hs_process.hstools.get_wavelength">
-<code class="sig-name descname">get_wavelength</code><span class="sig-paren">(</span><em class="sig-param">target_band</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.get_wavelength"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hstools.get_wavelength" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns actual wavelength of the closest target band.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>target_band</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">float</span></code>) -- the target band to retrieve
-wavelength number for (required).</p></li>
-<li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object, optional) -- The datacube being accessed and/or
-manipulated; if <code class="docutils literal notranslate"><span class="pre">None</span></code>, uses <code class="docutils literal notranslate"><span class="pre">hstools.spyfile</span></code> (default:
-<code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>key_wavelength</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code>) -- wavelength of the closest
-target band (<code class="docutils literal notranslate"><span class="pre">target_band</span></code>).</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Use <code class="docutils literal notranslate"><span class="pre">hstools.get_wavelength</span></code> to find the wavelength value corresponding to the <em>151st band</em></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">get_wavelength</span><span class="p">(</span><span class="mi">151</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
-<span class="go">702.52</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.hstools.load_spyfile">
-<code class="sig-name descname">load_spyfile</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.load_spyfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hstools.load_spyfile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">load_spyfile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spyfile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.load_spyfile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hstools.load_spyfile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads a <code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> (Spectral Python object) for data access and/or
 manipulation by the <code class="docutils literal notranslate"><span class="pre">hstools</span></code> class.</p>
 <dl class="field-list simple">
@@ -686,14 +791,14 @@ manipulated.</p>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Load a new datacube using <code class="docutils literal notranslate"><span class="pre">hstools.load_spyfile</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span>
-<span class="go">Data Source:   &#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip&#39;</span>
+<span class="go">Data Source:   &#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip&#39;</span>
 <span class="go">    # Rows:            617</span>
 <span class="go">    # Samples:        1300</span>
 <span class="go">    # Bands:           240</span>
@@ -704,9 +809,9 @@ manipulated.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.hstools.mask_array">
-<code class="sig-name descname">mask_array</code><span class="sig-paren">(</span><em class="sig-param">array</em>, <em class="sig-param">metadata</em>, <em class="sig-param">thresh=None</em>, <em class="sig-param">percentile=None</em>, <em class="sig-param">side='lower'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.mask_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hstools.mask_array" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">mask_array</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">percentile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">side</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lower'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.mask_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hstools.mask_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a masked numpy array based on a threshold value. If <code class="docutils literal notranslate"><span class="pre">array</span></code> is
 already a masked array, that mask is maintained and the new mask(s) is/
 are added to the original mask.</p>
@@ -725,10 +830,13 @@ value in the list will be considered for thresholding (default:
 pixels will be masked prior to calculating the mean spectra
 across pixels (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>; range: 0-100).</p></li>
 <li><p><strong>side</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- The side of the threshold for which to apply the
-mask. Must be either 'lower', 'upper', or <code class="docutils literal notranslate"><span class="pre">None</span></code>; if 'lower',
-everything below the threshold will be masked; if <code class="docutils literal notranslate"><span class="pre">None</span></code>,
-only the values that exactly match the threshol will be masked
-(default: 'lower').</p></li>
+mask. Must be either 'lower', 'upper', 'outside', or <code class="docutils literal notranslate"><span class="pre">None</span></code>;
+if 'lower', everything below the threshold will be masked; if
+'outside', the <code class="docutils literal notranslate"><span class="pre">thresh</span></code> / <code class="docutils literal notranslate"><span class="pre">percentile</span></code> parameter must be
+list-like with two values indicating the lower and upper bounds
+- anything outside of these values will be masked out; if
+<code class="docutils literal notranslate"><span class="pre">None</span></code>, only the values that exactly match the threshold will
+be masked (default: 'lower').</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -744,7 +852,7 @@ based on the passed threshold and/or percentile value.</p></li>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -780,9 +888,9 @@ the masked vs. unmasked arrays.</p>
 <img alt="../_images/mask_array_800nm_75th.png" src="../_images/mask_array_800nm_75th.png" />
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.hstools.mean_datacube">
-<code class="sig-name descname">mean_datacube</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em>, <em class="sig-param">mask=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.mean_datacube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hstools.mean_datacube" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">mean_datacube</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spyfile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.mean_datacube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hstools.mean_datacube" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Calculates the mean spectra for a datcube; if <code class="docutils literal notranslate"><span class="pre">mask</span></code> is passed (as a
 <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>), then the mask is applied to <code class="docutils literal notranslate"><span class="pre">spyfile</span></code> prior to
@@ -795,6 +903,10 @@ computing the mean spectra.</p>
 first band (i.e., first two dimensions) of <code class="docutils literal notranslate"><span class="pre">mask</span></code> will be
 repeated <em>n</em> times to match the number of bands of <code class="docutils literal notranslate"><span class="pre">spyfile</span></code>
 (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p>
+</dd>
+<dt>nodata (<code class="docutils literal notranslate"><span class="pre">float</span></code> or <code class="docutils literal notranslate"><span class="pre">None</span></code>): If <code class="docutils literal notranslate"><span class="pre">None</span></code>, treats all pixels</dt><dd><p>cells as they are repressented in the <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>.
+Otherwise, replaces <code class="docutils literal notranslate"><span class="pre">nodata</span></code> with <code class="docutils literal notranslate"><span class="pre">np.nan</span></code> and these cells
+will not be considered when calculating the mean spectra.</p>
 </dd>
 </dl>
 </dd>
@@ -811,7 +923,7 @@ is identical to the <code class="docutils literal notranslate"><span class="pre"
 </dd>
 <dt>Example:</dt><dd><p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -832,7 +944,7 @@ pixels using <code class="docutils literal notranslate"><span class="pre">hstool
 into Spectronon software for visualization.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr_spec</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\hstools\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.spec.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr_cube</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\hstools\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.bip.hdr&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">write_spec</span><span class="p">(</span><span class="n">fname_hdr_spec</span><span class="p">,</span> <span class="n">spec_mean</span><span class="p">,</span> <span class="n">spec_std</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">write_spec</span><span class="p">(</span><span class="n">fname_hdr_spec</span><span class="p">,</span> <span class="n">spec_mean</span><span class="p">,</span> <span class="n">spec_std</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="go">Saving F:</span>
 </pre></div>
 </div>
@@ -840,7 +952,7 @@ into Spectronon software for visualization.</p>
 </dl>
 </div></blockquote>
 <dl>
-<dt>igo0024Documentshs_process_demohstoolsWells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.spec</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">write_cube</span><span class="p">(</span><span class="n">fname_hdr_cube</span><span class="p">,</span> <span class="n">datacube_masked</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
+<dt>igo0024Documentshs_process_demohstoolsWells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.spec</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">write_cube</span><span class="p">(</span><span class="n">fname_hdr_cube</span><span class="p">,</span> <span class="n">datacube_masked</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="go">Saving F:</span>
 </pre></div>
 </div>
@@ -852,9 +964,9 @@ into Spectronon software for visualization.</p>
 </div></blockquote>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.hstools.modify_meta_set">
-<code class="sig-name descname">modify_meta_set</code><span class="sig-paren">(</span><em class="sig-param">meta_set</em>, <em class="sig-param">idx</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.modify_meta_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hstools.modify_meta_set" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">modify_meta_set</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">meta_set</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.modify_meta_set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hstools.modify_meta_set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Modifies metadata &quot;set&quot; (i.e., string representation of a Python set;
 common in .hdr files) by converting string to list, then adjusts the
 value of an item by its index.</p>
@@ -877,7 +989,7 @@ returned (default: <code class="docutils literal notranslate"><span class="pre">
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -907,9 +1019,9 @@ to <code class="docutils literal notranslate"><span class="pre">441300.2</span><
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.hstools.plot_histogram">
-<code class="sig-name descname">plot_histogram</code><span class="sig-paren">(</span><em class="sig-param">array</em>, <em class="sig-param">fname_fig=None</em>, <em class="sig-param">title=None</em>, <em class="sig-param">xlabel=None</em>, <em class="sig-param">percentile=90</em>, <em class="sig-param">bins=50</em>, <em class="sig-param">fontsize=16</em>, <em class="sig-param">color='#444444'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.plot_histogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hstools.plot_histogram" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">plot_histogram</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">percentile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">90</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fontsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'#444444'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hstools.plot_histogram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hstools.plot_histogram" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots a histogram with the percentile value labeled.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -943,7 +1055,7 @@ text annotations will be scaled relatively (default: 16).</p></li>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -984,8 +1096,8 @@ than the 5th percentile) using <code class="docutils literal notranslate"><span 
       
     </p>
     <p>
-        &copy; Copyright 2020, Tyler J. Nigon.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.<br/>
+        &copy; Copyright 2019-2021, Tyler J. Nigon.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
     </p>
   </div>
 </footer>

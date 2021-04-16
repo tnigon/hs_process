@@ -9,7 +9,7 @@ There is also a focus of maintaining the ability to record some of the
 subjective aspects of image processing.
 """
 
-__copyright__ = '2019-2020 Tyler J Nigon. All rights reserved.'
+__copyright__ = '2019-2021 Tyler J Nigon. All rights reserved.'
 __author__ = 'Tyler J Nigon'
 __license__ = (
         'The MIT license'
@@ -45,7 +45,7 @@ from .spatial_mod import spatial_mod
 from .spec_mod import spec_mod
 
 name = 'hs_process'
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 
 __all__ = ['batch',
            'defaults',

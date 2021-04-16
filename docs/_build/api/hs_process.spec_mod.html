@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="python">
+<html lang="python">
   <head>
     <meta charset="utf-8" />
-    <title>8.1.7. spec_mod &#8212; hs_process 0.0.3 documentation</title>
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>8.1.7. spec_mod &#8212; hs_process 0.0.4 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="9. License" href="../license.html" />
@@ -46,7 +46,7 @@
           <ul class="nav navbar-nav">
             
                 <li><a href="https://github.com/tnigon/hs_process">Github</a></li>
-                <li><a href="https://pypi.org/project/hs-process/">PyPI</a></li>
+                <li><a href="https://anaconda.org/conda-forge/hs-process">Download</a></li>
                 <li><a href="http://www.spectralpython.net/">Spectral Python</a></li>
             
             
@@ -59,7 +59,28 @@
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Home</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../installation.html">1. Setup and Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_hsio.html">2. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_hstools.html">3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hstools</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_segment.html">4. Tutorial: <code class="docutils literal notranslate"><span class="pre">segment</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_spec_mod.html">5. Tutorial: <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_spatial_mod.html">6. Tutorial: <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_batch.html">7. Tutorial: <code class="docutils literal notranslate"><span class="pre">batch</span></code></a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../my_hs_process_api.html">8. API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="hs_process.batch.html">8.1.1. batch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.defaults.html">8.1.2. defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.hsio.html">8.1.3. hsio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.hstools.html">8.1.4. hstools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.segment.html">8.1.5. segment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.spatial_mod.html">8.1.6. spatial_mod</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">8.1.7. spec_mod</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">9. License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html">10. Change Log</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">1. Setup and Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_hsio.html">2. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_hstools.html">3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hstools</span></code></a></li>
@@ -67,7 +88,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_spec_mod.html">5. Tutorial: <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_spatial_mod.html">6. Tutorial: <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_batch.html">7. Tutorial: <code class="docutils literal notranslate"><span class="pre">batch</span></code></a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../my_hs_process_api.html">8. API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../my_hs_process_api.html">8. API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="hs_process.batch.html">8.1.1. batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.defaults.html">8.1.2. defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.hsio.html">8.1.3. hsio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.hstools.html">8.1.4. hstools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.segment.html">8.1.5. segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spatial_mod.html">8.1.6. spatial_mod</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">8.1.7. spec_mod</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">9. License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">10. Change Log</a></li>
 </ul>
@@ -133,9 +163,9 @@
       
   <div class="section" id="spec-mod">
 <h1><span class="section-number">8.1.7. </span>spec_mod<a class="headerlink" href="#spec-mod" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
+<dl class="py class">
 <dt id="hs_process.spec_mod">
-<em class="property">class </em><code class="sig-prename descclassname">hs_process.</code><code class="sig-name descname">spec_mod</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/spec_mod.html#spec_mod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spec_mod" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">hs_process.</span></code><code class="sig-name descname"><span class="pre">spec_mod</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spyfile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/spec_mod.html#spec_mod"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.spec_mod" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class for manipulating data within the spectral domain, which
 is usually pixel-based.</p>
@@ -146,21 +176,30 @@ is usually pixel-based.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.spec_mod.load_spyfile" title="hs_process.spec_mod.spec_mod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_spyfile</span></code></a>(spyfile)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.spec_mod.spec_mod.load_spyfile" title="hs_process.spec_mod.spec_mod.load_spyfile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_spyfile</span></code></a>(spyfile)</p></td>
 <td><p>Loads a <code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> (Spectral Python object) for data access and/or manipulation by the <code class="docutils literal notranslate"><span class="pre">hstools</span></code> class.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.spec_mod.spectral_clip" title="hs_process.spec_mod.spec_mod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spectral_clip</span></code></a>([wl_bands, spyfile])</p></td>
-<td><p>Removes/clips designated wavelength bands from the hyperspectral</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../hs_process.html#hs_process.spec_mod.spec_mod.spec_derivative" title="hs_process.spec_mod.spec_mod.spec_derivative"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spec_derivative</span></code></a>([spyfile_spec, order])</p></td>
+<td><p>Calculates the numeric derivative spectra from spyfile_spec.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.spec_mod.spectral_smooth" title="hs_process.spec_mod.spec_mod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spectral_smooth</span></code></a>([window_size, order, spyfile])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.spec_mod.spec_mod.spectral_clip" title="hs_process.spec_mod.spec_mod.spectral_clip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spectral_clip</span></code></a>([wl_bands, spyfile])</p></td>
+<td><p>Removes/clips designated wavelength bands from the hyperspectral datacube.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../hs_process.html#hs_process.spec_mod.spec_mod.spectral_mimic" title="hs_process.spec_mod.spec_mod.spectral_mimic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spectral_mimic</span></code></a>([sensor, df_band_response, ...])</p></td>
+<td><p>Mimics the response of a multispectral sensor based on transmissivity</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.spec_mod.spec_mod.spectral_resample" title="hs_process.spec_mod.spec_mod.spectral_resample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spectral_resample</span></code></a>([bandwidth, bins_n, spyfile])</p></td>
+<td><p>Performs pixel-wise resampling of spectral bands via binning</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../hs_process.html#hs_process.spec_mod.spec_mod.spectral_smooth" title="hs_process.spec_mod.spec_mod.spectral_smooth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spectral_smooth</span></code></a>([window_size, order, spyfile])</p></td>
 <td><p>Performs Savitzky-Golay smoothing on the spectral domain.</p></td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Methods Documentation</p>
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.spec_mod.load_spyfile">
-<code class="sig-name descname">load_spyfile</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/spec_mod.html#spec_mod.load_spyfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spec_mod.load_spyfile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">load_spyfile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spyfile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/spec_mod.html#spec_mod.load_spyfile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.spec_mod.load_spyfile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads a <code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> (Spectral Python object) for data access and/or
 manipulation by the <code class="docutils literal notranslate"><span class="pre">hstools</span></code> class.</p>
 <dl class="field-list simple">
@@ -192,95 +231,309 @@ manipulated.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="hs_process.spec_mod.spec_derivative">
+<code class="sig-name descname"><span class="pre">spec_derivative</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spyfile_spec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/spec_mod.html#spec_mod.spec_derivative"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.spec_mod.spec_derivative" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the numeric derivative spectra from spyfile_spec.</p>
+<p>The derivavative spectra is calculated as the slope (rise over run) of
+the input spectra, and is normalized by the wavelength unit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spyfile_spec</strong> -- The spectral spyfile object to calculate the
+derivative for.</p></li>
+<li><p><strong>order</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) -- The order of the derivative (default: 1).</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">spec_mod</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr_spec</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_plot_611-cube-to-spec-mean.spec.hdr&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">read_spec</span><span class="p">(</span><span class="n">fname_hdr_spec</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_spec_mod</span> <span class="o">=</span> <span class="n">spec_mod</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile_spec</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Calculate the numeric derivative.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">spec_dydx</span><span class="p">,</span> <span class="n">metadata_dydx</span> <span class="o">=</span> <span class="n">my_spec_mod</span><span class="o">.</span><span class="n">spec_derivative</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">write_spec</span><span class="p">(</span><span class="s1">&#39;spec_derivative_order-1.spec.hdr&#39;</span><span class="p">,</span> <span class="n">spec_dydx</span><span class="p">,</span> <span class="n">df_std</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata_dydx</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Plot the numeric derivative spectra and compare against the original spectra.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s2">&quot;ticks&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wl_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">metadata_dydx</span><span class="p">[</span><span class="s1">&#39;wavelength&#39;</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_ref</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">spyfile_spec</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,:]</span><span class="o">*</span><span class="mi">100</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax1</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">wl_x</span><span class="p">,</span> <span class="n">y_ref</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax2</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax2</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">wl_x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax2</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">wl_x</span><span class="p">,</span> <span class="n">spec_dydx</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,:]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax2</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectance (%)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectance derivative (%)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;API Example: `hstools.spec_derivative`&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt id="hs_process.spec_mod.spectral_clip">
-<code class="sig-name descname">spectral_clip</code><span class="sig-paren">(</span><em class="sig-param">wl_bands=[[0, 420], [760, 776], [813, 827], [880, 1000]], spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/spec_mod.html#spec_mod.spectral_clip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spec_mod.spectral_clip" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Removes/clips designated wavelength bands from the hyperspectral
+<code class="sig-name descname"><span class="pre">spectral_clip</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wl_bands</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[[0,</span> <span class="pre">420],</span> <span class="pre">[760,</span> <span class="pre">776],</span> <span class="pre">[813,</span> <span class="pre">827],</span> <span class="pre">[880,</span> <span class="pre">1000]]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spyfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/spec_mod.html#spec_mod.spectral_clip"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.spec_mod.spectral_clip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes/clips designated wavelength bands from the hyperspectral
 datacube.</p>
-<dl>
-<dt>Parameters:</dt><dd><dl class="simple">
-<dt>wl_bands (<code class="docutils literal notranslate"><span class="pre">list</span></code> or <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">lists</span></code>): minimum and maximum</dt><dd><p>wavelenths to clip from image; if multiple groups of
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wl_bands</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code> or <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">lists</span></code>) -- minimum and maximum
+wavelenths to clip from image; if multiple groups of
 wavelengths should be cut, this should be a list of lists. For
 example, wl_bands=[760, 776] will clip all bands greater than
 760.0 nm and less than 776.0 nm;
 wl_bands = [[0, 420], [760, 776], [813, 827], [880, 1000]]
 will clip all band less than 420.0 nm, bands greater than 760.0
 nm and less than 776.0 nm, bands greater than 813.0 nm and less
-than 827.0 nm, and bands greater than 880 nm (default).</p>
+than 827.0 nm, and bands greater than 880 nm (default).</p></li>
+<li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object or <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) -- The data cube to
+clip; if <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> or <code class="docutils literal notranslate"><span class="pre">None</span></code>, loads band information
+from <code class="docutils literal notranslate"><span class="pre">spec_mod.spyfile</span></code> (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+</ul>
 </dd>
-<dt>spyfile (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object or <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>): The data cube to</dt><dd><p>clip; if <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> or <code class="docutils literal notranslate"><span class="pre">None</span></code>, loads band information
-from <code class="docutils literal notranslate"><span class="pre">spec_mod.spyfile</span></code> (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p>
-</dd>
-</dl>
-</dd>
-<dt>Returns:</dt><dd><p>2-element <code class="docutils literal notranslate"><span class="pre">tuple</span></code> containing</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>2-element <code class="docutils literal notranslate"><span class="pre">tuple</span></code> containing</p>
 <ul class="simple">
 <li><p><strong>array_clip</strong> (<code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>): Clipped datacube.</p></li>
 <li><p><strong>metadata</strong> (<code class="docutils literal notranslate"><span class="pre">dict</span></code>): Modified metadata describing the clipped
 hyperspectral datacube (<code class="docutils literal notranslate"><span class="pre">array_clip</span></code>).</p></li>
 </ul>
+</p>
 </dd>
-<dt>Example:</dt><dd><p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
+</dl>
+<p class="rubric">Example</p>
+<p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">spec_mod</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">io1</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">io1</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">my_spec_mod</span> <span class="o">=</span> <span class="n">spec_mod</span><span class="p">(</span><span class="n">io1</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_spec_mod</span> <span class="o">=</span> <span class="n">spec_mod</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Using <code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_clip</span></code>, clip all spectral bands below
 <em>420 nm</em> and above <em>880 nm</em>, as well as the bands near the oxygen
 absorption (i.e., <em>760-776 nm</em>) and water absorption
 (i.e., <em>813-827 nm</em>) regions.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_clip</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_spec_mod</span><span class="o">.</span><span class="n">spectral_clip</span><span class="p">(</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_clip</span><span class="p">,</span> <span class="n">metadata_clip</span> <span class="o">=</span> <span class="n">my_spec_mod</span><span class="o">.</span><span class="n">spectral_clip</span><span class="p">(</span>
 <span class="go">        wl_bands=[[0, 420], [760, 776], [813, 827], [880, 1000]])</span>
 </pre></div>
 </div>
-<p>Save the clipped datacube</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr_clip</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip.hdr&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">io1</span><span class="o">.</span><span class="n">write_cube</span><span class="p">(</span><span class="n">fname_hdr_clip</span><span class="p">,</span> <span class="n">array_clip</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
-<span class="go">Saving F:</span>
+<p>Plot the spectra of the unclippe hyperspectral image and compare to that of the clipped image for a single pixel.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ast</span> <span class="kn">import</span> <span class="n">literal_eval</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spy_hs</span> <span class="o">=</span> <span class="n">my_spec_mod</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>  <span class="c1"># datacube before smoothing</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">meta_bands</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">meta_bands_clip</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">literal_eval</span><span class="p">(</span><span class="n">metadata_clip</span><span class="p">[</span><span class="s1">&#39;wavelength&#39;</span><span class="p">])])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">spy_hs</span><span class="p">[</span><span class="mi">200</span><span class="p">][</span><span class="mi">800</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Before spectral clipping&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands_clip</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">array_clip</span><span class="p">[</span><span class="mi">200</span><span class="p">][</span><span class="mi">800</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;After spectral clipping&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectance (%)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;API Example: `spec_mod.spectral_clip`&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+<img alt="../_images/spectral_clip.png" src="../_images/spectral_clip.png" />
+</dd></dl>
+
+<dl class="py method">
+<dt id="hs_process.spec_mod.spectral_mimic">
+<code class="sig-name descname"><span class="pre">spectral_mimic</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sentinel-2a'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_band_response</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_wl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'wl_nm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_wl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'peak'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spyfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/spec_mod.html#spec_mod.spectral_mimic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.spec_mod.spectral_mimic" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Mimics the response of a multispectral sensor based on transmissivity
+of sensor bands across a range of wavelength values by calculating its
+weighted average response and interpolating the hyperspectral response.</p>
+<dl>
+<dt>Parameters:</dt><dd><dl class="simple">
+<dt>sensor (<code class="docutils literal notranslate"><span class="pre">str</span></code>): Should be one of</dt><dd><p>[&quot;sentera_6x&quot;, &quot;micasense_rededge_3&quot;, &quot;sentinel-2a&quot;,
+&quot;sentinel-2b&quot;, &quot;custom&quot;]; if &quot;custom&quot;, <code class="docutils literal notranslate"><span class="pre">df_band_response</span></code>
+and <code class="docutils literal notranslate"><span class="pre">col_wl</span></code> must be passed.</p>
+</dd>
+<dt>df_band_response (<code class="docutils literal notranslate"><span class="pre">pd.DataFrame</span></code>): A DataFrame that contains the</dt><dd><p>transmissivity (%) for each sensor band (as columns) mapped to
+the continuous wavelength values (as rows). Required if
+<code class="docutils literal notranslate"><span class="pre">sensor</span></code> is  &quot;custom&quot;, ignored otherwise.</p>
+</dd>
+<dt>col_wl (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The column of <code class="docutils literal notranslate"><span class="pre">df_band_response</span></code> denoting the</dt><dd><p>wavlengths (default: 'wl_nm').</p>
+</dd>
+<dt>center_wl (<code class="docutils literal notranslate"><span class="pre">str</span></code>): Indicates how the center wavelength of each</dt><dd><p>band is determined. If <code class="docutils literal notranslate"><span class="pre">center_wl</span></code> is &quot;peak&quot;, the point at
+which transmissivity is at its maximum is used as the center
+wavelength. If <code class="docutils literal notranslate"><span class="pre">center_wl</span></code> is &quot;weighted&quot;, the weighted
+average is used to compute the center wavelength. Must be one
+of [&quot;peak&quot;, &quot;weighted&quot;] (<code class="docutils literal notranslate"><span class="pre">default:</span> <span class="pre">&quot;peak&quot;</span></code>).</p>
+</dd>
+<dt>spyfile (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object): The datacube being accessed and/or</dt><dd><p>manipulated.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>2-element <code class="docutils literal notranslate"><span class="pre">tuple</span></code> containing</p>
+<ul class="simple">
+<li><p><strong>array_multi</strong> (<code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>): Mimicked datacube.</p></li>
+<li><p><strong>metadata</strong> (<code class="docutils literal notranslate"><span class="pre">dict</span></code>): Modified metadata describing the
+mimicked spectral array (<code class="docutils literal notranslate"><span class="pre">array_multi</span></code>).</p></li>
+</ul>
+</dd>
+<dt>Example:</dt><dd><p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">spec_mod</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>data_dir2 = r'G:BBEAGROBOTShared Workhs_process_resultsdata</p>
 </dd>
 </dl>
 </div></blockquote>
-<p>igo0024Documentshs_process_demospec_modWells_rep2_20180628_16h56m_pika_gige_7-clip.bip</p>
-<blockquote>
-<div><p>Initialize a second instance of <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and read in the clipped
-cube to compare the clipped cube to the unclipped cube</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io2</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>  <span class="c1"># initialize a second instance to compare cubes</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">io2</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname_hdr_clip</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">io1</span><span class="o">.</span><span class="n">spyfile</span>
-<span class="go">Data Source:   &#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip&#39;</span>
-<span class="go">    # Rows:            617</span>
-<span class="go">    # Samples:        1300</span>
-<span class="go">    # Bands:           240</span>
-<span class="go">    Interleave:        BIP</span>
-<span class="go">    Quantization:  32 bits</span>
-<span class="go">    Data format:   float32</span>
+<dl>
+<dt>ef_closest_panelcrop_plot'</dt><dd><p>fname_hdr = os.path.join(data_dir2, 'study_aerffield_date_20190708_plot_5110-crop-plot.bip.hdr')
+array = io.spyfile.open_memmap()</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_spec_mod</span> <span class="o">=</span> <span class="n">spec_mod</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The unclipped cube (above) has 240 spectral bands, while the
-clipped cube (below) has 210.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io2</span><span class="o">.</span><span class="n">spyfile</span>
-<span class="go">Data Source:   &#39;F:\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip&#39;</span>
-<span class="go">    # Rows:            617</span>
-<span class="go">    # Samples:        1300</span>
-<span class="go">    # Bands:           210</span>
-<span class="go">    Interleave:        BIP</span>
-<span class="go">    Quantization:  32 bits</span>
-<span class="go">    Data format:   float32</span>
+<p>Use spec_mod.spectral_mimic to mimic the Sentinel-2A spectral
+response function.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_s2a</span><span class="p">,</span> <span class="n">metadata_s2a</span> <span class="o">=</span> <span class="n">my_spec_mod</span><span class="o">.</span><span class="n">spectral_mimic</span><span class="p">(</span><span class="n">sensor</span><span class="o">=</span><span class="s1">&#39;sentinel-2a&#39;</span><span class="p">,</span> <span class="n">center_wl</span><span class="o">=</span><span class="s1">&#39;weighted&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div></blockquote>
+<p>Plot the mean spectral response of the hyperspectral image to that
+of the mimicked Sentinel-2A image bands (mean calculated across the
+entire image).</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ast</span> <span class="kn">import</span> <span class="n">literal_eval</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spy_hs</span> <span class="o">=</span> <span class="n">my_spec_mod</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>  <span class="c1"># datacube before smoothing</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">meta_bands</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">meta_bands_s2a</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">literal_eval</span><span class="p">(</span><span class="n">metadata_s2a</span><span class="p">[</span><span class="s1">&#39;wavelength&#39;</span><span class="p">])])</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">spy_hs</span><span class="p">[</span><span class="mi">200</span><span class="p">][</span><span class="mi">800</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Hyperspectral (Pika II)&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands_s2a</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">array_s2a</span><span class="p">[</span><span class="mi">200</span><span class="p">][</span><span class="mi">800</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Sentinel-2A &quot;mimic&quot;&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectance (%)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;API Example: `spec_mod.spectral_mimic`&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/spectral_mimic_sentinel-2a.png" src="../_images/spectral_mimic_sentinel-2a.png" />
+<p>Use spec_mod.spectral_mimic to mimic the Sentera 6x spectral configuration and compare to both hyperspectral and Sentinel-2A.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_6x</span><span class="p">,</span> <span class="n">metadata_6x</span> <span class="o">=</span> <span class="n">my_spec_mod</span><span class="o">.</span><span class="n">spectral_mimic</span><span class="p">(</span><span class="n">sensor</span><span class="o">=</span><span class="s1">&#39;sentera_6x&#39;</span><span class="p">,</span> <span class="n">center_wl</span><span class="o">=</span><span class="s1">&#39;peak&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">meta_bands_6x</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">literal_eval</span><span class="p">(</span><span class="n">metadata_6x</span><span class="p">[</span><span class="s1">&#39;wavelength&#39;</span><span class="p">])])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">spy_hs</span><span class="p">[</span><span class="mi">200</span><span class="p">][</span><span class="mi">800</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Hyperspectral (Pika II)&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands_s2a</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">array_s2a</span><span class="p">[</span><span class="mi">200</span><span class="p">][</span><span class="mi">800</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Sentinel-2A &quot;mimic&quot;&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands_6x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">array_6x</span><span class="p">[</span><span class="mi">200</span><span class="p">][</span><span class="mi">800</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Sentera 6X &quot;mimic&quot;&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectance (%)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;API Example: `spec_mod.spectral_mimic`&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/spectral_mimic_6x.png" src="../_images/spectral_mimic_6x.png" />
+<p>And finally, mimic the Micasense RedEdge-MX and compare to hyperspectral, Sentinel-2A, and Sentera 6X.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_re3</span><span class="p">,</span> <span class="n">metadata_re3</span> <span class="o">=</span> <span class="n">my_spec_mod</span><span class="o">.</span><span class="n">spectral_mimic</span><span class="p">(</span><span class="n">sensor</span><span class="o">=</span><span class="s1">&#39;micasense_rededge_3&#39;</span><span class="p">,</span> <span class="n">center_wl</span><span class="o">=</span><span class="s1">&#39;peak&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">meta_bands_re3</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">literal_eval</span><span class="p">(</span><span class="n">metadata_re3</span><span class="p">[</span><span class="s1">&#39;wavelength&#39;</span><span class="p">])])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">spy_hs</span><span class="p">[</span><span class="mi">200</span><span class="p">][</span><span class="mi">800</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Hyperspectral (Pika II)&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands_s2a</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">array_s2a</span><span class="p">[</span><span class="mi">200</span><span class="p">][</span><span class="mi">800</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Sentinel-2A &quot;mimic&quot;&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands_6x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">array_6x</span><span class="p">[</span><span class="mi">200</span><span class="p">][</span><span class="mi">800</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Sentera 6X &quot;mimic&quot;&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands_re3</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">array_re3</span><span class="p">[</span><span class="mi">200</span><span class="p">][</span><span class="mi">800</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Micasense RedEdge 3 &quot;mimic&quot;&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectance (%)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;API Example: `spec_mod.spectral_mimic`&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="img/spec_mod/spectral_mimic_re.png" src="img/spec_mod/spectral_mimic_re.png" />
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="hs_process.spec_mod.spectral_resample">
+<code class="sig-name descname"><span class="pre">spectral_resample</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bandwidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spyfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/spec_mod.html#spec_mod.spectral_resample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.spec_mod.spectral_resample" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Performs pixel-wise resampling of spectral bands via binning</dt><dd><dl class="simple">
+<dt>(calculates the mean across all bands within each <code class="docutils literal notranslate"><span class="pre">bandwidth</span></code></dt><dd><p>region for each image pixel).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bandwidth</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code> or <code class="docutils literal notranslate"><span class="pre">int</span></code>) -- The bandwidth of the bands
+after spectral resampling is complete (units should be
+consistent with that of the .hdr file). Setting <code class="docutils literal notranslate"><span class="pre">bandwidth</span></code>
+to 10 will consolidate bands that fall within every 10 nm
+interval.</p></li>
+<li><p><strong>bins_n</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) -- The number of bins (i.e., &quot;bands&quot;) to achieve
+after spectral resampling is complete. Ignored if <code class="docutils literal notranslate"><span class="pre">bandwidth</span></code>
+is not <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object) -- The datacube being accessed and/or
+manipulated.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>2-element <code class="docutils literal notranslate"><span class="pre">tuple</span></code> containing</p>
+<ul class="simple">
+<li><p><strong>array_bin</strong> (<code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>): Binned datacube.</p></li>
+<li><p><strong>metadata</strong> (<code class="docutils literal notranslate"><span class="pre">dict</span></code>): Modified metadata describing the
+binned spectral array (<code class="docutils literal notranslate"><span class="pre">array_bin</span></code>).</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">spec_mod</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_spec_mod</span> <span class="o">=</span> <span class="n">spec_mod</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Use spec_mod.spectral_resample to &quot;bin&quot; the datacube to bands with
+20 nm bandwidths.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_bin</span><span class="p">,</span> <span class="n">metadata_bin</span> <span class="o">=</span> <span class="n">my_spec_mod</span><span class="o">.</span><span class="n">spectral_resample</span><span class="p">(</span><span class="n">bandwidth</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Plot the mean spectral response of the hyperspectral image to that
+of the binned image bands (mean calculated across the entire image).</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ast</span> <span class="kn">import</span> <span class="n">literal_eval</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spy_hs</span> <span class="o">=</span> <span class="n">my_spec_mod</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>  <span class="c1"># datacube before smoothing</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">meta_bands</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">meta_bands_bin</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">literal_eval</span><span class="p">(</span><span class="n">metadata_bin</span><span class="p">[</span><span class="s1">&#39;wavelength&#39;</span><span class="p">])])</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">spy_hs</span><span class="p">[</span><span class="mi">200</span><span class="p">][</span><span class="mi">800</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Hyperspectral (Pika II)&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands_bin</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">array_bin</span><span class="p">[</span><span class="mi">200</span><span class="p">][</span><span class="mi">800</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Spectral resample (20 nm)&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectance (%)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;API Example: `spec_mod.spectral_resample`&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/spectral_resample.png" src="../_images/spectral_resample.png" />
+</dd></dl>
+
+<dl class="py method">
 <dt id="hs_process.spec_mod.spectral_smooth">
-<code class="sig-name descname">spectral_smooth</code><span class="sig-paren">(</span><em class="sig-param">window_size=11</em>, <em class="sig-param">order=2</em>, <em class="sig-param">spyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/spec_mod.html#spec_mod.spectral_smooth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.spec_mod.spectral_smooth" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">spectral_smooth</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">11</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spyfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/spec_mod.html#spec_mod.spectral_smooth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.spec_mod.spectral_smooth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs Savitzky-Golay smoothing on the spectral domain.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -312,9 +565,11 @@ images.</p>
 </div>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">spec_mod</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_spec_mod</span> <span class="o">=</span> <span class="n">spec_mod</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
@@ -322,24 +577,23 @@ images.</p>
 </div>
 <p>Use <code class="docutils literal notranslate"><span class="pre">spec_mod.spectral_smooth</span></code> to perform a <em>Savitzky-Golay</em>
 smoothing operation across the hyperspectral spectral signature.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_smooth</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_spec_mod</span><span class="o">.</span><span class="n">spectral_smooth</span><span class="p">(</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_smooth</span><span class="p">,</span> <span class="n">metadata_smooth</span> <span class="o">=</span> <span class="n">my_spec_mod</span><span class="o">.</span><span class="n">spectral_smooth</span><span class="p">(</span>
 <span class="go">        window_size=11, order=2)</span>
 </pre></div>
 </div>
-<p>Save the smoothed datacube using <code class="docutils literal notranslate"><span class="pre">hsio.write_cube</span></code></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr_smooth</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-smooth.bip.hdr&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">write_cube</span><span class="p">(</span><span class="n">fname_hdr_smooth</span><span class="p">,</span> <span class="n">array_smooth</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
-<span class="go">Saving F:\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-smooth.bip</span>
+<p>Plot the spectra of an individual pixel to visualize the result of the smoothing procedure.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spy_hs</span> <span class="o">=</span> <span class="n">my_spec_mod</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>  <span class="c1"># datacube before smoothing</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">meta_bands</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">meta_bands_smooth</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">metadata_smooth</span><span class="p">[</span><span class="s1">&#39;wavelength&#39;</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">spy_hs</span><span class="p">[</span><span class="mi">200</span><span class="p">][</span><span class="mi">800</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Before spectral smoothing&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands_smooth</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">array_smooth</span><span class="p">[</span><span class="mi">200</span><span class="p">][</span><span class="mi">800</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;After spectral smoothing&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectance (%)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;API Example: `spec_mod.spectral_smooth`&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Open smoothed datacube in Spectronon software to visualize the
-result of the smoothing for a specific pixel.</p>
-<img alt="../_images/spectral_smooth_before.png" src="../_images/spectral_smooth_before.png" />
-<p>Before smoothing (the spectral curve of the pixel at the <em>800th
-column/sample</em> and <em>200th row/line</em> is plotted)</p>
-<img alt="../_images/spectral_smooth_after.png" src="../_images/spectral_smooth_after.png" />
-<p>And after smoothing (the spectral curve of the pixel at the <em>800th
-column/sample</em> and <em>200th row/line</em> is plotted)</p>
+<img alt="../_images/spectral_smooth.png" src="../_images/spectral_smooth.png" />
 </dd></dl>
 
 </dd></dl>
@@ -358,8 +612,8 @@ column/sample</em> and <em>200th row/line</em> is plotted)</p>
       
     </p>
     <p>
-        &copy; Copyright 2020, Tyler J. Nigon.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.<br/>
+        &copy; Copyright 2019-2021, Tyler J. Nigon.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
     </p>
   </div>
 </footer>

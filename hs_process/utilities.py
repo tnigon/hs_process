@@ -3,14 +3,15 @@ import ast
 from matplotlib import pyplot as plt
 import numpy as np
 import os
-# from osgeo import gdal
-# from osgeo import gdalconst
+from osgeo import gdal
+from osgeo import gdalconst
 import pandas as pd
 import re
 import seaborn as sns
-# import spectral.io.envi as envi
-# import spectral.io.spyfile as SpyFile
+import spectral.io.envi as envi
+import spectral.io.spyfile as SpyFile
 import sys
+import sysconfig
 import warnings
 
 plt_style = 'seaborn-whitegrid'
@@ -18,7 +19,7 @@ plt.style.use(plt_style)
 plt.rcParams["font.weight"] = "bold"
 plt.rcParams["axes.labelweight"] = "bold"
 plt.rc('text', usetex=True)
-plt.rcParams['text.latex.preamble'] = [r'\boldmath']
+plt.rcParams['text.latex.preamble'] = r'\boldmath'
 plt.rc('text', usetex=False)
 
 
@@ -40,21 +41,26 @@ class defaults(object):
                 'name_short': None,
                 'name_long': None,
                 'ext': 'bip',
+                'plot_id_ref': None,
                 'pix_e_ul': 0,
                 'pix_n_ul': 0,
-                'alley_size_e_pix': None,  # set to `None` because should be set
-                'alley_size_n_pix': None,  # intentionally
                 'alley_size_e_m': None,
                 'alley_size_n_m': None,
-                'buf_e_pix': None,
-                'buf_n_pix': None,
+                'alley_size_e_pix': None,  # set to `None` because should be set
+                'alley_size_n_pix': None,  # intentionally
                 'buf_e_m': None,
                 'buf_n_m': None,
-                'crop_e_pix': 90,
-                'crop_n_pix': 120,
+                'buf_e_pix': None,
+                'buf_n_pix': None,
                 'crop_e_m': None,
                 'crop_n_m': None,
-                'plot_id': None})
+                'crop_e_pix': None,
+                'crop_n_pix': None,
+                'gdf_shft_e_m': None,
+                'gdf_shft_n_m': None,
+                'gdf_shft_e_pix': None,
+                'gdf_shft_n_pix': None,
+                'n_plots': None})
         '''
         Default values for performing spatial cropping on images. ``crop_defaults``
         is referenced by the ``spatial_mod.crop_single()`` function to get default
@@ -119,7 +125,7 @@ class defaults(object):
             crop_defaults.crop_n_m (``float``): length of each column (northing
                 direction) of the cropped image in map units (e.g., meters;
                 default: ``None``).
-            crop_defaults.plot_id (``int``): the plot ID of the area to be cropped
+            crop_defaults.plot_id_ref (``int``): the plot ID of the area to be cropped
                 (default: ``None``).
         '''
 
@@ -168,6 +174,7 @@ class defaults(object):
                 'name_short': 'name_short',
                 'name_long': 'name_long',
                 'ext': 'ext',
+                'plot_id_ref': 'plot_id_ref',
                 'pix_e_ul': 'pix_e_ul',
                 'pix_n_ul': 'pix_n_ul',
                 'alley_size_e_m': 'alley_size_e_m',
@@ -182,7 +189,10 @@ class defaults(object):
                 'crop_n_m': 'crop_n_m',
                 'crop_e_pix': 'crop_e_pix',
                 'crop_n_pix': 'crop_n_pix',
-                'plot_id': 'plot_id',
+                'gdf_shft_e_m': 'gdf_shft_e_m',
+                'gdf_shft_n_m': 'gdf_shft_n_m',
+                'gdf_shft_e_pix': 'gdf_shft_e_pix',
+                'gdf_shft_n_pix': 'gdf_shft_n_pix',
                 'n_plots_x': 'n_plots_x',
                 'n_plots_y': 'n_plots_y',
                 'n_plots': 'n_plots'})
@@ -234,9 +244,9 @@ class defaults(object):
                 (default: 'crop_e_m').
             spat_crop_cols.crop_n_m (``str``): column name for ``crop_n_m``
                 (default: 'crop_n_m').
-            spat_crop_cols.plot_id (``str``): column name for ``plot_id``
+            spat_crop_cols.plot_id_ref (``str``): column name for ``plot_id``
                 (default: 'crop_n_pix').
-            spat_crop_cols.plot_id (``str``): column name for ``n_plots_x``
+            spat_crop_cols.n_plots_x (``str``): column name for ``n_plots_x``
                 (default: 'n_plots_x').
             spat_crop_cols.n_plots_y (``str``): column name for ``n_plots_y``
                 (default: 'n_plots_y').
@@ -450,7 +460,10 @@ class hsio(object):
         if str_plot in s and '_pika' in s:
             name_plot = s[s.find(str_plot) + len(str_plot):s.find('_pika')]
         elif str_plot in s and '_pika' not in s:
-            name_plot = s[s.find(str_plot) + len(str_plot):s.find('-')]
+            if s.find('_', s.find(str_plot) + len(str_plot)) == -1:
+                name_plot = s[s.find(str_plot) + len(str_plot):]
+            else:  # there is an underscore after plot_id, so cut off name_plot there
+                name_plot = s[s.find(str_plot) + len(str_plot):s.find('_')]
         else:
             name_plot = self.name_short.rsplit('_', 1)[1]
 
@@ -538,7 +551,7 @@ class hsio(object):
 
         if name_plot is not None:
             self.name_plot = name_plot
-        elif overwrite is False and self.name_plot is None:
+        elif overwrite is False and self.name_plot is None:  # don't have name_plot yet, so see if we can find it
             self.name_plot = self._parse_fname_plot(str_plot)
         else:
             pass
@@ -786,14 +799,14 @@ class hsio(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio()  # initialize an instance of the hsio class (note there are no required parameters)
 
             Load datacube using ``hsio.read_cube``
 
             >>> io.read_cube(fname_hdr)
             >>> io.spyfile
-            Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
+            Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
         	# Rows:            617
         	# Samples:        1300
         	# Bands:           240
@@ -993,7 +1006,7 @@ class hsio(object):
 
             Load the datacube using ``hsio.read_cube``
 
-            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio()  # initialize an instance of the hsio class
             >>> io.read_cube(fname_hdr)
 
@@ -1140,9 +1153,11 @@ class hsio(object):
             Load ``hsio`` and ``spatial_mod`` modules
 
             >>> import os
+            >>> import pathlib
             >>> from hs_process import hsio  # load hsio
             >>> from hs_process import spatial_mod  # load spatial mod
-            >>> fname_hdr_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> data_dir = r'F:\\nigo0024\Documents\hs_process_demo'
+            >>> fname_hdr_in = os.path.join(data_dir, 'Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr')
             >>> io = hsio()  # initialize the hsio class
             >>> io.read_cube(fname_hdr_in)
 
@@ -1153,10 +1168,9 @@ class hsio(object):
 
             Save the datacube using ``hsio.write_cube``
 
-            >>> fname_hdr = r'F:\\nigo0024\Documents\hs_process_demo\hsio\Wells_rep2_20180628_16h56m_pika_gige_7-hsio-write-cube-cropped.bip.hdr'
-            >>> os.mkdir(os.path.dirname(fname_hdr))
-            >>> io.write_cube(fname_hdr, array_crop, metadata=metadata)
-            Saving F:\nigo0024\Documents\hs_process_demo\hsio\Wells_rep2_20180628_16h56m_pika_gige_7-hsio-write-cube-cropped.bip
+            >>> fname_hdr = os.path.join(data_dir, 'hsio', 'Wells_rep2_20180628_16h56m_pika_gige_7-hsio-write-cube-cropped.bip.hdr')
+            >>> pathlib.Path(os.path.dirname(fname_hdr)).mkdir(parents=True, exist_ok=True)
+            >>> io.write_cube(fname_hdr, array_crop, metadata=metadata, force=True)
 
             Load the datacube into Spectronon for visualization
 
@@ -1209,7 +1223,7 @@ class hsio(object):
                    'keyword'.format(fname_hdr))
             raise envi.EnviException(msg)
 
-    def write_spec(self, fname_hdr_spec, df_mean, df_std, metadata=None,
+    def write_spec(self, fname_hdr_spec, df_mean, df_std=None, metadata=None,
                    dtype=None, force=None, ext=None, interleave=None,
                    byteorder=None):
         '''
@@ -1224,9 +1238,9 @@ class hsio(object):
                 set using the ``ext`` parameter.
             df_mean (``pandas.Series`` or ``numpy.ndarray``): Mean spectra,
                 stored as a df row, where columns are the bands.
-            df_std (``pandas.Series`` or ``numpy.ndarray``): Standard deviation
-                of each spectra, stored as a df row, where columns are the
-                bands. This will be saved to the .hdr file.
+            df_std (``pandas.Series`` or ``numpy.ndarray``, optional): Standard
+                deviation of each spectra, stored as a df row, where columns
+                are the bands. This will be saved to the .hdr file.
             dtype (``numpy.dtype`` or ``str``): The data type with which to
                 store the image. For example, to store the image in 16-bit
                 unsigned integer format, the argument could be any of
@@ -1263,7 +1277,7 @@ class hsio(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio # load hsio
-            >>> fname_hdr_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_hdr_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio()  # initialize the hsio class (note there are no required parameters)
             >>> io.read_cube(fname_hdr_in)
 
@@ -1305,9 +1319,6 @@ class hsio(object):
 
         metadata = self._del_meta_item(metadata, 'map info')
         metadata = self._del_meta_item(metadata, 'coordinate system string')
-#        metadata = self._del_meta_item(metadata, 'history')
-#        metadata = self._del_meta_item(metadata, 'original cube file')
-#        metadata = self._del_meta_item(metadata, 'pointlist')
         metadata = self._del_meta_item(metadata, 'boundary')
         metadata = self._del_meta_item(metadata, 'label')
 
@@ -1317,11 +1328,11 @@ class hsio(object):
         if 'wavelength' not in metadata.keys():
             metadata['wavelength'] = '{' + ', '.join(str(e) for e in list(
                     self.tools.meta_bands.values())) + '}'
-        if isinstance(df_std, np.ndarray):
+        if df_std is not None and isinstance(df_std, np.ndarray):
             df_std = pd.Series(df_std)
-        std = df_std.to_dict()
-        metadata['stdev'] = '{' + ', '.join(str(e) for e in list(
-                std.values())) + '}'
+            std = df_std.to_dict()
+            metadata['stdev'] = '{' + ', '.join(str(e) for e in list(
+                    std.values())) + '}'
         metadata['label'] = os.path.basename(
                 os.path.splitext(fname_hdr_spec)[0])
         metadata = self.tools.clean_md_sets(metadata=metadata)
@@ -1333,10 +1344,12 @@ class hsio(object):
             array_mean = df_mean.copy()
         else:
             array_mean = df_mean.to_numpy()
-        array = array_mean.reshape(1, 1, len(df_mean))
-
+        if len(array_mean.shape) != 3:  # it may have been passed as a 3d numpy array already
+            array_single = array_mean.copy()
+            array_mean = array_single.reshape(1, 1, len(df_mean))
         try:
-            envi.save_image(fname_hdr_spec, array, interleave=interleave,
+            # print(fname_hdr_spec)
+            envi.save_image(fname_hdr_spec, array_mean, interleave=interleave,
                             dtype=dtype, byteorder=byteorder,
                             metadata=metadata, force=force, ext=ext)
         except envi.EnviException:
@@ -1349,7 +1362,7 @@ class hsio(object):
 
     def write_tif(self, fname_tif, spyfile=None, metadata=None, fname_in=None,
                   projection_out=None, geotransform_out=None,
-                  show_img='inline'):
+                  show_img=False):
         '''
         Wrapper function that accesses the `GDAL Python package`_ to save a
         small datacube subset (i.e., three bands or less) to file.
@@ -1390,7 +1403,7 @@ class hsio(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio  # load hsio
-            >>> fname_hdr_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_hdr_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio()  # initialize the hsio class
             >>> io.read_cube(fname_hdr_in)
 
@@ -1531,18 +1544,20 @@ class hstools(object):
         spyfile (``SpyFile`` object): The datacube being accessed and/or
             manipulated.
     '''
+    # def __init__(self, spyfile):
     def __init__(self, spyfile):
         msg = ('Pleae load a SpyFile (Spectral Python object)')
         assert spyfile is not None, msg
 
         self.spyfile = spyfile
 
-        self.fname_in = None
-        self.fname_hdr = None
-        self.base_name = None
-        self.name_short = None
-        self.name_long = None
-        self.name_plot = None
+        # self.fname_in = None
+        # self.fname_hdr = None
+        # self.base_dir = None
+        # self.base_name = None
+        # self.name_short = None
+        # self.name_long = None
+        # self.name_plot = None
         self.meta_bands = None
 
         self.load_spyfile(spyfile)
@@ -1585,107 +1600,107 @@ class hstools(object):
                     meta_bands[band_names[idx]] = float(wl_names[idx])
         self.meta_bands = meta_bands
 
-    def _parse_fname_plot(self, str_plot):
-        '''
-        Code for parsing ``name_plot`` (numeric text following ``str_plot``).
-        '''
-        s = self.name_short
-        if str_plot in s and '_pika' in s:
-            name_plot = s[s.find(str_plot) + len(str_plot):s.find('_pika')]
-        elif str_plot in s and '_pika' not in s:
-            name_plot = s[s.find(str_plot) + len(str_plot):s.find('-')]
-        else:
-            name_plot = self.name_short.rsplit('_', 1)[1]
+#     def _parse_fname_plot(self, str_plot):
+#         '''
+#         Code for parsing ``name_plot`` (numeric text following ``str_plot``).
+#         '''
+#         s = self.name_short
+#         if str_plot in s and '_pika' in s:
+#             name_plot = s[s.find(str_plot) + len(str_plot):s.find('_pika')]
+#         elif str_plot in s and '_pika' not in s:
+#             name_plot = s[s.find(str_plot) + len(str_plot):s.find('-')]
+#         else:
+#             name_plot = self.name_short.rsplit('_', 1)[1]
 
-        if len(name_plot) > 12:  # then it must have gone wrong
-            name_plot = self.name_short.rsplit('_', 1)[1]
-        if len(name_plot) == 0:  # then '_pika' must not
-            name_plot = self.name_short.rsplit('_', 1)[1]
+#         if len(name_plot) > 12:  # then it must have gone wrong
+#             name_plot = self.name_short.rsplit('_', 1)[1]
+#         if len(name_plot) == 0:  # then '_pika' must not
+#             name_plot = self.name_short.rsplit('_', 1)[1]
 
-        try:
-            int(name_plot)
-        except ValueError:  # give up..
-            msg = ('Cannot determine the plot name from the image filename. '
-                   'Setting `hsio.name_plot` to `None`. If this image is for '
-                   'a particular plot, please set `hsio.name_plot; otherwise, '
-                   'ignore this warning.\n')
-            warnings.warn(msg, UserWarning)
+#         try:
+#             int(name_plot)
+#         except ValueError:  # give up..
+#             msg = ('Cannot determine the plot name from the image filename. '
+#                    'Setting `hsio.name_plot` to `None`. If this image is for '
+#                    'a particular plot, please set `hsio.name_plot; otherwise, '
+#                    'ignore this warning.\n')
+#             warnings.warn(msg, UserWarning)
 
-            name_plot = None
-        return name_plot
+#             name_plot = None
+#         return name_plot
 
-    def _parse_fname(self, fname_hdr=None, str_plot='plot_', overwrite=True,
-                     name_long=None, name_short=None, name_plot=None):
-        '''
-        Parses the filename for ``name_long`` (text after the first dash,
-        inclusive), ``name_short`` (text before the first dash), and
-        ``name_plot`` (numeric text following ``str_plot``).
+#     def _parse_fname(self, fname_hdr=None, str_plot='plot_', overwrite=True,
+#                      name_long=None, name_short=None, name_plot=None):
+#         '''
+#         Parses the filename for ``name_long`` (text after the first dash,
+#         inclusive), ``name_short`` (text before the first dash), and
+#         ``name_plot`` (numeric text following ``str_plot``).
 
-        Parameters:
-            fname_hdr (``str``): input filename.
-            str_plot (``str``): text to search for that precedes the numeric
-                text that describes the plot number.
-            overwrite (``bool``): whether the class instances of ``name_long``,
-                ``name_short``, and ``name_plot`` should be overwritten based
-                on ``fname_in`` (default: ``True``).
-        '''
-        if fname_hdr is None:
-            fname_hdr = self.spyfile.filename + '.hdr'
-        if os.path.splitext(fname_hdr)[1] == '.hdr':  # modify self.fname_in based on new file
-            fname_in = os.path.splitext(fname_hdr)[0]
-        else:
-            fname_hdr = fname_hdr + '.hdr'
-            fname_in = os.path.splitext(fname_hdr)[0]
-        self.fname_in = fname_in
-        self.fname_hdr = fname_hdr
+#         Parameters:
+#             fname_hdr (``str``): input filename.
+#             str_plot (``str``): text to search for that precedes the numeric
+#                 text that describes the plot number.
+#             overwrite (``bool``): whether the class instances of ``name_long``,
+#                 ``name_short``, and ``name_plot`` should be overwritten based
+#                 on ``fname_in`` (default: ``True``).
+#         '''
+#         if fname_hdr is None:
+#             fname_hdr = self.spyfile.filename + '.hdr'
+#         if os.path.splitext(fname_hdr)[1] == '.hdr':  # modify self.fname_in based on new file
+#             fname_in = os.path.splitext(fname_hdr)[0]
+#         else:
+#             fname_hdr = fname_hdr + '.hdr'
+#             fname_in = os.path.splitext(fname_hdr)[0]
+#         self.fname_in = fname_in
+#         self.fname_hdr = fname_hdr
 
-        self.base_dir = os.path.dirname(fname_in)
-#        base_name = os.path.basename(fname_in)
-        base_name = os.path.basename(os.path.splitext(fname_in)[0])
-        self.base_name = base_name
+#         self.base_dir = os.path.dirname(fname_in)
+# #        base_name = os.path.basename(fname_in)
+#         base_name = os.path.basename(os.path.splitext(fname_in)[0])
+#         self.base_name = base_name
 
-        if overwrite is True:
-            if '-' in base_name:
-                self.name_long = base_name[base_name.find(
-                        '-', base_name.rfind('_')):]
-                self.name_short = base_name[:base_name.find(
-                        '-', base_name.rfind('_'))]
-            else:
-                # if name_long does not have ext, it can be just blank
-                self.name_long = ''
-                # and name_short can be base_name
-                self.name_short = base_name
-            self.name_plot = self._parse_fname_plot(str_plot)
+#         if overwrite is True:
+#             if '-' in base_name:
+#                 self.name_long = base_name[base_name.find(
+#                         '-', base_name.rfind('_')):]
+#                 self.name_short = base_name[:base_name.find(
+#                         '-', base_name.rfind('_'))]
+#             else:
+#                 # if name_long does not have ext, it can be just blank
+#                 self.name_long = ''
+#                 # and name_short can be base_name
+#                 self.name_short = base_name
+#             self.name_plot = self._parse_fname_plot(str_plot)
 
-        if name_long is not None:
-            self.name_long = name_long
-        elif overwrite is False and self.name_long is None:
-            if '-' in base_name:
-                self.name_long = base_name[base_name.find(
-                        '-', base_name.rfind('_')):]
-            else:
-                # if name_long does not have ext, it can be just blank
-                self.name_long = ''
-        else:
-            pass
+#         if name_long is not None:
+#             self.name_long = name_long
+#         elif overwrite is False and self.name_long is None:
+#             if '-' in base_name:
+#                 self.name_long = base_name[base_name.find(
+#                         '-', base_name.rfind('_')):]
+#             else:
+#                 # if name_long does not have ext, it can be just blank
+#                 self.name_long = ''
+#         else:
+#             pass
 
-        if name_short is not None:
-            self.name_short = name_short
-        elif overwrite is False and self.name_short is None:
-            if '-' in base_name:
-                self.name_short = base_name[:base_name.find(
-                        '-', base_name.rfind('_'))]
-            else:
-                self.name_short = base_name
-        else:
-            pass
+#         if name_short is not None:
+#             self.name_short = name_short
+#         elif overwrite is False and self.name_short is None:
+#             if '-' in base_name:
+#                 self.name_short = base_name[:base_name.find(
+#                         '-', base_name.rfind('_'))]
+#             else:
+#                 self.name_short = base_name
+#         else:
+#             pass
 
-        if name_plot is not None:
-            self.name_plot = name_plot
-        elif overwrite is False and self.name_plot is None:
-            self.name_plot = self._parse_fname_plot(str_plot)
-        else:
-            pass
+#         if name_plot is not None:
+#             self.name_plot = name_plot
+#         elif overwrite is False and self.name_plot is None:  # don't have name_plot yet, so see if we can find it
+#             self.name_plot = self._parse_fname_plot(str_plot)
+#         else:
+#             pass
 
     def clean_md_sets(self, metadata=None):
         '''
@@ -1703,7 +1718,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Create sample metadata with "wavelength" expressed as a list of strings
@@ -1755,7 +1770,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Create sample metadata
@@ -1787,6 +1802,11 @@ class hstools(object):
             print('{0} not a valid key in input dictionary.'.format(key))
         return metadata
 
+    def dir_data(self,):
+        '''Retrieves the data directory from "site packages".'''
+        dir_data = os.path.join(sysconfig.get_paths()['purelib'], 'hs_process', 'data')
+        return dir_data
+
     def get_band(self, target_wl, spyfile=None):
         '''
         Finds the band number of the closest target wavelength.
@@ -1807,7 +1827,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Use ``hstools.get_band`` to find the band number corresponding to
@@ -1848,7 +1868,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Use ``hstools.get_wavelength`` to find the wavelength value corresponding to the *151st band*
@@ -1861,12 +1881,73 @@ class hstools(object):
         else:
             self.load_spyfile(spyfile)
 
-        val_target = min(list(self.meta_bands.keys()),
-                         key=lambda x: abs(x-target_band))
+        try:
+            val_target = min(list(self.meta_bands.keys()),
+                             key=lambda x: abs(x-target_band))
+        except TypeError:
+            val_target = target_band  # If band names are not 1, 2, 3, etc., and are actual strings
         key_wavelength = list(self.meta_bands.values())[sorted(list(
                 self.meta_bands.keys())).index(val_target)]
-#        key_wavelength = sorted(list(self.meta_bands.values()))[key_band-1]
         return key_wavelength
+
+    def get_wavelength_range(self, range_bands, index=True, spyfile=None):
+        '''
+        Retrieves the wavelengths for all bands within a band range.
+
+        Parameters:
+            range_bands (``list``): the minimum and maximum band number to
+                consider; values should be ``int``.
+            index (bool): Indicates whether the bands in ``range_bands`` denote
+                the band number (``False``; min=1) or the index number
+                (``True``; min=0) (default: ``True``).
+
+        Returns:
+            ``list``:
+                **wavelength_list** (``list``): A list of all wavelengths
+                between a range in band numbers or index values (depending how
+                ``index`` is set).
+
+        Example:
+            Load and initialize ``hsio``
+
+            >>> from hs_process import hsio
+            >>> fname_hdr = r'F:\nigo0024\Documents\GitHub\hs_process\hs_process\data\Wells_rep2_20180628_16h56m_test_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> io = hsio(fname_hdr)
+
+            Find the wavelengths from the *16th* to *21st bands*
+
+            >>> io.tools.get_wavelength_range([16, 21], index=False, spyfile=io.spyfile)
+            [425.392, 427.4448, 429.4976, 431.5504, 433.6032, 435.656]
+
+            Find the wavelengths from the *16th* to the *21st index*
+
+            >>> io.tools.get_wavelength_range([16, 21], index=True, spyfile=io.spyfile)
+            [427.4448, 429.4976, 431.5504, 433.6032, 435.656, 437.7088]
+        '''
+        msg = ('"range_bands" must be a `list` or `tuple`.')
+        assert isinstance(range_bands, list) or isinstance(range_bands, tuple), msg
+        # could also just take the min and max as long as it has at least 2..
+        msg = ('"range_bands" must have exactly two items.')
+        assert len(range_bands) == 2, msg
+
+        range_bands = sorted(range_bands)
+        if index is True:
+            range_bands[0] += 1
+            range_bands[1] += 1
+
+        wl_min = self.get_wavelength(min(range_bands))  # gets closest wavelength
+        wl_max = self.get_wavelength(max(range_bands))
+        band_min = self.get_band(wl_min)
+        band_max = self.get_band(wl_max)
+
+        if band_min < min(range_bands):  # ensures its actually within the range
+            band_min += 1
+            wl_min = self.get_wavelength(band_min)
+        if band_max > max(range_bands):
+            band_max -= 1
+            wl_max = self.get_wavelength(band_max)
+        wl_list = [self.get_wavelength(x) for x in range(band_min, band_max+1)]
+        return wl_list
 
     def get_center_wl(self, wl_list, spyfile=None, wls=True):
         '''
@@ -1894,7 +1975,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Using ``hstools.get_center_wl``, find the bands and *actual mean wavelength* of the bands closest to *700* and *710* nm.
@@ -1932,36 +2013,40 @@ class hstools(object):
 
         return bands, wls_mean
 
-    def get_band_index(self, band_num):
-        '''
-        Subtracts 1 from ``band_num`` and returns the band index(es).
+    def get_band_index(self, band_name):
+        '''.
+        Returns the index of ``band`` from "band names".
 
         Parameters:
-            band_num (``int`` or ``list``): the target band number(s) to retrieve
-            the band index for (required).
+            band_name (``int`` or ``list``): the target band to retrieve the
+                band index for (required).
 
         Returns:
             ``int`` or ``list``:
-                **band_idx** (``int``) -- band index of the passed band number
-                (``band_num``).
+                **band_idx** (``int``) -- band index of the passed band name
+                (``band_name``).
 
         Example:
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
-            Using ``hstools.get_band_index``, find the band index of the *4th*, *43rd*, and *111th* bands
+            Using ``hstools.get_band_index``, find the band index of bands *4*, *43*, and *111*.
 
             >>> io.tools.get_band_index([4, 43, 111])
             [3, 42, 110]
         '''
-        if isinstance(band_num, list):
-            band_num = np.array(band_num)
-            band_idx = list(band_num - 1)
+        meta_band_list = list(self.meta_bands.keys())
+
+        if isinstance(band_name, list):
+            # band_name = np.array(band_name)
+            # band_idx = list(band_name - 1)
+            band_idx = [meta_band_list.index(i) for i in band_name]
         else:
-            band_idx = band_num - 1
+            # band_idx = band_name - 1
+            band_idx = meta_band_list.index(band_name)
         return band_idx
 
     def get_spectral_mean(self, band_list, spyfile=None):
@@ -1984,7 +2069,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Calculate the spectral mean of the datacube via
@@ -2044,7 +2129,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Using ``hstools.get_band_num``, find the band number located at the *4th*, *43rd*, and *111th* index values.
@@ -2061,7 +2146,7 @@ class hstools(object):
 
     def get_band_range(self, range_wl, index=True, spyfile=None):
         '''
-        Retrieves the band index or band number for all bands within a
+        Retrieves the band index or band name for all bands within a
         wavelength range.
 
         Parameters:
@@ -2081,10 +2166,11 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> data_dir = r'F:\\nigo0024\Documents\hs_process_demo'
+            >>> fname_in = os.path.join(data_dir, 'Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr')
             >>> io = hsio(fname_in)
 
-            Find the band number of all bands between *700* and *710 nm*
+            Find the band name of all bands between *700* and *710 nm*
 
             >>> io.tools.get_band_range([700, 710], index=False, spyfile=io.spyfile)
             [150, 151, 152, 153, 154]
@@ -2094,6 +2180,25 @@ class hstools(object):
 
             >>> io.tools.get_band_range([700, 710], index=True, spyfile=io.spyfile)
             [149, 150, 151, 152, 153]
+
+            Sometimes "band names" are not integers in sequential order. To
+            demonstrate the utility of the ``index`` parameter, let's take a
+            look at Sentinel 2A mimicked imagery.
+
+            >>> data_dir = r'F:\nigo0024\Documents\hs_process_demo\spec_mod'
+            >>> fname_in = os.path.join(data_dir, 'Wells_rep2_20180628_16h56m_pika_gige_7-mimic-s2a.bip.hdr')
+            >>> io = hsio(fname_in)
+
+            Find the band name of all bands between *760* and *840 nm*
+
+            >>> io.tools.get_band_range([760, 840], index=False, spyfile=io.spyfile)
+            ['S2A_SR_AV_B7', 'S2A_SR_AV_B8']
+
+            Find the band index values of all bands between *760* and *840 nm*
+            via ``hstools.get_band_range``
+
+            >>> io.tools.get_band_range([760, 840], index=True, spyfile=io.spyfile)
+            [6, 7]
         '''
         msg = ('"range_wl" must be a `list` or `tuple`.')
         assert isinstance(range_wl, list) or isinstance(range_wl, tuple), msg
@@ -2105,17 +2210,33 @@ class hstools(object):
         band_max = self.get_band(max(range_wl))
         wl_min = self.get_wavelength(band_min)
         wl_max = self.get_wavelength(band_max)
+        meta_band_list = list(self.meta_bands.keys())
         if wl_min < range_wl[0]:  # ensures its actually within the range
-            band_min += 1
+            # band_min += 1
+            band_min = meta_band_list[meta_band_list.index(band_min) + 1]
             wl_min = self.get_wavelength(band_min)
         if wl_max > range_wl[1]:
-            band_max -= 1
+            # band_max -= 1
+            band_max = meta_band_list[meta_band_list.index(band_max) - 1]
             wl_max = self.get_wavelength(band_max)
+
         if index is True:
-            band_min = self.get_band_index(band_min)
-            band_max = self.get_band_index(band_max)
-        band_list = [x for x in range(band_min, band_max+1)]
+            band_list = list(range(meta_band_list.index(band_min),
+                                   meta_band_list.index(band_max)+1))    # inclusive
+        else:
+            band_list = meta_band_list[meta_band_list.index(band_min):
+                                       meta_band_list.index(band_max)+1]
         return band_list
+
+        # if index is True:
+        #     band_min = hsbatch.my_spectral_mod.tools.get_band_index(band_min)
+        #     band_max = hsbatch.my_spectral_mod.tools.get_band_index(band_max)
+
+        # # band_list = [x for x in range(band_min, band_max+1)]
+        # idx1 = meta_band_list.index(band_min)
+        # band_list = meta_band_list[meta_band_list.index(band_min):
+        #                            meta_band_list.index(band_max)+1]  # inclusive
+        # return band_list
 
     def get_meta_set(self, meta_set, idx=None):
         '''
@@ -2138,7 +2259,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Retrieve the *"map info" set* from the metadata via
@@ -2216,7 +2337,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Retrieve UTM coordinates and pixel sizes from the metadata
@@ -2256,14 +2377,14 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Load a new datacube using ``hstools.load_spyfile``
 
             >>> io.tools.load_spyfile(io.spyfile)
             >>> io.tools.spyfile
-            Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
+            Data Source:   'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip'
         	# Rows:            617
         	# Samples:        1300
         	# Bands:           240
@@ -2273,8 +2394,9 @@ class hstools(object):
         '''
         self.spyfile = spyfile
         self._get_meta_bands(spyfile)
-        self._parse_fname(fname_hdr=None, str_plot='plot_', overwrite=True,
-                          name_long=None, name_short=None, name_plot=None)
+        # self._parse_fname(fname_hdr=None, str_plot='plot_', overwrite=True,
+        #                   name_long=None, name_short=None, name_plot=None)
+        self.base_dir = os.path.dirname(self.spyfile.filename)
 
     def mask_array(self, array, metadata, thresh=None, percentile=None,
                    side='lower'):
@@ -2296,10 +2418,13 @@ class hstools(object):
                 pixels will be masked prior to calculating the mean spectra
                 across pixels (default: ``None``; range: 0-100).
             side (``str``): The side of the threshold for which to apply the
-                mask. Must be either 'lower', 'upper', or ``None``; if 'lower',
-                everything below the threshold will be masked; if ``None``,
-                only the values that exactly match the threshol will be masked
-                (default: 'lower').
+                mask. Must be either 'lower', 'upper', 'outside', or ``None``;
+                if 'lower', everything below the threshold will be masked; if
+                'outside', the ``thresh`` / ``percentile`` parameter must be
+                list-like with two values indicating the lower and upper bounds
+                - anything outside of these values will be masked out; if
+                ``None``, only the values that exactly match the threshold will
+                be masked (default: 'lower').
 
         Returns:
             2-element ``tuple`` containing
@@ -2312,7 +2437,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Retrieve the image band at *800 nm* using ``hstools.get_band`` and
@@ -2347,6 +2472,13 @@ class hstools(object):
 
             .. image:: ../img/utilities/mask_array_800nm_75th.png
         '''
+        msg1 = ('``side`` must be one of the following: "lower", "upper", '
+                '"outside", or "equal".')
+        msg2 = ('``side`` is {0}, so either ``percentile`` or ``thresh`` must '
+                'be list-type with length of two (the lower and upper bounds)')
+        assert side in ['lower', 'upper', 'outside', 'equal'], msg1
+        if side == 'outside':
+            assert isinstance(percentile, list), msg2
         if isinstance(array, np.ma.core.MaskedArray):
             array_m = array.compressed()  # allows for accurate percentile calc
         else:
@@ -2366,6 +2498,18 @@ class hstools(object):
                 mask_array_p = np.ma.masked_less_equal(array, array_pctl)
             elif side == 'upper':
                 mask_array_p = np.ma.masked_greater(array, array_pctl)
+            elif side == 'outside':
+                if len(array_pctl) > 2:
+                    print('WARNING: There were more than two percentile '
+                          'values passed to ``hstools.mask_array``. Using '
+                          'only the first two values (after sorting).')
+                msg = ('Two percentile values must be passed to '
+                       '``hstools.mask_array``. ``percentile``: {0}'
+                       ''.format(percentile))
+                assert isinstance(array_pctl, np.ndarray), msg
+                array_pctl.sort()
+                mask_array_p = np.ma.masked_less_equal(array, array_pctl[0])
+                mask_array_p = np.ma.masked_greater(mask_array_p, array_pctl[1])
             elif side is None:
                 mask_array_p = np.ma.masked_equal(array, array_pctl)
         else:
@@ -2375,6 +2519,18 @@ class hstools(object):
                 mask_array_t = np.ma.masked_less_equal(array, thresh)
             elif side == 'upper':
                 mask_array_t = np.ma.masked_greater(array, thresh)
+            elif side == 'outside':
+                msg = ('Two threshold values must be passed to '
+                       '``hstools.mask_array`` in a list-like object. '
+                       '``thresh``: {0}'.format(thresh))
+                assert isinstance(thresh, list) or isinstance(thresh, tuple), msg
+                if len(thresh) > 2:
+                    print('WARNING: There were more than two threshold '
+                          'values passed to ``hstools.mask_array``. Using '
+                          'only the first two values (after sorting).')
+                thresh.sort()
+                mask_array_t = np.ma.masked_less_equal(array, thresh[0])
+                mask_array_t = np.ma.masked_greater(mask_array_t, thresh[1])
             elif side is None and isinstance(thresh, list):
                 mask_array_t = np.ma.MaskedArray(array, np.in1d(array, thresh))
             else:  # side is None; thresh is float or int
@@ -2388,7 +2544,7 @@ class hstools(object):
         except AttributeError as err:
             pass  # array_m does not have a mask
         array = np.ma.masked_invalid(array)  # masks out invalid data (e.g., NaN, inf)
-        array_mask = np.ma.array(array, mask=mask_combine)
+        array_mask = np.ma.array(array, mask=mask_combine)  # combines aray (and its mask) with mask_combine (masks all cells with a mask in either)
         unmasked_pct = 100 * (array_mask.count() /
                               (array.shape[0]*array.shape[1]))
 #        print('Proportion unmasked pixels: {0:.2f}%'.format(unmasked_pct))
@@ -2449,7 +2605,7 @@ class hstools(object):
 #        spec_std = pd.Series(spec_std)
 #        return spec_mean, spec_std, datacube_masked
 
-    def mean_datacube(self, spyfile, mask=None):
+    def mean_datacube(self, spyfile, mask=None, nodata=0):
         '''
         Calculates the mean spectra for a datcube; if ``mask`` is passed (as a
         ``numpy.ndarray``), then the mask is applied to ``spyfile`` prior to
@@ -2463,6 +2619,10 @@ class hstools(object):
                 first band (i.e., first two dimensions) of ``mask`` will be
                 repeated *n* times to match the number of bands of ``spyfile``
                 (default: ``None``).
+            nodata (``float`` or ``None``): If ``None``, treats all pixels
+                cells as they are repressented in the ``numpy.ndarray``.
+                Otherwise, replaces ``nodata`` with ``np.nan`` and these cells
+                will not be considered when calculating the mean spectra.
 
         Returns:
             3-element ``tuple`` containing
@@ -2479,7 +2639,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Retrieve the image band at *800 nm* using ``hstools.get_band`` and
@@ -2500,9 +2660,9 @@ class hstools(object):
 
             >>> fname_hdr_spec = r'F:\\nigo0024\Documents\hs_process_demo\hstools\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.spec.hdr'
             >>> fname_hdr_cube = r'F:\\nigo0024\Documents\hs_process_demo\hstools\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.bip.hdr'
-            >>> io.write_spec(fname_hdr_spec, spec_mean, spec_std, metadata=metadata)
+            >>> io.write_spec(fname_hdr_spec, spec_mean, spec_std, metadata=metadata, force=True)
             Saving F:\nigo0024\Documents\hs_process_demo\hstools\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.spec
-            >>> io.write_cube(fname_hdr_cube, datacube_masked, metadata=metadata)
+            >>> io.write_cube(fname_hdr_cube, datacube_masked, metadata=metadata, force=True)
             Saving F:\nigo0024\Documents\hs_process_demo\hstools\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.bip
 
             .. image:: ../img/utilities/mean_datacube.png
@@ -2510,67 +2670,44 @@ class hstools(object):
         if isinstance(spyfile, SpyFile.SpyFile):
             self.load_spyfile(spyfile)
             array = self.spyfile.load()
+            # array = self.spyfile.open_memmap().copy()
+            nbands = spyfile.nbands
+            shape = spyfile.shape
         elif isinstance(spyfile, np.ndarray):
             array = spyfile.copy()
+            if len(array.shape) == 3:
+                nbands = array.shape[2]
+            else:
+                nbands = 1
+            shape = array.shape
+        array[array==nodata] = np.nan
 
+        if mask is None:  # find all invalid values and mask them
+            if nbands == 1:
+                mask = np.ma.masked_greater(array[:, :], 1e10).mask
+            else:
+                mask = np.ma.masked_greater(array[:, :, 0], 1e10).mask
         if isinstance(mask, np.ma.masked_array):
             mask = mask.mask
+
         if mask is not None:
-            if mask.shape != spyfile.shape:
+            if mask.shape != shape:
                 if len(mask.shape) == 3:
                     mask_2d = np.reshape(mask, mask.shape[:2])
                 else:
                     mask_2d = mask.copy()
-                mask = np.empty(spyfile.shape)
-                for band in range(spyfile.nbands):
+                mask = np.empty(shape)
+                for band in range(nbands):
                     mask[:, :, band] = mask_2d
 
         datacube_masked = np.ma.masked_array(array, mask=mask)
+        # spec_mean = np.mean(datacube_masked, axis=(0, 1))
+        # spec_std = np.std(datacube_masked, axis=(0, 1))
         spec_mean = np.nanmean(datacube_masked, axis=(0, 1))
         spec_std = np.nanstd(datacube_masked, axis=(0, 1))
         spec_mean = pd.Series(spec_mean)
         spec_std = pd.Series(spec_std)
         return spec_mean, spec_std, datacube_masked
-
-#    def mask_shadow(self, shadow_pctl=20, show_histogram=False,
-#                    spyfile=None):
-#        '''
-#        Creates a ``numpy.mask`` of all pixels that are likely shadow pixels.
-#
-#        Parameters:
-#            shadow_pctl (``int``): the percentile of pixels in the image to mask
-#                (default: 20).
-#            show_histogram (``bool``):
-#            spyfile (``SpyFile.SpyFile`` object):
-#
-#        Returns:
-#            2-element ``tuple`` containing
-#
-#            - **array_noshadow.mask** (``numpy.mask``): The mask indicating all
-#              pixels that are likely shadow pixels.
-#            - **metadata** (``dict``): The modified metadata.
-#
-#        Example:
-#            >>> from hs_process import hsio
-#            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
-#            >>> io = hsio(fname_in)
-#            >>> io.tools.mask_shadow(shadow_pctl=20, show_histogram=False,
-#                    spyfile=None)
-#        '''
-#        if spyfile is None:
-#            spyfile = self.spyfile
-#            array = self.spyfile.load()
-#        elif isinstance(spyfile, SpyFile.SpyFile):
-#            self.load_spyfile(spyfile)
-#            array = self.spyfile.load()
-#        elif isinstance(spyfile, np.ndarray):
-#            array = spyfile.copy()
-#
-#        array_energy = np.mean(array, axis=2)
-#        array_noshadow, metadata = self.mask_array(
-#                array_energy, self.spyfile.metadata, percentile=shadow_pctl,
-#                side='lower', show_histogram=show_histogram)
-#        return array_noshadow.mask, metadata
 
     def modify_meta_set(self, meta_set, idx, value):
         '''
@@ -2592,7 +2729,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Retrieve the *"map info" set* from the metadata via
@@ -2655,7 +2792,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_in = r'F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_in)
 
             Retrieve the image band at *800 nm* using ``hstools.get_band`` and
@@ -2678,6 +2815,8 @@ class hstools(object):
 
             .. image:: ../img/utilities/plot_histogram_800nm.png
         '''
+        plt.close('all')  # close all other plots before create a new one
+        # this is useful when this function is accesed by the batch module
         plt.style.use(plt_style)
 
         msg = ('Array must be 1-dimensional or 2-dimensional. Please choose '
@@ -2699,7 +2838,7 @@ class hstools(object):
         pctl = np.nanpercentile(array_m.flatten(), percentile)
 
         fig, ax = plt.subplots()
-        ax = sns.distplot(array_m.flatten(), bins=bins, color='grey')
+        ax = sns.histplot(array_m.flatten(), bins=bins, color='grey', kde=True)
         data_x, data_y = ax.lines[0].get_data()
 
         y_lim = ax.get_ylim()
