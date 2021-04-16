@@ -2,10 +2,11 @@ channels:
     - conda-forge
 dependencies:
     - python=3.8
-    - geopandas=0.8.*
+    - geopandas=0.9.*
     - rasterstats=0.14.*
     - seaborn=0.11.*
     - spectral=0.22.*
-    - pip=20.2.*
+    - spyder=5.*
+    - pip=21.*
     - pip:
         - -r file:requirements/dev_pip.txt

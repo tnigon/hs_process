@@ -2838,7 +2838,7 @@ class hstools(object):
         pctl = np.nanpercentile(array_m.flatten(), percentile)
 
         fig, ax = plt.subplots()
-        ax = sns.distplot(array_m.flatten(), bins=bins, color='grey')
+        ax = sns.histplot(array_m.flatten(), bins=bins, color='grey', kde=True)
         data_x, data_y = ax.lines[0].get_data()
 
         y_lim = ax.get_ylim()

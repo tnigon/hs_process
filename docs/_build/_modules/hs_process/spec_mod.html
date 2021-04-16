@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="python">
+<html lang="python">
   <head>
     <meta charset="utf-8" />
-    <title>hs_process.spec_mod &#8212; hs_process 0.0.3 documentation</title>
-    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>hs_process.spec_mod &#8212; hs_process 0.0.4 documentation</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
-    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
 <meta charset='utf-8'>
@@ -44,7 +44,7 @@
           <ul class="nav navbar-nav">
             
                 <li><a href="https://github.com/tnigon/hs_process">Github</a></li>
-                <li><a href="https://pypi.org/project/hs-process/">PyPI</a></li>
+                <li><a href="https://anaconda.org/conda-forge/hs-process">Download</a></li>
                 <li><a href="http://www.spectralpython.net/">Spectral Python</a></li>
             
             
@@ -57,7 +57,28 @@
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul>
-<li class="toctree-l1"><a class="reference internal" href="../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Home</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../installation.html">1. Setup and Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorial_hsio.html">2. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorial_hstools.html">3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hstools</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorial_segment.html">4. Tutorial: <code class="docutils literal notranslate"><span class="pre">segment</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorial_spec_mod.html">5. Tutorial: <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorial_spatial_mod.html">6. Tutorial: <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorial_batch.html">7. Tutorial: <code class="docutils literal notranslate"><span class="pre">batch</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../my_hs_process_api.html">8. API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/hs_process.batch.html">8.1.1. batch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/hs_process.defaults.html">8.1.2. defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/hs_process.hsio.html">8.1.3. hsio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/hs_process.hstools.html">8.1.4. hstools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/hs_process.segment.html">8.1.5. segment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/hs_process.spatial_mod.html">8.1.6. spatial_mod</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/hs_process.spec_mod.html">8.1.7. spec_mod</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../license.html">9. License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html">10. Change Log</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">1. Setup and Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial_hsio.html">2. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial_hstools.html">3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hstools</span></code></a></li>
@@ -65,7 +86,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial_spec_mod.html">5. Tutorial: <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial_spatial_mod.html">6. Tutorial: <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial_batch.html">7. Tutorial: <code class="docutils literal notranslate"><span class="pre">batch</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../my_hs_process_api.html">8. API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../my_hs_process_api.html">8. API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.batch.html">8.1.1. batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.defaults.html">8.1.2. defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.hsio.html">8.1.3. hsio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.hstools.html">8.1.4. hstools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.segment.html">8.1.5. segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.spatial_mod.html">8.1.6. spatial_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/hs_process.spec_mod.html">8.1.7. spec_mod</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../license.html">9. License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">10. Change Log</a></li>
 </ul>
@@ -116,17 +146,22 @@
       
   <h1>Source code for hs_process.spec_mod</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">factorial</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">findiff</span> <span class="kn">import</span> <span class="n">FinDiff</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">factorial</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">interpolate</span>
 <span class="kn">import</span> <span class="nn">spectral.io.envi</span> <span class="k">as</span> <span class="nn">envi</span>
 <span class="kn">import</span> <span class="nn">spectral.io.spyfile</span> <span class="k">as</span> <span class="nn">SpyFile</span>
 
 <span class="kn">from</span> <span class="nn">hs_process.utilities</span> <span class="kn">import</span> <span class="n">hstools</span>
 
 
-<div class="viewcode-block" id="spec_mod"><a class="viewcode-back" href="../../api/hs_process.spec_mod.html#hs_process.spec_mod">[docs]</a><span class="k">class</span> <span class="nc">spec_mod</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="spec_mod"><a class="viewcode-back" href="../../hs_process.html#hs_process.spec_mod">[docs]</a><span class="k">class</span> <span class="nc">spec_mod</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Class for manipulating data within the spectral domain, which</span>
 <span class="sd">    is usually pixel-based.</span>
@@ -134,6 +169,170 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span> <span class="o">=</span> <span class="n">spyfile</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tools</span> <span class="o">=</span> <span class="n">hstools</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_metadata_clip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wl_bands</span><span class="p">,</span> <span class="n">meta_bands</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Modifies metadata for spectral_clip() function.&#39;&#39;&#39;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span>
+        <span class="n">hist_str</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot; -&gt; hs_process.spectral_clip[&lt;SpecPyFloatText label: &quot;</span>
+                    <span class="s2">&quot;&#39;wl_bands?&#39; value:</span><span class="si">{0}</span><span class="s2">&gt;]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wl_bands</span><span class="p">))</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">hist_str</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;bands&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">meta_bands</span><span class="p">)</span>
+
+        <span class="n">band</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">wavelength</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">band</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">wavelength</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="n">band_str</span> <span class="o">=</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">band</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span>
+        <span class="n">wavelength</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="n">wavelength_str</span> <span class="o">=</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">wl</span><span class="p">)</span> <span class="k">for</span> <span class="n">wl</span> <span class="ow">in</span> <span class="n">wavelength</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;band names&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">band_str</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;wavelength&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wavelength_str</span>
+        <span class="c1"># self.tools.spyfile.metadata = metadata</span>
+        <span class="k">return</span> <span class="n">metadata</span>
+
+    <span class="k">def</span> <span class="nf">_metadata_derivative</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Modifies metadata for spec_derivative() function.&#39;&#39;&#39;</span>
+        <span class="n">metadata_dydx</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span>
+        <span class="n">hist_str</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot; -&gt; hs_process.spec_derivative[&lt;&quot;</span>
+                    <span class="s2">&quot;SpecPyFloatText label: &#39;order?&#39; value:</span><span class="si">{0}</span><span class="s2">&gt;]&quot;</span>
+                    <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">order</span><span class="p">))</span>
+        <span class="n">metadata_dydx</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">hist_str</span>
+        <span class="c1"># if stdev_dydx is None:</span>
+        <span class="c1">#     if &#39;stdev&#39; in metadata_dydx:</span>
+        <span class="c1">#         metadata_dydx.pop(&#39;stdev&#39;, None)</span>
+        <span class="c1"># else:</span>
+        <span class="c1">#     metadata_dydx[&#39;stdev&#39;] = stdev_dydx</span>
+        <span class="k">return</span> <span class="n">metadata_dydx</span>
+
+    <span class="k">def</span> <span class="nf">_metadata_mimic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sensor</span><span class="p">,</span> <span class="n">meta_bands_sensor</span><span class="p">,</span> <span class="n">fwhm_dict</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Modifies metadata for spectral_mimic() function.&#39;&#39;&#39;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="n">band_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">meta_bands_sensor</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">hist_str</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot; -&gt; hs_process.spectral_mimic[&lt;&quot;</span>
+                    <span class="s2">&quot;SpecPyFloatText label: &#39;sensor?&#39; value:</span><span class="si">{0}</span><span class="s2">; &quot;</span>
+                    <span class="s2">&quot;SpecPyFloatText label: &#39;band_names?&#39; value:</span><span class="si">{1}</span><span class="s2">&gt;]&quot;</span>
+                    <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sensor</span><span class="p">,</span> <span class="n">band_names</span><span class="p">))</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">hist_str</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;bands&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">band_names</span><span class="p">)</span>
+        <span class="n">wavelength</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">meta_bands_sensor</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">band_str</span> <span class="o">=</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">band_names</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span>
+        <span class="n">wavelength_str</span> <span class="o">=</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">wl</span><span class="p">)</span> <span class="k">for</span> <span class="n">wl</span> <span class="ow">in</span> <span class="n">wavelength</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span>
+        <span class="n">fwhm_str</span> <span class="o">=</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">fwhm_dict</span><span class="p">[</span><span class="n">b</span><span class="p">])</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">band_names</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;band names&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">band_str</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;wavelength&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wavelength_str</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;fwhm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fwhm_str</span>
+        <span class="c1"># self.tools.spyfile.metadata = metadata</span>
+        <span class="k">return</span> <span class="n">metadata</span>
+
+    <span class="k">def</span> <span class="nf">_metadata_resample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bandwidth</span><span class="p">,</span> <span class="n">meta_bands</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Modifies metadata for spectral_resample() function.&#39;&#39;&#39;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span>
+        <span class="n">hist_str</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot; -&gt; hs_process.spectral_resample[&lt;SpecPyFloatText label: &quot;</span>
+                    <span class="s2">&quot;&#39;bandwidth?&#39; value:</span><span class="si">{0}</span><span class="s2">&gt;]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">bandwidth</span><span class="p">))</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">hist_str</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;bands&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">meta_bands</span><span class="p">)</span>
+
+        <span class="n">band</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">wavelength</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">fwhm</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">band</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">wavelength</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+            <span class="n">fwhm</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bandwidth</span><span class="p">)</span>
+        <span class="n">band_str</span> <span class="o">=</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">band</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span>
+        <span class="n">wavelength</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="n">wavelength_str</span> <span class="o">=</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wl</span><span class="p">)</span> <span class="k">for</span> <span class="n">wl</span> <span class="ow">in</span> <span class="n">wavelength</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span>
+        <span class="n">fwhm_str</span> <span class="o">=</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">fw</span><span class="p">)</span> <span class="k">for</span> <span class="n">fw</span> <span class="ow">in</span> <span class="n">fwhm</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;band names&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">band_str</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;wavelength&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wavelength_str</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;fwhm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fwhm_str</span>
+        <span class="k">return</span> <span class="n">metadata</span>
+
+    <span class="k">def</span> <span class="nf">_metadata_smooth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window_size</span><span class="p">,</span> <span class="n">order</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Modifies metadata for spectral_smooth() function.&#39;&#39;&#39;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="n">hist_str</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot; -&gt; hs_process.spectral_smooth[&lt;&quot;</span>
+                    <span class="s2">&quot;SpecPyFloatText label: &#39;window_size?&#39; value:</span><span class="si">{0}</span><span class="s2">; &quot;</span>
+                    <span class="s2">&quot;SpecPyFloatText label: &#39;polynomial_order?&#39; value:</span><span class="si">{1}</span><span class="s2">&gt;&quot;</span>
+                    <span class="s2">&quot;]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">window_size</span><span class="p">,</span> <span class="n">order</span><span class="p">))</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">hist_str</span>
+        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;bands&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">nbands</span>
+        <span class="c1"># self.tools.spyfile.metadata = metadata</span>
+        <span class="k">return</span> <span class="n">metadata</span>
+
+    <span class="k">def</span> <span class="nf">_mimic_center_wl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">center_wl</span><span class="p">,</span> <span class="n">wl_hs</span><span class="p">,</span> <span class="n">spec_response</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Finds the center wavelength based on the method of ``center_wl``.&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">center_wl</span> <span class="o">==</span> <span class="s1">&#39;weighted&#39;</span><span class="p">:</span>
+            <span class="n">wl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">wl_hs</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">spec_response</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">center_wl</span> <span class="o">==</span> <span class="s1">&#39;peak&#39;</span><span class="p">:</span>
+            <span class="n">wl</span> <span class="o">=</span> <span class="n">wl_hs</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">spec_response</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="n">wl</span>
+
+    <span class="k">def</span> <span class="nf">_mimic_get_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sensor</span><span class="p">,</span> <span class="n">df_band_response</span><span class="p">,</span> <span class="n">col_wl</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Gets ``df_band_response`` based on the ``sensor`` passed.&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">sensor</span> <span class="o">==</span> <span class="s1">&#39;custom&#39;</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;``col_wl`` (</span><span class="si">{0}</span><span class="s1">) must be a column in ``df_band_response``.&#39;</span>
+                   <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">col_wl</span><span class="p">))</span>
+            <span class="k">assert</span> <span class="n">col_wl</span> <span class="ow">in</span> <span class="n">df_band_response</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">msg</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dir_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">dir_data</span><span class="p">()</span>
+            <span class="n">name_response</span> <span class="o">=</span> <span class="n">sensor</span> <span class="o">+</span> <span class="s1">&#39;_band_response.csv&#39;</span>
+            <span class="n">fname_response</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_data</span><span class="p">,</span> <span class="n">name_response</span><span class="p">)</span>
+            <span class="n">df_band_response</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fname_response</span><span class="p">)</span>
+            <span class="n">col_wl</span> <span class="o">=</span> <span class="s1">&#39;wl_nm&#39;</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df_band_response</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="n">col_wl</span><span class="p">:</span><span class="s1">&#39;wl_nm&#39;</span><span class="p">})</span>
+
+        <span class="n">wl_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">-</span><span class="mi">100</span>
+        <span class="n">wl_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">+</span><span class="mi">100</span>  <span class="c1"># adding because interp needs some room</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;wl_nm&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">wl_min</span><span class="p">]</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;wl_nm&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">wl_max</span><span class="p">]</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Checks if columns are all zero or not</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">s</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>  <span class="c1"># Removes all zero cols</span>
+
+        <span class="n">band_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="n">band_names</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;wl_nm&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span><span class="p">,</span> <span class="n">band_names</span>
+
+    <span class="k">def</span> <span class="nf">_mimic_get_fwhm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Gets the FWHM off the band responses in ``df``.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            df: The band response dataframe (first column should be &quot;wl_nm&quot;</span>
+<span class="sd">                indicating the wavelength).</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">fwhm_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;wl_nm&#39;</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">df_half_max</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">]</span>
+            <span class="n">fwhm_dict</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_half_max</span><span class="p">[</span><span class="s1">&#39;wl_nm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">df_half_max</span><span class="p">[</span><span class="s1">&#39;wl_nm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">fwhm_dict</span>
+
+    <span class="k">def</span> <span class="nf">_resample_get_bin_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bandwidth</span><span class="p">,</span> <span class="n">bins_n</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Gets an array of indices that indicate which bands should be averaged/</span>
+<span class="sd">        binned.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            inds (``numpy.array``): The band number (or index) that each</span>
+<span class="sd">                original (non-binned) band should be consolidated into.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># get wavelength as list of float values</span>
+        <span class="n">wl_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;wavelength&#39;</span><span class="p">]])</span>
+        <span class="k">if</span> <span class="n">bandwidth</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">bandwidth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span>
+                <span class="nb">int</span><span class="p">(</span><span class="n">wl_array</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">wl_array</span><span class="o">.</span><span class="n">max</span><span class="p">())),</span>
+                <span class="n">num</span><span class="o">=</span><span class="n">bins_n</span><span class="p">,</span> <span class="n">retstep</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">bandwidth</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">bandwidth</span><span class="p">))</span>
+        <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">wl_array</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span>
+                              <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">wl_array</span><span class="o">.</span><span class="n">max</span><span class="p">())</span><span class="o">+</span><span class="n">bandwidth</span><span class="p">),</span>
+                              <span class="n">bandwidth</span><span class="p">))</span>
+        <span class="n">inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">wl_array</span><span class="p">,</span> <span class="n">bins</span><span class="p">)</span>  <span class="c1"># assign an idx to each bin group</span>
+        <span class="k">return</span> <span class="n">wl_array</span><span class="p">,</span> <span class="n">bandwidth</span><span class="p">,</span> <span class="n">inds</span>  <span class="c1"># now, inds means band name (group_id)</span>
 
     <span class="k">def</span> <span class="nf">_savitzky_golay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">deriv</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
@@ -202,7 +401,7 @@
 <span class="sd">        domain of each image pixel</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">array</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_sp</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>
         <span class="n">array_2d</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
         <span class="n">array_2d_temp</span> <span class="o">=</span> <span class="n">array_2d</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">array_2d</span><span class="p">):</span>
@@ -212,7 +411,7 @@
 <span class="c1">#            sns.lineplot(list(hs.meta_bands.keys()), array_2d_temp[1000])</span>
         <span class="k">return</span> <span class="n">array_2d_temp</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
 
-<div class="viewcode-block" id="spec_mod.load_spyfile"><a class="viewcode-back" href="../../api/hs_process.spec_mod.html#hs_process.spec_mod.load_spyfile">[docs]</a>    <span class="k">def</span> <span class="nf">load_spyfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">):</span>
+<div class="viewcode-block" id="spec_mod.load_spyfile"><a class="viewcode-back" href="../../hs_process.html#hs_process.spec_mod.load_spyfile">[docs]</a>    <span class="k">def</span> <span class="nf">load_spyfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Loads a ``SpyFile`` (Spectral Python object) for data access and/or</span>
 <span class="sd">        manipulation by the ``hstools`` class.</span>
@@ -258,7 +457,91 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_e</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">spy_ps_n</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="spec_mod.spectral_clip"><a class="viewcode-back" href="../../api/hs_process.spec_mod.html#hs_process.spec_mod.spectral_clip">[docs]</a>    <span class="k">def</span> <span class="nf">spectral_clip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wl_bands</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">420</span><span class="p">],</span> <span class="p">[</span><span class="mi">760</span><span class="p">,</span> <span class="mi">776</span><span class="p">],</span> <span class="p">[</span><span class="mi">813</span><span class="p">,</span> <span class="mi">827</span><span class="p">],</span>
+<div class="viewcode-block" id="spec_mod.spec_derivative"><a class="viewcode-back" href="../../hs_process.html#hs_process.spec_mod.spec_derivative">[docs]</a>    <span class="k">def</span> <span class="nf">spec_derivative</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spyfile_spec</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Calculates the numeric derivative spectra from spyfile_spec.</span>
+
+<span class="sd">        The derivavative spectra is calculated as the slope (rise over run) of</span>
+<span class="sd">        the input spectra, and is normalized by the wavelength unit.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            spyfile_spec: The spectral spyfile object to calculate the</span>
+<span class="sd">                derivative for.</span>
+<span class="sd">            order (``int``): The order of the derivative (default: 1).</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            Load and initialize ``hsio``</span>
+
+<span class="sd">            &gt;&gt;&gt; import os</span>
+<span class="sd">            &gt;&gt;&gt; from hs_process import hsio</span>
+<span class="sd">            &gt;&gt;&gt; from hs_process import spec_mod</span>
+<span class="sd">            &gt;&gt;&gt; data_dir = r&#39;F:\\nigo0024\Documents\hs_process_demo&#39;</span>
+<span class="sd">            &gt;&gt;&gt; fname_hdr_spec = os.path.join(data_dir, &#39;Wells_rep2_20180628_16h56m_pika_gige_7_plot_611-cube-to-spec-mean.spec.hdr&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; io = hsio()</span>
+<span class="sd">            &gt;&gt;&gt; io.read_spec(fname_hdr_spec)</span>
+<span class="sd">            &gt;&gt;&gt; my_spec_mod = spec_mod(io.spyfile_spec)</span>
+
+<span class="sd">            Calculate the numeric derivative.</span>
+
+<span class="sd">            &gt;&gt;&gt; spec_dydx, metadata_dydx = my_spec_mod.spec_derivative(order=1)</span>
+
+<span class="sd">            &gt;&gt;&gt; io.write_spec(&#39;spec_derivative_order-1.spec.hdr&#39;, spec_dydx, df_std=None, metadata=metadata_dydx)</span>
+
+<span class="sd">            Plot the numeric derivative spectra and compare against the original spectra.</span>
+
+<span class="sd">            &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">            &gt;&gt;&gt; import seaborn as sns</span>
+<span class="sd">            &gt;&gt;&gt; sns.set_style(&quot;ticks&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; wl_x = np.array([float(i) for i in metadata_dydx[&#39;wavelength&#39;]])</span>
+<span class="sd">            &gt;&gt;&gt; y_ref = io.spyfile_spec.open_memmap()[0,0,:]*100</span>
+<span class="sd">            &gt;&gt;&gt; ax1 = sns.lineplot(wl_x, y_ref)</span>
+<span class="sd">            &gt;&gt;&gt; ax2 = ax1.twinx()</span>
+<span class="sd">            &gt;&gt;&gt; ax2 = sns.lineplot(wl_x, 0, ax=ax2, color=&#39;gray&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; ax2 = sns.lineplot(wl_x, spec_dydx[0,0,:]*100, ax=ax2, color=sns.color_palette()[1])</span>
+<span class="sd">            &gt;&gt;&gt; ax2.set(ylim=(-0.8, 1.5))</span>
+<span class="sd">            &gt;&gt;&gt; ax1.set_xlabel(&#39;Wavelength (nm)&#39;, weight=&#39;bold&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; ax1.set_ylabel(&#39;Reflectance (%)&#39;, weight=&#39;bold&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; ax2.set_ylabel(&#39;Reflectance derivative (%)&#39;, weight=&#39;bold&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; ax1.set_title(r&#39;API Example: `hstools.spec_derivative`&#39;, weight=&#39;bold&#39;)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">msg0</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;A numpy array was passed under the ``spyfile`` parameter, &#39;</span>
+                <span class="s1">&#39;so therefore metadata must be retrieved from &#39;</span>
+                <span class="s1">&#39;``spec_mod.spyfile.metadata``. However, ``spec_mod.spyfile`` &#39;</span>
+                <span class="s1">&#39;is not set. Please set via ``spec_mod.load_spyfile()``.&#39;</span><span class="p">)</span>
+        <span class="n">msg1</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;``spyfile_spec`` was not passed and is not set; please set &#39;</span>
+                <span class="s1">&#39;via ``spec_mod.load_spyfile()``.&#39;</span><span class="p">)</span>
+        <span class="n">msg2</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;The passed ``Spyfile`` is not a valid &quot;spec&quot; file. A valid &#39;</span>
+                <span class="s1">&#39;&quot;spec&quot; file must have 3 dimensions with each of the first &#39;</span>
+                <span class="s1">&#39;two dimensions (x and y) equal to 1 (e.g., shape = &#39;</span>
+                <span class="s1">&#39;(1, 1, n_bands)). Please set ``spyfile`` to a valid &quot;spec&quot; &#39;</span>
+                <span class="s1">&#39;or pass a valid &quot;spec&quot; ``spyfile`` to ``spec_derivative()``.&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile_spec</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
+            <span class="n">spec</span> <span class="o">=</span> <span class="n">spyfile_spec</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>
+            <span class="n">metadata</span> <span class="o">=</span> <span class="n">spyfile_spec</span><span class="o">.</span><span class="n">metadata</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile_spec</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">msg0</span>
+            <span class="n">spec</span> <span class="o">=</span> <span class="n">spyfile_spec</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">msg1</span>
+            <span class="n">spec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>
+            <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span>
+        <span class="k">assert</span> <span class="n">spec</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">msg2</span>  <span class="c1"># First two dimensions must be 1</span>
+        <span class="n">wl_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;wavelength&#39;</span><span class="p">]])</span>
+        <span class="n">dydx</span> <span class="o">=</span> <span class="n">FinDiff</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">wl_x</span><span class="p">,</span> <span class="n">order</span><span class="p">)</span>
+        <span class="c1"># spec_dydx = np.empty_like(spec)</span>
+        <span class="c1"># spec_dydx = np.empty(spec.shape)</span>
+        <span class="c1"># spec_dydx[0,0,:] = np.gradient(spec[0,0,:], wl_x)</span>
+        <span class="n">spec_dydx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">spec</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">spec_dydx</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">dydx</span><span class="p">(</span><span class="n">spec</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,:])</span>
+
+        <span class="c1"># if &#39;stdev&#39; in metadata:</span>
+        <span class="c1">#     stdev = np.array([float(i) for i in metadata[&#39;stdev&#39;]])</span>
+        <span class="c1">#     stdev_dydx = np.gradient(stdev, wl_x)</span>
+        <span class="n">metadata_dydx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metadata_derivative</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">order</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">spec_dydx</span><span class="p">,</span> <span class="n">metadata_dydx</span></div>
+
+<div class="viewcode-block" id="spec_mod.spectral_clip"><a class="viewcode-back" href="../../hs_process.html#hs_process.spec_mod.spectral_clip">[docs]</a>    <span class="k">def</span> <span class="nf">spectral_clip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wl_bands</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">420</span><span class="p">],</span> <span class="p">[</span><span class="mi">760</span><span class="p">,</span> <span class="mi">776</span><span class="p">],</span> <span class="p">[</span><span class="mi">813</span><span class="p">,</span> <span class="mi">827</span><span class="p">],</span>
                                       <span class="p">[</span><span class="mi">880</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]],</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Removes/clips designated wavelength bands from the hyperspectral</span>
@@ -288,59 +571,44 @@
 <span class="sd">        Example:</span>
 <span class="sd">            Load and initialize ``hsio`` and ``spec_mod``</span>
 
+<span class="sd">            &gt;&gt;&gt; import os</span>
 <span class="sd">            &gt;&gt;&gt; from hs_process import hsio</span>
 <span class="sd">            &gt;&gt;&gt; from hs_process import spec_mod</span>
-<span class="sd">            &gt;&gt;&gt; fname_hdr = r&#39;F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
-<span class="sd">            &gt;&gt;&gt; io1 = hsio()</span>
-<span class="sd">            &gt;&gt;&gt; io1.read_cube(fname_hdr)</span>
-<span class="sd">            &gt;&gt;&gt; my_spec_mod = spec_mod(io1.spyfile)</span>
+<span class="sd">            &gt;&gt;&gt; data_dir = r&#39;F:\\nigo0024\Documents\hs_process_demo&#39;</span>
+<span class="sd">            &gt;&gt;&gt; fname_hdr = os.path.join(data_dir, &#39;Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; io = hsio()</span>
+<span class="sd">            &gt;&gt;&gt; io.read_cube(fname_hdr)</span>
+<span class="sd">            &gt;&gt;&gt; my_spec_mod = spec_mod(io.spyfile)</span>
 
 <span class="sd">            Using ``spec_mod.spectral_clip``, clip all spectral bands below</span>
 <span class="sd">            *420 nm* and above *880 nm*, as well as the bands near the oxygen</span>
 <span class="sd">            absorption (i.e., *760-776 nm*) and water absorption</span>
 <span class="sd">            (i.e., *813-827 nm*) regions.</span>
 
-<span class="sd">            &gt;&gt;&gt; array_clip, metadata = my_spec_mod.spectral_clip(</span>
+<span class="sd">            &gt;&gt;&gt; array_clip, metadata_clip = my_spec_mod.spectral_clip(</span>
 <span class="sd">                    wl_bands=[[0, 420], [760, 776], [813, 827], [880, 1000]])</span>
 
-<span class="sd">            Save the clipped datacube</span>
+<span class="sd">            Plot the spectra of the unclippe hyperspectral image and compare to that of the clipped image for a single pixel.</span>
 
-<span class="sd">            &gt;&gt;&gt; fname_hdr_clip = r&#39;F:\\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip.hdr&#39;</span>
-<span class="sd">            &gt;&gt;&gt; io1.write_cube(fname_hdr_clip, array_clip, metadata)</span>
-<span class="sd">            Saving F:\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip</span>
+<span class="sd">            &gt;&gt;&gt; import seaborn as sns</span>
+<span class="sd">            &gt;&gt;&gt; from ast import literal_eval</span>
+<span class="sd">            &gt;&gt;&gt; spy_hs = my_spec_mod.spyfile.open_memmap()  # datacube before smoothing</span>
+<span class="sd">            &gt;&gt;&gt; meta_bands = list(io.tools.meta_bands.values())</span>
+<span class="sd">            &gt;&gt;&gt; meta_bands_clip = sorted([float(i) for i in literal_eval(metadata_clip[&#39;wavelength&#39;])])</span>
+<span class="sd">            &gt;&gt;&gt; ax = sns.lineplot(x=meta_bands, y=spy_hs[200][800]*100, label=&#39;Before spectral clipping&#39;, linewidth=3)</span>
+<span class="sd">            &gt;&gt;&gt; ax = sns.lineplot(x=meta_bands_clip, y=array_clip[200][800]*100, label=&#39;After spectral clipping&#39;, ax=ax)</span>
+<span class="sd">            &gt;&gt;&gt; ax.set_xlabel(&#39;Wavelength (nm)&#39;, weight=&#39;bold&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; ax.set_ylabel(&#39;Reflectance (%)&#39;, weight=&#39;bold&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; ax.set_title(r&#39;API Example: `spec_mod.spectral_clip`&#39;, weight=&#39;bold&#39;)</span>
 
-<span class="sd">            Initialize a second instance of ``hsio`` and read in the clipped</span>
-<span class="sd">            cube to compare the clipped cube to the unclipped cube</span>
-
-<span class="sd">            &gt;&gt;&gt; io2 = hsio()  # initialize a second instance to compare cubes</span>
-<span class="sd">            &gt;&gt;&gt; io2.read_cube(fname_hdr_clip)</span>
-<span class="sd">            &gt;&gt;&gt; io1.spyfile</span>
-<span class="sd">            Data Source:   &#39;F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip&#39;</span>
-<span class="sd">        	# Rows:            617</span>
-<span class="sd">        	# Samples:        1300</span>
-<span class="sd">        	# Bands:           240</span>
-<span class="sd">        	Interleave:        BIP</span>
-<span class="sd">        	Quantization:  32 bits</span>
-<span class="sd">        	Data format:   float32</span>
-
-<span class="sd">            The unclipped cube (above) has 240 spectral bands, while the</span>
-<span class="sd">            clipped cube (below) has 210.</span>
-
-<span class="sd">            &gt;&gt;&gt; io2.spyfile</span>
-<span class="sd">            Data Source:   &#39;F:\\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-clip.bip&#39;</span>
-<span class="sd">        	# Rows:            617</span>
-<span class="sd">        	# Samples:        1300</span>
-<span class="sd">        	# Bands:           210</span>
-<span class="sd">        	Interleave:        BIP</span>
-<span class="sd">        	Quantization:  32 bits</span>
-<span class="sd">        	Data format:   float32</span>
+<span class="sd">            .. image:: ../img/spec_mod/spectral_clip.png</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">spyfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
-            <span class="n">array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
-            <span class="n">array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
             <span class="n">array</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
             <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
@@ -357,28 +625,261 @@
             <span class="n">meta_bands</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 <span class="c1">#        tools.meta_bands = meta_bands</span>
         <span class="n">array_clip</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">spec_clip</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-
-        <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span>
-        <span class="n">hist_str</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot; -&gt; hs_process.spectral_clip[&lt;SpecPyFloatText label: &quot;</span>
-                    <span class="s2">&quot;&#39;wl_bands?&#39; value:</span><span class="si">{0}</span><span class="s2">&gt;]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wl_bands</span><span class="p">))</span>
-        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">hist_str</span>
-        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;bands&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">meta_bands</span><span class="p">)</span>
-
-        <span class="n">band</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">wavelength</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
-            <span class="n">band</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">wavelength</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-        <span class="n">band_str</span> <span class="o">=</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">band</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span>
-        <span class="n">wavelength</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-        <span class="n">wavelength_str</span> <span class="o">=</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">wl</span><span class="p">)</span> <span class="k">for</span> <span class="n">wl</span> <span class="ow">in</span> <span class="n">wavelength</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span>
-        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;band names&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">band_str</span>
-        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;wavelength&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wavelength_str</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
-
+        <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metadata_clip</span><span class="p">(</span><span class="n">wl_bands</span><span class="p">,</span> <span class="n">meta_bands</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">array_clip</span><span class="p">,</span> <span class="n">metadata</span></div>
 
-<div class="viewcode-block" id="spec_mod.spectral_smooth"><a class="viewcode-back" href="../../api/hs_process.spec_mod.html#hs_process.spec_mod.spectral_smooth">[docs]</a>    <span class="k">def</span> <span class="nf">spectral_smooth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="spec_mod.spectral_mimic"><a class="viewcode-back" href="../../hs_process.html#hs_process.spec_mod.spectral_mimic">[docs]</a>    <span class="k">def</span> <span class="nf">spectral_mimic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sensor</span><span class="o">=</span><span class="s1">&#39;sentinel-2a&#39;</span><span class="p">,</span> <span class="n">df_band_response</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">col_wl</span><span class="o">=</span><span class="s1">&#39;wl_nm&#39;</span><span class="p">,</span> <span class="n">center_wl</span><span class="o">=</span><span class="s1">&#39;peak&#39;</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Mimics the response of a multispectral sensor based on transmissivity</span>
+<span class="sd">        of sensor bands across a range of wavelength values by calculating its</span>
+<span class="sd">        weighted average response and interpolating the hyperspectral response.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            sensor (``str``): Should be one of</span>
+<span class="sd">                [&quot;sentera_6x&quot;, &quot;micasense_rededge_3&quot;, &quot;sentinel-2a&quot;,</span>
+<span class="sd">                &quot;sentinel-2b&quot;, &quot;custom&quot;]; if &quot;custom&quot;, ``df_band_response``</span>
+<span class="sd">                and ``col_wl`` must be passed.</span>
+<span class="sd">            df_band_response (``pd.DataFrame``): A DataFrame that contains the</span>
+<span class="sd">                transmissivity (%) for each sensor band (as columns) mapped to</span>
+<span class="sd">                the continuous wavelength values (as rows). Required if</span>
+<span class="sd">                ``sensor`` is  &quot;custom&quot;, ignored otherwise.</span>
+<span class="sd">            col_wl (``str``): The column of ``df_band_response`` denoting the</span>
+<span class="sd">                wavlengths (default: &#39;wl_nm&#39;).</span>
+<span class="sd">            center_wl (``str``): Indicates how the center wavelength of each</span>
+<span class="sd">                band is determined. If ``center_wl`` is &quot;peak&quot;, the point at</span>
+<span class="sd">                which transmissivity is at its maximum is used as the center</span>
+<span class="sd">                wavelength. If ``center_wl`` is &quot;weighted&quot;, the weighted</span>
+<span class="sd">                average is used to compute the center wavelength. Must be one</span>
+<span class="sd">                of [&quot;peak&quot;, &quot;weighted&quot;] (``default: &quot;peak&quot;``).</span>
+<span class="sd">            spyfile (``SpyFile`` object): The datacube being accessed and/or</span>
+<span class="sd">                manipulated.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            2-element ``tuple`` containing</span>
+
+<span class="sd">            - **array_multi** (``numpy.ndarray``): Mimicked datacube.</span>
+<span class="sd">            - **metadata** (``dict``): Modified metadata describing the</span>
+<span class="sd">              mimicked spectral array (``array_multi``).</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            Load and initialize ``hsio`` and ``spec_mod``</span>
+
+<span class="sd">            &gt;&gt;&gt; import os</span>
+<span class="sd">            &gt;&gt;&gt; from hs_process import hsio</span>
+<span class="sd">            &gt;&gt;&gt; from hs_process import spec_mod</span>
+<span class="sd">            &gt;&gt;&gt; data_dir = r&#39;F:\\nigo0024\Documents\hs_process_demo&#39;</span>
+<span class="sd">            &gt;&gt;&gt; fname_hdr = os.path.join(data_dir, &#39;Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;)</span>
+
+<span class="sd">            data_dir2 = r&#39;G:\BBE\AGROBOT\Shared Work\hs_process_results\data\ref_closest_panel\crop_plot&#39;</span>
+<span class="sd">            fname_hdr = os.path.join(data_dir2, &#39;study_aerffield_date_20190708_plot_5110-crop-plot.bip.hdr&#39;)</span>
+<span class="sd">            array = io.spyfile.open_memmap()</span>
+
+<span class="sd">            &gt;&gt;&gt; io = hsio()</span>
+<span class="sd">            &gt;&gt;&gt; io.read_cube(fname_hdr)</span>
+<span class="sd">            &gt;&gt;&gt; my_spec_mod = spec_mod(io.spyfile)</span>
+
+<span class="sd">            Use spec_mod.spectral_mimic to mimic the Sentinel-2A spectral</span>
+<span class="sd">            response function.</span>
+
+<span class="sd">            &gt;&gt;&gt; array_s2a, metadata_s2a = my_spec_mod.spectral_mimic(sensor=&#39;sentinel-2a&#39;, center_wl=&#39;weighted&#39;)</span>
+
+<span class="sd">            Plot the mean spectral response of the hyperspectral image to that</span>
+<span class="sd">            of the mimicked Sentinel-2A image bands (mean calculated across the</span>
+<span class="sd">            entire image).</span>
+
+<span class="sd">            &gt;&gt;&gt; import seaborn as sns</span>
+<span class="sd">            &gt;&gt;&gt; from ast import literal_eval</span>
+<span class="sd">            &gt;&gt;&gt; spy_hs = my_spec_mod.spyfile.open_memmap()  # datacube before smoothing</span>
+<span class="sd">            &gt;&gt;&gt; meta_bands = list(io.tools.meta_bands.values())</span>
+<span class="sd">            &gt;&gt;&gt; meta_bands_s2a = sorted([float(i) for i in literal_eval(metadata_s2a[&#39;wavelength&#39;])])</span>
+
+<span class="sd">            &gt;&gt;&gt; ax = sns.lineplot(x=meta_bands, y=spy_hs[200][800]*100, label=&#39;Hyperspectral (Pika II)&#39;, linewidth=3)</span>
+<span class="sd">            &gt;&gt;&gt; ax = sns.lineplot(x=meta_bands_s2a, y=array_s2a[200][800]*100, label=&#39;Sentinel-2A &quot;mimic&quot;&#39;, marker=&#39;o&#39;, ms=6, ax=ax)</span>
+<span class="sd">            &gt;&gt;&gt; ax.set_xlabel(&#39;Wavelength (nm)&#39;, weight=&#39;bold&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; ax.set_ylabel(&#39;Reflectance (%)&#39;, weight=&#39;bold&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; ax.set_title(r&#39;API Example: `spec_mod.spectral_mimic`&#39;, weight=&#39;bold&#39;)</span>
+
+<span class="sd">            .. image:: ../img/spec_mod/spectral_mimic_sentinel-2a.png</span>
+
+<span class="sd">            Use spec_mod.spectral_mimic to mimic the Sentera 6x spectral configuration and compare to both hyperspectral and Sentinel-2A.</span>
+
+<span class="sd">            &gt;&gt;&gt; array_6x, metadata_6x = my_spec_mod.spectral_mimic(sensor=&#39;sentera_6x&#39;, center_wl=&#39;peak&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; meta_bands_6x = sorted([float(i) for i in literal_eval(metadata_6x[&#39;wavelength&#39;])])</span>
+<span class="sd">            &gt;&gt;&gt; ax = sns.lineplot(x=meta_bands, y=spy_hs[200][800]*100, label=&#39;Hyperspectral (Pika II)&#39;, linewidth=3)</span>
+<span class="sd">            &gt;&gt;&gt; ax = sns.lineplot(x=meta_bands_s2a, y=array_s2a[200][800]*100, label=&#39;Sentinel-2A &quot;mimic&quot;&#39;, marker=&#39;o&#39;, ms=6, ax=ax)</span>
+<span class="sd">            &gt;&gt;&gt; ax = sns.lineplot(x=meta_bands_6x, y=array_6x[200][800]*100, label=&#39;Sentera 6X &quot;mimic&quot;&#39;, marker=&#39;o&#39;, ms=8, ax=ax)</span>
+<span class="sd">            &gt;&gt;&gt; ax.set_xlabel(&#39;Wavelength (nm)&#39;, weight=&#39;bold&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; ax.set_ylabel(&#39;Reflectance (%)&#39;, weight=&#39;bold&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; ax.set_title(r&#39;API Example: `spec_mod.spectral_mimic`&#39;, weight=&#39;bold&#39;)</span>
+
+<span class="sd">            .. image:: ../img/spec_mod/spectral_mimic_6x.png</span>
+
+<span class="sd">            And finally, mimic the Micasense RedEdge-MX and compare to hyperspectral, Sentinel-2A, and Sentera 6X.</span>
+
+<span class="sd">            &gt;&gt;&gt; array_re3, metadata_re3 = my_spec_mod.spectral_mimic(sensor=&#39;micasense_rededge_3&#39;, center_wl=&#39;peak&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; meta_bands_re3 = sorted([float(i) for i in literal_eval(metadata_re3[&#39;wavelength&#39;])])</span>
+<span class="sd">            &gt;&gt;&gt; ax = sns.lineplot(x=meta_bands, y=spy_hs[200][800]*100, label=&#39;Hyperspectral (Pika II)&#39;, linewidth=3)</span>
+<span class="sd">            &gt;&gt;&gt; ax = sns.lineplot(x=meta_bands_s2a, y=array_s2a[200][800]*100, label=&#39;Sentinel-2A &quot;mimic&quot;&#39;, marker=&#39;o&#39;, ms=6, ax=ax)</span>
+<span class="sd">            &gt;&gt;&gt; ax = sns.lineplot(x=meta_bands_6x, y=array_6x[200][800]*100, label=&#39;Sentera 6X &quot;mimic&quot;&#39;, marker=&#39;o&#39;, ms=8, ax=ax)</span>
+<span class="sd">            &gt;&gt;&gt; ax = sns.lineplot(x=meta_bands_re3, y=array_re3[200][800]*100, label=&#39;Micasense RedEdge 3 &quot;mimic&quot;&#39;, marker=&#39;o&#39;, ms=8, ax=ax)</span>
+<span class="sd">            &gt;&gt;&gt; ax.set_xlabel(&#39;Wavelength (nm)&#39;, weight=&#39;bold&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; ax.set_ylabel(&#39;Reflectance (%)&#39;, weight=&#39;bold&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; ax.set_title(r&#39;API Example: `spec_mod.spectral_mimic`&#39;, weight=&#39;bold&#39;)</span>
+
+<span class="sd">            .. image:: ../img/spec_mod/spectral_mimic_re.png</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">spyfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+
+        <span class="n">msg1</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;`sensor`` (</span><span class="si">{0}</span><span class="s1">) must be one of [&quot;sentera_6x&quot;, &#39;</span>
+                <span class="s1">&#39;&quot;micasense_rededge_3&quot;, &quot;sentinel-2a&quot;, &quot;sentinel-2b&quot;, &#39;</span>
+                <span class="s1">&#39;&quot;custom&quot;].&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sensor</span><span class="p">))</span>
+        <span class="n">msg2</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;``center_wl`` (</span><span class="si">{0}</span><span class="s1">) must be one of [&quot;peak&quot;, &quot;weighted&quot;].&#39;</span>
+                <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">center_wl</span><span class="p">))</span>
+        <span class="k">assert</span> <span class="n">sensor</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;sentera_6x&#39;</span><span class="p">,</span> <span class="s1">&#39;micasense_rededge_3&#39;</span><span class="p">,</span> <span class="s1">&#39;sentinel-2a&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;sentinel-2b&#39;</span><span class="p">,</span> <span class="s1">&#39;custom&#39;</span><span class="p">],</span> <span class="n">msg1</span>
+        <span class="k">assert</span> <span class="n">center_wl</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;peak&#39;</span><span class="p">,</span> <span class="s1">&#39;weighted&#39;</span><span class="p">],</span> <span class="n">msg2</span>
+
+        <span class="n">df</span><span class="p">,</span> <span class="n">band_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mimic_get_response</span><span class="p">(</span><span class="n">sensor</span><span class="p">,</span> <span class="n">df_band_response</span><span class="p">,</span>
+                                                  <span class="n">col_wl</span><span class="p">)</span>
+        <span class="c1"># Normalizes cells along columns so column sum equals 1.0</span>
+        <span class="n">df_norm</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,:]</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;wl_nm&#39;</span><span class="p">))</span>
+        <span class="n">df_norm</span><span class="p">[</span><span class="s1">&#39;wl_nm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;wl_nm&#39;</span><span class="p">]</span>
+
+
+        <span class="c1"># df_temp = df_norm.cumsum(axis=0)</span>
+        <span class="c1"># df_temp[&#39;wl_nm&#39;] = df[&#39;wl_nm&#39;]</span>
+
+        <span class="n">array_multi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">nrows</span><span class="p">,</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">ncols</span><span class="p">,</span>
+                                <span class="nb">len</span><span class="p">(</span><span class="n">band_names</span><span class="p">)))</span>
+        <span class="c1"># interpolate and sum each pixel to get mimicked value</span>
+        <span class="n">meta_bands</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">meta_bands_sensor</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">wl_sensor</span> <span class="o">=</span> <span class="n">df_norm</span><span class="p">[</span><span class="s1">&#39;wl_nm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">wl_hs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">bands_remove</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">band_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">band_names</span><span class="p">):</span>
+            <span class="n">y_sensor</span> <span class="o">=</span> <span class="n">df_norm</span><span class="p">[</span><span class="n">band_name</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">wl_sensor</span><span class="p">,</span> <span class="n">y_sensor</span><span class="p">)</span>
+            <span class="n">spec_response</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">wl_hs</span><span class="p">)</span>  <span class="c1"># this is the response that can be multiplied by every pixel</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">spec_response</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">array_multi</span><span class="p">[:,:,</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">spec_response</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+                <span class="n">meta_bands_sensor</span><span class="p">[</span><span class="n">band_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mimic_center_wl</span><span class="p">(</span><span class="n">center_wl</span><span class="p">,</span> <span class="n">wl_hs</span><span class="p">,</span> <span class="n">spec_response</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">bands_remove</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">band_name</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">band_name</span> <span class="ow">in</span> <span class="n">bands_remove</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">array_multi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">array_multi</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">fwhm_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mimic_get_fwhm</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metadata_mimic</span><span class="p">(</span><span class="n">sensor</span><span class="p">,</span> <span class="n">meta_bands_sensor</span><span class="p">,</span> <span class="n">fwhm_dict</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">array_multi</span><span class="p">,</span> <span class="n">metadata</span></div>
+
+<div class="viewcode-block" id="spec_mod.spectral_resample"><a class="viewcode-back" href="../../hs_process.html#hs_process.spec_mod.spectral_resample">[docs]</a>    <span class="k">def</span> <span class="nf">spectral_resample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bins_n</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Performs pixel-wise resampling of spectral bands via binning</span>
+<span class="sd">            (calculates the mean across all bands within each ``bandwidth``</span>
+<span class="sd">             region for each image pixel).</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            bandwidth (``float`` or ``int``): The bandwidth of the bands</span>
+<span class="sd">                after spectral resampling is complete (units should be</span>
+<span class="sd">                consistent with that of the .hdr file). Setting ``bandwidth``</span>
+<span class="sd">                to 10 will consolidate bands that fall within every 10 nm</span>
+<span class="sd">                interval.</span>
+<span class="sd">            bins_n (``int``): The number of bins (i.e., &quot;bands&quot;) to achieve</span>
+<span class="sd">                after spectral resampling is complete. Ignored if ``bandwidth``</span>
+<span class="sd">                is not ``None``.</span>
+<span class="sd">            spyfile (``SpyFile`` object): The datacube being accessed and/or</span>
+<span class="sd">                manipulated.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            2-element ``tuple`` containing</span>
+
+<span class="sd">            - **array_bin** (``numpy.ndarray``): Binned datacube.</span>
+<span class="sd">            - **metadata** (``dict``): Modified metadata describing the</span>
+<span class="sd">              binned spectral array (``array_bin``).</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            Load and initialize ``hsio`` and ``spec_mod``</span>
+
+<span class="sd">            &gt;&gt;&gt; import os</span>
+<span class="sd">            &gt;&gt;&gt; from hs_process import hsio</span>
+<span class="sd">            &gt;&gt;&gt; from hs_process import spec_mod</span>
+<span class="sd">            &gt;&gt;&gt; data_dir = r&#39;F:\\nigo0024\Documents\hs_process_demo&#39;</span>
+<span class="sd">            &gt;&gt;&gt; fname_hdr = os.path.join(data_dir, &#39;Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; io = hsio()</span>
+<span class="sd">            &gt;&gt;&gt; io.read_cube(fname_hdr)</span>
+<span class="sd">            &gt;&gt;&gt; my_spec_mod = spec_mod(io.spyfile)</span>
+
+<span class="sd">            Use spec_mod.spectral_resample to &quot;bin&quot; the datacube to bands with</span>
+<span class="sd">            20 nm bandwidths.</span>
+
+<span class="sd">            &gt;&gt;&gt; array_bin, metadata_bin = my_spec_mod.spectral_resample(bandwidth=20)</span>
+
+<span class="sd">            Plot the mean spectral response of the hyperspectral image to that</span>
+<span class="sd">            of the binned image bands (mean calculated across the entire image).</span>
+
+<span class="sd">            &gt;&gt;&gt; import seaborn as sns</span>
+<span class="sd">            &gt;&gt;&gt; from ast import literal_eval</span>
+<span class="sd">            &gt;&gt;&gt; spy_hs = my_spec_mod.spyfile.open_memmap()  # datacube before smoothing</span>
+<span class="sd">            &gt;&gt;&gt; meta_bands = list(io.tools.meta_bands.values())</span>
+<span class="sd">            &gt;&gt;&gt; meta_bands_bin = sorted([float(i) for i in literal_eval(metadata_bin[&#39;wavelength&#39;])])</span>
+
+<span class="sd">            &gt;&gt;&gt; ax = sns.lineplot(x=meta_bands, y=spy_hs[200][800]*100, label=&#39;Hyperspectral (Pika II)&#39;, linewidth=3)</span>
+<span class="sd">            &gt;&gt;&gt; ax = sns.lineplot(x=meta_bands_bin, y=array_bin[200][800]*100, label=&#39;Spectral resample (20 nm)&#39;, marker=&#39;o&#39;, ms=6, ax=ax)</span>
+<span class="sd">            &gt;&gt;&gt; ax.set_xlabel(&#39;Wavelength (nm)&#39;, weight=&#39;bold&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; ax.set_ylabel(&#39;Reflectance (%)&#39;, weight=&#39;bold&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; ax.set_title(r&#39;API Example: `spec_mod.spectral_resample`&#39;, weight=&#39;bold&#39;)</span>
+
+<span class="sd">            .. image:: ../img/spec_mod/spectral_resample.png</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">spyfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
+
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Either ``bandwidth`` or ``bins_n`` must be set and be greater &#39;</span>
+               <span class="s1">&#39;than zero.&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">bandwidth</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">bins_n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">msg</span>
+            <span class="n">bins_n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">bins_n</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">bandwidth</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="n">msg</span>
+            <span class="n">bins_n</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">wl_array</span><span class="p">,</span> <span class="n">bandwidth</span><span class="p">,</span> <span class="n">inds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resample_get_bin_indices</span><span class="p">(</span>
+            <span class="n">bandwidth</span><span class="p">,</span> <span class="n">bins_n</span><span class="p">)</span>
+        <span class="c1"># get empty array with</span>
+        <span class="n">array_bin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">nrows</span><span class="p">,</span>
+                              <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">ncols</span><span class="p">,</span>
+                              <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">inds</span><span class="p">))))</span>
+        <span class="c1"># find the first and last index for each group</span>
+        <span class="n">meta_bands</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">uid</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">inds</span><span class="p">):</span>
+            <span class="n">i_low</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">inds</span> <span class="o">==</span> <span class="n">uid</span><span class="p">)</span>
+            <span class="n">i_high</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">inds</span> <span class="o">&gt;</span> <span class="n">uid</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">i_high</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">i_high</span> <span class="o">=</span> <span class="n">i_low</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">array_bin</span><span class="p">[:,:,</span><span class="n">uid</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">array</span><span class="p">[:,:,</span><span class="n">i_low</span><span class="p">:</span><span class="n">i_high</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">meta_bands</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">uid</span><span class="p">)]</span> <span class="o">=</span> <span class="n">wl_array</span><span class="p">[</span><span class="n">i_low</span><span class="p">:</span><span class="n">i_high</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="c1"># get band_names and center wavelengths</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metadata_resample</span><span class="p">(</span><span class="n">bandwidth</span><span class="p">,</span> <span class="n">meta_bands</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">array_bin</span><span class="p">,</span> <span class="n">metadata</span></div>
+
+<div class="viewcode-block" id="spec_mod.spectral_smooth"><a class="viewcode-back" href="../../hs_process.html#hs_process.spec_mod.spectral_smooth">[docs]</a>    <span class="k">def</span> <span class="nf">spectral_smooth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Performs Savitzky-Golay smoothing on the spectral domain.</span>
 
@@ -406,9 +907,11 @@
 <span class="sd">        Example:</span>
 <span class="sd">            Load and initialize ``hsio`` and ``spec_mod``</span>
 
+<span class="sd">            &gt;&gt;&gt; import os</span>
 <span class="sd">            &gt;&gt;&gt; from hs_process import hsio</span>
 <span class="sd">            &gt;&gt;&gt; from hs_process import spec_mod</span>
-<span class="sd">            &gt;&gt;&gt; fname_hdr = r&#39;F:\\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="sd">            &gt;&gt;&gt; data_dir = r&#39;F:\\nigo0024\Documents\hs_process_demo&#39;</span>
+<span class="sd">            &gt;&gt;&gt; fname_hdr = os.path.join(data_dir, &#39;Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;)</span>
 <span class="sd">            &gt;&gt;&gt; io = hsio()</span>
 <span class="sd">            &gt;&gt;&gt; io.read_cube(fname_hdr)</span>
 <span class="sd">            &gt;&gt;&gt; my_spec_mod = spec_mod(io.spyfile)</span>
@@ -416,50 +919,37 @@
 <span class="sd">            Use ``spec_mod.spectral_smooth`` to perform a *Savitzky-Golay*</span>
 <span class="sd">            smoothing operation across the hyperspectral spectral signature.</span>
 
-<span class="sd">            &gt;&gt;&gt; array_smooth, metadata = my_spec_mod.spectral_smooth(</span>
+<span class="sd">            &gt;&gt;&gt; array_smooth, metadata_smooth = my_spec_mod.spectral_smooth(</span>
 <span class="sd">                    window_size=11, order=2)</span>
 
-<span class="sd">            Save the smoothed datacube using ``hsio.write_cube``</span>
+<span class="sd">            Plot the spectra of an individual pixel to visualize the result of the smoothing procedure.</span>
 
-<span class="sd">            &gt;&gt;&gt; fname_hdr_smooth = r&#39;F:\\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-smooth.bip.hdr&#39;</span>
-<span class="sd">            &gt;&gt;&gt; io.write_cube(fname_hdr_smooth, array_smooth, metadata)</span>
-<span class="sd">            Saving F:\\nigo0024\Documents\hs_process_demo\spec_mod\Wells_rep2_20180628_16h56m_pika_gige_7-smooth.bip</span>
+<span class="sd">            &gt;&gt;&gt; import seaborn as sns</span>
+<span class="sd">            &gt;&gt;&gt; spy_hs = my_spec_mod.spyfile.open_memmap()  # datacube before smoothing</span>
+<span class="sd">            &gt;&gt;&gt; meta_bands = list(io.tools.meta_bands.values())</span>
+<span class="sd">            &gt;&gt;&gt; meta_bands_smooth = sorted([float(i) for i in metadata_smooth[&#39;wavelength&#39;]])</span>
+<span class="sd">            &gt;&gt;&gt; ax = sns.lineplot(x=meta_bands, y=spy_hs[200][800]*100, label=&#39;Before spectral smoothing&#39;, linewidth=3)</span>
+<span class="sd">            &gt;&gt;&gt; ax = sns.lineplot(x=meta_bands_smooth, y=array_smooth[200][800]*100, label=&#39;After spectral smoothing&#39;, ax=ax)</span>
+<span class="sd">            &gt;&gt;&gt; ax.set_xlabel(&#39;Wavelength (nm)&#39;, weight=&#39;bold&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; ax.set_ylabel(&#39;Reflectance (%)&#39;, weight=&#39;bold&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; ax.set_title(r&#39;API Example: `spec_mod.spectral_smooth`&#39;, weight=&#39;bold&#39;)</span>
 
-<span class="sd">            Open smoothed datacube in Spectronon software to visualize the</span>
-<span class="sd">            result of the smoothing for a specific pixel.</span>
-
-<span class="sd">            .. image:: ../img/spec_mod/spectral_smooth_before.png</span>
-
-<span class="sd">            Before smoothing (the spectral curve of the pixel at the *800th</span>
-<span class="sd">            column/sample* and *200th row/line* is plotted)</span>
-
-<span class="sd">            .. image:: ../img/spec_mod/spectral_smooth_after.png</span>
-
-<span class="sd">            And after smoothing (the spectral curve of the pixel at the *800th</span>
-<span class="sd">            column/sample* and *200th row/line* is plotted)</span>
+<span class="sd">            .. image:: ../img/spec_mod/spectral_smooth.png</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">spyfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
-            <span class="n">array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">SpyFile</span><span class="o">.</span><span class="n">SpyFile</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">spyfile</span><span class="p">)</span>
-            <span class="n">array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
             <span class="n">array</span> <span class="o">=</span> <span class="n">spyfile</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
             <span class="n">spyfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span>
 
         <span class="n">array_smooth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_smooth_image</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">window_size</span><span class="p">,</span> <span class="n">order</span><span class="p">)</span>
-
-        <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span>
-        <span class="n">hist_str</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot; -&gt; hs_process.spectral_smooth[&lt;&quot;</span>
-                    <span class="s2">&quot;SpecPyFloatText label: &#39;window_size?&#39; value:</span><span class="si">{0}</span><span class="s2">; &quot;</span>
-                    <span class="s2">&quot;SpecPyFloatText label: &#39;polynomial_order?&#39; value:</span><span class="si">{1}</span><span class="s2">&gt;&quot;</span>
-                    <span class="s2">&quot;]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">window_size</span><span class="p">,</span> <span class="n">order</span><span class="p">))</span>
-        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">hist_str</span>
-        <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;bands&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">nbands</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span>
-
+        <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metadata_smooth</span><span class="p">(</span><span class="n">window_size</span><span class="p">,</span> <span class="n">order</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">array_smooth</span><span class="p">,</span> <span class="n">metadata</span></div></div>
+
 
 <span class="c1"># TODO: Add normalization function for light scattering</span>
 <span class="c1"># https://link.springer.com/chapter/10.1007/978-1-4939-2836-1_4#Sec12</span>
@@ -476,8 +966,8 @@
       
     </p>
     <p>
-        &copy; Copyright 2020, Tyler J. Nigon.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.<br/>
+        &copy; Copyright 2019-2021, Tyler J. Nigon.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
     </p>
   </div>
 </footer>

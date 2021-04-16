@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="python">
+<html lang="python">
   <head>
     <meta charset="utf-8" />
-    <title>8.1.3. hsio &#8212; hs_process 0.0.3 documentation</title>
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>8.1.3. hsio &#8212; hs_process 0.0.4 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="8.1.4. hstools" href="hs_process.hstools.html" />
@@ -46,7 +46,7 @@
           <ul class="nav navbar-nav">
             
                 <li><a href="https://github.com/tnigon/hs_process">Github</a></li>
-                <li><a href="https://pypi.org/project/hs-process/">PyPI</a></li>
+                <li><a href="https://anaconda.org/conda-forge/hs-process">Download</a></li>
                 <li><a href="http://www.spectralpython.net/">Spectral Python</a></li>
             
             
@@ -59,7 +59,28 @@
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Home</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../installation.html">1. Setup and Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_hsio.html">2. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_hstools.html">3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hstools</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_segment.html">4. Tutorial: <code class="docutils literal notranslate"><span class="pre">segment</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_spec_mod.html">5. Tutorial: <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_spatial_mod.html">6. Tutorial: <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_batch.html">7. Tutorial: <code class="docutils literal notranslate"><span class="pre">batch</span></code></a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../my_hs_process_api.html">8. API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="hs_process.batch.html">8.1.1. batch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.defaults.html">8.1.2. defaults</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">8.1.3. hsio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.hstools.html">8.1.4. hstools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.segment.html">8.1.5. segment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.spatial_mod.html">8.1.6. spatial_mod</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.spec_mod.html">8.1.7. spec_mod</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">9. License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html">10. Change Log</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">1. Setup and Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_hsio.html">2. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_hstools.html">3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hstools</span></code></a></li>
@@ -67,7 +88,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_spec_mod.html">5. Tutorial: <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_spatial_mod.html">6. Tutorial: <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_batch.html">7. Tutorial: <code class="docutils literal notranslate"><span class="pre">batch</span></code></a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../my_hs_process_api.html">8. API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../my_hs_process_api.html">8. API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="hs_process.batch.html">8.1.1. batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.defaults.html">8.1.2. defaults</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">8.1.3. hsio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.hstools.html">8.1.4. hstools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.segment.html">8.1.5. segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spatial_mod.html">8.1.6. spatial_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spec_mod.html">8.1.7. spec_mod</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">9. License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">10. Change Log</a></li>
 </ul>
@@ -133,9 +163,9 @@
       
   <div class="section" id="hsio">
 <h1><span class="section-number">8.1.3. </span>hsio<a class="headerlink" href="#hsio" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
+<dl class="py class">
 <dt id="hs_process.hsio">
-<em class="property">class </em><code class="sig-prename descclassname">hs_process.</code><code class="sig-name descname">hsio</code><span class="sig-paren">(</span><em class="sig-param">fname_in=None</em>, <em class="sig-param">name_long=None</em>, <em class="sig-param">name_plot=None</em>, <em class="sig-param">name_short=None</em>, <em class="sig-param">str_plot='plot_'</em>, <em class="sig-param">individual_plot=False</em>, <em class="sig-param">fname_hdr_spec=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hsio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hsio" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">hs_process.</span></code><code class="sig-name descname"><span class="pre">hsio</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname_in</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_long</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_short</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">str_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'plot_'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">individual_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_hdr_spec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hsio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hsio" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class for reading and writing hyperspectral data files, as well as
 accessing, interpreting, and modifying its associated metadata. With a
@@ -150,33 +180,33 @@ heavily on the <a class="reference external" href="http://www.spectralpython.net
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.hsio.read_cube" title="hs_process.hsio.read_cube"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_cube</span></code></a>([fname_hdr, overwrite, name_long, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hsio.read_cube" title="hs_process.hsio.read_cube"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_cube</span></code></a>([fname_hdr, overwrite, name_long, ...])</p></td>
 <td><p>Reads in a hyperspectral datacube using the <a class="reference external" href="http://www.spectralpython.net/">Spectral Python</a> package.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.hsio.read_spec" title="hs_process.hsio.read_spec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_spec</span></code></a>(fname_hdr_spec[, overwrite, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hsio.read_spec" title="hs_process.hsio.read_spec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_spec</span></code></a>(fname_hdr_spec[, overwrite, ...])</p></td>
 <td><p>Reads in a hyperspectral spectrum file using the using the <a class="reference external" href="http://www.spectralpython.net/">Spectral Python</a> package.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.hsio.set_io_defaults" title="hs_process.hsio.set_io_defaults"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_io_defaults</span></code></a>([dtype, force, ext, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hsio.set_io_defaults" title="hs_process.hsio.set_io_defaults"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_io_defaults</span></code></a>([dtype, force, ext, ...])</p></td>
 <td><p>Sets any of the ENVI file writing parameters to <code class="docutils literal notranslate"><span class="pre">hsio</span></code>; if any parameter is left unchanged from its default, it will remain as-is (i.e., it will not be set).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.hsio.show_img" title="hs_process.hsio.show_img"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_img</span></code></a>([spyfile, band_r, band_g, band_b, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hsio.show_img" title="hs_process.hsio.show_img"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_img</span></code></a>([spyfile, band_r, band_g, band_b, ...])</p></td>
 <td><p>Displays a datacube as a 3-band RGB image using <a class="reference external" href="https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.imshow.html#">Matplotlib</a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.hsio.write_cube" title="hs_process.hsio.write_cube"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_cube</span></code></a>(fname_hdr, spyfile[, metadata, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hsio.write_cube" title="hs_process.hsio.write_cube"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_cube</span></code></a>(fname_hdr, spyfile[, metadata, ...])</p></td>
+<td><p>Wrapper function that accesses the <a class="reference external" href="http://www.spectralpython.net/">Spectral Python</a> package to save a datacube to file.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hsio.write_spec" title="hs_process.hsio.write_spec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_spec</span></code></a>(fname_hdr_spec, df_mean[, ...])</p></td>
 <td><p>Wrapper function that accesses the <a class="reference external" href="http://www.spectralpython.net/">Spectral Python</a> package to save a</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.hsio.write_spec" title="hs_process.hsio.write_spec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_spec</span></code></a>(fname_hdr_spec, df_mean, df_std)</p></td>
-<td><p>Wrapper function that accesses the <a class="reference external" href="http://www.spectralpython.net/">Spectral Python</a> package to save a</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.hsio.write_tif" title="hs_process.hsio.write_tif"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_tif</span></code></a>(fname_tif[, spyfile, metadata, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.hsio.write_tif" title="hs_process.hsio.write_tif"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_tif</span></code></a>(fname_tif[, spyfile, metadata, ...])</p></td>
 <td><p>Wrapper function that accesses the <a class="reference external" href="https://pypi.org/project/GDAL/">GDAL Python package</a> to save a small datacube subset (i.e., three bands or less) to file.</p></td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Methods Documentation</p>
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.hsio.read_cube">
-<code class="sig-name descname">read_cube</code><span class="sig-paren">(</span><em class="sig-param">fname_hdr=None</em>, <em class="sig-param">overwrite=True</em>, <em class="sig-param">name_long=None</em>, <em class="sig-param">name_short=None</em>, <em class="sig-param">name_plot=None</em>, <em class="sig-param">individual_plot=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hsio.read_cube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hsio.read_cube" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">read_cube</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname_hdr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_long</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_short</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">individual_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hsio.read_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hsio.read_cube" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads in a hyperspectral datacube using the <a class="reference external" href="http://www.spectralpython.net/">Spectral Python</a> package.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -218,14 +248,14 @@ typical file nameing behavior&quot;.</p>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>  <span class="c1"># initialize an instance of the hsio class (note there are no required parameters)</span>
 </pre></div>
 </div>
 <p>Load datacube using <code class="docutils literal notranslate"><span class="pre">hsio.read_cube</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span>
-<span class="go">Data Source:   &#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip&#39;</span>
+<span class="go">Data Source:   &#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip&#39;</span>
 <span class="go">    # Rows:            617</span>
 <span class="go">    # Samples:        1300</span>
 <span class="go">    # Bands:           240</span>
@@ -249,9 +279,9 @@ typical file nameing behavior&quot;.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.hsio.read_spec">
-<code class="sig-name descname">read_spec</code><span class="sig-paren">(</span><em class="sig-param">fname_hdr_spec</em>, <em class="sig-param">overwrite=True</em>, <em class="sig-param">name_long=None</em>, <em class="sig-param">name_short=None</em>, <em class="sig-param">name_plot=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hsio.read_spec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hsio.read_spec" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">read_spec</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname_hdr_spec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_long</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_short</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hsio.read_spec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hsio.read_spec" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads in a hyperspectral spectrum file using the using the <a class="reference external" href="http://www.spectralpython.net/">Spectral
 Python</a> package.</p>
 <dl class="field-list simple">
@@ -293,9 +323,9 @@ Python</a> package.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.hsio.set_io_defaults">
-<code class="sig-name descname">set_io_defaults</code><span class="sig-paren">(</span><em class="sig-param">dtype=False</em>, <em class="sig-param">force=None</em>, <em class="sig-param">ext=False</em>, <em class="sig-param">interleave=False</em>, <em class="sig-param">byteorder=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hsio.set_io_defaults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hsio.set_io_defaults" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">set_io_defaults</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interleave</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">byteorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hsio.set_io_defaults"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hsio.set_io_defaults" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets any of the ENVI file writing parameters to <code class="docutils literal notranslate"><span class="pre">hsio</span></code>; if any
 parameter is left unchanged from its default, it will remain as-is
 (i.e., it will not be set).</p>
@@ -353,9 +383,9 @@ used (default=``False``).</p></li>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.hsio.show_img">
-<code class="sig-name descname">show_img</code><span class="sig-paren">(</span><em class="sig-param">spyfile=None</em>, <em class="sig-param">band_r=120</em>, <em class="sig-param">band_g=76</em>, <em class="sig-param">band_b=32</em>, <em class="sig-param">vmin=None</em>, <em class="sig-param">vmax=None</em>, <em class="sig-param">cmap='viridis'</em>, <em class="sig-param">cbar=True</em>, <em class="sig-param">inline=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hsio.show_img"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hsio.show_img" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">show_img</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spyfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band_r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band_g</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">76</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band_b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'viridis'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inline</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hsio.show_img"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hsio.show_img" title="Permalink to this definition">¶</a></dt>
 <dd><p>Displays a datacube as a 3-band RGB image using <a class="reference external" href="https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.imshow.html#">Matplotlib</a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -393,7 +423,7 @@ used in a normal Python console).</p>
 </pre></div>
 </div>
 <p>Load the datacube using <code class="docutils literal notranslate"><span class="pre">hsio.read_cube</span></code></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>  <span class="c1"># initialize an instance of the hsio class</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">)</span>
 </pre></div>
@@ -410,32 +440,33 @@ used in a normal Python console).</p>
 <img alt="../_images/show_img.png" src="../_images/show_img.png" />
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.hsio.write_cube">
-<code class="sig-name descname">write_cube</code><span class="sig-paren">(</span><em class="sig-param">fname_hdr</em>, <em class="sig-param">spyfile</em>, <em class="sig-param">metadata=None</em>, <em class="sig-param">dtype=None</em>, <em class="sig-param">force=None</em>, <em class="sig-param">ext=None</em>, <em class="sig-param">interleave=None</em>, <em class="sig-param">byteorder=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hsio.write_cube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hsio.write_cube" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Wrapper function that accesses the <a class="reference external" href="http://www.spectralpython.net/">Spectral Python</a> package to save a
+<code class="sig-name descname"><span class="pre">write_cube</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname_hdr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spyfile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interleave</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">byteorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hsio.write_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hsio.write_cube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper function that accesses the <a class="reference external" href="http://www.spectralpython.net/">Spectral Python</a> package to save a
 datacube to file.</p>
-<dl>
-<dt>Parameters:</dt><dd><dl class="simple">
-<dt>fname_hdr (<code class="docutils literal notranslate"><span class="pre">str</span></code>): Output header file path (with the '.hdr'</dt><dd><p>extension).</p>
-</dd>
-<dt>spyfile (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object or <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>): The hyperspectral</dt><dd><p>datacube to save. If <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>, then metadata (<code class="docutils literal notranslate"><span class="pre">dict</span></code>)
-should also be passed.</p>
-</dd>
-<dt>metadata (<code class="docutils literal notranslate"><span class="pre">dict</span></code>): Metadata to write to the ENVI .hdr file</dt><dd><p>describing the hyperspectral data cube being saved. If
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_hdr</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- Output header file path (with the '.hdr'
+extension).</p></li>
+<li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object or <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) -- The hyperspectral
+datacube to save. If <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>, then metadata (<code class="docutils literal notranslate"><span class="pre">dict</span></code>)
+should also be passed.</p></li>
+<li><p><strong>metadata</strong> (<code class="docutils literal notranslate"><span class="pre">dict</span></code>) -- Metadata to write to the ENVI .hdr file
+describing the hyperspectral data cube being saved. If
 <code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object is passed to <code class="docutils literal notranslate"><span class="pre">spyfile</span></code>, <code class="docutils literal notranslate"><span class="pre">metadata</span></code> will
 overwrite any existing metadata stored by the <code class="docutils literal notranslate"><span class="pre">SpyFile</span></code>
-object (default=None).</p>
-</dd>
-<dt>dtype (<code class="docutils literal notranslate"><span class="pre">numpy.dtype</span></code> or <code class="docutils literal notranslate"><span class="pre">str</span></code>): The data type with which to</dt><dd><p>store the image. For example, to store the image in 16-bit
+object (default=None).</p></li>
+<li><p><strong>dtype</strong> (<code class="docutils literal notranslate"><span class="pre">numpy.dtype</span></code> or <code class="docutils literal notranslate"><span class="pre">str</span></code>) -- The data type with which to
+store the image. For example, to store the image in 16-bit
 unsigned integer format, the argument could be any of
-numpy.uint16, 'u2', 'uint16', or 'H' (default=np.float32).</p>
-</dd>
-<dt>force (<code class="docutils literal notranslate"><span class="pre">bool</span></code>): If <code class="docutils literal notranslate"><span class="pre">hdr_file</span></code> or its associated image file</dt><dd><p>exist, <code class="docutils literal notranslate"><span class="pre">force=True</span></code> will overwrite the files; otherwise, an
-exception will be raised if either file exists (default=False).</p>
-</dd>
-<dt>ext (<code class="docutils literal notranslate"><span class="pre">None</span></code> or <code class="docutils literal notranslate"><span class="pre">str</span></code>): The extension to use for saving the</dt><dd><p>image file. If not specified or if set to an empty string
+numpy.uint16, 'u2', 'uint16', or 'H' (default=np.float32).</p></li>
+<li><p><strong>force</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) -- If <code class="docutils literal notranslate"><span class="pre">hdr_file</span></code> or its associated image file
+exist, <code class="docutils literal notranslate"><span class="pre">force=True</span></code> will overwrite the files; otherwise, an
+exception will be raised if either file exists (default=False).</p></li>
+<li><p><strong>ext</strong> (<code class="docutils literal notranslate"><span class="pre">None</span></code> or <code class="docutils literal notranslate"><span class="pre">str</span></code>) -- The extension to use for saving the
+image file. If not specified or if set to an empty string
 (e.g., <code class="docutils literal notranslate"><span class="pre">ext=''</span></code>), a default extension is determined using the
 same name as <code class="docutils literal notranslate"><span class="pre">fname_hdr</span></code>, except without the &quot;.hdr&quot;
 extension. If <code class="docutils literal notranslate"><span class="pre">fname_hdr</span></code> is provided without the
@@ -445,19 +476,21 @@ determined from the <code class="docutils literal notranslate"><span class="pre"
 of <code class="docutils literal notranslate"><span class="pre">ext</span></code> is not recommended; instead, just set
 <code class="docutils literal notranslate"><span class="pre">fname_hdr</span></code> with the correct extension or use
 <code class="docutils literal notranslate"><span class="pre">interleave</span></code> to set the extension (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>;
-determined from <code class="docutils literal notranslate"><span class="pre">fname_hdr</span></code> or <code class="docutils literal notranslate"><span class="pre">interleave</span></code>).</p>
-</dd>
-<dt>interleave (<code class="docutils literal notranslate"><span class="pre">str</span></code>): The band interleave format to use for writing</dt><dd><p>the file; <code class="docutils literal notranslate"><span class="pre">interleave</span></code> should be one of 'bil', 'bip', or
-'bsq' (default='bip').</p>
-</dd>
-<dt>byteorder (<code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">str</span></code>): Specifies the byte order</dt><dd><p>(endian-ness) of the data as written to disk. For little
+determined from <code class="docutils literal notranslate"><span class="pre">fname_hdr</span></code> or <code class="docutils literal notranslate"><span class="pre">interleave</span></code>).</p></li>
+<li><p><strong>interleave</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- The band interleave format to use for writing
+the file; <code class="docutils literal notranslate"><span class="pre">interleave</span></code> should be one of 'bil', 'bip', or
+'bsq' (default='bip').</p></li>
+<li><p><strong>byteorder</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">str</span></code>) -- Specifies the byte order
+(endian-ness) of the data as written to disk. For little
 endian, this value should be either 0 or 'little'. For big
 endian, it should be either 1 or 'big'. If not specified,
-native byte order will be used (default=None).</p>
+native byte order will be used (default=None).</p></li>
+</ul>
 </dd>
 </dl>
-</dd>
-<dt>Note:</dt><dd><p>If <code class="docutils literal notranslate"><span class="pre">dtype</span></code>, <code class="docutils literal notranslate"><span class="pre">force</span></code>, <code class="docutils literal notranslate"><span class="pre">ext</span></code>, <code class="docutils literal notranslate"><span class="pre">interleave</span></code>, and <code class="docutils literal notranslate"><span class="pre">byteorder</span></code> are not
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">dtype</span></code>, <code class="docutils literal notranslate"><span class="pre">force</span></code>, <code class="docutils literal notranslate"><span class="pre">ext</span></code>, <code class="docutils literal notranslate"><span class="pre">interleave</span></code>, and <code class="docutils literal notranslate"><span class="pre">byteorder</span></code> are not
 passed, default values will be pulled from <code class="docutils literal notranslate"><span class="pre">hsio.defaults</span></code>. Thus,
 <code class="docutils literal notranslate"><span class="pre">hsio.defaults</span></code> can be modified prior to calling
 <code class="docutils literal notranslate"><span class="pre">hsio.write_cube()</span></code> to avoid having to pass each of thes parameters
@@ -467,12 +500,15 @@ defaults and for more information on the parameters). Each of these
 parameters are passed directly to the Spectral Python
 <code class="docutils literal notranslate"><span class="pre">envi.save_image()</span></code> function. For more information, please refer to
 the Spectral Python documentation.</p>
-</dd>
-<dt>Example:</dt><dd><p>Load <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code> modules</p>
+</div>
+<p class="rubric">Example</p>
+<p>Load <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code> modules</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pathlib</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>  <span class="c1"># load hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">spatial_mod</span>  <span class="c1"># load spatial mod</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr_in</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>  <span class="c1"># initialize the hsio class</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname_hdr_in</span><span class="p">)</span>
 </pre></div>
@@ -483,27 +519,18 @@ the Spectral Python documentation.</p>
 </pre></div>
 </div>
 <p>Save the datacube using <code class="docutils literal notranslate"><span class="pre">hsio.write_cube</span></code></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\hsio\Wells_rep2_20180628_16h56m_pika_gige_7-hsio-write-cube-cropped.bip.hdr&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">write_cube</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">,</span> <span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
-<span class="go">Saving F:</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;hsio&#39;</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7-hsio-write-cube-cropped.bip.hdr&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">))</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">write_cube</span><span class="p">(</span><span class="n">fname_hdr</span><span class="p">,</span> <span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-</dd>
-</dl>
-</div></blockquote>
-<p>igo0024Documentshs_process_demohsioWells_rep2_20180628_16h56m_pika_gige_7-hsio-write-cube-cropped.bip</p>
-<blockquote>
-<div><blockquote>
-<div><p>Load the datacube into Spectronon for visualization</p>
+<p>Load the datacube into Spectronon for visualization</p>
 <img alt="../_images/write_cube.png" src="../_images/write_cube.png" />
-</div></blockquote>
-</div></blockquote>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.hsio.write_spec">
-<code class="sig-name descname">write_spec</code><span class="sig-paren">(</span><em class="sig-param">fname_hdr_spec</em>, <em class="sig-param">df_mean</em>, <em class="sig-param">df_std</em>, <em class="sig-param">metadata=None</em>, <em class="sig-param">dtype=None</em>, <em class="sig-param">force=None</em>, <em class="sig-param">ext=None</em>, <em class="sig-param">interleave=None</em>, <em class="sig-param">byteorder=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hsio.write_spec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hsio.write_spec" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">write_spec</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname_hdr_spec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_std</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interleave</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">byteorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hsio.write_spec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hsio.write_spec" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Wrapper function that accesses the <a class="reference external" href="http://www.spectralpython.net/">Spectral Python</a> package to save a
 single spectra to file.</p>
@@ -516,8 +543,8 @@ set using the <code class="docutils literal notranslate"><span class="pre">ext</
 </dd>
 <dt>df_mean (<code class="docutils literal notranslate"><span class="pre">pandas.Series</span></code> or <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>): Mean spectra,</dt><dd><p>stored as a df row, where columns are the bands.</p>
 </dd>
-<dt>df_std (<code class="docutils literal notranslate"><span class="pre">pandas.Series</span></code> or <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>): Standard deviation</dt><dd><p>of each spectra, stored as a df row, where columns are the
-bands. This will be saved to the .hdr file.</p>
+<dt>df_std (<code class="docutils literal notranslate"><span class="pre">pandas.Series</span></code> or <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>, optional): Standard</dt><dd><p>deviation of each spectra, stored as a df row, where columns
+are the bands. This will be saved to the .hdr file.</p>
 </dd>
 <dt>dtype (<code class="docutils literal notranslate"><span class="pre">numpy.dtype</span></code> or <code class="docutils literal notranslate"><span class="pre">str</span></code>): The data type with which to</dt><dd><p>store the image. For example, to store the image in 16-bit
 unsigned integer format, the argument could be any of
@@ -554,7 +581,7 @@ pull metadata template from <code class="docutils literal notranslate"><span cla
 </dd>
 <dt>Example:</dt><dd><p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span> <span class="c1"># load hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>  <span class="c1"># initialize the hsio class (note there are no required parameters)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname_hdr_in</span><span class="p">)</span>
 </pre></div>
@@ -581,9 +608,9 @@ pull metadata template from <code class="docutils literal notranslate"><span cla
 </div></blockquote>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.hsio.write_tif">
-<code class="sig-name descname">write_tif</code><span class="sig-paren">(</span><em class="sig-param">fname_tif</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">metadata=None</em>, <em class="sig-param">fname_in=None</em>, <em class="sig-param">projection_out=None</em>, <em class="sig-param">geotransform_out=None</em>, <em class="sig-param">show_img='inline'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hsio.write_tif"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.hsio.write_tif" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">write_tif</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname_tif</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spyfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname_in</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projection_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geotransform_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_img</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/utilities.html#hsio.write_tif"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.hsio.write_tif" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper function that accesses the <a class="reference external" href="https://pypi.org/project/GDAL/">GDAL Python package</a> to save a
 small datacube subset (i.e., three bands or less) to file.</p>
 <dl class="field-list simple">
@@ -625,7 +652,7 @@ pop-out window; default: &quot;inline&quot;).</p></li>
 <p class="rubric">Example</p>
 <p>Load and initialize <code class="docutils literal notranslate"><span class="pre">hsio</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>  <span class="c1"># load hsio</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_hdr_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">()</span>  <span class="c1"># initialize the hsio class</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname_hdr_in</span><span class="p">)</span>
 </pre></div>
@@ -658,8 +685,8 @@ pop-out window; default: &quot;inline&quot;).</p></li>
       
     </p>
     <p>
-        &copy; Copyright 2020, Tyler J. Nigon.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.<br/>
+        &copy; Copyright 2019-2021, Tyler J. Nigon.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
     </p>
   </div>
 </footer>

@@ -1,6 +1,6 @@
 Release: 0.0.4
 ***************
-**Date**: 2020
+**Date**: 2021 April 16
 
 **Description**: Fixes to the batch.spatial_crop function
 

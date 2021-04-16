@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="python">
+<html lang="python">
   <head>
     <meta charset="utf-8" />
-    <title>8.1.5. segment &#8212; hs_process 0.0.3 documentation</title>
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>8.1.5. segment &#8212; hs_process 0.0.4 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="8.1.6. spatial_mod" href="hs_process.spatial_mod.html" />
@@ -46,7 +46,7 @@
           <ul class="nav navbar-nav">
             
                 <li><a href="https://github.com/tnigon/hs_process">Github</a></li>
-                <li><a href="https://pypi.org/project/hs-process/">PyPI</a></li>
+                <li><a href="https://anaconda.org/conda-forge/hs-process">Download</a></li>
                 <li><a href="http://www.spectralpython.net/">Spectral Python</a></li>
             
             
@@ -59,7 +59,28 @@
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Home</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../installation.html">1. Setup and Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_hsio.html">2. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_hstools.html">3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hstools</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_segment.html">4. Tutorial: <code class="docutils literal notranslate"><span class="pre">segment</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_spec_mod.html">5. Tutorial: <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_spatial_mod.html">6. Tutorial: <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_batch.html">7. Tutorial: <code class="docutils literal notranslate"><span class="pre">batch</span></code></a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../my_hs_process_api.html">8. API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="hs_process.batch.html">8.1.1. batch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.defaults.html">8.1.2. defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.hsio.html">8.1.3. hsio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.hstools.html">8.1.4. hstools</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">8.1.5. segment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.spatial_mod.html">8.1.6. spatial_mod</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.spec_mod.html">8.1.7. spec_mod</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">9. License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html">10. Change Log</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">1. Setup and Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_hsio.html">2. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_hstools.html">3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hstools</span></code></a></li>
@@ -67,7 +88,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_spec_mod.html">5. Tutorial: <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_spatial_mod.html">6. Tutorial: <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_batch.html">7. Tutorial: <code class="docutils literal notranslate"><span class="pre">batch</span></code></a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../my_hs_process_api.html">8. API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../my_hs_process_api.html">8. API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="hs_process.batch.html">8.1.1. batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.defaults.html">8.1.2. defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.hsio.html">8.1.3. hsio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.hstools.html">8.1.4. hstools</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">8.1.5. segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spatial_mod.html">8.1.6. spatial_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spec_mod.html">8.1.7. spec_mod</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">9. License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">10. Change Log</a></li>
 </ul>
@@ -133,9 +163,9 @@
       
   <div class="section" id="segment">
 <h1><span class="section-number">8.1.5. </span>segment<a class="headerlink" href="#segment" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
+<dl class="py class">
 <dt id="hs_process.segment">
-<em class="property">class </em><code class="sig-prename descclassname">hs_process.</code><code class="sig-name descname">segment</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">hs_process.</span></code><code class="sig-name descname"><span class="pre">segment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spyfile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.segment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class for aiding in the segmentation and/or masking of image
 data to filter out pixels that are of least interest.</p>
@@ -146,27 +176,30 @@ data to filter out pixels that are of least interest.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.segment.band_math_derivative" title="hs_process.segment.segment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">band_math_derivative</span></code></a>([wl1, wl2, wl3, b1, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.segment.segment.band_math_derivative" title="hs_process.segment.segment.band_math_derivative"><code class="xref py py-obj docutils literal notranslate"><span class="pre">band_math_derivative</span></code></a>([wl1, wl2, wl3, b1, ...])</p></td>
 <td><p>Calculates a derivative-type spectral index from two input bands and/or wavelengths.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.segment.band_math_mcari2" title="hs_process.segment.segment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">band_math_mcari2</span></code></a>([wl1, wl2, wl3, b1, b2, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../hs_process.html#hs_process.segment.segment.band_math_mcari2" title="hs_process.segment.segment.band_math_mcari2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">band_math_mcari2</span></code></a>([wl1, wl2, wl3, b1, b2, ...])</p></td>
 <td><p>Calculates the MCARI2 (Modified Chlorophyll Absorption Ratio Index Improved; Haboudane et al., 2004) spectral index from three input bands and/or wavelengths.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.segment.band_math_ndi" title="hs_process.segment.segment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">band_math_ndi</span></code></a>([wl1, wl2, b1, b2, spyfile, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.segment.segment.band_math_ndi" title="hs_process.segment.segment.band_math_ndi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">band_math_ndi</span></code></a>([wl1, wl2, b1, b2, spyfile, ...])</p></td>
 <td><p>Calculates a normalized difference spectral index from two input bands and/or wavelengths.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.segment.band_math_ratio" title="hs_process.segment.segment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">band_math_ratio</span></code></a>([wl1, wl2, b1, b2, spyfile, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../hs_process.html#hs_process.segment.segment.band_math_ratio" title="hs_process.segment.segment.band_math_ratio"><code class="xref py py-obj docutils literal notranslate"><span class="pre">band_math_ratio</span></code></a>([wl1, wl2, b1, b2, spyfile, ...])</p></td>
 <td><p>Calculates a simple ratio spectral index from two input band and/or wavelengths.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.segment.load_spyfile" title="hs_process.segment.segment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_spyfile</span></code></a>(spyfile)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.segment.segment.composite_band" title="hs_process.segment.segment.composite_band"><code class="xref py py-obj docutils literal notranslate"><span class="pre">composite_band</span></code></a>([wl1, b1, spyfile, ...])</p></td>
+<td><p>Calculates a composite band from a range of bands or wavelengths.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../hs_process.html#hs_process.segment.segment.load_spyfile" title="hs_process.segment.segment.load_spyfile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_spyfile</span></code></a>(spyfile)</p></td>
 <td><p>Loads a <code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> (Spectral Python object) for data access and/or manipulation by the <code class="docutils literal notranslate"><span class="pre">hstools</span></code> class.</p></td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Methods Documentation</p>
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.segment.band_math_derivative">
-<code class="sig-name descname">band_math_derivative</code><span class="sig-paren">(</span><em class="sig-param">wl1=None</em>, <em class="sig-param">wl2=None</em>, <em class="sig-param">wl3=None</em>, <em class="sig-param">b1=None</em>, <em class="sig-param">b2=None</em>, <em class="sig-param">b3=None</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">list_range=True</em>, <em class="sig-param">print_out=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment.band_math_derivative"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.band_math_derivative" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">band_math_derivative</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wl1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wl2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wl3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spyfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment.band_math_derivative"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.segment.band_math_derivative" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates a derivative-type spectral index from two input bands
 and/or wavelengths. Bands/wavelengths can be input as two individual
 bands, two sets of bands (i.e., list of bands), or range of bands
@@ -209,7 +242,7 @@ be used as the third parameter of the derivative index; if
 by calculating the mean pixel value across all bands in that
 range (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
 <li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object or <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) -- The datacube to
-crop; if <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> or <code class="docutils literal notranslate"><span class="pre">None</span></code>, loads band information
+process; if <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> or <code class="docutils literal notranslate"><span class="pre">None</span></code>, loads band information
 from <code class="docutils literal notranslate"><span class="pre">self.spyfile</span></code> (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
 <li><p><strong>list_range</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) -- Whether bands/wavelengths passed as a list
 is interpreted as a range of bands (<code class="docutils literal notranslate"><span class="pre">True</span></code>) or for each
@@ -235,9 +268,11 @@ derivative array (<code class="docutils literal notranslate"><span class="pre">a
 <p class="rubric">Example</p>
 <p>Load <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">segment</span></code> modules</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">segment</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_segment</span> <span class="o">=</span> <span class="n">segment</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 </pre></div>
@@ -245,14 +280,8 @@ derivative array (<code class="docutils literal notranslate"><span class="pre">a
 <p>Calculate the MERIS Terrestrial Chlorophyll Index (MTCI; Dash and
 Curran, 2004) via <code class="docutils literal notranslate"><span class="pre">segment.band_math_derivative</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_mtci</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_segment</span><span class="o">.</span><span class="n">band_math_derivative</span><span class="p">(</span><span class="n">wl1</span><span class="o">=</span><span class="mi">754</span><span class="p">,</span> <span class="n">wl2</span><span class="o">=</span><span class="mi">709</span><span class="p">,</span> <span class="n">wl3</span><span class="o">=</span><span class="mi">681</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
-
-<span class="go">Bands used (``b1``): [176]</span>
-<span class="go">Bands used (``b2``): [154]</span>
-<span class="go">Bands used (``b3``): [141]</span>
-
-<span class="go">Wavelengths used (``b1``): [753.84]</span>
-<span class="go">Wavelengths used (``b2``): [708.6784]</span>
-<span class="go">Wavelengths used (``b3``): [681.992]</span>
+<span class="go">Band 1: [176]  Band 2: [154]  Band 3: [141]</span>
+<span class="go">Wavelength 1: [753.84]  Wavelength 2: [708.6784]  Wavelength 3: [681.992]</span>
 </pre></div>
 </div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_mtci</span><span class="o">.</span><span class="n">shape</span>
@@ -263,15 +292,14 @@ Curran, 2004) via <code class="docutils literal notranslate"><span class="pre">s
 </div>
 <p>Show MTCI image via <code class="docutils literal notranslate"><span class="pre">hsio.show_img</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">show_img</span><span class="p">(</span><span class="n">array_mtci</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">2</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-
 </pre></div>
 </div>
 <img alt="../_images/mtci.png" src="../_images/mtci.png" />
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.segment.band_math_mcari2">
-<code class="sig-name descname">band_math_mcari2</code><span class="sig-paren">(</span><em class="sig-param">wl1=None</em>, <em class="sig-param">wl2=None</em>, <em class="sig-param">wl3=None</em>, <em class="sig-param">b1=None</em>, <em class="sig-param">b2=None</em>, <em class="sig-param">b3=None</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">list_range=True</em>, <em class="sig-param">print_out=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment.band_math_mcari2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.band_math_mcari2" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">band_math_mcari2</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wl1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wl2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wl3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spyfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment.band_math_mcari2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.segment.band_math_mcari2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the MCARI2 (Modified Chlorophyll Absorption Ratio Index
 Improved; Haboudane et al., 2004) spectral index from three input bands
 and/or wavelengths. Bands/wavelengths can be input as two individual
@@ -315,7 +343,7 @@ be used as the third parameter of the MCARI2 index; if
 by calculating the mean pixel value across all bands in that
 range (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
 <li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object or <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) -- The datacube to
-crop; if <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> or <code class="docutils literal notranslate"><span class="pre">None</span></code>, loads band information
+process; if <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> or <code class="docutils literal notranslate"><span class="pre">None</span></code>, loads band information
 from <code class="docutils literal notranslate"><span class="pre">self.spyfile</span></code> (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
 <li><p><strong>list_range</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) -- Whether bands/wavelengths passed as a list
 is interpreted as a range of bands (<code class="docutils literal notranslate"><span class="pre">True</span></code>) or for each
@@ -341,9 +369,12 @@ MCARI2 index array (<code class="docutils literal notranslate"><span class="pre"
 </dl>
 <p class="rubric">Example</p>
 <p>Load <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">segment</span></code> modules</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">segment</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_segment</span> <span class="o">=</span> <span class="n">segment</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 </pre></div>
@@ -351,14 +382,8 @@ MCARI2 index array (<code class="docutils literal notranslate"><span class="pre"
 <p>Calculate the MCARI2 spectral index (Haboudane et al., 2004) via
 <code class="docutils literal notranslate"><span class="pre">segment.band_math_mcari2</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_mcari2</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_segment</span><span class="o">.</span><span class="n">band_math_mcari2</span><span class="p">(</span><span class="n">wl1</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">wl2</span><span class="o">=</span><span class="mi">670</span><span class="p">,</span> <span class="n">wl3</span><span class="o">=</span><span class="mi">550</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
-
-<span class="go">Bands used (``b1``): [198]</span>
-<span class="go">Bands used (``b2``): [135]</span>
-<span class="go">Bands used (``b3``): [77]</span>
-
-<span class="go">Wavelengths used (``b1``): [799.0016]</span>
-<span class="go">Wavelengths used (``b2``): [669.6752]</span>
-<span class="go">Wavelengths used (``b3``): [550.6128]</span>
+<span class="go">Band 1: [198]  Band 2: [135]  Band 3: [77]</span>
+<span class="go">Wavelength 1: [799.0016]  Wavelength 2: [669.6752]  Wavelength 3: [550.6128]</span>
 </pre></div>
 </div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">array_mcari2</span><span class="p">)</span>
@@ -367,15 +392,14 @@ MCARI2 index array (<code class="docutils literal notranslate"><span class="pre"
 </div>
 <p>Show MCARI2 image via <code class="docutils literal notranslate"><span class="pre">hsio.show_img</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">show_img</span><span class="p">(</span><span class="n">array_mcari2</span><span class="p">)</span>
-
 </pre></div>
 </div>
 <img alt="../_images/mcari2.png" src="../_images/mcari2.png" />
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.segment.band_math_ndi">
-<code class="sig-name descname">band_math_ndi</code><span class="sig-paren">(</span><em class="sig-param">wl1=None</em>, <em class="sig-param">wl2=None</em>, <em class="sig-param">b1=None</em>, <em class="sig-param">b2=None</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">list_range=True</em>, <em class="sig-param">print_out=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment.band_math_ndi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.band_math_ndi" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">band_math_ndi</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wl1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wl2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spyfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment.band_math_ndi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.segment.band_math_ndi" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates a normalized difference spectral index from two input bands
 and/or wavelengths. Bands/wavelengths can be input as two individual
 bands, two sets of bands (i.e., list of bands), or range of bands
@@ -408,7 +432,7 @@ index; if <code class="docutils literal notranslate"><span class="pre">list</spa
 values by calculating the mean pixel value across all bands in
 that range (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
 <li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object or <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) -- The datacube to
-crop; if <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> or <code class="docutils literal notranslate"><span class="pre">None</span></code>, loads band information from
+process; if <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> or <code class="docutils literal notranslate"><span class="pre">None</span></code>, loads band information from
 <code class="docutils literal notranslate"><span class="pre">self.spyfile</span></code> (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
 <li><p><strong>list_range</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) -- Whether bands/wavelengths passed as a list is
 interpreted as a range of bands (<code class="docutils literal notranslate"><span class="pre">True</span></code>) or for each individual
@@ -434,9 +458,12 @@ normalized difference array (<code class="docutils literal notranslate"><span cl
 </dl>
 <p class="rubric">Example</p>
 <p>Load <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">segment</span></code> modules</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">segment</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_segment</span> <span class="o">=</span> <span class="n">segment</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 </pre></div>
@@ -444,28 +471,23 @@ normalized difference array (<code class="docutils literal notranslate"><span cl
 <p>Calculate the Normalized difference vegetation index using 10 nm
 bands centered at 800 nm and 680 nm via <code class="docutils literal notranslate"><span class="pre">segment.band_math_ndi</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_ndvi</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_segment</span><span class="o">.</span><span class="n">band_math_ndi</span><span class="p">(</span><span class="n">wl1</span><span class="o">=</span><span class="p">[</span><span class="mi">795</span><span class="p">,</span> <span class="mi">805</span><span class="p">],</span> <span class="n">wl2</span><span class="o">=</span><span class="p">[</span><span class="mi">675</span><span class="p">,</span> <span class="mi">685</span><span class="p">],</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
-
-<span class="go">Bands used (``b1``): [197, 198, 199, 200]</span>
-<span class="go">Bands used (``b2``): [138, 139, 140, 141, 142]</span>
-
-<span class="go">Wavelengths used (``b1``): [796.9488, 799.0016, 801.0544, 803.1072]</span>
-<span class="go">Wavelengths used (``b2``): [675.8336, 677.8864, 679.9392, 681.992, 684.0448]</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">array_ndvi</span><span class="p">)</span>
+<span class="go">Effective NDI: (800 - 680) / 800 + 680)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">array_ndvi</span><span class="p">)</span>
 <span class="go">0.8184888</span>
 </pre></div>
 </div>
 <p>Show NDVI image via <code class="docutils literal notranslate"><span class="pre">hsio.show_img</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">show_img</span><span class="p">(</span><span class="n">array_ndvi</span><span class="p">)</span>
-
 </pre></div>
 </div>
 <img alt="../_images/ndvi.png" src="../_images/ndvi.png" />
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.segment.band_math_ratio">
-<code class="sig-name descname">band_math_ratio</code><span class="sig-paren">(</span><em class="sig-param">wl1=None</em>, <em class="sig-param">wl2=None</em>, <em class="sig-param">b1=None</em>, <em class="sig-param">b2=None</em>, <em class="sig-param">spyfile=None</em>, <em class="sig-param">list_range=True</em>, <em class="sig-param">print_out=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment.band_math_ratio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.band_math_ratio" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">band_math_ratio</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wl1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wl2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spyfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment.band_math_ratio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.segment.band_math_ratio" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates a simple ratio spectral index from two input band and/or
 wavelengths. Bands/wavelengths can be input as two individual bands,
 two sets of bands (i.e., list of bands), or a range of bands (i.e.,
@@ -479,12 +501,12 @@ list of two bands indicating the lower and upper range).</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>wl1</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>, or <code class="docutils literal notranslate"><span class="pre">list</span></code>) -- the wavelength (or set of
 wavelengths) to be used as the first parameter of the
-normalized difference index; if <code class="docutils literal notranslate"><span class="pre">list</span></code>, then consolidates all
+ratio index; if <code class="docutils literal notranslate"><span class="pre">list</span></code>, then consolidates all
 bands between two wavelength values by calculating the mean
 pixel value across all bands in that range (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
 <li><p><strong>wl2</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>, or <code class="docutils literal notranslate"><span class="pre">list</span></code>) -- the wavelength (or set of
 wavelengths) to be used as the second parameter of the
-normalized difference index; if <code class="docutils literal notranslate"><span class="pre">list</span></code>, then consolidates all
+ratio index; if <code class="docutils literal notranslate"><span class="pre">list</span></code>, then consolidates all
 bands between two wavelength values by calculating the mean
 pixel value across all bands in that range (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
 <li><p><strong>b1</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>, or <code class="docutils literal notranslate"><span class="pre">list</span></code>) -- the band (or set of bands) to
@@ -498,7 +520,7 @@ index; if <code class="docutils literal notranslate"><span class="pre">list</spa
 bands values by calculating the mean pixel value across all
 bands in that range (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
 <li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object or <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) -- The datacube to
-crop; if <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> or <code class="docutils literal notranslate"><span class="pre">None</span></code>, loads band information
+process; if <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> or <code class="docutils literal notranslate"><span class="pre">None</span></code>, loads band information
 from <code class="docutils literal notranslate"><span class="pre">self.spyfile</span></code> (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
 <li><p><strong>list_range</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) -- Whether a band passed as a list is
 interpreted as a range of bands (<code class="docutils literal notranslate"><span class="pre">True</span></code>) or for each
@@ -523,9 +545,12 @@ ratio array (<code class="docutils literal notranslate"><span class="pre">array_
 </dl>
 <p class="rubric">Example</p>
 <p>Load <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">segment</span></code> modules</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">hsio</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">segment</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_in</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">hsio</span><span class="p">(</span><span class="n">fname_in</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_segment</span> <span class="o">=</span> <span class="n">segment</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
 </pre></div>
@@ -534,14 +559,7 @@ ratio array (<code class="docutils literal notranslate"><span class="pre">array_
 (i.e., mimicking a broadband sensor) via
 <code class="docutils literal notranslate"><span class="pre">segment.band_math_ratio</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_ratio</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_segment</span><span class="o">.</span><span class="n">band_math_ratio</span><span class="p">(</span><span class="n">wl1</span><span class="o">=</span><span class="p">[</span><span class="mi">630</span><span class="p">,</span> <span class="mi">690</span><span class="p">],</span> <span class="n">wl2</span><span class="o">=</span><span class="p">[</span><span class="mi">800</span><span class="p">,</span> <span class="mi">860</span><span class="p">],</span> <span class="n">list_range</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="go">Bands used (``b1``): [116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144]</span>
-<span class="go">Bands used (``b2``): [199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227]</span>
-
-<span class="go">Wavelengths used (``b1``): [630.672, 632.7248, 634.7776, 636.8304, 638.8832, 640.936, 642.9888, 645.0416, 647.0944, 649.1472, 651.2, 653.2528, 655.3056, 657.3584, 659.4112, 661.464, 663.5168, 665.5696, 667.6224, 669.6752, 671.728, 673.7808, 675.8336, 677.8864, 679.9392, 681.992, 684.0448, 686.0976, 688.1504]</span>
-<span class="go">Wavelengths used (``b2``): [801.0544, 803.1072, 805.16, 807.2128, 809.2656, 811.3184, 813.3712, 815.424, 817.4768, 819.5296, 821.5824, 823.6352, 825.688, 827.7408, 829.7936, 831.8464, 833.8992, 835.952, 838.0048, 840.0576, 842.1104, 844.1632, 846.216, 848.2688, 850.3216, 852.3744, 854.4272, 856.48, 858.5328]</span>
-
-<span class="go">(659/830)</span>
+<span class="go">Effective band ratio: (659/830)</span>
 </pre></div>
 </div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">array_ratio</span><span class="p">)</span>
@@ -553,29 +571,69 @@ mimic a single broad band. We can take the mean of two bands by
 changing <code class="docutils literal notranslate"><span class="pre">list_range</span></code> to <code class="docutils literal notranslate"><span class="pre">False</span></code>, and this slightly changes the
 result.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array_ratio</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_segment</span><span class="o">.</span><span class="n">band_math_ratio</span><span class="p">(</span><span class="n">wl1</span><span class="o">=</span><span class="p">[</span><span class="mi">630</span><span class="p">,</span> <span class="mi">690</span><span class="p">],</span> <span class="n">wl2</span><span class="o">=</span><span class="p">[</span><span class="mi">800</span><span class="p">,</span> <span class="mi">860</span><span class="p">],</span> <span class="n">list_range</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
-<span class="go">Bands used (``b1``): [116, 145]</span>
-<span class="go">Bands used (``b2``): [198, 228]</span>
-
-<span class="go">Wavelengths used (``b1``): [630.672, 690.2032]</span>
-<span class="go">Wavelengths used (``b2``): [799.0016, 860.5856]</span>
-
-<span class="go">(660/830)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">array_ratio</span><span class="p">)</span>
+<span class="go">Effective band ratio: (660/830)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">array_ratio</span><span class="p">)</span>
 <span class="go">0.113607444</span>
 </pre></div>
 </div>
 <p>Show the red/near-infrared ratio image via <code class="docutils literal notranslate"><span class="pre">hsio.show_img</span></code></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">show_img</span><span class="p">(</span><span class="n">array_ratio</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
-
 </pre></div>
 </div>
 <img alt="../_images/ratio_r_nir.png" src="../_images/ratio_r_nir.png" />
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="hs_process.segment.composite_band">
+<code class="sig-name descname"><span class="pre">composite_band</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wl1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spyfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment.composite_band"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.segment.composite_band" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates a composite band from a range of bands or wavelengths.
+Bands/wavelengths can be input as individual bands, a set of bands
+(i.e., list of bands), or a range of bands (i.e., list of two bands
+indicating the lower and upper range).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wl1</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>, or <code class="docutils literal notranslate"><span class="pre">list</span></code>) -- the wavelength (or set of
+wavelengths) to consolidate; if <code class="docutils literal notranslate"><span class="pre">list</span></code>, then all wavelengths
+between two wavelength values are consolidated by calculating
+the mean pixel value across all wavelengths in that range
+(default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>b1</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>, or <code class="docutils literal notranslate"><span class="pre">list</span></code>) -- the band (or set of
+bands) to consolidate; if <code class="docutils literal notranslate"><span class="pre">list</span></code>, then all bands
+between two band values are consolidated by calculating
+the mean pixel value across all bands in that range (default:
+<code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>spyfile</strong> (<code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> object or <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>) -- The datacube to
+process; if <code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code> or <code class="docutils literal notranslate"><span class="pre">None</span></code>, loads band information
+from <code class="docutils literal notranslate"><span class="pre">self.spyfile</span></code> (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>list_range</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) -- Whether a band passed as a list is
+interpreted as a range of bands (<code class="docutils literal notranslate"><span class="pre">True</span></code>) or for each
+individual band in the list (<code class="docutils literal notranslate"><span class="pre">False</span></code>). If <code class="docutils literal notranslate"><span class="pre">list_range</span></code> is
+<code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">b1</span></code>/<code class="docutils literal notranslate"><span class="pre">wl1</span></code> and <code class="docutils literal notranslate"><span class="pre">b2</span></code>/<code class="docutils literal notranslate"><span class="pre">wl2</span></code> should be lists
+with two items, and all bands/wavelegths between the two values
+will be used (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>).</p></li>
+<li><p><strong>print_out</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) -- Whether to print out the actual bands and
+wavelengths being used in the NDI calculation (default:
+<code class="docutils literal notranslate"><span class="pre">True</span></code>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>2-element <code class="docutils literal notranslate"><span class="pre">tuple</span></code> containing</p>
+<ul class="simple">
+<li><p><strong>array_b1</strong> (<code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>): Consolidated array.</p></li>
+<li><p><strong>metadata</strong> (<code class="docutils literal notranslate"><span class="pre">dict</span></code>): Modified metadata describing the
+consolidated array (<code class="docutils literal notranslate"><span class="pre">array_b1</span></code>).</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="hs_process.segment.load_spyfile">
-<code class="sig-name descname">load_spyfile</code><span class="sig-paren">(</span><em class="sig-param">spyfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment.load_spyfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.segment.load_spyfile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">load_spyfile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spyfile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/segment.html#segment.load_spyfile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.segment.load_spyfile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads a <code class="docutils literal notranslate"><span class="pre">SpyFile</span></code> (Spectral Python object) for data access and/or
 manipulation by the <code class="docutils literal notranslate"><span class="pre">hstools</span></code> class.</p>
 <dl class="field-list simple">
@@ -623,8 +681,8 @@ manipulated.</p>
       
     </p>
     <p>
-        &copy; Copyright 2020, Tyler J. Nigon.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.<br/>
+        &copy; Copyright 2019-2021, Tyler J. Nigon.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
     </p>
   </div>
 </footer>

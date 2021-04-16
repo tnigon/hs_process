@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="python">
+<html lang="python">
   <head>
     <meta charset="utf-8" />
-    <title>1. Setup and Installation &#8212; hs_process 0.0.3 documentation</title>
-    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1. Setup and Installation &#8212; hs_process 0.0.4 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
-    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="2. Tutorial: hsio" href="tutorial_hsio.html" />
@@ -46,7 +46,7 @@
           <ul class="nav navbar-nav">
             
                 <li><a href="https://github.com/tnigon/hs_process">Github</a></li>
-                <li><a href="https://pypi.org/project/hs-process/">PyPI</a></li>
+                <li><a href="https://anaconda.org/conda-forge/hs-process">Download</a></li>
                 <li><a href="http://www.spectralpython.net/">Spectral Python</a></li>
             
             
@@ -59,7 +59,28 @@
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Home</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1. Setup and Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_hsio.html">2. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_hstools.html">3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hstools</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_segment.html">4. Tutorial: <code class="docutils literal notranslate"><span class="pre">segment</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_spec_mod.html">5. Tutorial: <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_spatial_mod.html">6. Tutorial: <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_batch.html">7. Tutorial: <code class="docutils literal notranslate"><span class="pre">batch</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="my_hs_process_api.html">8. API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/hs_process.batch.html">8.1.1. batch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/hs_process.defaults.html">8.1.2. defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/hs_process.hsio.html">8.1.3. hsio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/hs_process.hstools.html">8.1.4. hstools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/hs_process.segment.html">8.1.5. segment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/hs_process.spatial_mod.html">8.1.6. spatial_mod</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/hs_process.spec_mod.html">8.1.7. spec_mod</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="license.html">9. License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html">10. Change Log</a></li>
+</ul>
+</li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">1. Setup and Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial_hsio.html">2. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial_hstools.html">3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hstools</span></code></a></li>
@@ -67,7 +88,16 @@
 <li class="toctree-l1"><a class="reference internal" href="tutorial_spec_mod.html">5. Tutorial: <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial_spatial_mod.html">6. Tutorial: <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial_batch.html">7. Tutorial: <code class="docutils literal notranslate"><span class="pre">batch</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="my_hs_process_api.html">8. API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="my_hs_process_api.html">8. API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.batch.html">8.1.1. batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.defaults.html">8.1.2. defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.hsio.html">8.1.3. hsio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.hstools.html">8.1.4. hstools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.segment.html">8.1.5. segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.spatial_mod.html">8.1.6. spatial_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.spec_mod.html">8.1.7. spec_mod</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">9. License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">10. Change Log</a></li>
 </ul>
@@ -118,20 +148,16 @@
       <div class="col-md-3">
         <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
 <li><a class="reference internal" href="#">1. Setup and Installation</a><ul>
-<li><a class="reference internal" href="#Installing-with-Anaconda/conda">1.1. Installing with Anaconda/conda</a><ul>
-<li><a class="reference internal" href="#[Option-2]-Installing-via-pip">1.1.1. [Option 2] Installing via <code class="docutils literal notranslate"><span class="pre">pip</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#Installing-with-Anaconda/conda">1.1. Installing with Anaconda/conda</a></li>
 <li><a class="reference internal" href="#Confirming-your-environment">1.2. Confirming your environment</a></li>
 <li><a class="reference internal" href="#Testing-hs_process-installation">1.3. Testing <code class="docutils literal notranslate"><span class="pre">hs_process</span></code> installation</a></li>
 <li><a class="reference internal" href="#Other-information">1.4. Other information</a><ul>
 <li><a class="reference internal" href="#Install-Python">1.4.1. Install Python</a></li>
 <li><a class="reference internal" href="#Create-a-new-environment-(optional)">1.4.2. Create a new environment (optional)</a></li>
-<li><a class="reference internal" href="#Install-Spyder-and/or-Jupyter-Notebook">1.4.3. Install Spyder and/or Jupyter Notebook</a></li>
-<li><a class="reference internal" href="#System-Requirements">1.4.4. System Requirements</a></li>
-<li><a class="reference internal" href="#Software-and-Libraries">1.4.5. Software and Libraries</a></li>
-<li><a class="reference internal" href="#Other-methods-for-installing-hs_process">1.4.6. Other methods for installing <code class="docutils literal notranslate"><span class="pre">hs_process</span></code></a></li>
-<li><a class="reference internal" href="#GeoPandas-and-Fiona-dependencies">1.4.7. GeoPandas and Fiona dependencies</a></li>
+<li><a class="reference internal" href="#System-Requirements">1.4.3. System Requirements</a></li>
+<li><a class="reference internal" href="#Software-and-Libraries">1.4.4. Software and Libraries</a></li>
+<li><a class="reference internal" href="#Other-methods-for-installing-hs_process">1.4.5. Other methods for installing <code class="docutils literal notranslate"><span class="pre">hs_process</span></code></a></li>
+<li><a class="reference internal" href="#GeoPandas-and-Fiona-dependencies">1.4.6. GeoPandas and Fiona dependencies</a></li>
 </ul>
 </li>
 </ul>
@@ -154,21 +180,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -215,20 +255,33 @@ div.nboutput.container div.prompt pre {
 /* all prompts */
 div.nbinput.container div.prompt,
 div.nboutput.container div.prompt {
-    min-width: 5.5ex;
-    padding-top: 0.3rem;
-    padding-right: 0.3rem;
-    text-align: right;
-    flex: 0;
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
 }
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
 @media (max-width: 540px) {
     div.nbinput.container div.prompt,
     div.nboutput.container div.prompt {
+        width: unset;
         text-align: left;
         padding: 0.4em;
     }
     div.nboutput.container div.prompt.empty {
         padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
     }
 }
 
@@ -256,7 +309,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -321,7 +374,8 @@ div.nboutput.container div.output_area div[class*=highlight].math,
 div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
-    padding: 0.3rem;
+    padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -381,26 +435,11 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="Installing-with-Anaconda/conda">
 <h2><span class="section-number">1.1. </span>Installing with Anaconda/conda<a class="headerlink" href="#Installing-with-Anaconda/conda" title="Permalink to this headline">¶</a></h2>
 <p>With <a class="reference external" href="https://www.anaconda.com/distribution/#download-section">Anaconda</a> installed, please proceed to install <code class="docutils literal notranslate"><span class="pre">hs_process</span></code> via <a class="reference external" href="https://anaconda.org/conda-forge/hs-process">conda-forge</a>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">hs</span><span class="o">-</span><span class="n">process</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>conda install -c conda-forge hs-process
 </pre></div>
 </div>
 <p>This is the easiest, most complete, and most reliable method for installation because it installs all of the dependencies from the same conda-forge channel. Before installing, it is recommended to create a new environment (see the <a class="reference external" href="installation.html#Create-a-new-environment-(optional)">Python Environment setup below</a>).</p>
-<div class="section" id="[Option-2]-Installing-via-pip">
-<h3><span class="section-number">1.1.1. </span>[Option 2] Installing via <code class="docutils literal notranslate"><span class="pre">pip</span></code><a class="headerlink" href="#[Option-2]-Installing-via-pip" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">hs_process</span></code> can be installed via <code class="docutils literal notranslate"><span class="pre">pip</span></code>, but first the dependencies should be installed via the <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span></code> command from the <em>conda forge</em> channel. Although <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">hs_process</span></code> will try to install package dependencies available on <a class="reference external" href="https://pypi.org/">PyPI</a>, it is not generally recommended to install a package via <code class="docutils literal notranslate"><span class="pre">pip</span></code> if that package exists in the <a class="reference external" href="https://anaconda.org/anaconda/repo">Anaconda Package Repository</a>. In the <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">Console</span></code>, execute each of the
-following commands:</p>
-<ol class="arabic simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">geopandas</span> <span class="pre">-y</span></code> <a class="reference external" href="https://anaconda.org/conda-forge/geopandas">(link)</a></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">seaborn</span> <span class="pre">-y</span></code> <a class="reference external" href="https://anaconda.org/conda-forge/seaborn">(link)</a></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">spectral</span> <span class="pre">-y</span></code> <a class="reference external" href="https://anaconda.org/conda-forge/spectral">(link)</a></p></li>
-</ol>
-<p>Now that all of the dependencies are installed via <code class="docutils literal notranslate"><span class="pre">conda</span></code>, <code class="docutils literal notranslate"><span class="pre">hs_process</span></code> can finally be installed via <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
-<ol class="arabic simple" start="4">
-<li><p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">hs_process</span></code> <a class="reference external" href="https://pypi.org/project/hs_process/">(link)</a> will install the remaining dependencies via <code class="docutils literal notranslate"><span class="pre">pip</span></code>. Note that <code class="docutils literal notranslate"><span class="pre">pip</span></code> should only be used <em>after</em> as many dependencies as possible are installed via <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span></code> - <a class="reference external" href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#using-pip-in-an-environment">see here for more information</a>.</p></li>
-</ol>
 </div>
-</div>
-<hr class="docutils" />
 <div class="section" id="Confirming-your-environment">
 <h2><span class="section-number">1.2. </span>Confirming your environment<a class="headerlink" href="#Confirming-your-environment" title="Permalink to this headline">¶</a></h2>
 <p>It can be easy to accidentally open a Python IDE (e.g., <a class="reference external" href="https://www.spyder-ide.org/">Spyder</a> or <a class="reference external" href="https://jupyter.org/">Jupyter Notebook</a>) for a Python environment different that where <code class="docutils literal notranslate"><span class="pre">hs_process</span></code> and its dependencies were installed. The following Python command can be used to confirm you are using the Python executable in your new environment:</p>
@@ -421,7 +460,7 @@ following commands:</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&#39;C:\\Users\\nigo0024\\AppData\\Local\\Continuum\\anaconda3\\envs\\spec\\python.exe&#39;
+&#39;C:\\Users\\nigo0024\\Anaconda3\\envs\\hs_process\\python.exe&#39;
 </pre></div></div>
 </div>
 </div>
@@ -437,118 +476,34 @@ following commands:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">&lt;path</span> <span class="pre">to</span> <span class="pre">hs_process\test\test.py&gt;</span></code> to run through some basic tests to be sure all dependencies are installed properly.</p></li>
 </ol>
 <hr class="docutils" />
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="o">%</span><span class="k">run</span> F:\nigo0024\Documents\GitHub\hs_process\test\test.py  # optionally, a script can be run from Jupyter with this syntax
-</pre></div>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-test_bip_extensions (test_hsio.Test_hsio_get_fname_hdr) ... ok
-test_spec_extensions (test_hsio.Test_hsio_get_fname_hdr) ... ok
-test_failure (test_hsio.Test_hsio_read_cube) ... expected failure
-test_names (test_hsio.Test_hsio_read_cube) ... ok
-test_readability (test_hsio.Test_hsio_read_cube) ... ok
-test_split (test_hsio.Test_hsio_read_cube) ... skipped &#39;demonstrating skipping&#39;
-test_names (test_hsio.Test_hsio_read_spec) ... ok
-test_readability (test_hsio.Test_hsio_read_spec) ... ok
-test_byteorder (test_hsio.Test_hsio_set_io_defaults) ... ok
-test_dtype (test_hsio.Test_hsio_set_io_defaults) ... ok
-test_ext (test_hsio.Test_hsio_set_io_defaults) ... ok
-test_force (test_hsio.Test_hsio_set_io_defaults) ... ok
-test_instance_independence (test_hsio.Test_hsio_set_io_defaults) ... ok
-test_interleave (test_hsio.Test_hsio_set_io_defaults) ... ok
-test_return_values (test_hsio.Test_hsio_set_io_defaults) ... ok
-test_write_cube (test_hsio.Test_hsio_write_cube) ... ok
-test_write_spec (test_hsio.Test_hsio_write_spec) ...
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-C:\Users\nigo0024\AppData\Local\Temp\tmpl3m_8qps\Wells_rep2_20180628_16h56m_pika_gige_7.bip.hdr
-Saving C:\Users\nigo0024\AppData\Local\Temp\tmpl3m_8qps\Wells_rep2_20180628_16h56m_pika_gige_7.bip
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-ok
-test_write_tif_multi (test_hsio.Test_hsio_write_tif) ... ok
-test_write_tif_single (test_hsio.Test_hsio_write_tif) ...
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Saving C:\Users\nigo0024\AppData\Local\Temp\tmpvpeb_d9y\Wells_rep2_20180628_16h56m_pika_gige_7-mean.spec
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-ok
-
-----------------------------------------------------------------------
-Ran 19 tests in 1.248s
-
-OK (skipped=1, expected failures=1)
-</pre></div></div>
-</div>
 </div>
 <div class="section" id="Other-information">
 <h2><span class="section-number">1.4. </span>Other information<a class="headerlink" href="#Other-information" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="Install-Python">
 <h3><span class="section-number">1.4.1. </span>Install Python<a class="headerlink" href="#Install-Python" title="Permalink to this headline">¶</a></h3>
 <p>There are many ways to download and install Python. The <a class="reference external" href="https://www.anaconda.com/distribution/#download-section">Anaconda distribution</a> is recommended becuase it can simplify the installation of package dependencies and streamlines the process of setting up the virtual environment. Anaconda also comes with <a class="reference external" href="https://www.spyder-ide.org/">Spyder</a> and <a class="reference external" href="https://jupyter.org/">Jupyter notebooks</a>, each of which make working with Python quite easy.</p>
-<p>Download and install <strong>Python 3.7</strong> via <a class="reference external" href="https://www.anaconda.com/distribution/#download-section">Anaconda</a>. When installing, choose <strong>install for only me</strong> instead of <em>install for all users</em>, as this simplifies insallation of package dependencies.</p>
-<p><strong>Note:</strong> Due to dependency conflicts, <code class="docutils literal notranslate"><span class="pre">hs_process</span></code> seems to only work with <em>Python 3.6</em> and <em>Python 3.7</em> (as of February 2020).</p>
-</div>
 <hr class="docutils" />
+</div>
 <div class="section" id="Create-a-new-environment-(optional)">
 <h3><span class="section-number">1.4.2. </span>Create a new environment (optional)<a class="headerlink" href="#Create-a-new-environment-(optional)" title="Permalink to this headline">¶</a></h3>
 <p>Creating a new environment is not strictly necessary, but given that installing other geospatial packages from different channels may cause dependency conflicts, it can be good practice to install the geospatial stack in a clean environment starting fresh.</p>
 <p>A <em>Python environment</em> refers to the ecosystem consisting of a particular installed version of <a class="reference external" href="https://www.python.org/">Python</a>, as well as any third-party packages it has access to. In Python, every time a package is installed (e.g., <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">some_third_party_package</span></code>, <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">some_third_party_package</span></code>, etc.), your Python environment is gaining functionality that builds upon the <a class="reference external" href="https://docs.python.org/3/library/">Python Standard Library</a>.</p>
 <p>This is great because the possibilities of what can be accomplished using Python is virtually limitless. Ideally, the list of packages in a given environment should only include those required in the project we are working on, not all packages that have ever been installed and are needed for any project you’ve ever worked on (this can be dozens or even hundreds of packages). A downside with too many packages is that it is inefficient to share your environment with someone else that would like to
 use the program. As time goes on, there may also be compatibility issues among package dependencies and your code that can be avoided by creating a tidy little Python environment for your project.</p>
-<p>With <a class="reference external" href="https://www.anaconda.com/distribution/#download-section">Anaconda</a> installed, it is first recommended (but not required) to create a new <strong>Python 3.7</strong> environment before installing package dependencies. Open an Anaconda console from the start menu as an administrator by clicking <code class="docutils literal notranslate"><span class="pre">Start-&gt;Anaconda</span></code>, right-click <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">Console</span></code>, and choose to <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">as</span> <span class="pre">Administrator</span></code>. In the <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">Console</span></code>, execute the following commands:</p>
+<p>With <a class="reference external" href="https://www.anaconda.com/distribution/#download-section">Anaconda</a> installed, it is first recommended (but not required) to create a new <strong>Python 3.8</strong> environment before installing package dependencies. Open an Anaconda console from the start menu as an administrator by clicking <code class="docutils literal notranslate"><span class="pre">Start-&gt;Anaconda</span></code>, right-click <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">Console</span></code>, and choose to <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">as</span> <span class="pre">Administrator</span></code>. In the <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">Console</span></code>, execute the following commands:</p>
 <ol class="arabic simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">-n</span> <span class="pre">spec</span> <span class="pre">python=3.7</span></code> to create an Anaconda <strong>Python 3.7</strong> environment named <strong>spec</strong> (you can name this whatever you’d like).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">-n</span> <span class="pre">spec</span> <span class="pre">python=3.8</span></code> to create an Anaconda <strong>Python 3.8</strong> environment named <strong>spec</strong> (you can name this whatever you’d like).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">spec</span></code> to activate the newly configured environment. <strong>IMPORTANT</strong>: Anytime you want to use <code class="docutils literal notranslate"><span class="pre">hs_process</span></code>, be sure to run <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">spec</span></code> prior to opening your Python IDE via the command line (e.g. <em>Spyder</em>, <em>Jupyter Notebook</em>, etc.). Otherwise, open your IDE via Anaconda Navigator, being sure the correct environment is active.</p></li>
 </ol>
-</div>
 <hr class="docutils" />
-<div class="section" id="Install-Spyder-and/or-Jupyter-Notebook">
-<h3><span class="section-number">1.4.3. </span>Install Spyder and/or Jupyter Notebook<a class="headerlink" href="#Install-Spyder-and/or-Jupyter-Notebook" title="Permalink to this headline">¶</a></h3>
-<p>Open <em>Anaconda Navigator</em> from the start menu by clicking <code class="docutils literal notranslate"><span class="pre">Start</span> <span class="pre">-&gt;</span> <span class="pre">Anaconda</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Anaconda</span> <span class="pre">Navigaor</span></code>. If <a class="reference external" href="https://www.spyder-ide.org/">Spyder</a> or <a class="reference external" href="https://jupyter.org/">Jupyter Notebook</a> are not installed on your new “spec” environment (if you created a new environment), select the “Install” button, then “Launch” to open the application to run Python in your selected environment.</p>
 </div>
-<hr class="docutils" />
 <div class="section" id="System-Requirements">
-<h3><span class="section-number">1.4.4. </span>System Requirements<a class="headerlink" href="#System-Requirements" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.4.3. </span>System Requirements<a class="headerlink" href="#System-Requirements" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">hs_process</span></code> was developed using Python 3 (on Windows 10 OS), so it is recommended to install and use Python 3. This tutorial has only been tested on Windows. It will likely work on other major platforms (i.e., Windows, Linux, Mac), but you will have to be sure to get the required dependencies installed and working on your own.</p>
-</div>
 <hr class="docutils" />
+</div>
 <div class="section" id="Software-and-Libraries">
-<h3><span class="section-number">1.4.5. </span>Software and Libraries<a class="headerlink" href="#Software-and-Libraries" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.4.4. </span>Software and Libraries<a class="headerlink" href="#Software-and-Libraries" title="Permalink to this headline">¶</a></h3>
 <p>The following software and libraries are required to leverage the full API of <code class="docutils literal notranslate"><span class="pre">hs_process</span></code>:</p>
 <p><strong>Software</strong></p>
 <ul class="simple">
@@ -568,10 +523,10 @@ use the program. As time goes on, there may also be compatibility issues among p
 <li><p><a class="reference external" href="https://anaconda.org/conda-forge/matplotlib">Matplotlib</a> *<code class="docutils literal notranslate"><span class="pre">Seaborn</span></code> has a <code class="docutils literal notranslate"><span class="pre">Matplotlib</span></code> dependency</p></li>
 <li><p><a class="reference external" href="https://anaconda.org/conda-forge/shapely">Shapely</a> *<code class="docutils literal notranslate"><span class="pre">GeoPandas</span></code> has a <code class="docutils literal notranslate"><span class="pre">Shapely</span></code> dependency</p></li>
 </ul>
-</div>
 <hr class="docutils" />
+</div>
 <div class="section" id="Other-methods-for-installing-hs_process">
-<h3><span class="section-number">1.4.6. </span>Other methods for installing <code class="docutils literal notranslate"><span class="pre">hs_process</span></code><a class="headerlink" href="#Other-methods-for-installing-hs_process" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.4.5. </span>Other methods for installing <code class="docutils literal notranslate"><span class="pre">hs_process</span></code><a class="headerlink" href="#Other-methods-for-installing-hs_process" title="Permalink to this headline">¶</a></h3>
 <p><strong>IMPORTANT</strong>: Before installing <code class="docutils literal notranslate"><span class="pre">hs_process</span></code> via any of the following methods, be sure the <a class="reference external" href="http://geopandas.org/install.html">GeoPandas</a> and <a class="reference external" href="https://fiona.readthedocs.io/en/latest/index.html">Fiona</a> dependencies are installed via <code class="docutils literal notranslate"><span class="pre">conda</span></code> (see <a class="reference external" href="installation.html#GeoPandas-and-Fiona-dependencies">GeoPandas and Fiona dependencies</a> below).</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">git+https://github.com/tnigon/hs_process</span></code> <a class="reference external" href="https://github.com/tnigon/hs_process">(link)</a> will install the latest development version directly from Github.</p></li>
@@ -581,10 +536,10 @@ use the program. As time goes on, there may also be compatibility issues among p
 <li><p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">.</span></code></p></li>
 </ul>
 <p>The recommended folder directory for the <code class="docutils literal notranslate"><span class="pre">hs_process</span></code> package is in the <em>site-packages</em> folder in your Python Path (alongside all other Python packages).</p>
-</div>
 <hr class="docutils" />
+</div>
 <div class="section" id="GeoPandas-and-Fiona-dependencies">
-<h3><span class="section-number">1.4.7. </span><a class="reference external" href="http://geopandas.org/install.html">GeoPandas</a> and <a class="reference external" href="https://fiona.readthedocs.io/en/latest/index.html">Fiona</a> dependencies<a class="headerlink" href="#GeoPandas-and-Fiona-dependencies" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">1.4.6. </span><a class="reference external" href="http://geopandas.org/install.html">GeoPandas</a> and <a class="reference external" href="https://fiona.readthedocs.io/en/latest/index.html">Fiona</a> dependencies<a class="headerlink" href="#GeoPandas-and-Fiona-dependencies" title="Permalink to this headline">¶</a></h3>
 <p><strong>IMPORTANT</strong>: The <a class="reference external" href="http://geopandas.org/install.html">GeoPandas</a> and <a class="reference external" href="https://fiona.readthedocs.io/en/latest/index.html">Fiona</a> dependencies <strong>MUST</strong> installed via <code class="docutils literal notranslate"><span class="pre">conda</span></code>. <a class="reference external" href="http://geopandas.org/install.html">GeoPandas</a> has a dependency on <a class="reference external" href="https://fiona.readthedocs.io/en/latest/index.html">Fiona</a>, and because of some nuances with the <a class="reference external" href="https://pypi.org/project/Fiona/">pip version of Fiona*</a>, <a class="reference external" href="https://anaconda.org/conda-forge/geopandas">GeoPandas</a> <strong>MUST</strong> be installed via
 Anaconda (at least on Windows OS).</p>
 <ul class="simple">
@@ -607,8 +562,8 @@ Anaconda (at least on Windows OS).</p>
       
     </p>
     <p>
-        &copy; Copyright 2020, Tyler J. Nigon.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.<br/>
+        &copy; Copyright 2019-2021, Tyler J. Nigon.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
     </p>
   </div>
 </footer>

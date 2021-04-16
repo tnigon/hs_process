@@ -28,7 +28,7 @@ autosummary_generate = True
 # -- Project information -----------------------------------------------------
 
 project = 'hs_process'
-copyright = '2020, Tyler J. Nigon'
+copyright = '2019-2021, Tyler J. Nigon'
 author = 'Tyler J. Nigon'
 
 # The full version, including alpha/beta/rc tags

@@ -7,12 +7,8 @@ def readme():
         return readme_file.read()
 
 requirements = [
-# 'gdal',
  'geopandas',  # must be installed with Anaconda because of shapely dependency
-# 'numpy',
-# 'pandas',
  'seaborn',
-# 'matplotlib',
  'spectral',  # segment
  'tqdm'  # for progress bars
  ]

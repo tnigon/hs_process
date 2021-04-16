@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="python">
+<html lang="python">
   <head>
     <meta charset="utf-8" />
-    <title>6. Tutorial: spatial_mod &#8212; hs_process 0.0.3 documentation</title>
-    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>6. Tutorial: spatial_mod &#8212; hs_process 0.0.4 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
-    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="7. Tutorial: batch" href="tutorial_batch.html" />
@@ -46,7 +46,7 @@
           <ul class="nav navbar-nav">
             
                 <li><a href="https://github.com/tnigon/hs_process">Github</a></li>
-                <li><a href="https://pypi.org/project/hs-process/">PyPI</a></li>
+                <li><a href="https://anaconda.org/conda-forge/hs-process">Download</a></li>
                 <li><a href="http://www.spectralpython.net/">Spectral Python</a></li>
             
             
@@ -59,7 +59,28 @@
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Home</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="installation.html">1. Setup and Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_hsio.html">2. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_hstools.html">3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hstools</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_segment.html">4. Tutorial: <code class="docutils literal notranslate"><span class="pre">segment</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_spec_mod.html">5. Tutorial: <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6. Tutorial: <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_batch.html">7. Tutorial: <code class="docutils literal notranslate"><span class="pre">batch</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="my_hs_process_api.html">8. API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/hs_process.batch.html">8.1.1. batch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/hs_process.defaults.html">8.1.2. defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/hs_process.hsio.html">8.1.3. hsio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/hs_process.hstools.html">8.1.4. hstools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/hs_process.segment.html">8.1.5. segment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/hs_process.spatial_mod.html">8.1.6. spatial_mod</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/hs_process.spec_mod.html">8.1.7. spec_mod</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="license.html">9. License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html">10. Change Log</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">1. Setup and Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial_hsio.html">2. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial_hstools.html">3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hstools</span></code></a></li>
@@ -67,7 +88,16 @@
 <li class="toctree-l1"><a class="reference internal" href="tutorial_spec_mod.html">5. Tutorial: <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">6. Tutorial: <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial_batch.html">7. Tutorial: <code class="docutils literal notranslate"><span class="pre">batch</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="my_hs_process_api.html">8. API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="my_hs_process_api.html">8. API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.batch.html">8.1.1. batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.defaults.html">8.1.2. defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.hsio.html">8.1.3. hsio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.hstools.html">8.1.4. hstools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.segment.html">8.1.5. segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.spatial_mod.html">8.1.6. spatial_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/hs_process.spec_mod.html">8.1.7. spec_mod</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">9. License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">10. Change Log</a></li>
 </ul>
@@ -143,21 +173,35 @@
 /* CSS for nbsphinx extension */
 
 /* remove conflicting styling from Sphinx themes */
-div.nbinput.container,
-div.nbinput.container div.prompt,
-div.nbinput.container div.input_area,
-div.nbinput.container div[class*=highlight],
-div.nbinput.container div[class*=highlight] pre,
-div.nboutput.container,
-div.nboutput.container div.prompt,
-div.nboutput.container div.output_area,
-div.nboutput.container div[class*=highlight],
-div.nboutput.container div[class*=highlight] pre {
-    background: none;
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
     border: none;
-    padding: 0 0;
+    padding: 0;
     margin: 0;
     box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
 }
 
 /* avoid gaps between output lines */
@@ -204,20 +248,33 @@ div.nboutput.container div.prompt pre {
 /* all prompts */
 div.nbinput.container div.prompt,
 div.nboutput.container div.prompt {
-    min-width: 5.5ex;
-    padding-top: 0.3rem;
-    padding-right: 0.3rem;
-    text-align: right;
-    flex: 0;
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
 }
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
 @media (max-width: 540px) {
     div.nbinput.container div.prompt,
     div.nboutput.container div.prompt {
+        width: unset;
         text-align: left;
         padding: 0.4em;
     }
     div.nboutput.container div.prompt.empty {
         padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
     }
 }
 
@@ -245,7 +302,7 @@ div.nboutput.container div.output_area {
 div.nbinput.container div.input_area {
     border: 1px solid #e0e0e0;
     border-radius: 2px;
-    background: #f5f5f5;
+    /*background: #f5f5f5;*/
 }
 
 /* override MathJax center alignment in output cells */
@@ -310,7 +367,8 @@ div.nboutput.container div.output_area div[class*=highlight].math,
 div.nboutput.container div.output_area.rendered_html,
 div.nboutput.container div.output_area > div.output_javascript,
 div.nboutput.container div.output_area:not(.rendered_html) > img{
-    padding: 0.3rem;
+    padding: 5px;
+    margin: 0;
 }
 
 /* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
@@ -384,7 +442,6 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">sys</span>
-
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Python install location: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -394,7 +451,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Python install location: C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\python.exe
+Python install location: C:\Users\nigo0024\Anaconda3\envs\msi_sip\python.exe
 </pre></div></div>
 </div>
 <p>The <em>spec</em> folder that contains <code class="docutils literal notranslate"><span class="pre">python.exe</span></code> tells me that the activated Python instance is indeed in the <code class="docutils literal notranslate"><span class="pre">spec</span></code> environment, just as I intend. If you created a virtual environment, but your <code class="docutils literal notranslate"><span class="pre">python.exe</span></code> is not in the <code class="docutils literal notranslate"><span class="pre">envs\spec</span></code> directory, you either did not properly create your virtual environment or you are not pointing to the correct Python installation in your IDE (e.g., Spyder, Jupyter notebook, etc.).</p>
@@ -445,7 +502,7 @@ Python install location: C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\env
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">df_plots</span> <span class="o">=</span> <span class="n">my_spatial_mod</span><span class="o">.</span><span class="n">crop_many_gdf</span><span class="p">(</span><span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">gdf</span><span class="o">=</span><span class="n">gdf</span><span class="p">)</span>
-<span class="n">df_plots</span>
+<span class="n">df_plots</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -476,11 +533,21 @@ Python install location: C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\env
       <th>name_short</th>
       <th>name_long</th>
       <th>ext</th>
-      <th>plot_id</th>
+      <th>plot_id_ref</th>
       <th>pix_e_ul</th>
       <th>pix_n_ul</th>
+      <th>buf_e_m</th>
+      <th>buf_n_m</th>
+      <th>buf_e_pix</th>
+      <th>buf_n_pix</th>
+      <th>crop_e_m</th>
+      <th>crop_n_m</th>
       <th>crop_e_pix</th>
       <th>crop_n_pix</th>
+      <th>gdf_shft_e_m</th>
+      <th>gdf_shft_n_m</th>
+      <th>gdf_shft_e_pix</th>
+      <th>gdf_shft_n_pix</th>
     </tr>
   </thead>
   <tbody>
@@ -493,8 +560,18 @@ Python install location: C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\env
       <td>1018</td>
       <td>113</td>
       <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>229</td>
-      <td>75</td>
+      <td>76</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>1</th>
@@ -505,8 +582,18 @@ Python install location: C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\env
       <td>918</td>
       <td>342</td>
       <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>229</td>
-      <td>75</td>
+      <td>76</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>2</th>
@@ -517,8 +604,18 @@ Python install location: C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\env
       <td>818</td>
       <td>571</td>
       <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>229</td>
-      <td>75</td>
+      <td>76</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>3</th>
@@ -529,8 +626,18 @@ Python install location: C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\env
       <td>718</td>
       <td>800</td>
       <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>229</td>
-      <td>75</td>
+      <td>76</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>4</th>
@@ -541,488 +648,18 @@ Python install location: C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\env
       <td>618</td>
       <td>1029</td>
       <td>0</td>
-      <td>229</td>
-      <td>75</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>1017</td>
-      <td>113</td>
-      <td>75</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>229</td>
       <td>76</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>917</td>
-      <td>342</td>
-      <td>75</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>817</td>
-      <td>571</td>
-      <td>75</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>717</td>
-      <td>800</td>
-      <td>75</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>617</td>
-      <td>1029</td>
-      <td>75</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>1016</td>
-      <td>113</td>
-      <td>152</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>916</td>
-      <td>342</td>
-      <td>152</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>816</td>
-      <td>571</td>
-      <td>152</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>716</td>
-      <td>800</td>
-      <td>152</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>616</td>
-      <td>1029</td>
-      <td>152</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>1015</td>
-      <td>113</td>
-      <td>228</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>915</td>
-      <td>342</td>
-      <td>228</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>815</td>
-      <td>571</td>
-      <td>228</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>715</td>
-      <td>800</td>
-      <td>228</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>615</td>
-      <td>1029</td>
-      <td>228</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>1014</td>
-      <td>113</td>
-      <td>304</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>914</td>
-      <td>342</td>
-      <td>304</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>814</td>
-      <td>571</td>
-      <td>304</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>714</td>
-      <td>800</td>
-      <td>304</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>614</td>
-      <td>1029</td>
-      <td>304</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>1013</td>
-      <td>113</td>
-      <td>380</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>913</td>
-      <td>342</td>
-      <td>380</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>813</td>
-      <td>571</td>
-      <td>380</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>713</td>
-      <td>800</td>
-      <td>380</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>613</td>
-      <td>1029</td>
-      <td>380</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>30</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>1012</td>
-      <td>113</td>
-      <td>456</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>31</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>912</td>
-      <td>342</td>
-      <td>456</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>32</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>812</td>
-      <td>571</td>
-      <td>456</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>33</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>712</td>
-      <td>800</td>
-      <td>456</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>34</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>612</td>
-      <td>1029</td>
-      <td>456</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>35</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>1011</td>
-      <td>113</td>
-      <td>533</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>36</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>911</td>
-      <td>342</td>
-      <td>533</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>37</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>811</td>
-      <td>571</td>
-      <td>533</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>38</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>711</td>
-      <td>800</td>
-      <td>533</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>39</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>611</td>
-      <td>1029</td>
-      <td>533</td>
-      <td>229</td>
-      <td>76</td>
-    </tr>
-    <tr>
-      <th>40</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>1010</td>
-      <td>113</td>
-      <td>609</td>
-      <td>229</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>41</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>910</td>
-      <td>342</td>
-      <td>609</td>
-      <td>229</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>42</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>810</td>
-      <td>571</td>
-      <td>609</td>
-      <td>229</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>43</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>710</td>
-      <td>800</td>
-      <td>609</td>
-      <td>229</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>44</th>
-      <td>F:\\nigo0024\Documents\hs_process_demo</td>
-      <td>Wells_rep2_20180628_16h56m_pika_gige_7</td>
-      <td>-Radiance Conversion-Georectify Airborne Datac...</td>
-      <td>.bip</td>
-      <td>610</td>
-      <td>1029</td>
-      <td>609</td>
-      <td>229</td>
-      <td>7</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
   </tbody>
 </table>
@@ -1038,10 +675,10 @@ Python install location: C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\env
 <span class="n">pix_n_ul</span><span class="o">=</span><span class="mi">0</span>
 <span class="n">crop_e_pix</span><span class="o">=</span><span class="mi">229</span>
 <span class="n">crop_n_pix</span><span class="o">=</span><span class="mi">75</span>
-<span class="n">plot_id</span><span class="o">=</span><span class="mi">1018</span>
+<span class="n">plot_id_ref</span><span class="o">=</span><span class="mi">1018</span>
 <span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_spatial_mod</span><span class="o">.</span><span class="n">crop_single</span><span class="p">(</span>
     <span class="n">pix_e_ul</span><span class="o">=</span><span class="n">pix_e_ul</span><span class="p">,</span> <span class="n">pix_n_ul</span><span class="o">=</span><span class="n">pix_n_ul</span><span class="p">,</span> <span class="n">crop_e_pix</span><span class="o">=</span><span class="n">crop_e_pix</span><span class="p">,</span> <span class="n">crop_n_pix</span><span class="o">=</span><span class="n">crop_n_pix</span><span class="p">,</span>
-    <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">plot_id</span><span class="o">=</span><span class="n">plot_id</span><span class="p">)</span>
+    <span class="n">spyfile</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">,</span> <span class="n">plot_id_ref</span><span class="o">=</span><span class="n">plot_id_ref</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1054,29 +691,19 @@ Python install location: C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\env
 <span></span><span class="n">fname_out</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_out</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">name_short</span> <span class="o">+</span> <span class="s1">&#39;_plot_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">1018</span><span class="p">)</span> <span class="o">+</span> <span class="n">name_append</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">envi_write</span><span class="o">.</span><span class="n">interleave</span><span class="p">)</span>
 <span class="n">fname_out_tif</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_out</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">name_short</span> <span class="o">+</span> <span class="s1">&#39;_plot_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">1018</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.tif&#39;</span><span class="p">)</span>
 
-<span class="n">io</span><span class="o">.</span><span class="n">write_cube</span><span class="p">(</span><span class="n">fname_out</span><span class="p">,</span> <span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
+<span class="n">io</span><span class="o">.</span><span class="n">write_cube</span><span class="p">(</span><span class="n">fname_out</span><span class="p">,</span> <span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">io</span><span class="o">.</span><span class="n">write_tif</span><span class="p">(</span><span class="n">fname_out_tif</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1018-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-</pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/tutorial_spatial_mod_13_1.png" src="_images/tutorial_spatial_mod_13_1.png" />
-</div>
+<div class="highlight"><pre>
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+</pre></div></div>
 </div>
 <p>Using a for loop, use <code class="docutils literal notranslate"><span class="pre">spatial_mod.crop_single</span></code> and <code class="docutils literal notranslate"><span class="pre">hsio.write_cube</span></code> to crop by plot and save cropped datacubes and geotiffs to file</p>
 <div class="nbinput docutils container">
@@ -1086,403 +713,107 @@ Either `projection_out` is `None` or `geotransform_out` is `None` (or both are).
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df_plots</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
     <span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname_in</span><span class="p">,</span> <span class="n">name_long</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">name_long</span><span class="p">,</span>
-                 <span class="n">name_plot</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;plot_id&#39;</span><span class="p">],</span>
+                 <span class="n">name_plot</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;plot_id_ref&#39;</span><span class="p">],</span>
                  <span class="n">name_short</span><span class="o">=</span><span class="n">io</span><span class="o">.</span><span class="n">name_short</span><span class="p">)</span>
     <span class="n">my_spatial_mod</span><span class="o">.</span><span class="n">load_spyfile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="p">)</span>
     <span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">my_spatial_mod</span><span class="o">.</span><span class="n">crop_single</span><span class="p">(</span>
             <span class="n">pix_e_ul</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;pix_e_ul&#39;</span><span class="p">],</span> <span class="n">pix_n_ul</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;pix_n_ul&#39;</span><span class="p">],</span>
             <span class="n">crop_e_pix</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;crop_e_pix&#39;</span><span class="p">],</span> <span class="n">crop_n_pix</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;crop_n_pix&#39;</span><span class="p">],</span>
             <span class="n">buf_e_m</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">buf_n_m</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span>
-            <span class="n">plot_id</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;plot_id&#39;</span><span class="p">])</span>
+            <span class="n">plot_id_ref</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;plot_id_ref&#39;</span><span class="p">])</span>
 
-    <span class="n">fname_out</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_out</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">name_short</span> <span class="o">+</span> <span class="s1">&#39;_plot_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;plot_id&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="n">name_append</span> <span class="o">+</span> <span class="s1">&#39;.bip.hdr&#39;</span><span class="p">)</span>
-    <span class="n">fname_out_tif</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_out</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">name_short</span> <span class="o">+</span> <span class="s1">&#39;_plot_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;plot_id&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;.tif&#39;</span><span class="p">)</span>
+    <span class="n">fname_out</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_out</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">name_short</span> <span class="o">+</span> <span class="s1">&#39;_plot_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;plot_id_ref&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="n">name_append</span> <span class="o">+</span> <span class="s1">&#39;.bip.hdr&#39;</span><span class="p">)</span>
+    <span class="n">fname_out_tif</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_out</span><span class="p">,</span> <span class="n">io</span><span class="o">.</span><span class="n">name_short</span> <span class="o">+</span> <span class="s1">&#39;_plot_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;plot_id_ref&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;.tif&#39;</span><span class="p">)</span>
 
     <span class="n">io</span><span class="o">.</span><span class="n">write_cube</span><span class="p">(</span><span class="n">fname_out</span><span class="p">,</span> <span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># force=True to overwrite the plot_1018 image</span>
     <span class="n">io</span><span class="o">.</span><span class="n">write_tif</span><span class="p">(</span><span class="n">fname_out_tif</span><span class="p">,</span> <span class="n">spyfile</span><span class="o">=</span><span class="n">array_crop</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1018-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_918-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_818-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_718-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_618-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1017-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_917-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_817-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_717-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_617-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1016-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_916-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_816-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_716-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_616-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1015-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_915-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_815-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_715-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_615-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1014-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_914-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_814-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_714-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_614-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_913-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_813-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_713-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_613-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_912-crop-many-gdf.bip
-Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
-
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_812-crop-many-gdf.bip
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
+<div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
 
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_712-crop-many-gdf.bip
 Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
 
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_612-crop-many-gdf.bip
 Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
 
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-crop-many-gdf.bip
 Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
 
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_911-crop-many-gdf.bip
 Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
 
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_811-crop-many-gdf.bip
 Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
 
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-C:\Users\nigo0024\AppData\Local\Continuum\anaconda3\envs\spec\lib\site-packages\hs_process\utilities.py:1041: MatplotlibDeprecationWarning: Adding an axes using the same arguments as a previous axes currently reuses the earlier instance.  In a future version, a new instance will always be created and returned.  Meanwhile, this warning can be suppressed, and the future behavior ensured, by passing a unique label to each axes instance.
-  ax = plt.subplot()
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_711-crop-many-gdf.bip
 Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
 
-
-
-Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_611-crop-many-gdf.bip
 Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
 
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
 
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
+
+Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
 
 The size of ``spyfile`` is zero; thus there is nothing to write to file and ``write_cube()`` is being aborted.
 Filename: Wells_rep2_20180628_16h56m_pika_gige_7_plot_1010-crop-many-gdf.bip.hdr
@@ -1516,19 +847,12 @@ Filename: Wells_rep2_20180628_16h56m_pika_gige_7_plot_610.tif
 
 </pre></div></div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="_images/tutorial_spatial_mod_15_15.png" src="_images/tutorial_spatial_mod_15_15.png" />
-</div>
-</div>
 <p>Open cropped geotiff images in <em>QGIS</em> to visualize the extent of the cropped images compared to the original datacube and the plot boundaries (the full extent image is darkened and displayed in the background): <img alt="crop_many_gdf" src="_images/crop_many_gdf_qgis1.png" /></p>
 </div>
 <hr class="docutils" />
 <div class="section" id="spatial_mod.crop_single">
 <h2><span class="section-number">6.4. </span><code class="docutils literal notranslate"><span class="pre">spatial_mod.crop_single</span></code><a class="headerlink" href="#spatial_mod.crop_single" title="Permalink to this headline">¶</a></h2>
-<p>Crops a single plot from an image. If <code class="docutils literal notranslate"><span class="pre">plot_id</span></code> and <code class="docutils literal notranslate"><span class="pre">gdf</span></code> are explicitly passed (i.e., they will not be loaded from <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code> class), the “map info” tag in the metadata will be adjusted to center the cropped area within the appropriate plot geometry. <a class="reference external" href="api/hs_process.spatial_mod.html#hs_process.spatial_mod.crop_single">[API]</a></p>
+<p>Crops a single plot from an image. If <code class="docutils literal notranslate"><span class="pre">plot_id_ref</span></code> and <code class="docutils literal notranslate"><span class="pre">gdf</span></code> are explicitly passed (i.e., they will not be loaded from <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code> class), the “map info” tag in the metadata will be adjusted to center the cropped area within the appropriate plot geometry. <a class="reference external" href="api/hs_process.spatial_mod.html#hs_process.spatial_mod.crop_single">[API]</a></p>
 <p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">hsio</span></code> and <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code> modules</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
@@ -1571,23 +895,14 @@ Filename: Wells_rep2_20180628_16h56m_pika_gige_7_plot_610.tif
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
+<div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Either `projection_out` is `None` or `geotransform_out` is `None` (or both are). Retrieving projection and geotransform information by loading `hsio.fname_in` via GDAL. Be sure this is appropriate for the data you are trying to write.
 
-
-
 </pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="_images/tutorial_spatial_mod_22_1.png" src="_images/tutorial_spatial_mod_22_1.png" />
-</div>
 </div>
 <p>Open cropped geotiff image in QGIS to visualize the extent of the cropped image compared to the original datacube and the plot boundaries (the full extent image is darkened and displayed in the background): <img alt="crop_single" src="_images/crop_single_qgis1.png" /></p>
 </div>
@@ -1651,8 +966,8 @@ Either `projection_out` is `None` or `geotransform_out` is `None` (or both are).
       
     </p>
     <p>
-        &copy; Copyright 2020, Tyler J. Nigon.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.<br/>
+        &copy; Copyright 2019-2021, Tyler J. Nigon.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
     </p>
   </div>
 </footer>

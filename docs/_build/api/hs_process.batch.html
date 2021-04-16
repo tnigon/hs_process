@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="python">
+<html lang="python">
   <head>
     <meta charset="utf-8" />
-    <title>8.1.1. batch &#8212; hs_process 0.0.3 documentation</title>
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>8.1.1. batch &#8212; hs_process 0.0.4 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="8.1.2. defaults" href="hs_process.defaults.html" />
@@ -46,7 +46,7 @@
           <ul class="nav navbar-nav">
             
                 <li><a href="https://github.com/tnigon/hs_process">Github</a></li>
-                <li><a href="https://pypi.org/project/hs-process/">PyPI</a></li>
+                <li><a href="https://anaconda.org/conda-forge/hs-process">Download</a></li>
                 <li><a href="http://www.spectralpython.net/">Spectral Python</a></li>
             
             
@@ -59,7 +59,28 @@
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Home</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../installation.html">1. Setup and Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_hsio.html">2. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_hstools.html">3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hstools</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_segment.html">4. Tutorial: <code class="docutils literal notranslate"><span class="pre">segment</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_spec_mod.html">5. Tutorial: <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_spatial_mod.html">6. Tutorial: <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial_batch.html">7. Tutorial: <code class="docutils literal notranslate"><span class="pre">batch</span></code></a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../my_hs_process_api.html">8. API</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">8.1.1. batch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.defaults.html">8.1.2. defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.hsio.html">8.1.3. hsio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.hstools.html">8.1.4. hstools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.segment.html">8.1.5. segment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.spatial_mod.html">8.1.6. spatial_mod</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hs_process.spec_mod.html">8.1.7. spec_mod</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">9. License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html">10. Change Log</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">1. Setup and Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_hsio.html">2. Tutorial: <code class="docutils literal notranslate"><span class="pre">hsio</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_hstools.html">3. Tutorial: <code class="docutils literal notranslate"><span class="pre">hstools</span></code></a></li>
@@ -67,7 +88,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_spec_mod.html">5. Tutorial: <code class="docutils literal notranslate"><span class="pre">spec_mod</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_spatial_mod.html">6. Tutorial: <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial_batch.html">7. Tutorial: <code class="docutils literal notranslate"><span class="pre">batch</span></code></a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../my_hs_process_api.html">8. API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../my_hs_process_api.html">8. API</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">8.1.1. batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.defaults.html">8.1.2. defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.hsio.html">8.1.3. hsio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.hstools.html">8.1.4. hstools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.segment.html">8.1.5. segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spatial_mod.html">8.1.6. spatial_mod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hs_process.spec_mod.html">8.1.7. spec_mod</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../license.html">9. License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">10. Change Log</a></li>
 </ul>
@@ -133,9 +163,9 @@
       
   <div class="section" id="batch">
 <h1><span class="section-number">8.1.1. </span>batch<a class="headerlink" href="#batch" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
+<dl class="py class">
 <dt id="hs_process.batch">
-<em class="property">class </em><code class="sig-prename descclassname">hs_process.</code><code class="sig-name descname">batch</code><span class="sig-paren">(</span><em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='.bip'</em>, <em class="sig-param">dir_level=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">hs_process.</span></code><code class="sig-name descname"><span class="pre">batch</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.bip'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lock</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progress_bar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.batch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class for batch processing hyperspectral image data. Makes use of
 <a class="reference external" href="hs_process.segment.html">segment</a>, <a class="reference external" href="hs_process.spatial_mod.html">spatial_mod</a>, and <a class="reference external" href="hs_process.spec_mod.html">spec_mod</a> to batch process many
@@ -155,39 +185,51 @@ classes prior to using the <code class="docutils literal notranslate"><span clas
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.batch.cube_to_spectra" title="hs_process.batch.batch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cube_to_spectra</span></code></a>([fname_list, base_dir, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.batch.batch.cube_to_spectra" title="hs_process.batch.batch.cube_to_spectra"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cube_to_spectra</span></code></a>([fname_list, base_dir, ...])</p></td>
 <td><p>Calculates the mean and standard deviation for each cube in <code class="docutils literal notranslate"><span class="pre">fname_list</span></code> and writes the result to a &quot;.spec&quot; file.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.batch.segment_band_math" title="hs_process.batch.batch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">segment_band_math</span></code></a>([fname_list, base_dir, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../hs_process.html#hs_process.batch.batch.segment_composite_band" title="hs_process.batch.batch.segment_composite_band"><code class="xref py py-obj docutils literal notranslate"><span class="pre">segment_composite_band</span></code></a>([fname_list, ...])</p></td>
+<td><p>Batch processing tool to create a composite band on multiple datacubes in the same way.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.batch.batch.segment_band_math" title="hs_process.batch.batch.segment_band_math"><code class="xref py py-obj docutils literal notranslate"><span class="pre">segment_band_math</span></code></a>([fname_list, base_dir, ...])</p></td>
 <td><p>Batch processing tool to perform band math on multiple datacubes in the same way.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.batch.segment_create_mask" title="hs_process.batch.batch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">segment_create_mask</span></code></a>([fname_list, base_dir, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../hs_process.html#hs_process.batch.batch.segment_create_mask" title="hs_process.batch.batch.segment_create_mask"><code class="xref py py-obj docutils literal notranslate"><span class="pre">segment_create_mask</span></code></a>([fname_list, base_dir, ...])</p></td>
 <td><p>Batch processing tool to create a masked array on many datacubes.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.batch.spatial_crop" title="hs_process.batch.batch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spatial_crop</span></code></a>([fname_sheet, base_dir, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.batch.batch.spatial_crop" title="hs_process.batch.batch.spatial_crop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spatial_crop</span></code></a>([fname_sheet, base_dir, ...])</p></td>
 <td><p>Iterates through a spreadsheet that provides necessary information about how each image should be cropped and how it should be saved.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.batch.spectra_combine" title="hs_process.batch.batch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spectra_combine</span></code></a>([fname_list, base_dir, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../hs_process.html#hs_process.batch.batch.spectra_combine" title="hs_process.batch.batch.spectra_combine"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spectra_combine</span></code></a>([fname_list, base_dir, ...])</p></td>
 <td><p>Batch processing tool to gather all pixels from every image in a directory, compute the mean and standard deviation, and save as a single spectra (i.e., a spectra file is equivalent to a single spectral pixel with no spatial information).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.batch.spectra_to_csv" title="hs_process.batch.batch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spectra_to_csv</span></code></a>([fname_list, base_dir, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.batch.batch.spectra_derivative" title="hs_process.batch.batch.spectra_derivative"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spectra_derivative</span></code></a>([fname_list, base_dir, ...])</p></td>
+<td><p>Batch processing tool to calculate the numeric spectral derivative for multiple spectra.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../hs_process.html#hs_process.batch.batch.spectra_to_csv" title="hs_process.batch.batch.spectra_to_csv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spectra_to_csv</span></code></a>([fname_list, base_dir, ...])</p></td>
 <td><p>Reads all the <code class="docutils literal notranslate"><span class="pre">.spec</span></code> files in a direcory and saves their reflectance information to a <code class="docutils literal notranslate"><span class="pre">.csv</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.batch.spectra_to_df" title="hs_process.batch.batch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spectra_to_df</span></code></a>([fname_list, base_dir, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.batch.batch.spectra_to_df" title="hs_process.batch.batch.spectra_to_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spectra_to_df</span></code></a>([fname_list, base_dir, ...])</p></td>
 <td><p>Reads all the .spec files in a direcory and returns their data as a <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> object.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hs_process.batch.spectral_clip" title="hs_process.batch.batch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spectral_clip</span></code></a>([fname_list, base_dir, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../hs_process.html#hs_process.batch.batch.spectral_clip" title="hs_process.batch.batch.spectral_clip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spectral_clip</span></code></a>([fname_list, base_dir, ...])</p></td>
 <td><p>Batch processing tool to spectrally clip multiple datacubes in the same way.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hs_process.batch.spectral_smooth" title="hs_process.batch.batch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spectral_smooth</span></code></a>([fname_list, base_dir, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.batch.batch.spectral_mimic" title="hs_process.batch.batch.spectral_mimic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spectral_mimic</span></code></a>([fname_list, base_dir, ...])</p></td>
+<td><p>Batch processing tool to spectrally mimic a multispectral sensor for multiple datacubes in the same way.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../hs_process.html#hs_process.batch.batch.spectral_resample" title="hs_process.batch.batch.spectral_resample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spectral_resample</span></code></a>([fname_list, base_dir, ...])</p></td>
+<td><p>Batch processing tool to spectrally resample (a.k.a.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../hs_process.html#hs_process.batch.batch.spectral_smooth" title="hs_process.batch.batch.spectral_smooth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spectral_smooth</span></code></a>([fname_list, base_dir, ...])</p></td>
 <td><p>Batch processing tool to spectrally smooth multiple datacubes in the same way.</p></td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Methods Documentation</p>
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.batch.cube_to_spectra">
-<code class="sig-name descname">cube_to_spectra</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None</em>, <em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='bip'</em>, <em class="sig-param">dir_level=0</em>, <em class="sig-param">base_dir_out=None</em>, <em class="sig-param">folder_name='cube_to_spec'</em>, <em class="sig-param">name_append='cube-to-spec'</em>, <em class="sig-param">geotiff=True</em>, <em class="sig-param">out_dtype=False</em>, <em class="sig-param">out_force=None</em>, <em class="sig-param">out_ext=False</em>, <em class="sig-param">out_interleave=False</em>, <em class="sig-param">out_byteorder=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch.cube_to_spectra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.cube_to_spectra" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">cube_to_spectra</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bip'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cube_to_spec'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_append</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cube-to-spec'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_geotiff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_interleave</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_byteorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch.cube_to_spectra"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.batch.cube_to_spectra" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the mean and standard deviation for each cube in
 <code class="docutils literal notranslate"><span class="pre">fname_list</span></code> and writes the result to a &quot;.spec&quot; file.</p>
 <dl class="field-list simple">
@@ -206,14 +248,14 @@ be ignored (default: 'bip').</p></li>
 <li><p><strong>dir_level</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) -- The number of directory levels to search; if
 <code class="docutils literal notranslate"><span class="pre">None</span></code>, searches all directory levels (default: 0).</p></li>
 <li><p><strong>base_dir_out</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- directory path to save all processed
-datacubes; if set to <code class="docutils literal notranslate"><span class="pre">None</span></code>, a folder named according to the
+spectra; if set to <code class="docutils literal notranslate"><span class="pre">None</span></code>, a folder named according to the
 <code class="docutils literal notranslate"><span class="pre">folder_name</span></code> parameter is added to <code class="docutils literal notranslate"><span class="pre">base_dir</span></code></p></li>
 <li><p><strong>folder_name</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- folder to add to <code class="docutils literal notranslate"><span class="pre">base_dir_out</span></code> to save all
 the processed datacubes (default: 'cube_to_spec').</p></li>
 <li><p><strong>name_append</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- name to append to the filename (default:
 'cube-to-spec').</p></li>
-<li><p><strong>geotiff</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) -- whether to save the masked RGB image as a geotiff
-alongside the masked datacube.</p></li>
+<li><p><strong>write_geotiff</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) -- whether to save the masked RGB image as a
+geotiff alongside the masked datacube.</p></li>
 <li><p><strong>out_XXX</strong> -- Settings for saving the output files can be adjusted here
 if desired. They are stored in <code class="docutils literal notranslate"><span class="pre">batch.io.defaults</span></code>, and are
 therefore accessible at a high level. See
@@ -237,23 +279,18 @@ the following directory:
 directory exists.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">batch</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">base_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;spatial_mod&#39;</span><span class="p">,</span> <span class="s1">&#39;crop_many_gdf&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span> <span class="o">=</span> <span class="n">batch</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;.bip&#39;</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># searches for all files in ``base_dir`` with a &quot;.bip&quot; file extension</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span> <span class="o">=</span> <span class="n">batch</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;.bip&#39;</span><span class="p">)</span>  <span class="c1"># searches for all files in ``base_dir`` with a &quot;.bip&quot; file extension</span>
 </pre></div>
 </div>
 <p>Use <code class="docutils literal notranslate"><span class="pre">batch.cube_to_spectra</span></code> to calculate the <em>mean</em> and <em>standard
 deviation</em> across all pixels for each of the datacubes in
 <code class="docutils literal notranslate"><span class="pre">base_dir</span></code>.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">cube_to_spectra</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">geotiff</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">out_force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="go">Calculating mean spectra: F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011.bip</span>
-<span class="go">Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-cube-to-spec-mean.spec</span>
-<span class="go">Calculating mean spectra: F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012.bip</span>
-<span class="go">Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012-cube-to-spec-mean.spec</span>
-<span class="go">Calculating mean spectra: F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013.bip</span>
-<span class="go">Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013-cube-to-spec-mean.spec</span>
-<span class="gp">...</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">cube_to_spectra</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">write_geotiff</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">out_force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">Processing file 39/40: 100%|██████████| 40/40 [00:03&lt;00:00, 13.28it/s]------------------------------------------------| 0.0%</span>
 </pre></div>
 </div>
 <p>Use <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> to visualize the spectra of plots 1011, 1012, and
@@ -265,17 +302,20 @@ across the original input image likely represent a combination of
 soil, vegetation, and shadow.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">re</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_list</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-cube-to-spec-mean.spec&#39;</span><span class="p">,</span>
-<span class="go">                  r&#39;F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012-cube-to-spec-mean.spec&#39;,</span>
-<span class="go">                  r&#39;F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\cube_to_spec\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013-cube-to-spec-mean.spec&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">fname</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">fname_list</span><span class="p">,</span> <span class="n">colors</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;cube_to_spec&#39;</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-cube-to-spec-mean.spec&#39;</span><span class="p">),</span>
+<span class="go">                  os.path.join(base_dir, &#39;cube_to_spec&#39;, &#39;Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012-cube-to-spec-mean.spec&#39;),</span>
+<span class="go">                  os.path.join(base_dir, &#39;cube_to_spec&#39;, &#39;Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013-cube-to-spec-mean.spec&#39;)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">fname</span> <span class="ow">in</span> <span class="n">fname_list</span><span class="p">:</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_spec</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="n">meta_bands</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="n">data</span> <span class="o">=</span> <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile_spec</span><span class="o">.</span><span class="n">load</span><span class="p">()</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="n">hist</span> <span class="o">=</span> <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile_spec</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="n">pix_n</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;&lt;pixel number: (.*)&gt;&#39;</span><span class="p">,</span> <span class="n">hist</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span>    <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Plot &#39;</span><span class="o">+</span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">name_plot</span><span class="o">+</span><span class="s1">&#39; (n=&#39;</span><span class="o">+</span><span class="n">pix_n</span><span class="o">+</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Plot &#39;</span><span class="o">+</span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">name_plot</span><span class="o">+</span><span class="s1">&#39; (n=&#39;</span><span class="o">+</span><span class="n">pix_n</span><span class="o">+</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">else</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Plot &#39;</span><span class="o">+</span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">name_plot</span><span class="o">+</span><span class="s1">&#39; (n=&#39;</span><span class="o">+</span><span class="n">pix_n</span><span class="o">+</span><span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectance (%)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;API Example: `batch.cube_to_spectra`&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
@@ -284,9 +324,44 @@ soil, vegetation, and shadow.</p>
 <img alt="../_images/cube_to_spectra.png" src="../_images/cube_to_spectra.png" />
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="hs_process.batch.segment_composite_band">
+<code class="sig-name descname"><span class="pre">segment_composite_band</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bip'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'composite_band'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_append</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'composite-band'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_geotiff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wl1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_interleave</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_byteorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch.segment_composite_band"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.batch.segment_composite_band" title="Permalink to this definition">¶</a></dt>
+<dd><p>Batch processing tool to create a composite band on multiple datacubes
+in the same way. <code class="docutils literal notranslate"><span class="pre">batch.segment_composite_band</span></code> is typically used
+prior to  <code class="docutils literal notranslate"><span class="pre">batch.segment_create_mask</span></code> to generate the
+images/directory required for the masking process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wl1</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>, or <code class="docutils literal notranslate"><span class="pre">list</span></code>) -- the wavelength (or set of
+wavelengths) to be used as the first parameter of the
+band math index; if <code class="docutils literal notranslate"><span class="pre">list</span></code>, then consolidates all
+bands between two wavelength values by calculating the mean
+pixel value across all bands in that range (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>b1</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>, or <code class="docutils literal notranslate"><span class="pre">list</span></code>) -- the band (or set of bands)
+to be used as the first parameter of the band math index; if
+<code class="docutils literal notranslate"><span class="pre">list</span></code>, then consolidates all bands between two band values
+by calculating the mean pixel value across all bands in that
+range (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>list_range</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) -- Whether bands/wavelengths passed as a list
+is interpreted as a range of bands (<code class="docutils literal notranslate"><span class="pre">True</span></code>) or for each
+individual band in the list (<code class="docutils literal notranslate"><span class="pre">False</span></code>). If <code class="docutils literal notranslate"><span class="pre">list_range</span></code> is
+<code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">b1</span></code>/<code class="docutils literal notranslate"><span class="pre">wl1</span></code> and <code class="docutils literal notranslate"><span class="pre">b2</span></code>/<code class="docutils literal notranslate"><span class="pre">wl2</span></code> should be lists
+with two items, and all bands/wavelegths between the two values
+will be used (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>).</p></li>
+<li><p><strong>plot_out</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) -- whether to save a histogram of the band math
+result (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>).</p></li>
+<li><p><strong>write_geotiff</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) -- whether to save the masked RGB image as a
+geotiff alongside the masked datacube.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="hs_process.batch.segment_band_math">
-<code class="sig-name descname">segment_band_math</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None</em>, <em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='bip'</em>, <em class="sig-param">dir_level=0</em>, <em class="sig-param">base_dir_out=None</em>, <em class="sig-param">folder_name='band_math'</em>, <em class="sig-param">name_append='band-math'</em>, <em class="sig-param">geotiff=True</em>, <em class="sig-param">method='ndi'</em>, <em class="sig-param">wl1=None</em>, <em class="sig-param">wl2=None</em>, <em class="sig-param">wl3=None</em>, <em class="sig-param">b1=None</em>, <em class="sig-param">b2=None</em>, <em class="sig-param">b3=None</em>, <em class="sig-param">list_range=True</em>, <em class="sig-param">plot_out=True</em>, <em class="sig-param">out_dtype=False</em>, <em class="sig-param">out_force=None</em>, <em class="sig-param">out_ext=False</em>, <em class="sig-param">out_interleave=False</em>, <em class="sig-param">out_byteorder=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch.segment_band_math"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.segment_band_math" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">segment_band_math</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bip'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'band_math'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_append</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'band-math'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_geotiff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ndi'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wl1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wl2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wl3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_interleave</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_byteorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch.segment_band_math"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.batch.segment_band_math" title="Permalink to this definition">¶</a></dt>
 <dd><p>Batch processing tool to perform band math on multiple datacubes in the
 same way. <code class="docutils literal notranslate"><span class="pre">batch.segment_band_math</span></code> is typically used prior to
 <code class="docutils literal notranslate"><span class="pre">batch.segment_create_mask</span></code> to generate the images/directory required
@@ -332,8 +407,8 @@ all bands/wavelegths between the two values will be used
 (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>).</p></li>
 <li><p><strong>plot_out</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) -- whether to save a histogram of the band math
 result (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>).</p></li>
-<li><p><strong>geotiff</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) -- whether to save the masked RGB image as a geotiff
-alongside the masked datacube.</p></li>
+<li><p><strong>write_geotiff</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) -- whether to save the masked RGB image as a
+geotiff alongside the masked datacube.</p></li>
 </ul>
 </dd>
 </dl>
@@ -369,7 +444,7 @@ index and references to other spectral indices.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">wl2</span> <span class="o">=</span> <span class="mi">670</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">wl3</span> <span class="o">=</span> <span class="mi">550</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">segment_band_math</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">folder_name</span><span class="o">=</span><span class="n">folder_name</span><span class="p">,</span>
-<span class="go">                              name_append=&#39;band-math&#39;, geotiff=True,</span>
+<span class="go">                              name_append=&#39;band-math&#39;, write_geotiff=True,</span>
 <span class="go">                              method=method, wl1=wl1, wl2=wl2, wl3=wl3,</span>
 <span class="go">                              plot_out=True, out_force=True)</span>
 <span class="go">Bands used (``b1``): [198]</span>
@@ -407,9 +482,9 @@ may be useful in the segmentation step (e.g., see
 <img alt="../_images/segment_band_math_plot_611-band-math-mcari2-800-670-550.png" src="../_images/segment_band_math_plot_611-band-math-mcari2-800-670-550.png" />
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.batch.segment_create_mask">
-<code class="sig-name descname">segment_create_mask</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None</em>, <em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='bip'</em>, <em class="sig-param">dir_level=0</em>, <em class="sig-param">mask_dir=None</em>, <em class="sig-param">base_dir_out=None</em>, <em class="sig-param">folder_name='mask'</em>, <em class="sig-param">name_append='mask'</em>, <em class="sig-param">geotiff=True</em>, <em class="sig-param">mask_thresh=None</em>, <em class="sig-param">mask_percentile=None</em>, <em class="sig-param">mask_side='lower'</em>, <em class="sig-param">out_dtype=False</em>, <em class="sig-param">out_force=None</em>, <em class="sig-param">out_ext=False</em>, <em class="sig-param">out_interleave=False</em>, <em class="sig-param">out_byteorder=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch.segment_create_mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.segment_create_mask" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">segment_create_mask</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bip'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mask'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_append</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mask'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_datacube</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_spec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_geotiff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_percentile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_side</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lower'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_interleave</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_byteorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch.segment_create_mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.batch.segment_create_mask" title="Permalink to this definition">¶</a></dt>
 <dd><p>Batch processing tool to create a masked array on many datacubes.
 <code class="docutils literal notranslate"><span class="pre">batch.segment_create_mask</span></code> is typically used after
 <code class="docutils literal notranslate"><span class="pre">batch.segment_band_math</span></code> to mask all the datacubes in a directory
@@ -423,10 +498,14 @@ array; should be used with <code class="docutils literal notranslate"><span clas
 mask; if <code class="docutils literal notranslate"><span class="pre">percentile``=95</span> <span class="pre">and</span> <span class="pre">``side``='lower',</span> <span class="pre">the</span> <span class="pre">lowest</span> <span class="pre">95%</span> <span class="pre">of</span>
 <span class="pre">pixels</span> <span class="pre">will</span> <span class="pre">be</span> <span class="pre">masked</span> <span class="pre">following</span> <span class="pre">the</span> <span class="pre">band</span> <span class="pre">math</span> <span class="pre">operation</span>
 <span class="pre">(default:</span> <span class="pre">``None</span></code>; range: 0-100).</p></li>
-<li><p><strong>mask_side</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- The side of the threshold or percentile for
-which to apply the mask. Must be either 'lower' or 'upper'; if
-'lower', everything below the threshold/percentile will be
-masked (default: 'lower').</p></li>
+<li><p><strong>mask_side</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- The side of the threshold for which to apply the
+mask. Must be either 'lower', 'upper', 'outside', or <code class="docutils literal notranslate"><span class="pre">None</span></code>;
+if 'lower', everything below the threshold will be masked; if
+'outside', the <code class="docutils literal notranslate"><span class="pre">thresh</span></code> / <code class="docutils literal notranslate"><span class="pre">percentile</span></code> parameter must be
+list-like with two values indicating the lower and upper bounds
+- anything outside of these values will be masked out; if
+<code class="docutils literal notranslate"><span class="pre">None</span></code>, only the values that exactly match the threshold will
+be masked (default: 'lower').</p></li>
 <li><p><strong>geotiff</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) -- whether to save the masked RGB image as a geotiff
 alongside the masked datacube.</p></li>
 </ul>
@@ -478,7 +557,7 @@ perform the batch masking via <code class="docutils literal notranslate"><span c
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">folder_name</span> <span class="o">=</span> <span class="s1">&#39;mask_mcari2_90th&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">segment_create_mask</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">mask_dir</span><span class="o">=</span><span class="n">mask_dir</span><span class="p">,</span>
 <span class="go">                                folder_name=folder_name,</span>
-<span class="go">                                name_append=&#39;mask-mcari2-90th&#39;, geotiff=True,</span>
+<span class="go">                                name_append=&#39;mask-mcari2-90th&#39;, write_geotiff=True,</span>
 <span class="go">                                mask_percentile=mask_percentile,</span>
 <span class="go">                                mask_side=mask_side)</span>
 <span class="go">Saving F:\nigo0024\Documents\hs_process_demo\spatial_mod\crop_many_gdf\mask_mcari2_90th\Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-mask-mcari2-90th.bip</span>
@@ -538,13 +617,13 @@ This is illustrated above by the green line plot (the light green
 shadow represents the standard deviation for each band).</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.batch.spatial_crop">
-<code class="sig-name descname">spatial_crop</code><span class="sig-paren">(</span><em class="sig-param">fname_sheet=None</em>, <em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='bip'</em>, <em class="sig-param">dir_level=0</em>, <em class="sig-param">base_dir_out=None</em>, <em class="sig-param">folder_name='spatial_crop'</em>, <em class="sig-param">name_append='spatial-crop'</em>, <em class="sig-param">geotiff=True</em>, <em class="sig-param">method='single'</em>, <em class="sig-param">gdf=None</em>, <em class="sig-param">out_dtype=False</em>, <em class="sig-param">out_force=None</em>, <em class="sig-param">out_ext=False</em>, <em class="sig-param">out_interleave=False</em>, <em class="sig-param">out_byteorder=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch.spatial_crop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.spatial_crop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">spatial_crop</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname_sheet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bip'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spatial_crop'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_append</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spatial-crop'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_geotiff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'single'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gdf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_interleave</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_byteorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch.spatial_crop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.batch.spatial_crop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Iterates through a spreadsheet that provides necessary information
 about how each image should be cropped and how it should be saved.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">gdf</span></code> is passed (a geopandas.GoeDataFrame polygon file), the
-cropped images will be shifted to the center of appropriate &quot;plot&quot;
+cropped images will be shifted to the center of appropriate 'plot_id'
 polygon.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -564,8 +643,8 @@ image (default: <code class="docutils literal notranslate"><span class="pre">Non
 to save all the processed datacubes (default: 'spatial_crop').</p></li>
 <li><p><strong>name_append</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>, optional) -- name to append to the filename
 (default: 'spatial-crop').</p></li>
-<li><p><strong>geotiff</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>, optional) -- whether to save an RGB image as a
-geotiff alongside the cropped datacube.</p></li>
+<li><p><strong>write_geotiff</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>, optional) -- whether to save an RGB image as
+a geotiff alongside the cropped datacube.</p></li>
 <li><p><strong>method</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>, optional) -- Must be one of &quot;single&quot; or
 &quot;many_gdf&quot;. Indicates whether a single plot should be cropped
 from the input datacube or if many/multiple plots should be
@@ -575,7 +654,7 @@ leverages <a class="reference external" href="hs_process.spatial_mod.html#hs_pro
 see the <code class="docutils literal notranslate"><span class="pre">spatial_mod</span></code> documentation for more information
 (default: &quot;single&quot;).</p></li>
 <li><p><strong>gdf</strong> (<code class="docutils literal notranslate"><span class="pre">geopandas.GeoDataFrame</span></code>, optional) -- the plot names and
-polygon geometery of each of the plots; 'plot' must be used as
+polygon geometery of each of the plots; 'plot_id' must be used as
 a column name to identify each of the plots, and should be an
 integer.</p></li>
 <li><p><strong>out_XXX</strong> -- Settings for saving the output files can be adjusted here
@@ -621,7 +700,11 @@ specifically for each datacube by including appropriate columns in
 <li><p>&quot;buf_n_pix&quot;</p></li>
 <li><p>&quot;buf_e_m&quot;</p></li>
 <li><p>&quot;buf_n_m&quot;</p></li>
-<li><p>&quot;plot_id&quot;</p></li>
+<li><p>&quot;gdf_shft_e_m&quot;</p></li>
+<li><p>&quot;gdf_shft_n_m&quot;</p></li>
+<li><p>&quot;plot_id_ref&quot;</p></li>
+<li><p>&quot;study&quot;</p></li>
+<li><p>&quot;date&quot;</p></li>
 </ol>
 <p><strong>More</strong> <code class="docutils literal notranslate"><span class="pre">fname_sheet</span></code> <strong>Tips and Tricks</strong></p>
 <ol class="arabic simple">
@@ -635,6 +718,18 @@ examples and tutorials.</p></li>
 <li><p>If the column names are different in <code class="docutils literal notranslate"><span class="pre">fname_sheet</span></code> than described
 here, <a class="reference external" href="hs_process.defaults.html#hs_process.defaults.spat_crop_cols">defaults.spat_crop_cols()</a> can be modified to indicate which
 columns correspond to the relevant information.</p></li>
+<li><p>The <em>date</em> and <em>study</em> columns do not impact how the datacubes are
+to be cropped, but if this information exists,
+<code class="docutils literal notranslate"><span class="pre">batch.spatial_crop</span></code> adds it to the filename of the cropped
+datacube. This can be used to avoid overwriting datacubes with
+similar names, and is especially useful when processing imagery from
+many dates and/or studies/locations and saving them in the same
+directory. If &quot;study&quot;, &quot;date&quot;, and &quot;plot_id&quot; are all passed, this
+information is used to formulate the output file name; e.g.,
+<em>study_wells_date_20180628_plot_527-spatial-crop.bip</em>. If either
+&quot;study&quot; or &quot;date&quot; is missing, the populated variables wil be
+appended to the end of the <code class="docutils literal notranslate"><span class="pre">hsio.name_short</span></code> string; e.g.,
+<em>plot_9_3_pika_gige_1_plot_527-spatial-crop.bip</em>.</p></li>
 <li><p>Any other columns can be added to <code class="docutils literal notranslate"><span class="pre">fname_sheet</span></code>, but
 <code class="docutils literal notranslate"><span class="pre">batch.spatial_crop()</span></code> does not use them in any way.</p></li>
 </ol>
@@ -660,38 +755,38 @@ directory exists.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">batch</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">base_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span> <span class="o">=</span> <span class="n">batch</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;.bip&#39;</span><span class="p">,</span> <span class="n">dir_level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="go">                    progress_bar=True)  # searches for all files in ``base_dir`` with a &quot;.bip&quot; file extension</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span> <span class="o">=</span> <span class="n">batch</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;.bip&#39;</span><span class="p">,</span> <span class="n">dir_level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># searches for all files in ``base_dir`` with a &quot;.bip&quot; file extension</span>
 </pre></div>
 </div>
 <p>Load the plot geometry as a <code class="docutils literal notranslate"><span class="pre">geopandas.GeoDataFrame</span></code></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_gdf</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\plot_bounds_small\plot_bounds.shp&#39;</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname_gdf</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\plot_bounds.geojson&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">fname_gdf</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Perform the spatial cropping using the <em>&quot;many_gdf&quot;</em> <code class="docutils literal notranslate"><span class="pre">method</span></code>.
-Note that nothing is being bassed to <code class="docutils literal notranslate"><span class="pre">fname_sheet</span></code> here, so
+<p>Perform the spatial cropping using the <em>&quot;many_gdf&quot;</em> <cite>method</cite>. Note
+that nothing is being passed to <cite>fname_sheet</cite> here, so
 <code class="docutils literal notranslate"><span class="pre">batch.spatial_crop</span></code> is simply going to attempt to crop all plots
-contained within <code class="docutils literal notranslate"><span class="pre">gdf</span></code> that overlap with any datacubes in
-<code class="docutils literal notranslate"><span class="pre">base_dir</span></code>. This option does not allow for any flexibility
-regarding minor adjustments to the cropping procedure (e.g.,
-offset to the plot location in the datacube relative to the
-location in the <code class="docutils literal notranslate"><span class="pre">gdf</span></code>), but it is the most straightforward way to
-run <code class="docutils literal notranslate"><span class="pre">batch.spatial_crop</span></code> because it does not depend on anything
-to be passed to <code class="docutils literal notranslate"><span class="pre">fname_sheet</span></code>. It does, however, allow you to
-adjust the plot buffer relative to <code class="docutils literal notranslate"><span class="pre">gdf</span></code> via
-<code class="docutils literal notranslate"><span class="pre">hsbatch.io.defaults.crop_defaults</span></code></p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">crop_defaults</span><span class="o">.</span><span class="n">buf_e_m</span> <span class="o">=</span> <span class="mi">2</span>
+contained within <cite>gdf</cite> that overlap with any datacubes in
+<code class="docutils literal notranslate"><span class="pre">base_dir</span></code>.</p>
+<p>Passing <code class="docutils literal notranslate"><span class="pre">fname_sheet</span></code> directly is definitely more flexible for
+customization. However, some customization is possible while not
+passing <code class="docutils literal notranslate"><span class="pre">fname_sheet</span></code>. In the example below, we set an easting
+and northing buffer, as well as limit the number of plots to crop
+to 40. These defaults trickle through to
+<code class="docutils literal notranslate"><span class="pre">spatial_mod.crop_many_gdf()</span></code>, so by setting them on the
+<code class="docutils literal notranslate"><span class="pre">batch</span></code> object, they will be recognized when calculating crop
+boundaries from <code class="docutils literal notranslate"><span class="pre">gdf</span></code>.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">crop_defaults</span><span class="o">.</span><span class="n">buf_e_m</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># Sets buffer in the easting direction (units of meters)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">crop_defaults</span><span class="o">.</span><span class="n">buf_n_m</span> <span class="o">=</span> <span class="mf">0.5</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">set_io_defaults</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">crop_defaults</span><span class="o">.</span><span class="n">n_plots</span> <span class="o">=</span> <span class="mi">40</span>  <span class="c1"># We can limit the number of plots to process from gdf</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">spatial_crop</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;many_gdf&#39;</span><span class="p">,</span>
-<span class="go">                         gdf=gdf)</span>
-<span class="go">Spatially cropping: F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip</span>
-<span class="go">Saving F:\nigo0024\Documents\hs_process_demo\spatial_crop\Wells_rep2_20180628_16h56m_pika_gige_7_1018-spatial-crop.bip</span>
-<span class="go">Spatially cropping: F:\nigo0024\Documents\hs_process_demo\Wells_rep2_20180628_16h56m_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip</span>
-<span class="go">Saving F:\nigo0024\Documents\hs_process_demo\spatial_crop\Wells_rep2_20180628_16h56m_pika_gige_7_918-spatial-crop.bip</span>
+<span class="go">                         gdf=gdf, out_force=True)</span>
 </pre></div>
 </div>
+<p>Because <code class="docutils literal notranslate"><span class="pre">fname_list</span></code> was passed instead of <code class="docutils literal notranslate"><span class="pre">fname_sheet</span></code>, there is not a way to infer the study name and date. Therefore, &quot;study&quot; and &quot;date&quot; will be omitted from the output file name. If you would like output file names to include &quot;study&quot; and &quot;date&quot;, please pass <code class="docutils literal notranslate"><span class="pre">fname_sheet</span></code> with &quot;study&quot; and &quot;date&quot; columns.</p>
+<p>Processing file 39/40: 100%|██████████| 40/40 [00:02&lt;00:00, 17.47it/s]</p>
 <img alt="../_images/spatial_crop_inline.png" src="../_images/spatial_crop_inline.png" />
 <p>A new folder was created in <code class="docutils literal notranslate"><span class="pre">base_dir</span></code>
 - <code class="docutils literal notranslate"><span class="pre">F:\nigo0024\Documents\hs_process_demo\spatial_crop</span></code> - that
@@ -706,9 +801,9 @@ cropped boundaries. The plot boundaries are overlaid for reference
 on the North/South sides).</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.batch.spectra_combine">
-<code class="sig-name descname">spectra_combine</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None</em>, <em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='bip'</em>, <em class="sig-param">dir_level=0</em>, <em class="sig-param">base_dir_out=None</em>, <em class="sig-param">out_dtype=False</em>, <em class="sig-param">out_force=None</em>, <em class="sig-param">out_ext=False</em>, <em class="sig-param">out_interleave=False</em>, <em class="sig-param">out_byteorder=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch.spectra_combine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.spectra_combine" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">spectra_combine</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bip'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_interleave</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_byteorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch.spectra_combine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.batch.spectra_combine" title="Permalink to this definition">¶</a></dt>
 <dd><p>Batch processing tool to gather all pixels from every image in a
 directory, compute the mean and standard deviation, and save as a
 single spectra (i.e., a spectra file is equivalent to a single spectral
@@ -785,9 +880,103 @@ desireable to spectrally clip this region (see
 <a class="reference external" href="hs_process.spec_mod.html#hs_process.spec_mod.spectral_clip">spec_mod.spectral_clip()</a>)</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="hs_process.batch.spectra_derivative">
+<code class="sig-name descname"><span class="pre">spectra_derivative</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spec'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spec_derivative'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_append</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spec-derivative'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_interleave</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_byteorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch.spectra_derivative"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.batch.spectra_derivative" title="Permalink to this definition">¶</a></dt>
+<dd><p>Batch processing tool to calculate the numeric spectral derivative for
+multiple spectra.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_list</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code>, optional) -- list of filenames to process; if
+left to <code class="docutils literal notranslate"><span class="pre">None</span></code>, will look at <code class="docutils literal notranslate"><span class="pre">base_dir</span></code>, <code class="docutils literal notranslate"><span class="pre">search_ext</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">dir_level</span></code> parameters for files to process (default:
+<code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>base_dir</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>, optional) -- directory path to search for files to
+process; if <code class="docutils literal notranslate"><span class="pre">fname_list</span></code> is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, <code class="docutils literal notranslate"><span class="pre">base_dir</span></code> will
+be ignored (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>search_ext</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- file format/extension to search for in all
+directories and subdirectories to determine which files to
+process; if <code class="docutils literal notranslate"><span class="pre">fname_list</span></code> is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, <code class="docutils literal notranslate"><span class="pre">search_ext</span></code> will
+be ignored (default: 'bip').</p></li>
+<li><p><strong>dir_level</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) -- The number of directory levels to search; if
+<code class="docutils literal notranslate"><span class="pre">None</span></code>, searches all directory levels (default: 0).</p></li>
+<li><p><strong>base_dir_out</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- directory path to save all processed
+spectra; if set to <code class="docutils literal notranslate"><span class="pre">None</span></code>, a folder named according to the
+<code class="docutils literal notranslate"><span class="pre">folder_name</span></code> parameter is added to <code class="docutils literal notranslate"><span class="pre">base_dir</span></code></p></li>
+<li><p><strong>folder_name</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- folder to add to <code class="docutils literal notranslate"><span class="pre">base_dir_out</span></code> to save
+all the processed datacubes (default: 'spec_derivative').</p></li>
+<li><p><strong>name_append</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- name to append to the filename (default:
+'spec-derivative').</p></li>
+<li><p><strong>order</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) -- The order of the derivative (default: 1).</p></li>
+<li><p><strong>out_XXX</strong> -- Settings for saving the output files can be adjusted here
+if desired. They are stored in <code class="docutils literal notranslate"><span class="pre">batch.io.defaults,</span> <span class="pre">and</span> <span class="pre">are</span>
+<span class="pre">therefore</span> <span class="pre">accessible</span> <span class="pre">at</span> <span class="pre">a</span> <span class="pre">high</span> <span class="pre">level.</span> <span class="pre">See</span>
+<span class="pre">``hsio.set_io_defaults()</span></code> for more information on each of the
+settings.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The following <cite>batch</cite> example builds on the API example results
+of the <a class="reference external" href="hs_process.batch.html#hs_process.batch.cube_to_spectra">batch.cube_to_spectra</a> function. Please complete
+both the <a class="reference external" href="hs_process.spatial_mod.html#hs_process.spatial_mod.crop_many_gdf">spatial_mod.crop_many_gdf</a> and
+<a class="reference external" href="hs_process.batch.html#hs_process.batch.cube_to_spectra">batch.cube_to_spectra</a> examples to be sure your directory
+(i.e., <cite>base_dir</cite>) is populated with multiple hyperspectral
+spectra. The following example will be using spectra located in the
+following directory:
+<a href="#id3"><span class="problematic" id="id4">``</span></a>F:nigo0024Documentshs_process_demospatial_modcrop_many_gdfcube_to_spec`</p>
+</div>
+<p class="rubric">Example</p>
+<p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">batch</span></code> module, checking to be sure the
+directory exists.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">batch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">base_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;spatial_mod&#39;</span><span class="p">,</span> <span class="s1">&#39;crop_many_gdf&#39;</span><span class="p">,</span> <span class="s1">&#39;cube_to_spec&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span> <span class="o">=</span> <span class="n">batch</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;.spec&#39;</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">batch.spectra_derivative</span></code> to calculate the central finite
+difference (i.e., the numeric spectral derivative) for each of the
+.spec files in <code class="docutils literal notranslate"><span class="pre">base_dir</span></code>.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">order</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">spectra_derivative</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span> <span class="n">out_force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Use seaborn to visualize the derivative spectra of plots 1011,
+1012, and 1013.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">re</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;spec_derivative&#39;</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_plot_1011-spec-derivative-order-</span><span class="si">{0}</span><span class="s1">.spec&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">order</span><span class="p">)),</span>
+<span class="go">                  os.path.join(base_dir, &#39;spec_derivative&#39;, &#39;Wells_rep2_20180628_16h56m_pika_gige_7_plot_1012-spec-derivative-order-{0}.spec&#39;.format(order)),</span>
+<span class="go">                  os.path.join(base_dir, &#39;spec_derivative&#39;, &#39;Wells_rep2_20180628_16h56m_pika_gige_7_plot_1013-spec-derivative-order-{0}.spec&#39;.format(order))]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">fname</span> <span class="ow">in</span> <span class="n">fname_list</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_spec</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">meta_bands</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">data</span> <span class="o">=</span> <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile_spec</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">hist</span> <span class="o">=</span> <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile_spec</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;history&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">pix_n</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;&lt;pixel number: (?s)(.*)&gt;] -&gt;&#39;</span><span class="p">,</span> <span class="n">hist</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">meta_bands</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Plot &#39;</span><span class="o">+</span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">name_plot</span><span class="o">+</span><span class="s1">&#39; (n=&#39;</span><span class="o">+</span><span class="n">pix_n</span><span class="o">+</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">else</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Plot &#39;</span><span class="o">+</span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">name_plot</span><span class="o">+</span><span class="s1">&#39; (n=&#39;</span><span class="o">+</span><span class="n">pix_n</span><span class="o">+</span><span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Derivative reflectance (%)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;API Example: `batch.spectra_derivative`&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/spectra_derivative.png" src="../_images/spectra_derivative.png" />
+</dd></dl>
+
+<dl class="py method">
 <dt id="hs_process.batch.spectra_to_csv">
-<code class="sig-name descname">spectra_to_csv</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None</em>, <em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='spec'</em>, <em class="sig-param">dir_level=0</em>, <em class="sig-param">base_dir_out=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch.spectra_to_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.spectra_to_csv" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">spectra_to_csv</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spec'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'stats-spectra'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multithread</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch.spectra_to_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.batch.spectra_to_csv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads all the <code class="docutils literal notranslate"><span class="pre">.spec</span></code> files in a direcory and saves their reflectance
 information to a <code class="docutils literal notranslate"><span class="pre">.csv</span></code>. <code class="docutils literal notranslate"><span class="pre">batch.spectra_to_csv</span></code> is identical to
 <code class="docutils literal notranslate"><span class="pre">batch.spectra_to_df</span></code> except a <code class="docutils literal notranslate"><span class="pre">.csv</span></code> file is saved rather than
@@ -808,8 +997,11 @@ be ignored (default: 'bip').</p></li>
 <li><p><strong>dir_level</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) -- The number of directory levels to search; if
 <code class="docutils literal notranslate"><span class="pre">None</span></code>, searches all directory levels (default: 0).</p></li>
 <li><p><strong>base_dir_out</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- directory path to save all processed
-datacubes; if set to <code class="docutils literal notranslate"><span class="pre">None</span></code>, a folder named according to the
-<code class="docutils literal notranslate"><span class="pre">folder_name</span></code> parameter is added to <code class="docutils literal notranslate"><span class="pre">base_dir</span></code></p></li>
+datacubes; if set to <code class="docutils literal notranslate"><span class="pre">None</span></code>, file is saved to <code class="docutils literal notranslate"><span class="pre">base_dir</span></code></p></li>
+<li><p><strong>name</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- The output filename (default: &quot;stats-spectra&quot;).</p></li>
+<li><p><strong>multithread</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) -- Whether to leverage multi-thread processing
+when reading the .spec files. Setting to <code class="docutils literal notranslate"><span class="pre">True</span></code> should speed
+up the time it takes to read all .spec files.</p></li>
 </ul>
 </dd>
 </dl>
@@ -848,9 +1040,9 @@ column is a particular spectral band/wavelength.</p>
 <img alt="../_images/spectra_to_csv.png" src="../_images/spectra_to_csv.png" />
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.batch.spectra_to_df">
-<code class="sig-name descname">spectra_to_df</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None</em>, <em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='spec'</em>, <em class="sig-param">dir_level=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch.spectra_to_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.spectra_to_df" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">spectra_to_df</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spec'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multithread</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch.spectra_to_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.batch.spectra_to_df" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reads all the .spec files in a direcory and returns their data as a
 <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> object. <code class="docutils literal notranslate"><span class="pre">batch.spectra_to_df</span></code> is identical to
 <code class="docutils literal notranslate"><span class="pre">batch.spectra_to_csv</span></code> except a <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> is returned
@@ -870,6 +1062,9 @@ process; if <code class="docutils literal notranslate"><span class="pre">fname_l
 be ignored (default: 'bip').</p></li>
 <li><p><strong>dir_level</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) -- The number of directory levels to search; if
 <code class="docutils literal notranslate"><span class="pre">None</span></code>, searches all directory levels (default: 0).</p></li>
+<li><p><strong>multithread</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) -- Whether to leverage multi-thread processing
+when reading the .spec files. Setting to <code class="docutils literal notranslate"><span class="pre">True</span></code> should speed
+up the time it takes to read all .spec files.</p></li>
 </ul>
 </dd>
 </dl>
@@ -916,9 +1111,9 @@ to access reflectance at 710 nm for each plot.</p>
 <img alt="../_images/spectra_to_df_710nm.png" src="../_images/spectra_to_df_710nm.png" />
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="hs_process.batch.spectral_clip">
-<code class="sig-name descname">spectral_clip</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None, base_dir=None, search_ext='bip', dir_level=0, base_dir_out=None, folder_name='spec_clip', name_append='spec-clip', wl_bands=[[0, 420], [760, 776], [813, 827], [880, 1000]], out_dtype=False, out_force=None, out_ext=False, out_interleave=False, out_byteorder=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch.spectral_clip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.spectral_clip" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">spectral_clip</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bip'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spec_clip'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_append</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spec-clip'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wl_bands</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[[0,</span> <span class="pre">420],</span> <span class="pre">[760,</span> <span class="pre">776],</span> <span class="pre">[813,</span> <span class="pre">827],</span> <span class="pre">[880,</span> <span class="pre">1000]]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_interleave</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_byteorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch.spectral_clip"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.batch.spectral_clip" title="Permalink to this definition">¶</a></dt>
 <dd><p>Batch processing tool to spectrally clip multiple datacubes in the same
 way.</p>
 <dl class="field-list simple">
@@ -978,7 +1173,7 @@ directory exists.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">base_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\spatial_crop&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">))</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span> <span class="o">=</span> <span class="n">batch</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;.bip&#39;</span><span class="p">)</span>  <span class="c1"># searches for all files in ``base_dir`` with a &quot;.bip&quot; file extension</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span> <span class="o">=</span> <span class="n">batch</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;.bip&#39;</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># searches for all files in ``base_dir`` with a &quot;.bip&quot; file extension</span>
 </pre></div>
 </div>
 <p>Use <code class="docutils literal notranslate"><span class="pre">batch.spectral_clip</span></code> to clip all spectral bands below
@@ -986,13 +1181,10 @@ directory exists.</p>
 absorption (i.e., <em>760-776 nm</em>) and water absorption
 (i.e., <em>813-827 nm</em>) regions.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">spectral_clip</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">folder_name</span><span class="o">=</span><span class="s1">&#39;spec_clip&#39;</span><span class="p">,</span>
-<span class="go">                          wl_bands=[[0, 420], [760, 776], [813, 827], [880, 1000]])</span>
+<span class="go">                          wl_bands=[[0, 420], [760, 776], [813, 827], [880, 1000]],</span>
+<span class="go">                          out_force=True)</span>
 <span class="go">Processing 40 files. If this is not what is expected, please check if files have already undergone processing. If existing files should be overwritten, be sure to set the ``out_force`` parameter.</span>
-<span class="go">Spectrally clipping: F:\nigo0024\Documents\hs_process_demo\spatial_crop\Wells_rep2_20180628_16h56m_pika_gige_7_1011-spatial-crop.bip</span>
-<span class="go">Saving F:\nigo0024\Documents\hs_process_demo\spatial_crop\spec_clip\Wells_rep2_20180628_16h56m_pika_gige_7_1011-spec-clip.bip</span>
-<span class="go">Spectrally clipping: F:\nigo0024\Documents\hs_process_demo\spatial_crop\Wells_rep2_20180628_16h56m_pika_gige_7_1012-spatial-crop.bip</span>
-<span class="go">Saving F:\nigo0024\Documents\hs_process_demo\spatial_crop\spec_clip\Wells_rep2_20180628_16h56m_pika_gige_7_1012-spec-clip.bip</span>
-<span class="gp">...</span>
+<span class="go">Processing file 39/40: 100%|██████████| 40/40 [00:01&lt;00:00, 26.68it/s]</span>
 </pre></div>
 </div>
 <p>Use <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> to visualize the spectra of a single pixel in one
@@ -1020,9 +1212,210 @@ is perhaps a lower <em>signal:noise</em> ratio in these regions, which was
 the merit for clipping those bands out.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="hs_process.batch.spectral_mimic">
+<code class="sig-name descname"><span class="pre">spectral_mimic</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bip'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spec_mimic'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_append</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spec-mimic'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sentinel-2a'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_band_response</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_wl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'wl_nm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_wl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'peak'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_interleave</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_byteorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch.spectral_mimic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.batch.spectral_mimic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Batch processing tool to spectrally mimic a multispectral sensor for
+multiple datacubes in the same way.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_list</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code>, optional) -- list of filenames to process; if
+left to <code class="docutils literal notranslate"><span class="pre">None</span></code>, will look at <code class="docutils literal notranslate"><span class="pre">base_dir</span></code>, <code class="docutils literal notranslate"><span class="pre">search_ext</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">dir_level</span></code> parameters for files to process (default:
+<code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>base_dir</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>, optional) -- directory path to search for files to
+spectrally resample; if <code class="docutils literal notranslate"><span class="pre">fname_list</span></code> is not <code class="docutils literal notranslate"><span class="pre">None</span></code>,
+<code class="docutils literal notranslate"><span class="pre">base_dir</span></code> will be ignored (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>search_ext</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- file format/extension to search for in all
+directories and subdirectories to determine which files to
+process; if <code class="docutils literal notranslate"><span class="pre">fname_list</span></code> is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, <code class="docutils literal notranslate"><span class="pre">search_ext</span></code> will
+be ignored (default: 'bip').</p></li>
+<li><p><strong>dir_level</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) -- The number of directory levels to search; if
+<code class="docutils literal notranslate"><span class="pre">None</span></code>, searches all directory levels (default: 0).</p></li>
+<li><p><strong>base_dir_out</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- directory path to save all processed
+datacubes; if set to <code class="docutils literal notranslate"><span class="pre">None</span></code>, a folder named according to the
+<code class="docutils literal notranslate"><span class="pre">folder_name</span></code> parameter is added to <code class="docutils literal notranslate"><span class="pre">base_dir</span></code></p></li>
+<li><p><strong>folder_name</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- folder to add to <code class="docutils literal notranslate"><span class="pre">base_dir_out</span></code> to save
+all the processed datacubes (default: 'spec_bin').</p></li>
+<li><p><strong>name_append</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- name to append to the filename (default:
+'spec-bin').</p></li>
+<li><p><strong>sensor</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- Should be one of
+[&quot;sentera_6x&quot;, &quot;micasense_rededge_3&quot;, &quot;sentinel-2a&quot;,
+&quot;sentinel-2b&quot;, &quot;custom&quot;]; if &quot;custom&quot;, <code class="docutils literal notranslate"><span class="pre">df_band_response</span></code>
+and <code class="docutils literal notranslate"><span class="pre">col_wl</span></code> must be passed.</p></li>
+<li><p><strong>df_band_response</strong> (<code class="docutils literal notranslate"><span class="pre">pd.DataFrame</span></code>) -- A DataFrame that contains the
+transmissivity (%) for each sensor band (as columns) mapped to
+the continuous wavelength values (as rows). Required if
+<code class="docutils literal notranslate"><span class="pre">sensor</span></code> is  &quot;custom&quot;, ignored otherwise.</p></li>
+<li><p><strong>col_wl</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- The column of <code class="docutils literal notranslate"><span class="pre">df_band_response</span></code> denoting the
+wavlengths (default: 'wl_nm').</p></li>
+<li><p><strong>center_wl</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- Indicates how the center wavelength of each
+band is determined. If <code class="docutils literal notranslate"><span class="pre">center_wl</span></code> is &quot;peak&quot;, the point at
+which transmissivity is at its maximum is used as the center
+wavelength. If <code class="docutils literal notranslate"><span class="pre">center_wl</span></code> is &quot;weighted&quot;, the weighted
+average is used to compute the center wavelength. Must be one
+of [&quot;peak&quot;, &quot;weighted&quot;] (<code class="docutils literal notranslate"><span class="pre">default:</span> <span class="pre">&quot;peak&quot;</span></code>).</p></li>
+<li><p><strong>out_XXX</strong> -- Settings for saving the output files can be adjusted here
+if desired. They are stored in <code class="docutils literal notranslate"><span class="pre">batch.io.defaults,</span> <span class="pre">and</span> <span class="pre">are</span>
+<span class="pre">therefore</span> <span class="pre">accessible</span> <span class="pre">at</span> <span class="pre">a</span> <span class="pre">high</span> <span class="pre">level.</span> <span class="pre">See</span>
+<span class="pre">``hsio.set_io_defaults()</span></code> for more information on each of the
+settings.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The following <code class="docutils literal notranslate"><span class="pre">batch</span></code> example builds on the API example results
+of the <a class="reference external" href="hs_process.batch.html#hs_process.batch.spatial_crop">batch.spatial_crop</a> function. Please complete the
+<a class="reference external" href="hs_process.batch.html#hs_process.batch.spatial_crop">batch.spatial_crop</a> example to be sure your directory
+(i.e., <code class="docutils literal notranslate"><span class="pre">base_dir</span></code>) is populated with multiple hyperspectral
+datacubes. The following example will be using datacubes located in
+the following directory:
+<code class="docutils literal notranslate"><span class="pre">F:\nigo0024\Documents\hs_process_demo\spatial_crop</span></code></p>
+</div>
+<p class="rubric">Example</p>
+<p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">batch</span></code> module, checking to be sure the
+directory exists.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">batch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">base_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\spatial_crop&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">))</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span> <span class="o">=</span> <span class="n">batch</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;.bip&#39;</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># searches for all files in ``base_dir`` with a &quot;.bip&quot; file extension</span>
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">batch.spectral_mimic</span></code> to spectrally mimic the Sentinel-2A
+multispectral satellite sensor.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">spectral_mimic</span><span class="p">(</span>
+<span class="go">    base_dir=base_dir, folder_name=&#39;spec_mimic&#39;,</span>
+<span class="go">    name_append=&#39;sentinel-2a&#39;,</span>
+<span class="go">    sensor=&#39;sentinel-2a&#39;, center_wl=&#39;weighted&#39;)</span>
+<span class="go">Processing 40 files. If existing files should be overwritten, be sure to set the ``out_force`` parameter.</span>
+<span class="go">Processing file 39/40: 100%|██████████| 40/40 [00:04&lt;00:00,  8.85it/s]</span>
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> to visualize the spectra of a single pixel in one
+of the processed images.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_1011-spatial-crop.bip&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spy_mem</span> <span class="o">=</span> <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>  <span class="c1"># datacube before mimicking</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">meta_bands</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;spec_mimic&#39;</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_1011-sentinel-2a.bip&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spy_mem_sen2a</span> <span class="o">=</span> <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>  <span class="c1"># datacube after mimicking</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">meta_bands_sen2a</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">spy_mem</span><span class="p">[</span><span class="mi">26</span><span class="p">][</span><span class="mi">29</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Hyperspectral (Pika II)&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands_sen2a</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">spy_mem_sen2a</span><span class="p">[</span><span class="mi">26</span><span class="p">][</span><span class="mi">29</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Sentinel-2A &quot;mimic&quot;&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectance (%)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;API Example: `batch.spectral_mimic`&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/spectral_mimic_sentinel-2a_plot.png" src="../_images/spectral_mimic_sentinel-2a_plot.png" />
+</dd></dl>
+
+<dl class="py method">
+<dt id="hs_process.batch.spectral_resample">
+<code class="sig-name descname"><span class="pre">spectral_resample</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bip'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spec_bin'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_append</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spec-bin'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bandwidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_interleave</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_byteorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch.spectral_resample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.batch.spectral_resample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Batch processing tool to spectrally resample (a.k.a. &quot;bin&quot;) multiple
+datacubes in the same way.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fname_list</strong> (<code class="docutils literal notranslate"><span class="pre">list</span></code>, optional) -- list of filenames to process; if
+left to <code class="docutils literal notranslate"><span class="pre">None</span></code>, will look at <code class="docutils literal notranslate"><span class="pre">base_dir</span></code>, <code class="docutils literal notranslate"><span class="pre">search_ext</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">dir_level</span></code> parameters for files to process (default:
+<code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>base_dir</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>, optional) -- directory path to search for files to
+spectrally resample; if <code class="docutils literal notranslate"><span class="pre">fname_list</span></code> is not <code class="docutils literal notranslate"><span class="pre">None</span></code>,
+<code class="docutils literal notranslate"><span class="pre">base_dir</span></code> will be ignored (default: <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+<li><p><strong>search_ext</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- file format/extension to search for in all
+directories and subdirectories to determine which files to
+process; if <code class="docutils literal notranslate"><span class="pre">fname_list</span></code> is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, <code class="docutils literal notranslate"><span class="pre">search_ext</span></code> will
+be ignored (default: 'bip').</p></li>
+<li><p><strong>dir_level</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) -- The number of directory levels to search; if
+<code class="docutils literal notranslate"><span class="pre">None</span></code>, searches all directory levels (default: 0).</p></li>
+<li><p><strong>base_dir_out</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- directory path to save all processed
+datacubes; if set to <code class="docutils literal notranslate"><span class="pre">None</span></code>, a folder named according to the
+<code class="docutils literal notranslate"><span class="pre">folder_name</span></code> parameter is added to <code class="docutils literal notranslate"><span class="pre">base_dir</span></code></p></li>
+<li><p><strong>folder_name</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- folder to add to <code class="docutils literal notranslate"><span class="pre">base_dir_out</span></code> to save
+all the processed datacubes (default: 'spec_bin').</p></li>
+<li><p><strong>name_append</strong> (<code class="docutils literal notranslate"><span class="pre">str</span></code>) -- name to append to the filename (default:
+'spec-bin').</p></li>
+<li><p><strong>bandwidth</strong> (<code class="docutils literal notranslate"><span class="pre">float</span></code> or <code class="docutils literal notranslate"><span class="pre">int</span></code>) -- The bandwidth of the bands
+after spectral resampling is complete (units should be
+consistent with that of the .hdr file). Setting <code class="docutils literal notranslate"><span class="pre">bandwidth</span></code>
+to 10 will consolidate bands that fall within every 10 nm
+interval.</p></li>
+<li><p><strong>bins_n</strong> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) -- The number of bins (i.e., &quot;bands&quot;) to achieve
+after spectral resampling is complete. Ignored if <code class="docutils literal notranslate"><span class="pre">bandwidth</span></code>
+is not <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>out_XXX</strong> -- Settings for saving the output files can be adjusted here
+if desired. They are stored in <code class="docutils literal notranslate"><span class="pre">batch.io.defaults,</span> <span class="pre">and</span> <span class="pre">are</span>
+<span class="pre">therefore</span> <span class="pre">accessible</span> <span class="pre">at</span> <span class="pre">a</span> <span class="pre">high</span> <span class="pre">level.</span> <span class="pre">See</span>
+<span class="pre">``hsio.set_io_defaults()</span></code> for more information on each of the
+settings.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The following <code class="docutils literal notranslate"><span class="pre">batch</span></code> example builds on the API example results
+of the <a class="reference external" href="hs_process.batch.html#hs_process.batch.spatial_crop">batch.spatial_crop</a> function. Please complete the
+<a class="reference external" href="hs_process.batch.html#hs_process.batch.spatial_crop">batch.spatial_crop</a> example to be sure your directory
+(i.e., <code class="docutils literal notranslate"><span class="pre">base_dir</span></code>) is populated with multiple hyperspectral
+datacubes. The following example will be using datacubes located in
+the following directory:
+<code class="docutils literal notranslate"><span class="pre">F:\nigo0024\Documents\hs_process_demo\spatial_crop</span></code></p>
+</div>
+<p class="rubric">Example</p>
+<p>Load and initialize the <code class="docutils literal notranslate"><span class="pre">batch</span></code> module, checking to be sure the
+directory exists.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">hs_process</span> <span class="kn">import</span> <span class="n">batch</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">base_dir</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;F:\nigo0024\Documents\hs_process_demo\spatial_crop&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">))</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span> <span class="o">=</span> <span class="n">batch</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">search_ext</span><span class="o">=</span><span class="s1">&#39;.bip&#39;</span><span class="p">,</span> <span class="n">progress_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># searches for all files in ``base_dir`` with a &quot;.bip&quot; file extension</span>
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">batch.spectral_resample</span></code> to bin (&quot;group&quot;) all spectral bands
+into 20 nm bandwidth bands (from ~2.3 nm bandwidth originally) on
+a per-pixel basis.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">spectral_resample</span><span class="p">(</span>
+<span class="go">    base_dir=base_dir, folder_name=&#39;spec_bin&#39;,</span>
+<span class="go">    name_append=&#39;spec-bin-20&#39;, bandwidth=20)</span>
+<span class="go">Processing 40 files. If existing files should be overwritten, be sure to set the ``out_force`` parameter.</span>
+<span class="go">Processing file 39/40: 100%|██████████| 40/40 [00:00&lt;00:00, 48.31it/s]</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> to visualize the spectra of a single pixel in one
+of the processed images.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_1011-spatial-crop.bip&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spy_mem</span> <span class="o">=</span> <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>  <span class="c1"># datacube before resampling</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">meta_bands</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;spec_bin&#39;</span><span class="p">,</span> <span class="s1">&#39;Wells_rep2_20180628_16h56m_pika_gige_7_1011-spec-bin-20.bip&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_cube</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spy_mem_bin</span> <span class="o">=</span> <span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">spyfile</span><span class="o">.</span><span class="n">open_memmap</span><span class="p">()</span>  <span class="c1"># datacube after resampling</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">meta_bands_bin</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">hsbatch</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">meta_bands</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">spy_mem</span><span class="p">[</span><span class="mi">26</span><span class="p">][</span><span class="mi">29</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Hyperspectral (Pika II)&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">meta_bands_bin</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">spy_mem_bin</span><span class="p">[</span><span class="mi">26</span><span class="p">][</span><span class="mi">29</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Spectral resample (20 nm)&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reflectance (%)&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;API Example: `batch.spectral_resample`&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/spectral_resample-20nm_plot.png" src="../_images/spectral_resample-20nm_plot.png" />
+</dd></dl>
+
+<dl class="py method">
 <dt id="hs_process.batch.spectral_smooth">
-<code class="sig-name descname">spectral_smooth</code><span class="sig-paren">(</span><em class="sig-param">fname_list=None</em>, <em class="sig-param">base_dir=None</em>, <em class="sig-param">search_ext='bip'</em>, <em class="sig-param">dir_level=0</em>, <em class="sig-param">base_dir_out=None</em>, <em class="sig-param">folder_name='spec_smooth'</em>, <em class="sig-param">name_append='spec-smooth'</em>, <em class="sig-param">window_size=11</em>, <em class="sig-param">order=2</em>, <em class="sig-param">stats=False</em>, <em class="sig-param">out_dtype=False</em>, <em class="sig-param">out_force=None</em>, <em class="sig-param">out_ext=False</em>, <em class="sig-param">out_interleave=False</em>, <em class="sig-param">out_byteorder=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch.spectral_smooth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hs_process.batch.spectral_smooth" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">spectral_smooth</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bip'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spec_smooth'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_append</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spec-smooth'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">11</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_ext</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_interleave</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_byteorder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/hs_process/batch.html#batch.spectral_smooth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hs_process.batch.spectral_smooth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Batch processing tool to spectrally smooth multiple datacubes in the
 same way.</p>
 <dl class="field-list simple">
@@ -1140,8 +1533,8 @@ wise to perform <code class="docutils literal notranslate"><span class="pre">bat
       
     </p>
     <p>
-        &copy; Copyright 2020, Tyler J. Nigon.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.<br/>
+        &copy; Copyright 2019-2021, Tyler J. Nigon.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.4.<br/>
     </p>
   </div>
 </footer>
