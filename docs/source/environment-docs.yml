@@ -2,15 +2,16 @@ channels:
     - conda-forge
 dependencies:
     - python=3.8.*
-    - autodocsumm=0.2.*
     - geopandas=0.9.*
-    - nbconvert=6.0.*
-    - nbsphinx=0.8.*
+    - rasterstats=0.14.*
     - seaborn=0.11.*
-    - sphinx=3.5.*
-    - sphinx-automodapi=0.13.*
     - spectral=0.22.*
     - tqdm=4.60.*
+    - autodocsumm=0.2.*
+    - nbconvert=6.0.*
+    - nbsphinx=0.8.*
+    - sphinx=3.5.*
+    - sphinx-automodapi=0.13.*
     - pip=21.*
     - pip:
         - sphinx-bootstrap-theme==0.7.1

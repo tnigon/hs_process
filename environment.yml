@@ -9,4 +9,4 @@ dependencies:
     - tqdm=4.60.*
     - pip=21.*
     - pip:
-        - -r file:requirements/dev_pip.txt
+        - findiff==0.8.*

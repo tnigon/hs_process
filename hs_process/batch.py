@@ -2364,7 +2364,7 @@ class batch(object):
 
             Processing file 39/40: 100%|██████████| 40/40 [00:02<00:00, 17.47it/s]
 
-            .. image:: ../img/batch/spatial_crop_inline.png
+            .. image:: img/batch/spatial_crop_inline.png
 
             A new folder was created in ``base_dir``
             - ``F:\\nigo0024\Documents\hs_process_demo\spatial_crop`` - that
