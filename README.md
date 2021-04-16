@@ -19,6 +19,8 @@
 
 In addressing these motivations, it was important to keep each post-processing steps as flexible as possible so the specific requirements of individual research objectives can be met.
 
+![hs-process flow chart](docs/source/img/flow_chart.png)
+
 For more information and tutorials, check out the [hs_process documentation](https://hs_process.readthedocs.io/en/latest/).
 
 ## Data requirements
