@@ -524,7 +524,7 @@ class spec_mod(object):
             >>> data_dir = r'F:\\nigo0024\Documents\hs_process_demo'
             >>> fname_hdr = os.path.join(data_dir, 'Wells_rep2_20180628_16h56m_pika_gige_7-Radiance Conversion-Georectify Airborne Datacube-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr')
 
-            >>> data_dir2 = r'G:\BBE\AGROBOT\Shared Work\hs_process_results\data\ref_closest_panel\crop_plot'
+            >>> data_dir2 = r'G:\\BBE\AGROBOT\Shared Work\hs_process_results\data\ref_closest_panel\crop_plot'
             >>> fname_hdr = os.path.join(data_dir2, 'study_aerffield_date_20190708_plot_5110-crop-plot.bip.hdr')
             >>> array = io.spyfile.open_memmap()
 

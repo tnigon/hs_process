@@ -1289,7 +1289,7 @@ class hsio(object):
             Save the new spectra to file via ``hsio.write_spec``
 
             >>> io.write_spec(fname_hdr_spec, spec_mean, spec_std)
-            Saving F:\nigo0024\Documents\hs_process_demo\hsio\Wells_rep2_20180628_16h56m_pika_gige_7-mean.spec
+            Saving F:\\nigo0024\Documents\hs_process_demo\hsio\Wells_rep2_20180628_16h56m_pika_gige_7-mean.spec
 
             Open *Wells_rep2_20180628_16h56m_pika_gige_7-mean.spec* in *Spectronon* for visualization
 
@@ -1911,7 +1911,7 @@ class hstools(object):
             Load and initialize ``hsio``
 
             >>> from hs_process import hsio
-            >>> fname_hdr = r'F:\nigo0024\Documents\GitHub\hs_process\hs_process\data\Wells_rep2_20180628_16h56m_test_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
+            >>> fname_hdr = r'F:\\nigo0024\Documents\GitHub\hs_process\hs_process\data\Wells_rep2_20180628_16h56m_test_pika_gige_7-Convert Radiance Cube to Reflectance from Measured Reference Spectrum.bip.hdr'
             >>> io = hsio(fname_hdr)
 
             Find the wavelengths from the *16th* to *21st bands*
@@ -2185,7 +2185,7 @@ class hstools(object):
             demonstrate the utility of the ``index`` parameter, let's take a
             look at Sentinel 2A mimicked imagery.
 
-            >>> data_dir = r'F:\nigo0024\Documents\hs_process_demo\spec_mod'
+            >>> data_dir = r'F:\\nigo0024\Documents\hs_process_demo\spec_mod'
             >>> fname_in = os.path.join(data_dir, 'Wells_rep2_20180628_16h56m_pika_gige_7-mimic-s2a.bip.hdr')
             >>> io = hsio(fname_in)
 
@@ -2661,9 +2661,9 @@ class hstools(object):
             >>> fname_hdr_spec = r'F:\\nigo0024\Documents\hs_process_demo\hstools\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.spec.hdr'
             >>> fname_hdr_cube = r'F:\\nigo0024\Documents\hs_process_demo\hstools\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.bip.hdr'
             >>> io.write_spec(fname_hdr_spec, spec_mean, spec_std, metadata=metadata, force=True)
-            Saving F:\nigo0024\Documents\hs_process_demo\hstools\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.spec
+            Saving F:\\nigo0024\Documents\hs_process_demo\hstools\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.spec
             >>> io.write_cube(fname_hdr_cube, datacube_masked, metadata=metadata, force=True)
-            Saving F:\nigo0024\Documents\hs_process_demo\hstools\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.bip
+            Saving F:\\nigo0024\Documents\hs_process_demo\hstools\Wells_rep2_20180628_16h56m_pika_gige_7-mean_800nm_75th.bip
 
             .. image:: img/utilities/mean_datacube.png
         '''
