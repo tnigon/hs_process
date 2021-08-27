@@ -42,8 +42,8 @@ class defaults(object):
                 'name_long': None,
                 'ext': 'bip',
                 'plot_id_ref': None,
-                'pix_e_ul': 0,
-                'pix_n_ul': 0,
+                'pix_e_ul': None,
+                'pix_n_ul': None,
                 'alley_size_e_m': None,
                 'alley_size_n_m': None,
                 'alley_size_e_pix': None,  # set to `None` because should be set

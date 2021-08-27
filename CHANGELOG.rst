@@ -1,3 +1,11 @@
+Release: 0.0.5
+***************
+**Date**: 2021
+
+**Description**: Fixes to the batch.spatial_crop function
+
+* In ``spatial_crop.crop_many_gdf``, fixed a bug that changed ``pix_e_ul``/``pix_n_ul`` to ``None`` if set to 0 (i.e., setting to "0" is no longer the same effect as setting to ``None``).
+
 Release: 0.0.4
 ***************
 **Date**: 2021 April 16

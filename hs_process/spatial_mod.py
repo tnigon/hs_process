@@ -189,10 +189,10 @@ class spatial_mod(object):
                'the spatial extent of the datacube (`spyfile`).\nCurrent '
                'value of `plot_id_ref`: {0}\nDatacube filename: {1}\n'
                ''.format(plot_id_ref, self.spyfile.filename))
-        if pix_e_ul == 0:
-            pix_e_ul = None
-        if pix_n_ul == 0:
-            pix_n_ul = None
+        # if pix_e_ul == 0:  # This should be None in all other files if not set (not 0)
+        #     pix_e_ul = None
+        # if pix_n_ul == 0:
+        #     pix_n_ul = None
         # if pd.notnull(n_plots) or pd.notnull(pix_e_ul) or pd.notnull(pix_n_ul):
         if pd.notnull(pix_e_ul) or pd.notnull(pix_n_ul):
             if pd.notnull(plot_id_ref):

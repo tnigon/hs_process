@@ -18,7 +18,7 @@ test_requirements = [
 ]
 
 setuptools.setup(name='hs_process',
-                 version='0.0.4',
+                 version='0.0.5',
                  description=('An open-source Python package for geospatial '
                               'processing of aerial hyperspectral imagery'),
                  long_description=readme(),
